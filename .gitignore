@@ -1,11 +1,13 @@
 # Defines which files Git should ignore
 # http://git-scm.com
 *~
+*.dylib
 *.dll
 *.exe
 *.la
 *.lo
 *.o
+*.so
 *.swp
 .deps/
 .dirstamp
@@ -27,7 +29,6 @@ gmon.out
 install-sh
 libtool
 ltmain.sh
-m4/*
 Makefile
 Makefile.in
 missing
