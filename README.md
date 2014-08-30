@@ -11,7 +11,7 @@ Declaring a type
 ```c
 /* animal.h */
 
-#include <objectively.h>
+#include "objectively.h"
 
 Interface(Animal, Object)
 	char *genus;
