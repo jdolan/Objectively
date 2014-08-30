@@ -78,6 +78,27 @@ Implementation(Animal, const char *genus, const char *species)
 
 End
 ```
+
+Using a type:
+```c
+	Animal *lion = New(Animal, "Panthera", "leo");
+	Animal *tiger = New(Animal, "Panthera", "tigris");
+	Animal *bear = New(Animal, "Ursus", "arctos");
+
+	printf("%s\n", lion->genus);
+	printf("%s\n", tiger->species);
+	
+	char *name = bear->scientificName(bear);
+	printf("%s\n", name);
+	free(name);
+
+	// No animals were actually harmed in the writing of this test
+
+	Destroy(lion);
+	Destroy(tiger);
+	Destroy(bear);
+```
+
 Archetypes
 ---
 For each declared type, an _archtype_ is also declared. The archetype is a statically allocated instance of the type that serves to hold the default method implementations.
@@ -94,4 +115,5 @@ To invoke a supertype's method implementation, use the archetype of the supertyp
 
 FAQ
 ---
-*Why?* Because c++ makes me puke, and Objective-c is not widely supported. 
+1. *Why?* Because c++ makes me puke, and Objective-c is not widely supported. 
+1. *This looks like poor-man's Objective-c?* Yup.
