@@ -86,9 +86,7 @@ Using a type:
 
 Archetypes
 ---
-For each declared type, an _archtype_ exists. The archetype is a statically allocated instance of the type that serves to hold the default method implementations.
-
-The archetype is defined and intialized by the `Implementation` and `Initialize` macros, respectively. The archetype for _FooBar_ is the symbol `__FooBar`.
+For each declared type, an _archtype_ exists. The archetype is a statically allocated instance of the type that serves to hold the default method implementations. The archetype is defined and intialized by the `Implementation` and `Initialize` macros, respectively. The archetype for _FooBar_ is the symbol `__FooBar`.
 
 Overriding a method
 ---
