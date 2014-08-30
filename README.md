@@ -6,9 +6,8 @@ Adding Objectively to your project
 ---
 Copy `objectively.c` and `objectively.h` to your project, and include them in your build target.
 
-Using Objectively
+Declaring a type
 ---
-Declaring a type:
 ```c
 /* animal.h */
 
@@ -25,6 +24,7 @@ Constructor(Animal, const char *genus, const char *species);
 ```
 
 Implementing a type:
+---
 ```c
 /* animal.c */
 
@@ -70,6 +70,7 @@ End
 ```
 
 Using a type:
+---
 ```c
 	Animal *lion = New(Animal, "Panthera", "leo");
 
