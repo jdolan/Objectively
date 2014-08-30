@@ -19,12 +19,10 @@ Declaring a type:
 #include <objectively.h>
 
 Interface(Animal, Object)
-
 	char *genus;
 	char *species;
 
 	char *(*scientificName)(Animal *self);
-
 End
 
 Constructor(Animal, const char *genus, const char *species);
@@ -57,15 +55,12 @@ static char *Animal_scientificName(Animal *self) {
 }
 
 Implementation(Animal, const char *genus, const char *species)
-
 	Initialize(Animal, NULL, NULL);
 
 	if (Object_init((Object *) self)) {
-
 		if (genus) {
 			self->genus = strdup(genus);
 		}
-
 		if (species) {
 			self->species = strdup(species);
 		}
@@ -75,7 +70,6 @@ Implementation(Animal, const char *genus, const char *species)
 	}
 
 	return self;
-
 End
 ```
 
