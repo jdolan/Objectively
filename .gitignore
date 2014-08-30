@@ -1,0 +1,37 @@
+# Defines which files Git should ignore
+# http://git-scm.com
+*~
+*.dll
+*.exe
+*.la
+*.lo
+*.o
+*.swp
+.deps/
+.dirstamp
+.DS_Store
+.libs/
+.settings/
+aclocal.m4
+autom4te.cache/
+compile
+config.guess
+config.h
+config.h.in
+config.log
+config.status
+config.sub
+configure
+depcomp
+gmon.out
+install-sh
+libtool
+ltmain.sh
+m4/*
+Makefile
+Makefile.in
+missing
+nbproject
+stamp-h1
+test-driver
+tests/animals
