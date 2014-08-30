@@ -39,7 +39,7 @@ AM_CONDITIONAL(BUILD_TESTS, test "x$BUILD_TESTS" = xyes)
 AC_CONFIG_FILES([
 	Makefile
 	src/Makefile
-	tests/Makefile
+	src/tests/Makefile
 ])
 
 AC_OUTPUT

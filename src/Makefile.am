@@ -1,3 +1,7 @@
+SUBDIRS = \
+	. \
+	tests
+
 include_HEADERS = \
 	objectively.h
 

@@ -62,8 +62,8 @@
 #define Initialize(Type, ...) \
 	static _Bool initialized; \
 		if (!initialized) { \
-			Type##_init(&__##Type, ## __VA_ARGS__); \
 			initialized = true; \
+			Type##_init(&__##Type, ## __VA_ARGS__); \
 		}
 
 /*

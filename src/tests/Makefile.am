@@ -6,7 +6,7 @@ TESTS_CFLAGS = \
 	
 TESTS_LIBS = \
 	@CHECK_LIBS@ \
-	../src/libobjectively.la
+	../.libs/objectively.o
 
 TESTS = \
 	animals

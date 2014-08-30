@@ -25,7 +25,7 @@
 #include <string.h>
 #include <check.h>
 
-#include "../src/objectively.h"
+#include "../objectively.h"
 
 Interface(Animal, Object)
 
@@ -41,7 +41,7 @@ Constructor(Animal, const char *genus, const char *species);
 /*
  * @brief Deallocate an animal.
  */
-void Animal_dealloc(Animal *self) {
+static void Animal_dealloc(Animal *self) {
 
 	free(self->genus);
 	free(self->species);
@@ -52,26 +52,33 @@ void Animal_dealloc(Animal *self) {
 /*
  * @return The Animal's scientific name.
  */
-char *Animal_scientificName(Animal *self) {
+static char *Animal_scientificName(Animal *self) {
 
-	ck_assert(self->genus);
-	ck_assert(self->species);
+	char *name = NULL;
 
-	char *name = malloc(strlen(self->genus) + strlen(self->species) + 1);
-	sprintf(name, "%s %s", self->genus, self->species);
+	if (self->genus && self->species) {
+		name = malloc(strlen(self->genus) + strlen(self->species) + 1);
+		sprintf(name, "%s %s", self->genus, self->species);
+	}
 
 	return name;
 }
 
 Implementation(Animal, const char *genus, const char *species)
 
-	Initialize(Animal, "unknown", "unknown");
+	Initialize(Animal, NULL, NULL);
 
 	if (Object_init((Object *) self)) {
 
-		self->genus = strdup(genus);
-		self->species = strdup(species);
+		if (genus) {
+			self->genus = strdup(genus);
+		}
 
+		if (species) {
+			self->species = strdup(species);
+		}
+
+		self->dealloc = Animal_dealloc;
 		self->scientificName = Animal_scientificName;
 	}
 
@@ -79,7 +86,7 @@ Implementation(Animal, const char *genus, const char *species)
 
 End
 
-START_TEST(zoo)
+START_TEST(animals)
 	{
 		Animal *lion = New(Animal, "Panthera", "leo");
 		Animal *tiger = New(Animal, "Panthera", "tigris");
@@ -103,7 +110,7 @@ START_TEST(zoo)
 int main(int argc, char **argv) {
 
 	TCase *tcase = tcase_create("animals");
-	tcase_add_test(tcase, zoo);
+	tcase_add_test(tcase, animals);
 
 	Suite *suite = suite_create("animals");
 	suite_add_tcase(suite, tcase);
