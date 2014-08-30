@@ -37,13 +37,6 @@
 		SuperType super;
 
 /*
- * @brief Implement the constructor for your type.
- */
-#define Implementation(Type, ...) \
-	Type __##Type; \
-	Type *Type##_init(Type *self, ## __VA_ARGS__) {
-
-/*
  * @brief Terminate an interface or implementation block.
  */
 #define End };
@@ -55,7 +48,14 @@
 	extern Type *Type##_init(Type *self, ## __VA_ARGS__)
 
 /*
- * @brief Initialize the reference instance of your type.
+ * @brief Implement the constructor for your type.
+ */
+#define Implementation(Type, ...) \
+	Type __##Type; \
+	Type *Type##_init(Type *self, ## __VA_ARGS__) {
+
+/*
+ * @brief Initialize the archetype of your type.
  */
 #define Initialize(Type, ...) \
 	static _Bool initialized; \

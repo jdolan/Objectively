@@ -38,9 +38,6 @@ End
 
 Constructor(Animal, const char *genus, const char *species);
 
-/*
- * @brief Deallocate an animal.
- */
 static void Animal_dealloc(Object *self) {
 
 	free(((Animal *) self)->genus);
@@ -49,9 +46,6 @@ static void Animal_dealloc(Object *self) {
 	__Object.dealloc(self);
 }
 
-/*
- * @return The Animal's scientific name.
- */
 static char *Animal_scientificName(Animal *self) {
 
 	char *name = NULL;
@@ -78,7 +72,7 @@ Implementation(Animal, const char *genus, const char *species)
 			self->species = strdup(species);
 		}
 
-		self->super.dealloc = Animal_dealloc;
+		Override(dealloc, Animal_dealloc);
 		self->scientificName = Animal_scientificName;
 	}
 
