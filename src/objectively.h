@@ -34,9 +34,7 @@
 	typedef struct _##Type Type; \
 	extern Type __##Type; \
 	struct _##Type { \
-		SuperType super; \
-		\
-		void (*dealloc)(Type *self);
+		SuperType super;
 
 /*
  * @brief Implement the constructor for your type.
@@ -83,7 +81,7 @@
  */
 #define Destroy(obj) \
 	if (obj) { \
-		obj->dealloc(obj); \
+		((Object *) obj)->dealloc((Object *) obj); \
 		obj = NULL; \
 	}
 
@@ -91,6 +89,8 @@
  * @brief The Object base type.
  */
 Interface(Object, void *)
+
+	void (*dealloc)(Object *self);
 
 End
 

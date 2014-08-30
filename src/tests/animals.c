@@ -41,12 +41,12 @@ Constructor(Animal, const char *genus, const char *species);
 /*
  * @brief Deallocate an animal.
  */
-static void Animal_dealloc(Animal *self) {
+static void Animal_dealloc(Object *self) {
 
-	free(self->genus);
-	free(self->species);
+	free(((Animal *) self)->genus);
+	free(((Animal *) self)->species);
 
-	self->super.dealloc((Object *) self);
+	__Object.dealloc(self);
 }
 
 /*
@@ -78,7 +78,7 @@ Implementation(Animal, const char *genus, const char *species)
 			self->species = strdup(species);
 		}
 
-		self->dealloc = Animal_dealloc;
+		self->super.dealloc = Animal_dealloc;
 		self->scientificName = Animal_scientificName;
 	}
 
