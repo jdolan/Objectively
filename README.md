@@ -4,7 +4,7 @@ Ultra-lightweight object oriented framework for the c programming language.
 
 Overview
 ---
-Objectively brings syntactic sugar and basic OO concepts to c99.
+Objectively brings syntactic sugar and basic OO concepts to c. It requires c99 and the GNU c compiler (gcc).
 
 Adding Objectively to your project
 ---
@@ -95,9 +95,9 @@ Using a type:
 
 Archetypes
 ---
-For each declared type, an _archtype_ is also declared. The archetype is a statically allocated instance of the type that serves to hold the default method implementations.
+For each declared type, an _archtype_ exists. The archetype is a statically allocated instance of the type that serves to hold the default method implementations.
 
-The archetype is defined and intialized by the `Implementation` and `Initialize` macros, respectively. The archetype for a custom type _FooBar_ is the symbol `__FooBar`.
+The archetype is defined and intialized by the `Implementation` and `Initialize` macros, respectively. The archetype for _FooBar_ is the symbol `__FooBar`.
 
 Overriding a method
 ---
@@ -105,7 +105,7 @@ To override a method, simply overwrite the function pointer in `self->super`. Se
 
 Calling super
 ---
-To invoke a supertype's method implementation, use the archetype of the supertype. See the invocation of `Object_dealloc` above.
+To invoke a supertype's method implementation, use the supertype's archetype. See the invocation of `Object_dealloc` above.
 
 FAQ
 ---
