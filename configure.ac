@@ -1,4 +1,4 @@
-AC_PREREQ(2.68)
+AC_PREREQ(2.69)
 
 AC_INIT([objectively], [0.1.0], [jay@jaydolan.com])
 
@@ -12,7 +12,7 @@ AC_PROG_CC
 AC_PROG_LIBTOOL
 
 AM_INIT_AUTOMAKE([silent-rules foreign])
-AM_SILENT_RULES
+AM_SILENT_RULES([yes])
 
 dnl ---------------------------------
 dnl Check whether to build unit tests
@@ -39,7 +39,7 @@ AM_CONDITIONAL(BUILD_TESTS, test "x$BUILD_TESTS" = xyes)
 AC_CONFIG_FILES([
 	Makefile
 	src/Makefile
-	src/tests/Makefile
+	tests/Makefile
 ])
 
 AC_OUTPUT
