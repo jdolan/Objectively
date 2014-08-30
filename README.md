@@ -82,21 +82,15 @@ End
 Using a type:
 ```c
 	Animal *lion = New(Animal, "Panthera", "leo");
-	Animal *tiger = New(Animal, "Panthera", "tigris");
-	Animal *bear = New(Animal, "Ursus", "arctos");
 
 	printf("%s\n", lion->genus);
-	printf("%s\n", tiger->species);
+	printf("%s\n", lion->species);
 	
-	char *name = bear->scientificName(bear);
+	char *name = lion->scientificName(lion);
 	printf("%s\n", name);
 	free(name);
 
-	// No animals were actually harmed in the writing of this test
-
 	Destroy(lion);
-	Destroy(tiger);
-	Destroy(bear);
 ```
 
 Archetypes
