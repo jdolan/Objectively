@@ -1,10 +1,10 @@
 Objectively
 ===
-Ultra-lightweight object oriented framework for the c programming language.
+Ultra-lightweight object oriented framework for the c programming language. Zlib license.
 
 Adding Objectively to your project
 ---
-Copy `objectively.c` and `objectively.h` to your project, and include them in your build target.
+Copy `objectively.c` and `objectively.h` to your project and include them in your build target.
 
 Declaring a type
 ---
