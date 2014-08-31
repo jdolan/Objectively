@@ -35,7 +35,7 @@ static void Animal_dealloc(Object *self) {
 	free(((Animal *) self)->genus);
 	free(((Animal *) self)->species);
 
-	__Object.dealloc(self); // calling "super"
+	Super(Object, Object, dealloc)
 }
 
 static char *Animal_scientificName(Animal *self) {
@@ -61,7 +61,7 @@ Implementation(Animal, const char *genus, const char *species)
 			self->species = strdup(species);
 		}
 
-		self->super.dealloc = Animal_dealloc; // overriding a method
+		Override(Object, dealloc, Animal_dealloc);
 		self->scientificName = Animal_scientificName;
 	}
 
@@ -90,11 +90,30 @@ For each declared type, an _archtype_ exists. The archetype is a statically allo
 
 Overriding a method
 ---
-To override a method, simply overwrite the function pointer in `self->super`. See the overriding of `Object_dealloc` above.
+To override a method, simply overwrite the function pointer in your constructor, or use the `Override` macro.
+
+```c
+	self->dealloc = Foo_dealloc;
+
+	/* or */
+
+	Override(Object, dealloc, Foo_dealloc);
+}
+```
 
 Calling super
 ---
-To invoke a supertype's method implementation, use the supertype's archetype. See the invocation of `Object_dealloc` above.
+To invoke a supertype's method implementation, either directly invoke the super-archetype implementation, or use the `Super` macro. The latter allows you to conveniently target an implementation anywhere in your type's hierarchy.
+
+```c
+	__Object_dealloc((Object *) self);
+	
+	/* or */
+
+	Super(Parent, Object, dealloc);
+
+	/* the latter invoke's the Parent archetype's implementation; e.g. Parent__dealloc */
+```
 
 FAQ
 ---

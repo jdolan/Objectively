@@ -71,7 +71,7 @@
 	((Type *) self)->method = implementation;
 
 /*
- * @brief
+ * @brief Invoke a supertype method on an instance of your type.
  */
 #define Super(Archetype, Type, method, ...) \
 	((Type *) &__##Archetype)->method((Type *) self, ## __VA_ARGS__);
