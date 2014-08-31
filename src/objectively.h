@@ -59,16 +59,22 @@
  */
 #define Initialize(Type, ...) \
 	static _Bool initialized; \
-		if (!initialized) { \
-			initialized = true; \
-			Type##_init(&__##Type, ## __VA_ARGS__); \
-		}
+	if (!initialized) { \
+		initialized = true; \
+		Type##_init(&__##Type, ## __VA_ARGS__); \
+	}
 
 /*
  * @brief Override a supertype method in your type.
  */
-#define Override(method, implementation) \
-	self->super.method = implementation;
+#define Override(Type, method, implementation) \
+	((Type *) self)->method = implementation;
+
+/*
+ * @brief
+ */
+#define Super(Archetype, Type, method, ...) \
+	((Type *) &__##Archetype)->method((Type *) self, ## __VA_ARGS__);
 
 /*
  * @brief Instantiate your type.

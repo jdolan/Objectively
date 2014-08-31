@@ -72,7 +72,7 @@ Implementation(Animal, const char *genus, const char *species)
 			self->species = strdup(species);
 		}
 
-		Override(dealloc, Animal_dealloc);
+		Override(Object, dealloc, Animal_dealloc);
 		self->scientificName = Animal_scientificName;
 	}
 

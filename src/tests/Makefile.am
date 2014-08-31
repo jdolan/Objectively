@@ -9,7 +9,8 @@ TESTS_LIBS = \
 	../.libs/objectively.o
 
 TESTS = \
-	animals
+	animals \
+	shapes
 
 noinst_PROGRAMS = $(TESTS)
 
@@ -18,6 +19,13 @@ animals_SOURCES = \
 animals_CFLAGS = \
 	$(TESTS_CFLAGS)
 animals_LDADD = \
+	$(TESTS_LIBS)
+
+shapes_SOURCES = \
+	shapes.c
+shapes_CFLAGS = \
+	$(TESTS_CFLAGS)
+shapes_LDADD = \
 	$(TESTS_LIBS)
 
 endif
