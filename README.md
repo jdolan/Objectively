@@ -98,7 +98,6 @@ To override a method, simply overwrite the function pointer in your constructor,
 	/* or */
 
 	Override(Object, dealloc, Foo_dealloc);
-}
 ```
 
 Calling super
