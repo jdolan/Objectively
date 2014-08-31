@@ -8,5 +8,5 @@ Description: Ultra-lightweight object oriented framework for c99.
 URL: https://github.com/jdolan/objectively
 Version: @PACKAGE_VERSION@
 Cflags: -I${includedir}
-Libs: -L${libdir} -l<library>
+Libs: -L${libdir} -lobjectively
 Libs.private: 
