@@ -54,7 +54,7 @@ End
 
 static void Rectangle_hello(Shape *self) {
 	printf(">rectangle\n");
-	Super(Shape, Shape, hello);
+	Super(Shape, Shape, self, hello);
 }
 
 Implementation(Rectangle)
@@ -74,7 +74,7 @@ End
 
 static void Square_hello(Shape *self) {
 	printf(">>square\n");
-	Super(Rectangle, Shape, hello);
+	Super(Shape, Rectangle, self, hello);
 }
 
 Implementation(Square)
@@ -94,6 +94,7 @@ START_TEST(shapes)
 		Square *square = New(Square);
 		((Shape *) square)->hello((Shape *) square);
 		Destroy(square);
+
 	}END_TEST
 
 int main(int argc, char **argv) {

@@ -15,4 +15,4 @@ libobjectively_la_LDFLAGS = \
 	-shared
 
 pkgconfigdir = $(libdir)/pkgconfig
-nodist_pkgconfig_DATA = libobjectively.pc
+nodist_pkgconfig_DATA = objectively.pc

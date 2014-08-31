@@ -73,8 +73,8 @@
 /*
  * @brief Invoke a supertype method on an instance of your type.
  */
-#define Super(Archetype, Type, method, ...) \
-	((Type *) &__##Archetype)->method((Type *) self, ## __VA_ARGS__);
+#define Super(Type, Archetype, instance, method, ...) \
+	((Type *) &__##Archetype)->method((Type *) instance, ## __VA_ARGS__);
 
 /*
  * @brief Instantiate your type.

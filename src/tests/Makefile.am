@@ -1,5 +1,3 @@
-if BUILD_TESTS
-
 TESTS_CFLAGS = \
 	-I ../src \
 	@CHECK_CFLAGS@
@@ -27,5 +25,3 @@ shapes_CFLAGS = \
 	$(TESTS_CFLAGS)
 shapes_LDADD = \
 	$(TESTS_LIBS)
-
-endif
