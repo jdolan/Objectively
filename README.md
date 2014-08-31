@@ -98,7 +98,6 @@ To override a method, simply overwrite the function pointer in your constructor,
 	/* or */
 
 	Override(Object, dealloc, Foo_dealloc);
-}
 ```
 
 Calling super
@@ -106,7 +105,7 @@ Calling super
 To invoke a supertype's method implementation, either directly invoke the super-archetype implementation, or use the `Super` macro. The latter allows you to conveniently target an implementation anywhere in your type's hierarchy.
 
 ```c
-	__Object_dealloc((Object *) self);
+	__Object.dealloc(self);
 	
 	/* or */
 
