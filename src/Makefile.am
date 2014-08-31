@@ -13,3 +13,6 @@ libobjectively_la_SOURCES = \
 
 libobjectively_la_LDFLAGS = \
 	-shared
+
+pkgconfigdir = $(libdir)/pkgconfig
+nodist_pkgconfig_DATA = libobjectively.pc
