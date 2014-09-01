@@ -74,7 +74,7 @@
  * @brief Override a supertype method in your type.
  */
 #define Override(Type, method, implementation) \
-	((Type *) self)->method = implementation;
+	((Type *) self)->method = (typeof(__##Type.method)) implementation;
 
 /*
  * @brief Invoke a supertype method on an instance of your type.

@@ -52,9 +52,9 @@ End
 Interface(Rectangle, Shape)
 End
 
-static void Rectangle_hello(Shape *self) {
+static void Rectangle_hello(Rectangle *self) {
 	printf(">rectangle\n");
-	Super(Shape, (Rectangle *) self, hello);
+	Super(Shape, self, hello);
 }
 
 Implementation(Rectangle)
@@ -72,9 +72,9 @@ End
 Interface(Square, Rectangle)
 End
 
-static void Square_hello(Shape *self) {
+static void Square_hello(Square *self) {
 	printf(">>square\n");
-	Super(Shape, (Square *) self, hello);
+	Super(Shape, self, hello);
 }
 
 Implementation(Square)
