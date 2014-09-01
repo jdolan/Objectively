@@ -26,13 +26,13 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 
 /*
  * @brief Define the interface (methods and members) of your type.
  */
 #define Interface(Type, SuperType) \
 	typedef struct _##Type Type; \
-	extern Type __##Type; \
 	struct _##Type { \
 		SuperType super; \
 		Type *archetype;
@@ -46,6 +46,7 @@
  * @brief Declare the constructor prototype for your type.
  */
 #define Constructor(Type, ...) \
+	extern Type __##Type; \
 	extern Type *Type##_init(Type *self, ## __VA_ARGS__)
 
 /*
@@ -57,12 +58,15 @@
 		self->archetype = &__##Type;
 
 /*
- * @brief Initialize the archetype of your type.
+ * @brief Initialize the archetype of your type from within your constructor.
  */
 #define Initialize(Type, ...) \
 	static _Bool initialized; \
-	if (!initialized) { \
+	\
+	if (initialized == false) { \
 		initialized = true; \
+		\
+		memset(&__##Type, 0, sizeof(Type)); \
 		Type##_init(&__##Type, ## __VA_ARGS__); \
 	}
 
