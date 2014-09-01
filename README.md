@@ -35,7 +35,7 @@ static void Animal_dealloc(Object *self) {
 	free(((Animal *) self)->genus);
 	free(((Animal *) self)->species);
 
-	Super(Object, Object, dealloc)
+	Super(Object, self, dealloc)
 }
 
 static char *Animal_scientificName(Animal *self) {
@@ -102,16 +102,16 @@ To override a method, simply overwrite the function pointer in your constructor,
 
 Calling super
 ---
-To invoke a supertype's method implementation, either directly invoke the super-archetype implementation, or use the `Super` macro. The latter allows you to conveniently target an implementation anywhere in your type's hierarchy.
+To invoke a supertype's method implementation, either directly invoke the super-archetype implementation, or use the `Super` macro. The latter allows you to conveniently target any implementation in your type's hierarchy.
 
 ```c
-	__Object.dealloc(self);
+	__Object.dealloc((Object *) self);
 	
 	/* or */
 
-	Super(Parent, Object, dealloc);
+	Super(Object, (FooBar *) self, dealloc);
 
-	/* the latter invoke's the Parent archetype's implementation; e.g. Parent__dealloc */
+	/* the latter invokes the FooBar archetype's implementation; e.g. FooBar_dealloc */
 ```
 
 FAQ
