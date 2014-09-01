@@ -34,7 +34,8 @@
 	typedef struct _##Type Type; \
 	extern Type __##Type; \
 	struct _##Type { \
-		SuperType super;
+		SuperType super; \
+		Type *archetype;
 
 /*
  * @brief Terminate an interface or implementation block.
@@ -52,7 +53,8 @@
  */
 #define Implementation(Type, ...) \
 	Type __##Type; \
-	Type *Type##_init(Type *self, ## __VA_ARGS__) {
+	Type *Type##_init(Type *self, ## __VA_ARGS__) { \
+		self->archetype = &__##Type;
 
 /*
  * @brief Initialize the archetype of your type.
@@ -73,8 +75,8 @@
 /*
  * @brief Invoke a supertype method on an instance of your type.
  */
-#define Super(Type, Archetype, instance, method, ...) \
-	((Type *) &__##Archetype)->method((Type *) instance, ## __VA_ARGS__);
+#define Super(Type, instance, method, ...) \
+	((Type *) (instance)->super.archetype)->method((Type *) instance, ## __VA_ARGS__);
 
 /*
  * @brief Instantiate your type.
