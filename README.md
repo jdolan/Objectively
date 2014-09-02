@@ -30,10 +30,10 @@ Implementing a type:
 
 #include "animal.h"
 
-static void Animal_dealloc(Object *self) {
+static void Animal_dealloc(Animal *self) {
 
-	free(((Animal *) self)->genus);
-	free(((Animal *) self)->species);
+	free(self->genus);
+	free(self->species);
 
 	Super(Object, self, dealloc)
 }
@@ -61,7 +61,7 @@ Implementation(Animal, const char *genus, const char *species)
 			self->species = strdup(species);
 		}
 
-		Override(Object, dealloc, Animal_dealloc);
+		Override(Object, self, dealloc, Animal_dealloc);
 		self->scientificName = Animal_scientificName;
 	}
 
@@ -90,28 +90,26 @@ For each declared type, an _archtype_ exists. The archetype is a statically allo
 
 Overriding a method
 ---
-To override a method, simply overwrite the function pointer in your constructor, or use the `Override` macro.
+To override a method, simply overwrite the function pointer in your constructor or use the `Override` macro (*preferred*).
 
 ```c
-	self->dealloc = Foo_dealloc;
+	self->dealloc = (void (*)(Object *)) Foo_dealloc;
 
 	/* or */
 
-	Override(Object, dealloc, Foo_dealloc);
+	Override(Object, self, dealloc, Foo_dealloc);
 ```
 
 Calling super
 ---
-To invoke a supertype's method implementation, either directly invoke the super-archetype implementation, or use the `Super` macro. The latter allows you to conveniently target any implementation in your type's hierarchy.
+To invoke a supertype's method implementation, either directly invoke the desired archetype implementation or use the `Super` macro (*strongly preferred*).
 
 ```c
 	__Object.dealloc((Object *) self);
 	
 	/* or */
 
-	Super(Object, (FooBar *) self, dealloc);
-
-	/* the latter invokes the FooBar archetype's implementation; e.g. FooBar_dealloc */
+	Super(Object, self, dealloc);
 ```
 
 FAQ
