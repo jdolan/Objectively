@@ -62,7 +62,7 @@ Implementation(Rectangle)
 	Initialize(Rectangle);
 
 	if (Shape_init((Shape *) self)) {
-		Override(Shape, hello, Rectangle_hello);
+		Override(Shape, self, hello, Rectangle_hello);
 	}
 
 	return self;
@@ -82,7 +82,7 @@ Implementation(Square)
 	Initialize(Square);
 
 	if (Rectangle_init((Rectangle *) self)) {
-		Override(Shape, hello, Square_hello);
+		Override(Shape, self, hello, Square_hello);
 	}
 
 	return self;

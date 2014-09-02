@@ -38,12 +38,12 @@ End
 
 Constructor(Animal, const char *genus, const char *species);
 
-static void Animal_dealloc(Object *self) {
+static void Animal_dealloc(Animal *self) {
 
-	free(((Animal *) self)->genus);
-	free(((Animal *) self)->species);
+	free(self->genus);
+	free(self->species);
 
-	__Object.dealloc(self);
+	Super(Object, self, dealloc);
 }
 
 static char *Animal_scientificName(Animal *self) {
@@ -72,7 +72,7 @@ Implementation(Animal, const char *genus, const char *species)
 			self->species = strdup(species);
 		}
 
-		Override(Object, dealloc, Animal_dealloc);
+		Override(Object, self, dealloc, Animal_dealloc);
 		self->scientificName = Animal_scientificName;
 	}
 
