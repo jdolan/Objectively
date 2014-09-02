@@ -61,10 +61,10 @@
  * @brief Initialize the archetype of your type from within your constructor.
  */
 #define Initialize(Type, ...) \
-	static _Bool initialized; \
+	static _Bool Type##_initialized; \
 	\
-	if (initialized == false) { \
-		initialized = true; \
+	if (Type##_initialized == false) { \
+		Type##_initialized = true; \
 		\
 		memset(&__##Type, 0, sizeof(Type)); \
 		Type##_init(&__##Type, ## __VA_ARGS__); \
