@@ -21,12 +21,24 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _objectively_h_
-#define _objectively_h_
+#ifndef _objectively_object_h_
+#define _objectively_object_h_
 
 #include <objectively/class.h>
-#include <objectively/macros.h>
-#include <objectively/object.h>
 #include <objectively/types.h>
+
+struct Object {
+	Class *class;
+
+	id (*init)(id self, va_list *args);
+	id (*copy)(const id self);
+
+	BOOL (*isKindOfClass)(const id self, const Class *class);
+	BOOL (*isEqual)(const id self, const id other);
+
+	void (*dealloc)(id self);
+};
+
+extern Class *Object;
 
 #endif

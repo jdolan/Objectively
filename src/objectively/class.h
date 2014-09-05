@@ -21,12 +21,42 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _objectively_h_
-#define _objectively_h_
+#ifndef _objectively_class_h_
+#define _objectively_class_h_
 
-#include <objectively/class.h>
-#include <objectively/macros.h>
-#include <objectively/object.h>
+#include <stdarg.h>
+
 #include <objectively/types.h>
+
+typedef struct _Class Class;
+struct _Class {
+	Class *superclass;
+
+	const char *name;
+	size_t size;
+
+	id archetype;
+
+	/*
+	 * @brief An optional static initializer for the Class.
+	 */
+	void (*initialize)(void);
+	BOOL initialized;
+
+	/*
+	 * @brief The constructor.
+	 */
+	id (*init)(id self, va_list *args);
+};
+
+extern id new(Class *class, ...);
+
+extern id cast(Class *class, const id obj);
+
+extern id archetype(Class *class);
+
+extern void delete(id obj);
+
+extern id $(id obj, id selector, ...);
 
 #endif

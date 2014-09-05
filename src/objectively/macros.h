@@ -21,15 +21,21 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#include "objectively.h"
+#ifndef _objectively_macros_h_
+#define _objectively_macros_h_
 
-Implementation(Object)
+#include <objectively/class.h>
 
-	Initialize(Object);
+/*
+ * @brief Override a supertype method in your type.
+ */
+#define override(Type, instance, method, implementation) \
+	((struct Type *) instance)->method = implementation;
 
-	self->super = NULL;
-	self->dealloc = (void (*)(Object *)) free;
+/*
+ * @brief Invoke a supertype method on an instance of your type.
+ */
+#define super(Type, instance, method, ...) \
+	((struct Type *) archetype(Type))->method((struct Type *) instance, ## __VA_ARGS__)
 
-	return self;
-
-End
+#endif

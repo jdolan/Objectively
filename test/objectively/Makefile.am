@@ -1,10 +1,10 @@
-TESTS_CFLAGS = \
-	-I ../src \
+TEST_CFLAGS = \
+	-I ../../src \
 	@CHECK_CFLAGS@
 	
-TESTS_LIBS = \
+TEST_LDADD = \
 	@CHECK_LIBS@ \
-	../.libs/objectively.o
+	../../src/objectively/.libs/libobjectively.la
 
 TESTS = \
 	animals \
@@ -15,13 +15,13 @@ noinst_PROGRAMS = $(TESTS)
 animals_SOURCES = \
 	animals.c
 animals_CFLAGS = \
-	$(TESTS_CFLAGS)
+	$(TEST_CFLAGS)
 animals_LDADD = \
-	$(TESTS_LIBS)
+	$(TEST_LDADD)
 
 shapes_SOURCES = \
 	shapes.c
 shapes_CFLAGS = \
-	$(TESTS_CFLAGS)
+	$(TEST_CFLAGS)
 shapes_LDADD = \
-	$(TESTS_LIBS)
+	$(TEST_LDADD)

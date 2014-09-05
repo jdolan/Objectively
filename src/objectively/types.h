@@ -21,12 +21,15 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _objectively_h_
-#define _objectively_h_
+#ifndef _objectively_types_h_
+#define _objectively_types_h_
 
-#include <objectively/class.h>
-#include <objectively/macros.h>
-#include <objectively/object.h>
-#include <objectively/types.h>
+#include <stddef.h>
+
+typedef void *id;
+
+typedef enum {
+	NO, YES
+} BOOL;
 
 #endif

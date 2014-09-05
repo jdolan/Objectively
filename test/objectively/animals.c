@@ -22,69 +22,89 @@
  */
 
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
 #include <check.h>
 
-#include "../objectively.h"
+#include <objectively.h>
 
-Interface(Animal, Object)
+struct Animal {
+	struct Object _;
 
 	char *genus;
 	char *species;
 
-	char *(*scientificName)(Animal *self);
+	char *(*scientificName)(const id self);
+};
 
-End
+extern Class *Animal;
 
-Constructor(Animal, const char *genus, const char *species);
+static void dealloc(id self) {
 
-static void Animal_dealloc(Animal *self) {
+	struct Animal *this = cast(Animal, self);
 
-	free(self->genus);
-	free(self->species);
+	free(this->genus);
+	free(this->species);
 
-	Super(Object, self, dealloc);
+	super(Object, self, dealloc);
 }
 
-static char *Animal_scientificName(Animal *self) {
+static char *scientificName(const id self) {
 
 	char *name = NULL;
 
-	if (self->genus && self->species) {
-		name = malloc(strlen(self->genus) + strlen(self->species) + 1);
-		sprintf(name, "%s %s", self->genus, self->species);
+	const struct Animal *this = cast(Animal, self);
+
+	if (this->genus && this->species) {
+		name = malloc(strlen(this->genus) + strlen(this->species) + 1);
+		sprintf(name, "%s %s", this->genus, this->species);
 	}
 
 	return name;
 }
 
-Implementation(Animal, const char *genus, const char *species)
+static id init(id self, va_list *args) {
 
-	Initialize(Animal, NULL, NULL);
+	if (super(Object, self, init, args)) {
 
-	if (Object_init((Object *) self)) {
+		override(Object, self, class, Animal);
+		override(Object, self, dealloc, dealloc);
+
+		const char *genus = va_arg(*args, const char *);
+		const char *species = va_arg(*args, const char *);
+
+		struct Animal *this = cast(Animal, self);
 
 		if (genus) {
-			self->genus = strdup(genus);
+			this->genus = strdup(genus);
 		}
 
 		if (species) {
-			self->species = strdup(species);
+			this->species = strdup(species);
 		}
 
-		Override(Object, self, dealloc, Animal_dealloc);
-		self->scientificName = Animal_scientificName;
+		this->scientificName = scientificName;
 	}
 
 	return self;
+}
 
-End
+static struct Animal archetype;
 
-START_TEST(animals)
+static Class class = {
+	.name = "Animal",
+	.size = sizeof(struct Animal),
+	.archetype = &archetype,
+	.init = init,
+};
+
+Class *Animal = &class;
+
+int main(int argc, char **argv)
+//START_TEST(animals)
 	{
-		Animal *lion = New(Animal, "Panthera", "leo");
-		Animal *tiger = New(Animal, "Panthera", "tigris");
-		Animal *bear = New(Animal, "Ursus", "arctos");
+		struct Animal *lion = new(Animal, "Panthera", "leo");
+		struct Animal *tiger = new(Animal, "Panthera", "tigris");
+		struct Animal *bear = new(Animal, "Ursus", "arctos");
 
 		ck_assert_str_eq("Panthera", lion->genus);
 		ck_assert_str_eq("tigris", tiger->species);
@@ -95,13 +115,13 @@ START_TEST(animals)
 
 		// No animals were actually harmed in the writing of this test
 
-		Destroy(lion);
-		Destroy(tiger);
-		Destroy(bear);
+		delete(lion);
+		delete(tiger);
+		delete(bear);
 
-	}END_TEST
+	}//END_TEST
 
-int main(int argc, char **argv) {
+/*int main(int argc, char **argv) {
 
 	TCase *tcase = tcase_create("animals");
 	tcase_add_test(tcase, animals);
@@ -117,4 +137,4 @@ int main(int argc, char **argv) {
 	srunner_free(runner);
 
 	return failed;
-}
+}*/

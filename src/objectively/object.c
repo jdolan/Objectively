@@ -21,12 +21,67 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _objectively_h_
-#define _objectively_h_
+#include <stdlib.h>
+#include <string.h>
 
-#include <objectively/class.h>
-#include <objectively/macros.h>
 #include <objectively/object.h>
-#include <objectively/types.h>
 
-#endif
+static id copy(const id self) {
+
+	const struct Object *this = cast(Object, self);
+
+	return memcpy(calloc(1, this->class->size), self, this->class->size);
+}
+
+static BOOL isKindOfClass(const id self, const Class *class) {
+
+	const struct Object *this = cast(Object, self);
+
+	Class *c = this->class;
+	while (c) {
+		if (c == class) {
+			return YES;
+		}
+		c = class->superclass;
+	}
+
+	return NO;
+}
+
+static BOOL isEqual(const id self, const id other) {
+	return self == other;
+}
+
+static void dealloc(id self) {
+	free(self);
+}
+
+static id init(id self, va_list *args) {
+
+	struct Object *this = cast(Object, self);
+	if (this) {
+
+		this->class = Object;
+
+		this->init = init;
+		this->copy = copy;
+
+		this->isKindOfClass = isKindOfClass;
+		this->isEqual = isEqual;
+
+		this->dealloc = dealloc;
+	}
+
+	return this;
+}
+
+static struct Object archetype;
+
+static Class class = {
+	.name = "Object",
+	.size = sizeof(Object),
+	.init = init,
+	.archetype = &archetype,
+};
+
+Class *Object = &class;
