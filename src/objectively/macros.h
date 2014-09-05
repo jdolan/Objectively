@@ -27,15 +27,27 @@
 #include <objectively/class.h>
 
 /*
+ * @brief Call a method.
+ */
+#define $(instance, method, ...) \
+	instance->method(instance, ## __VA_ARGS__)
+
+/*
+ * @brief Take a constructor parameter.
+ */
+#define arg(args, type, def) \
+	(args ? va_arg(*args, type) : def)
+
+/*
  * @brief Override a supertype method in your type.
  */
-#define override(Type, instance, method, implementation) \
-	((struct Type *) instance)->method = implementation;
+#define override(type, instance, method, implementation) \
+	((struct type *) instance)->method = implementation;
 
 /*
  * @brief Invoke a supertype method on an instance of your type.
  */
-#define super(Type, instance, method, ...) \
-	((struct Type *) archetype(Type))->method((struct Type *) instance, ## __VA_ARGS__)
+#define super(type, instance, method, ...) \
+	((struct type *) archetype(type))->method((struct type *) instance, ## __VA_ARGS__)
 
 #endif

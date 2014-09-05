@@ -1,7 +1,10 @@
+AUTOMAKE_OPTIONS = nostdinc
+
 pkginclude_HEADERS = \
 	class.h \
 	macros.h \
 	object.h \
+	string.h \
 	types.h
 
 lib_LTLIBRARIES = \
@@ -9,7 +12,8 @@ lib_LTLIBRARIES = \
 
 libobjectively_la_SOURCES = \
 	class.c \
-	object.c
+	object.c \
+	string.c
 
 libobjectively_la_CFLAGS = \
 	-I ..

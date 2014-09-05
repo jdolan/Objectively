@@ -28,7 +28,7 @@
 #include <objectively/types.h>
 
 struct Object {
-	Class *class;
+	const Class *class;
 
 	id (*init)(id self, va_list *args);
 	id (*copy)(const id self);
@@ -39,6 +39,6 @@ struct Object {
 	void (*dealloc)(id self);
 };
 
-extern Class *Object;
+extern const Class *Object;
 
 #endif

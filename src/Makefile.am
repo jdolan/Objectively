@@ -1,3 +1,5 @@
+AUTOMAKE_OPTIONS = nostdinc
+
 SUBDIRS = \
 	objectively
 

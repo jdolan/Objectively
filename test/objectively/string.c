@@ -21,13 +21,37 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _objectively_h_
-#define _objectively_h_
+#include <check.h>
 
-#include <objectively/class.h>
-#include <objectively/macros.h>
-#include <objectively/object.h>
-#include <objectively/string.h>
-#include <objectively/types.h>
+#include <objectively.h>
 
-#endif
+START_TEST(string)
+	{
+		struct String *string = new(String, "hello");
+
+		ck_assert(string);
+		ck_assert_ptr_eq(String, ((struct Object *) string)->class);
+
+		ck_assert_str_eq("hello", string->str);
+
+		delete(string);
+
+	}END_TEST
+
+int main(int argc, char **argv) {
+
+	TCase *tcase = tcase_create("string");
+	tcase_add_test(tcase, string);
+
+	Suite *suite = suite_create("string");
+	suite_add_tcase(suite, tcase);
+
+	SRunner *runner = srunner_create(suite);
+
+	srunner_run_all(runner, CK_VERBOSE);
+	int failed = srunner_ntests_failed(runner);
+
+	srunner_free(runner);
+
+	return failed;
+}

@@ -22,19 +22,23 @@
  */
 
 #include <assert.h>
+#include <stdarg.h>
 #include <stdlib.h>
 
 #include <objectively/class.h>
+#include <objectively/macros.h>
 #include <objectively/object.h>
 
-static void initialize(Class *class) {
+static void initialize(const Class *class) {
 
 	assert(class);
 
-	if (class->initialized == NO) {
+	if (!class->magic) {
+		((Class *) class)->magic = CLASS_MAGIC;
 
 		assert(class->name);
 		assert(class->size);
+		assert(class == Object ? class->superclass == NULL : class->superclass != NULL);
 		assert(class->archetype);
 		assert(class->init);
 
@@ -43,16 +47,19 @@ static void initialize(Class *class) {
 		}
 
 		class->init(class->archetype, NULL);
-		class->initialized = YES;
+	} else {
+		assert(class->magic == CLASS_MAGIC);
 	}
 }
 
-id new(Class *class, ...) {
+id new(const Class *class, ...) {
 
 	initialize(class);
 
 	id obj = calloc(1, class->size);
 	if (obj) {
+
+		((struct Object *) obj)->class = class;
 
 		va_list args;
 		va_start(args, class);
@@ -65,36 +72,38 @@ id new(Class *class, ...) {
 	return obj;
 }
 
-id cast(Class *class, const id obj) {
+id cast(const Class *class, const id obj) {
 
 	initialize(class);
 
 	if (obj) {
+
 		struct Object *object = (struct Object *) obj;
 		if (object->class) {
-			assert(object->isKindOfClass(object, class));
+
+			const Class *c = object->class;
+			while (c) {
+
+				assert(c->magic == CLASS_MAGIC);
+
+				if (c == class) {
+					break;
+				}
+
+				c = *c->superclass;
+			}
+			assert(c);
 		}
 	}
 
 	return (id) obj;
 }
 
-id archetype(Class *class) {
+id archetype(const Class *class) {
 
 	initialize(class);
 
 	return class->archetype;
-}
-
-id $(id obj, id selector, ...) {
-
-	id ret = NULL;
-
-	if (obj) {
-		Class *c = (Object *) obj;
-	}
-
-	return ret;
 }
 
 void delete(id obj) {

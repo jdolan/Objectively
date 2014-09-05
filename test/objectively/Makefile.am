@@ -1,27 +1,29 @@
+AUTOMAKE_OPTIONS = nostdinc
+
 TEST_CFLAGS = \
-	-I ../../src \
+	-I$(includedir) \
 	@CHECK_CFLAGS@
 	
 TEST_LDADD = \
 	@CHECK_LIBS@ \
-	../../src/objectively/.libs/libobjectively.la
+	-L$(libdir) -lobjectively
 
 TESTS = \
-	animals \
-	shapes
+	object \
+	string
 
 noinst_PROGRAMS = $(TESTS)
 
-animals_SOURCES = \
-	animals.c
-animals_CFLAGS = \
+object_SOURCES = \
+	object.c
+object_CFLAGS = \
 	$(TEST_CFLAGS)
-animals_LDADD = \
+object_LDADD = \
 	$(TEST_LDADD)
 
-shapes_SOURCES = \
-	shapes.c
-shapes_CFLAGS = \
+string_SOURCES = \
+	string.c
+string_CFLAGS = \
 	$(TEST_CFLAGS)
-shapes_LDADD = \
+string_LDADD = \
 	$(TEST_LDADD)

@@ -21,89 +21,39 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#include <stdio.h>
-#include <string.h>
 #include <check.h>
 
 #include <objectively.h>
 
-/*
-Interface(Shape, Object)
-	void (*hello)(Shape *self);
-End
-
-Constructor(Shape);
-
-static void Shape_hello(Shape *self) {
-	printf("shape\n");
-}
-
-Implementation(Shape)
-
-	Initialize(Shape);
-
-	if (Object_init((Object *) self)) {
-		self->hello = Shape_hello;
-	}
-
-	return self;
-
-End
-
-Interface(Rectangle, Shape)
-End
-
-static void Rectangle_hello(Rectangle *self) {
-	printf(">rectangle\n");
-	Super(Shape, self, hello);
-}
-
-Implementation(Rectangle)
-
-	Initialize(Rectangle);
-
-	if (Shape_init((Shape *) self)) {
-		Override(Shape, self, hello, Rectangle_hello);
-	}
-
-	return self;
-
-End
-
-Interface(Square, Rectangle)
-End
-
-static void Square_hello(Square *self) {
-	printf(">>square\n");
-	Super(Shape, self, hello);
-}
-
-Implementation(Square)
-
-	Initialize(Square);
-
-	if (Rectangle_init((Rectangle *) self)) {
-		Override(Shape, self, hello, Square_hello);
-	}
-
-	return self;
-
-End*/
-
-START_TEST(shapes)
+START_TEST(object)
 	{
-		/*Square *square = New(Square);
-		((Shape *) square)->hello((Shape *) square);
-		Destroy(square);*/
+		struct Object *object = new(Object);
+
+		ck_assert(object);
+		ck_assert_ptr_eq(Object, object->class);
+
+		ck_assert($(object, isKindOfClass, Object));
+		ck_assert($(object, isEqual, object));
+
+		struct Object *copy = $(object, copy);
+
+		ck_assert(copy);
+		ck_assert_ptr_eq(Object, copy->class);
+
+		ck_assert($(copy, isKindOfClass, Object));
+		ck_assert(!$(copy, isEqual, object));
+
+		delete(copy);
+		delete(object);
 
 	}END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("shapes");
-	tcase_add_test(tcase, shapes);
+	TCase *tcase = tcase_create("object");
+	tcase_add_test(tcase, object);
 
-	Suite *suite = suite_create("shapes");
+	Suite *suite = suite_create("object");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);

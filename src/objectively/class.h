@@ -28,35 +28,113 @@
 
 #include <objectively/types.h>
 
-typedef struct _Class Class;
-struct _Class {
-	Class *superclass;
+#define CLASS_MAGIC 0xabcdef
 
-	const char *name;
-	size_t size;
+typedef struct Class Class;
 
-	id archetype;
+/*
+ * @brief The Class structure.
+ *
+ * @details Classes are the interface between the library functions
+ * <code>new</code>, <code>cast</code>, <code>delete</code>, et. al. and
+ * Objects. Each Class describes a type, and each instance of that type will
+ * reference the Class.
+ *
+ * To implement a type, define its instance structure and its Class
+ * descriptor:
+ *
+ * @code
+ *
+ * // foo.h
+ *
+ * struct Foo {
+ * 	   Object _;
+ *     // ...
+ * }
+ *
+ * extern const Class *Foo;
+ *
+ * // foo.c
+ *
+ * static id init(id self, va_list *args) {
+ *
+ *     self = super(Object, self, init, args);
+ *     if (self) {
+ *     	   Foo *this = cast(Foo, self);
+ *         // ...
+ *     }
+ *     return self;
+ * }
+ *
+ * static struct Foo foo;
+ *
+ * static struct Class class {
+ *     .name = "Foo",
+ *     .size = sizeof(struct Foo),
+ *     .superclass = &Object,
+ *     .archetype = &foo,
+ *     .init = init,
+ * };
+ *
+ * const Class *Foo = &class;
+ *
+ * @endcode
+ */
+struct Class {
 
 	/*
-	 * @brief An optional static initializer for the Class.
+	 * @brief The magic number identifying this structure as a class.
+	 *
+	 * @details Do not set this value; it is set by Objectively when your class
+	 * is first encountered to signify initialization.
+	 *
+	 * @private
+	 */
+	int magic;
+
+	/*
+	 * @brief The class name (required).
+	 */
+	const char *name;
+
+	/*
+	 * @brief The instance size (required).
+	 */
+	const size_t size;
+
+	/*
+	 * @brief The superclass (required). For custom base types, use
+	 * <code>Object</code>.
+	 */
+	const Class **superclass;
+
+	/*
+	 * @brief The statically allocated archetype instance (required).
+	 */
+	const id archetype;
+
+	/*
+	 * @brief The static initializer for the class (optional).
+	 *
+	 * @details This method is run once when your class is initialized.
 	 */
 	void (*initialize)(void);
-	BOOL initialized;
 
 	/*
 	 * @brief The constructor.
+	 *
+	 * @param self The newly allocated instance.
+	 * @param args The constructor arguments (optional).
 	 */
 	id (*init)(id self, va_list *args);
 };
 
-extern id new(Class *class, ...);
+extern id new(const Class *class, ...);
 
-extern id cast(Class *class, const id obj);
+extern id cast(const Class *class, const id obj);
 
-extern id archetype(Class *class);
+extern id archetype(const Class *class);
 
 extern void delete(id obj);
-
-extern id $(id obj, id selector, ...);
 
 #endif
