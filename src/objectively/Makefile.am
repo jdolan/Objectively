@@ -1,6 +1,7 @@
 AUTOMAKE_OPTIONS = nostdinc
 
 pkginclude_HEADERS = \
+	array.h \
 	class.h \
 	object.h \
 	string.h \
@@ -10,6 +11,7 @@ lib_LTLIBRARIES = \
 	libobjectively.la
 
 libobjectively_la_SOURCES = \
+	array.c \
 	class.c \
 	object.c \
 	string.c

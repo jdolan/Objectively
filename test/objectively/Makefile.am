@@ -9,11 +9,19 @@ TEST_LDADD = \
 	-L$(libdir) -lobjectively
 
 TESTS = \
+	array \
 	object \
 	string
 
 check_PROGRAMS = $(TESTS)
 
+array_SOURCES = \
+	array.c
+array_CFLAGS = \
+	$(TEST_CFLAGS)
+array_LDADD = \
+	$(TEST_LDADD)
+	
 object_SOURCES = \
 	object.c
 object_CFLAGS = \

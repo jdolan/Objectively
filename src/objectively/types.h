@@ -25,6 +25,7 @@
 #define _objectively_types_h_
 
 #include <stddef.h>
+#include <stdint.h>
 
 typedef void *id;
 

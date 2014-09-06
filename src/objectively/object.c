@@ -53,8 +53,8 @@ static void dealloc(Object *self) {
 
 static id init(id obj, va_list *args) {
 
-	if (obj) {
-		Object *self = cast(Object, obj);
+	Object *self = cast(Object, obj);
+	if (self) {
 
 		self->init = init;
 		self->copy = copy;
@@ -63,10 +63,9 @@ static id init(id obj, va_list *args) {
 		self->isEqual = isEqual;
 
 		self->dealloc = dealloc;
-		return self;
 	}
 
-	return NULL;
+	return self;
 }
 
 static Object object;

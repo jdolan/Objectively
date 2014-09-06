@@ -32,7 +32,7 @@
 
 static Object *copy(const Object *self) {
 
-	return new(String, ((String *) self)->str);
+	return new(String, ((String * ) self)->str);
 }
 
 static void dealloc(Object *self) {
@@ -48,10 +48,10 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		return YES;
 	}
 
-	if (other && $(other, isKindOfClass, __String)) {
+	if (other && other->class == __String) {
 
-		const String *this = cast(String, self);
-		const String *that = cast(String, other);
+		const String *this = (String *) self;
+		const String *that = (String *) other;
 
 		RANGE range = { 0, this->len };
 		return $(this, compareTo, that, range) == 0;
@@ -182,7 +182,7 @@ static id init(id obj, va_list *args) {
 
 static String string;
 
-static struct Class class = {
+static Class class = {
 	.name = "String",
 	.size = sizeof(String),
 	.superclass = &__Object,
