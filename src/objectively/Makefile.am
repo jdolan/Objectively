@@ -2,7 +2,6 @@ AUTOMAKE_OPTIONS = nostdinc
 
 pkginclude_HEADERS = \
 	class.h \
-	macros.h \
 	object.h \
 	string.h \
 	types.h

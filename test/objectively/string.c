@@ -27,10 +27,10 @@
 
 START_TEST(string)
 	{
-		struct String *string = new(String, "hello");
+		String *string = new(String, "hello");
 
 		ck_assert(string);
-		ck_assert_ptr_eq(String, ((struct Object *) string)->class);
+		ck_assert_ptr_eq(__String, classof(string));
 
 		ck_assert_str_eq("hello", string->str);
 
@@ -40,14 +40,14 @@ START_TEST(string)
 		$(string, appendString, string);
 		ck_assert_str_eq("hello world!hello world!", string->str);
 
-		struct String *prefix = new(String, "hello");
+		String *prefix = new(String, "hello");
 		ck_assert($(string, hasPrefix, prefix));
 
-		struct String *suffix = new(String, "world!");
+		String *suffix = new(String, "world!");
 		ck_assert($(string, hasSuffix, suffix));
 
 		RANGE range = { 6, 11 };
-		struct String *substring = $(string, substring, range);
+		String *substring = $(string, substring, range);
 		ck_assert_str_eq("world!hello", substring->str);
 
 		delete(substring);

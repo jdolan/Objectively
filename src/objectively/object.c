@@ -26,18 +26,13 @@
 
 #include <objectively/object.h>
 
-static id copy(const id self) {
-
-	const struct Object *this = cast(Object, self);
-
-	return memcpy(calloc(1, this->class->size), self, this->class->size);
+static Object *copy(const Object *self) {
+	return memcpy(calloc(1, self->class->size), self, self->class->size);
 }
 
-static BOOL isKindOfClass(const id self, const Class *class) {
+static BOOL isKindOfClass(const Object *self, const Class *class) {
 
-	const struct Object *this = cast(Object, self);
-
-	const Class *c = this->class;
+	const Class *c = self->class;
 	while (c) {
 		if (c == class) {
 			return YES;
@@ -48,38 +43,39 @@ static BOOL isKindOfClass(const id self, const Class *class) {
 	return NO;
 }
 
-static BOOL isEqual(const id self, const id other) {
+static BOOL isEqual(const Object *self, const Object *other) {
 	return self == other;
 }
 
-static void dealloc(id self) {
+static void dealloc(Object *self) {
 	free(self);
 }
 
-static id init(id self, va_list *args) {
+static id init(id obj, va_list *args) {
 
-	struct Object *this = cast(Object, self);
-	if (this) {
+	if (obj) {
+		Object *self = cast(Object, obj);
 
-		this->init = init;
-		this->copy = copy;
+		self->init = init;
+		self->copy = copy;
 
-		this->isKindOfClass = isKindOfClass;
-		this->isEqual = isEqual;
+		self->isKindOfClass = isKindOfClass;
+		self->isEqual = isEqual;
 
-		this->dealloc = dealloc;
+		self->dealloc = dealloc;
+		return self;
 	}
 
-	return this;
+	return NULL;
 }
 
-static struct Object object;
+static Object object;
 
 static Class class = {
 	.name = "Object",
-	.size = sizeof(struct Object),
+	.size = sizeof(Object),
 	.archetype = &object,
 	.init = init,
 };
 
-const Class *Object = &class;
+const Class *__Object = &class;

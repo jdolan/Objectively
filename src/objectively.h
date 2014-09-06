@@ -25,7 +25,6 @@
 #define _objectively_h_
 
 #include <objectively/class.h>
-#include <objectively/macros.h>
 #include <objectively/object.h>
 #include <objectively/string.h>
 #include <objectively/types.h>

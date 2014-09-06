@@ -26,11 +26,17 @@
 
 #include <objectively/object.h>
 
+typedef struct _String String;
+
 /*
  * @brief A mutable string implementation.
  */
-struct String {
-	struct Object object;
+struct _String {
+
+	/*
+	 * @brief The parent.
+	 */
+	Object object;
 
 	/*
 	 * @brief The backing character array.
@@ -45,34 +51,59 @@ struct String {
 	/*
 	 * @brief Appends the specified formatted string.
 	 *
+	 * @param fmt The format sequence.
+	 *
 	 * @return The resulting String.
 	 */
-	id (*appendFormat)(id self, const char *fmt, ...);
+	String *(*appendFormat)(String *self, const char *fmt, ...);
 
 	/*
 	 * @brief Appends the specified String.
 	 *
+	 * @param other The String to append.
+	 *
 	 * @return The resulting String.
 	 */
-	id (*appendString)(id self, const id other);
+	String *(*appendString)(String *self, const String *other);
 
 	/*
-	 * @brief Compares this object to other.
+	 * @brief Compares this String lexicographically to another.
+	 *
+	 * @param other The String to compare to.
+	 * @param range The character range to compare.
 	 *
 	 * @return Greater than, equal to, or less than zero.
 	 */
-	int (*compareTo)(const id self, const id other, RANGE range);
+	int (*compareTo)(const String *self, const String *other, RANGE range);
 
 	/*
+	 * @brief Checks this String for the given prefix.
 	 *
+	 * @param prefix The Prefix to check.
+	 *
+	 * @return YES if this String starts with prefix, NO otherwise.
 	 */
-	BOOL (*hasPrefix)(const id self, const id prefix);
+	BOOL (*hasPrefix)(const String *self, const String *prefix);
 
-	BOOL (*hasSuffix)(const id self, const id suffix);
+	/*
+	 * @brief Checks this String for the given suffix.
+	 *
+	 * @param suffix The suffix to check.
+	 *
+	 * @return YES if this String ends with suffix, NO otherwise.
+	 */
+	BOOL (*hasSuffix)(const String *self, const String *suffix);
 
-	id (*substring)(const id self, RANGE range);
+	/*
+	 * @brief Creates a new String from a subset of this one.
+	 *
+	 * @param range The character range.
+	 *
+	 * @return The new String.
+	 */
+	String *(*substring)(const String *self, RANGE range);
 };
 
-extern const Class *String;
+extern const Class *__String;
 
 #endif

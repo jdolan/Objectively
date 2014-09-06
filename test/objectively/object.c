@@ -27,20 +27,20 @@
 
 START_TEST(object)
 	{
-		struct Object *object = new(Object);
+		Object *object = new(Object);
 
 		ck_assert(object);
-		ck_assert_ptr_eq(Object, object->class);
+		ck_assert_ptr_eq(__Object, classof(object));
 
-		ck_assert($(object, isKindOfClass, Object));
+		ck_assert($(object, isKindOfClass, __Object));
 		ck_assert($(object, isEqual, object));
 
-		struct Object *copy = $(object, copy);
+		Object *copy = $(object, copy);
 
 		ck_assert(copy);
-		ck_assert_ptr_eq(Object, copy->class);
+		ck_assert_ptr_eq(__Object, classof(object));
 
-		ck_assert($(copy, isKindOfClass, Object));
+		ck_assert($(copy, isKindOfClass, __Object));
 		ck_assert(!$(copy, isEqual, object));
 
 		delete(copy);

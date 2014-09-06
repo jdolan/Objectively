@@ -26,42 +26,43 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <objectively/macros.h>
 #include <objectively/string.h>
 
 #pragma mark - Object
 
-static id copy(const id self) {
+static Object *copy(const Object *self) {
 
-	struct String *this = cast(String, self);
-
-	return new(String, this->str);
+	return new(String, ((String *) self)->str);
 }
 
-static void dealloc(id self) {
+static void dealloc(Object *self) {
 
-	struct String *this = cast(String, self);
-
-	free(this->str);
+	free(((String *) self)->str);
 
 	super(Object, self, dealloc);
 }
 
-static BOOL isEqual(const id self, const id other) {
+static BOOL isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
 		return YES;
 	}
 
-	struct String *this = cast(String, self);
+	if (other && $(other, isKindOfClass, __String)) {
 
-	RANGE range = { 0, this->len };
-	return $(this, compareTo, other, range) == 0;
+		const String *this = cast(String, self);
+		const String *that = cast(String, other);
+
+		RANGE range = { 0, this->len };
+		return $(this, compareTo, that, range) == 0;
+	}
+
+	return NO;
 }
 
 #pragma mark - String
 
-static id appendFormat(id self, const char *fmt, ...) {
+static String *appendFormat(String *self, const char *fmt, ...) {
 
 	va_list args;
 	va_start(args, fmt);
@@ -72,92 +73,77 @@ static id appendFormat(id self, const char *fmt, ...) {
 	va_end(args);
 
 	if (str) {
-		struct String *this = cast(String, self);
-		struct String *that = new(String, NULL);
+		String *string = new(String, NULL);
 
-		that->str = str;
-		that->len = strlen(that->str);
+		string->str = str;
+		string->len = strlen(string->str);
 
-		$(this, appendString, that);
+		$(self, appendString, string);
 
-		delete(that);
+		delete(string);
 	}
 
 	return self;
 }
 
-static id appendString(id self, const id other) {
+static String *appendString(String *self, const String *other) {
 
-	struct String *this = cast(String, self);
-	struct String *that = cast(String, other);
+	if (other->len) {
+		if (self->len) {
+			const size_t size = self->len + other->len + 1;
+			self->str = realloc(self->str, size);
+			assert(self->str);
 
-	if (that->len) {
-		if (this->len) {
-			const size_t size = this->len + that->len + 1;
-			this->str = realloc(this->str, size);
-			assert(this->str);
-
-			strlcat(this->str, that->str, size);
+			strlcat(self->str, other->str, size);
 		} else {
-			this->str = strdup(that->str);
+			self->str = strdup(other->str);
 		}
 
-		this->len = strlen(this->str);
+		self->len = strlen(self->str);
 	}
 
 	return self;
 }
 
-static int compareTo(const id self, const id other, RANGE range) {
+static int compareTo(const String *self, const String *other, RANGE range) {
 
-	struct String *this = cast(String, self);
-	struct String *that = cast(String, other);
+	assert(range.offset + range.length <= self->len);
 
-	assert(range.offset + range.length <= this->len);
-
-	if (that) {
-		return strncmp(this->str + range.offset, that->str, range.length);
+	if (other) {
+		return strncmp(self->str + range.offset, other->str, range.length);
 	}
 
 	return -1;
 }
 
-static BOOL hasPrefix(const id self, const id prefix) {
+static BOOL hasPrefix(const String *self, const String *prefix) {
 
-	struct String *this = cast(String, self);
-	struct String *that = cast(String, prefix);
-
-	if (that->len > this->len) {
+	if (prefix->len > self->len) {
 		return NO;
 	}
 
-	RANGE range = { 0, strlen(prefix) };
-	return $(this, compareTo, that, range) == 0;
+	RANGE range = { 0, prefix->len };
+	return $(self, compareTo, prefix, range) == 0;
 }
 
-static BOOL hasSuffix(const id self, const id suffix) {
+static BOOL hasSuffix(const String *self, const String *suffix) {
 
-	struct String *this = cast(String, self);
-	struct String *that = cast(String, suffix);
-
-	if (that->len > this->len) {
+	if (suffix->len > self->len) {
 		return NO;
 	}
 
-	RANGE range = { this->len - that->len, that->len };
-	return $(this, compareTo, that, range) == 0;
+	RANGE range = { self->len - suffix->len, suffix->len };
+	return $(self, compareTo, suffix, range) == 0;
 }
 
-static id substring(const id self, RANGE range) {
+static String *substring(const String *self, RANGE range) {
 
-	struct String *this = cast(String, self);
-
-	assert(range.offset + range.length <= this->len);
+	assert(range.offset + range.length <= self->len);
 
 	char *str = malloc(range.length + 1);
-	strlcpy(str, this->str + range.offset, range.length + 1);
+	strlcpy(str, self->str + range.offset, range.length + 1);
 
-	struct String *substring = new(String, NULL);
+	String *substring = new(String, NULL);
 
 	substring->str = str;
 	substring->len = strlen(str);
@@ -167,9 +153,9 @@ static id substring(const id self, RANGE range) {
 
 #pragma mark - Initializer
 
-static id init(id self, va_list *args) {
+static id init(id obj, va_list *args) {
 
-	self = super(Object, self, init, args);
+	String *self = (String *) super(Object, obj, init, args);
 	if (self) {
 
 		override(Object, self, copy, copy);
@@ -177,32 +163,30 @@ static id init(id self, va_list *args) {
 		override(Object, self, isEqual, isEqual);
 		override(Object, self, init, init);
 
-		struct String *this = cast(String, self);
-
-		this->appendFormat = appendFormat;
-		this->appendString = appendString;
-		this->compareTo = compareTo;
-		this->hasPrefix = hasPrefix;
-		this->hasSuffix = hasSuffix;
-		this->substring = substring;
+		self->appendFormat = appendFormat;
+		self->appendString = appendString;
+		self->compareTo = compareTo;
+		self->hasPrefix = hasPrefix;
+		self->hasSuffix = hasSuffix;
+		self->substring = substring;
 
 		const char *fmt = arg(args, const char *, NULL);
 		if (fmt) {
-			vasprintf(&this->str, fmt, *args);
-			this->len = strlen(this->str);
+			vasprintf(&self->str, fmt, *args);
+			self->len = strlen(self->str);
 		}
 	}
 
 	return self;
 }
 
-static struct String string;
+static String string;
 
 static struct Class class = {
 	.name = "String",
-	.size = sizeof(struct String),
-	.superclass = &Object,
+	.size = sizeof(String),
+	.superclass = &__Object,
 	.archetype = &string,
 	.init = init, };
 
-const Class *String = &class;
+const Class *__String = &class;

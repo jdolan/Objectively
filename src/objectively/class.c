@@ -26,9 +26,11 @@
 #include <stdlib.h>
 
 #include <objectively/class.h>
-#include <objectively/macros.h>
 #include <objectively/object.h>
 
+/*
+ * @brief Initializes the class by setting up its magic and archetype.
+ */
 static void initialize(const Class *class) {
 
 	assert(class);
@@ -38,7 +40,13 @@ static void initialize(const Class *class) {
 
 		assert(class->name);
 		assert(class->size);
-		assert(class == Object ? class->superclass == NULL : class->superclass != NULL);
+
+		if (class == __Object) {
+			assert(class->superclass == NULL);
+		} else {
+			assert(class->superclass != NULL);
+		}
+
 		assert(class->archetype);
 		assert(class->init);
 
@@ -52,14 +60,14 @@ static void initialize(const Class *class) {
 	}
 }
 
-id new(const Class *class, ...) {
+id __new(const Class *class, ...) {
 
 	initialize(class);
 
 	id obj = calloc(1, class->size);
 	if (obj) {
 
-		((struct Object *) obj)->class = class;
+		((Object *) obj)->class = class;
 
 		va_list args;
 		va_start(args, class);
@@ -72,13 +80,13 @@ id new(const Class *class, ...) {
 	return obj;
 }
 
-id cast(const Class *class, const id obj) {
+id __cast(const Class *class, const id obj) {
 
 	initialize(class);
 
 	if (obj) {
 
-		struct Object *object = (struct Object *) obj;
+		Object *object = (Object *) obj;
 		if (object->class) {
 
 			const Class *c = object->class;
@@ -86,7 +94,9 @@ id cast(const Class *class, const id obj) {
 
 				assert(c->magic == CLASS_MAGIC);
 
-				if (c == class) {
+				// as a special case, we optimize for __Object
+
+				if (c == class || class == __Object) {
 					break;
 				}
 
@@ -99,17 +109,28 @@ id cast(const Class *class, const id obj) {
 	return (id) obj;
 }
 
-id archetype(const Class *class) {
+void delete(id obj) {
+
+	if (obj) {
+		Object *object = cast(Object, obj);
+		object->dealloc(object);
+	}
+}
+
+const Class *classof(const id obj) {
+
+	const Object *object = cast(Object, obj);
+
+	if (object) {
+		return object->class;
+	}
+
+	return NULL;
+}
+
+const id archetypeof(const Class *class) {
 
 	initialize(class);
 
 	return class->archetype;
-}
-
-void delete(id obj) {
-
-	if (obj) {
-		struct Object *object = cast(Object, obj);
-		object->dealloc(object);
-	}
 }

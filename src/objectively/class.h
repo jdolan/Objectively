@@ -123,20 +123,59 @@ struct Class {
 	void (*initialize)(void);
 
 	/*
-	 * @brief The constructor.
+	 * @brief The instance initializer.
 	 *
-	 * @param self The newly allocated instance.
+	 * @param obj The newly allocated instance.
 	 * @param args The constructor arguments (optional).
 	 */
-	id (*init)(id self, va_list *args);
+	id (*init)(id obj, va_list *args);
 };
 
-extern id new(const Class *class, ...);
+extern id __new(const Class *class, ...);
 
-extern id cast(const Class *class, const id obj);
-
-extern id archetype(const Class *class);
+extern id __cast(const Class *class, const id obj);
 
 extern void delete(id obj);
+
+extern const Class *classof(const id obj);
+
+extern const id archetypeof(const Class *class);
+
+/*
+ * @brief Instantiate a type.
+ */
+#define new(type, ...) \
+	__new(__##type, ## __VA_ARGS__)
+
+/*
+ * @brief Safely cast to a type.
+ */
+#define cast(type, instance) \
+	__cast(__##type, (const id) instance)
+
+/*
+ * @brief Call a method.
+ */
+#define $(instance, method, ...) \
+	instance->method(instance, ## __VA_ARGS__)
+
+/*
+ * @brief Take a constructor parameter.
+ */
+#define arg(args, type, def) \
+	(args ? va_arg(*args, type) : def)
+
+/*
+ * @brief Override a supertype method in your type.
+ */
+#define override(type, instance, method, implementation) \
+	((type *) instance)->method = implementation;
+
+/*
+ * @brief Invoke a supertype method on an instance of your type.
+ */
+#define super(type, instance, method, ...) \
+	((type *) archetypeof(__##type))->method((type *) instance, ## __VA_ARGS__)
+
 
 #endif

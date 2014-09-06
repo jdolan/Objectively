@@ -12,7 +12,7 @@ TESTS = \
 	object \
 	string
 
-noinst_PROGRAMS = $(TESTS)
+check_PROGRAMS = $(TESTS)
 
 object_SOURCES = \
 	object.c
