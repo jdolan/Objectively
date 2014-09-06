@@ -4,84 +4,74 @@ Ultra-lightweight object oriented framework for the c programming language. Zlib
 
 Adding Objectively to your project
 ---
-Copy `objectively.c` and `objectively.h` to your project and include them in your build target.
+1. Do the Autotools dance (`./configure; make && make install`).
+2. Include the main header file in your source (`#include <objectively.h>`).
+3. Compile and link with Objectively (`pkg-config --cflags --libs objectively`).
 
 Declaring a type
 ---
 ```c
-/* animal.h */
+/* foo.h */
 
-#include "objectively.h"
+#include <objectively.h>
 
-Interface(Animal, Object)
-	char *genus;
-	char *species;
+struct Foo {
+    Object object;
+    int bar;
+    void (*baz)(const id self);
+    // ...
+}
 
-	char *(*scientificName)(Animal *self);
-End
-
-Constructor(Animal, const char *genus, const char *species);
+extern const Class *Foo;
 ```
 
 Implementing a type:
 ---
 ```c
-/* animal.c */
 
-#include "animal.h"
+/* foo.c */
 
-static void Animal_dealloc(Animal *self) {
+#include "foo.h"
 
-	free(self->genus);
-	free(self->species);
-
-	Super(Object, self, dealloc)
+static void baz(const id self) {
+    const struct Foo *this = cast(Foo, self);
+    printf("%d\n", this->bar);
 }
 
-static char *Animal_scientificName(Animal *self) {
+static id init(id self, va_list *args) {
 
-	char *name = NULL;
-
-	if (self->genus && self->species) {
-		name = malloc(strlen(self->genus) + strlen(self->species) + 1);
-		sprintf(name, "%s %s", self->genus, self->species);
-	}
-
-	return name;
+    self = super(Object, self, init, args);
+    if (self) {
+        override(Object, self, init, init);
+        
+    	struct Foo *this = cast(Foo, self);
+    	
+    	this->bar = 0x69;
+        this->baz = baz;
+    }
+    return self;
 }
 
-Implementation(Animal, const char *genus, const char *species)
-	Initialize(Animal, NULL, NULL);
+static struct Foo foo;
 
-	if (Object_init((Object *) self)) {
-		if (genus) {
-			self->genus = strdup(genus);
-		}
-		if (species) {
-			self->species = strdup(species);
-		}
+static struct Class class {
+    .name = "Foo",
+    .size = sizeof(struct Foo),
+    .superclass = &Object,
+    .archetype = &foo,
+    .init = init,
+};
 
-		Override(Object, self, dealloc, Animal_dealloc);
-		self->scientificName = Animal_scientificName;
-	}
+const Class *Foo = &class;
 
-	return self;
-End
 ```
 
 Using a type:
 ---
 ```c
-	Animal *lion = New(Animal, "Panthera", "leo");
-
-	printf("%s\n", lion->genus);
-	printf("%s\n", lion->species);
-	
-	char *name = lion->scientificName(lion);
-	printf("%s\n", name);
-	free(name);
-
-	Destroy(lion);
+	struct Foo *foo = new(Foo);
+	$(foo, baz);
+	delete(foo);
 ```
 
 Archetypes
