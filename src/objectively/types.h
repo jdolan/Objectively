@@ -27,14 +27,31 @@
 #include <stddef.h>
 #include <stdint.h>
 
+/**
+ * @brief The id type from Objective-C.
+ */
 typedef void *id;
 
+/**
+ * @brief The boolean type from Objective-C.
+ */
 typedef enum {
 	NO, YES
 } BOOL;
 
+/**
+ * @brief An offset and length into contiguous collections.
+ */
 typedef struct {
+
+	/**
+	 * @brief The offset.
+	 */
 	unsigned offset;
+
+	/**
+	 * @brief The length.
+	 */
 	unsigned length;
 } RANGE;
 

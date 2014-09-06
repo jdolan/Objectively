@@ -26,61 +26,64 @@
 
 #include <objectively/object.h>
 
-typedef struct _Array Array;
+typedef struct Array Array;
 
-/*
+/**
  * @brief A mutable array implementation.
  */
-struct _Array {
+struct Array {
 
-	/*
+	/**
 	 * @brief The parent.
 	 */
 	Object object;
 
-	/*
+	/**
 	 * @brief The Array elements.
 	 *
 	 * @private
 	 */
 	id *elements;
 
-	/*
+	/**
 	 * @brief The count of elements.
 	 */
 	size_t count;
 
-	/*
+	/**
 	 * @brief The Array capacity.
 	 */
 	size_t capacity;
 
-	/*
+	/**
 	 * @brief Adds the specified Object to this Array.
 	 */
 	void (*addObject)(Array *self, const id obj);
 
-	/*
+	/**
 	 * @return YES if this Array contains the given Object, NO otherwise.
 	 */
 	BOOL (*containsObject)(const Array *self, const id obj);
 
-	/*
+	/**
 	 * @return The index of the given Object, or -1 if not found.
 	 */
 	int (*indexOfObject)(const Array *self, const id obj);
 
-	/*
+	/**
 	 * @brief Removes the specified Object from this Array.
 	 */
 	void (*removeObject)(Array *self, const id obj);
 
-	/*
-	 *
+	/**
+	 * @brief Removes all Objects from this Array.
 	 */
 	void (*removeAllObjects)(Array *self);
 };
 
+/**
+ * @brief The Array Class.
+ */
 extern const Class *__Array;
 
 #endif

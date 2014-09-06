@@ -6,82 +6,76 @@ Adding Objectively to your project
 ---
 
 1) Do the Autotools dance.
-```shell
-./configure; make; sudo make install
-```
+
+    ./configure; make; sudo make install
+
 2) Include the main header file in your source.
-```c
-#include <objectively.h>
-```
+
+    #include <objectively.h>
+
 3) Compile and link with Objectively.
-```shell
-gcc `pkg-config --cflags --libs objectively` -o foo *.c
-```
+
+    gcc `pkg-config --cflags --libs objectively` -o foo *.c
 
 Declaring a type
 ---
-```c
-/* foo.h */
 
-#include <objectively.h>
+    /* foo.h */
 
-typedef struct Foo {
-    Object object;
-    void (*bar)(const Foo *self);
-    const char *baz;
-    // ...
-} Foo;
+    #include <objectively.h>
 
-extern const Class *__Foo;
-```
+    typedef struct Foo {
+        Object object;
+        void (*bar)(const Foo *self);
+        const char *baz;
+        // ...
+    } Foo;
+
+    extern const Class *__Foo;
 
 Implementing a type
 ---
-```c
 
-/* foo.c */
+    /* foo.c */
 
-#include "foo.h"
+    #include "foo.h"
 
-static void bar(const Foo *self) {
-    printf("%s\n", self->bar);
-}
-
-static id init(id obj, va_list *args) {
-
-    Foo *self = (Foo *) super(Object, obj, init, args);
-    if (self) {
-        override(Object, self, init, init);
-        
-    	self->bar = bar;
-        self->baz = arg(args, const char *, NULL);
+    static void bar(const Foo *self) {
+        printf("%s\n", self->bar);
     }
-    return self;
-}
 
-/* class initialization boilerplate */
+    static id init(id obj, va_list *args) {
 
-static Foo foo;
+        Foo *self = (Foo *) super(Object, obj, init, args);
+        if (self) {
+            override(Object, self, init, init);
 
-static struct Class class {
-    .name = "Foo",
-    .size = sizeof(Foo),
-    .superclass = &__Object,
-    .archetype = &foo,
-    .init = init,
-};
+            self->bar = bar;
+            self->baz = arg(args, const char *, NULL);
+        }
+        return self;
+    }
 
-const Class *__Foo = &class;
+    /* class initialization boilerplate */
 
-```
+    static Foo foo;
+
+    static struct Class class {
+        .name = "Foo",
+        .size = sizeof(Foo),
+        .superclass = &__Object,
+        .archetype = &foo,
+        .init = init,
+    };
+
+    const Class *__Foo = &class;
 
 Using a type
 ---
-```c
-	Foo *foo = new(Foo, "hello world!");
+
+    Foo *foo = new(Foo, "hello world!");
 	$(foo, bar);
 	delete(foo);
-```
 
 Initialization
 ---
@@ -95,34 +89,28 @@ Invoking a method
 ---
 To invoke a method, call the function pointer or use the `$` macro.
 
-```c
 	self->isEqual(self, other);
-	
+
 	/* or */
-	
+
 	$(self, isEqual, other);
-```
 
 Overriding a method
 ---
 To override a method, simply overwrite the function pointer or use the `override` macro. Overrides are typically installed in the initializer method.
 
-```c
 	((Object *) self)->dealloc = dealloc;
 
 	/* or */
 
 	override(Object, self, dealloc, dealloc);
-```
 
 Calling super
 ---
 To invoke a supertype's method implementation, either directly invoke the desired archetype implementation or use the `super` macro.
 
-```c
 	((Object *) archetype(__Object))->dealloc(self);
-	
+
 	/* or */
 
 	super(Object, self, dealloc);
-```

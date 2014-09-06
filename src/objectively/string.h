@@ -26,29 +26,29 @@
 
 #include <objectively/object.h>
 
-typedef struct _String String;
+typedef struct String String;
 
-/*
+/**
  * @brief A mutable string implementation.
  */
-struct _String {
+struct String {
 
-	/*
+	/**
 	 * @brief The parent.
 	 */
 	Object object;
 
-	/*
+	/**
 	 * @brief The backing character array.
 	 */
 	char *str;
 
-	/*
+	/**
 	 * @brief The backing character array length.
 	 */
 	size_t len;
 
-	/*
+	/**
 	 * @brief Appends the specified formatted string.
 	 *
 	 * @param fmt The format sequence.
@@ -57,7 +57,7 @@ struct _String {
 	 */
 	String *(*appendFormat)(String *self, const char *fmt, ...);
 
-	/*
+	/**
 	 * @brief Appends the specified String.
 	 *
 	 * @param other The String to append.
@@ -66,7 +66,7 @@ struct _String {
 	 */
 	String *(*appendString)(String *self, const String *other);
 
-	/*
+	/**
 	 * @brief Compares this String lexicographically to another.
 	 *
 	 * @param other The String to compare to.
@@ -76,7 +76,7 @@ struct _String {
 	 */
 	int (*compareTo)(const String *self, const String *other, RANGE range);
 
-	/*
+	/**
 	 * @brief Checks this String for the given prefix.
 	 *
 	 * @param prefix The Prefix to check.
@@ -85,7 +85,7 @@ struct _String {
 	 */
 	BOOL (*hasPrefix)(const String *self, const String *prefix);
 
-	/*
+	/**
 	 * @brief Checks this String for the given suffix.
 	 *
 	 * @param suffix The suffix to check.
@@ -94,7 +94,7 @@ struct _String {
 	 */
 	BOOL (*hasSuffix)(const String *self, const String *suffix);
 
-	/*
+	/**
 	 * @brief Creates a new String from a subset of this one.
 	 *
 	 * @param range The character range.
@@ -104,6 +104,9 @@ struct _String {
 	String *(*substring)(const String *self, RANGE range);
 };
 
+/**
+ * @brief The String Class.
+ */
 extern const Class *__String;
 
 #endif

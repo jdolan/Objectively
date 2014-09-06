@@ -27,20 +27,20 @@
 #include <objectively/class.h>
 #include <objectively/types.h>
 
-typedef struct _Object Object;
+typedef struct Object Object;
 
-/*
+/**
  * @brief Object is the root instance type. Every subclass of Object must
  * declare a structure that begins with a `struct Object`.
  */
-struct _Object {
+struct Object {
 
-	/*
+	/**
 	 * @brief Every instance of Object begins with a pointer to its Class.
 	 */
 	const Class *class;
 
-	/*
+	/**
 	 * @brief Creates a shallow copy of this Object.
 	 *
 	 * @param self The instance.
@@ -49,26 +49,26 @@ struct _Object {
 	 */
 	Object *(*copy)(const Object *self);
 
-	/*
+	/**
 	 * @brief Frees all resources held by this Object.
 	 */
 	void (*dealloc)(Object *self);
 
-	/*
+	/**
 	 * @brief Tests equality of the other Object.
 	 *
 	 * @return YES if other is deemed equal, NO otherwise.
 	 */
 	BOOL (*isEqual)(const Object *self, const Object *other);
 
-	/*
+	/**
 	 * @brief Tests for class hierarchy membership.
 	 *
 	 * @return YES if this instance belongs to class' hierarchy, NO otherwise.
 	 */
 	BOOL (*isKindOfClass)(const Object *self, const Class *class);
 
-	/*
+	/**
 	 * @brief The initializer is responsible for populating newly allocated
 	 * instances with valid state and behavior.
 	 *
