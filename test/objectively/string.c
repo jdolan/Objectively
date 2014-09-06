@@ -34,6 +34,25 @@ START_TEST(string)
 
 		ck_assert_str_eq("hello", string->str);
 
+		$(string, appendFormat, " %s", "world!");
+		ck_assert_str_eq("hello world!", string->str);
+
+		$(string, appendString, string);
+		ck_assert_str_eq("hello world!hello world!", string->str);
+
+		struct String *prefix = new(String, "hello");
+		ck_assert($(string, hasPrefix, prefix));
+
+		struct String *suffix = new(String, "world!");
+		ck_assert($(string, hasSuffix, suffix));
+
+		RANGE range = { 6, 11 };
+		struct String *substring = $(string, substring, range);
+		ck_assert_str_eq("world!hello", substring->str);
+
+		delete(substring);
+		delete(prefix);
+		delete(suffix);
 		delete(string);
 
 	}END_TEST

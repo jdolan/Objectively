@@ -27,16 +27,60 @@
 #include <objectively/class.h>
 #include <objectively/types.h>
 
+/*
+ * @brief Object is the root instance type. Every subclass of Object must
+ * declare a structure that begins with a `struct Object`.
+ */
 struct Object {
+
+	/*
+	 * @brief Every instance of Object begins with a pointer to its Class.
+	 */
 	const Class *class;
 
-	id (*init)(id self, va_list *args);
+	/*
+	 * @brief Creates a shallow copy of this Object.
+	 *
+	 * @param self The instance.
+	 *
+	 * @return The copy.
+	 */
 	id (*copy)(const id self);
 
-	BOOL (*isKindOfClass)(const id self, const Class *class);
+	/*
+	 * @brief Frees all resources held by this Object.
+	 */
+	void (*dealloc)(id self);
+
+	/*
+	 * @brief Tests equality of the other Object.
+	 *
+	 * @return YES if other is deemed equal, NO otherwise.
+	 */
 	BOOL (*isEqual)(const id self, const id other);
 
-	void (*dealloc)(id self);
+	/*
+	 * @brief Tests for class hierarchy membership.
+	 *
+	 * @return YES if this instance belongs to class' hierarchy, NO otherwise.
+	 */
+	BOOL (*isKindOfClass)(const id self, const Class *class);
+
+	/*
+	 * @brief The initializer is responsible for populating newly allocated
+	 * instances with valid state and behavior.
+	 *
+	 * @details This method typically begins with a call to the superclass
+	 * initializer, passing the arguments list up the initializer chain. Method
+	 * overrides as well as method and member assignment and initialization
+	 * then follow.
+	 *
+	 * @param self The newly allocated instance.
+	 * @param args The initializer arguments list.
+	 *
+	 * @return The initialized instance, typically self.
+	 */
+	id (*init)(id self, va_list *args);
 };
 
 extern const Class *Object;

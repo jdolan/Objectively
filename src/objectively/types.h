@@ -32,4 +32,9 @@ typedef enum {
 	NO, YES
 } BOOL;
 
+typedef struct {
+	unsigned offset;
+	unsigned length;
+} RANGE;
+
 #endif

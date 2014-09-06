@@ -26,11 +26,51 @@
 
 #include <objectively/object.h>
 
+/*
+ * @brief A mutable string implementation.
+ */
 struct String {
-	struct Object _;
+	struct Object object;
+
+	/*
+	 * @brief The backing character array.
+	 */
 	char *str;
 
-	id (*append)(id self, const char *fmt, ...);
+	/*
+	 * @brief The backing character array length.
+	 */
+	size_t len;
+
+	/*
+	 * @brief Appends the specified formatted string.
+	 *
+	 * @return The resulting String.
+	 */
+	id (*appendFormat)(id self, const char *fmt, ...);
+
+	/*
+	 * @brief Appends the specified String.
+	 *
+	 * @return The resulting String.
+	 */
+	id (*appendString)(id self, const id other);
+
+	/*
+	 * @brief Compares this object to other.
+	 *
+	 * @return Greater than, equal to, or less than zero.
+	 */
+	int (*compareTo)(const id self, const id other, RANGE range);
+
+	/*
+	 *
+	 */
+	BOOL (*hasPrefix)(const id self, const id prefix);
+
+	BOOL (*hasSuffix)(const id self, const id suffix);
+
+	id (*substring)(const id self, RANGE range);
 };
 
 extern const Class *String;

@@ -21,12 +21,22 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+#include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
 #include <objectively/macros.h>
 #include <objectively/string.h>
+
+#pragma mark - Object
+
+static id copy(const id self) {
+
+	struct String *this = cast(String, self);
+
+	return new(String, this->str);
+}
 
 static void dealloc(id self) {
 
@@ -37,7 +47,21 @@ static void dealloc(id self) {
 	super(Object, self, dealloc);
 }
 
-static id append(id self, const char *fmt, ...) {
+static BOOL isEqual(const id self, const id other) {
+
+	if (super(Object, self, isEqual, other)) {
+		return YES;
+	}
+
+	struct String *this = cast(String, self);
+
+	RANGE range = { 0, this->len };
+	return $(this, compareTo, other, range) == 0;
+}
+
+#pragma mark - String
+
+static id appendFormat(id self, const char *fmt, ...) {
 
 	va_list args;
 	va_start(args, fmt);
@@ -48,39 +72,125 @@ static id append(id self, const char *fmt, ...) {
 	va_end(args);
 
 	if (str) {
-
 		struct String *this = cast(String, self);
-		if (this->str) {
+		struct String *that = new(String, NULL);
 
-			const size_t len = strlen(this->str) + strlen(str);
-			this->str = realloc(this->str, len);
+		that->str = str;
+		that->len = strlen(that->str);
 
-			strlcat(this->str, str, len);
-			free(str);
-		} else {
-			this->str = str;
-		}
+		$(this, appendString, that);
+
+		delete(that);
 	}
 
 	return self;
 }
+
+static id appendString(id self, const id other) {
+
+	struct String *this = cast(String, self);
+	struct String *that = cast(String, other);
+
+	if (that->len) {
+		if (this->len) {
+			const size_t size = this->len + that->len + 1;
+			this->str = realloc(this->str, size);
+			assert(this->str);
+
+			strlcat(this->str, that->str, size);
+		} else {
+			this->str = strdup(that->str);
+		}
+
+		this->len = strlen(this->str);
+	}
+
+	return self;
+}
+
+static int compareTo(const id self, const id other, RANGE range) {
+
+	struct String *this = cast(String, self);
+	struct String *that = cast(String, other);
+
+	assert(range.offset + range.length <= this->len);
+
+	if (that) {
+		return strncmp(this->str + range.offset, that->str, range.length);
+	}
+
+	return -1;
+}
+
+static BOOL hasPrefix(const id self, const id prefix) {
+
+	struct String *this = cast(String, self);
+	struct String *that = cast(String, prefix);
+
+	if (that->len > this->len) {
+		return NO;
+	}
+
+	RANGE range = { 0, strlen(prefix) };
+	return $(this, compareTo, that, range) == 0;
+}
+
+static BOOL hasSuffix(const id self, const id suffix) {
+
+	struct String *this = cast(String, self);
+	struct String *that = cast(String, suffix);
+
+	if (that->len > this->len) {
+		return NO;
+	}
+
+	RANGE range = { this->len - that->len, that->len };
+	return $(this, compareTo, that, range) == 0;
+}
+
+static id substring(const id self, RANGE range) {
+
+	struct String *this = cast(String, self);
+
+	assert(range.offset + range.length <= this->len);
+
+	char *str = malloc(range.length + 1);
+	strlcpy(str, this->str + range.offset, range.length + 1);
+
+	struct String *substring = new(String, NULL);
+
+	substring->str = str;
+	substring->len = strlen(str);
+
+	return substring;
+}
+
+#pragma mark - Initializer
 
 static id init(id self, va_list *args) {
 
 	self = super(Object, self, init, args);
 	if (self) {
 
-		override(Object, self, init, init);
+		override(Object, self, copy, copy);
 		override(Object, self, dealloc, dealloc);
+		override(Object, self, isEqual, isEqual);
+		override(Object, self, init, init);
 
 		struct String *this = cast(String, self);
+
+		this->appendFormat = appendFormat;
+		this->appendString = appendString;
+		this->compareTo = compareTo;
+		this->hasPrefix = hasPrefix;
+		this->hasSuffix = hasSuffix;
+		this->substring = substring;
 
 		const char *fmt = arg(args, const char *, NULL);
 		if (fmt) {
 			vasprintf(&this->str, fmt, *args);
+			this->len = strlen(this->str);
 		}
-
-		this->append = append;
 	}
 
 	return self;
