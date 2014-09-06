@@ -15,17 +15,17 @@ Declaring a type
 
 #include <objectively.h>
 
-struct Foo {
+typedef struct Foo {
     Object object;
-    int bar;
-    void (*baz)(const id self);
+    void (*bar)(const Foo *self);
+    const char *baz;
     // ...
-}
+} Foo;
 
-extern const Class *Foo;
+extern const Class *__Foo;
 ```
 
-Implementing a type:
+Implementing a type
 ---
 ```c
 
@@ -33,77 +33,76 @@ Implementing a type:
 
 #include "foo.h"
 
-static void baz(const id self) {
-    const struct Foo *this = cast(Foo, self);
-    printf("%d\n", this->bar);
+static void bar(const Foo *self) {
+    printf("%s\n", self->bar);
 }
 
-static id init(id self, va_list *args) {
+static id init(id obj, va_list *args) {
 
-    self = super(Object, self, init, args);
+    Foo *self = (Foo *) super(Object, obj, init, args);
     if (self) {
         override(Object, self, init, init);
         
-    	struct Foo *this = cast(Foo, self);
-    	
-    	this->bar = 0x69;
-        this->baz = baz;
+    	self->bar = bar;
+        self->baz = arg(args, const char *, NULL);
     }
     return self;
 }
 
-static struct Foo foo;
+/* class initialization boilerplate */
+
+static Foo foo;
 
 static struct Class class {
     .name = "Foo",
-    .size = sizeof(struct Foo),
+    .size = sizeof(Foo),
     .superclass = &Object,
     .archetype = &foo,
     .init = init,
 };
 
-const Class *Foo = &class;
+const Class *__Foo = &class;
 
 ```
 
-Using a type:
+Using a type
 ---
 ```c
-	struct Foo *foo = new(Foo);
-	$(foo, baz);
+	Foo *foo = new(Foo, "hello world!");
+	$(foo, bar);
 	delete(foo);
 ```
 
 Initialization
 ---
-Types are initialized at compile time in Objectively, which means you rarely have to monkey with them at runtime. To instantiate a type, simply call `new` from anywhere in your program. The first time a type is instantiated, an optional `initialize` method is invoked. Use `initialize` for things like singletons and other shared resources.
+Classes are initialized at compile time in Objectively, which means you rarely have to monkey with them at runtime. To instantiate a type, simply call `new` from anywhere in your program. The first time a type is instantiated, an optional Class initializer, `initialize`, is called. Use `initialize` for things like singletons and other shared resources.
 
 Archetypes
 ---
-For each class, an _archtype_ exists. The archetype is a statically allocated instance of the type that serves to hold the default method implementations. This serves as the basis for Objectively's inheritance graph. The archetype is initialized the first time the type is referenced in the application.
+For each Class, an _archtype_ exists. The archetype is a statically allocated instance of the corresponding type that serves to hold the default method implementations. This serves as the basis for Objectively's inheritance graph. The archetype is initialized the first time the type is referenced in the application.
 
 Invoking a method
 ---
 To invoke a method, call the function pointer or use the `$` macro.
 
 ```c
-	this->isEqual(this, that);
+	self->isEqual(self, other);
 	
 	/* or */
 	
-	$(this, isEqual, that);
+	$(self, isEqual, other);
 ```
 
 Overriding a method
 ---
-To override a method, simply overwrite the function pointer in your constructor or use the `override` macro.
+To override a method, simply overwrite the function pointer or use the `override` macro. Overrides are typically installed in the initializer method.
 
 ```c
-	((struct Object *) self)->dealloc = Foo_dealloc;
+	((Object *) self)->dealloc = dealloc;
 
 	/* or */
 
-	override(Object, self, dealloc, Foo_dealloc);
+	override(Object, self, dealloc, dealloc);
 ```
 
 Calling super
@@ -111,7 +110,7 @@ Calling super
 To invoke a supertype's method implementation, either directly invoke the desired archetype implementation or use the `super` macro.
 
 ```c
-	((struct Object *) archetype(Object))->dealloc(self);
+	((Object *) archetype(__Object))->dealloc(self);
 	
 	/* or */
 
