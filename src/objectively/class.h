@@ -48,7 +48,7 @@ typedef struct Class Class;
  * // foo.h
  *
  * struct Foo {
- * 	   Object _;
+ * 	   Object object;
  *     // ...
  * }
  *
@@ -60,7 +60,9 @@ typedef struct Class Class;
  *
  *     self = super(Object, self, init, args);
  *     if (self) {
- *     	   Foo *this = cast(Foo, self);
+ *         override(Object, self, init, init);
+ *
+ *     	   struct Foo *this = cast(Foo, self);
  *         // ...
  *     }
  *     return self;
