@@ -4,115 +4,116 @@ Ultra-lightweight object oriented framework for the c programming language. Zlib
 
 Adding Objectively to your project
 ---
-Copy `objectively.c` and `objectively.h` to your project and include them in your build target.
+1. Do the Autotools dance: `./configure; make; sudo make install`
+2. Include the main header file in your source: `#include <objectively.h>`
+3. Compile and link with Objectively: `pkg-config --cflags --libs objectively`
 
 Declaring a type
 ---
 ```c
-/* animal.h */
+/* foo.h */
 
-#include "objectively.h"
+#include <objectively.h>
 
-Interface(Animal, Object)
-	char *genus;
-	char *species;
+struct Foo {
+    Object object;
+    int bar;
+    void (*baz)(const id self);
+    // ...
+}
 
-	char *(*scientificName)(Animal *self);
-End
-
-Constructor(Animal, const char *genus, const char *species);
+extern const Class *Foo;
 ```
 
 Implementing a type:
 ---
 ```c
-/* animal.c */
 
-#include "animal.h"
+/* foo.c */
 
-static void Animal_dealloc(Animal *self) {
+#include "foo.h"
 
-	free(self->genus);
-	free(self->species);
-
-	Super(Object, self, dealloc)
+static void baz(const id self) {
+    const struct Foo *this = cast(Foo, self);
+    printf("%d\n", this->bar);
 }
 
-static char *Animal_scientificName(Animal *self) {
+static id init(id self, va_list *args) {
 
-	char *name = NULL;
-
-	if (self->genus && self->species) {
-		name = malloc(strlen(self->genus) + strlen(self->species) + 1);
-		sprintf(name, "%s %s", self->genus, self->species);
-	}
-
-	return name;
+    self = super(Object, self, init, args);
+    if (self) {
+        override(Object, self, init, init);
+        
+    	struct Foo *this = cast(Foo, self);
+    	
+    	this->bar = 0x69;
+        this->baz = baz;
+    }
+    return self;
 }
 
-Implementation(Animal, const char *genus, const char *species)
-	Initialize(Animal, NULL, NULL);
+static struct Foo foo;
 
-	if (Object_init((Object *) self)) {
-		if (genus) {
-			self->genus = strdup(genus);
-		}
-		if (species) {
-			self->species = strdup(species);
-		}
+static struct Class class {
+    .name = "Foo",
+    .size = sizeof(struct Foo),
+    .superclass = &Object,
+    .archetype = &foo,
+    .init = init,
+};
 
-		Override(Object, self, dealloc, Animal_dealloc);
-		self->scientificName = Animal_scientificName;
-	}
+const Class *Foo = &class;
 
-	return self;
-End
 ```
 
 Using a type:
 ---
 ```c
-	Animal *lion = New(Animal, "Panthera", "leo");
-
-	printf("%s\n", lion->genus);
-	printf("%s\n", lion->species);
-	
-	char *name = lion->scientificName(lion);
-	printf("%s\n", name);
-	free(name);
-
-	Destroy(lion);
+	struct Foo *foo = new(Foo);
+	$(foo, baz);
+	delete(foo);
 ```
+
+Initialization
+---
+Types are initialized at compile time in Objectively, which means you rarely have to monkey with them at runtime. To instantiate a type, simply call `new` from anywhere in your program. The first time a type is instantiated, an optional `initialize` method is invoked. Use `initialize` for things like singletons and other shared resources.
 
 Archetypes
 ---
-For each declared type, an _archtype_ exists. The archetype is a statically allocated instance of the type that serves to hold the default method implementations. The archetype is defined and intialized by the `Implementation` and `Initialize` macros, respectively. The archetype for _FooBar_ is the symbol `__FooBar`.
+For each class, an _archtype_ exists. The archetype is a statically allocated instance of the type that serves to hold the default method implementations. This serves as the basis for Objectively's inheritance graph. The archetype is initialized the first time the type is referenced in the application.
+
+Invoking a method
+---
+To invoke a method, call the function pointer or use the `$` macro.
+
+```c
+	this->isEqual(this, that);
+	
+	/* or */
+	
+	$(this, isEqual, that);
+```
 
 Overriding a method
 ---
-To override a method, simply overwrite the function pointer in your constructor or use the `Override` macro (*preferred*).
+To override a method, simply overwrite the function pointer in your constructor or use the `override` macro.
 
 ```c
-	self->dealloc = (void (*)(Object *)) Foo_dealloc;
+	((struct Object *) self)->dealloc = Foo_dealloc;
 
 	/* or */
 
-	Override(Object, self, dealloc, Foo_dealloc);
+	override(Object, self, dealloc, Foo_dealloc);
 ```
 
 Calling super
 ---
-To invoke a supertype's method implementation, either directly invoke the desired archetype implementation or use the `Super` macro (*strongly preferred*).
+To invoke a supertype's method implementation, either directly invoke the desired archetype implementation or use the `super` macro.
 
 ```c
-	__Object.dealloc((Object *) self);
+	((struct Object *) archetype(Object))->dealloc(self);
 	
 	/* or */
 
-	Super(Object, self, dealloc);
+	super(Object, self, dealloc);
 ```
-
-FAQ
----
-1. *Why?* Because c++ makes me puke, and Objective-c is not widely supported. 
-1. *This looks like poor-man's Objective-c?* Yup.
