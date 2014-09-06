@@ -5,17 +5,17 @@ Ultra-lightweight object oriented framework for the c programming language. Zlib
 Adding Objectively to your project
 ---
 
-1. Do the Autotools dance.
+1) Do the Autotools dance.
 ```shell
 ./configure; make; sudo make install
 ```
-2. Include the main header file in your source.
+2) Include the main header file in your source.
 ```c
 #include <objectively.h>
 ```
-3. Compile and link with Objectively.
+3) Compile and link with Objectively.
 ```shell
-pkg-config --cflags --libs objectively
+gcc `pkg-config --cflags --libs objectively` -o foo *.c
 ```
 
 Declaring a type
@@ -66,7 +66,7 @@ static Foo foo;
 static struct Class class {
     .name = "Foo",
     .size = sizeof(Foo),
-    .superclass = &Object,
+    .superclass = &__Object,
     .archetype = &foo,
     .init = init,
 };
