@@ -1,4 +1,5 @@
 *.log
 *.trs
+array
 object
 string
