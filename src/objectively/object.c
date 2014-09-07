@@ -27,7 +27,7 @@
 #include <objectively/object.h>
 
 static Object *copy(const Object *self) {
-	return memcpy(calloc(1, self->class->size), self, self->class->size);
+	return memcpy(calloc(1, self->class->instanceSize), self, self->class->instanceSize);
 }
 
 static BOOL isKindOfClass(const Object *self, const Class *class) {
@@ -72,7 +72,7 @@ static Object object;
 
 static Class class = {
 	.name = "Object",
-	.size = sizeof(Object),
+	.instanceSize = sizeof(Object),
 	.archetype = &object,
 	.init = init,
 };

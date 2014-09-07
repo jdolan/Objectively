@@ -26,10 +26,16 @@
 
 #include <objectively/object.h>
 
+/**
+ * @file
+ *
+ * @brief A mutable array implementation.
+ */
+
 typedef struct Array Array;
 
 /**
- * @brief A mutable array implementation.
+ * @brief The Array type.
  */
 struct Array {
 
@@ -39,11 +45,9 @@ struct Array {
 	Object object;
 
 	/**
-	 * @brief The Array elements.
-	 *
-	 * @private
+	 * @brief The Array capacity.
 	 */
-	id *elements;
+	size_t capacity;
 
 	/**
 	 * @brief The count of elements.
@@ -51,9 +55,11 @@ struct Array {
 	size_t count;
 
 	/**
-	 * @brief The Array capacity.
+	 * @brief The Array elements.
+	 *
+	 * @private
 	 */
-	size_t capacity;
+	id *elements;
 
 	/**
 	 * @brief Adds the specified Object to this Array.

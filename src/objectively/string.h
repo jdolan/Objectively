@@ -26,10 +26,16 @@
 
 #include <objectively/object.h>
 
+/**
+ * @file
+ *
+ * @brief A mutable string implementation.
+ */
+
 typedef struct String String;
 
 /**
- * @brief A mutable string implementation.
+ * @brief The String type.
  */
 struct String {
 
@@ -39,14 +45,14 @@ struct String {
 	Object object;
 
 	/**
-	 * @brief The backing character array.
-	 */
-	char *str;
-
-	/**
 	 * @brief The backing character array length.
 	 */
 	size_t len;
+
+	/**
+	 * @brief The backing character array.
+	 */
+	char *str;
 
 	/**
 	 * @brief Appends the specified formatted string.

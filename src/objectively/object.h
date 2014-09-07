@@ -27,11 +27,17 @@
 #include <objectively/class.h>
 #include <objectively/types.h>
 
+/**
+ * @file
+ *
+ * @brief Object is the root instance type. Every subclass of Object must
+ * declare a structure that begins with a `struct Object`.
+ */
+
 typedef struct Object Object;
 
 /**
- * @brief Object is the root instance type. Every subclass of Object must
- * declare a structure that begins with a `struct Object`.
+ * @brief The Object type.
  */
 struct Object {
 

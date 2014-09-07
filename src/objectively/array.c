@@ -114,7 +114,12 @@ static id init(id obj, va_list *args) {
 
 static Array array;
 
-static Class class = { .name = "Array", .size = sizeof(Array), .superclass = &__Object, .archetype =
-		&array, .init = init, };
+static Class class = {
+	.name = "Array",
+	.superclass = &__Object,
+	.instanceSize = sizeof(Array),
+	.archetype = &array,
+	.init = init,
+};
 
 const Class *__Array = &class;

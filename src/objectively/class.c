@@ -39,7 +39,7 @@ static void initialize(const Class *class) {
 		((Class *) class)->magic = CLASS_MAGIC;
 
 		assert(class->name);
-		assert(class->size);
+		assert(class->instanceSize);
 
 		if (class == __Object) {
 			assert(class->superclass == NULL);
@@ -64,7 +64,7 @@ id __new(const Class *class, ...) {
 
 	initialize(class);
 
-	id obj = calloc(1, class->size);
+	id obj = calloc(1, class->instanceSize);
 	if (obj) {
 
 		((Object *) obj)->class = class;

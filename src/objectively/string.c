@@ -184,8 +184,8 @@ static String string;
 
 static Class class = {
 	.name = "String",
-	.size = sizeof(String),
 	.superclass = &__Object,
+	.instanceSize = sizeof(String),
 	.archetype = &string,
 	.init = init, };
 
