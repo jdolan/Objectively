@@ -56,26 +56,21 @@ static BOOL isKindOfClass(const Object *self, const Class *class) {
 
 #pragma mark - Class methods
 
-static void initialize(Class *class) {
-	assert(class == (Class *) &__Object);
-}
-
 static id init(id obj, va_list *args) {
 	assert(obj);
 	return obj;
 }
 
-ObjectClass __Object = {
-	.class = {
-		.name = "Object",
-		.size = sizeof(ObjectClass),
-		.initialize = initialize,
-		.instanceSize = sizeof(Object),
-		.init = init,
-	},
-
+static const ObjectInterface interface = {
+	.init = init,
 	.copy = copy,
 	.dealloc = dealloc,
 	.isEqual = isEqual,
 	.isKindOfClass = isKindOfClass,
+};
+
+Class __Object = {
+	.name = "Object",
+	.size = sizeof(Object),
+	.interface = (const Interface *) &interface,
 };

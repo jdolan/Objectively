@@ -30,6 +30,29 @@
 
 #define CLASS_MAGIC 0xabcdef
 
+typedef struct Interface Interface;
+
+/**
+ * @brief The Interface structure.
+ */
+struct Interface {
+
+	/**
+	 * @brief The instance initializer.
+	 *
+	 * @details This method typically begins with a call to the superclass
+	 * initializer, passing the arguments list up the initializer chain. Method
+	 * overrides as well as method and member assignment and initialization
+	 * then follow.
+	 *
+	 * @param obj The newly allocated instance.
+	 * @param args The initializer arguments list.
+	 *
+	 * @return The initialized instance, or the unmodified pointer on error.
+	 */
+	id (*init)(id obj, va_list *args);
+};
+
 typedef struct Class Class;
 
 /**
@@ -103,36 +126,26 @@ struct Class {
 	const char *name;
 
 	/**
-	 * @brief The class size (required).
-	 */
-	const size_t size;
-
-	/**
-	 * @brief The class initializer (required).
-	 *
-	 * @details This method is run once when your class is first initialized.
-	 */
-	void (*initialize)(Class *class);
-
-	/**
 	 * @brief The instance size (required).
 	 */
 	const size_t instanceSize;
 
 	/**
-	 * @brief The instance initializer (required).
-	 *
-	 * @details This method typically begins with a call to the superclass
-	 * initializer, passing the arguments list up the initializer chain. Method
-	 * overrides as well as method and member assignment and initialization
-	 * then follow.
-	 *
-	 * @param obj The newly allocated instance.
-	 * @param args The initializer arguments list.
-	 *
-	 * @return The initialized instance, or the unmodified pointer on error.
+	 * @brief The interface size (required).
 	 */
-	id (*init)(id obj, va_list *args);
+	const size_t interfaceSize;
+
+	/**
+	 * @brief The interface (required).
+	 */
+	const Interface* interface;
+
+	/**
+	 * @brief The class initializer (optional).
+	 *
+	 * @details This method is run once when your class is first initialized.
+	 */
+	void (*initialize)(Class *class);
 };
 
 /**
@@ -179,14 +192,14 @@ extern void delete(id obj);
 /**
  * @brief Apply a selector to an instance.
  */
-#define $(type, instance, method, ...) \
-	((type##Class *) classof(instance))->method(instance, ## __VA_ARGS__)
+#define $(instance, method, ...) \
+	(instance)->interface->method(instance, ## __VA_ARGS__)
 
 /**
  * @brief Apply a Superclass selector to an instance.
  */
 #define super(type, instance, method, ...) \
-	((type##Class *) superclassof(instance))->method(instance, ## __VA_ARGS__)
+	((type *) instance)->interface->method(instance, ## __VA_ARGS__)
 
 /**
  * @brief Take an initializer parameter.

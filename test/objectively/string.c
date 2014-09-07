@@ -34,14 +34,14 @@ START_TEST(string)
 
 		ck_assert_str_eq("hello", string->str);
 
-		$(String, string, appendFormat, " %s", "world!");
+		$(string, appendFormat, " %s", "world!");
 		ck_assert_str_eq("hello world!", string->str);
 
-		$(String, string, appendString, string);
+		$(string, appendString, string);
 		ck_assert_str_eq("hello world!hello world!", string->str);
 
 		String *prefix = new(String, "hello");
-		ck_assert($(String, string, hasPrefix, prefix));
+		ck_assert($(string, hasPrefix, prefix));
 
 		String *suffix = new(String, "world!");
 		ck_assert($(String, string, hasSuffix, suffix));

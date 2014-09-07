@@ -30,6 +30,20 @@
 
 #pragma mark - Object instance methods
 
+static id init(id obj, va_list *args) {
+
+	String *self = super(Object, obj, init, args);
+	if (self) {
+		const char *fmt = arg(args, const char *, NULL);
+		if (fmt) {
+			vasprintf(&self->str, fmt, *args);
+			self->len = strlen(self->str);
+		}
+	}
+
+	return self;
+}
+
 static Object *copy(const Object *self) {
 
 	return new(String, ((String * ) self)->str);
@@ -54,7 +68,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		const String *that = (String *) other;
 
 		RANGE range = { 0, this->len };
-		return $(String, this, compareTo, that, range) == 0;
+		return $(this, compareTo, that, range) == 0;
 	}
 
 	return NO;
@@ -78,7 +92,7 @@ static String *appendFormat(String *self, const char *fmt, ...) {
 		string->str = str;
 		string->len = strlen(string->str);
 
-		$(String, self, appendString, string);
+		$(self, appendString, string);
 
 		delete(string);
 	}
@@ -123,7 +137,7 @@ static BOOL hasPrefix(const String *self, const String *prefix) {
 	}
 
 	RANGE range = { 0, prefix->len };
-	return $(String, self, compareTo, prefix, range) == 0;
+	return $(self, compareTo, prefix, range) == 0;
 }
 
 static BOOL hasSuffix(const String *self, const String *suffix) {
@@ -133,7 +147,7 @@ static BOOL hasSuffix(const String *self, const String *suffix) {
 	}
 
 	RANGE range = { self->len - suffix->len, suffix->len };
-	return $(String, self, compareTo, suffix, range) == 0;
+	return $(self, compareTo, suffix, range) == 0;
 }
 
 static String *substring(const String *self, RANGE range) {
@@ -151,47 +165,30 @@ static String *substring(const String *self, RANGE range) {
 	return substring;
 }
 
-#pragma mark - StringClass
-
-static id init(id obj, va_list *args) {
-
-	String *self = (String *) superclassof(obj)->init(obj, args);
-	if (self) {
-		const char *fmt = arg(args, const char *, NULL);
-		if (fmt) {
-			vasprintf(&self->str, fmt, *args);
-			self->len = strlen(self->str);
-		}
-	}
-
-	return self;
-}
+#pragma mark - Interface
 
 static void initialize(Class *class) {
 
-	StringClass *stringClass = (StringClass *) class;
+	StringInterface *this = (StringInterface *) class->interface;
 
-	stringClass->object.copy = copy;
-	stringClass->object.dealloc = dealloc;
-	stringClass->object.isEqual = isEqual;
+	this->init = init;
+	this->copy = copy;
+	this->dealloc = dealloc;
+	this->isEqual = isEqual;
 
-	stringClass->appendFormat = appendFormat;
-	stringClass->appendString = appendString;
-	stringClass->compareTo = compareTo;
-	stringClass->hasPrefix = hasPrefix;
-	stringClass->hasSuffix = hasSuffix;
-	stringClass->substring = substring;
-
+	this->appendFormat = appendFormat;
+	this->appendString = appendString;
+	this->compareTo = compareTo;
+	this->hasPrefix = hasPrefix;
+	this->hasSuffix = hasSuffix;
+	this->substring = substring;
 }
 
-StringClass __String = {
-	.object.class = {
-		.superclass = (Class *) &__Object,
-		.name = "String",
-		.size = sizeof(StringClass),
-		.initialize = initialize,
-		.instanceSize = sizeof(String),
-		.init = init,
-	},
+const Class __String = {
+	.superclass = &__Object,
+	.name = "String",
+	.size = sizeof(String),
+	.initialize = initialize,
+	.init = init,
 };
 

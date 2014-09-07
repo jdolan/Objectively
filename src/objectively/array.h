@@ -26,10 +26,17 @@
 
 #include <objectively/object.h>
 
+/**
+ * @file
+ *
+ * @brief A mutable array implementation.
+ */
+
 typedef struct Array Array;
+typedef struct ArrayInterface ArrayInterface;
 
 /**
- * @brief A mutable array implementation.
+ * @brief The Array type.
  */
 struct Array {
 
@@ -54,19 +61,22 @@ struct Array {
 	 * @brief The Array capacity.
 	 */
 	size_t capacity;
+
+	/**
+	 * @brief The typed Interface.
+	 */
+	ArrayInterface *interface;
 };
 
-typedef struct ArrayClass ArrayClass;
-
 /**
- * @brief The Array Class.
+ * @brief The Array Interface.
  */
-struct ArrayClass {
+struct ArrayInterface {
 
 	/**
 	 * @brief The parent.
 	 */
-	ObjectClass object;
+	ObjectInterface objectInterface;
 
 	/**
 	 * @brief Adds the specified Object to this Array.
@@ -97,6 +107,6 @@ struct ArrayClass {
 /**
  * @brief The Array Class.
  */
-extern ArrayClass __Array;
+extern Class __Array;
 
 #endif

@@ -27,6 +27,7 @@
 #include <objectively/object.h>
 
 typedef struct String String;
+typedef struct StringInterface StringInterface;
 
 /**
  * @brief A mutable string implementation.
@@ -47,19 +48,22 @@ struct String {
 	 * @brief The backing character array length.
 	 */
 	size_t len;
-};
-
-typedef struct StringClass StringClass;
-
-/**
- * @brief The String Class.
- */
-struct StringClass {
 
 	/**
-	 * @brief The parent.
+	 * @brief The typed Interface.
 	 */
-	ObjectClass object;
+	const StringInterface *interface;
+};
+
+/**
+ * @brief The String Interface.
+ */
+struct StringInterface {
+
+	/**
+	 * @brief The super Interface.
+	 */
+	struct ObjectInterface objectInterface;
 
 	/**
 	 * @brief Appends the specified formatted string.
@@ -120,6 +124,6 @@ struct StringClass {
 /**
  * @brief The String Class.
  */
-extern StringClass __String;
+extern Class __String;
 
 #endif

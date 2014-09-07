@@ -27,11 +27,18 @@
 #include <objectively/class.h>
 #include <objectively/types.h>
 
+/**
+ * @file
+ *
+ * @brief Object is the root instance type. Every subclass of Object must
+ * declare a structure that begins with `Object object;`.
+ */
+
+typedef struct ObjectInterface ObjectInterface;
 typedef struct Object Object;
 
 /**
- * @brief Object is the root instance type. Every subclass of Object must
- * declare a structure that begins with a `struct Object`.
+ * @brief The Object type.
  */
 struct Object {
 
@@ -39,19 +46,32 @@ struct Object {
 	 * @brief Every instance of Object begins with a pointer to its Class.
 	 */
 	const Class *class;
+
+	/*
+	 * @brief A pointer to the typed interface for Object.
+	 */
+	const id interface;
 };
 
-typedef struct ObjectClass ObjectClass;
-
 /*
- * @brief The Object Class.
+ * @brief The Object interface.
  */
-struct ObjectClass {
+struct ObjectInterface {
 
 	/**
-	 * @brief The Class descriptor.
+	 * @brief The instance initializer (required).
+	 *
+	 * @details This method typically begins with a call to the superclass
+	 * initializer, passing the arguments list up the initializer chain. Method
+	 * overrides as well as method and member assignment and initialization
+	 * then follow.
+	 *
+	 * @param obj The newly allocated instance.
+	 * @param args The initializer arguments list.
+	 *
+	 * @return The initialized instance, or the unmodified pointer on error.
 	 */
-	Class class;
+	id (*init)(id obj, va_list *args);
 
 	/**
 	 * @brief Creates a shallow copy of this Object.
@@ -68,6 +88,21 @@ struct ObjectClass {
 	void (*dealloc)(Object *self);
 
 	/**
+	 * @brief The instance initializer (required).
+	 *
+	 * @details This method typically begins with a call to the superclass
+	 * initializer, passing the arguments list up the initializer chain. Method
+	 * overrides as well as method and member assignment and initialization
+	 * then follow.
+	 *
+	 * @param obj The newly allocated instance.
+	 * @param args The initializer arguments list.
+	 *
+	 * @return The initialized instance, or the unmodified pointer on error.
+	 */
+	id (*init)(id obj, va_list *args);
+
+	/**
 	 * @brief Tests equality of the other Object.
 	 *
 	 * @return YES if other is deemed equal, NO otherwise.
@@ -82,6 +117,6 @@ struct ObjectClass {
 	BOOL (*isKindOfClass)(const Object *self, const Class *class);
 };
 
-extern ObjectClass __Object;
+extern Class __Object;
 
 #endif

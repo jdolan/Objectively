@@ -40,27 +40,26 @@ static void initialize(Class *class) {
 		class->magic = CLASS_MAGIC;
 
 		assert(class->name);
-		assert(class->size);
-		assert(class->initialize);
 		assert(class->instanceSize);
-		assert(class->init);
+		assert(class->interfaceSize);
 
 		if (class == (Class *) &__Object) {
 			assert(class->superclass == NULL);
 		} else {
 			assert(class->superclass != NULL);
-			assert(class->size >= class->superclass->size);
 
 			initialize(class->superclass);
 
-			void *dst = class + sizeof(Class);
-			const void *src = class->superclass + sizeof(Class);
+			assert(class->superclass->instanceSize <= class->instanceSize);
+			assert(class->superclass->interfaceSize <= class->interfaceSize);
 
-			memcpy(dst, src, class->superclass->size - sizeof(Class));
+			class->interface = calloc(1, class->interfaceSize);
+			assert(class->interface);
+
+			memcpy(class->interface, class->superclass->interface, class->superclass->interfaceSize);
 		}
 
 		class->initialize(class);
-
 	} else {
 		assert(class->magic == CLASS_MAGIC);
 	}
@@ -78,7 +77,7 @@ id __new(Class *class, ...) {
 		va_list args;
 		va_start(args, class);
 
-		obj = class->init(obj, &args);
+		obj = class->interface->init(obj, &args);
 
 		va_end(args);
 	}
@@ -118,6 +117,6 @@ id __cast(Class *class, const id obj) {
 void delete(id obj) {
 
 	if (obj) {
-		$(Object, (Object * ) obj, dealloc);
+		$((Object * ) obj, dealloc);
 	}
 }
