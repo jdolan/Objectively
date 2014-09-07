@@ -47,6 +47,19 @@ struct String {
 	 * @brief The backing character array length.
 	 */
 	size_t len;
+};
+
+typedef struct StringClass StringClass;
+
+/**
+ * @brief The String Class.
+ */
+struct StringClass {
+
+	/**
+	 * @brief The parent.
+	 */
+	ObjectClass object;
 
 	/**
 	 * @brief Appends the specified formatted string.
@@ -107,6 +120,6 @@ struct String {
 /**
  * @brief The String Class.
  */
-extern const Class *__String;
+extern StringClass __String;
 
 #endif

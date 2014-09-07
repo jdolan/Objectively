@@ -30,24 +30,24 @@ START_TEST(string)
 		String *string = new(String, "hello");
 
 		ck_assert(string);
-		ck_assert_ptr_eq(__String, classof(string));
+		ck_assert_ptr_eq((Class *) &__String, classof(string));
 
 		ck_assert_str_eq("hello", string->str);
 
-		$(string, appendFormat, " %s", "world!");
+		$(String, string, appendFormat, " %s", "world!");
 		ck_assert_str_eq("hello world!", string->str);
 
-		$(string, appendString, string);
+		$(String, string, appendString, string);
 		ck_assert_str_eq("hello world!hello world!", string->str);
 
 		String *prefix = new(String, "hello");
-		ck_assert($(string, hasPrefix, prefix));
+		ck_assert($(String, string, hasPrefix, prefix));
 
 		String *suffix = new(String, "world!");
-		ck_assert($(string, hasSuffix, suffix));
+		ck_assert($(String, string, hasSuffix, suffix));
 
 		RANGE range = { 6, 11 };
-		String *substring = $(string, substring, range);
+		String *substring = $(String, string, substring, range);
 		ck_assert_str_eq("world!hello", substring->str);
 
 		delete(substring);

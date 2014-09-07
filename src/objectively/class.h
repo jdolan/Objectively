@@ -93,37 +93,44 @@ struct Class {
 	int magic;
 
 	/**
+	 * @brief The superclass (required). e.g. `&__Object`.
+	 */
+	Class *superclass;
+
+	/**
 	 * @brief The class name (required).
 	 */
 	const char *name;
 
 	/**
-	 * @brief The instance size (required).
+	 * @brief The class size (required).
 	 */
 	const size_t size;
 
 	/**
-	 * @brief The superclass (required). e.g. `&__Object`.
-	 */
-	const Class **superclass;
-
-	/**
-	 * @brief The archetype instance (required).
-	 */
-	const id archetype;
-
-	/**
-	 * @brief The class initializer (optional).
+	 * @brief The class initializer (required).
 	 *
 	 * @details This method is run once when your class is first initialized.
 	 */
-	void (*initialize)(void);
+	void (*initialize)(Class *class);
 
 	/**
-	 * @brief The instance initializer.
+	 * @brief The instance size (required).
+	 */
+	const size_t instanceSize;
+
+	/**
+	 * @brief The instance initializer (required).
+	 *
+	 * @details This method typically begins with a call to the superclass
+	 * initializer, passing the arguments list up the initializer chain. Method
+	 * overrides as well as method and member assignment and initialization
+	 * then follow.
 	 *
 	 * @param obj The newly allocated instance.
-	 * @param args The constructor arguments (optional).
+	 * @param args The initializer arguments list.
+	 *
+	 * @return The initialized instance, or the unmodified pointer on error.
 	 */
 	id (*init)(id obj, va_list *args);
 };
@@ -131,12 +138,12 @@ struct Class {
 /**
  * @brief Instantiate a type through the given Class.
  */
-extern id __new(const Class *class, ...);
+extern id __new(Class *class, ...);
 
 /**
  * @brief Perform a type-checking cast.
  */
-extern id __cast(const Class *class, const id obj);
+extern id __cast(Class *class, const id obj);
 
 /**
  * @brief Delete (deallocate) an instance.
@@ -146,49 +153,45 @@ extern id __cast(const Class *class, const id obj);
 extern void delete(id obj);
 
 /**
- * @return The Class of the specified Object.
- */
-extern const Class *classof(const id obj);
-
-/**
- * @return The archetype for the specified Class.
- */
-extern const id archetypeof(const Class *class);
-
-/**
  * @brief Instantiate a type.
  */
 #define new(type, ...) \
-	__new(__##type, ## __VA_ARGS__)
+	__new((Class *) &__##type, ## __VA_ARGS__)
 
 /**
  * @brief Safely cast to a type.
  */
 #define cast(type, instance) \
-	__cast(__##type, (const id) instance)
+	__cast((Class *) &__##type, (const id) instance)
 
 /**
- * @brief Call a method.
+ * @brief Resolve the Class of an instance.
  */
-#define $(instance, method, ...) \
-	instance->method(instance, ## __VA_ARGS__)
+#define classof(instance) \
+	((Object *) instance)->class
+
+/*
+ * @brief Resolve the Superclass of an instance.
+ */
+#define superclassof(instance) \
+	classof(instance)->superclass
 
 /**
- * @brief Take a constructor parameter.
+ * @brief Apply a selector to an instance.
+ */
+#define $(type, instance, method, ...) \
+	((type##Class *) classof(instance))->method(instance, ## __VA_ARGS__)
+
+/**
+ * @brief Apply a Superclass selector to an instance.
+ */
+#define super(type, instance, method, ...) \
+	((type##Class *) superclassof(instance))->method(instance, ## __VA_ARGS__)
+
+/**
+ * @brief Take an initializer parameter.
  */
 #define arg(args, type, def) \
 	(args ? va_arg(*args, type) : def)
-
-/**
- * @brief Override a supertype method in your type.
- */
-#define override(type, instance, method, implementation) \
-	((type *) instance)->method = implementation
-
-/**
- * @brief Invoke a supertype method on an instance of your type.
- */
-#define super(type, instance, method, ...) \
-	((type *) archetypeof(__##type))->method((type *) instance, ## __VA_ARGS__)
 
 #endif

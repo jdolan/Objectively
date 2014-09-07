@@ -54,6 +54,19 @@ struct Array {
 	 * @brief The Array capacity.
 	 */
 	size_t capacity;
+};
+
+typedef struct ArrayClass ArrayClass;
+
+/**
+ * @brief The Array Class.
+ */
+struct ArrayClass {
+
+	/**
+	 * @brief The parent.
+	 */
+	ObjectClass object;
 
 	/**
 	 * @brief Adds the specified Object to this Array.
@@ -84,6 +97,6 @@ struct Array {
 /**
  * @brief The Array Class.
  */
-extern const Class *__Array;
+extern ArrayClass __Array;
 
 #endif

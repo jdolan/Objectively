@@ -21,13 +21,24 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include <objectively/object.h>
 
+#pragma mark - Object instance methods
+
 static Object *copy(const Object *self) {
 	return memcpy(calloc(1, self->class->size), self, self->class->size);
+}
+
+static void dealloc(Object *self) {
+	free(self);
+}
+
+static BOOL isEqual(const Object *self, const Object *other) {
+	return self == other;
 }
 
 static BOOL isKindOfClass(const Object *self, const Class *class) {
@@ -37,44 +48,34 @@ static BOOL isKindOfClass(const Object *self, const Class *class) {
 		if (c == class) {
 			return YES;
 		}
-		c = *c->superclass;
+		c = c->superclass;
 	}
 
 	return NO;
 }
 
-static BOOL isEqual(const Object *self, const Object *other) {
-	return self == other;
-}
+#pragma mark - Class methods
 
-static void dealloc(Object *self) {
-	free(self);
+static void initialize(Class *class) {
+	assert(class == (Class *) &__Object);
 }
 
 static id init(id obj, va_list *args) {
-
-	Object *self = cast(Object, obj);
-	if (self) {
-
-		self->init = init;
-		self->copy = copy;
-
-		self->isKindOfClass = isKindOfClass;
-		self->isEqual = isEqual;
-
-		self->dealloc = dealloc;
-	}
-
-	return self;
+	assert(obj);
+	return obj;
 }
 
-static Object object;
+ObjectClass __Object = {
+	.class = {
+		.name = "Object",
+		.size = sizeof(ObjectClass),
+		.initialize = initialize,
+		.instanceSize = sizeof(Object),
+		.init = init,
+	},
 
-static Class class = {
-	.name = "Object",
-	.size = sizeof(Object),
-	.archetype = &object,
-	.init = init,
+	.copy = copy,
+	.dealloc = dealloc,
+	.isEqual = isEqual,
+	.isKindOfClass = isKindOfClass,
 };
-
-const Class *__Object = &class;

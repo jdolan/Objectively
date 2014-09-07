@@ -39,6 +39,19 @@ struct Object {
 	 * @brief Every instance of Object begins with a pointer to its Class.
 	 */
 	const Class *class;
+};
+
+typedef struct ObjectClass ObjectClass;
+
+/*
+ * @brief The Object Class.
+ */
+struct ObjectClass {
+
+	/**
+	 * @brief The Class descriptor.
+	 */
+	Class class;
 
 	/**
 	 * @brief Creates a shallow copy of this Object.
@@ -67,24 +80,8 @@ struct Object {
 	 * @return YES if this instance belongs to class' hierarchy, NO otherwise.
 	 */
 	BOOL (*isKindOfClass)(const Object *self, const Class *class);
-
-	/**
-	 * @brief The initializer is responsible for populating newly allocated
-	 * instances with valid state and behavior.
-	 *
-	 * @details This method typically begins with a call to the superclass
-	 * initializer, passing the arguments list up the initializer chain. Method
-	 * overrides as well as method and member assignment and initialization
-	 * then follow.
-	 *
-	 * @param obj The newly allocated instance.
-	 * @param args The initializer arguments list.
-	 *
-	 * @return The initialized instance, or the unmodified pointer on error.
-	 */
-	id (*init)(id obj, va_list *args);
 };
 
-extern const Class *__Object;
+extern ObjectClass __Object;
 
 #endif

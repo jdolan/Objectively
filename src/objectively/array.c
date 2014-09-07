@@ -55,7 +55,7 @@ static void addObject(Array *self, const id obj) {
 
 static BOOL containsObject(const Array *self, const id obj) {
 
-	return $(self, indexOfObject, obj) != -1;
+	return $(Array, self, indexOfObject, obj) != -1;
 }
 
 static int indexOfObject(const Array *self, const id obj) {
@@ -65,7 +65,7 @@ static int indexOfObject(const Array *self, const id obj) {
 	assert(object);
 
 	for (size_t i = 0; i < self->count; i++) {
-		if ($(object, isEqual, (Object * ) self->elements[i])) {
+		if ($(Object, object, isEqual, (Object * ) self->elements[i])) {
 			return (int) i;
 		}
 	}
@@ -75,7 +75,7 @@ static int indexOfObject(const Array *self, const id obj) {
 
 static void removeObject(Array *self, const id obj) {
 
-	int index = $(self, indexOfObject, obj);
+	int index = $(Array, self, indexOfObject, obj);
 
 	if (index != -1) {
 		for (size_t i = index; i < self->count; i++) {
@@ -90,21 +90,25 @@ static void removeAllObjects(Array *self) {
 	self->count = 0;
 }
 
-#pragma mark - Initializer
+#pragma mark - Initializers
+
+static void initialize(Class *class) {
+
+	ArrayClass *array = (ArrayClass *) class;
+
+	array->object.dealloc = dealloc;
+
+	array->addObject = addObject;
+	array->containsObject = containsObject;
+	array->indexOfObject = indexOfObject;
+	array->removeObject = removeObject;
+	array->removeAllObjects = removeAllObjects;
+}
 
 static id init(id obj, va_list *args) {
 
-	Array *self = (Array *) super(Object, obj, init, args);
+	Array *self = (Array *) superclassof(obj)->init(obj, args);
 	if (self) {
-		override(Object, self, dealloc, dealloc);
-		override(Object, self, init, init);
-
-		self->addObject = addObject;
-		self->containsObject = containsObject;
-		self->indexOfObject = indexOfObject;
-		self->removeObject = removeObject;
-		self->removeAllObjects = removeAllObjects;
-
 		self->capacity = arg(args, size_t, ARRAY_CHUNK_SIZE);
 		self->elements = malloc(self->capacity * sizeof(id));
 	}
@@ -112,9 +116,13 @@ static id init(id obj, va_list *args) {
 	return self;
 }
 
-static Array array;
-
-static Class class = { .name = "Array", .size = sizeof(Array), .superclass = &__Object, .archetype =
-		&array, .init = init, };
-
-const Class *__Array = &class;
+ArrayClass __Array = {
+	.object.class = {
+		.superclass = (Class *) &__Object,
+		.name = "Array",
+		.size = sizeof(ArrayClass),
+		.initialize = initialize,
+		.instanceSize = sizeof(Array),
+		.init = init,
+	},
+};

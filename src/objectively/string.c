@@ -28,7 +28,7 @@
 
 #include <objectively/string.h>
 
-#pragma mark - Object
+#pragma mark - Object instance methods
 
 static Object *copy(const Object *self) {
 
@@ -48,19 +48,19 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		return YES;
 	}
 
-	if (other && other->class == __String) {
+	if (other && other->class == (Class *) &__String) {
 
 		const String *this = (String *) self;
 		const String *that = (String *) other;
 
 		RANGE range = { 0, this->len };
-		return $(this, compareTo, that, range) == 0;
+		return $(String, this, compareTo, that, range) == 0;
 	}
 
 	return NO;
 }
 
-#pragma mark - String
+#pragma mark - String instance methods
 
 static String *appendFormat(String *self, const char *fmt, ...) {
 
@@ -78,7 +78,7 @@ static String *appendFormat(String *self, const char *fmt, ...) {
 		string->str = str;
 		string->len = strlen(string->str);
 
-		$(self, appendString, string);
+		$(String, self, appendString, string);
 
 		delete(string);
 	}
@@ -123,7 +123,7 @@ static BOOL hasPrefix(const String *self, const String *prefix) {
 	}
 
 	RANGE range = { 0, prefix->len };
-	return $(self, compareTo, prefix, range) == 0;
+	return $(String, self, compareTo, prefix, range) == 0;
 }
 
 static BOOL hasSuffix(const String *self, const String *suffix) {
@@ -133,7 +133,7 @@ static BOOL hasSuffix(const String *self, const String *suffix) {
 	}
 
 	RANGE range = { self->len - suffix->len, suffix->len };
-	return $(self, compareTo, suffix, range) == 0;
+	return $(String, self, compareTo, suffix, range) == 0;
 }
 
 static String *substring(const String *self, RANGE range) {
@@ -151,25 +151,12 @@ static String *substring(const String *self, RANGE range) {
 	return substring;
 }
 
-#pragma mark - Initializer
+#pragma mark - StringClass
 
 static id init(id obj, va_list *args) {
 
-	String *self = (String *) super(Object, obj, init, args);
+	String *self = (String *) superclassof(obj)->init(obj, args);
 	if (self) {
-
-		override(Object, self, copy, copy);
-		override(Object, self, dealloc, dealloc);
-		override(Object, self, isEqual, isEqual);
-		override(Object, self, init, init);
-
-		self->appendFormat = appendFormat;
-		self->appendString = appendString;
-		self->compareTo = compareTo;
-		self->hasPrefix = hasPrefix;
-		self->hasSuffix = hasSuffix;
-		self->substring = substring;
-
 		const char *fmt = arg(args, const char *, NULL);
 		if (fmt) {
 			vasprintf(&self->str, fmt, *args);
@@ -180,13 +167,31 @@ static id init(id obj, va_list *args) {
 	return self;
 }
 
-static String string;
+static void initialize(Class *class) {
 
-static Class class = {
-	.name = "String",
-	.size = sizeof(String),
-	.superclass = &__Object,
-	.archetype = &string,
-	.init = init, };
+	StringClass *stringClass = (StringClass *) class;
 
-const Class *__String = &class;
+	stringClass->object.copy = copy;
+	stringClass->object.dealloc = dealloc;
+	stringClass->object.isEqual = isEqual;
+
+	stringClass->appendFormat = appendFormat;
+	stringClass->appendString = appendString;
+	stringClass->compareTo = compareTo;
+	stringClass->hasPrefix = hasPrefix;
+	stringClass->hasSuffix = hasSuffix;
+	stringClass->substring = substring;
+
+}
+
+StringClass __String = {
+	.object.class = {
+		.superclass = (Class *) &__Object,
+		.name = "String",
+		.size = sizeof(StringClass),
+		.initialize = initialize,
+		.instanceSize = sizeof(String),
+		.init = init,
+	},
+};
+

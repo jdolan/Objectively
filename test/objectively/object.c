@@ -30,18 +30,18 @@ START_TEST(object)
 		Object *object = new(Object);
 
 		ck_assert(object);
-		ck_assert_ptr_eq(__Object, classof(object));
+		ck_assert_ptr_eq(&__Object.class, classof(object));
 
-		ck_assert($(object, isKindOfClass, __Object));
-		ck_assert($(object, isEqual, object));
+		ck_assert($(Object, object, isEqual, object));
+		ck_assert($(Object, object, isKindOfClass, (Class *) &__Object.class));
 
-		Object *copy = $(object, copy);
+		Object *copy = $(Object, object, copy);
 
 		ck_assert(copy);
-		ck_assert_ptr_eq(__Object, classof(object));
+		ck_assert_ptr_eq((Class *) &__Object, classof(object));
 
-		ck_assert($(copy, isKindOfClass, __Object));
-		ck_assert(!$(copy, isEqual, object));
+		ck_assert($(Object, copy, isKindOfClass, &__Object.class));
+		ck_assert(!$(Object, copy, isEqual, object));
 
 		delete(copy);
 		delete(object);

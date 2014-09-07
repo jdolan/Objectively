@@ -24,6 +24,7 @@
 #include <assert.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <objectively/class.h>
 #include <objectively/object.h>
@@ -31,40 +32,45 @@
 /*
  * @brief Initializes the class by setting up its magic and archetype.
  */
-static void initialize(const Class *class) {
+static void initialize(Class *class) {
 
 	assert(class);
 
 	if (!class->magic) {
-		((Class *) class)->magic = CLASS_MAGIC;
+		class->magic = CLASS_MAGIC;
 
 		assert(class->name);
 		assert(class->size);
+		assert(class->initialize);
+		assert(class->instanceSize);
+		assert(class->init);
 
-		if (class == __Object) {
+		if (class == (Class *) &__Object) {
 			assert(class->superclass == NULL);
 		} else {
 			assert(class->superclass != NULL);
+			assert(class->size >= class->superclass->size);
+
+			initialize(class->superclass);
+
+			void *dst = class + sizeof(Class);
+			const void *src = class->superclass + sizeof(Class);
+
+			memcpy(dst, src, class->superclass->size - sizeof(Class));
 		}
 
-		assert(class->archetype);
-		assert(class->init);
+		class->initialize(class);
 
-		if (class->initialize) {
-			class->initialize();
-		}
-
-		class->init(class->archetype, NULL);
 	} else {
 		assert(class->magic == CLASS_MAGIC);
 	}
 }
 
-id __new(const Class *class, ...) {
+id __new(Class *class, ...) {
 
 	initialize(class);
 
-	id obj = calloc(1, class->size);
+	id obj = calloc(1, class->instanceSize);
 	if (obj) {
 
 		((Object *) obj)->class = class;
@@ -80,7 +86,7 @@ id __new(const Class *class, ...) {
 	return obj;
 }
 
-id __cast(const Class *class, const id obj) {
+id __cast(Class *class, const id obj) {
 
 	initialize(class);
 
@@ -96,11 +102,11 @@ id __cast(const Class *class, const id obj) {
 
 				// as a special case, we optimize for __Object
 
-				if (c == class || class == __Object) {
+				if (c == class || class == (Class *) &__Object) {
 					break;
 				}
 
-				c = *c->superclass;
+				c = c->superclass;
 			}
 			assert(c);
 		}
@@ -112,25 +118,6 @@ id __cast(const Class *class, const id obj) {
 void delete(id obj) {
 
 	if (obj) {
-		Object *object = cast(Object, obj);
-		object->dealloc(object);
+		$(Object, (Object * ) obj, dealloc);
 	}
-}
-
-const Class *classof(const id obj) {
-
-	const Object *object = cast(Object, obj);
-
-	if (object) {
-		return object->class;
-	}
-
-	return NULL;
-}
-
-const id archetypeof(const Class *class) {
-
-	initialize(class);
-
-	return class->archetype;
 }
