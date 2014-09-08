@@ -20,12 +20,9 @@ Adding Objectively to your project
 Declaring a type
 ---
 
-    // foo.h
+Types in Objectively are comprised of 3 components:
 
-    #include <objectively.h>
-
-    typedef struct Foo Foo;
-    typedef struct FooInterface FooInterface;
+1) The instance struct, containing the parent type and any additional fields.
 
     struct Foo {
         Object object;
@@ -33,6 +30,8 @@ Declaring a type
         
         const FooInterface *interface;
     };
+    
+2) The interface struct, containing the parent interface and any additional methods.
 
     struct FooInterface {
         ObjectInterface objectInterface;
@@ -40,18 +39,17 @@ Declaring a type
         void (*baz)(const Foo *self);
     };
 
+ 3) The class descriptor, serving to tie 1) and 2) together.
+
     extern Class __Foo;
 
 Implementing a type
 ---
 
-    // foo.c
+    static void baz(const Foo *self) {
+        printf("%s\n", self->bar);
+    }
     
-    #include <stdio.h>
-    #include "foo.h"
-
-    #pragma mark - Object instance methods
-
     static Object *init(id obj, id interface, va_list *args) {
 
         Foo *self = (Foo *) super(Object, obj, init, interface, args);
@@ -61,14 +59,6 @@ Implementing a type
         }
         return self;
     }
-
-    #pragma mark - Foo instance methods
-
-    static void baz(const Foo *self) {
-        printf("%s\n", self->bar);
-    }
-
-    #pragma mark - Foo class methods
 
     static void initialize(Class *class) {
         ((ObjectInterface *) class->interface)->init = init;
@@ -89,9 +79,12 @@ Using a type
     $(foo, bar);
     delete(foo);
 
+
+See [test/objectively/foo.c] for the full source to this example.
+
 Initialization
 ---
-Classes are initialized at compile time in Objectively, which means you rarely have to monkey with them at runtime. To instantiate a type, simply call `new` from anywhere in your program. The first time a type is instantiated, an optional Class initializer, `initialize`, is called. Use `initialize` for things like singletons and other shared resources.
+Classes are initialized at compile time in Objectively, which means you rarely have to monkey with them at runtime. To instantiate a type, simply call `new` from anywhere in your program. The first time a type is instantiated, an optional Class initializer, `initialize`, is called. Use `initialize` to setup your interface, override methods, or create a singleton.
 
 Invoking a method
 ---
@@ -111,3 +104,10 @@ Calling super
 To invoke a supertype's method implementation, use the `super` macro.
 
     super(Object, self, dealloc);
+
+Core library
+---
+Objectively provides a small but useful core library:
+
+ * [Array](src/objectively/array.h) - Mutable arrays.
+ * [String](src/objectively/string.h) - Mutable strings.
