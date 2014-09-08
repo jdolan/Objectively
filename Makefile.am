@@ -4,10 +4,6 @@ SUBDIRS = \
 	src \
 	test
 
-docsdir = $(abs_builddir)/docs
-
-docs:
+html:
 	doxygen
 
-docs-clean:
-	rm -rf $(docsdir)/html

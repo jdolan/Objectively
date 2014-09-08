@@ -81,7 +81,7 @@ struct ObjectInterface {
 	 * then follow.
 	 *
 	 * @param obj The newly allocated instance.
-	 * @param interface The allocated
+	 * @param interface The interface handle.
 	 * @param args The initializer arguments list.
 	 *
 	 * @return The initialized instance, or the unmodified pointer on error.
@@ -103,6 +103,9 @@ struct ObjectInterface {
 	BOOL (*isKindOfClass)(const Object *self, const Class *class);
 };
 
+/**
+ * @brief The Object Class.
+ */
 extern Class __Object;
 
 #endif
