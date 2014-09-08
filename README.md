@@ -80,7 +80,7 @@ Using a type
     delete(foo);
 
 
-See [test/objectively/foo.c] for the full source to this example.
+See [foo.c](test/objectively/foo.c) for the full source to this example.
 
 Initialization
 ---
