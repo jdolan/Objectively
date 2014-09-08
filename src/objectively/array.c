@@ -28,7 +28,7 @@
 
 #define ARRAY_CHUNK_SIZE 64
 
-#pragma mark - Object
+#pragma mark - Object instance methods
 
 static void dealloc(Object *self) {
 
@@ -37,7 +37,20 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - Array
+static Object *init(id obj, id interface, va_list *args) {
+
+	Array *self = (Array *) super(Object, obj, init, interface, args);
+	if (self) {
+		self->interface = (ArrayInterface *) interface;
+
+		self->capacity = arg(args, size_t, ARRAY_CHUNK_SIZE);
+		self->elements = malloc(self->capacity * sizeof(id));
+	}
+
+	return (Object *) self;
+}
+
+#pragma mark - Array instance methods
 
 static void addObject(Array *self, const id obj) {
 
@@ -90,37 +103,27 @@ static void removeAllObjects(Array *self) {
 	self->count = 0;
 }
 
-#pragma mark - Initializers
+#pragma mark - Array class methods
 
 static void initialize(Class *class) {
 
-	ArrayInterface *this = (ArrayInterface *) class->interface;
+	ObjectInterface *object = (ObjectInterface *) class->interface;
 
-	this->dealloc = dealloc;
+	object->dealloc = dealloc;
+	object->init = init;
 
-	this->addObject = addObject;
-	this->containsObject = containsObject;
-	this->indexOfObject = indexOfObject;
-	this->removeObject = removeObject;
-	this->removeAllObjects = removeAllObjects;
+	ArrayInterface *array = (ArrayInterface *) class->interface;
+
+	array->addObject = addObject;
+	array->containsObject = containsObject;
+	array->indexOfObject = indexOfObject;
+	array->removeObject = removeObject;
+	array->removeAllObjects = removeAllObjects;
 }
 
-static id init(id obj, va_list *args) {
-
-	Array *self = (Array *) super(Object, obj, init, args);
-	if (self) {
-		self->capacity = arg(args, size_t, ARRAY_CHUNK_SIZE);
-		self->elements = malloc(self->capacity * sizeof(id));
-	}
-
-	return self;
-}
-
-const Class __Array = {
-	.superclass = (Class *) &__Object,
+Class __Array = {
 	.name = "Array",
+	.superclass = (Class *) &__Object,
 	.instanceSize = sizeof(Array),
-	.initialize = initialize,
-	.instanceSize = sizeof(Array),
-	.init = init,
-};
+	.interfaceSize = sizeof(ArrayInterface),
+	.initialize = initialize, };

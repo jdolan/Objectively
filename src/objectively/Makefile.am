@@ -17,7 +17,6 @@ libobjectively_la_SOURCES = \
 	string.c
 
 libobjectively_la_CFLAGS = \
-	-std=c11 \
 	-I ..
 
 libobjectively_la_LDFLAGS = \

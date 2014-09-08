@@ -30,7 +30,7 @@ START_TEST(string)
 		String *string = new(String, "hello");
 
 		ck_assert(string);
-		ck_assert_ptr_eq((Class *) &__String, classof(string));
+		ck_assert_ptr_eq(&__String, classof(string));
 
 		ck_assert_str_eq("hello", string->str);
 
@@ -44,10 +44,10 @@ START_TEST(string)
 		ck_assert($(string, hasPrefix, prefix));
 
 		String *suffix = new(String, "world!");
-		ck_assert($(String, string, hasSuffix, suffix));
+		ck_assert($(string, hasSuffix, suffix));
 
 		RANGE range = { 6, 11 };
-		String *substring = $(String, string, substring, range);
+		String *substring = $(string, substring, range);
 		ck_assert_str_eq("world!hello", substring->str);
 
 		delete(substring);

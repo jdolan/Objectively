@@ -30,7 +30,7 @@ START_TEST(array)
 		Array *array = new(Array, 5);
 
 		ck_assert(array);
-		ck_assert_ptr_eq((Class *) &__Array, classof(array));
+		ck_assert_ptr_eq(&__Array, classof(array));
 
 		ck_assert_int_eq(0, array->count);
 		ck_assert_int_eq(5, array->capacity);
@@ -39,31 +39,31 @@ START_TEST(array)
 		Object *two = new(Object);
 		Object *three = new(Object);
 
-		$(Array, array, addObject, one);
-		$(Array, array, addObject, two);
-		$(Array, array, addObject, three);
+		$(array, addObject, one);
+		$(array, addObject, two);
+		$(array, addObject, three);
 
 		ck_assert_int_eq(3, array->count);
 
-		ck_assert($(Array, array, containsObject, one));
-		ck_assert($(Array, array, containsObject, two));
-		ck_assert($(Array, array, containsObject, three));
+		ck_assert($(array, containsObject, one));
+		ck_assert($(array, containsObject, two));
+		ck_assert($(array, containsObject, three));
 
-		ck_assert_int_eq(0, $(Array, array, indexOfObject, one));
-		ck_assert_int_eq(1, $(Array, array, indexOfObject, two));
-		ck_assert_int_eq(2, $(Array, array, indexOfObject, three));
+		ck_assert_int_eq(0, $(array, indexOfObject, one));
+		ck_assert_int_eq(1, $(array, indexOfObject, two));
+		ck_assert_int_eq(2, $(array, indexOfObject, three));
 
-		$(Array, array, removeObject, one);
+		$(array, removeObject, one);
 
-		ck_assert(!$(Array, array, containsObject, one));
+		ck_assert(!$(array, containsObject, one));
 		ck_assert_int_eq(2, array->count);
 
-		$(Array, array, removeAllObjects);
+		$(array, removeAllObjects);
 
 		ck_assert_int_eq(0, array->count);
 
-		ck_assert(!$(Array, array, containsObject, two));
-		ck_assert(!$(Array, array, containsObject, three));
+		ck_assert(!$(array, containsObject, two));
+		ck_assert(!$(array, containsObject, three));
 
 		delete(one);
 		delete(two);

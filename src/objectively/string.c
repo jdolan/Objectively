@@ -30,20 +30,6 @@
 
 #pragma mark - Object instance methods
 
-static id init(id obj, va_list *args) {
-
-	String *self = super(Object, obj, init, args);
-	if (self) {
-		const char *fmt = arg(args, const char *, NULL);
-		if (fmt) {
-			vasprintf(&self->str, fmt, *args);
-			self->len = strlen(self->str);
-		}
-	}
-
-	return self;
-}
-
 static Object *copy(const Object *self) {
 
 	return new(String, ((String * ) self)->str);
@@ -54,6 +40,22 @@ static void dealloc(Object *self) {
 	free(((String *) self)->str);
 
 	super(Object, self, dealloc);
+}
+
+static Object *init(id obj, id interface, va_list *args) {
+
+	String *self = (String *) super(Object, obj, init, interface, args);
+	if (self) {
+		self->interface = (StringInterface *) interface;
+
+		const char *fmt = arg(args, const char *, NULL);
+		if (fmt) {
+			vasprintf(&self->str, fmt, *args);
+			self->len = strlen(self->str);
+		}
+	}
+
+	return (Object *) self;
 }
 
 static BOOL isEqual(const Object *self, const Object *other) {
@@ -169,26 +171,26 @@ static String *substring(const String *self, RANGE range) {
 
 static void initialize(Class *class) {
 
-	StringInterface *this = (StringInterface *) class->interface;
+	ObjectInterface *object = (ObjectInterface *) class->interface;
 
-	this->init = init;
-	this->copy = copy;
-	this->dealloc = dealloc;
-	this->isEqual = isEqual;
+	object->init = init;
+	object->copy = copy;
+	object->dealloc = dealloc;
+	object->isEqual = isEqual;
 
-	this->appendFormat = appendFormat;
-	this->appendString = appendString;
-	this->compareTo = compareTo;
-	this->hasPrefix = hasPrefix;
-	this->hasSuffix = hasSuffix;
-	this->substring = substring;
+	StringInterface *string = (StringInterface *) class->interface;
+
+	string->appendFormat = appendFormat;
+	string->appendString = appendString;
+	string->compareTo = compareTo;
+	string->hasPrefix = hasPrefix;
+	string->hasSuffix = hasSuffix;
+	string->substring = substring;
 }
 
-const Class __String = {
-	.superclass = &__Object,
+Class __String = {
 	.name = "String",
-	.size = sizeof(String),
-	.initialize = initialize,
-	.init = init,
-};
-
+	.superclass = &__Object,
+	.instanceSize = sizeof(String),
+	.interfaceSize = sizeof(StringInterface),
+	.initialize = initialize, };

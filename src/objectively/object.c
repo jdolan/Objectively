@@ -30,11 +30,20 @@
 #pragma mark - Object instance methods
 
 static Object *copy(const Object *self) {
-	return memcpy(calloc(1, self->class->size), self, self->class->size);
+	return memcpy(calloc(1, self->class->instanceSize), self, self->class->instanceSize);
 }
 
 static void dealloc(Object *self) {
 	free(self);
+}
+
+static Object *init(id obj, id interface, va_list *args) {
+
+	Object *self = (Object *) obj;
+
+	self->interface = (ObjectInterface *) interface;
+
+	return (Object *) obj;
 }
 
 static BOOL isEqual(const Object *self, const Object *other) {
@@ -54,23 +63,21 @@ static BOOL isKindOfClass(const Object *self, const Class *class) {
 	return NO;
 }
 
-#pragma mark - Class methods
+#pragma mark - Object class methods
 
-static id init(id obj, va_list *args) {
-	assert(obj);
-	return obj;
+static void initialize(Class *class) {
+
+	ObjectInterface *object = (ObjectInterface *) class->interface;
+
+	object->copy = copy;
+	object->dealloc = dealloc;
+	object->init = init;
+	object->isEqual = isEqual;
+	object->isKindOfClass = isKindOfClass;
 }
-
-static const ObjectInterface interface = {
-	.init = init,
-	.copy = copy,
-	.dealloc = dealloc,
-	.isEqual = isEqual,
-	.isKindOfClass = isKindOfClass,
-};
 
 Class __Object = {
 	.name = "Object",
-	.size = sizeof(Object),
-	.interface = (const Interface *) &interface,
-};
+	.instanceSize = sizeof(Object),
+	.interfaceSize = sizeof(ObjectInterface),
+	.initialize = initialize, };

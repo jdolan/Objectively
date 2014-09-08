@@ -43,20 +43,21 @@ static void initialize(Class *class) {
 		assert(class->instanceSize);
 		assert(class->interfaceSize);
 
+		class->interface = calloc(1, class->interfaceSize);
+		assert(class->interface);
+
 		if (class == (Class *) &__Object) {
 			assert(class->superclass == NULL);
 		} else {
 			assert(class->superclass != NULL);
 
-			initialize(class->superclass);
+			Class *super = class->superclass;
+			initialize(super);
 
-			assert(class->superclass->instanceSize <= class->instanceSize);
-			assert(class->superclass->interfaceSize <= class->interfaceSize);
+			assert(super->instanceSize <= class->instanceSize);
+			assert(super->interfaceSize <= class->interfaceSize);
 
-			class->interface = calloc(1, class->interfaceSize);
-			assert(class->interface);
-
-			memcpy(class->interface, class->superclass->interface, class->superclass->interfaceSize);
+			memcpy(class->interface, super->interface, super->interfaceSize);
 		}
 
 		class->initialize(class);
@@ -77,7 +78,7 @@ id __new(Class *class, ...) {
 		va_list args;
 		va_start(args, class);
 
-		obj = class->interface->init(obj, &args);
+		obj = ((ObjectInterface *) class->interface)->init(obj, class->interface, &args);
 
 		va_end(args);
 	}

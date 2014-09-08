@@ -30,29 +30,6 @@
 
 #define CLASS_MAGIC 0xabcdef
 
-typedef struct Interface Interface;
-
-/**
- * @brief The Interface structure.
- */
-struct Interface {
-
-	/**
-	 * @brief The instance initializer.
-	 *
-	 * @details This method typically begins with a call to the superclass
-	 * initializer, passing the arguments list up the initializer chain. Method
-	 * overrides as well as method and member assignment and initialization
-	 * then follow.
-	 *
-	 * @param obj The newly allocated instance.
-	 * @param args The initializer arguments list.
-	 *
-	 * @return The initialized instance, or the unmodified pointer on error.
-	 */
-	id (*init)(id obj, va_list *args);
-};
-
 typedef struct Class Class;
 
 /**
@@ -106,24 +83,25 @@ typedef struct Class Class;
 struct Class {
 
 	/**
+	 * @private
+	 *
 	 * @brief The magic number identifying this structure as a class.
 	 *
 	 * @details Do not set this value; it is set by Objectively when your class
 	 * is first encountered to signify initialization.
 	 *
-	 * @private
 	 */
 	int magic;
-
-	/**
-	 * @brief The superclass (required). e.g. `&__Object`.
-	 */
-	Class *superclass;
 
 	/**
 	 * @brief The class name (required).
 	 */
 	const char *name;
+
+	/**
+	 * @brief The superclass (required). e.g. `&__Object`.
+	 */
+	Class *superclass;
 
 	/**
 	 * @brief The instance size (required).
@@ -136,16 +114,21 @@ struct Class {
 	const size_t interfaceSize;
 
 	/**
-	 * @brief The interface (required).
-	 */
-	const Interface* interface;
-
-	/**
-	 * @brief The class initializer (optional).
+	 * @brief The class initializer (required).
 	 *
 	 * @details This method is run once when your class is first initialized.
 	 */
 	void (*initialize)(Class *class);
+
+	/**
+	 * @private
+	 *
+	 * @brief The interface.
+	 *
+	 * @details Do not set this field. The interface is allocated by
+	 * Objectively when your class is initialized.
+	 */
+	id interface;
 };
 
 /**
@@ -199,7 +182,7 @@ extern void delete(id obj);
  * @brief Apply a Superclass selector to an instance.
  */
 #define super(type, instance, method, ...) \
-	((type *) instance)->interface->method(instance, ## __VA_ARGS__)
+	((type##Interface *) superclassof(instance)->interface)->method((type *) instance, ## __VA_ARGS__)
 
 /**
  * @brief Take an initializer parameter.

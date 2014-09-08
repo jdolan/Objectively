@@ -47,31 +47,16 @@ struct Object {
 	 */
 	const Class *class;
 
-	/*
-	 * @brief A pointer to the typed interface for Object.
+	/**
+	 * @brief The typed instance of Object.
 	 */
-	const id interface;
+	const ObjectInterface *interface;
 };
 
 /*
  * @brief The Object interface.
  */
 struct ObjectInterface {
-
-	/**
-	 * @brief The instance initializer (required).
-	 *
-	 * @details This method typically begins with a call to the superclass
-	 * initializer, passing the arguments list up the initializer chain. Method
-	 * overrides as well as method and member assignment and initialization
-	 * then follow.
-	 *
-	 * @param obj The newly allocated instance.
-	 * @param args The initializer arguments list.
-	 *
-	 * @return The initialized instance, or the unmodified pointer on error.
-	 */
-	id (*init)(id obj, va_list *args);
 
 	/**
 	 * @brief Creates a shallow copy of this Object.
@@ -96,11 +81,12 @@ struct ObjectInterface {
 	 * then follow.
 	 *
 	 * @param obj The newly allocated instance.
+	 * @param interface The allocated
 	 * @param args The initializer arguments list.
 	 *
 	 * @return The initialized instance, or the unmodified pointer on error.
 	 */
-	id (*init)(id obj, va_list *args);
+	Object *(*init)(id obj, id interface, va_list *args);
 
 	/**
 	 * @brief Tests equality of the other Object.
