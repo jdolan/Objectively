@@ -28,11 +28,9 @@
 
 #include <objectively/types.h>
 
-#define CLASS_MAGIC 0xabcdef
-
-typedef struct Class Class;
-
 /**
+ * @file
+ *
  * @brief The Class structure.
  *
  * @details Classes are the interface between the library functions
@@ -79,6 +77,17 @@ typedef struct Class Class;
  * const Class *__Foo = &class;
  *
  * @endcode
+ */
+
+/**
+ * @brief Initialized Classes reflect this value as their first word.
+ */
+#define CLASS_MAGIC 0xabcdef
+
+typedef struct Class Class;
+
+/**
+ * @brief The Class type.
  */
 struct Class {
 

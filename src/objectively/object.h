@@ -48,7 +48,7 @@ struct Object {
 	const Class *class;
 
 	/**
-	 * @brief The typed instance of Object.
+	 * @brief The typed interface of Object.
 	 */
 	const ObjectInterface *interface;
 };

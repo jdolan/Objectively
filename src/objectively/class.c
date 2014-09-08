@@ -74,11 +74,12 @@ id __new(Class *class, ...) {
 	if (obj) {
 
 		((Object *) obj)->class = class;
+		id interface = class->interface;
 
 		va_list args;
 		va_start(args, class);
 
-		obj = ((ObjectInterface *) class->interface)->init(obj, class->interface, &args);
+		obj = ((ObjectInterface *) interface)->init(obj, interface, &args);
 
 		va_end(args);
 	}

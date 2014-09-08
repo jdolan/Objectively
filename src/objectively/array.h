@@ -46,11 +46,9 @@ struct Array {
 	Object object;
 
 	/**
-	 * @brief The Array elements.
-	 *
-	 * @private
+	 * @brief The Array capacity.
 	 */
-	id *elements;
+	size_t capacity;
 
 	/**
 	 * @brief The count of elements.
@@ -58,14 +56,16 @@ struct Array {
 	size_t count;
 
 	/**
-	 * @brief The Array capacity.
+	 * @brief The Array elements.
+	 *
+	 * @private
 	 */
-	size_t capacity;
+	id *elements;
 
 	/**
-	 * @brief The typed Interface.
+	 * @brief The typed interface of Array.
 	 */
-	ArrayInterface *interface;
+	const ArrayInterface *interface;
 };
 
 /**
