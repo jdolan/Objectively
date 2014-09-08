@@ -62,7 +62,7 @@ Implementing a type
 
     static void initialize(Class *class) {
         ((ObjectInterface *) class->interface)->init = init;
-	((FooInterface *) class->interface)->baz = baz;
+        ((FooInterface *) class->interface)->baz = baz;
     }
 
     Class __Foo = {
