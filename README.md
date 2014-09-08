@@ -29,17 +29,13 @@ Declaring a type
 
     struct Foo {
         Object object;
-
-        int bar;
-        // ...
-
+        const char *bar;
+        
         const FooInterface *interface;
     };
 
     struct FooInterface {
         ObjectInterface objectInterface;
-
-        // ...
 
         void (*baz)(const Foo *self);
     };
@@ -61,9 +57,7 @@ Implementing a type
         Foo *self = (Foo *) super(Object, obj, init, interface, args);
         if (self) {
             self->interface = (FooInterface *) interface;
-
-            self->bar = arg(args, int, 0x69);
-            // ...
+            self->bar = arg(args, const char *, NULL);
         }
         return self;
     }
@@ -71,15 +65,14 @@ Implementing a type
     #pragma mark - Foo instance methods
 
     static void baz(const Foo *self) {
-        printf("%d\n", self->bar);
+        printf("%s\n", self->bar);
     }
 
     #pragma mark - Foo class methods
 
     static void initialize(Class *class) {
-
-        ((ObjectInterface *) interface)->init = init;
-	((FooInterface *) interface)->baz = baz;
+        ((ObjectInterface *) class->interface)->init = init;
+	((FooInterface *) class->interface)->baz = baz;
     }
 
     Class __Foo = {
