@@ -20,97 +20,94 @@ Adding Objectively to your project
 Declaring a type
 ---
 
-    /* foo.h */
+Types in Objectively are comprised of 3 components:
 
-    #include <objectively.h>
+1) The instance struct, containing the parent type and any additional fields.
 
-    typedef struct Foo {
+    struct Foo {
         Object object;
-        void (*bar)(const Foo *self);
-        const char *baz;
-        // ...
-    } Foo;
+        const char *bar;
+        
+        const FooInterface *interface;
+    };
+    
+2) The interface struct, containing the parent interface and any additional methods.
 
-    extern const Class *__Foo;
+    struct FooInterface {
+        ObjectInterface objectInterface;
+
+        void (*baz)(const Foo *self);
+    };
+
+ 3) The class descriptor, serving to tie 1) and 2) together.
+
+    extern Class __Foo;
 
 Implementing a type
 ---
 
-    /* foo.c */
-
-    #include "foo.h"
-
-    static void bar(const Foo *self) {
+    static void baz(const Foo *self) {
         printf("%s\n", self->bar);
     }
+    
+    static Object *init(id obj, id interface, va_list *args) {
 
-    static id init(id obj, va_list *args) {
-
-        Foo *self = (Foo *) super(Object, obj, init, args);
+        Foo *self = (Foo *) super(Object, obj, init, interface, args);
         if (self) {
-            override(Object, self, init, init);
-
-            self->bar = bar;
-            self->baz = arg(args, const char *, NULL);
+            self->interface = (FooInterface *) interface;
+            self->bar = arg(args, const char *, NULL);
         }
         return self;
     }
 
-    /* class initialization boilerplate */
+    static void initialize(Class *class) {
+        ((ObjectInterface *) class->interface)->init = init;
+        ((FooInterface *) class->interface)->baz = baz;
+    }
 
-    static Foo foo;
-
-    static struct Class class {
+    Class __Foo = {
         .name = "Foo",
-        .size = sizeof(Foo),
         .superclass = &__Object,
-        .archetype = &foo,
-        .init = init,
-    };
-
-    const Class *__Foo = &class;
+        .instanceSize = sizeof(Foo),
+        .interfaceSize = sizeof(FooInterface),
+        .initialize = initialize, };
 
 Using a type
 ---
 
     Foo *foo = new(Foo, "hello world!");
-	$(foo, bar);
-	delete(foo);
+    $(foo, bar);
+    delete(foo);
+
+
+See [foo.c](test/objectively/foo.c) for the full source to this example.
 
 Initialization
 ---
-Classes are initialized at compile time in Objectively, which means you rarely have to monkey with them at runtime. To instantiate a type, simply call `new` from anywhere in your program. The first time a type is instantiated, an optional Class initializer, `initialize`, is called. Use `initialize` for things like singletons and other shared resources.
-
-Archetypes
----
-For each Class, an _archtype_ exists. The archetype is a statically allocated instance of the corresponding type that serves to hold the default method implementations. This serves as the basis for Objectively's inheritance graph. The archetype is initialized the first time the type is referenced in the application.
+Classes are initialized at compile time in Objectively, which means you rarely have to monkey with them at runtime. To instantiate a type, simply call `new` from anywhere in your program. The first time a type is instantiated, an optional Class initializer, `initialize`, is called. Use `initialize` to setup your interface, override methods, or create a singleton.
 
 Invoking a method
 ---
-To invoke a method, call the function pointer or use the `$` macro.
+To invoke a method, use the `$` macro.
 
-	self->isEqual(self, other);
-
-	/* or */
-
-	$(self, isEqual, other);
+    $(self, isEqual, other);
 
 Overriding a method
 ---
-To override a method, simply overwrite the function pointer or use the `override` macro. Overrides are typically installed in the initializer method.
+To override a method, overwrite the function pointer from within your Class' `initialize` method.
 
-	((Object *) self)->dealloc = dealloc;
-
-	/* or */
-
-	override(Object, self, dealloc, dealloc);
+    ((ObjectInterface *) interface)->init = init;
+    ((ObjectInterface *) interface)->isEqual = isEqual;
 
 Calling super
 ---
-To invoke a supertype's method implementation, either directly invoke the desired archetype implementation or use the `super` macro.
+To invoke a supertype's method implementation, use the `super` macro.
 
-	((Object *) archetype(__Object))->dealloc(self);
+    super(Object, self, dealloc);
 
-	/* or */
+Core library
+---
+Objectively provides a small but useful core library:
 
-	super(Object, self, dealloc);
+ * [Array](src/objectively/array.h) - Mutable arrays.
+ * [String](src/objectively/string.h) - Mutable strings.
