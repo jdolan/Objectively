@@ -33,50 +33,11 @@
  *
  * @brief The Class structure.
  *
- * @details Classes are the interface between the library functions
- * <code>new</code>, <code>cast</code>, <code>delete</code>, et. al. and
- * Objects. Each Class describes a type, and each instance of that type will
- * reference the Class.
+ * Classes are the bridge between Objects and their interfaces. They provide
+ * an entry point to the framework via the library function <code>new</code>.
  *
- * To implement a type, define its instance structure and its Class
- * descriptor:
- *
- * @code
- *
- * // foo.h
- *
- * typedef struct Foo {
- * 	   Object object;
- *     // ...
- * } Foo;
- *
- * extern const Class *__Foo;
- *
- * // foo.c
- *
- * static id init(id obj, va_list *args) {
- *
- *     Foo *self = super(Object, obj, init, args);
- *     if (self) {
- *         override(Object, self, init, init);
- *         // ...
- *     }
- *     return self;
- * }
- *
- * static Foo foo;
- *
- * static Class class {
- *     .name = "Foo",
- *     .size = sizeof(Foo),
- *     .superclass = &__Object,
- *     .archetype = &foo,
- *     .init = init,
- * };
- *
- * const Class *__Foo = &class;
- *
- * @endcode
+ * Each Class describes a type and initializes an interface. Each instance of
+ * that type will reference the Class and, in turn, its interface.
  */
 
 /**
@@ -94,16 +55,14 @@ struct Class {
 	/**
 	 * @private
 	 *
-	 * @brief The magic number identifying this structure as a class.
+	 * @brief The magic number identifying this structure as a Class.
 	 *
-	 * @details Do not set this value; it is set by Objectively when your class
-	 * is first encountered to signify initialization.
-	 *
+	 * *Do not* set this value; it is set when your Class is initialized.
 	 */
 	int magic;
 
 	/**
-	 * @brief The class name (required).
+	 * @brief The Class name (required).
 	 */
 	const char *name;
 
@@ -123,19 +82,24 @@ struct Class {
 	const size_t interfaceSize;
 
 	/**
-	 * @brief The class initializer (required).
+	 * @brief The Class initializer (optional).
 	 *
-	 * @details This method is run once when your class is first initialized.
+	 * This method is run _once_ when your class is first initialized.
+	 *
+	 * If your Class defines an interface, you *must* implement this method
+	 * and initialize that interface here.
+	 *
+	 * @remark The `interface` property of the Class is copied from the
+	 * superclass before this method is called. Method overrides are achieved
+	 * by simply overwriting the function pointers here.
 	 */
 	void (*initialize)(Class *class);
 
 	/**
-	 * @private
+	 * @brief The interface handle.
 	 *
-	 * @brief The interface.
-	 *
-	 * @details Do not set this field. The interface is allocated by
-	 * Objectively when your class is initialized.
+	 * Do not set this field. The interface is allocated by Objectively when
+	 * your class is initialized.
 	 */
 	id interface;
 };
@@ -175,7 +139,7 @@ extern void delete(id obj);
 #define classof(instance) \
 	((Object *) instance)->class
 
-/*
+/**
  * @brief Resolve the Superclass of an instance.
  */
 #define superclassof(instance) \

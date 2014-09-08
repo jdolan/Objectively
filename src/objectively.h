@@ -24,6 +24,89 @@
 #ifndef _objectively_h_
 #define _objectively_h_
 
+/**
+ * @file
+ *
+ * @brief Objectively: Ultra-lightweight object oriented framework for c99.
+ *
+ * Types in Objectively are comprised of 3 components:
+ *
+ *  1. The instance struct, containing the parent type and any additional fields.
+ *  2. The interface struct, containing the parent interface and any additional methods.
+ *  3. The class descriptor, serving to tie 1. and 2. together.
+ *
+ * @code
+ *
+ * // foo.h
+ *
+ * typedef struct Foo Foo;
+ * typedef struct FooInterface FooInterface;
+ *
+ * struct Foo {
+ * 	   Object object;
+ *
+ *     int bar;
+ *     // ...
+ *
+ *     const FooInterface *interface;
+ * };
+ *
+ * struct FooInterface {
+ * 	   ObjectInterface objectInterface;
+ *
+ * 	   // ...
+ *
+ * 	   void (*baz)(const Foo *self);
+ * };
+ *
+ * extern Class __Foo;
+ *
+ * // foo.c
+ *
+ * #pragma mark - Object instance methods
+ *
+ * static Object *init(id obj, id interface, va_list *args) {
+ *
+ *     Foo *self = (Foo *) super(Object, obj, init, interface, args);
+ *     if (self) {
+ *         self->interface = (FooInterface *) interface;
+ *
+ *         self->bar =
+ *         // ...
+ *     }
+ *     return self;
+ * }
+ *
+ * #pragma mark - Foo instance methods
+ *
+ * static void baz(const Foo *self) {
+ *     printf("%d\n", self->bar);
+ * }
+ *
+ * #pragma mark - Foo class methods
+ *
+ * static void initialize(Class *class) {
+ *
+ *     ObjectInterface *object = (ObjectInterface *) class->interface;
+ *
+ *     object->init = init;
+ *
+ *     FooInterface *foo = (FooInterface *) class->interface;
+ *
+ *     foo->baz = baz;
+ * }
+ *
+ * Class __Foo = {
+ *     .name = "Foo",
+ *     .superclass = &__Object,
+ *     .instanceSize = sizeof(Foo),
+ *     .interfaceSize = sizeof(FooInterface),
+ *     .initialize = initialize,
+ * };
+ *
+ * @endcode
+ */
+
 #include <objectively/array.h>
 #include <objectively/class.h>
 #include <objectively/object.h>
