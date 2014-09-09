@@ -22,6 +22,7 @@
  */
 
 #include <check.h>
+#include <stdio.h>
 
 #include <objectively.h>
 
@@ -58,7 +59,7 @@ START_TEST(array)
 		ck_assert(!$(array, containsObject, one));
 		ck_assert_int_eq(2, array->count);
 
-		$(array, removeAllObjects);
+		$(array, removeAllObjects, NO);
 
 		ck_assert_int_eq(0, array->count);
 
@@ -68,6 +69,26 @@ START_TEST(array)
 		delete(one);
 		delete(two);
 		delete(three);
+
+		for (int i = 0; i < 1024; i++) {
+			$(array, addObject, new(Object));
+		}
+
+		int counter = 0;
+
+		BOOL enumerator(const Array *array, id obj, id data) {
+			counter++;
+			return NO;
+		}
+
+		$(array, enumerateObjects, enumerator, NULL);
+
+		ck_assert_int_eq(1024, counter);
+
+		$(array, removeAllObjects, YES);
+
+		ck_assert_int_eq(array->count, 0);
+
 		delete(array);
 
 	}END_TEST

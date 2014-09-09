@@ -35,6 +35,8 @@
 typedef struct Array Array;
 typedef struct ArrayInterface ArrayInterface;
 
+typedef BOOL (*ArrayEnumerator)(const Array *array, id obj, id data);
+
 /**
  * @brief The Array type.
  */
@@ -63,6 +65,11 @@ struct Array {
 	id *elements;
 
 	/**
+	 * @brief The Array initial capacity.
+	 */
+	size_t initialCapacity;
+
+	/**
 	 * @brief The typed interface of Array.
 	 */
 	const ArrayInterface *interface;
@@ -89,19 +96,41 @@ struct ArrayInterface {
 	BOOL (*containsObject)(const Array *self, const id obj);
 
 	/**
+	 * @brief Enumerate the elements of this Array with the given function.
+	 *
+	 * @param enumerator The enumerator function.
+	 * @param data User data.
+	 *
+	 * @remark The enumerator should return `YES` to break the iteration.
+	 */
+	void (*enumerateObjects)(const Array *self, ArrayEnumerator enumerator, id data);
+
+	/**
+	 * @brief Creates a new Array with elements that pass the filter function.
+	 *
+	 * @param enumerator The enumerator function.
+	 * @param data User data.
+	 *
+	 * @return The new, filtered Array.
+	 */
+	Array *(*filterObjects)(const Array *self, ArrayEnumerator enumerator, id data);
+
+	/**
 	 * @return The index of the given Object, or -1 if not found.
 	 */
 	int (*indexOfObject)(const Array *self, const id obj);
 
 	/**
+	 * @brief Removes all Objects from this Array.
+	 *
+	 * @param delete If YES, each object is `deleted` upon removal.
+	 */
+	void (*removeAllObjects)(Array *self, BOOL delete);
+
+	/**
 	 * @brief Removes the specified Object from this Array.
 	 */
 	void (*removeObject)(Array *self, const id obj);
-
-	/**
-	 * @brief Removes all Objects from this Array.
-	 */
-	void (*removeAllObjects)(Array *self);
 };
 
 /**

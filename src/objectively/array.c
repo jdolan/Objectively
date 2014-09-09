@@ -43,7 +43,7 @@ static Object *init(id obj, id interface, va_list *args) {
 	if (self) {
 		self->interface = (ArrayInterface *) interface;
 
-		self->capacity = arg(args, size_t, ARRAY_CHUNK_SIZE);
+		self->capacity = self->initialCapacity = arg(args, size_t, ARRAY_CHUNK_SIZE);
 		self->elements = malloc(self->capacity * sizeof(id));
 	}
 
@@ -59,7 +59,10 @@ static void addObject(Array *self, const id obj) {
 	assert(object);
 
 	if (self->count == self->capacity) {
-		self->elements = realloc(self->elements, self->capacity + ARRAY_CHUNK_SIZE * sizeof(id));
+
+		self->capacity += ARRAY_CHUNK_SIZE;
+		self->elements = realloc(self->elements, self->capacity * sizeof(id));
+
 		assert(self->elements);
 	}
 
@@ -69,6 +72,32 @@ static void addObject(Array *self, const id obj) {
 static BOOL containsObject(const Array *self, const id obj) {
 
 	return $(self, indexOfObject, obj) != -1;
+}
+
+static void enumerateObjects(const Array *self, ArrayEnumerator enumerator, id data) {
+
+	assert(enumerator);
+
+	for (size_t i = 0; i < self->count; i++) {
+		if (enumerator(self, self->elements[i], data)) {
+			break;
+		}
+	}
+}
+
+static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, id data) {
+
+	assert(enumerator);
+
+	Array *array = new(Array);
+
+	for (size_t i = 0; i < self->count; i++) {
+		if (enumerator(self, self->elements[i], data)) {
+			$(array, addObject, self->elements[i]);
+		}
+	}
+
+	return array;
 }
 
 static int indexOfObject(const Array *self, const id obj) {
@@ -86,6 +115,25 @@ static int indexOfObject(const Array *self, const id obj) {
 	return -1;
 }
 
+static void removeAllObjects(Array *self, BOOL delete) {
+
+	if (delete) {
+		for (size_t i = 0; i < self->count; i++) {
+			$((Object *) self->elements[i], dealloc);
+		}
+	}
+
+	self->count = 0;
+
+	if (self->capacity > self->initialCapacity) {
+
+		self->capacity = self->initialCapacity;
+		self->elements = realloc(self->elements, self->capacity * sizeof(id));
+
+		assert(self->elements);
+	}
+}
+
 static void removeObject(Array *self, const id obj) {
 
 	int index = $(self, indexOfObject, obj);
@@ -99,26 +147,24 @@ static void removeObject(Array *self, const id obj) {
 	}
 }
 
-static void removeAllObjects(Array *self) {
-	self->count = 0;
-}
-
 #pragma mark - Array class methods
 
-static void initialize(Class *class) {
+static void initialize(Class *self) {
 
-	ObjectInterface *object = (ObjectInterface *) class->interface;
+	ObjectInterface *object = (ObjectInterface *) self->interface;
 
 	object->dealloc = dealloc;
 	object->init = init;
 
-	ArrayInterface *array = (ArrayInterface *) class->interface;
+	ArrayInterface *array = (ArrayInterface *) self->interface;
 
 	array->addObject = addObject;
 	array->containsObject = containsObject;
+	array->enumerateObjects = enumerateObjects;
+	array->filterObjects = filterObjects;
 	array->indexOfObject = indexOfObject;
-	array->removeObject = removeObject;
 	array->removeAllObjects = removeAllObjects;
+	array->removeObject = removeObject;
 }
 
 Class __Array = {

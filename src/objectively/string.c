@@ -169,16 +169,16 @@ static String *substring(const String *self, RANGE range) {
 
 #pragma mark - Interface
 
-static void initialize(Class *class) {
+static void initialize(Class *self) {
 
-	ObjectInterface *object = (ObjectInterface *) class->interface;
+	ObjectInterface *object = (ObjectInterface *) self->interface;
 
 	object->init = init;
 	object->copy = copy;
 	object->dealloc = dealloc;
 	object->isEqual = isEqual;
 
-	StringInterface *string = (StringInterface *) class->interface;
+	StringInterface *string = (StringInterface *) self->interface;
 
 	string->appendFormat = appendFormat;
 	string->appendString = appendString;
