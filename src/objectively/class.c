@@ -28,6 +28,39 @@
 #include <objectively/class.h>
 #include <objectively/object.h>
 
+static Class *__classes;
+
+/**
+ * @brief Called `atexit` to teardown Objectively.
+ */
+static void teardown(void) {
+	Class *c;
+
+	c = __classes;
+	while (c) {
+		if (c->destroy) {
+			c->destroy(c);
+		}
+		c = c->locals.next;
+	}
+
+	c = __classes;
+	while (c) {
+		if (c->interface) {
+			free(c->interface);
+		}
+		c = c->locals.next;
+	}
+}
+
+/**
+ * @brief Called when initializing `Object` to setup Objectively.
+ */
+static void setup(void) {
+
+	atexit(teardown);
+}
+
 /**
  * @brief Initializes the class by setting up its magic and archetype.
  */
@@ -35,7 +68,7 @@ static void initialize(Class *class) {
 
 	assert(class);
 
-	if (__sync_val_compare_and_swap(&class->magic, 0, -1) == 0) {
+	if (__sync_val_compare_and_swap(&class->locals.magic, 0, -1) == 0) {
 
 		assert(class->name);
 		assert(class->instanceSize);
@@ -46,6 +79,7 @@ static void initialize(Class *class) {
 
 		if (class == (Class *) &__Object) {
 			assert(class->superclass == NULL);
+			setup();
 		} else {
 			assert(class->superclass != NULL);
 
@@ -60,9 +94,11 @@ static void initialize(Class *class) {
 
 		class->initialize(class);
 
-		__sync_val_compare_and_swap(&class->magic, -1, CLASS_MAGIC);
+		class->locals.next = __sync_lock_test_and_set(&__classes, class);
+		class->locals.magic = CLASS_MAGIC;
+
 	} else {
-		while (__sync_fetch_and_or(&class->magic, 0) != CLASS_MAGIC) {
+		while (__sync_fetch_and_or(&class->locals.magic, 0) != CLASS_MAGIC) {
 			;
 		}
 	}
@@ -103,7 +139,7 @@ id __cast(Class *class, const id obj) {
 			const Class *c = object->class;
 			while (c) {
 
-				assert(c->magic == CLASS_MAGIC);
+				assert(c->locals.magic == CLASS_MAGIC);
 
 				// as a special case, we optimize for __Object
 

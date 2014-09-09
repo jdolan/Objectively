@@ -89,12 +89,9 @@ START_TEST(dictionary)
 		int counter = 0;
 
 		BOOL enumerator(const Dictionary *dictionary, id obj, id key, id data) {
-
 			release(obj);
 			release(key);
-
 			counter++;
-
 			return NO;
 		}
 

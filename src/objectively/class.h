@@ -54,14 +54,29 @@ typedef struct Class Class;
 struct Class {
 
 	/**
-	 * @brief The magic number identifying this structure as a Class.
+	 * @private
+	 *
+	 * @brief For internal use only.
 	 */
-	int magic;
+	struct {
+
+		/**
+		 * @brief Identifies this structure as an initialized Class.
+		 */
+		int magic;
+
+		/**
+		 * @brief Provides chaining of initialized Classes.
+		 */
+		Class *next;
+
+	} locals;
 
 	/**
 	 * @brief The Class destructor (optional).
 	 *
-	 * This method is run _once_ when your class is no longer referenced.
+	 * This method is run _once_ for initialized Classes when your application
+	 * exits.
 	 *
 	 * @param self The Class.
 	 */
