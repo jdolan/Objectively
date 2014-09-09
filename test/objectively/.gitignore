@@ -1,6 +1,7 @@
 *.log
 *.trs
 array
+dictionary
 foo
 object
 string

@@ -184,17 +184,20 @@ extern void retain(id obj);
 #define arg(args, type, def) \
 	(args ? va_arg(*args, type) : def)
 
-#define log(...) \
-	fprintf(stderr, __VA_ARGS__)
+/**
+ * @brief Log a message.
+ */
+#define log(fmt, ...) \
+	fprintf(stderr, fmt, ## __VA_ARGS__)
 
 /**
- * @brief Returns the higher of the two parameters.
+ * @return The maximum of the two parameters.
  */
 #define max(a, b) \
    ({ typeof(a) _a = (a); typeof(b) _b = (b); _a > _b ? _a : _b; })
 
 /**
- * @brief Returns the higher of the two parameters.
+ * @return The minimum of the two parameters.
  */
 #define min(a, b) \
    ({ typeof(a) _a = (a); typeof(b) _b = (b); _a < _b ? _a : _b; })

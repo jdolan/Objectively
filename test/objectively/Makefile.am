@@ -10,6 +10,7 @@ TEST_LDADD = \
 
 TESTS = \
 	array \
+	dictionary \
 	object \
 	string
 
@@ -21,7 +22,14 @@ array_CFLAGS = \
 	$(TEST_CFLAGS)
 array_LDADD = \
 	$(TEST_LDADD)
-	
+
+dictionary_SOURCES = \
+	object.c
+dictionary_CFLAGS = \
+	$(TEST_CFLAGS)
+dictionary_LDADD = \
+	$(TEST_LDADD)
+
 object_SOURCES = \
 	object.c
 object_CFLAGS = \
