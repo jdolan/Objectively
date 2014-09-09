@@ -36,8 +36,7 @@ static void initialize(Class *class) {
 
 	assert(class);
 
-	if (!class->magic) {
-		class->magic = CLASS_MAGIC;
+	if (__sync_val_compare_and_swap(&class->magic, 0, -1) == 0) {
 
 		assert(class->name);
 		assert(class->instanceSize);
@@ -61,8 +60,11 @@ static void initialize(Class *class) {
 		}
 
 		class->initialize(class);
+		__sync_val_compare_and_swap(&class->magic, -1, CLASS_MAGIC);
 	} else {
-		assert(class->magic == CLASS_MAGIC);
+		while (__sync_fetch_and_or(&class->magic, 0) != CLASS_MAGIC) {
+			;
+		}
 	}
 }
 
@@ -118,7 +120,9 @@ id __cast(Class *class, const id obj) {
 
 void delete(id obj) {
 
-	if (obj) {
-		$((Object * ) obj, dealloc);
-	}
+	Object *object = cast(Object, obj);
+
+	assert(object);
+
+	$(object, dealloc);
 }

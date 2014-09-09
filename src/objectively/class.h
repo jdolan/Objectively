@@ -53,13 +53,49 @@ typedef struct Class Class;
 struct Class {
 
 	/**
-	 * @private
-	 *
 	 * @brief The magic number identifying this structure as a Class.
-	 *
-	 * *Do not* set this value; it is set when your Class is initialized.
 	 */
 	int magic;
+
+	/**
+	 * @brief The Class destructor (optional).
+	 *
+	 * This method is run _once_ when your class is no longer referenced.
+	 *
+	 * @param self The Class.
+	 */
+	void (*destroy)(Class *self);
+
+	/**
+	 * @brief The Class initializer (optional).
+	 *
+	 * This method is run _once_ when your class is first initialized.
+	 *
+	 * If your Class defines an interface, you *must* implement this method
+	 * and initialize that interface here.
+	 *
+	 * @param self The Class.
+	 *
+	 * @remark The `interface` property of the Class is copied from the
+	 * superclass before this method is called. Method overrides are achieved
+	 * by simply overwriting the function pointers here.
+	 */
+	void (*initialize)(Class *self);
+
+	/**
+	 * @brief The instance size (required).
+	 */
+	const size_t instanceSize;
+
+	/**
+	 * @brief The interface handle (do *not* provide).
+	 */
+	id interface;
+
+	/**
+	 * @brief The interface size (required).
+	 */
+	const size_t interfaceSize;
 
 	/**
 	 * @brief The Class name (required).
@@ -70,38 +106,6 @@ struct Class {
 	 * @brief The superclass (required). e.g. `&__Object`.
 	 */
 	Class *superclass;
-
-	/**
-	 * @brief The instance size (required).
-	 */
-	const size_t instanceSize;
-
-	/**
-	 * @brief The interface size (required).
-	 */
-	const size_t interfaceSize;
-
-	/**
-	 * @brief The Class initializer (optional).
-	 *
-	 * This method is run _once_ when your class is first initialized.
-	 *
-	 * If your Class defines an interface, you *must* implement this method
-	 * and initialize that interface here.
-	 *
-	 * @remark The `interface` property of the Class is copied from the
-	 * superclass before this method is called. Method overrides are achieved
-	 * by simply overwriting the function pointers here.
-	 */
-	void (*initialize)(Class *class);
-
-	/**
-	 * @brief The interface handle.
-	 *
-	 * Do not set this field. The interface is allocated by Objectively when
-	 * your class is initialized.
-	 */
-	id interface;
 };
 
 /**
