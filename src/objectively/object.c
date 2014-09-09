@@ -26,6 +26,7 @@
 #include <string.h>
 
 #include <objectively/object.h>
+#include <objectively/string.h>
 
 #pragma mark - Object instance methods
 
@@ -35,6 +36,14 @@ static Object *copy(const Object *self) {
 
 static void dealloc(Object *self) {
 	free(self);
+}
+
+static String *description(const Object *self) {
+	return new(String, "%s@%p", self->class->name, self);
+}
+
+static int hash(const Object *self) {
+	return *(int *) self;
 }
 
 static Object *init(id obj, id interface, va_list *args) {
@@ -65,12 +74,14 @@ static BOOL isKindOfClass(const Object *self, const Class *class) {
 
 #pragma mark - Object class methods
 
-static void initialize(Class *class) {
+static void initialize(Class *self) {
 
-	ObjectInterface *object = (ObjectInterface *) class->interface;
+	ObjectInterface *object = (ObjectInterface *) self->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
+	object->description = description;
+	object->hash = hash;
 	object->init = init;
 	object->isEqual = isEqual;
 	object->isKindOfClass = isKindOfClass;

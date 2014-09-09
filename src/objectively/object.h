@@ -53,6 +53,8 @@ struct Object {
 	const ObjectInterface *interface;
 };
 
+typedef struct String String;
+
 /*
  * @brief The Object interface.
  */
@@ -71,6 +73,16 @@ struct ObjectInterface {
 	 * @brief Frees all resources held by this Object.
 	 */
 	void (*dealloc)(Object *self);
+
+	/**
+	 * @return A brief description of this Object.
+	 */
+	String *(*description)(const Object *self);
+
+	/**
+	 * @return An integer hash for use in hash tables, etc.
+	 */
+	int (*hash)(const Object *self);
 
 	/**
 	 * @brief The instance initializer (required).
