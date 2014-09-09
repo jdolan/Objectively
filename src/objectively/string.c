@@ -30,11 +30,17 @@
 
 #pragma mark - Object instance methods
 
+/**
+ * @see Object::copy(const Object *)
+ */
 static Object *copy(const Object *self) {
 
 	return new(String, ((String * ) self)->str);
 }
 
+/**
+ * @see Object::dealloc(Object *)
+ */
 static void dealloc(Object *self) {
 
 	free(((String *) self)->str);
@@ -42,6 +48,9 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
+/**
+ * @see Object::init(id, id, va_list *)
+ */
 static Object *init(id obj, id interface, va_list *args) {
 
 	String *self = (String *) super(Object, obj, init, interface, args);
@@ -58,6 +67,9 @@ static Object *init(id obj, id interface, va_list *args) {
 	return (Object *) self;
 }
 
+/**
+ * @see Object::isEqual(const Object *, const Object *)
+ */
 static BOOL isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
@@ -78,6 +90,9 @@ static BOOL isEqual(const Object *self, const Object *other) {
 
 #pragma mark - String instance methods
 
+/**
+ * @see String::appendFormat(String *, const char *, ...)
+ */
 static String *appendFormat(String *self, const char *fmt, ...) {
 
 	va_list args;
@@ -102,6 +117,9 @@ static String *appendFormat(String *self, const char *fmt, ...) {
 	return self;
 }
 
+/**
+ * @see String::appendString(String *, const String *)
+ */
 static String *appendString(String *self, const String *other) {
 
 	if (other->len) {
@@ -121,6 +139,9 @@ static String *appendString(String *self, const String *other) {
 	return self;
 }
 
+/**
+ * @see String::compareTo(const String *, const String *, RANGE)
+ */
 static int compareTo(const String *self, const String *other, RANGE range) {
 
 	assert(range.offset + range.length <= self->len);
@@ -132,6 +153,9 @@ static int compareTo(const String *self, const String *other, RANGE range) {
 	return -1;
 }
 
+/**
+ * @see String::hasPrefix(const String *, const String *)
+ */
 static BOOL hasPrefix(const String *self, const String *prefix) {
 
 	if (prefix->len > self->len) {
@@ -142,6 +166,9 @@ static BOOL hasPrefix(const String *self, const String *prefix) {
 	return $(self, compareTo, prefix, range) == 0;
 }
 
+/**
+ * @see String::hasSuffix(const String *, const String *)
+ */
 static BOOL hasSuffix(const String *self, const String *suffix) {
 
 	if (suffix->len > self->len) {
@@ -152,6 +179,9 @@ static BOOL hasSuffix(const String *self, const String *suffix) {
 	return $(self, compareTo, suffix, range) == 0;
 }
 
+/**
+ * @see String::substring(const String *, RANGE)
+ */
 static String *substring(const String *self, RANGE range) {
 
 	assert(range.offset + range.length <= self->len);
@@ -169,6 +199,9 @@ static String *substring(const String *self, RANGE range) {
 
 #pragma mark - Interface
 
+/**
+ * @see Class::initialize(Class *)
+ */
 static void initialize(Class *self) {
 
 	ObjectInterface *object = (ObjectInterface *) self->interface;

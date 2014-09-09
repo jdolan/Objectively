@@ -35,6 +35,15 @@
 typedef struct Array Array;
 typedef struct ArrayInterface ArrayInterface;
 
+/**
+ * @brief A function pointer for Array enumeration (iteration).
+ *
+ * @param array The Array.
+ * @param obj The Object for the current iteration.
+ * @param data User data.
+ *
+ * @return See the documentation for the enumeration methods.
+ */
 typedef BOOL (*ArrayEnumerator)(const Array *array, id obj, id data);
 
 /**
@@ -121,16 +130,46 @@ struct ArrayInterface {
 	int (*indexOfObject)(const Array *self, const id obj);
 
 	/**
-	 * @brief Removes all Objects from this Array.
+	 * @param index The index of the desired Object.
 	 *
-	 * @param delete If YES, each object is `deleted` upon removal.
+	 * @return The Object at the specified index.
 	 */
-	void (*removeAllObjects)(Array *self, BOOL delete);
+	id (*objectAtIndex)(const Array *self, const int index);
+
+	/**
+	 * @brief Removes all Objects from this Array.
+	 */
+	void (*removeAllObjects)(Array *self);
 
 	/**
 	 * @brief Removes the specified Object from this Array.
 	 */
 	void (*removeObject)(Array *self, const id obj);
+
+	/**
+	 * @brief Removes the Object at the specified index.
+	 *
+	 * @param index The index of the Object to remove.
+	 */
+	void (*removeObjectAtIndex)(Array *self, const int index);
+
+	/**
+	 * @brief Resizes this Array to an appropriate capacity based on count.
+	 *
+	 * @remark This operation is entirely optional, but can reclaim memory
+	 * after large removal operations have executed.
+	 */
+	void (*resize)(Array *self);
+
+	/**
+	 * @brief Replaces the Object at the specified index.
+	 *
+	 * @param obj The Object with which to replace.
+	 * @param index The index of the Object to replace.
+	 *
+	 * @remark The index must not exceed the size of the Array.
+	 */
+	void (*setObjectAtIndex)(Array *self, const id obj, const int index);
 };
 
 /**

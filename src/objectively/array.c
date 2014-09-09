@@ -30,13 +30,23 @@
 
 #pragma mark - Object instance methods
 
+/**
+ * @see Object::dealloc(Object *)
+ */
 static void dealloc(Object *self) {
 
-	free(((Array *) self)->elements);
+	Array *this = (Array *) self;
+
+	$(this, removeAllObjects);
+
+	free(this->elements);
 
 	super(Object, self, dealloc);
 }
 
+/**
+ * @see Object::init(id, id, va_list *)
+ */
 static Object *init(id obj, id interface, va_list *args) {
 
 	Array *self = (Array *) super(Object, obj, init, interface, args);
@@ -52,11 +62,10 @@ static Object *init(id obj, id interface, va_list *args) {
 
 #pragma mark - Array instance methods
 
+/**
+ * @see addObject(Array *, const id)
+ */
 static void addObject(Array *self, const id obj) {
-
-	Object *object = cast(Object, obj);
-
-	assert(object);
 
 	if (self->count == self->capacity) {
 
@@ -66,25 +75,36 @@ static void addObject(Array *self, const id obj) {
 		assert(self->elements);
 	}
 
-	self->elements[self->count++] = object;
+	retain(obj);
+
+	self->elements[self->count++] = obj;
 }
 
+/**
+ * @see Array::containsObject(const Array *, const id)
+ */
 static BOOL containsObject(const Array *self, const id obj) {
 
 	return $(self, indexOfObject, obj) != -1;
 }
 
+/**
+ * @see Array::enumerateObjects(const Array *, ArrayEnumerator, id)
+ */
 static void enumerateObjects(const Array *self, ArrayEnumerator enumerator, id data) {
 
 	assert(enumerator);
 
 	for (size_t i = 0; i < self->count; i++) {
 		if (enumerator(self, self->elements[i], data)) {
-			break;
+			return;
 		}
 	}
 }
 
+/**
+ * @see Array::filterObjects(const Array *, ArrayEnumerator, id)
+ */
 static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, id data) {
 
 	assert(enumerator);
@@ -100,6 +120,9 @@ static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, id da
 	return array;
 }
 
+/**
+ * @see Array::indexOfObject(const Array *, const id)
+ */
 static int indexOfObject(const Array *self, const id obj) {
 
 	Object *object = cast(Object, obj);
@@ -115,40 +138,93 @@ static int indexOfObject(const Array *self, const id obj) {
 	return -1;
 }
 
-static void removeAllObjects(Array *self, BOOL delete) {
+/**
+ * @see Array::objectAtIndex(const Array *, const int)
+ */
+static id objectAtIndex(const Array *self, const int index) {
 
-	if (delete) {
-		for (size_t i = 0; i < self->count; i++) {
-			$((Object *) self->elements[i], dealloc);
-		}
+	assert(index > -1);
+	assert(index < self->count);
+
+	return self->elements[index];
+}
+
+/**
+ * @see Array::removeAllObjects(Array *)
+ */
+static void removeAllObjects(Array *self) {
+
+	for (size_t i = self->count; i > 0; i--) {
+		$(self, removeObjectAtIndex, i - 1);
+	}
+}
+
+/**
+ * @see Array::removeObject(Array *, const id)
+ */
+static void removeObject(Array *self, const id obj) {
+
+	int index = $(self, indexOfObject, obj);
+	if (index != -1) {
+		$(self, removeObjectAtIndex, index);
+	}
+}
+
+/**
+ * @see Array::removeObjectAtIndex(Array *, const int)
+ */
+static void removeObjectAtIndex(Array *self, const int index) {
+
+	assert(index > -1);
+	assert(index < self->count);
+
+	release(self->elements[index]);
+
+	for (size_t i = index; i < self->count; i++) {
+		self->elements[i] = self->elements[i + 1];
 	}
 
-	self->count = 0;
+	self->count--;
+}
 
-	if (self->capacity > self->initialCapacity) {
+/**
+ * @see Array::resize(Array *)
+ */
+static void resize(Array *self) {
 
-		self->capacity = self->initialCapacity;
+	size_t chunks = (self->count / ARRAY_CHUNK_SIZE) + 1;
+	size_t capacity = chunks * ARRAY_CHUNK_SIZE;
+
+	capacity = MAX(capacity, self->initialCapacity);
+	if (capacity != self->capacity) {
+
+		self->capacity = capacity;
 		self->elements = realloc(self->elements, self->capacity * sizeof(id));
 
 		assert(self->elements);
 	}
 }
 
-static void removeObject(Array *self, const id obj) {
+/**
+ * @see Array::setObjectAtIndex(Array *, const id, const int)
+ */
+static void setObjectAtIndex(Array *self, const id obj, const int index) {
 
-	int index = $(self, indexOfObject, obj);
+	assert(index > -1);
+	assert(index < self->count);
 
-	if (index != -1) {
-		for (size_t i = index; i < self->count; i++) {
-			self->elements[i] = self->elements[i + 1];
-		}
+	release(self->elements[index]);
 
-		self->count--;
-	}
+	retain(obj);
+
+	self->elements[index] = obj;
 }
 
 #pragma mark - Array class methods
 
+/**
+ * @see Class::initialize(Class *)
+ */
 static void initialize(Class *self) {
 
 	ObjectInterface *object = (ObjectInterface *) self->interface;
@@ -163,8 +239,12 @@ static void initialize(Class *self) {
 	array->enumerateObjects = enumerateObjects;
 	array->filterObjects = filterObjects;
 	array->indexOfObject = indexOfObject;
+	array->objectAtIndex = objectAtIndex;
 	array->removeAllObjects = removeAllObjects;
 	array->removeObject = removeObject;
+	array->removeObjectAtIndex = removeObjectAtIndex;
+	array->resize = resize;
+	array->setObjectAtIndex = setObjectAtIndex;
 }
 
 Class __Array = {

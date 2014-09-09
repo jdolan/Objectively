@@ -48,6 +48,11 @@ struct Object {
 	const Class *class;
 
 	/**
+	 * @brief The reference count of this Object.
+	 */
+	unsigned referenceCount;
+
+	/**
 	 * @brief The typed interface of Object.
 	 */
 	const ObjectInterface *interface;

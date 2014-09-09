@@ -30,22 +30,41 @@
 
 #pragma mark - Object instance methods
 
+/**
+ * @see Object::copy(const Object *)
+ */
 static Object *copy(const Object *self) {
+
 	return memcpy(calloc(1, self->class->instanceSize), self, self->class->instanceSize);
 }
 
+/**
+ * @see Object::dealloc(Object *)
+ */
 static void dealloc(Object *self) {
+
 	free(self);
 }
 
+/**
+ * @see Object::description(const Object *)
+ */
 static String *description(const Object *self) {
+
 	return new(String, "%s@%p", self->class->name, self);
 }
 
+/**
+ * @see Object::hash(const Object *)
+ */
 static int hash(const Object *self) {
+
 	return *(int *) self;
 }
 
+/**
+ * @see Object::init(id, id, va_list *)
+ */
 static Object *init(id obj, id interface, va_list *args) {
 
 	Object *self = (Object *) obj;
@@ -55,10 +74,17 @@ static Object *init(id obj, id interface, va_list *args) {
 	return (Object *) obj;
 }
 
+/**
+ * @see Object::isEqual(const Object *, const Object *)
+ */
 static BOOL isEqual(const Object *self, const Object *other) {
+
 	return self == other;
 }
 
+/**
+ * @see Object::isKindOfClass(const Object *, const Class *)
+ */
 static BOOL isKindOfClass(const Object *self, const Class *class) {
 
 	const Class *c = self->class;
@@ -74,6 +100,9 @@ static BOOL isKindOfClass(const Object *self, const Class *class) {
 
 #pragma mark - Object class methods
 
+/**
+ * @see Class::initialize(Class *)
+ */
 static void initialize(Class *self) {
 
 	ObjectInterface *object = (ObjectInterface *) self->interface;

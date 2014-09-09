@@ -32,7 +32,6 @@
  * @brief A mutable string implementation.
  */
 
-typedef struct String String;
 typedef struct StringInterface StringInterface;
 
 /**

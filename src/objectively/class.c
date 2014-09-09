@@ -29,7 +29,7 @@
 #include <objectively/class.h>
 #include <objectively/object.h>
 
-/*
+/**
  * @brief Initializes the class by setting up its magic and archetype.
  */
 static void initialize(Class *class) {
@@ -60,6 +60,7 @@ static void initialize(Class *class) {
 		}
 
 		class->initialize(class);
+
 		__sync_val_compare_and_swap(&class->magic, -1, CLASS_MAGIC);
 	} else {
 		while (__sync_fetch_and_or(&class->magic, 0) != CLASS_MAGIC) {
@@ -76,6 +77,8 @@ id __new(Class *class, ...) {
 	if (obj) {
 
 		((Object *) obj)->class = class;
+		((Object *) obj)->referenceCount = 1;
+
 		id interface = class->interface;
 
 		va_list args;
@@ -125,4 +128,24 @@ void delete(id obj) {
 	assert(object);
 
 	$(object, dealloc);
+}
+
+void release(id obj) {
+
+	Object *object = cast(Object, obj);
+
+	assert(object);
+
+	if (__sync_add_and_fetch(&object->referenceCount, -1) == 0) {
+		delete(object);
+	}
+}
+
+void retain(id obj) {
+
+	Object *object = cast(Object, obj);
+
+	assert(object);
+
+	__sync_add_and_fetch(&object->referenceCount, 1);
 }

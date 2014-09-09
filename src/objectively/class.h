@@ -126,6 +126,21 @@ extern id __cast(Class *class, const id obj);
 extern void delete(id obj);
 
 /**
+ * Atomically decrement the given Object's reference count. If the resulting
+ * reference count is `0`, the Object is deleted.
+ */
+extern void release(id obj);
+
+/**
+ * Atomically increment the given Object's reference count.
+ *
+ * @remark By calling this, the caller is expressing ownership of the Object,
+ * and preventing it from being released. Be sure to balance calls to `retain`
+ * with calls to `release`.
+ */
+extern void retain(id obj);
+
+/**
  * @brief Instantiate a type.
  */
 #define new(type, ...) \
