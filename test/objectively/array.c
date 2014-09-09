@@ -54,17 +54,25 @@ START_TEST(array)
 		ck_assert_int_eq(1, $(array, indexOfObject, two));
 		ck_assert_int_eq(2, $(array, indexOfObject, three));
 
+		ck_assert_int_eq(2, one->referenceCount);
+		ck_assert_int_eq(2, two->referenceCount);
+		ck_assert_int_eq(2, three->referenceCount);
+
 		$(array, removeObject, one);
 
 		ck_assert(!$(array, containsObject, one));
+		ck_assert_int_eq(1, one->referenceCount);
 		ck_assert_int_eq(2, array->count);
 
-		$(array, removeAllObjects, NO);
+		$(array, removeAllObjects);
 
 		ck_assert_int_eq(0, array->count);
 
 		ck_assert(!$(array, containsObject, two));
+		ck_assert_int_eq(1, two->referenceCount);
+
 		ck_assert(!$(array, containsObject, three));
+		ck_assert_int_eq(1, three->referenceCount);
 
 		delete(one);
 		delete(two);
@@ -77,7 +85,10 @@ START_TEST(array)
 		int counter = 0;
 
 		BOOL enumerator(const Array *array, id obj, id data) {
+
+			release(obj);
 			counter++;
+
 			return NO;
 		}
 
@@ -85,7 +96,7 @@ START_TEST(array)
 
 		ck_assert_int_eq(1024, counter);
 
-		$(array, removeAllObjects, YES);
+		$(array, removeAllObjects);
 
 		ck_assert_int_eq(array->count, 0);
 

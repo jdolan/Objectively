@@ -35,7 +35,12 @@
  */
 static Object *copy(const Object *self) {
 
-	return memcpy(calloc(1, self->class->instanceSize), self, self->class->instanceSize);
+	size_t size = self->class->instanceSize;
+
+	Object *object = memcpy(calloc(1, size), self, size);
+	object->referenceCount = 1;
+
+	return object;
 }
 
 /**

@@ -22,7 +22,6 @@
  */
 
 #include <assert.h>
-#include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -126,6 +125,11 @@ void delete(id obj) {
 	Object *object = cast(Object, obj);
 
 	assert(object);
+
+	if (object->referenceCount > 1) {
+		log("Deleting %s @ %p with reference count %d", object->class->name, obj,
+				object->referenceCount);
+	}
 
 	$(object, dealloc);
 }

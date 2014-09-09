@@ -135,15 +135,11 @@ struct DictionaryInterface {
 
 	/**
 	 * @brief Removes all Objects from this Dictionary.
-	 *
-	 * @param del If `YES`, each Object is `delete`d upon removal.
 	 */
 	void (*removeAllObjects)(Dictionary *self);
 
 	/**
 	 * @brief Removes the specified Object from this Dictionary.
-	 *
-	 * @param del If `YES`, the Object is `delete`d upon removal.
 	 */
 	void (*removeObjectForKey)(Dictionary *self, const id key);
 

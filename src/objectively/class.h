@@ -25,6 +25,7 @@
 #define _objectively_class_h_
 
 #include <stdarg.h>
+#include <stdio.h>
 
 #include <objectively/types.h>
 
@@ -121,7 +122,8 @@ extern id __cast(Class *class, const id obj);
 /**
  * @brief Delete (deallocate) an instance.
  *
- * @details You are responsible for deleting all Objects you create.
+ * @remark Deletion should be left to the creator of the Object. If you
+ * have `retain`ed an object, call `release` to relinquish ownership.
  */
 extern void delete(id obj);
 
@@ -181,5 +183,20 @@ extern void retain(id obj);
  */
 #define arg(args, type, def) \
 	(args ? va_arg(*args, type) : def)
+
+#define log(...) \
+	fprintf(stderr, __VA_ARGS__)
+
+/**
+ * @brief Returns the higher of the two parameters.
+ */
+#define max(a, b) \
+   ({ typeof(a) _a = (a); typeof(b) _b = (b); _a > _b ? _a : _b; })
+
+/**
+ * @brief Returns the higher of the two parameters.
+ */
+#define min(a, b) \
+   ({ typeof(a) _a = (a); typeof(b) _b = (b); _a < _b ? _a : _b; })
 
 #endif

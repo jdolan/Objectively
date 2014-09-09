@@ -31,6 +31,20 @@
 #pragma mark - Object instance methods
 
 /**
+ * @see Object::copy(const Object *)
+ */
+static Object *copy(const Object *self) {
+
+	Array *array = (Array *) super(Object, self, copy);
+
+	for (size_t i = 0; i < array->count; i++) {
+		retain(array->elements[i]);
+	}
+
+	return (Object *) array;
+}
+
+/**
  * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
@@ -195,7 +209,7 @@ static void resize(Array *self) {
 	size_t chunks = (self->count / ARRAY_CHUNK_SIZE) + 1;
 	size_t capacity = chunks * ARRAY_CHUNK_SIZE;
 
-	capacity = MAX(capacity, self->initialCapacity);
+	capacity = max(capacity, self->initialCapacity);
 	if (capacity != self->capacity) {
 
 		self->capacity = capacity;
@@ -229,6 +243,7 @@ static void initialize(Class *self) {
 
 	ObjectInterface *object = (ObjectInterface *) self->interface;
 
+	object->copy = copy;
 	object->dealloc = dealloc;
 	object->init = init;
 

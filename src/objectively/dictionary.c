@@ -32,6 +32,9 @@
 
 #pragma mark - Object instance methods
 
+/**
+ * @see Object::dealloc(Object *)
+ */
 static void dealloc(Object *self) {
 
 	Dictionary *this = (Dictionary *) self;
@@ -47,6 +50,9 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
+/**
+ * @see Object::init(id, id, va_list *)
+ */
 static Object *init(id obj, id interface, va_list *args) {
 
 	Dictionary *self = (Dictionary *) super(Object, obj, init, interface, args);
@@ -62,32 +68,43 @@ static Object *init(id obj, id interface, va_list *args) {
 
 #pragma mark - Dictionary instance methods
 
+static BOOL allKeys_enumerator(const Dictionary *dict, id obj, id key, id data) {
+	$((Array * ) data, addObject, key);
+	return NO;
+}
+
+/**
+ * @see Dictionary::allKeys(const Dictionary *)
+ */
 static Array *allKeys(const Dictionary *self) {
 
 	Array *keys = new(Array);
 
-	BOOL enumerator(const Dictionary *dict, id obj, id key, id data) {
-		$(keys, addObject, key); return NO;
-	}
-
-	$(self, enumerateObjectsAndKeys, enumerator, NULL);
+	$(self, enumerateObjectsAndKeys, allKeys_enumerator, keys);
 
 	return keys;
 }
 
+static BOOL allObjects_enumerator(const Dictionary *dict, id obj, id key, id data) {
+	$((Array * ) data, addObject, obj);
+	return NO;
+}
+
+/**
+ * @see Dictionary::allObjects(const Dictionary *)
+ */
 static Array *allObjects(const Dictionary *self) {
 
 	Array *objects = new(Array);
 
-	BOOL enumerator(const Dictionary *dict, id obj, id key, id data) {
-		$(objects, addObject, obj); return NO;
-	}
-
-	$(self, enumerateObjectsAndKeys, enumerator, NULL);
+	$(self, enumerateObjectsAndKeys, allObjects_enumerator, objects);
 
 	return objects;
 }
 
+/**
+ * @see Dictionary::enumerateObjectsAndKeys(const Dictionary *, DictionaryEnumerator, id)
+ */
 static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator enumerator,
 		id data) {
 
@@ -111,6 +128,9 @@ static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator
 	}
 }
 
+/**
+ * @see Dictionary::filterObjectsAndKeys(const Dictionary *, DictionaryEnumerator, id)
+ */
 static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumerator enumerator,
 		id data) {
 
@@ -138,6 +158,9 @@ static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumer
 	return dictionary;
 }
 
+/**
+ * @see Dictionary::objectForKey(const Dictionary *, const id)
+ */
 static id objectForKey(const Dictionary *self, const id key) {
 
 	assert(cast(Object, key));
@@ -154,6 +177,9 @@ static id objectForKey(const Dictionary *self, const id key) {
 	return NULL;
 }
 
+/**
+ * @see Dictionary::removeAllObjects(Dictionary *)
+ */
 static void removeAllObjects(Dictionary *self) {
 
 	for (size_t i = 0; i < self->capacity; i++) {
@@ -163,12 +189,15 @@ static void removeAllObjects(Dictionary *self) {
 
 			$(array, removeAllObjects);
 
-			release(array);
+			delete(array);
 			self->elements[i] = NULL;
 		}
 	}
 }
 
+/**
+ * @see Dictionary::removeObjectForKey(Dictionary *, const id)
+ */
 static void removeObjectForKey(Dictionary *self, const id key) {
 
 	assert(cast(Object, key));
@@ -183,7 +212,7 @@ static void removeObjectForKey(Dictionary *self, const id key) {
 			$(array, removeObjectAtIndex, index);
 
 			if (array->count == 0) {
-				release(array);
+				delete(array);
 				self->elements[HASH(key)] = NULL;
 			}
 
@@ -192,6 +221,9 @@ static void removeObjectForKey(Dictionary *self, const id key) {
 	}
 }
 
+/**
+ * @see Dictionary::setObjectForKey(Dictionary *, const id, const id)
+ */
 static void setObjectForKey(Dictionary *self, const id obj, const id key) {
 
 	assert(cast(Object, obj));
@@ -215,6 +247,9 @@ static void setObjectForKey(Dictionary *self, const id obj, const id key) {
 
 #pragma mark - Dictionary class methods
 
+/**
+ * @see Class::initialize(Class *)
+ */
 static void initialize(Class *self) {
 
 	ObjectInterface *object = (ObjectInterface *) self->interface;
