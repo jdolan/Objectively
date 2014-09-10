@@ -96,8 +96,8 @@ Overriding a method
 ---
 To override a method, overwrite the function pointer from within your Class' `initialize` method.
 
-    ((ObjectInterface *) interface)->init = init;
-    ((ObjectInterface *) interface)->isEqual = isEqual;
+    ((ObjectInterface *) class->interface)->init = init;
+    ((ObjectInterface *) class->interface)->isEqual = isEqual;
 
 Calling super
 ---
