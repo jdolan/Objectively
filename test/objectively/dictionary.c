@@ -43,8 +43,6 @@ START_TEST(dictionary)
 		ck_assert(dictionary);
 		ck_assert_ptr_eq(&__Dictionary, classof(dictionary));
 
-		fprintf(stderr, "1\n"); fflush(stderr);
-
 		ck_assert_int_eq(0, dictionary->count);
 		ck_assert_int_eq(128, dictionary->capacity);
 
@@ -56,21 +54,15 @@ START_TEST(dictionary)
 		String *keyTwo = new(String, "two");
 		String *keyThree = new(String, "three");
 
-		fprintf(stderr, "2\n"); fflush(stderr);
-
 		$(dictionary, setObjectForKey, objectOne, keyOne);
 		$(dictionary, setObjectForKey, objectTwo, keyTwo);
 		$(dictionary, setObjectForKey, objectThree, keyThree);
-
-		fprintf(stderr, "3\n"); fflush(stderr);
 
 		ck_assert_int_eq(3, dictionary->count);
 
 		ck_assert_ptr_eq(objectOne, $(dictionary, objectForKey, keyOne));
 		ck_assert_ptr_eq(objectTwo, $(dictionary, objectForKey, keyTwo));
 		ck_assert_ptr_eq(objectThree, $(dictionary, objectForKey, keyThree));
-
-		fprintf(stderr, "4\n"); fflush(stderr);
 
 		ck_assert_int_eq(2, objectOne->referenceCount);
 		ck_assert_int_eq(2, objectTwo->referenceCount);

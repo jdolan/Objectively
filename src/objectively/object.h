@@ -60,7 +60,7 @@ struct Object {
 
 typedef struct String String;
 
-/*
+/**
  * @brief The Object interface.
  */
 struct ObjectInterface {

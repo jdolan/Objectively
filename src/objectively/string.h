@@ -61,7 +61,7 @@ struct String {
 };
 
 /**
- * @brief The String Interface.
+ * @brief The String interface.
  */
 struct StringInterface {
 

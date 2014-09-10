@@ -87,7 +87,7 @@ struct Dictionary {
 };
 
 /**
- * @brief The Dictionary Interface.
+ * @brief The Dictionary interface.
  */
 struct DictionaryInterface {
 

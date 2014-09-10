@@ -21,22 +21,72 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _objectively_h_
-#define _objectively_h_
+#ifndef _objectively_lock_h_
+#define _objectively_lock_h_
+
+#include <objectively/object.h>
 
 /**
  * @file
  *
- * @brief Objectively: Ultra-lightweight object oriented framework for c99.
+ * Mediate access to a critical section by enforcing mutual exclusion.
  */
 
-#include <objectively/array.h>
-#include <objectively/class.h>
-#include <objectively/dictionary.h>
-#include <objectively/lock.h>
-#include <objectively/object.h>
-#include <objectively/string.h>
-#include <objectively/thread.h>
-#include <objectively/types.h>
+typedef struct Lock Lock;
+typedef struct LockInterface LockInterface;
+
+/**
+ * @brief The Lock type.
+ */
+struct Lock {
+
+	/**
+	 * @brief The parent.
+	 */
+	Object object;
+
+	/**
+	 * @brief The backing lock.
+	 */
+	id lock;
+
+	/**
+	 * @brief The typed interface.
+	 */
+	LockInterface *interface;
+};
+
+/**
+ * @brief The Lock interface.
+ */
+struct LockInterface {
+
+	/**
+	 * @brief The parent.
+	 */
+	ObjectInterface objectInterface;
+
+	/**
+	 * @brief Acquire this lock, waiting indefinitely.
+	 */
+	void (*lock)(Lock *self);
+
+	/**
+	 * @brief Attempt to acquire this lock immediately.
+	 *
+	 * @return `YES` if the Lock was acquired, `NO` otherwise.
+	 */
+	BOOL (*tryLock)(Lock *self);
+
+	/**
+	 * @brief Release this Lock.
+	 */
+	void (*unlock)(Lock *self);
+};
+
+/**
+ * @brief The Lock Class.
+ */
+extern Class __Lock;
 
 #endif

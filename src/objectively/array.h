@@ -85,7 +85,7 @@ struct Array {
 };
 
 /**
- * @brief The Array Interface.
+ * @brief The Array interface.
  */
 struct ArrayInterface {
 
