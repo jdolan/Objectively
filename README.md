@@ -116,14 +116,12 @@ Objectively provides a small but useful core library:
  * [Object](src/objectively/object.h) - Hurr.
  * [String](src/objectively/string.h) - Mutable strings.
 
-Collections
-===
+Collections:
 
  * [Array](src/objectively/array.h) - Mutable arrays.
  * [Dictionary](src/objectively/dictionary.h) - Mutable dictionaries.
 
-Concurrency
-===
+Concurrency:
 
  * [Condition](src/objectively/condition.h) - Conditions (pthreads).
  * [Lock](src/objectively/lock.h) - Locks (pthreads).
