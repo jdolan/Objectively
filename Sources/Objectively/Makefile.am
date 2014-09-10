@@ -1,5 +1,7 @@
 AUTOMAKE_OPTIONS = nostdinc
 
+pkgincludedir = $(includedir)/Objectively
+
 pkginclude_HEADERS = \
 	Array.h \
 	Class.h \
@@ -11,9 +13,9 @@ pkginclude_HEADERS = \
 	Types.h
 
 lib_LTLIBRARIES = \
-	libobjectively.la
+	libObjectively.la
 
-libobjectively_la_SOURCES = \
+libObjectively_la_SOURCES = \
 	Array.c \
 	Class.c \
 	Dictionary.c \
@@ -22,10 +24,10 @@ libobjectively_la_SOURCES = \
 	String.c \
 	Thread.c
 
-libobjectively_la_CFLAGS = \
+libObjectively_la_CFLAGS = \
 	-I ..
 
-libobjectively_la_LDFLAGS = \
+libObjectively_la_LDFLAGS = \
 	-pthread \
 	-shared
 

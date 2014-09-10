@@ -4,7 +4,7 @@ AC_INIT([Objectively], [0.1.0], [jay@jaydolan.com])
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_SRCDIR([src/objectively.h])
+AC_CONFIG_SRCDIR([Sources/Objectively.h])
 
 AC_CANONICAL_SYSTEM
 
@@ -20,11 +20,11 @@ PKG_CHECK_MODULES([CHECK], [check >= 0.9.4])
 
 AC_CONFIG_FILES([
 	Makefile
-	src/Makefile
-	src/Objectively/Makefile
-	src/objectively.pc
-	test/Makefile
-	test/Objectively/Makefile
+	Sources/Makefile
+	Sources/Objectively/Makefile
+	Sources/Objectively.pc
+	Tests/Makefile
+	Tests/Objectively/Makefile
 ])
 
 AC_OUTPUT

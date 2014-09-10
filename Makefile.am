@@ -1,8 +1,8 @@
 ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = \
-	src \
-	test
+	Sources \
+	Tests
 
 html:
 	doxygen

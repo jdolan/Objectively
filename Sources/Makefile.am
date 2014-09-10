@@ -1,10 +1,10 @@
 AUTOMAKE_OPTIONS = nostdinc
 
 SUBDIRS = \
-	objectively
+	Objectively
 
 include_HEADERS = \
-	objectively.h
+	Objectively.h
 
 pkgconfigdir = $(libdir)/pkgconfig
-nodist_pkgconfig_DATA = objectively.pc
+nodist_pkgconfig_DATA = Objectively.pc

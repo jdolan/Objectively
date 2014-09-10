@@ -11,7 +11,7 @@ Adding Objectively to your project
 
 2) Include the main header file in your source.
 
-    #include <objectively.h>
+    #include <Objectively.h>
 
 3) Compile and link with Objectively.
 
@@ -80,7 +80,7 @@ Using a type
     release(foo);
 
 
-See [foo.c](test/objectively/foo.c) for the full source to this example.
+See [Foo.c](test/Objectively/Foo.c) for the full source to this example.
 
 Initialization
 ---

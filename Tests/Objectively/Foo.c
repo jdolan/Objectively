@@ -1,6 +1,7 @@
 // foo.h
 
 #include <stdio.h>
+
 #include <Objectively.h>
 
 typedef struct Foo Foo;
