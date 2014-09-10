@@ -1,0 +1,10 @@
+*.log
+*.trs
+Array
+Conditional
+Dictionary
+Foo
+Lock
+Object
+String
+Thread
