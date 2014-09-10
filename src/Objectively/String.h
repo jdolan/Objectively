@@ -21,10 +21,10 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_string_h_
-#define _Objectively_string_h_
+#ifndef _Objectively_String_h_
+#define _Objectively_String_h_
 
-#include <Objectively/object.h>
+#include <Objectively/Object.h>
 
 /**
  * @file

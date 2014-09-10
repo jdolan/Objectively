@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_types_h_
-#define _Objectively_types_h_
+#ifndef _Objectively_Types_h_
+#define _Objectively_Types_h_
 
 #include <stddef.h>
 #include <stdint.h>

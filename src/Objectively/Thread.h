@@ -21,10 +21,10 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_thread_h_
-#define _Objectively_thread_h_
+#ifndef _Objectively_Thread_h_
+#define _Objectively_Thread_h_
 
-#include <Objectively/object.h>
+#include <Objectively/Object.h>
 
 /**
  * @file

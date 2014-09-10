@@ -24,7 +24,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#include <Objectively/array.h>
+#include <Objectively/Array.h>
 
 #define ARRAY_CHUNK_SIZE 64
 

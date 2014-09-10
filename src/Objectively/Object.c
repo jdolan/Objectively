@@ -25,8 +25,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <Objectively/object.h>
-#include <Objectively/string.h>
+#include <Objectively/Object.h>
+#include <Objectively/String.h>
 
 #pragma mark - Object instance methods
 

@@ -24,7 +24,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#include <Objectively/dictionary.h>
+#include <Objectively/Dictionary.h>
 
 #define DICTIONARY_CHUNK_SIZE 64
 

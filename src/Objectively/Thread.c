@@ -26,7 +26,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 
-#include <Objectively/thread.h>
+#include <Objectively/Thread.h>
 
 #pragma mark - Object instance methods
 

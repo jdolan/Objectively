@@ -21,11 +21,11 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_dictionary_h_
-#define _Objectively_dictionary_h_
+#ifndef _Objectively_Dictionary_h_
+#define _Objectively_Dictionary_h_
 
-#include <Objectively/array.h>
-#include <Objectively/object.h>
+#include <Objectively/Array.h>
+#include <Objectively/Object.h>
 
 /**
  * @file

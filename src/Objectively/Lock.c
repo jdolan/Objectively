@@ -26,7 +26,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 
-#include <Objectively/lock.h>
+#include <Objectively/Lock.h>
 
 #pragma mark - Object instance methods
 

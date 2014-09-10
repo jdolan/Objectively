@@ -25,8 +25,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <Objectively/class.h>
-#include <Objectively/object.h>
+#include <Objectively/Class.h>
+#include <Objectively/Object.h>
 
 static Class *__classes;
 

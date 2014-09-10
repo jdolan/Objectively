@@ -21,11 +21,11 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_object_h_
-#define _Objectively_object_h_
+#ifndef _Objectively_Object_h_
+#define _Objectively_Object_h_
 
-#include <Objectively/class.h>
-#include <Objectively/types.h>
+#include <Objectively/Class.h>
+#include <Objectively/Types.h>
 
 /**
  * @file
