@@ -115,4 +115,5 @@ Objectively provides a small but useful core library:
 
  * [Array](src/objectively/array.h) - Mutable arrays.
  * [Dictionary](src/objectively/dictionary.h) - Mutable dictionaries.
+ * [Object](src/objectively/object.h) - Hurr.
  * [String](src/objectively/string.h) - Mutable strings.
