@@ -96,8 +96,8 @@ Overriding a method
 ---
 To override a method, overwrite the function pointer from within your Class' `initialize` method.
 
-    ((ObjectInterface *) class->interface)->init = init;
-    ((ObjectInterface *) class->interface)->isEqual = isEqual;
+    ((ObjectInterface *) self->interface)->init = init;
+    ((ObjectInterface *) self->interface)->isEqual = isEqual;
 
 Calling super
 ---
@@ -113,7 +113,16 @@ Core library
 ---
 Objectively provides a small but useful core library:
 
- * [Array](src/objectively/array.h) - Mutable arrays.
- * [Dictionary](src/objectively/dictionary.h) - Mutable dictionaries.
  * [Object](src/objectively/object.h) - Hurr.
  * [String](src/objectively/string.h) - Mutable strings.
+
+Collections:
+
+ * [Array](src/objectively/array.h) - Mutable arrays.
+ * [Dictionary](src/objectively/dictionary.h) - Mutable dictionaries.
+
+Concurrency:
+
+ * [Condition](src/objectively/condition.h) - Conditions (pthreads).
+ * [Lock](src/objectively/lock.h) - Locks (pthreads).
+ * [Thread](src/objectively/thread.h) - Threads (pthreads).
