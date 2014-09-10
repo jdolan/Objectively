@@ -77,14 +77,14 @@ Using a type
 
     Foo *foo = new(Foo, "hello world!");
     $(foo, bar);
-    delete(foo);
+    release(foo);
 
 
 See [foo.c](test/objectively/foo.c) for the full source to this example.
 
 Initialization
 ---
-Classes are initialized at compile time in Objectively, which means you rarely have to monkey with them at runtime. To instantiate a type, simply call `new` from anywhere in your program. The first time a type is instantiated, an optional Class initializer, `initialize`, is called. Use `initialize` to setup your interface, override methods, or create a singleton.
+There is no explicit setup or teardown with Objectively. To instantiate a type, simply call `new` from anywhere in your program. The first time a type is instantiated, an optional Class initializer, `initialize`, is called. Use `initialize` to setup your interface, override methods, or create a singleton. When your application terminates, an optional Class destructor, `destroy`, is also called.
 
 Invoking a method
 ---
@@ -104,10 +104,15 @@ Calling super
 To invoke a supertype's method implementation, use the `super` macro.
 
     super(Object, self, dealloc);
+    
+Managing memory
+---
+Objectively uses reference counting to govern object retention. Newly instantiated Objects have a reference count of 1. To maintain a strong reference to an Object, call `retain(obj)`. To dispose of it, call `release(obj)`. Once an Object's reference count reaches 0, it is deallocated. Remember to balance every `retain` with a `release`.
 
 Core library
 ---
 Objectively provides a small but useful core library:
 
  * [Array](src/objectively/array.h) - Mutable arrays.
+ * [Dictionary](src/objectively/dictionary.h) - Mutable dictionaries.
  * [String](src/objectively/string.h) - Mutable strings.
