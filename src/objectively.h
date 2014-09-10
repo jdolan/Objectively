@@ -32,6 +32,7 @@
 
 #include <objectively/array.h>
 #include <objectively/class.h>
+#include <objectively/dictionary.h>
 #include <objectively/object.h>
 #include <objectively/string.h>
 #include <objectively/types.h>

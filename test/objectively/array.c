@@ -74,9 +74,9 @@ START_TEST(array)
 		ck_assert(!$(array, containsObject, three));
 		ck_assert_int_eq(1, three->referenceCount);
 
-		delete(one);
-		delete(two);
-		delete(three);
+		release(one);
+		release(two);
+		release(three);
 
 		for (int i = 0; i < 1024; i++) {
 			$(array, addObject, new(Object));
@@ -85,11 +85,7 @@ START_TEST(array)
 		int counter = 0;
 
 		BOOL enumerator(const Array *array, id obj, id data) {
-
-			release(obj);
-			counter++;
-
-			return NO;
+			release(obj); counter++; return NO;
 		}
 
 		$(array, enumerateObjects, enumerator, NULL);
@@ -100,7 +96,7 @@ START_TEST(array)
 
 		ck_assert_int_eq(array->count, 0);
 
-		delete(array);
+		release(array);
 
 	}END_TEST
 

@@ -64,7 +64,9 @@ static String *description(const Object *self) {
  */
 static int hash(const Object *self) {
 
-	return *(int *) self;
+	uintptr_t addr = (uintptr_t) self;
+
+	return (int) ((13 * addr) ^ (addr >> 15));
 }
 
 /**

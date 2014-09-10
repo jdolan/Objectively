@@ -26,6 +26,16 @@
 
 #include <objectively.h>
 
+static BOOL enumerator(const Dictionary *dictionary, id obj, id key, id data) {
+
+	(* (int *) data)++;
+
+	release(obj);
+	release(key);
+
+	return NO;
+}
+
 START_TEST(dictionary)
 	{
 		Dictionary *dictionary = new(Dictionary, 128);
@@ -33,8 +43,10 @@ START_TEST(dictionary)
 		ck_assert(dictionary);
 		ck_assert_ptr_eq(&__Dictionary, classof(dictionary));
 
+		fprintf(stderr, "1\n"); fflush(stderr);
+
 		ck_assert_int_eq(0, dictionary->count);
-		ck_assert_int_eq(9, dictionary->capacity);
+		ck_assert_int_eq(128, dictionary->capacity);
 
 		Object *objectOne = new(Object);
 		Object *objectTwo = new(Object);
@@ -44,15 +56,21 @@ START_TEST(dictionary)
 		String *keyTwo = new(String, "two");
 		String *keyThree = new(String, "three");
 
+		fprintf(stderr, "2\n"); fflush(stderr);
+
 		$(dictionary, setObjectForKey, objectOne, keyOne);
 		$(dictionary, setObjectForKey, objectTwo, keyTwo);
 		$(dictionary, setObjectForKey, objectThree, keyThree);
+
+		fprintf(stderr, "3\n"); fflush(stderr);
 
 		ck_assert_int_eq(3, dictionary->count);
 
 		ck_assert_ptr_eq(objectOne, $(dictionary, objectForKey, keyOne));
 		ck_assert_ptr_eq(objectTwo, $(dictionary, objectForKey, keyTwo));
 		ck_assert_ptr_eq(objectThree, $(dictionary, objectForKey, keyThree));
+
+		fprintf(stderr, "4\n"); fflush(stderr);
 
 		ck_assert_int_eq(2, objectOne->referenceCount);
 		ck_assert_int_eq(2, objectTwo->referenceCount);
@@ -74,13 +92,13 @@ START_TEST(dictionary)
 		ck_assert_ptr_eq(NULL, $(dictionary, objectForKey, keyThree));
 		ck_assert_int_eq(1, objectThree->referenceCount);
 
-		delete(objectOne);
-		delete(objectTwo);
-		delete(objectThree);
+		release(objectOne);
+		release(objectTwo);
+		release(objectThree);
 
-		delete(keyOne);
-		delete(keyTwo);
-		delete(keyThree);
+		release(keyOne);
+		release(keyTwo);
+		release(keyThree);
 
 		for (int i = 0; i < 1024; i++) {
 			$(dictionary, setObjectForKey, new(Object), new(String, "%d", i));
@@ -88,14 +106,7 @@ START_TEST(dictionary)
 
 		int counter = 0;
 
-		BOOL enumerator(const Dictionary *dictionary, id obj, id key, id data) {
-			release(obj);
-			release(key);
-			counter++;
-			return NO;
-		}
-
-		$(dictionary, enumerateObjectsAndKeys, enumerator, NULL);
+		$(dictionary, enumerateObjectsAndKeys, enumerator, &counter);
 
 		ck_assert_int_eq(1024, counter);
 
@@ -103,7 +114,7 @@ START_TEST(dictionary)
 
 		ck_assert_int_eq(dictionary->count, 0);
 
-		delete(dictionary);
+		release(dictionary);
 
 	}END_TEST
 

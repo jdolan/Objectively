@@ -43,8 +43,8 @@ START_TEST(object)
 		ck_assert($(copy, isKindOfClass, &__Object));
 		ck_assert(!$(copy, isEqual, object));
 
-		delete(copy);
-		delete(object);
+		release(copy);
+		release(object);
 
 	}END_TEST
 

@@ -189,10 +189,12 @@ static void removeAllObjects(Dictionary *self) {
 
 			$(array, removeAllObjects);
 
-			delete(array);
+			release(array);
 			self->elements[i] = NULL;
 		}
 	}
+
+	self->count = 0;
 }
 
 /**
@@ -212,7 +214,7 @@ static void removeObjectForKey(Dictionary *self, const id key) {
 			$(array, removeObjectAtIndex, index);
 
 			if (array->count == 0) {
-				delete(array);
+				release(array);
 				self->elements[HASH(key)] = NULL;
 			}
 
@@ -245,6 +247,29 @@ static void setObjectForKey(Dictionary *self, const id obj, const id key) {
 	}
 }
 
+/**
+ * @see Dictionary::setObjectsForKeys(Dictionary *, ...)
+ */
+static void setObjectsForKeys(Dictionary *self, ...) {
+
+	va_list args;
+	va_start(args, self);
+
+	while (YES) {
+
+		id obj = va_arg(args, id);
+		if (obj) {
+
+			id key = va_arg(args, id);
+			$(self, setObjectForKey, obj, key);
+		} else {
+			break;
+		}
+	}
+
+	va_end(args);
+}
+
 #pragma mark - Dictionary class methods
 
 /**
@@ -267,6 +292,7 @@ static void initialize(Class *self) {
 	dictionary->removeAllObjects = removeAllObjects;
 	dictionary->removeObjectForKey = removeObjectForKey;
 	dictionary->setObjectForKey = setObjectForKey;
+	dictionary->setObjectsForKeys = setObjectsForKeys;
 }
 
 Class __Dictionary = {

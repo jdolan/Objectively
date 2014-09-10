@@ -64,5 +64,5 @@ int main(int argc, char **argv) {
 
 	Foo *foo = new(Foo, "hello world!");
 	$(foo, baz);
-	delete(foo);
+	release(foo);
 }

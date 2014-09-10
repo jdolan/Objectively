@@ -111,7 +111,7 @@ static String *appendFormat(String *self, const char *fmt, ...) {
 
 		$(self, appendString, string);
 
-		delete(string);
+		release(string);
 	}
 
 	return self;

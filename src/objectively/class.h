@@ -75,8 +75,7 @@ struct Class {
 	/**
 	 * @brief The Class destructor (optional).
 	 *
-	 * This method is run _once_ for initialized Classes when your application
-	 * exits.
+	 * This method is run for initialized Classes when your application exits.
 	 *
 	 * @param self The Class.
 	 */
@@ -85,7 +84,7 @@ struct Class {
 	/**
 	 * @brief The Class initializer (optional).
 	 *
-	 * This method is run _once_ when your class is first initialized.
+	 * This method is run when your class is first initialized.
 	 *
 	 * If your Class defines an interface, you *must* implement this method
 	 * and initialize that interface here.
@@ -135,16 +134,8 @@ extern id __new(Class *class, ...);
 extern id __cast(Class *class, const id obj);
 
 /**
- * @brief Delete (deallocate) an instance.
- *
- * @remark Deletion should be left to the creator of the Object. If you
- * have `retain`ed an object, call `release` to relinquish ownership.
- */
-extern void delete(id obj);
-
-/**
  * Atomically decrement the given Object's reference count. If the resulting
- * reference count is `0`, the Object is deleted.
+ * reference count is `0`, the Object is deallocated.
  */
 extern void release(id obj);
 
@@ -158,10 +149,10 @@ extern void release(id obj);
 extern void retain(id obj);
 
 /**
- * @brief Instantiate a type.
+ * @brief Instantiate a type with a `NULL`-terminated arguments list.
  */
 #define new(type, ...) \
-	__new((Class *) &__##type, ## __VA_ARGS__)
+	__new((Class *) &__##type, ## __VA_ARGS__, NULL)
 
 /**
  * @brief Safely cast to a type.
@@ -197,7 +188,7 @@ extern void retain(id obj);
  * @brief Take an initializer parameter.
  */
 #define arg(args, type, def) \
-	(args ? va_arg(*args, type) : def)
+	(va_arg(*args, type) ?: def)
 
 /**
  * @brief Log a message.

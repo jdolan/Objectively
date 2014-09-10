@@ -50,10 +50,10 @@ START_TEST(string)
 		String *substring = $(string, substring, range);
 		ck_assert_str_eq("world!hello", substring->str);
 
-		delete(substring);
-		delete(prefix);
-		delete(suffix);
-		delete(string);
+		release(substring);
+		release(prefix);
+		release(suffix);
+		release(string);
 
 	}END_TEST
 

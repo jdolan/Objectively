@@ -24,7 +24,7 @@ array_LDADD = \
 	$(TEST_LDADD)
 
 dictionary_SOURCES = \
-	object.c
+	dictionary.c
 dictionary_CFLAGS = \
 	$(TEST_CFLAGS)
 dictionary_LDADD = \

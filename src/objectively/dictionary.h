@@ -129,7 +129,7 @@ struct DictionaryInterface {
 			id data);
 
 	/**
-	 * @return The value stored at the specified key in this Dictionary.
+	 * @return The Object stored at the specified key in this Dictionary.
 	 */
 	id (*objectForKey)(const Dictionary *self, const id key);
 
@@ -144,9 +144,14 @@ struct DictionaryInterface {
 	void (*removeObjectForKey)(Dictionary *self, const id key);
 
 	/**
-	 * @brief Sets a key-value pair in this Dictionary.
+	 * @brief Sets a pair in this Dictionary.
 	 */
 	void (*setObjectForKey)(Dictionary *self, const id obj, const id key);
+
+	/**
+	 * @brief Sets pairs in this Dictionary from the NULL-terminated list.
+	 */
+	void (*setObjectsForKeys)(Dictionary *self, ...);
 };
 
 /**
