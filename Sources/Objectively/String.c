@@ -187,7 +187,7 @@ static String *substring(const String *self, RANGE range) {
 
 	assert(range.offset + range.length <= self->len);
 
-	char *str = malloc(range.length + 1);
+	char *str = calloc(1, range.length + 1);
 	strncpy(str, self->str + range.offset, range.length);
 
 	String *substring = new(String, NULL);

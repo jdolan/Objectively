@@ -24,6 +24,10 @@
 #ifndef _Objectively_Types_h_
 #define _Objectively_Types_h_
 
+#if defined(__linux__)
+  #define _GNU_SOURCE
+#endif
+
 #include <stddef.h>
 #include <stdint.h>
 
