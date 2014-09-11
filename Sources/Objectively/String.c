@@ -128,7 +128,8 @@ static String *appendString(String *self, const String *other) {
 			self->str = realloc(self->str, size);
 			assert(self->str);
 
-			strlcat(self->str, other->str, size);
+			strcat(self->str, other->str);
+			self->str[size - 1] = '\0';
 		} else {
 			self->str = strdup(other->str);
 		}
@@ -187,7 +188,7 @@ static String *substring(const String *self, RANGE range) {
 	assert(range.offset + range.length <= self->len);
 
 	char *str = malloc(range.length + 1);
-	strlcpy(str, self->str + range.offset, range.length + 1);
+	strncpy(str, self->str + range.offset, range.length);
 
 	String *substring = new(String, NULL);
 
