@@ -34,10 +34,7 @@
  * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
-
-	Thread *this = (Thread *) self;
-
-	return new(Thread, this->function, this->data);
+	return NULL;
 }
 
 /**

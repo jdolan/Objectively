@@ -37,6 +37,13 @@ START_TEST(string)
 		$(string, appendFormat, " %s", "world!");
 		ck_assert_str_eq("hello world!", string->str);
 
+		Object *copy = $((Object *) string, copy);
+
+		ck_assert($(copy, isEqual, (Object *) string));
+		ck_assert_int_eq($(copy, hash), $((Object *) string, hash));
+
+		release(copy);
+
 		$(string, appendString, string);
 		ck_assert_str_eq("hello world!hello world!", string->str);
 

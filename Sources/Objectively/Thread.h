@@ -96,7 +96,8 @@ struct ThreadInterface {
 	/**
 	 * @brief Wait for the specified Thread to terminate.
 	 *
-	 * @param status If not NULL, the exit status is returned here.
+	 * @param status If not NULL, the return value of this Thread's
+	 * ThreadFunction is returned here.
 	 */
 	void (*join)(Thread *self, id *status);
 };

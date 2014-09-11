@@ -49,6 +49,29 @@ static void dealloc(Object *self) {
 }
 
 /**
+ * @see Object::hash(const Object *)
+ */
+static int hash(const Object *self) {
+
+	String *this = (String *) self;
+
+	int hash = 13;
+	for (size_t i = 0; i < this->len; i++) {
+
+		int shift;
+		if (i & 1) { // hit the high bits
+			shift = 16 + (i % 16);
+		} else {
+			shift = 0 + (i % 16);
+		}
+
+		hash += ((int) this->str[i]) << shift;
+	}
+
+	return hash;
+}
+
+/**
  * @see Object::init(id, id, va_list *)
  */
 static Object *init(id obj, id interface, va_list *args) {
@@ -207,9 +230,10 @@ static void initialize(Class *self) {
 
 	ObjectInterface *object = (ObjectInterface *) self->interface;
 
-	object->init = init;
 	object->copy = copy;
 	object->dealloc = dealloc;
+	object->hash = hash;
+	object->init = init;
 	object->isEqual = isEqual;
 
 	StringInterface *string = (StringInterface *) self->interface;
