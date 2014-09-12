@@ -45,7 +45,7 @@ struct Object {
 	/**
 	 * @brief Every instance of Object begins with a pointer to its Class.
 	 */
-	const Class *class;
+	const Class *clazz;
 
 	/**
 	 * @brief The reference count of this Object.
@@ -117,7 +117,7 @@ struct ObjectInterface {
 	 *
 	 * @return YES if this instance belongs to class' hierarchy, NO otherwise.
 	 */
-	BOOL (*isKindOfClass)(const Object *self, const Class *class);
+	BOOL (*isKindOfClass)(const Object *self, const Class *clazz);
 };
 
 /**

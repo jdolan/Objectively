@@ -40,7 +40,7 @@ typedef struct ThreadInterface ThreadInterface;
  *
  * @param data User data.
  */
-typedef id (*ThreadFunction)(id data);
+typedef id (*ThreadFunction)(Thread *self);
 
 /**
  * @brief The Thread type.
@@ -61,6 +61,26 @@ struct Thread {
 	 * @brief The Thread function.
 	 */
 	ThreadFunction function;
+
+	/**
+	 * @brief `YES` when this Thread has been cancelled, `NO` otherwise.
+	 */
+	BOOL isCancelled;
+
+	/**
+	 * @brief `YES` when this Thread has been detached, `NO` otherwise.
+	 */
+	BOOL isDetached;
+
+	/**
+	 * @brief `YES` when this Thread is live, `NO` otherwise.
+	 */
+	BOOL isExecuting;
+
+	/**
+	 * @brief `YES` when this Thread is finished, `NO` otherwise.
+	 */
+	BOOL isFinished;
 
 	/**
 	 * @brief The backing thread.
@@ -100,6 +120,11 @@ struct ThreadInterface {
 	 * ThreadFunction is returned here.
 	 */
 	void (*join)(Thread *self, id *status);
+
+	/**
+	 * @brief Start this Thread.
+	 */
+	void (*start)(Thread *self);
 };
 
 /**

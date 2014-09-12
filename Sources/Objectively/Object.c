@@ -28,6 +28,8 @@
 #include <Objectively/Object.h>
 #include <Objectively/String.h>
 
+#define __Class __Object
+
 #pragma mark - Object instance methods
 
 /**
@@ -35,7 +37,7 @@
  */
 static Object *copy(const Object *self) {
 
-	size_t size = self->class->instanceSize;
+	size_t size = self->clazz->instanceSize;
 
 	Object *object = memcpy(calloc(1, size), self, size);
 	object->referenceCount = 1;
@@ -56,7 +58,7 @@ static void dealloc(Object *self) {
  */
 static String *description(const Object *self) {
 
-	return new(String, "%s@%p", self->class->name, self);
+	return new(String, "%s@%p", self->clazz->name, self);
 }
 
 /**
@@ -78,7 +80,7 @@ static Object *init(id obj, id interface, va_list *args) {
 
 	self->interface = (ObjectInterface *) interface;
 
-	return (Object *) obj;
+	return self;
 }
 
 /**
@@ -94,7 +96,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
  */
 static BOOL isKindOfClass(const Object *self, const Class *class) {
 
-	const Class *c = self->class;
+	const Class *c = self->clazz;
 	while (c) {
 		if (c == class) {
 			return YES;

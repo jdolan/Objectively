@@ -26,6 +26,8 @@
 
 #include <Objectively/Dictionary.h>
 
+#define __Class __Dictionary
+
 #define DICTIONARY_CHUNK_SIZE 64
 
 #define HASH(key) ( $((Object *) key, hash) % self->capacity )

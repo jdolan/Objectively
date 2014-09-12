@@ -23,10 +23,13 @@
 
 #include <assert.h>
 #include <errno.h>
-#include <pthread.h>
 #include <stdlib.h>
 
+#include <pthread.h>
+
 #include <Objectively/Thread.h>
+
+#define __Class __Thread
 
 #pragma mark - Object instance methods
 
@@ -44,7 +47,8 @@ static void dealloc(Object *self) {
 
 	Thread *this = (Thread *) self;
 
-	$(this, join, NULL);
+	assert(this->isExecuting == NO);
+
 	free(this->thread);
 
 	super(Object, self, dealloc);
@@ -66,9 +70,6 @@ static Object *init(id obj, id interface, va_list *args) {
 
 		self->thread = calloc(1, sizeof(pthread_t));
 		assert(self->thread);
-
-		int err = pthread_create(self->thread, NULL, self->function, self->data);
-		assert(err == 0);
 	}
 
 	return (Object *) self;
@@ -81,8 +82,12 @@ static Object *init(id obj, id interface, va_list *args) {
  */
 static void cancel(Thread *self) {
 
-	int err = pthread_cancel(*(pthread_t *) (self->thread));
+	assert(self->isCancelled == NO);
+
+	int err = pthread_cancel(*((pthread_t *) self->thread));
 	assert(err == 0);
+
+	self->isCancelled = YES;
 }
 
 /**
@@ -90,8 +95,12 @@ static void cancel(Thread *self) {
  */
 static void detach(Thread *self) {
 
-	int err = pthread_detach(*(pthread_t *) (self->thread));
-	assert(err == 0 || err == EBUSY);
+	assert(self->isDetached == NO);
+
+	int err = pthread_detach(*((pthread_t *) self->thread));
+	assert(err == 0);
+
+	self->isDetached = YES;
 }
 
 /**
@@ -99,7 +108,52 @@ static void detach(Thread *self) {
  */
 static void join(Thread *self, id *status) {
 
-	int err = pthread_join(*(pthread_t *) (self->thread), status);
+	int err = pthread_join(*((pthread_t *) self->thread), status);
+	assert(err == 0);
+}
+
+/**
+ * @brief Cleans up after execution.
+ */
+static void cleanup(id obj) {
+
+	Thread *self = (Thread *) obj;
+
+	self->isExecuting = NO;
+}
+
+/**
+ * @brief Wraps the user-specified ThreadFunction, providing cleanup.
+ */
+static id main(id obj) {
+
+	Thread *self = (Thread *) obj;
+
+	self->isExecuting = YES;
+
+	id ret = NULL;
+
+	pthread_cleanup_push(cleanup, self);
+
+	ret = self->function(self);
+
+	pthread_cleanup_pop(cleanup);
+
+	self->isFinished = YES;
+
+	return ret;
+}
+
+/**
+ * @see Thread::start(Thread *)
+ */
+static void start(Thread *self) {
+
+	assert(self->isCancelled == NO);
+	assert(self->isExecuting == NO);
+	assert(self->isFinished == NO);
+
+	int err = pthread_create(self->thread, NULL, main, self);
 	assert(err == 0);
 }
 
@@ -121,11 +175,12 @@ static void initialize(Class *self) {
 	thread->cancel = cancel;
 	thread->detach = detach;
 	thread->join = join;
+	thread->start = start;
 }
 
 Class __Thread = {
 	.name = "Thread",
 	.superclass = &__Object,
-	.instanceSize = sizeof(Object),
-	.interfaceSize = sizeof(ObjectInterface),
+	.instanceSize = sizeof(Thread),
+	.interfaceSize = sizeof(ThreadInterface),
 	.initialize = initialize, };

@@ -25,6 +25,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <pthread.h>
+
 #include <Objectively/Class.h>
 #include <Objectively/Object.h>
 
@@ -51,6 +53,8 @@ static void teardown(void) {
 		}
 		c = c->locals.next;
 	}
+
+	pthread_exit(NULL);
 }
 
 /**
@@ -64,60 +68,61 @@ static void setup(void) {
 /**
  * @brief Initializes the class by setting up its magic and archetype.
  */
-static void initialize(Class *class) {
+static void initialize(Class *clazz) {
 
-	assert(class);
+	assert(clazz);
 
-	if (__sync_val_compare_and_swap(&class->locals.magic, 0, -1) == 0) {
+	if (__sync_val_compare_and_swap(&clazz->locals.magic, 0, -1) == 0) {
 
-		assert(class->name);
-		assert(class->instanceSize);
-		assert(class->interfaceSize);
+		assert(clazz->name);
+		assert(clazz->instanceSize);
+		assert(clazz->interfaceSize);
 
-		class->interface = calloc(1, class->interfaceSize);
-		assert(class->interface);
+		clazz->interface = calloc(1, clazz->interfaceSize);
+		assert(clazz->interface);
 
-		if (class == (Class *) &__Object) {
-			assert(class->superclass == NULL);
+		Class *super = clazz->superclass;
+
+		if (clazz == (Class *) &__Object) {
+			assert(super == NULL);
 			setup();
 		} else {
-			assert(class->superclass != NULL);
+			assert(super != NULL);
 
-			Class *super = class->superclass;
+			assert(super->instanceSize <= clazz->instanceSize);
+			assert(super->interfaceSize <= clazz->interfaceSize);
+
 			initialize(super);
 
-			assert(super->instanceSize <= class->instanceSize);
-			assert(super->interfaceSize <= class->interfaceSize);
-
-			memcpy(class->interface, super->interface, super->interfaceSize);
+			memcpy(clazz->interface, super->interface, super->interfaceSize);
 		}
 
-		class->initialize(class);
+		clazz->initialize(clazz);
 
-		class->locals.next = __sync_lock_test_and_set(&__classes, class);
-		class->locals.magic = CLASS_MAGIC;
+		clazz->locals.next = __sync_lock_test_and_set(&__classes, clazz);
+		clazz->locals.magic = CLASS_MAGIC;
 
 	} else {
-		while (__sync_fetch_and_or(&class->locals.magic, 0) != CLASS_MAGIC) {
+		while (__sync_fetch_and_or(&clazz->locals.magic, 0) != CLASS_MAGIC) {
 			;
 		}
 	}
 }
 
-id __new(Class *class, ...) {
+id __new(Class *clazz, ...) {
 
-	initialize(class);
+	initialize(clazz);
 
-	id obj = calloc(1, class->instanceSize);
+	id obj = calloc(1, clazz->instanceSize);
 	if (obj) {
 
-		((Object *) obj)->class = class;
+		((Object *) obj)->clazz = clazz;
 		((Object *) obj)->referenceCount = 1;
 
-		id interface = class->interface;
+		id interface = clazz->interface;
 
 		va_list args;
-		va_start(args, class);
+		va_start(args, clazz);
 
 		obj = ((ObjectInterface *) interface)->init(obj, interface, &args);
 
@@ -127,23 +132,23 @@ id __new(Class *class, ...) {
 	return obj;
 }
 
-id __cast(Class *class, const id obj) {
+id __cast(Class *clazz, const id obj) {
 
-	initialize(class);
+	initialize(clazz);
 
 	if (obj) {
 
 		Object *object = (Object *) obj;
-		if (object->class) {
+		if (object->clazz) {
 
-			const Class *c = object->class;
+			const Class *c = object->clazz;
 			while (c) {
 
 				assert(c->locals.magic == CLASS_MAGIC);
 
 				// as a special case, we optimize for __Object
 
-				if (c == class || class == (Class *) &__Object) {
+				if (c == clazz || clazz == (Class *) &__Object) {
 					break;
 				}
 

@@ -26,6 +26,8 @@
 
 #include <Objectively/Array.h>
 
+#define __Class __Array
+
 #define ARRAY_CHUNK_SIZE 64
 
 #pragma mark - Object instance methods

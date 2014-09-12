@@ -22,33 +22,27 @@
  */
 
 #include <assert.h>
-#include <errno.h>
+
 #include <stdlib.h>
+#include <string.h>
 
 #include <pthread.h>
 
-#include <Objectively/Lock.h>
+#include <objectively/Condition.h>
 
-#define __Class __Lock
+#define __Class __Condition
 
 #pragma mark - Object instance methods
-
-/**
- * @see Object::copy(const Object *)
- */
-static Object *copy(const Object *self) {
-	return NULL;
-}
 
 /**
  * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
-	Lock *this = (Lock *) self;
+	Condition *this = (Condition *) self;
 
-	pthread_mutex_destroy(this->lock);
-	free(this->lock);
+	pthread_cond_destroy(this->condition);
+	free(this->condition);
 
 	super(Object, self, dealloc);
 }
@@ -58,74 +52,69 @@ static void dealloc(Object *self) {
  */
 static Object *init(id obj, id interface, va_list *args) {
 
-	Lock *self = (Lock *) super(Object, obj, init, interface, args);
+	Condition *self = (Condition *) super(Object, obj, init, interface, args);
 	if (self) {
-		self->interface = (LockInterface *) interface;
+		self->interface = (ConditionInterface *) interface;
 
-		self->lock = calloc(1, sizeof(pthread_mutex_t));
-		assert(self->lock);
+		self->condition = calloc(1, sizeof(pthread_cond_t));
+		assert(self->condition);
 
-		int err = pthread_mutex_init(self->lock, NULL);
+		int err = pthread_cond_init(self->condition, NULL);
 		assert(err == 0);
 	}
 
 	return (Object *) self;
 }
 
-#pragma mark - Lock instance methods
+#pragma mark - Condition instance methods
 
 /**
- * @see Lock::lock(Lock *)
+ * @see Condition::broadcast(Condition *)
  */
-static void lock(Lock *self) {
+static void broadcast(Condition *self) {
 
-	int err = pthread_mutex_lock(self->lock);
+	int err = pthread_cond_broadcast(self->condition);
 	assert(err == 0);
 }
 
 /**
- * @see Lock::tryLock(Lock *)
+ * @see Condition::signal(Condition *)
  */
-static BOOL tryLock(Lock *self) {
+static void _signal(Condition *self) {
 
-	int err = pthread_mutex_trylock(self->lock);
-	assert(err == 0 || err == EBUSY);
-
-	return err == 0;
-}
-
-/**
- * @see Lock::unlock(Lock *)
- */
-static void unlock(Lock *self) {
-
-	int err = pthread_mutex_unlock(self->lock);
+	int err = pthread_cond_signal(self->condition);
 	assert(err == 0);
 }
 
-#pragma mark - Object class methods
-
 /**
- * @see Class::initialize(Class *)
+ * @see Condition::wait(Condition *)
  */
+static void _wait(Condition *self) {
+
+	int err = pthread_cond_wait(self->condition, self->lock.lock);
+	assert(err == 0);
+}
+
+#pragma mark - Condition Class methods
+
 static void initialize(Class *self) {
 
 	ObjectInterface *object = (ObjectInterface *) self->interface;
 
-	object->copy = copy;
 	object->dealloc = dealloc;
 	object->init = init;
 
-	LockInterface *interface = (LockInterface *) self->interface;
+	ConditionInterface *condition = (ConditionInterface *) self->interface;
 
-	interface->lock = lock;
-	interface->tryLock = tryLock;
-	interface->unlock = unlock;
+	condition->broadcast = broadcast;
+	condition->signal = _signal;
+	condition->wait = _wait;
 }
 
-Class __Lock = {
-	.name = "Lock",
-	.superclass = &__Object,
-	.instanceSize = sizeof(Lock),
-	.interfaceSize = sizeof(LockInterface),
-	.initialize = initialize, };
+Class __Condition = {
+	.name = "Condition",
+	.superclass = &__Lock,
+	.instanceSize = sizeof(Condition),
+	.interfaceSize = sizeof(ConditionInterface),
+	.initialize = initialize,
+};

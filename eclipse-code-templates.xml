@@ -1,58 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="false" context="org.eclipse.cdt.core.cSource.contenttype_context" deleted="false" description="You may wish to create the file in camel case (e.g. MyClass.c) and rename it afterwards." enabled="true" name="Objectively Type Source">${filecomment}
-
-#include &lt;assert.h&gt;
-
-#include &lt;objectively/${file_base}.h&gt;
-
-#pragma mark - Object instance methods
-
-/**
- * @see Object::dealloc(Object *)
- */
-static void dealloc(Object *self) {
-
-	super(Object, self, dealloc);
-}
-
-/**
- * @see Object::init(id, id, va_list *)
- */
-static Object *init(id obj, id interface, va_list *args) {
-
-	${file_base} *self = (${file_base} *) super(Object, self, init, interface, args);
-	if (self) {
-		self-&gt;interface = (${file_base}Interface *) interface;
-
-		//..
-	}
-
-	return self;
-}
-
-#pragma mark - ${file_base} instance methods
-
-//..
-
-#pragma mark - ${file_base} Class methods
-
-static void initialize(Class *self) {
-
-	((ObjectInterface *) self-&gt;interface)-&gt;dealloc = dealloc;
-	((ObjectInterface *) self-&gt;interface)-&gt;init = init;
-
-	//..
-}
-
-Class __${file_base} = {
-	.name = "${file_base}",
-	.superclass = __Object,
-	.instanceSize = sizeof(${file_base}),
-	.interfaceSize = sizeof(${file_base}Interface),
-	.initialize = initialize,
-};
-
-
-#endif</template><template autoinsert="false" context="org.eclipse.cdt.core.cHeader.contenttype_context" deleted="false" description="You may wish to create the file with camel case (e.g. MyClass.h), and rename it afterwards." enabled="true" name="Objectively Type Header">${filecomment}
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="false" context="org.eclipse.cdt.core.cHeader.contenttype_context" deleted="false" description="" enabled="true" name="Objectively Type Header">${filecomment}
 
 #ifndef _${project_name}_${file_base}_h
 #define _${project_name}_${file_base}_h
@@ -84,6 +30,10 @@ struct ${file_base} {
  * @brief The ${file_base} type.
  */
 struct ${file_base}Interface {
+
+	/**
+	 * @brief The parent.
+	 */
 	ObjectInterface objectInterface;
 
 	// ..
@@ -94,4 +44,65 @@ struct ${file_base}Interface {
  */
 extern Class __${file_base};
 
-#endif</template></templates>
+#endif</template><template autoinsert="false" context="org.eclipse.cdt.core.cSource.contenttype_context" deleted="false" description="" enabled="true" name="Objectively Type Source">${filecomment}
+
+#include &lt;assert.h&gt;
+
+#include &lt;objectively/${file_base}.h&gt;
+
+#define __Class __${file_base}
+
+#pragma mark - Object instance methods
+
+/**
+ * @see Object::dealloc(Object *)
+ */
+static void dealloc(Object *self) {
+
+	//..
+
+	super(Object, self, dealloc);
+}
+
+/**
+ * @see Object::init(id, id, va_list *)
+ */
+static Object *init(id obj, id interface, va_list *args) {
+
+	${file_base} *self = (${file_base} *) super(Object, obj, init, interface, args);
+	if (self) {
+		self-&gt;interface = (${file_base}Interface *) interface;
+
+		//..
+	}
+
+	return self;
+}
+
+#pragma mark - ${file_base} instance methods
+
+//..
+
+#pragma mark - ${file_base} Class methods
+
+/**
+ * see Class::initialize(Class *)
+ */
+static void initialize(Class *self) {
+
+	((ObjectInterface *) self-&gt;interface)-&gt;dealloc = dealloc;
+	((ObjectInterface *) self-&gt;interface)-&gt;init = init;
+
+	//..
+}
+
+Class __${file_base} = {
+	.name = "${file_base}",
+	.superclass = &amp;__Object,
+	.instanceSize = sizeof(${file_base}),
+	.interfaceSize = sizeof(${file_base}Interface),
+	.initialize = initialize,
+};
+
+#undef __Class
+</template></templates>

@@ -6,13 +6,14 @@ TEST_CFLAGS = \
 	
 TEST_LDADD = \
 	@CHECK_LIBS@ \
-	-L$(libdir) -lObjectively
+	../../Sources/Objectively/.libs/*.o
 
 TESTS = \
 	Array \
 	Dictionary \
 	Object \
-	String
+	String \
+	Thread
 
 check_PROGRAMS = $(TESTS)
 
@@ -43,3 +44,11 @@ String_CFLAGS = \
 	$(TEST_CFLAGS)
 String_LDADD = \
 	$(TEST_LDADD)
+
+Thread_SOURCES = \
+	Thread.c
+Thread_CFLAGS = \
+	$(TEST_CFLAGS)
+Thread_LDADD = \
+	$(TEST_LDADD)
+

@@ -25,7 +25,7 @@
 #define _Objectively_Types_h_
 
 #if defined(__linux__)
-  #define _GNU_SOURCE
+#define _GNU_SOURCE
 #endif
 
 #include <stddef.h>
@@ -58,5 +58,17 @@ typedef struct {
 	 */
 	unsigned length;
 } RANGE;
+
+/**
+ * @return The maximum of the two parameters.
+ */
+#define max(a, b) \
+   ({ typeof(a) _a = (a); typeof(b) _b = (b); _a > _b ? _a : _b; })
+
+/**
+ * @return The minimum of the two parameters.
+ */
+#define min(a, b) \
+   ({ typeof(a) _a = (a); typeof(b) _b = (b); _a < _b ? _a : _b; })
 
 #endif

@@ -25,7 +25,6 @@
 #define _Objectively_Class_h_
 
 #include <stdarg.h>
-#include <stdio.h>
 
 #include <Objectively/Types.h>
 
@@ -134,13 +133,13 @@ extern id __new(Class *class, ...);
 extern id __cast(Class *class, const id obj);
 
 /**
- * Atomically decrement the given Object's reference count. If the resulting
- * reference count is `0`, the Object is deallocated.
+ * @brief Atomically decrement the given Object's reference count. If the
+ * resulting reference count is `0`, the Object is deallocated.
  */
 extern void release(id obj);
 
 /**
- * Atomically increment the given Object's reference count.
+ * @brief Atomically increment the given Object's reference count.
  *
  * @remark By calling this, the caller is expressing ownership of the Object,
  * and preventing it from being released. Be sure to balance calls to `retain`
@@ -157,55 +156,32 @@ extern void retain(id obj);
 /**
  * @brief Safely cast to a type.
  */
-#define cast(type, instance) \
-	__cast((Class *) &__##type, (const id) instance)
+#define cast(type, obj) \
+	__cast((Class *) &__##type, (const id) obj)
 
 /**
- * @brief Resolve the Class of an instance.
+ * @brief Resolve the Class of an Object instance.
  */
-#define classof(instance) \
-	((Object *) instance)->class
-
-/**
- * @brief Resolve the Superclass of an instance.
- */
-#define superclassof(instance) \
-	classof(instance)->superclass
+#define classof(obj) \
+	((Object *) obj)->clazz
 
 /**
  * @brief Apply a selector to an instance.
  */
-#define $(instance, method, ...) \
-	(instance)->interface->method(instance, ## __VA_ARGS__)
+#define $(obj, method, ...) \
+	(obj)->interface->method(obj, ## __VA_ARGS__)
 
 /**
  * @brief Apply a Superclass selector to an instance.
  */
-#define super(type, instance, method, ...) \
-	((type##Interface *) superclassof(instance)->interface)->method((type *) instance, ## __VA_ARGS__)
+#define super(type, obj, method, ...) \
+	((type##Interface *) __Class.superclass->interface) \
+		->method((type *) obj, ## __VA_ARGS__)
 
 /**
  * @brief Take an initializer parameter.
  */
 #define arg(args, type, def) \
 	(va_arg(*args, type) ?: def)
-
-/**
- * @brief Log a message.
- */
-#define log(fmt, ...) \
-	fprintf(stderr, fmt, ## __VA_ARGS__)
-
-/**
- * @return The maximum of the two parameters.
- */
-#define max(a, b) \
-   ({ typeof(a) _a = (a); typeof(b) _b = (b); _a > _b ? _a : _b; })
-
-/**
- * @return The minimum of the two parameters.
- */
-#define min(a, b) \
-   ({ typeof(a) _a = (a); typeof(b) _b = (b); _a < _b ? _a : _b; })
 
 #endif
