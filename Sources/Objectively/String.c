@@ -28,6 +28,8 @@
 
 #include <Objectively/String.h>
 
+#define __Class __String
+
 #pragma mark - Object instance methods
 
 /**
@@ -59,10 +61,10 @@ static int hash(const Object *self) {
 	for (size_t i = 0; i < this->len; i++) {
 
 		int shift;
-		if (i & 1) { // hit the high bits
+		if (i & 1) {
 			shift = 16 + (i % 16);
 		} else {
-			shift = 0 + (i % 16);
+			shift = (i % 16);
 		}
 
 		hash += ((int) this->str[i]) << shift;
@@ -99,7 +101,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		return YES;
 	}
 
-	if (other && other->class == (Class *) &__String) {
+	if (other && other->clazz == self->clazz) {
 
 		const String *this = (String *) self;
 		const String *that = (String *) other;
@@ -127,7 +129,7 @@ static String *appendFormat(String *self, const char *fmt, ...) {
 	va_end(args);
 
 	if (str) {
-		String *string = new(String, NULL);
+		String *string = new(String);
 
 		string->str = str;
 		string->len = strlen(string->str);
@@ -148,10 +150,11 @@ static String *appendString(String *self, const String *other) {
 	if (other->len) {
 		if (self->len) {
 			const size_t size = self->len + other->len + 1;
+
 			self->str = realloc(self->str, size);
 			assert(self->str);
 
-			strcat(self->str, other->str);
+			memcpy(self->str + self->len, other->str, other->len);
 			self->str[size - 1] = '\0';
 		} else {
 			self->str = strdup(other->str);
@@ -211,9 +214,9 @@ static String *substring(const String *self, RANGE range) {
 	assert(range.offset + range.length <= self->len);
 
 	char *str = calloc(1, range.length + 1);
-	strncpy(str, self->str + range.offset, range.length);
+	memcpy(str, self->str + range.offset, range.length);
 
-	String *substring = new(String, NULL);
+	String *substring = new(String);
 
 	substring->str = str;
 	substring->len = strlen(str);
