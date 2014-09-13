@@ -122,6 +122,13 @@ struct ThreadInterface {
 	void (*join)(Thread *self, id *status);
 
 	/**
+	 * @brief Sends the given signal to this Thread.
+	 *
+	 * @param signal The signal to send.
+	 */
+	void (*kill)(Thread *self, int signal);
+
+	/**
 	 * @brief Start this Thread.
 	 */
 	void (*start)(Thread *self);

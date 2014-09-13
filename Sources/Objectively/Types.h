@@ -60,6 +60,12 @@ typedef struct {
 } RANGE;
 
 /**
+ * @return The length of an array.
+ */
+#define lengthof(array) \
+	(sizeof(array) / sizeof((array)[0]))
+
+/**
  * @return The maximum of the two parameters.
  */
 #define max(a, b) \

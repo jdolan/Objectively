@@ -8,6 +8,7 @@ pkginclude_HEADERS = \
 	Condition.h \
 	Dictionary.h \
 	Lock.h \
+	Log.h \
 	Object.h \
 	String.h \
 	Thread.h \
@@ -22,6 +23,7 @@ libObjectively_la_SOURCES = \
 	Condition.c \
 	Dictionary.c \
 	Lock.c \
+	Log.c \
 	Object.c \
 	String.c \
 	Thread.c

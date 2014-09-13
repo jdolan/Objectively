@@ -11,6 +11,7 @@ TEST_LDADD = \
 TESTS = \
 	Array \
 	Dictionary \
+	Log \
 	Object \
 	String \
 	Thread
@@ -31,6 +32,13 @@ Dictionary_CFLAGS = \
 Dictionary_LDADD = \
 	$(TEST_LDADD)
 
+Log_SOURCES = \
+	Log.c
+Log_CFLAGS = \
+	$(TEST_CFLAGS)
+Log_LDADD = \
+	$(TEST_LDADD)
+	
 Object_SOURCES = \
 	Object.c
 Object_CFLAGS = \

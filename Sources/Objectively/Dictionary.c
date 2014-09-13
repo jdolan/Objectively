@@ -70,11 +70,6 @@ static Object *init(id obj, id interface, va_list *args) {
 
 #pragma mark - Dictionary instance methods
 
-static BOOL allKeys_enumerator(const Dictionary *dict, id obj, id key, id data) {
-	$((Array * ) data, addObject, key);
-	return NO;
-}
-
 /**
  * @see Dictionary::allKeys(const Dictionary *)
  */
@@ -82,14 +77,13 @@ static Array *allKeys(const Dictionary *self) {
 
 	Array *keys = new(Array);
 
-	$(self, enumerateObjectsAndKeys, allKeys_enumerator, keys);
+	BOOL enumerator(const Dictionary *dict, id obj, id key, id data) {
+		$(keys, addObject, key); return NO;
+	}
+
+	$(self, enumerateObjectsAndKeys, enumerator, NULL);
 
 	return keys;
-}
-
-static BOOL allObjects_enumerator(const Dictionary *dict, id obj, id key, id data) {
-	$((Array * ) data, addObject, obj);
-	return NO;
 }
 
 /**
@@ -99,7 +93,11 @@ static Array *allObjects(const Dictionary *self) {
 
 	Array *objects = new(Array);
 
-	$(self, enumerateObjectsAndKeys, allObjects_enumerator, objects);
+	BOOL enumerator(const Dictionary *dict, id obj, id key, id data) {
+		$(objects, addObject, obj); return NO;
+	}
+
+	$(self, enumerateObjectsAndKeys, enumerator, objects);
 
 	return objects;
 }

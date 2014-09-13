@@ -21,24 +21,53 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_h_
-#define _Objectively_h_
+#include <check.h>
+#include <stdio.h>
 
-/**
- * @file
- *
- * @brief Objectively: Ultra-lightweight object oriented framework for c99.
- */
+#include <Objectively.h>
 
-#include <Objectively/Array.h>
-#include <Objectively/Class.h>
-#include <Objectively/Condition.h>
-#include <Objectively/Dictionary.h>
-#include <Objectively/Lock.h>
-#include <Objectively/Log.h>
-#include <Objectively/Object.h>
-#include <Objectively/String.h>
-#include <Objectively/Thread.h>
-#include <Objectively/Types.h>
+START_TEST(_log)
+	{
+		Log *log = new(Log, "test", DEBUG);
+		ck_assert(log);
 
-#endif
+		ck_assert_str_eq("test", log->name);
+		ck_assert_int_eq(DEBUG, log->level);
+
+		log->file = fopen("/tmp/objectively-test.log", "w");
+		ck_assert(log->file);
+		ck_assert_int_eq(0, ftell(log->file));
+
+		$(log, debug, "hello %s", "world!");
+		$(log, flush);
+
+		long int len = ftell(log->file);
+		ck_assert_int_gt(len, 0);
+
+		$(log, trace, "hello again");
+		$(log, flush);
+
+		long int len2 = ftell(log->file);
+		ck_assert_int_eq(len, len2);
+
+		release(log);
+
+	}END_TEST
+
+int main(int argc, char **argv) {
+
+	TCase *tcase = tcase_create("log");
+	tcase_add_test(tcase, _log);
+
+	Suite *suite = suite_create("log");
+	suite_add_tcase(suite, tcase);
+
+	SRunner *runner = srunner_create(suite);
+
+	srunner_run_all(runner, CK_VERBOSE);
+	int failed = srunner_ntests_failed(runner);
+
+	srunner_free(runner);
+
+	return failed;
+}

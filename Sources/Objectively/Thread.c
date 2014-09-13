@@ -113,6 +113,15 @@ static void join(Thread *self, id *status) {
 }
 
 /**
+ * @see Thread::kill(Thread *, int)
+ */
+static void kill(Thread *self, int signal) {
+
+	int err = pthread_kill(*((pthread_t *)self->thread), signal);
+	assert(err == 0);
+}
+
+/**
  * @brief Cleans up after execution.
  */
 static void cleanup(id obj) {
@@ -150,6 +159,7 @@ static id main(id obj) {
 static void start(Thread *self) {
 
 	assert(self->isCancelled == NO);
+	assert(self->isDetached == NO);
 	assert(self->isExecuting == NO);
 	assert(self->isFinished == NO);
 
@@ -175,6 +185,7 @@ static void initialize(Class *self) {
 	thread->cancel = cancel;
 	thread->detach = detach;
 	thread->join = join;
+	thread->kill = kill;
 	thread->start = start;
 }
 

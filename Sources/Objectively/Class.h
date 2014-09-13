@@ -166,17 +166,23 @@ extern void retain(id obj);
 	((Object *) obj)->clazz
 
 /**
- * @brief Apply a selector to an instance.
+ * @brief Invoke an instance method.
  */
 #define $(obj, method, ...) \
 	(obj)->interface->method(obj, ## __VA_ARGS__)
 
 /**
- * @brief Apply a Superclass selector to an instance.
+ * @brief Invoke a Superclass instance method.
  */
 #define super(type, obj, method, ...) \
 	((type##Interface *) __Class.superclass->interface) \
 		->method((type *) obj, ## __VA_ARGS__)
+
+/**
+ * @brief Invoke a Class method.
+ */
+#define __$(type, method, ...) \
+	((type##Interface *) __#type.interface)->method(__##type, __VA_ARGS__)
 
 /**
  * @brief Take an initializer parameter.

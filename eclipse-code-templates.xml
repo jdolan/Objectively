@@ -76,7 +76,7 @@ static Object *init(id obj, id interface, va_list *args) {
 		//..
 	}
 
-	return self;
+	return (Object *) self;
 }
 
 #pragma mark - ${file_base} instance methods
