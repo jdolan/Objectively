@@ -42,7 +42,8 @@ static void dealloc(Object *self) {
 	Log *this = (Log *) self;
 
 	if (!isatty(fileno(this->file))) {
-		fclose(this->file);
+		int err = fclose(this->file);
+		assert(err == 0);
 	}
 
 	free(this->name);
