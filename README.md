@@ -1,6 +1,6 @@
 Objectively
 ===
-Ultra-lightweight object oriented framework for the c programming language. Zlib license.
+Ultra-lightweight object oriented framework for the C programming language. Zlib license.
 
 Adding Objectively to your project
 ---
