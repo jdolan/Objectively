@@ -53,6 +53,11 @@ struct Thread {
 	Object object;
 
 	/**
+	 * @brief The typed interface.
+	 */
+	const ThreadInterface *interface;
+
+	/**
 	 * @brief The user data.
 	 */
 	id data;
@@ -86,11 +91,6 @@ struct Thread {
 	 * @brief The backing thread.
 	 */
 	id thread;
-
-	/**
-	 * @brief The typed interface.
-	 */
-	ThreadInterface *interface;
 };
 
 /**

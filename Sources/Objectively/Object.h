@@ -48,14 +48,14 @@ struct Object {
 	const Class *clazz;
 
 	/**
+	 * @brief The typed interface.
+	 */
+	const ObjectInterface *interface;
+
+	/**
 	 * @brief The reference count of this Object.
 	 */
 	unsigned referenceCount;
-
-	/**
-	 * @brief The typed interface of Object.
-	 */
-	const ObjectInterface *interface;
 };
 
 typedef struct String String;

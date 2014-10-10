@@ -118,3 +118,5 @@ Class __Condition = {
 	.interfaceSize = sizeof(ConditionInterface),
 	.initialize = initialize,
 };
+
+#undef __Class

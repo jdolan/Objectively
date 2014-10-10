@@ -69,7 +69,7 @@ static Object *init(id obj, id interface, va_list *args) {
 	if (self) {
 		self->interface = (ArrayInterface *) interface;
 
-		self->capacity = self->initialCapacity = arg(args, size_t, ARRAY_CHUNK_SIZE);
+		self->capacity = self->initialCapacity = $arg(args, size_t, ARRAY_CHUNK_SIZE);
 		self->elements = malloc(self->capacity * sizeof(id));
 	}
 
@@ -270,3 +270,6 @@ Class __Array = {
 	.instanceSize = sizeof(Array),
 	.interfaceSize = sizeof(ArrayInterface),
 	.initialize = initialize, };
+
+#undef __Class
+

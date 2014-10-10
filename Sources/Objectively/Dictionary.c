@@ -61,7 +61,7 @@ static Object *init(id obj, id interface, va_list *args) {
 	if (self) {
 		self->interface = (DictionaryInterface *) interface;
 
-		self->capacity = self->initialCapacity = arg(args, size_t, DICTIONARY_CHUNK_SIZE);
+		self->capacity = self->initialCapacity = $arg(args, size_t, DICTIONARY_CHUNK_SIZE);
 		self->elements = calloc(1, self->capacity * sizeof(id));
 	}
 
@@ -301,3 +301,5 @@ Class __Dictionary = {
 	.instanceSize = sizeof(Dictionary),
 	.interfaceSize = sizeof(DictionaryInterface),
 	.initialize = initialize, };
+
+#undef __Class

@@ -181,7 +181,7 @@ extern void retain(id obj);
 /**
  * @brief Take an initializer parameter.
  */
-#define arg(args, type, def) \
+#define $arg(args, type, def) \
 	(va_arg(*args, type) ?: def)
 
 #endif

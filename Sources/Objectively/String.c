@@ -82,7 +82,7 @@ static Object *init(id obj, id interface, va_list *args) {
 	if (self) {
 		self->interface = (StringInterface *) interface;
 
-		const char *fmt = arg(args, const char *, NULL);
+		const char *fmt = $arg(args, const char *, NULL);
 		if (fmt) {
 			vasprintf(&self->str, fmt, *args);
 			self->len = strlen(self->str);
@@ -255,3 +255,5 @@ Class __String = {
 	.instanceSize = sizeof(String),
 	.interfaceSize = sizeof(StringInterface),
 	.initialize = initialize, };
+
+#undef __Class

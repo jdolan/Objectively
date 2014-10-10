@@ -129,3 +129,5 @@ Class __Lock = {
 	.instanceSize = sizeof(Lock),
 	.interfaceSize = sizeof(LockInterface),
 	.initialize = initialize, };
+
+#undef __Class

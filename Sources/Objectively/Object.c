@@ -130,3 +130,5 @@ Class __Object = {
 	.instanceSize = sizeof(Object),
 	.interfaceSize = sizeof(ObjectInterface),
 	.initialize = initialize, };
+
+#undef __Class

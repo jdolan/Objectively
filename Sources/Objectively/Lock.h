@@ -46,14 +46,14 @@ struct Lock {
 	Object object;
 
 	/**
+	 * @brief The typed interface.
+	 */
+	const LockInterface *interface;
+
+	/**
 	 * @brief The backing lock.
 	 */
 	id lock;
-
-	/**
-	 * @brief The typed interface.
-	 */
-	LockInterface *interface;
 };
 
 /**

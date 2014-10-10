@@ -50,14 +50,14 @@ struct Condition {
 	Lock lock;
 
 	/**
+	 * @brief The typed interface.
+	 */
+	const ConditionInterface *interface;
+
+	/**
 	 * @brief The backing condition.
 	 */
 	id condition;
-
-	/**
-	 * @brief The typed interface.
-	 */
-	ConditionInterface *interface;
 };
 
 /**

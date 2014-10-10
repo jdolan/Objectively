@@ -45,6 +45,11 @@ struct String {
 	Object object;
 
 	/**
+	 * @brief The typed interface of String.
+	 */
+	const StringInterface *interface;
+
+	/**
 	 * @brief The backing character array length.
 	 */
 	size_t len;
@@ -53,11 +58,6 @@ struct String {
 	 * @brief The backing character array.
 	 */
 	char *str;
-
-	/**
-	 * @brief The typed interface of String.
-	 */
-	const StringInterface *interface;
 };
 
 /**

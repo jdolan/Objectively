@@ -15,73 +15,82 @@ Adding Objectively to your project
 
 3) Compile and link with Objectively.
 
-    gcc `pkg-config --cflags --libs objectively` -o foo *.c
+    gcc `pkg-config --cflags --libs objectively` -o myprogram *.c
 
 Declaring a type
 ---
 
 Types in Objectively are comprised of 3 components:
 
-1) The instance struct, containing the parent type and any additional fields.
+1) The instance struct, containing the parent type, the interface pointer, and any additional fields.
 
-    struct Foo {
+    struct Hello {
         Object object;
-        const char *bar;
+        const HelloInterface *interface;
         
-        const FooInterface *interface;
+        const char *bar;
     };
     
 2) The interface struct, containing the parent interface and any additional methods.
 
-    struct FooInterface {
+    struct HelloInterface {
         ObjectInterface objectInterface;
 
-        void (*baz)(const Foo *self);
+        void (*baz)(const Hello *self);
     };
 
 3) The class descriptor, serving to tie 1) and 2) together.
 
-    extern Class __Foo;
+    extern Class __Hello;
 
 Implementing a type
 ---
 
-    static void baz(const Foo *self) {
-        printf("%s\n", self->bar);
-    }
+To implement a type, define its initializer, instance methods and Class initializer:
+
+    #include <stdio.h>
+    #include <Objectively.h>
     
+    #define __Class __Hello
+        
     static Object *init(id obj, id interface, va_list *args) {
 
-        Foo *self = (Foo *) super(Object, obj, init, interface, args);
+        Hello *self = (Hello *) super(Object, obj, init, interface, args);
         if (self) {
-            self->interface = (FooInterface *) interface;
-            self->bar = arg(args, const char *, NULL);
+            self->interface = (HelloInterface *) interface;
+            self->bar = $arg(args, const char *, NULL);
         }
         return self;
     }
-
-    static void initialize(Class *class) {
-        ((ObjectInterface *) class->interface)->init = init;
-        ((FooInterface *) class->interface)->baz = baz;
+            
+    static void baz(const Hello *self) {
+        printf("%s\n", self->bar);
+    }
+        
+    static void initialize(Class *clazz) {
+        ((ObjectInterface *) clazz->interface)->init = init;
+        ((HelloInterface *) clazz->interface)->baz = baz;
     }
 
-    Class __Foo = {
-        .name = "Foo",
+    Class __Hello = {
+        .name = "Hello",
         .superclass = &__Object,
-        .instanceSize = sizeof(Foo),
-        .interfaceSize = sizeof(FooInterface),
+        .instanceSize = sizeof(Hello),
+        .interfaceSize = sizeof(HelloInterface),
         .initialize = initialize
     };
+    
+    #undef __Class
 
 Using a type
 ---
 
-    Foo *foo = new(Foo, "hello world!");
-    $(foo, bar);
-    release(foo);
+    Hello *hello = new(Hello, "hello world!");
+    $(hello, bar);
+    release(hello);
 
 
-See [Foo.c](test/Objectively/Foo.c) for the full source to this example.
+See [Hello.c](test/Objectively/Hello.c) for the full source to this example.
 
 Initialization
 ---

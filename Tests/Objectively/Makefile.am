@@ -1,5 +1,15 @@
 AUTOMAKE_OPTIONS = nostdinc
 
+noinst_PROGRAMS = \
+	Hello
+
+Hello_SOURCES = \
+	Hello.c
+Hello_CFLAGS = \
+	-I$(includedir)
+Hello_LDADD = \
+	../../Sources/Objectively/.libs/*.o
+
 TEST_CFLAGS = \
 	-I$(includedir) \
 	@CHECK_CFLAGS@
@@ -59,4 +69,3 @@ Thread_CFLAGS = \
 	$(TEST_CFLAGS)
 Thread_LDADD = \
 	$(TEST_LDADD)
-

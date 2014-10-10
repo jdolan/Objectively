@@ -57,6 +57,11 @@ struct Array {
 	Object object;
 
 	/**
+	 * @brief The typed interface of Array.
+	 */
+	const ArrayInterface *interface;
+
+	/**
 	 * @brief The Array capacity.
 	 */
 	size_t capacity;
@@ -77,11 +82,6 @@ struct Array {
 	 * @brief The Array initial capacity.
 	 */
 	size_t initialCapacity;
-
-	/**
-	 * @brief The typed interface of Array.
-	 */
-	const ArrayInterface *interface;
 };
 
 /**

@@ -59,6 +59,11 @@ struct Dictionary {
 	Object object;
 
 	/**
+	 * @brief The typed interface of Dictionary.
+	 */
+	const DictionaryInterface *interface;
+
+	/**
 	 * @brief The capacity, or number of bins, in this Dictionary.
 	 */
 	size_t capacity;
@@ -79,11 +84,6 @@ struct Dictionary {
 	 * @brief The initial capacity, or number of bins, in this Dictionary.
 	 */
 	size_t initialCapacity;
-
-	/**
-	 * @brief The typed interface of Dictionary.
-	 */
-	const DictionaryInterface *interface;
 };
 
 /**

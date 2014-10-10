@@ -32,9 +32,25 @@ First attempt
 
 Second attempt (current implementation)
 ---
+
+    struct Foo {
+        Object object;
+        const FooInterface *interface;
+        
+        const char *bar;
+    };
+    
+    struct FooInterface {
+        ObjectInterface objectInterface;
+
+        void (*baz)(const Foo *self);
+    };
+    
+    extern Class __Foo;
+    
  * Sparse use of macros, use code templates for convenience
  * Instance and interface types are separate
- * Instances include a pointer to their typed interface
+ * Instances include a typed pointer to their interface
   * Allows for faster instantiation
   * Complicates polymorphism
  * This is how most OO languages work

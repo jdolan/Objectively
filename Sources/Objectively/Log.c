@@ -60,8 +60,8 @@ static Object *init(id obj, id interface, va_list *args) {
 	if (self) {
 		self->interface = (LogInterface *) interface;
 
-		self->name = strdup(arg(args, char *, "default"));
-		self->level = arg(args, LogLevel, INFO);
+		self->name = strdup($arg(args, char *, "default"));
+		self->level = $arg(args, LogLevel, INFO);
 
 		self->format = LOG_FORMAT_DEFAULT;
 		self->file = stdout;

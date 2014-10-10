@@ -63,10 +63,10 @@ static Object *init(id obj, id interface, va_list *args) {
 	if (self) {
 		self->interface = (ThreadInterface *) interface;
 
-		self->function = arg(args, ThreadFunction, NULL);
+		self->function = $arg(args, ThreadFunction, NULL);
 		assert(self->function);
 
-		self->data = arg(args, id, NULL);
+		self->data = $arg(args, id, NULL);
 
 		self->thread = calloc(1, sizeof(pthread_t));
 		assert(self->thread);
@@ -195,3 +195,5 @@ Class __Thread = {
 	.instanceSize = sizeof(Thread),
 	.interfaceSize = sizeof(ThreadInterface),
 	.initialize = initialize, };
+
+#undef __Class
