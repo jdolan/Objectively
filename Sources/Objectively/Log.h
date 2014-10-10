@@ -72,11 +72,6 @@ struct Log {
 	LogLevel level;
 
 	/**
-	 * @brief The level format, defaults to `[%s] `.
-	 */
-	const char *levelFormat;
-
-	/**
 	 * @brief The name of this Log.
 	 */
 	char *name;
