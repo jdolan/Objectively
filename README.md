@@ -90,7 +90,7 @@ Using a type
     release(hello);
 
 
-See [Hello.c](test/Objectively/Hello.c) for the full source to this example.
+See [Hello.c](Tests/Objectively/Hello.c) for the full source to this example.
 
 Initialization
 ---
