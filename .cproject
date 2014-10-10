@@ -28,7 +28,7 @@
 							<tool errorParsers="" id="org.eclipse.linuxtools.cdt.autotools.core.toolchain.tool.autogen.1923773071" name="autogen.sh" superClass="org.eclipse.linuxtools.cdt.autotools.core.toolchain.tool.autogen"/>
 							<tool errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="org.eclipse.linuxtools.cdt.autotools.core.toolchain.tool.gcc.1012225088" name="GCC C Compiler" superClass="org.eclipse.linuxtools.cdt.autotools.core.toolchain.tool.gcc">
 								<option id="gnu.c.compiler.option.include.paths.517993096" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/objectively/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Objectively/Sources}&quot;"/>
 									<listOptionValue builtIn="false" value="/opt/local/include"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1278236108" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>

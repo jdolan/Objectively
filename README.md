@@ -39,7 +39,7 @@ Types in Objectively are comprised of 3 components:
         void (*baz)(const Foo *self);
     };
 
- 3) The class descriptor, serving to tie 1) and 2) together.
+3) The class descriptor, serving to tie 1) and 2) together.
 
     extern Class __Foo;
 
@@ -70,7 +70,8 @@ Implementing a type
         .superclass = &__Object,
         .instanceSize = sizeof(Foo),
         .interfaceSize = sizeof(FooInterface),
-        .initialize = initialize, };
+        .initialize = initialize
+    };
 
 Using a type
 ---

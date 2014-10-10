@@ -179,12 +179,6 @@ extern void retain(id obj);
 		->method((type *) obj, ## __VA_ARGS__)
 
 /**
- * @brief Invoke a Class method.
- */
-#define __$(type, method, ...) \
-	((type##Interface *) __#type.interface)->method(__##type, __VA_ARGS__)
-
-/**
  * @brief Take an initializer parameter.
  */
 #define arg(args, type, def) \
