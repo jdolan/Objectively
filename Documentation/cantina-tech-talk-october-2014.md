@@ -39,13 +39,13 @@ Second attempt (current implementation)
         
         const char *bar;
     };
-    
+
     struct FooInterface {
         ObjectInterface objectInterface;
-
+        
         void (*baz)(const Foo *self);
     };
-    
+
     extern Class __Foo;
     
  * Sparse use of macros, use code templates for convenience
@@ -84,21 +84,18 @@ In a nut shell
  
  * Planes can be represented as a normal vector and distance
 
-
-    typedef float vec_t;
-    typedef vec_t[2] vec2_t;
-    typedef vec_t[3] vec3_t;
-    typedef vec_t[4] vec4_t;
-    typedef vec4_t plane_t;
-
+        typedef float vec_t;
+        typedef vec_t[2] vec2_t;
+        typedef vec_t[3] vec3_t;
+        typedef vec_t[4] vec4_t;
+        typedef vec4_t plane_t;
 
  * Volumes can therefore be defined by a set of clipping planes
  * _Dot-product_ can yield plane sidedness
 
-
-    vec_t dot(plane_t p, vec3_t v) {
-    	return (p[0] * v[0] + p[1] * v[1] + p[2] * v2[2]) - p[3];
-    }
+        vec_t dot(plane_t p, vec3_t v) {
+    	    return (p[0] * v[0] + p[1] * v[1] + p[2] * v2[2]) - p[3];
+        }
 
  * This is the basis for *all* collision detection and visibility checking in Quake
  * [Further reading on BSP format](https://developer.valvesoftware.com/wiki/Source_BSP_File_Format)
