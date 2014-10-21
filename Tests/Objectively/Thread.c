@@ -26,30 +26,32 @@
 
 #include <Objectively.h>
 
-START_TEST(thread)
-	{
-		Condition *condition = new(Condition);
-		ck_assert(condition);
+Condition *condition;
+
+static id run(Thread *self) {
+
+	BOOL stop = NO;
+	while (!stop) {
 
 		$((Lock * ) condition, lock);
 
-		id run(Thread *self) {
-
-			BOOL stop = NO;
-			while (!stop) {
-
-				$((Lock * ) condition, lock);
-
-				if (++(*(int *) self->data) == 0xbeaf) {
-					$(condition, signal);
-					stop = YES;
-				}
-
-				$((Lock * ) condition, unlock);
-			}
-
-			return (id) YES;
+		if (++(*(int *) self->data) == 0xbeaf) {
+			$(condition, signal);
+			stop = YES;
 		}
+
+		$((Lock * ) condition, unlock);
+	}
+
+	return (id) YES;
+}
+
+START_TEST(thread)
+	{
+		condition = new(Condition);
+		ck_assert(condition);
+
+		$((Lock * ) condition, lock);
 
 		int criticalSection = 0;
 
@@ -63,7 +65,7 @@ START_TEST(thread)
 
 		id ret;
 		$(thread, join, &ret);
-		ck_assert_int_eq(YES, ret);
+		ck_assert_int_eq(YES, (BOOL) ret);
 
 		release(thread);
 		release(condition);

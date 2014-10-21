@@ -33,7 +33,7 @@
 #pragma mark - Object instance methods
 
 /**
- * @see Object::copy(const Object *)
+ * @see ObjectInterface::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -46,7 +46,7 @@ static Object *copy(const Object *self) {
 }
 
 /**
- * @see Object::dealloc(Object *)
+ * @see ObjectInterface::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -54,7 +54,7 @@ static void dealloc(Object *self) {
 }
 
 /**
- * @see Object::description(const Object *)
+ * @see ObjectInterface::description(const Object *)
  */
 static String *description(const Object *self) {
 
@@ -62,7 +62,7 @@ static String *description(const Object *self) {
 }
 
 /**
- * @see Object::hash(const Object *)
+ * @see ObjectInterface::hash(const Object *)
  */
 static int hash(const Object *self) {
 
@@ -72,7 +72,7 @@ static int hash(const Object *self) {
 }
 
 /**
- * @see Object::init(id, id, va_list *)
+ * @see ObjectInterface::init(id, id, va_list *)
  */
 static Object *init(id obj, id interface, va_list *args) {
 
@@ -84,7 +84,7 @@ static Object *init(id obj, id interface, va_list *args) {
 }
 
 /**
- * @see Object::isEqual(const Object *, const Object *)
+ * @see ObjectInterface::isEqual(const Object *, const Object *)
  */
 static BOOL isEqual(const Object *self, const Object *other) {
 
@@ -92,7 +92,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 }
 
 /**
- * @see Object::isKindOfClass(const Object *, const Class *)
+ * @see ObjectInterface::isKindOfClass(const Object *, const Class *)
  */
 static BOOL isKindOfClass(const Object *self, const Class *class) {
 
@@ -129,6 +129,7 @@ Class __Object = {
 	.name = "Object",
 	.instanceSize = sizeof(Object),
 	.interfaceSize = sizeof(ObjectInterface),
-	.initialize = initialize, };
+	.initialize = initialize,
+};
 
 #undef __Class

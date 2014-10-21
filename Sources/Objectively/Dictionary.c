@@ -35,7 +35,7 @@
 #pragma mark - Object instance methods
 
 /**
- * @see Object::dealloc(Object *)
+ * @see ObjectInterface::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -53,7 +53,7 @@ static void dealloc(Object *self) {
 }
 
 /**
- * @see Object::init(id, id, va_list *)
+ * @see ObjectInterface::init(id, id, va_list *)
  */
 static Object *init(id obj, id interface, va_list *args) {
 
@@ -71,39 +71,45 @@ static Object *init(id obj, id interface, va_list *args) {
 #pragma mark - Dictionary instance methods
 
 /**
- * @see Dictionary::allKeys(const Dictionary *)
+ * @brief DictionaryEnumerator for allKeys.
+ */
+static BOOL allKeys_enumerator(const Dictionary *dict, id obj, id key, id data) {
+	$((Array *) data, addObject, key); return NO;
+}
+
+/**
+ * @see DictionaryInterface::allKeys(const Dictionary *)
  */
 static Array *allKeys(const Dictionary *self) {
 
 	Array *keys = new(Array);
 
-	BOOL enumerator(const Dictionary *dict, id obj, id key, id data) {
-		$(keys, addObject, key); return NO;
-	}
-
-	$(self, enumerateObjectsAndKeys, enumerator, NULL);
+	$(self, enumerateObjectsAndKeys, allKeys_enumerator, NULL);
 
 	return keys;
 }
 
 /**
- * @see Dictionary::allObjects(const Dictionary *)
+ * @brief DictionaryEnumerator for allObjects.
+ */
+static BOOL allObjects_enumerator(const Dictionary *dict, id obj, id key, id data) {
+	$((Array *) data, addObject, obj); return NO;
+}
+
+/**
+ * @see DictionaryInterface::allObjects(const Dictionary *)
  */
 static Array *allObjects(const Dictionary *self) {
 
 	Array *objects = new(Array);
 
-	BOOL enumerator(const Dictionary *dict, id obj, id key, id data) {
-		$(objects, addObject, obj); return NO;
-	}
-
-	$(self, enumerateObjectsAndKeys, enumerator, objects);
+	$(self, enumerateObjectsAndKeys, allObjects_enumerator, objects);
 
 	return objects;
 }
 
 /**
- * @see Dictionary::enumerateObjectsAndKeys(const Dictionary *, DictionaryEnumerator, id)
+ * @see DictionaryInterface::enumerateObjectsAndKeys(const Dictionary *, DictionaryEnumerator, id)
  */
 static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator enumerator,
 		id data) {
@@ -129,7 +135,7 @@ static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator
 }
 
 /**
- * @see Dictionary::filterObjectsAndKeys(const Dictionary *, DictionaryEnumerator, id)
+ * @see DictionaryInterface::filterObjectsAndKeys(const Dictionary *, DictionaryEnumerator, id)
  */
 static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumerator enumerator,
 		id data) {
@@ -159,7 +165,7 @@ static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumer
 }
 
 /**
- * @see Dictionary::objectForKey(const Dictionary *, const id)
+ * @see DictionaryInterface::objectForKey(const Dictionary *, const id)
  */
 static id objectForKey(const Dictionary *self, const id key) {
 
@@ -178,7 +184,7 @@ static id objectForKey(const Dictionary *self, const id key) {
 }
 
 /**
- * @see Dictionary::removeAllObjects(Dictionary *)
+ * @see DictionaryInterface::removeAllObjects(Dictionary *)
  */
 static void removeAllObjects(Dictionary *self) {
 
@@ -198,7 +204,7 @@ static void removeAllObjects(Dictionary *self) {
 }
 
 /**
- * @see Dictionary::removeObjectForKey(Dictionary *, const id)
+ * @see DictionaryInterface::removeObjectForKey(Dictionary *, const id)
  */
 static void removeObjectForKey(Dictionary *self, const id key) {
 
@@ -224,7 +230,7 @@ static void removeObjectForKey(Dictionary *self, const id key) {
 }
 
 /**
- * @see Dictionary::setObjectForKey(Dictionary *, const id, const id)
+ * @see DictionaryInterface::setObjectForKey(Dictionary *, const id, const id)
  */
 static void setObjectForKey(Dictionary *self, const id obj, const id key) {
 
@@ -248,7 +254,7 @@ static void setObjectForKey(Dictionary *self, const id obj, const id key) {
 }
 
 /**
- * @see Dictionary::setObjectsForKeys(Dictionary *, ...)
+ * @see DictionaryInterface::setObjectsForKeys(Dictionary *, ...)
  */
 static void setObjectsForKeys(Dictionary *self, ...) {
 
@@ -300,6 +306,7 @@ Class __Dictionary = {
 	.superclass = &__Object,
 	.instanceSize = sizeof(Dictionary),
 	.interfaceSize = sizeof(DictionaryInterface),
-	.initialize = initialize, };
+	.initialize = initialize,
+};
 
 #undef __Class

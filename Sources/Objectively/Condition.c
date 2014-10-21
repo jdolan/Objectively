@@ -35,7 +35,7 @@
 #pragma mark - Object instance methods
 
 /**
- * @see Object::dealloc(Object *)
+ * @see ObjectInterface::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -48,7 +48,7 @@ static void dealloc(Object *self) {
 }
 
 /**
- * @see Object::init(id, id, va_list *)
+ * @see ObjectInterface::init(id, id, va_list *)
  */
 static Object *init(id obj, id interface, va_list *args) {
 
@@ -69,7 +69,7 @@ static Object *init(id obj, id interface, va_list *args) {
 #pragma mark - Condition instance methods
 
 /**
- * @see Condition::broadcast(Condition *)
+ * @see ConditionInterface::broadcast(Condition *)
  */
 static void broadcast(Condition *self) {
 
@@ -78,7 +78,7 @@ static void broadcast(Condition *self) {
 }
 
 /**
- * @see Condition::signal(Condition *)
+ * @see ConditionInterface::signal(Condition *)
  */
 static void _signal(Condition *self) {
 
@@ -87,7 +87,7 @@ static void _signal(Condition *self) {
 }
 
 /**
- * @see Condition::wait(Condition *)
+ * @see ConditionInterface::wait(Condition *)
  */
 static void _wait(Condition *self) {
 
@@ -97,6 +97,9 @@ static void _wait(Condition *self) {
 
 #pragma mark - Condition Class methods
 
+/**
+ * @see Class::initialize(Class *)
+ */
 static void initialize(Class *self) {
 
 	ObjectInterface *object = (ObjectInterface *) self->interface;

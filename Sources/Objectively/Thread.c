@@ -34,14 +34,14 @@
 #pragma mark - Object instance methods
 
 /**
- * @see Object::copy(const Object *)
+ * @see ObjectInterface::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 	return NULL;
 }
 
 /**
- * @see Object::dealloc(Object *)
+ * @see ObjectInterface::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -55,7 +55,7 @@ static void dealloc(Object *self) {
 }
 
 /**
- * @see Object::init(id, id, va_list *)
+ * @see ObjectInterface::init(id, id, va_list *)
  */
 static Object *init(id obj, id interface, va_list *args) {
 
@@ -78,7 +78,7 @@ static Object *init(id obj, id interface, va_list *args) {
 #pragma mark - Thread instance methods
 
 /**
- * @see Thread::cancel(Thread *)
+ * @see ThreadInterface::cancel(Thread *)
  */
 static void cancel(Thread *self) {
 
@@ -91,7 +91,7 @@ static void cancel(Thread *self) {
 }
 
 /**
- * @see Thread::detach(Thread *)
+ * @see ThreadInterface::detach(Thread *)
  */
 static void detach(Thread *self) {
 
@@ -104,7 +104,7 @@ static void detach(Thread *self) {
 }
 
 /**
- * @see Thread::join(Thread *, id *)
+ * @see ThreadInterface::join(Thread *, id *)
  */
 static void join(Thread *self, id *status) {
 
@@ -134,7 +134,7 @@ static void cleanup(id obj) {
 /**
  * @brief Wraps the user-specified ThreadFunction, providing cleanup.
  */
-static id main(id obj) {
+static id run(id obj) {
 
 	Thread *self = (Thread *) obj;
 
@@ -154,7 +154,7 @@ static id main(id obj) {
 }
 
 /**
- * @see Thread::start(Thread *)
+ * @see ThreadInterface::start(Thread *)
  */
 static void start(Thread *self) {
 
@@ -163,7 +163,7 @@ static void start(Thread *self) {
 	assert(self->isExecuting == NO);
 	assert(self->isFinished == NO);
 
-	int err = pthread_create(self->thread, NULL, main, self);
+	int err = pthread_create(self->thread, NULL, run, self);
 	assert(err == 0);
 }
 
@@ -194,6 +194,7 @@ Class __Thread = {
 	.superclass = &__Object,
 	.instanceSize = sizeof(Thread),
 	.interfaceSize = sizeof(ThreadInterface),
-	.initialize = initialize, };
+	.initialize = initialize,
+};
 
 #undef __Class

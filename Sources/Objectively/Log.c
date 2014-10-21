@@ -35,7 +35,7 @@
 #pragma mark - Object instance methods
 
 /**
- * @see Object::dealloc(Object *)
+ * @see ObjectInterface::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -52,7 +52,7 @@ static void dealloc(Object *self) {
 }
 
 /**
- * @see Object::init(id, id, va_list *)
+ * @see ObjectInterface::init(id, id, va_list *)
  */
 static Object *init(id obj, id interface, va_list *args) {
 
@@ -73,7 +73,7 @@ static Object *init(id obj, id interface, va_list *args) {
 #pragma mark - Log instance methods
 
 /**
- * @see Log::debug(const Log *, const char *, ...)
+ * @see LogInterface::debug(const Log *, const char *, ...)
  */
 static void debug(const Log *self, const char *fmt, ...) {
 
@@ -86,7 +86,7 @@ static void debug(const Log *self, const char *fmt, ...) {
 }
 
 /**
- * @see Log::error(const Log *, const char *, ...)
+ * @see LogInterface::error(const Log *, const char *, ...)
  */
 static void error(const Log *self, const char *fmt, ...) {
 
@@ -99,7 +99,7 @@ static void error(const Log *self, const char *fmt, ...) {
 }
 
 /**
- * @see Log::fatal(const Log *, const char *, ...)
+ * @see LogInterface::fatal(const Log *, const char *, ...)
  */
 static void fatal(const Log *self, const char *fmt, ...) {
 
@@ -112,7 +112,7 @@ static void fatal(const Log *self, const char *fmt, ...) {
 }
 
 /**
- * @see Log::flush
+ * @see LogInterface::flush
  */
 static void flush(const Log *self) {
 
@@ -121,7 +121,7 @@ static void flush(const Log *self) {
 }
 
 /**
- * @see Log::info(const Log *, const char *, ...)
+ * @see LogInterface::info(const Log *, const char *, ...)
  */
 static void info(const Log *self, const char *fmt, ...) {
 
@@ -188,7 +188,7 @@ static void _log(const Log *self, LogLevel level, const char *fmt, va_list args)
 }
 
 /**
- * @see Log::trace(const Log *, const char *, ...)
+ * @see LogInterface::trace(const Log *, const char *, ...)
  */
 static void trace(const Log *self, const char *fmt, ...) {
 
@@ -201,7 +201,7 @@ static void trace(const Log *self, const char *fmt, ...) {
 }
 
 /**
- * @see Log::warn(const Log *, const char *, ...)
+ * @see LogInterface::warn(const Log *, const char *, ...)
  */
 static void warn(const Log *self, const char *fmt, ...) {
 
@@ -240,6 +240,7 @@ Class __Log = {
 	.superclass = &__Object,
 	.instanceSize = sizeof(Log),
 	.interfaceSize = sizeof(LogInterface),
-	.initialize = initialize, };
+	.initialize = initialize,
+};
 
 #undef __Class

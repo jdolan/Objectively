@@ -26,6 +26,10 @@
 
 #include <Objectively.h>
 
+BOOL enumerator(const Array *array, id obj, id data) {
+	(*(int *) data)++; return NO;
+}
+
 START_TEST(array)
 	{
 		Array *array = new(Array, 5);
@@ -79,18 +83,22 @@ START_TEST(array)
 		release(three);
 
 		for (int i = 0; i < 1024; i++) {
-			$(array, addObject, new(Object));
+
+			id obj = new(Object);
+			ck_assert(obj);
+
+			$(array, addObject, obj);
+
+			release(obj);
 		}
 
-		int counter = 0;
+		ck_assert_int_eq(1024, array->count);
 
-		BOOL enumerator(const Array *array, id obj, id data) {
-			release(obj); counter++; return NO;
-		}
+		int count = 0;
 
-		$(array, enumerateObjects, enumerator, NULL);
+		$(array, enumerateObjects, enumerator, &count);
 
-		ck_assert_int_eq(1024, counter);
+		ck_assert_int_eq(array->count, count);
 
 		$(array, removeAllObjects);
 

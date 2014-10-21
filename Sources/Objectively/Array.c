@@ -33,7 +33,7 @@
 #pragma mark - Object instance methods
 
 /**
- * @see Object::copy(const Object *)
+ * @see ObjectInterface::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -47,7 +47,7 @@ static Object *copy(const Object *self) {
 }
 
 /**
- * @see Object::dealloc(Object *)
+ * @see ObjectInterface::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -61,7 +61,7 @@ static void dealloc(Object *self) {
 }
 
 /**
- * @see Object::init(id, id, va_list *)
+ * @see ObjectInterface::init(id, id, va_list *)
  */
 static Object *init(id obj, id interface, va_list *args) {
 
@@ -79,7 +79,7 @@ static Object *init(id obj, id interface, va_list *args) {
 #pragma mark - Array instance methods
 
 /**
- * @see addObject(Array *, const id)
+ * @see ArrayInterface::addObject(Array *, const id)
  */
 static void addObject(Array *self, const id obj) {
 
@@ -97,7 +97,7 @@ static void addObject(Array *self, const id obj) {
 }
 
 /**
- * @see Array::containsObject(const Array *, const id)
+ * @see ArrayInterface::containsObject(const Array *, const id)
  */
 static BOOL containsObject(const Array *self, const id obj) {
 
@@ -105,7 +105,7 @@ static BOOL containsObject(const Array *self, const id obj) {
 }
 
 /**
- * @see Array::enumerateObjects(const Array *, ArrayEnumerator, id)
+ * @see ArrayInterface::enumerateObjects(const Array *, ArrayEnumerator, id)
  */
 static void enumerateObjects(const Array *self, ArrayEnumerator enumerator, id data) {
 
@@ -119,7 +119,7 @@ static void enumerateObjects(const Array *self, ArrayEnumerator enumerator, id d
 }
 
 /**
- * @see Array::filterObjects(const Array *, ArrayEnumerator, id)
+ * @see ArrayInterface::filterObjects(const Array *, ArrayEnumerator, id)
  */
 static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, id data) {
 
@@ -137,7 +137,7 @@ static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, id da
 }
 
 /**
- * @see Array::indexOfObject(const Array *, const id)
+ * @see ArrayInterface::indexOfObject(const Array *, const id)
  */
 static int indexOfObject(const Array *self, const id obj) {
 
@@ -155,7 +155,7 @@ static int indexOfObject(const Array *self, const id obj) {
 }
 
 /**
- * @see Array::objectAtIndex(const Array *, const int)
+ * @see ArrayInterface::objectAtIndex(const Array *, const int)
  */
 static id objectAtIndex(const Array *self, const int index) {
 
@@ -166,7 +166,7 @@ static id objectAtIndex(const Array *self, const int index) {
 }
 
 /**
- * @see Array::removeAllObjects(Array *)
+ * @see ArrayInterface::removeAllObjects(Array *)
  */
 static void removeAllObjects(Array *self) {
 
@@ -176,7 +176,7 @@ static void removeAllObjects(Array *self) {
 }
 
 /**
- * @see Array::removeObject(Array *, const id)
+ * @see ArrayInterface::removeObject(Array *, const id)
  */
 static void removeObject(Array *self, const id obj) {
 
@@ -187,7 +187,7 @@ static void removeObject(Array *self, const id obj) {
 }
 
 /**
- * @see Array::removeObjectAtIndex(Array *, const int)
+ * @see ArrayInterface::removeObjectAtIndex(Array *, const int)
  */
 static void removeObjectAtIndex(Array *self, const int index) {
 
@@ -204,7 +204,7 @@ static void removeObjectAtIndex(Array *self, const int index) {
 }
 
 /**
- * @see Array::resize(Array *)
+ * @see ArrayInterface::resize(Array *)
  */
 static void resize(Array *self) {
 
@@ -222,7 +222,7 @@ static void resize(Array *self) {
 }
 
 /**
- * @see Array::setObjectAtIndex(Array *, const id, const int)
+ * @see ArrayInterface::setObjectAtIndex(Array *, const id, const int)
  */
 static void setObjectAtIndex(Array *self, const id obj, const int index) {
 

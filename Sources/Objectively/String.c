@@ -33,7 +33,7 @@
 #pragma mark - Object instance methods
 
 /**
- * @see Object::copy(const Object *)
+ * @see ObjectInterface::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -41,7 +41,7 @@ static Object *copy(const Object *self) {
 }
 
 /**
- * @see Object::dealloc(Object *)
+ * @see ObjectInterface::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -51,7 +51,7 @@ static void dealloc(Object *self) {
 }
 
 /**
- * @see Object::hash(const Object *)
+ * @see ObjectInterface::hash(const Object *)
  */
 static int hash(const Object *self) {
 
@@ -74,7 +74,7 @@ static int hash(const Object *self) {
 }
 
 /**
- * @see Object::init(id, id, va_list *)
+ * @see ObjectInterface::init(id, id, va_list *)
  */
 static Object *init(id obj, id interface, va_list *args) {
 
@@ -93,7 +93,7 @@ static Object *init(id obj, id interface, va_list *args) {
 }
 
 /**
- * @see Object::isEqual(const Object *, const Object *)
+ * @see ObjectInterface::isEqual(const Object *, const Object *)
  */
 static BOOL isEqual(const Object *self, const Object *other) {
 
@@ -116,7 +116,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 #pragma mark - String instance methods
 
 /**
- * @see String::appendFormat(String *, const char *, ...)
+ * @see StringInterface::appendFormat(String *, const char *, ...)
  */
 static String *appendFormat(String *self, const char *fmt, ...) {
 
@@ -143,7 +143,7 @@ static String *appendFormat(String *self, const char *fmt, ...) {
 }
 
 /**
- * @see String::appendString(String *, const String *)
+ * @see StringInterface::appendString(String *, const String *)
  */
 static String *appendString(String *self, const String *other) {
 
@@ -167,7 +167,7 @@ static String *appendString(String *self, const String *other) {
 }
 
 /**
- * @see String::compareTo(const String *, const String *, RANGE)
+ * @see StringInterface::compareTo(const String *, const String *, RANGE)
  */
 static int compareTo(const String *self, const String *other, RANGE range) {
 
@@ -181,7 +181,7 @@ static int compareTo(const String *self, const String *other, RANGE range) {
 }
 
 /**
- * @see String::hasPrefix(const String *, const String *)
+ * @see StringInterface::hasPrefix(const String *, const String *)
  */
 static BOOL hasPrefix(const String *self, const String *prefix) {
 
@@ -194,7 +194,7 @@ static BOOL hasPrefix(const String *self, const String *prefix) {
 }
 
 /**
- * @see String::hasSuffix(const String *, const String *)
+ * @see StringInterface::hasSuffix(const String *, const String *)
  */
 static BOOL hasSuffix(const String *self, const String *suffix) {
 
@@ -207,7 +207,7 @@ static BOOL hasSuffix(const String *self, const String *suffix) {
 }
 
 /**
- * @see String::substring(const String *, RANGE)
+ * @see StringInterface::substring(const String *, RANGE)
  */
 static String *substring(const String *self, RANGE range) {
 
@@ -254,6 +254,7 @@ Class __String = {
 	.superclass = &__Object,
 	.instanceSize = sizeof(String),
 	.interfaceSize = sizeof(StringInterface),
-	.initialize = initialize, };
+	.initialize = initialize,
+};
 
 #undef __Class

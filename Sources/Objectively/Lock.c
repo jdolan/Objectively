@@ -34,14 +34,14 @@
 #pragma mark - Object instance methods
 
 /**
- * @see Object::copy(const Object *)
+ * @see ObjectInterface::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 	return NULL;
 }
 
 /**
- * @see Object::dealloc(Object *)
+ * @see ObjectInterface::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -54,7 +54,7 @@ static void dealloc(Object *self) {
 }
 
 /**
- * @see Object::init(id, id, va_list *)
+ * @see ObjectInterface::init(id, id, va_list *)
  */
 static Object *init(id obj, id interface, va_list *args) {
 
@@ -75,7 +75,7 @@ static Object *init(id obj, id interface, va_list *args) {
 #pragma mark - Lock instance methods
 
 /**
- * @see Lock::lock(Lock *)
+ * @see LockInterface::lock(Lock *)
  */
 static void lock(Lock *self) {
 
@@ -84,7 +84,7 @@ static void lock(Lock *self) {
 }
 
 /**
- * @see Lock::tryLock(Lock *)
+ * @see LockInterface::tryLock(Lock *)
  */
 static BOOL tryLock(Lock *self) {
 
@@ -95,7 +95,7 @@ static BOOL tryLock(Lock *self) {
 }
 
 /**
- * @see Lock::unlock(Lock *)
+ * @see LockInterface::unlock(Lock *)
  */
 static void unlock(Lock *self) {
 
@@ -128,6 +128,7 @@ Class __Lock = {
 	.superclass = &__Object,
 	.instanceSize = sizeof(Lock),
 	.interfaceSize = sizeof(LockInterface),
-	.initialize = initialize, };
+	.initialize = initialize,
+};
 
 #undef __Class
