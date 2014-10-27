@@ -240,16 +240,16 @@ static String *substring(const String *self, RANGE range) {
 /**
  * @see Class::initialize(Class *)
  */
-static void initialize(Class *self) {
+static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) self->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
 	object->hash = hash;
 	object->isEqual = isEqual;
 
-	StringInterface *string = (StringInterface *) self->interface;
+	StringInterface *string = (StringInterface *) clazz->interface;
 
 	string->appendFormat = appendFormat;
 	string->appendString = appendString;

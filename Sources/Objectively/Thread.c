@@ -176,14 +176,14 @@ static void start(Thread *self) {
 /**
  * @see Class::initialize(Class *)
  */
-static void initialize(Class *self) {
+static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) self->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
 
-	ThreadInterface *thread = (ThreadInterface *) self->interface;
+	ThreadInterface *thread = (ThreadInterface *) clazz->interface;
 
 	thread->cancel = cancel;
 	thread->detach = detach;

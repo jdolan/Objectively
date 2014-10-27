@@ -221,13 +221,13 @@ static void warn(const Log *self, const char *fmt, ...) {
 /**
  * see Class::initialize(Class *)
  */
-static void initialize(Class *self) {
+static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) self->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
 	object->dealloc = dealloc;
 
-	LogInterface *log = (LogInterface *) self->interface;
+	LogInterface *log = (LogInterface *) clazz->interface;
 
 	log->debug = debug;
 	log->error = error;

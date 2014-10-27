@@ -97,13 +97,13 @@ static void _wait(Condition *self) {
 /**
  * @see Class::initialize(Class *)
  */
-static void initialize(Class *self) {
+static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) self->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
 	object->dealloc = dealloc;
 
-	ConditionInterface *condition = (ConditionInterface *) self->interface;
+	ConditionInterface *condition = (ConditionInterface *) clazz->interface;
 
 	condition->broadcast = broadcast;
 	condition->init = init;

@@ -105,15 +105,19 @@ static void unlock(Lock *self) {
 /**
  * @see Class::initialize(Class *)
  */
-static void initialize(Class *self) {
+static void initialize(Class *clazz) {
 
-	((ObjectInterface *) self->interface)->copy = copy;
-	((ObjectInterface *) self->interface)->dealloc = dealloc;
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
-	((LockInterface *) self->interface)->init = init;
-	((LockInterface *) self->interface)->lock = lock;
-	((LockInterface *) self->interface)->tryLock = tryLock;
-	((LockInterface *) self->interface)->unlock = unlock;
+	object->copy = copy;
+	object->dealloc = dealloc;
+
+	LockInterface *interface = (LockInterface *) clazz->interface;
+
+	interface->init = init;
+	interface->lock = lock;
+	interface->tryLock = tryLock;
+	interface->unlock = unlock;
 }
 
 Class __Lock = {

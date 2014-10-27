@@ -245,14 +245,14 @@ static void setObjectAtIndex(Array *self, const id obj, const int index) {
 /**
  * @see Class::initialize(Class *)
  */
-static void initialize(Class *self) {
+static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) self->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
 
-	ArrayInterface *array = (ArrayInterface *) self->interface;
+	ArrayInterface *array = (ArrayInterface *) clazz->interface;
 
 	array->addObject = addObject;
 	array->containsObject = containsObject;

@@ -26,9 +26,8 @@ Types in Objectively are comprised of 3 components:
 
     struct Hello {
         Object object;
-        const HelloInterface *interface;
         
-        const char *bar;
+        const char *greeting;
     };
     
 2) The interface struct, containing the parent interface and any additional methods.
@@ -36,7 +35,8 @@ Types in Objectively are comprised of 3 components:
     struct HelloInterface {
         ObjectInterface objectInterface;
 
-        void (*baz)(const Hello *self);
+		Hello *(*initWithGreeting)(Hello *self, const char *greeting);
+        void (*sayHello)(const Hello *self);
     };
 
 3) The class descriptor, serving to tie 1) and 2) together.
@@ -50,26 +50,23 @@ To implement a type, define its initializer, instance methods and Class initiali
 
     #include <stdio.h>
     #include <Objectively.h>
-    
-    #define __Class __Hello
+            
+    static Hello *initWithGreeting(Hello *self, const char *greeting) {
         
-    static Object *init(id obj, id interface, va_list *args) {
-
-        Hello *self = (Hello *) super(Object, obj, init, interface, args);
+        self = (Hello *) super(Object, self, init);
         if (self) {
-            self->interface = (HelloInterface *) interface;
-            self->bar = $arg(args, const char *, NULL);
+            self->greeting = greeting ?: "hello";
         }
         return self;
     }
-            
-    static void baz(const Hello *self) {
+        
+    static void sayHello(const Hello *self) {
         printf("%s\n", self->bar);
     }
-        
+    
     static void initialize(Class *clazz) {
-        ((ObjectInterface *) clazz->interface)->init = init;
-        ((HelloInterface *) clazz->interface)->baz = baz;
+        ((HelloInterface *) clazz->interface)->initWithGreeting = initWithGreeting;
+        ((HelloInterface *) clazz->interface)->sayHello = sayHello;
     }
 
     Class __Hello = {
@@ -80,13 +77,11 @@ To implement a type, define its initializer, instance methods and Class initiali
         .initialize = initialize
     };
     
-    #undef __Class
-
 Using a type
 ---
 
-    Hello *hello = new(Hello, "hello world!");
-    $(hello, bar);
+    Hello *hello = $(Hello, alloc(Hello), initWithGreeting, "hello world!");
+    $(Hello, hello, sayHello);
     release(hello);
 
 
@@ -94,20 +89,20 @@ See [Hello.c](Tests/Objectively/Hello.c) for the full source to this example.
 
 Initialization
 ---
-There is no explicit setup or teardown with Objectively. To instantiate a type, simply call `new` from anywhere in your program. The first time a type is instantiated, an optional Class initializer, `initialize`, is called. Use `initialize` to setup your interface, override methods, or create a singleton. When your application terminates, an optional Class destructor, `destroy`, is also called.
+There is no explicit setup or teardown with Objectively. To instantiate a type, simply call `alloc` from anywhere in your program. The first time a type is instantiated, an optional Class initializer, `initialize`, is called. Use `initialize` to setup your interface, override methods, or create a singleton. When your application terminates, an optional Class destructor, `destroy`, is also called.
 
 Invoking a method
 ---
 To invoke a method, use the `$` macro.
 
-    $(self, isEqual, other);
+    $(Object, self, isEqual, other);
 
 Overriding a method
 ---
 To override a method, overwrite the function pointer from within your Class' `initialize` method.
 
-    ((ObjectInterface *) self->interface)->init = init;
-    ((ObjectInterface *) self->interface)->isEqual = isEqual;
+    ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+    ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
 Calling super
 ---

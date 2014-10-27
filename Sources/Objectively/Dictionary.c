@@ -281,13 +281,13 @@ static void setObjectsForKeys(Dictionary *self, ...) {
 /**
  * @see Class::initialize(Class *)
  */
-static void initialize(Class *self) {
+static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) self->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
 	object->dealloc = dealloc;
 
-	DictionaryInterface *dictionary = (DictionaryInterface *) self->interface;
+	DictionaryInterface *dictionary = (DictionaryInterface *) clazz->interface;
 
 	dictionary->allKeys = allKeys;
 	dictionary->allObjects = allObjects;

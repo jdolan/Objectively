@@ -75,10 +75,8 @@ struct Class {
 	 * @brief The Class destructor (optional).
 	 *
 	 * This method is run for initialized Classes when your application exits.
-	 *
-	 * @param self The Class.
 	 */
-	void (*destroy)(Class *self);
+	void (*destroy)(Class *clazz);
 
 	/**
 	 * @brief The Class initializer (optional).
@@ -88,13 +86,11 @@ struct Class {
 	 * If your Class defines an interface, you *must* implement this method
 	 * and initialize that interface here.
 	 *
-	 * @param self The Class.
-	 *
 	 * @remark The `interface` property of the Class is copied from the
 	 * superclass before this method is called. Method overrides are achieved
 	 * by simply overwriting the function pointers here.
 	 */
-	void (*initialize)(Class *self);
+	void (*initialize)(Class *clazz);
 
 	/**
 	 * @brief The instance size (required).
@@ -125,12 +121,12 @@ struct Class {
 /**
  * @brief Instantiate a type through the given Class.
  */
-extern id __alloc(Class *class);
+extern id __alloc(Class *clazz);
 
 /**
  * @brief Perform a type-checking cast.
  */
-extern id __cast(Class *class, const id obj);
+extern id __cast(Class *clazz, const id obj);
 
 /**
  * @brief Atomically decrement the given Object's reference count. If the
