@@ -109,24 +109,14 @@ static void initialize(Class *clazz) {
 	}
 }
 
-id __new(Class *clazz, ...) {
+id __alloc(Class *clazz) {
 
 	initialize(clazz);
 
 	id obj = calloc(1, clazz->instanceSize);
 	if (obj) {
-
 		((Object *) obj)->clazz = clazz;
 		((Object *) obj)->referenceCount = 1;
-
-		id interface = clazz->interface;
-
-		va_list args;
-		va_start(args, clazz);
-
-		obj = ((ObjectInterface *) interface)->init(obj, interface, &args);
-
-		va_end(args);
 	}
 
 	return obj;
@@ -168,7 +158,7 @@ void release(id obj) {
 	assert(object);
 
 	if (__sync_add_and_fetch(&object->referenceCount, -1) == 0) {
-		$(object, dealloc);
+		$(Object, object, dealloc);
 	}
 }
 

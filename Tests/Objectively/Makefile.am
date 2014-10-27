@@ -6,12 +6,12 @@ noinst_PROGRAMS = \
 Hello_SOURCES = \
 	Hello.c
 Hello_CFLAGS = \
-	-I$(includedir)
+	-I../../Sources
 Hello_LDADD = \
 	../../Sources/Objectively/.libs/*.o
 
 TEST_CFLAGS = \
-	-I$(includedir) \
+	-I../../Sources \
 	@CHECK_CFLAGS@
 	
 TEST_LDADD = \

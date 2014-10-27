@@ -57,11 +57,6 @@ struct Array {
 	Object object;
 
 	/**
-	 * @brief The typed interface of Array.
-	 */
-	const ArrayInterface *interface;
-
-	/**
 	 * @brief The Array capacity.
 	 */
 	size_t capacity;
@@ -128,6 +123,22 @@ struct ArrayInterface {
 	 * @return The index of the given Object, or -1 if not found.
 	 */
 	int (*indexOfObject)(const Array *self, const id obj);
+
+	/**
+	 * @brief Initializes this Array.
+	 *
+	 * @return The initialized instance, or NULL on error.
+	 */
+	Array *(*init)(Array *self);
+
+	/**
+	 * @brief Initializes this Array with the specified capacity.
+	 *
+	 * @param capacity The desired initial capacity.
+	 *
+	 * @return The initialized instance, or NULL on error.
+	 */
+	Array *(*initWithCapacity)(Array *self, size_t capacity);
 
 	/**
 	 * @param index The index of the desired Object.

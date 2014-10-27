@@ -27,34 +27,34 @@
 
 START_TEST(string)
 	{
-		String *string = new(String, "hello");
+		String *string = $(String, alloc(String), initWithFormat, "hello");
 
 		ck_assert(string);
 		ck_assert_ptr_eq(&__String, classof(string));
 
 		ck_assert_str_eq("hello", string->str);
 
-		$(string, appendFormat, " %s", "world!");
+		$(String, string, appendFormat, " %s", "world!");
 		ck_assert_str_eq("hello world!", string->str);
 
-		Object *copy = $((Object *) string, copy);
+		String *copy = (String *) $(Object, string, copy);
 
-		ck_assert($(copy, isEqual, (Object *) string));
-		ck_assert_int_eq($(copy, hash), $((Object *) string, hash));
+		ck_assert($(Object, copy, isEqual, (Object *) string));
+		ck_assert_int_eq($(Object, copy, hash), $(Object, string, hash));
 
 		release(copy);
 
-		$(string, appendString, string);
+		$(String, string, appendString, string);
 		ck_assert_str_eq("hello world!hello world!", string->str);
 
-		String *prefix = new(String, "hello");
-		ck_assert($(string, hasPrefix, prefix));
+		String *prefix = $(String, alloc(String), initWithFormat, "hello");
+		ck_assert($(String, string, hasPrefix, prefix));
 
-		String *suffix = new(String, "world!");
-		ck_assert($(string, hasSuffix, suffix));
+		String *suffix = $(String, alloc(String), initWithFormat, "world!");
+		ck_assert($(String, string, hasSuffix, suffix));
 
 		RANGE range = { 6, 11 };
-		String *substring = $(string, substring, range);
+		String *substring = $(String, string, substring, range);
 		ck_assert_str_eq("world!hello", substring->str);
 
 		release(substring);

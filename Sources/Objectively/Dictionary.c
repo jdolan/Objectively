@@ -30,7 +30,7 @@
 
 #define DICTIONARY_CHUNK_SIZE 64
 
-#define HASH(key) ( $((Object *) key, hash) % self->capacity )
+#define HASH(key) ( $(Object, key, hash) % self->capacity )
 
 #pragma mark - Object instance methods
 
@@ -52,29 +52,13 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-/**
- * @see ObjectInterface::init(id, id, va_list *)
- */
-static Object *init(id obj, id interface, va_list *args) {
-
-	Dictionary *self = (Dictionary *) super(Object, obj, init, interface, args);
-	if (self) {
-		self->interface = (DictionaryInterface *) interface;
-
-		self->capacity = self->initialCapacity = $arg(args, size_t, DICTIONARY_CHUNK_SIZE);
-		self->elements = calloc(1, self->capacity * sizeof(id));
-	}
-
-	return (Object *) self;
-}
-
 #pragma mark - Dictionary instance methods
 
 /**
  * @brief DictionaryEnumerator for allKeys.
  */
 static BOOL allKeys_enumerator(const Dictionary *dict, id obj, id key, id data) {
-	$((Array *) data, addObject, key); return NO;
+	$(Array, data, addObject, key); return NO;
 }
 
 /**
@@ -82,9 +66,9 @@ static BOOL allKeys_enumerator(const Dictionary *dict, id obj, id key, id data) 
  */
 static Array *allKeys(const Dictionary *self) {
 
-	Array *keys = new(Array);
+	Array *keys = alloc(Array);
 
-	$(self, enumerateObjectsAndKeys, allKeys_enumerator, NULL);
+	$(Dictionary, self, enumerateObjectsAndKeys, allKeys_enumerator, NULL);
 
 	return keys;
 }
@@ -93,7 +77,7 @@ static Array *allKeys(const Dictionary *self) {
  * @brief DictionaryEnumerator for allObjects.
  */
 static BOOL allObjects_enumerator(const Dictionary *dict, id obj, id key, id data) {
-	$((Array *) data, addObject, obj); return NO;
+	$(Array, data, addObject, obj); return NO;
 }
 
 /**
@@ -101,9 +85,9 @@ static BOOL allObjects_enumerator(const Dictionary *dict, id obj, id key, id dat
  */
 static Array *allObjects(const Dictionary *self) {
 
-	Array *objects = new(Array);
+	Array *objects = alloc(Array);
 
-	$(self, enumerateObjectsAndKeys, allObjects_enumerator, objects);
+	$(Dictionary, self, enumerateObjectsAndKeys, allObjects_enumerator, objects);
 
 	return objects;
 }
@@ -123,8 +107,8 @@ static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator
 
 			for (size_t j = 0; j < array->count; j += 2) {
 
-				id key = $(array, objectAtIndex, j);
-				id obj = $(array, objectAtIndex, j + 1);
+				id key = $(Array, array, objectAtIndex, j);
+				id obj = $(Array, array, objectAtIndex, j + 1);
 
 				if (enumerator(self, obj, key, data)) {
 					return;
@@ -142,7 +126,7 @@ static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumer
 
 	assert(enumerator);
 
-	Dictionary *dictionary = new(Dictionary);
+	Dictionary *dictionary = alloc(Dictionary);
 
 	for (size_t i = 0; i < self->capacity; i++) {
 
@@ -151,17 +135,39 @@ static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumer
 
 			for (size_t j = 0; j < array->count; j += 2) {
 
-				id key = $(array, objectAtIndex, j);
-				id obj = $(array, objectAtIndex, j + 1);
+				id key = $(Array, array, objectAtIndex, j);
+				id obj = $(Array, array, objectAtIndex, j + 1);
 
 				if (enumerator(self, obj, key, data)) {
-					$(dictionary, setObjectForKey, obj, key);
+					$(Dictionary, dictionary, setObjectForKey, obj, key);
 				}
 			}
 		}
 	}
 
 	return dictionary;
+}
+
+/**
+ * @see DictionaryInterface::init(Dictionary *)
+ */
+static Dictionary *init(Dictionary *self) {
+	return $(Dictionary, self, initWithCapacity, DICTIONARY_CHUNK_SIZE);
+}
+
+/**
+ * @see DicionaryInterface::initWithCapacity(Dictionary *, size_t)
+ */
+static Dictionary *initWithCapacity(Dictionary *self, size_t capacity) {
+
+	self = (Dictionary *) super(Object, self, init);
+	if (self) {
+		self->capacity = self->initialCapacity = capacity;
+		self->elements = calloc(1, self->capacity * sizeof(id));
+		assert(self->elements);
+	}
+
+	return self;
 }
 
 /**
@@ -174,9 +180,9 @@ static id objectForKey(const Dictionary *self, const id key) {
 	Array *array = self->elements[HASH(key)];
 	if (array != NULL) {
 
-		int index = $(array, indexOfObject, key);
+		int index = $(Array, array, indexOfObject, key);
 		if (index > -1) {
-			return $(array, objectAtIndex, index + 1);
+			return $(Array, array, objectAtIndex, index + 1);
 		}
 	}
 
@@ -193,7 +199,7 @@ static void removeAllObjects(Dictionary *self) {
 		Array *array = self->elements[i];
 		if (array != NULL) {
 
-			$(array, removeAllObjects);
+			$(Array, array, removeAllObjects);
 
 			release(array);
 			self->elements[i] = NULL;
@@ -213,11 +219,11 @@ static void removeObjectForKey(Dictionary *self, const id key) {
 	Array *array = self->elements[HASH(key)];
 	if (array != NULL) {
 
-		int index = $(array, indexOfObject, key);
+		int index = $(Array, array, indexOfObject, key);
 		if (index > -1) {
 
-			$(array, removeObjectAtIndex, index);
-			$(array, removeObjectAtIndex, index);
+			$(Array, array, removeObjectAtIndex, index);
+			$(Array, array, removeObjectAtIndex, index);
 
 			if (array->count == 0) {
 				release(array);
@@ -239,15 +245,15 @@ static void setObjectForKey(Dictionary *self, const id obj, const id key) {
 
 	Array *array = self->elements[HASH(key)];
 	if (array == NULL) {
-		array = self->elements[HASH(key)] = new(Array);
+		array = self->elements[HASH(key)] = alloc(Array);
 	}
 
-	int index = $(array, indexOfObject, key);
+	int index = $(Array, array, indexOfObject, key);
 	if (index > -1) {
-		$(array, setObjectAtIndex, obj, index + 1);
+		$(Array, array, setObjectAtIndex, obj, index + 1);
 	} else {
-		$(array, addObject, key);
-		$(array, addObject, obj);
+		$(Array, array, addObject, key);
+		$(Array, array, addObject, obj);
 
 		self->count++;
 	}
@@ -267,7 +273,7 @@ static void setObjectsForKeys(Dictionary *self, ...) {
 		if (obj) {
 
 			id key = va_arg(args, id);
-			$(self, setObjectForKey, obj, key);
+			$(Dictionary, self, setObjectForKey, obj, key);
 		} else {
 			break;
 		}
@@ -286,7 +292,6 @@ static void initialize(Class *self) {
 	ObjectInterface *object = (ObjectInterface *) self->interface;
 
 	object->dealloc = dealloc;
-	object->init = init;
 
 	DictionaryInterface *dictionary = (DictionaryInterface *) self->interface;
 
@@ -294,6 +299,8 @@ static void initialize(Class *self) {
 	dictionary->allObjects = allObjects;
 	dictionary->enumerateObjectsAndKeys = enumerateObjectsAndKeys;
 	dictionary->filterObjectsAndKeys = filterObjectsAndKeys;
+	dictionary->init = init;
+	dictionary->initWithCapacity = initWithCapacity;
 	dictionary->objectForKey = objectForKey;
 	dictionary->removeAllObjects = removeAllObjects;
 	dictionary->removeObjectForKey = removeObjectForKey;

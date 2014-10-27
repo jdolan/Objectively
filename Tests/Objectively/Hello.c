@@ -11,16 +11,14 @@ typedef struct HelloInterface HelloInterface;
 
 struct Hello {
 	Object object;
-
-	const HelloInterface *interface;
-
 	const char *greeting;
 };
 
 struct HelloInterface {
 	ObjectInterface objectInterface;
 
-	void (*hello)(const Hello *self);
+	Hello *(*initWithGreeting)(Hello *self, const char *greeting);
+	void (*sayHello)(const Hello *self);
 };
 
 extern Class __Hello;
@@ -29,28 +27,33 @@ extern Class __Hello;
 
 #pragma mark - Object instance methods
 
-static Object *init(id obj, id interface, va_list *args) {
-
-	Hello *self = (Hello *) super(Object, obj, init, interface, args);
-	if (self) {
-		self->interface = (HelloInterface *) interface;
-		self->greeting = $arg(args, const char *, NULL);
-	}
-	return (Object *) self;
+static Object *init(Object *self) {
+	return (Object *) $(Hello, self, initWithGreeting, NULL);
 }
 
 #pragma mark - Hello instance methods
 
-static void hello(const Hello *self) {
+static Hello *initWithGreeting(Hello *self, const char *greeting) {
+
+	self = (Hello *) super(Object, self, init);
+	if (self) {
+		self->greeting = greeting ?: "hello";
+	}
+	return self;
+}
+
+static void sayHello(const Hello *self) {
 	printf("%s\n", self->greeting);
 }
 
 #pragma mark - Hello class methods
 
-static void initialize(Class *class) {
+static void initialize(Class *self) {
 
-	((ObjectInterface *) class->interface)->init = init;
-	((HelloInterface *) class->interface)->hello = hello;
+	((ObjectInterface *) self->interface)->init = init;
+
+	((HelloInterface *) self->interface)->initWithGreeting = initWithGreeting;
+	((HelloInterface *) self->interface)->sayHello = sayHello;
 }
 
 Class __Hello = {
@@ -67,7 +70,7 @@ Class __Hello = {
 
 int main(int argc, char **argv) {
 
-	Hello *hello = new(Hello, "Hello World!");
-	$(hello, hello);
+	Hello *hello = $(Hello, alloc(Hello), initWithGreeting, "Hello World!");
+	$(Hello, hello, sayHello);
 	release(hello);
 }

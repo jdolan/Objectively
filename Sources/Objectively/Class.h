@@ -125,7 +125,7 @@ struct Class {
 /**
  * @brief Instantiate a type through the given Class.
  */
-extern id __new(Class *class, ...);
+extern id __alloc(Class *class);
 
 /**
  * @brief Perform a type-checking cast.
@@ -148,10 +148,10 @@ extern void release(id obj);
 extern void retain(id obj);
 
 /**
- * @brief Instantiate a type with a `NULL`-terminated arguments list.
+ * @brief Allocate a type.
  */
-#define new(type, ...) \
-	__new((Class *) &__##type, ## __VA_ARGS__, NULL)
+#define alloc(type) \
+	(type *) __alloc((Class *) &__##type)
 
 /**
  * @brief Safely cast to a type.
@@ -166,10 +166,16 @@ extern void retain(id obj);
 	((Object *) obj)->clazz
 
 /**
+ * @brief Resolve the typed interface of an Object instance.
+ */
+#define interfaceof(type, obj) \
+	(type##Interface *) classof(obj)->interface
+
+/**
  * @brief Invoke an instance method.
  */
-#define $(obj, method, ...) \
-	(obj)->interface->method(obj, ## __VA_ARGS__)
+#define $(type, obj, method, ...) \
+	(interfaceof(type, obj))->method((type *) obj, ## __VA_ARGS__)
 
 /**
  * @brief Invoke a Superclass instance method.
@@ -177,11 +183,5 @@ extern void retain(id obj);
 #define super(type, obj, method, ...) \
 	((type##Interface *) __Class.superclass->interface) \
 		->method((type *) obj, ## __VA_ARGS__)
-
-/**
- * @brief Take an initializer parameter.
- */
-#define $arg(args, type, def) \
-	(va_arg(*args, type) ?: def)
 
 #endif

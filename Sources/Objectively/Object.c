@@ -58,7 +58,7 @@ static void dealloc(Object *self) {
  */
 static String *description(const Object *self) {
 
-	return new(String, "%s@%p", self->clazz->name, self);
+	return $(String, alloc(String), initWithFormat, "%s@%p", self->clazz->name, self);
 }
 
 /**
@@ -72,13 +72,9 @@ static int hash(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::init(id, id, va_list *)
+ * @see ObjectInterface::init(Object *)
  */
-static Object *init(id obj, id interface, va_list *args) {
-
-	Object *self = (Object *) obj;
-
-	self->interface = (ObjectInterface *) interface;
+static Object *init(Object *self) {
 
 	return self;
 }

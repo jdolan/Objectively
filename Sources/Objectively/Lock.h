@@ -46,11 +46,6 @@ struct Lock {
 	Object object;
 
 	/**
-	 * @brief The typed interface.
-	 */
-	const LockInterface *interface;
-
-	/**
 	 * @brief The backing lock.
 	 */
 	id lock;
@@ -65,6 +60,13 @@ struct LockInterface {
 	 * @brief The parent.
 	 */
 	ObjectInterface objectInterface;
+
+	/**
+	 * @brief Initializes this Lock.
+	 *
+	 * @return The initialized instance, or NULL on error.
+	 */
+	Lock *(*init)(Lock *self);
 
 	/**
 	 * @brief Acquire this lock, waiting indefinitely.

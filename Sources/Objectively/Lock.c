@@ -53,26 +53,25 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-/**
- * @see ObjectInterface::init(id, id, va_list *)
- */
-static Object *init(id obj, id interface, va_list *args) {
+#pragma mark - Lock instance methods
 
-	Lock *self = (Lock *) super(Object, obj, init, interface, args);
+/**
+ * @see LockInterface::init(Lock *)
+ */
+static Lock *init(Lock *self) {
+
+	self = (Lock *) super(Object, self, init);
 	if (self) {
-		self->interface = (LockInterface *) interface;
 
 		self->lock = calloc(1, sizeof(pthread_mutex_t));
 		assert(self->lock);
 
-		int err = pthread_mutex_init(self->lock, NULL);
+		const int err = pthread_mutex_init(self->lock, NULL);
 		assert(err == 0);
 	}
 
-	return (Object *) self;
+	return self;
 }
-
-#pragma mark - Lock instance methods
 
 /**
  * @see LockInterface::lock(Lock *)
@@ -110,17 +109,13 @@ static void unlock(Lock *self) {
  */
 static void initialize(Class *self) {
 
-	ObjectInterface *object = (ObjectInterface *) self->interface;
+	((ObjectInterface *) self->interface)->copy = copy;
+	((ObjectInterface *) self->interface)->dealloc = dealloc;
 
-	object->copy = copy;
-	object->dealloc = dealloc;
-	object->init = init;
-
-	LockInterface *interface = (LockInterface *) self->interface;
-
-	interface->lock = lock;
-	interface->tryLock = tryLock;
-	interface->unlock = unlock;
+	((LockInterface *) self->interface)->init = init;
+	((LockInterface *) self->interface)->lock = lock;
+	((LockInterface *) self->interface)->tryLock = tryLock;
+	((LockInterface *) self->interface)->unlock = unlock;
 }
 
 Class __Lock = {
@@ -128,7 +123,6 @@ Class __Lock = {
 	.superclass = &__Object,
 	.instanceSize = sizeof(Lock),
 	.interfaceSize = sizeof(LockInterface),
-	.initialize = initialize,
-};
+	.initialize = initialize, };
 
 #undef __Class

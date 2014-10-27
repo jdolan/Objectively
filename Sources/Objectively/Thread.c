@@ -54,27 +54,6 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-/**
- * @see ObjectInterface::init(id, id, va_list *)
- */
-static Object *init(id obj, id interface, va_list *args) {
-
-	Thread *self = (Thread *) super(Object, obj, init, interface, args);
-	if (self) {
-		self->interface = (ThreadInterface *) interface;
-
-		self->function = $arg(args, ThreadFunction, NULL);
-		assert(self->function);
-
-		self->data = $arg(args, id, NULL);
-
-		self->thread = calloc(1, sizeof(pthread_t));
-		assert(self->thread);
-	}
-
-	return (Object *) self;
-}
-
 #pragma mark - Thread instance methods
 
 /**
@@ -101,6 +80,31 @@ static void detach(Thread *self) {
 	assert(err == 0);
 
 	self->isDetached = YES;
+}
+
+/**
+ * @see ThreadInterface::init(Thread *)
+ */
+static Thread *init(Thread *self) {
+
+	return $(Thread, self, initWithFunction, NULL, NULL);
+}
+
+/**
+ * @see ThreadInterface::initWithFunction(Thread *, ThreadFunction, id)
+ */
+static Thread *initWithFunction(Thread *self, ThreadFunction function, id data) {
+
+	self = (Thread *) super(Object, self, init);
+	if (self) {
+		self->function = function;
+		self->data = data;
+
+		self->thread = calloc(1, sizeof(pthread_t));
+		assert(self->thread);
+	}
+
+	return self;
 }
 
 /**
@@ -158,6 +162,8 @@ static id run(id obj) {
  */
 static void start(Thread *self) {
 
+	assert(self->function);
+
 	assert(self->isCancelled == NO);
 	assert(self->isDetached == NO);
 	assert(self->isExecuting == NO);
@@ -178,12 +184,13 @@ static void initialize(Class *self) {
 
 	object->copy = copy;
 	object->dealloc = dealloc;
-	object->init = init;
 
 	ThreadInterface *thread = (ThreadInterface *) self->interface;
 
 	thread->cancel = cancel;
 	thread->detach = detach;
+	thread->init = init;
+	thread->initWithFunction = initWithFunction;
 	thread->join = join;
 	thread->kill = kill;
 	thread->start = start;
