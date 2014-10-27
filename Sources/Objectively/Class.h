@@ -67,7 +67,7 @@ struct Class {
 		/**
 		 * @brief Provides chaining of initialized Classes.
 		 */
-		Class *next;
+		 Class *next;
 
 	} locals;
 
@@ -181,7 +181,7 @@ extern void retain(id obj);
  * @brief Invoke a Superclass instance method.
  */
 #define super(type, obj, method, ...) \
-	((type##Interface *) __Class.superclass->interface) \
+	((type##Interface *) classof(obj)->superclass->interface) \
 		->method((type *) obj, ## __VA_ARGS__)
 
 #endif

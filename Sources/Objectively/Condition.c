@@ -30,8 +30,6 @@
 
 #include <objectively/Condition.h>
 
-#define __Class __Condition
-
 #pragma mark - Object instance methods
 
 /**
@@ -120,5 +118,3 @@ Class __Condition = {
 	.interfaceSize = sizeof(ConditionInterface),
 	.initialize = initialize,
 };
-
-#undef __Class

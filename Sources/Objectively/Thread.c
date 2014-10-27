@@ -29,8 +29,6 @@
 
 #include <Objectively/Thread.h>
 
-#define __Class __Thread
-
 #pragma mark - Object instance methods
 
 /**
@@ -203,5 +201,3 @@ Class __Thread = {
 	.interfaceSize = sizeof(ThreadInterface),
 	.initialize = initialize,
 };
-
-#undef __Class

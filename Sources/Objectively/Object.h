@@ -45,7 +45,7 @@ struct Object {
 	/**
 	 * @brief Every instance of Object begins with a pointer to its Class.
 	 */
-	const Class *clazz;
+	Class *clazz;
 
 	/**
 	 * @brief The reference count of this Object.

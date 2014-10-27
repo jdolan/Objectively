@@ -45,8 +45,6 @@ extern Class __${file_base};
 
 #include &lt;Objectively/${file_base}.h&gt;
 
-#define __Class __${file_base}
-
 #pragma mark - Object instance methods
 
 /**
@@ -97,6 +95,4 @@ Class __${file_base} = {
 	.interfaceSize = sizeof(${file_base}Interface),
 	.initialize = initialize,
 };
-
-#undef __Class
 </template></templates>

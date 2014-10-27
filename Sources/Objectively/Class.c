@@ -83,7 +83,7 @@ static void initialize(Class *clazz) {
 
 		Class *super = clazz->superclass;
 
-		if (clazz == (Class *) &__Object) {
+		if (clazz == &__Object) {
 			assert(super == NULL);
 			setup();
 		} else {
@@ -138,7 +138,7 @@ id __cast(Class *clazz, const id obj) {
 
 				// as a special case, we optimize for __Object
 
-				if (c == clazz || clazz == (Class *) &__Object) {
+				if (c == clazz || clazz == &__Object) {
 					break;
 				}
 

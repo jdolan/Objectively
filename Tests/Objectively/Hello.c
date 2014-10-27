@@ -4,8 +4,6 @@
 
 #include <Objectively.h>
 
-#define __Class __Hello
-
 typedef struct Hello Hello;
 typedef struct HelloInterface HelloInterface;
 
@@ -63,8 +61,6 @@ Class __Hello = {
 	.interfaceSize = sizeof(HelloInterface),
 	.initialize = initialize,
 };
-
-#undef __Class
 
 #pragma mark - main
 

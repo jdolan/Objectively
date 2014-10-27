@@ -26,8 +26,6 @@
 
 #include <Objectively/Dictionary.h>
 
-#define __Class __Dictionary
-
 #define DICTIONARY_CHUNK_SIZE 64
 
 #define HASH(key) ( $(Object, key, hash) % self->capacity )
@@ -41,11 +39,7 @@ static void dealloc(Object *self) {
 
 	Dictionary *this = (Dictionary *) self;
 
-	for (size_t i = 0; i < this->capacity; i++) {
-		if (this->elements[i] != NULL) {
-			release(this->elements[i]);
-		}
-	}
+	$(Dictionary, self, removeAllObjects);
 
 	free(this->elements);
 
@@ -315,5 +309,3 @@ Class __Dictionary = {
 	.interfaceSize = sizeof(DictionaryInterface),
 	.initialize = initialize,
 };
-
-#undef __Class
