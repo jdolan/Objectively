@@ -22,7 +22,7 @@ Declaring a type
 
 Types in Objectively are comprised of 3 components:
 
-1) The instance struct, containing the parent type, the interface pointer, and any additional fields.
+1) The instance struct, containing the parent type and any additional instance variables.
 
     struct Hello {
         Object object;
@@ -30,12 +30,13 @@ Types in Objectively are comprised of 3 components:
         const char *greeting;
     };
     
-2) The interface struct, containing the parent interface and any additional methods.
+2) The interface struct, containing the parent interface, an initlializer and any additional methods.
 
     struct HelloInterface {
         ObjectInterface objectInterface;
-
-		Hello *(*initWithGreeting)(Hello *self, const char *greeting);
+        
+        Hello *(*initWithGreeting)(Hello *self, const char *greeting);
+        
         void (*sayHello)(const Hello *self);
     };
 
