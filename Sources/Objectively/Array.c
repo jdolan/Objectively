@@ -26,8 +26,6 @@
 
 #include <Objectively/Array.h>
 
-#define __Class __Array
-
 #define ARRAY_CHUNK_SIZE 64
 
 #pragma mark - Object instance methods
@@ -51,29 +49,13 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	Array *this = (Array *) self;
+	$(Array, self, removeAllObjects);
 
-	$(this, removeAllObjects);
+	Array *this = (Array *) self;
 
 	free(this->elements);
 
 	super(Object, self, dealloc);
-}
-
-/**
- * @see ObjectInterface::init(id, id, va_list *)
- */
-static Object *init(id obj, id interface, va_list *args) {
-
-	Array *self = (Array *) super(Object, obj, init, interface, args);
-	if (self) {
-		self->interface = (ArrayInterface *) interface;
-
-		self->capacity = self->initialCapacity = $arg(args, size_t, ARRAY_CHUNK_SIZE);
-		self->elements = malloc(self->capacity * sizeof(id));
-	}
-
-	return (Object *) self;
 }
 
 #pragma mark - Array instance methods
@@ -101,7 +83,7 @@ static void addObject(Array *self, const id obj) {
  */
 static BOOL containsObject(const Array *self, const id obj) {
 
-	return $(self, indexOfObject, obj) != -1;
+	return $(Array, self, indexOfObject, obj) != -1;
 }
 
 /**
@@ -125,11 +107,11 @@ static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, id da
 
 	assert(enumerator);
 
-	Array *array = new(Array);
+	Array *array = alloc(Array);
 
 	for (size_t i = 0; i < self->count; i++) {
 		if (enumerator(self, self->elements[i], data)) {
-			$(array, addObject, self->elements[i]);
+			$(Array, array, addObject, self->elements[i]);
 		}
 	}
 
@@ -146,12 +128,34 @@ static int indexOfObject(const Array *self, const id obj) {
 	assert(object);
 
 	for (size_t i = 0; i < self->count; i++) {
-		if ($(object, isEqual, (Object * ) self->elements[i])) {
+		if ($(Object, object, isEqual, (Object * ) self->elements[i])) {
 			return (int) i;
 		}
 	}
 
 	return -1;
+}
+
+/**
+ * @see ArrayInterface::init(Array *)
+ */
+static Array *init(Array *self) {
+
+	return $(Array, self, initWithCapacity, ARRAY_CHUNK_SIZE);
+}
+
+/**
+ * @see ArrayInterface::initWithCapacity(Array *, size_t)
+ */
+static Array *initWithCapacity(Array *self, size_t capacity) {
+
+	self = (Array *) super(Object, self, init);
+	if (self) {
+		self->capacity = self->initialCapacity = capacity;
+		self->elements = malloc(self->capacity * sizeof(id));
+		assert(self->elements);
+	}
+	return self;
 }
 
 /**
@@ -171,7 +175,7 @@ static id objectAtIndex(const Array *self, const int index) {
 static void removeAllObjects(Array *self) {
 
 	for (size_t i = self->count; i > 0; i--) {
-		$(self, removeObjectAtIndex, i - 1);
+		$(Array, self, removeObjectAtIndex, i - 1);
 	}
 }
 
@@ -180,9 +184,9 @@ static void removeAllObjects(Array *self) {
  */
 static void removeObject(Array *self, const id obj) {
 
-	int index = $(self, indexOfObject, obj);
+	int index = $(Array, self, indexOfObject, obj);
 	if (index != -1) {
-		$(self, removeObjectAtIndex, index);
+		$(Array, self, removeObjectAtIndex, index);
 	}
 }
 
@@ -229,9 +233,9 @@ static void setObjectAtIndex(Array *self, const id obj, const int index) {
 	assert(index > -1);
 	assert(index < self->count);
 
-	release(self->elements[index]);
-
 	retain(obj);
+
+	release(self->elements[index]);
 
 	self->elements[index] = obj;
 }
@@ -241,21 +245,22 @@ static void setObjectAtIndex(Array *self, const id obj, const int index) {
 /**
  * @see Class::initialize(Class *)
  */
-static void initialize(Class *self) {
+static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) self->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
-	object->init = init;
 
-	ArrayInterface *array = (ArrayInterface *) self->interface;
+	ArrayInterface *array = (ArrayInterface *) clazz->interface;
 
 	array->addObject = addObject;
 	array->containsObject = containsObject;
 	array->enumerateObjects = enumerateObjects;
 	array->filterObjects = filterObjects;
 	array->indexOfObject = indexOfObject;
+	array->init = init;
+	array->initWithCapacity = initWithCapacity;
 	array->objectAtIndex = objectAtIndex;
 	array->removeAllObjects = removeAllObjects;
 	array->removeObject = removeObject;
@@ -266,10 +271,8 @@ static void initialize(Class *self) {
 
 Class __Array = {
 	.name = "Array",
-	.superclass = (Class *) &__Object,
+	.superclass = &__Object,
 	.instanceSize = sizeof(Array),
 	.interfaceSize = sizeof(ArrayInterface),
 	.initialize = initialize, };
-
-#undef __Class
 

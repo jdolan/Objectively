@@ -30,8 +30,6 @@
 
 #include <objectively/Condition.h>
 
-#define __Class __Condition
-
 #pragma mark - Object instance methods
 
 /**
@@ -47,25 +45,6 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-/**
- * @see ObjectInterface::init(id, id, va_list *)
- */
-static Object *init(id obj, id interface, va_list *args) {
-
-	Condition *self = (Condition *) super(Object, obj, init, interface, args);
-	if (self) {
-		self->interface = (ConditionInterface *) interface;
-
-		self->condition = calloc(1, sizeof(pthread_cond_t));
-		assert(self->condition);
-
-		int err = pthread_cond_init(self->condition, NULL);
-		assert(err == 0);
-	}
-
-	return (Object *) self;
-}
-
 #pragma mark - Condition instance methods
 
 /**
@@ -75,6 +54,24 @@ static void broadcast(Condition *self) {
 
 	int err = pthread_cond_broadcast(self->condition);
 	assert(err == 0);
+}
+
+/**
+ * @see ConditionInterface::init(Condition *)
+ */
+static Condition *init(Condition *self) {
+
+	self = (Condition *) super(Lock, self, init);
+	if (self) {
+
+		self->condition = calloc(1, sizeof(pthread_cond_t));
+		assert(self->condition);
+
+		const int err = pthread_cond_init(self->condition, NULL);
+		assert(err == 0);
+	}
+
+	return self;
 }
 
 /**
@@ -100,16 +97,16 @@ static void _wait(Condition *self) {
 /**
  * @see Class::initialize(Class *)
  */
-static void initialize(Class *self) {
+static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) self->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
 	object->dealloc = dealloc;
-	object->init = init;
 
-	ConditionInterface *condition = (ConditionInterface *) self->interface;
+	ConditionInterface *condition = (ConditionInterface *) clazz->interface;
 
 	condition->broadcast = broadcast;
+	condition->init = init;
 	condition->signal = _signal;
 	condition->wait = _wait;
 }
@@ -121,5 +118,3 @@ Class __Condition = {
 	.interfaceSize = sizeof(ConditionInterface),
 	.initialize = initialize,
 };
-
-#undef __Class

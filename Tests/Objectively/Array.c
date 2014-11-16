@@ -32,7 +32,7 @@ BOOL enumerator(const Array *array, id obj, id data) {
 
 START_TEST(array)
 	{
-		Array *array = new(Array, 5);
+		Array *array = $(Array, alloc(Array), initWithCapacity, 5);
 
 		ck_assert(array);
 		ck_assert_ptr_eq(&__Array, classof(array));
@@ -40,42 +40,42 @@ START_TEST(array)
 		ck_assert_int_eq(0, array->count);
 		ck_assert_int_eq(5, array->capacity);
 
-		Object *one = new(Object);
-		Object *two = new(Object);
-		Object *three = new(Object);
+		Object *one = alloc(Object);
+		Object *two = alloc(Object);
+		Object *three = alloc(Object);
 
-		$(array, addObject, one);
-		$(array, addObject, two);
-		$(array, addObject, three);
+		$(Array, array, addObject, one);
+		$(Array, array, addObject, two);
+		$(Array, array, addObject, three);
 
 		ck_assert_int_eq(3, array->count);
 
-		ck_assert($(array, containsObject, one));
-		ck_assert($(array, containsObject, two));
-		ck_assert($(array, containsObject, three));
+		ck_assert($(Array, array, containsObject, one));
+		ck_assert($(Array, array, containsObject, two));
+		ck_assert($(Array, array, containsObject, three));
 
-		ck_assert_int_eq(0, $(array, indexOfObject, one));
-		ck_assert_int_eq(1, $(array, indexOfObject, two));
-		ck_assert_int_eq(2, $(array, indexOfObject, three));
+		ck_assert_int_eq(0, $(Array, array, indexOfObject, one));
+		ck_assert_int_eq(1, $(Array, array, indexOfObject, two));
+		ck_assert_int_eq(2, $(Array, array, indexOfObject, three));
 
 		ck_assert_int_eq(2, one->referenceCount);
 		ck_assert_int_eq(2, two->referenceCount);
 		ck_assert_int_eq(2, three->referenceCount);
 
-		$(array, removeObject, one);
+		$(Array, array, removeObject, one);
 
-		ck_assert(!$(array, containsObject, one));
+		ck_assert(!$(Array, array, containsObject, one));
 		ck_assert_int_eq(1, one->referenceCount);
 		ck_assert_int_eq(2, array->count);
 
-		$(array, removeAllObjects);
+		$(Array, array, removeAllObjects);
 
 		ck_assert_int_eq(0, array->count);
 
-		ck_assert(!$(array, containsObject, two));
+		ck_assert(!$(Array, array, containsObject, two));
 		ck_assert_int_eq(1, two->referenceCount);
 
-		ck_assert(!$(array, containsObject, three));
+		ck_assert(!$(Array, array, containsObject, three));
 		ck_assert_int_eq(1, three->referenceCount);
 
 		release(one);
@@ -84,10 +84,10 @@ START_TEST(array)
 
 		for (int i = 0; i < 1024; i++) {
 
-			id obj = new(Object);
+			id obj = alloc(Object);
 			ck_assert(obj);
 
-			$(array, addObject, obj);
+			$(Array, array, addObject, obj);
 
 			release(obj);
 		}
@@ -96,11 +96,11 @@ START_TEST(array)
 
 		int count = 0;
 
-		$(array, enumerateObjects, enumerator, &count);
+		$(Array, array, enumerateObjects, enumerator, &count);
 
 		ck_assert_int_eq(array->count, count);
 
-		$(array, removeAllObjects);
+		$(Array, array, removeAllObjects);
 
 		ck_assert_int_eq(array->count, 0);
 

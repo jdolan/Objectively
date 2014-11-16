@@ -67,7 +67,7 @@ struct Class {
 		/**
 		 * @brief Provides chaining of initialized Classes.
 		 */
-		Class *next;
+		 Class *next;
 
 	} locals;
 
@@ -75,10 +75,8 @@ struct Class {
 	 * @brief The Class destructor (optional).
 	 *
 	 * This method is run for initialized Classes when your application exits.
-	 *
-	 * @param self The Class.
 	 */
-	void (*destroy)(Class *self);
+	void (*destroy)(Class *clazz);
 
 	/**
 	 * @brief The Class initializer (optional).
@@ -88,13 +86,11 @@ struct Class {
 	 * If your Class defines an interface, you *must* implement this method
 	 * and initialize that interface here.
 	 *
-	 * @param self The Class.
-	 *
 	 * @remark The `interface` property of the Class is copied from the
 	 * superclass before this method is called. Method overrides are achieved
 	 * by simply overwriting the function pointers here.
 	 */
-	void (*initialize)(Class *self);
+	void (*initialize)(Class *clazz);
 
 	/**
 	 * @brief The instance size (required).
@@ -125,12 +121,12 @@ struct Class {
 /**
  * @brief Instantiate a type through the given Class.
  */
-extern id __new(Class *class, ...);
+extern id __alloc(Class *clazz);
 
 /**
  * @brief Perform a type-checking cast.
  */
-extern id __cast(Class *class, const id obj);
+extern id __cast(Class *clazz, const id obj);
 
 /**
  * @brief Atomically decrement the given Object's reference count. If the
@@ -148,10 +144,10 @@ extern void release(id obj);
 extern void retain(id obj);
 
 /**
- * @brief Instantiate a type with a `NULL`-terminated arguments list.
+ * @brief Allocate a type.
  */
-#define new(type, ...) \
-	__new((Class *) &__##type, ## __VA_ARGS__, NULL)
+#define alloc(type) \
+	(type *) __alloc((Class *) &__##type)
 
 /**
  * @brief Safely cast to a type.
@@ -166,22 +162,22 @@ extern void retain(id obj);
 	((Object *) obj)->clazz
 
 /**
+ * @brief Resolve the typed interface of an Object instance.
+ */
+#define interfaceof(type, obj) \
+	(type##Interface *) classof(obj)->interface
+
+/**
  * @brief Invoke an instance method.
  */
-#define $(obj, method, ...) \
-	(obj)->interface->method(obj, ## __VA_ARGS__)
+#define $(type, obj, method, ...) \
+	(interfaceof(type, obj))->method((type *) obj, ## __VA_ARGS__)
 
 /**
  * @brief Invoke a Superclass instance method.
  */
 #define super(type, obj, method, ...) \
-	((type##Interface *) __Class.superclass->interface) \
+	((type##Interface *) classof(obj)->superclass->interface) \
 		->method((type *) obj, ## __VA_ARGS__)
-
-/**
- * @brief Take an initializer parameter.
- */
-#define $arg(args, type, def) \
-	(va_arg(*args, type) ?: def)
 
 #endif

@@ -29,8 +29,6 @@
 
 #include <Objectively/Thread.h>
 
-#define __Class __Thread
-
 #pragma mark - Object instance methods
 
 /**
@@ -52,27 +50,6 @@ static void dealloc(Object *self) {
 	free(this->thread);
 
 	super(Object, self, dealloc);
-}
-
-/**
- * @see ObjectInterface::init(id, id, va_list *)
- */
-static Object *init(id obj, id interface, va_list *args) {
-
-	Thread *self = (Thread *) super(Object, obj, init, interface, args);
-	if (self) {
-		self->interface = (ThreadInterface *) interface;
-
-		self->function = $arg(args, ThreadFunction, NULL);
-		assert(self->function);
-
-		self->data = $arg(args, id, NULL);
-
-		self->thread = calloc(1, sizeof(pthread_t));
-		assert(self->thread);
-	}
-
-	return (Object *) self;
 }
 
 #pragma mark - Thread instance methods
@@ -101,6 +78,31 @@ static void detach(Thread *self) {
 	assert(err == 0);
 
 	self->isDetached = YES;
+}
+
+/**
+ * @see ThreadInterface::init(Thread *)
+ */
+static Thread *init(Thread *self) {
+
+	return $(Thread, self, initWithFunction, NULL, NULL);
+}
+
+/**
+ * @see ThreadInterface::initWithFunction(Thread *, ThreadFunction, id)
+ */
+static Thread *initWithFunction(Thread *self, ThreadFunction function, id data) {
+
+	self = (Thread *) super(Object, self, init);
+	if (self) {
+		self->function = function;
+		self->data = data;
+
+		self->thread = calloc(1, sizeof(pthread_t));
+		assert(self->thread);
+	}
+
+	return self;
 }
 
 /**
@@ -158,6 +160,8 @@ static id run(id obj) {
  */
 static void start(Thread *self) {
 
+	assert(self->function);
+
 	assert(self->isCancelled == NO);
 	assert(self->isDetached == NO);
 	assert(self->isExecuting == NO);
@@ -172,18 +176,19 @@ static void start(Thread *self) {
 /**
  * @see Class::initialize(Class *)
  */
-static void initialize(Class *self) {
+static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) self->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
-	object->init = init;
 
-	ThreadInterface *thread = (ThreadInterface *) self->interface;
+	ThreadInterface *thread = (ThreadInterface *) clazz->interface;
 
 	thread->cancel = cancel;
 	thread->detach = detach;
+	thread->init = init;
+	thread->initWithFunction = initWithFunction;
 	thread->join = join;
 	thread->kill = kill;
 	thread->start = start;
@@ -196,5 +201,3 @@ Class __Thread = {
 	.interfaceSize = sizeof(ThreadInterface),
 	.initialize = initialize,
 };
-
-#undef __Class

@@ -59,11 +59,6 @@ struct Dictionary {
 	Object object;
 
 	/**
-	 * @brief The typed interface of Dictionary.
-	 */
-	const DictionaryInterface *interface;
-
-	/**
 	 * @brief The capacity, or number of bins, in this Dictionary.
 	 */
 	size_t capacity;
@@ -127,6 +122,22 @@ struct DictionaryInterface {
 	 */
 	Dictionary *(*filterObjectsAndKeys)(const Dictionary *self, DictionaryEnumerator enumerator,
 			id data);
+
+	/**
+	 * Initializes this Dictionary.
+	 *
+	 * @return The initialized Dictionary, or NULL on error.
+	 */
+	Dictionary *(*init)(Dictionary *self);
+
+	/**
+	 * Initializes this Dictionary with the specified capacity.
+	 *
+	 * @param capacity The initial capacity.
+	 *
+	 * @return The initialized Dictionary, or NULL on error.
+	 */
+	Dictionary *(*initWithCapacity)(Dictionary *self, size_t capacity);
 
 	/**
 	 * @return The Object stored at the specified key in this Dictionary.

@@ -48,11 +48,6 @@ struct Log {
 	Object object;
 
 	/**
-	 * @brief The typed interface.
-	 */
-	const LogInterface *interface;
-
-	/**
 	 * @brief The format string, defaults to `LOG_FORMAT_DEFAULT`.
 	 *
 	 * This string is post-processed after date substitution is performed by
@@ -116,6 +111,22 @@ struct LogInterface {
 	 * @brief Log an info message.
 	 */
 	void (*info)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
+
+	/**
+	 * @brief Initializes this Log.
+	 *
+	 * @return The newly initialized Log.
+	 */
+	Log *(*init)(Log *self);
+
+	/**
+	 * Initializes this Log with the specified name.
+	 *
+	 * @param name The Log name.
+	 *
+	 * @return The initialized Log, or NULL on error.
+	 */
+	Log *(*initWithName)(Log *self, const char *name);
 
 	/**
 	 * @brief Write a message to the Log.

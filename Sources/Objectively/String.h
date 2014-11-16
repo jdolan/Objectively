@@ -45,11 +45,6 @@ struct String {
 	Object object;
 
 	/**
-	 * @brief The typed interface of String.
-	 */
-	const StringInterface *interface;
-
-	/**
 	 * @brief The backing character array length.
 	 */
 	size_t len;
@@ -115,6 +110,23 @@ struct StringInterface {
 	 * @return YES if this String ends with suffix, NO otherwise.
 	 */
 	BOOL (*hasSuffix)(const String *self, const String *suffix);
+
+	/**
+	 * @brief Initializes this String.
+	 *
+	 * @return The initialized instance, or NULL on error.
+	 */
+	String *(*init)(String *self);
+
+	/**
+	 * @brief Initializes this String with the specified format string.
+	 *
+	 * @param self The newly allocated instance.
+	 * @param fmt The formatted string.
+	 *
+	 * @return The initialized instance, or NULL on error.
+	 */
+	String *(*initWithFormat)(String *self, const char *fmt, ...);
 
 	/**
 	 * @brief Creates a new String from a subset of this one.

@@ -28,8 +28,6 @@
 #include <Objectively/Object.h>
 #include <Objectively/String.h>
 
-#define __Class __Object
-
 #pragma mark - Object instance methods
 
 /**
@@ -58,7 +56,7 @@ static void dealloc(Object *self) {
  */
 static String *description(const Object *self) {
 
-	return new(String, "%s@%p", self->clazz->name, self);
+	return $(String, alloc(String), initWithFormat, "%s@%p", self->clazz->name, self);
 }
 
 /**
@@ -72,13 +70,9 @@ static int hash(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::init(id, id, va_list *)
+ * @see ObjectInterface::init(Object *)
  */
-static Object *init(id obj, id interface, va_list *args) {
-
-	Object *self = (Object *) obj;
-
-	self->interface = (ObjectInterface *) interface;
+static Object *init(Object *self) {
 
 	return self;
 }
@@ -94,11 +88,11 @@ static BOOL isEqual(const Object *self, const Object *other) {
 /**
  * @see ObjectInterface::isKindOfClass(const Object *, const Class *)
  */
-static BOOL isKindOfClass(const Object *self, const Class *class) {
+static BOOL isKindOfClass(const Object *self, const Class *clazz) {
 
 	const Class *c = self->clazz;
 	while (c) {
-		if (c == class) {
+		if (c == clazz) {
 			return YES;
 		}
 		c = c->superclass;
@@ -112,9 +106,9 @@ static BOOL isKindOfClass(const Object *self, const Class *class) {
 /**
  * @see Class::initialize(Class *)
  */
-static void initialize(Class *self) {
+static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) self->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
@@ -131,5 +125,3 @@ Class __Object = {
 	.interfaceSize = sizeof(ObjectInterface),
 	.initialize = initialize,
 };
-
-#undef __Class

@@ -28,24 +28,23 @@
 
 START_TEST(_log)
 	{
-		Log *log = new(Log, "test", DEBUG);
+		Log *log = $(Log, alloc(Log), initWithName, "test");
 		ck_assert(log);
 
 		ck_assert_str_eq("test", log->name);
-		ck_assert_int_eq(DEBUG, log->level);
 
 		log->file = fopen("/tmp/objectively-test.log", "w");
 		ck_assert(log->file);
 		ck_assert_int_eq(0, ftell(log->file));
 
-		$(log, debug, "hello %s", "world!");
-		$(log, flush);
+		$(Log, log, info, "hello %s", "world!");
+		$(Log, log, flush);
 
 		long int len = ftell(log->file);
 		ck_assert_int_gt(len, 0);
 
-		$(log, trace, "hello again");
-		$(log, flush);
+		$(Log, log, debug, "hello again");
+		$(Log, log, flush);
 
 		long int len2 = ftell(log->file);
 		ck_assert_int_eq(len, len2);

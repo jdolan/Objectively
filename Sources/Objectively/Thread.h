@@ -53,11 +53,6 @@ struct Thread {
 	Object object;
 
 	/**
-	 * @brief The typed interface.
-	 */
-	const ThreadInterface *interface;
-
-	/**
 	 * @brief The user data.
 	 */
 	id data;
@@ -112,6 +107,23 @@ struct ThreadInterface {
 	 * @brief Daemonize this Thread.
 	 */
 	void (*detach)(Thread *self);
+
+	/**
+	 * Initializes this Thread.
+	 *
+	 * @return The initialized instance, or NULL on error.
+	 */
+	Thread *(*init)(Thread *self);
+
+	/**
+	 * Initializes this Thread with the specified ThreadFunction and data.
+	 *
+	 * @param function The ThreadFunction to run.
+	 * @param data The user data.
+	 *
+	 * @return The initialized instance, or NULL on error.
+	 */
+	Thread *(*initWithFunction)(Thread *self, ThreadFunction function, id data);
 
 	/**
 	 * @brief Wait for the specified Thread to terminate.

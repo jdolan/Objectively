@@ -30,8 +30,6 @@
 
 #include <objectively/Log.h>
 
-#define __Class __Log
-
 #pragma mark - Object instance methods
 
 /**
@@ -51,25 +49,6 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-/**
- * @see ObjectInterface::init(id, id, va_list *)
- */
-static Object *init(id obj, id interface, va_list *args) {
-
-	Log *self = (Log *) super(Object, obj, init, interface, args);
-	if (self) {
-		self->interface = (LogInterface *) interface;
-
-		self->name = strdup($arg(args, char *, "default"));
-		self->level = $arg(args, LogLevel, INFO);
-
-		self->format = LOG_FORMAT_DEFAULT;
-		self->file = stdout;
-	}
-
-	return (Object *) self;
-}
-
 #pragma mark - Log instance methods
 
 /**
@@ -80,7 +59,7 @@ static void debug(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(self, log, DEBUG, fmt, args);
+	$(Log, self, log, DEBUG, fmt, args);
 
 	va_end(args);
 }
@@ -93,7 +72,7 @@ static void error(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(self, log, ERROR, fmt, args);
+	$(Log, self, log, ERROR, fmt, args);
 
 	va_end(args);
 }
@@ -106,7 +85,7 @@ static void fatal(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(self, log, FATAL, fmt, args);
+	$(Log, self, log, FATAL, fmt, args);
 
 	va_end(args);
 }
@@ -128,9 +107,33 @@ static void info(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(self, log, INFO, fmt, args);
+	$(Log, self, log, INFO, fmt, args);
 
 	va_end(args);
+}
+
+/**
+ * @see LogInterface::init(Log *)
+ */
+static Log *init(Log *self) {
+
+	return $(Log, self, initWithName, NULL);
+}
+
+/**
+ * @see LogInterface::initWithName(Log *, const char *)
+ */
+static Log *initWithName(Log *self, const char *name) {
+
+	self = (Log *) super(Object, self, init);
+	if (self) {
+		self->name = strdup(name ?: "default");
+		self->level = INFO;
+		self->format = LOG_FORMAT_DEFAULT;
+		self->file = stdout;
+	}
+
+	return self;
 }
 
 /**
@@ -195,7 +198,7 @@ static void trace(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(self, log, TRACE, fmt, args);
+	$(Log, self, log, TRACE, fmt, args);
 
 	va_end(args);
 }
@@ -208,7 +211,7 @@ static void warn(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(self, log, WARN, fmt, args);
+	$(Log, self, log, WARN, fmt, args);
 
 	va_end(args);
 }
@@ -218,21 +221,24 @@ static void warn(const Log *self, const char *fmt, ...) {
 /**
  * see Class::initialize(Class *)
  */
-static void initialize(Class *self) {
+static void initialize(Class *clazz) {
 
-	((ObjectInterface *) self->interface)->dealloc = dealloc;
-	((ObjectInterface *) self->interface)->init = init;
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
-	LogInterface *interface = (LogInterface *) self->interface;
+	object->dealloc = dealloc;
 
-	interface->debug = debug;
-	interface->error = error;
-	interface->fatal = fatal;
-	interface->flush = flush;
-	interface->info = info;
-	interface->log = _log;
-	interface->trace = trace;
-	interface->warn = warn;
+	LogInterface *log = (LogInterface *) clazz->interface;
+
+	log->debug = debug;
+	log->error = error;
+	log->fatal = fatal;
+	log->flush = flush;
+	log->info = info;
+	log->init = init;
+	log->initWithName = initWithName;
+	log->log = _log;
+	log->trace = trace;
+	log->warn = warn;
 }
 
 Class __Log = {
@@ -242,5 +248,3 @@ Class __Log = {
 	.interfaceSize = sizeof(LogInterface),
 	.initialize = initialize,
 };
-
-#undef __Class

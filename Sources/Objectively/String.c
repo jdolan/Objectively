@@ -28,8 +28,6 @@
 
 #include <Objectively/String.h>
 
-#define __Class __String
-
 #pragma mark - Object instance methods
 
 /**
@@ -37,7 +35,10 @@
  */
 static Object *copy(const Object *self) {
 
-	return new(String, ((String * ) self)->str);
+	String *this = (String *) self;
+	String *that = $(String, alloc(String), initWithFormat, this->str);
+
+	return (Object *) that;
 }
 
 /**
@@ -74,25 +75,6 @@ static int hash(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::init(id, id, va_list *)
- */
-static Object *init(id obj, id interface, va_list *args) {
-
-	String *self = (String *) super(Object, obj, init, interface, args);
-	if (self) {
-		self->interface = (StringInterface *) interface;
-
-		const char *fmt = $arg(args, const char *, NULL);
-		if (fmt) {
-			vasprintf(&self->str, fmt, *args);
-			self->len = strlen(self->str);
-		}
-	}
-
-	return (Object *) self;
-}
-
-/**
  * @see ObjectInterface::isEqual(const Object *, const Object *)
  */
 static BOOL isEqual(const Object *self, const Object *other) {
@@ -107,7 +89,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		const String *that = (String *) other;
 
 		RANGE range = { 0, this->len };
-		return $(this, compareTo, that, range) == 0;
+		return $(String, this, compareTo, that, range) == 0;
 	}
 
 	return NO;
@@ -129,12 +111,12 @@ static String *appendFormat(String *self, const char *fmt, ...) {
 	va_end(args);
 
 	if (str) {
-		String *string = new(String);
+		String *string = alloc(String);
 
 		string->str = str;
 		string->len = strlen(string->str);
 
-		$(self, appendString, string);
+		$(String, self, appendString, string);
 
 		release(string);
 	}
@@ -190,7 +172,7 @@ static BOOL hasPrefix(const String *self, const String *prefix) {
 	}
 
 	RANGE range = { 0, prefix->len };
-	return $(self, compareTo, prefix, range) == 0;
+	return $(String, self, compareTo, prefix, range) == 0;
 }
 
 /**
@@ -203,7 +185,36 @@ static BOOL hasSuffix(const String *self, const String *suffix) {
 	}
 
 	RANGE range = { self->len - suffix->len, suffix->len };
-	return $(self, compareTo, suffix, range) == 0;
+	return $(String, self, compareTo, suffix, range) == 0;
+}
+
+/**
+ * @see StringInterface::init(String *)
+ */
+static String *init(String *self) {
+
+	return $(String, self, initWithFormat, NULL);
+}
+
+/**
+ * @see StringInterface::initWithFormat(id, const char *, ...)
+ */
+static String *initWithFormat(String *self, const char *fmt, ...) {
+
+	self = (String *) super(Object, self, init);
+	if (self) {
+		if (fmt) {
+			va_list args;
+
+			va_start(args, fmt);
+			vasprintf(&self->str, fmt, args);
+			va_end(args);
+
+			self->len = strlen(self->str);
+		}
+	}
+
+	return self;
 }
 
 /**
@@ -216,7 +227,7 @@ static String *substring(const String *self, RANGE range) {
 	char *str = calloc(1, range.length + 1);
 	memcpy(str, self->str + range.offset, range.length);
 
-	String *substring = new(String);
+	String *substring = alloc(String);
 
 	substring->str = str;
 	substring->len = strlen(str);
@@ -224,28 +235,29 @@ static String *substring(const String *self, RANGE range) {
 	return substring;
 }
 
-#pragma mark - Interface
+#pragma mark - String class methods
 
 /**
  * @see Class::initialize(Class *)
  */
-static void initialize(Class *self) {
+static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) self->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
 	object->hash = hash;
-	object->init = init;
 	object->isEqual = isEqual;
 
-	StringInterface *string = (StringInterface *) self->interface;
+	StringInterface *string = (StringInterface *) clazz->interface;
 
 	string->appendFormat = appendFormat;
 	string->appendString = appendString;
 	string->compareTo = compareTo;
 	string->hasPrefix = hasPrefix;
 	string->hasSuffix = hasSuffix;
+	string->init = init;
+	string->initWithFormat = initWithFormat;
 	string->substring = substring;
 }
 
@@ -256,5 +268,3 @@ Class __String = {
 	.interfaceSize = sizeof(StringInterface),
 	.initialize = initialize,
 };
-
-#undef __Class

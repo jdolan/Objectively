@@ -3,7 +3,7 @@
 #ifndef _${project_name}_${file_base}_h
 #define _${project_name}_${file_base}_h
 
-#include &lt;objectively/object.h&gt;
+#include &lt;Objectively/object.h&gt;
 
 typedef struct ${file_base} ${file_base};
 typedef struct ${file_base}Interface ${file_base}Interface;
@@ -19,11 +19,6 @@ struct ${file_base} {
 	Object object;
 
 	//.. 
-
-	/**
-	 * @brief The typed interface.
-	 */
-	${file_base}Interface *interface;
 };
 
 /**
@@ -48,9 +43,7 @@ extern Class __${file_base};
 
 #include &lt;assert.h&gt;
 
-#include &lt;objectively/${file_base}.h&gt;
-
-#define __Class __${file_base}
+#include &lt;Objectively/${file_base}.h&gt;
 
 #pragma mark - Object instance methods
 
@@ -65,18 +58,17 @@ static void dealloc(Object *self) {
 }
 
 /**
- * @see Object::init(id, id, va_list *)
+ * @see Object::init(Object *)
  */
-static Object *init(id obj, id interface, va_list *args) {
+static Object *init(${file_base} *self) {
 
-	${file_base} *self = (${file_base} *) super(Object, obj, init, interface, args);
+	self = (${file_base} *) super(Object, self, init);
 	if (self) {
-		self-&gt;interface = (${file_base}Interface *) interface;
 
 		//..
 	}
 
-	return (Object *) self;
+	return self;
 }
 
 #pragma mark - ${file_base} instance methods
@@ -103,6 +95,4 @@ Class __${file_base} = {
 	.interfaceSize = sizeof(${file_base}Interface),
 	.initialize = initialize,
 };
-
-#undef __Class
 </template></templates>

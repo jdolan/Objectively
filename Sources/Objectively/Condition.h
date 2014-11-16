@@ -50,11 +50,6 @@ struct Condition {
 	Lock lock;
 
 	/**
-	 * @brief The typed interface.
-	 */
-	const ConditionInterface *interface;
-
-	/**
 	 * @brief The backing condition.
 	 */
 	id condition;
@@ -74,6 +69,13 @@ struct ConditionInterface {
 	 * @brief Signals all Threads waiting on this Condition.
 	 */
 	void (*broadcast)(Condition *self);
+
+	/**
+	 * @brief Initializes this Condition.
+	 *
+	 * @return The initialized instance, or NULL on error.
+	 */
+	Condition *(*init)(Condition *self);
 
 	/**
 	 * @brief Signals a single Thread waiting on this Condition.

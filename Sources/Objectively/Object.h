@@ -45,12 +45,7 @@ struct Object {
 	/**
 	 * @brief Every instance of Object begins with a pointer to its Class.
 	 */
-	const Class *clazz;
-
-	/**
-	 * @brief The typed interface.
-	 */
-	const ObjectInterface *interface;
+	Class *clazz;
 
 	/**
 	 * @brief The reference count of this Object.
@@ -90,20 +85,13 @@ struct ObjectInterface {
 	int (*hash)(const Object *self);
 
 	/**
-	 * @brief The instance initializer (required).
+	 * @brief Initializes this Object.
 	 *
-	 * @details This method typically begins with a call to the superclass
-	 * initializer, passing the arguments list up the initializer chain. Method
-	 * overrides as well as method and member assignment and initialization
-	 * then follow.
-	 *
-	 * @param obj The newly allocated instance.
-	 * @param interface The interface handle.
-	 * @param args The initializer arguments list.
+	 * @param self The newly allocated instance.
 	 *
 	 * @return The initialized instance, or the unmodified pointer on error.
 	 */
-	Object *(*init)(id obj, id interface, va_list *args);
+	Object *(*init)(Object *self);
 
 	/**
 	 * @brief Tests equality of the other Object.

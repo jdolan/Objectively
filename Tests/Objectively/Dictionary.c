@@ -38,50 +38,50 @@ static BOOL enumerator(const Dictionary *dictionary, id obj, id key, id data) {
 
 START_TEST(dictionary)
 	{
-		Dictionary *dictionary = new(Dictionary, 128);
+		Dictionary *dict = $(Dictionary, alloc(Dictionary), initWithCapacity, 128);
 
-		ck_assert(dictionary);
-		ck_assert_ptr_eq(&__Dictionary, classof(dictionary));
+		ck_assert(dict);
+		ck_assert_ptr_eq(&__Dictionary, classof(dict));
 
-		ck_assert_int_eq(0, dictionary->count);
-		ck_assert_int_eq(128, dictionary->capacity);
+		ck_assert_int_eq(0, dict->count);
+		ck_assert_int_eq(128, dict->capacity);
 
-		Object *objectOne = new(Object);
-		Object *objectTwo = new(Object);
-		Object *objectThree = new(Object);
+		Object *objectOne = alloc(Object);
+		Object *objectTwo = alloc(Object);
+		Object *objectThree = alloc(Object);
 
-		String *keyOne = new(String, "one");
-		String *keyTwo = new(String, "two");
-		String *keyThree = new(String, "three");
+		String *keyOne = $(String, alloc(String), initWithFormat, "one");
+		String *keyTwo = $(String, alloc(String), initWithFormat, "two");
+		String *keyThree = $(String, alloc(String), initWithFormat, "three");
 
-		$(dictionary, setObjectForKey, objectOne, keyOne);
-		$(dictionary, setObjectForKey, objectTwo, keyTwo);
-		$(dictionary, setObjectForKey, objectThree, keyThree);
+		$(Dictionary, dict, setObjectForKey, objectOne, keyOne);
+		$(Dictionary, dict, setObjectForKey, objectTwo, keyTwo);
+		$(Dictionary, dict, setObjectForKey, objectThree, keyThree);
 
-		ck_assert_int_eq(3, dictionary->count);
+		ck_assert_int_eq(3, dict->count);
 
-		ck_assert_ptr_eq(objectOne, $(dictionary, objectForKey, keyOne));
-		ck_assert_ptr_eq(objectTwo, $(dictionary, objectForKey, keyTwo));
-		ck_assert_ptr_eq(objectThree, $(dictionary, objectForKey, keyThree));
+		ck_assert_ptr_eq(objectOne, $(Dictionary, dict, objectForKey, keyOne));
+		ck_assert_ptr_eq(objectTwo, $(Dictionary, dict, objectForKey, keyTwo));
+		ck_assert_ptr_eq(objectThree, $(Dictionary, dict, objectForKey, keyThree));
 
 		ck_assert_int_eq(2, objectOne->referenceCount);
 		ck_assert_int_eq(2, objectTwo->referenceCount);
 		ck_assert_int_eq(2, objectThree->referenceCount);
 
-		$(dictionary, removeObjectForKey, keyOne);
+		$(Dictionary, dict, removeObjectForKey, keyOne);
 
-		ck_assert_ptr_eq(NULL, $(dictionary, objectForKey, keyOne));
+		ck_assert_ptr_eq(NULL, $(Dictionary, dict, objectForKey, keyOne));
 		ck_assert_int_eq(1, objectOne->referenceCount);
-		ck_assert_int_eq(2, dictionary->count);
+		ck_assert_int_eq(2, dict->count);
 
-		$(dictionary, removeAllObjects);
+		$(Dictionary, dict, removeAllObjects);
 
-		ck_assert_int_eq(0, dictionary->count);
+		ck_assert_int_eq(0, dict->count);
 
-		ck_assert_ptr_eq(NULL, $(dictionary, objectForKey, keyTwo));
+		ck_assert_ptr_eq(NULL, $(Dictionary, dict, objectForKey, keyTwo));
 		ck_assert_int_eq(1, objectTwo->referenceCount);
 
-		ck_assert_ptr_eq(NULL, $(dictionary, objectForKey, keyThree));
+		ck_assert_ptr_eq(NULL, $(Dictionary, dict, objectForKey, keyThree));
 		ck_assert_int_eq(1, objectThree->referenceCount);
 
 		release(objectOne);
@@ -93,20 +93,27 @@ START_TEST(dictionary)
 		release(keyThree);
 
 		for (int i = 0; i < 1024; i++) {
-			$(dictionary, setObjectForKey, new(Object), new(String, "%d", i));
+
+			Object *object = $(Object, alloc(Object), init);
+			String *key = $(String, alloc(String), initWithFormat, "%d", i);
+
+			$(Dictionary, dict, setObjectForKey, object, key);
+
+			//release(object);
+			//release(key);
 		}
 
 		int counter = 0;
 
-		$(dictionary, enumerateObjectsAndKeys, enumerator, &counter);
+		$(Dictionary, dict, enumerateObjectsAndKeys, enumerator, &counter);
 
 		ck_assert_int_eq(1024, counter);
 
-		$(dictionary, removeAllObjects);
+		$(Dictionary, dict, removeAllObjects);
 
-		ck_assert_int_eq(dictionary->count, 0);
+		ck_assert_int_eq(dict->count, 0);
 
-		release(dictionary);
+		release(dict);
 
 	}END_TEST
 

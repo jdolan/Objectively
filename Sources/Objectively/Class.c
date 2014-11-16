@@ -83,7 +83,7 @@ static void initialize(Class *clazz) {
 
 		Class *super = clazz->superclass;
 
-		if (clazz == (Class *) &__Object) {
+		if (clazz == &__Object) {
 			assert(super == NULL);
 			setup();
 		} else {
@@ -109,24 +109,14 @@ static void initialize(Class *clazz) {
 	}
 }
 
-id __new(Class *clazz, ...) {
+id __alloc(Class *clazz) {
 
 	initialize(clazz);
 
 	id obj = calloc(1, clazz->instanceSize);
 	if (obj) {
-
 		((Object *) obj)->clazz = clazz;
 		((Object *) obj)->referenceCount = 1;
-
-		id interface = clazz->interface;
-
-		va_list args;
-		va_start(args, clazz);
-
-		obj = ((ObjectInterface *) interface)->init(obj, interface, &args);
-
-		va_end(args);
 	}
 
 	return obj;
@@ -148,7 +138,7 @@ id __cast(Class *clazz, const id obj) {
 
 				// as a special case, we optimize for __Object
 
-				if (c == clazz || clazz == (Class *) &__Object) {
+				if (c == clazz || clazz == &__Object) {
 					break;
 				}
 
@@ -168,7 +158,7 @@ void release(id obj) {
 	assert(object);
 
 	if (__sync_add_and_fetch(&object->referenceCount, -1) == 0) {
-		$(object, dealloc);
+		$(Object, object, dealloc);
 	}
 }
 

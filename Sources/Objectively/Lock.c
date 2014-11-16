@@ -29,8 +29,6 @@
 
 #include <Objectively/Lock.h>
 
-#define __Class __Lock
-
 #pragma mark - Object instance methods
 
 /**
@@ -53,26 +51,25 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-/**
- * @see ObjectInterface::init(id, id, va_list *)
- */
-static Object *init(id obj, id interface, va_list *args) {
+#pragma mark - Lock instance methods
 
-	Lock *self = (Lock *) super(Object, obj, init, interface, args);
+/**
+ * @see LockInterface::init(Lock *)
+ */
+static Lock *init(Lock *self) {
+
+	self = (Lock *) super(Object, self, init);
 	if (self) {
-		self->interface = (LockInterface *) interface;
 
 		self->lock = calloc(1, sizeof(pthread_mutex_t));
 		assert(self->lock);
 
-		int err = pthread_mutex_init(self->lock, NULL);
+		const int err = pthread_mutex_init(self->lock, NULL);
 		assert(err == 0);
 	}
 
-	return (Object *) self;
+	return self;
 }
-
-#pragma mark - Lock instance methods
 
 /**
  * @see LockInterface::lock(Lock *)
@@ -108,16 +105,16 @@ static void unlock(Lock *self) {
 /**
  * @see Class::initialize(Class *)
  */
-static void initialize(Class *self) {
+static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) self->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
-	object->init = init;
 
-	LockInterface *interface = (LockInterface *) self->interface;
+	LockInterface *interface = (LockInterface *) clazz->interface;
 
+	interface->init = init;
 	interface->lock = lock;
 	interface->tryLock = tryLock;
 	interface->unlock = unlock;
@@ -128,7 +125,4 @@ Class __Lock = {
 	.superclass = &__Object,
 	.instanceSize = sizeof(Lock),
 	.interfaceSize = sizeof(LockInterface),
-	.initialize = initialize,
-};
-
-#undef __Class
+	.initialize = initialize, };
