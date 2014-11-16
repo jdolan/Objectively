@@ -15,7 +15,9 @@ struct Hello {
 struct HelloInterface {
 	ObjectInterface objectInterface;
 
+        Hello *(*init)(Hello *self);
 	Hello *(*initWithGreeting)(Hello *self, const char *greeting);
+
 	void (*sayHello)(const Hello *self);
 };
 
@@ -23,13 +25,11 @@ extern Class __Hello;
 
 // Hello.c
 
-#pragma mark - Object instance methods
+#pragma mark - Hello initializers
 
-static Object *init(Object *self) {
-	return (Object *) $(Hello, self, initWithGreeting, NULL);
+static Hello *init(Hello *self) {
+	return $(Hello, self, initWithGreeting, NULL);
 }
-
-#pragma mark - Hello instance methods
 
 static Hello *initWithGreeting(Hello *self, const char *greeting) {
 
@@ -40,6 +40,8 @@ static Hello *initWithGreeting(Hello *self, const char *greeting) {
 	return self;
 }
 
+#pragma mark - Hello instance methods
+
 static void sayHello(const Hello *self) {
 	printf("%s\n", self->greeting);
 }
@@ -48,8 +50,7 @@ static void sayHello(const Hello *self) {
 
 static void initialize(Class *self) {
 
-	((ObjectInterface *) self->interface)->init = init;
-
+	((HelloInterface *) self->interface)->init = init;
 	((HelloInterface *) self->interface)->initWithGreeting = initWithGreeting;
 	((HelloInterface *) self->interface)->sayHello = sayHello;
 }
