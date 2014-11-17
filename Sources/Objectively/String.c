@@ -22,6 +22,7 @@
  */
 
 #include <assert.h>
+#include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -89,7 +90,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		const String *that = (String *) other;
 
 		RANGE range = { 0, this->len };
-		return $(String, this, compareTo, that, range) == 0;
+		return $(String, this, compareTo, that, range) == SAME;
 	}
 
 	return NO;
@@ -151,15 +152,21 @@ static String *appendString(String *self, const String *other) {
 /**
  * @see StringInterface::compareTo(const String *, const String *, RANGE)
  */
-static int compareTo(const String *self, const String *other, RANGE range) {
+static ORDER compareTo(const String *self, const String *other, RANGE range) {
 
 	assert(range.offset + range.length <= self->len);
 
 	if (other) {
-		return strncmp(self->str + range.offset, other->str, range.length);
+		const int i = strncmp(self->str + range.offset, other->str, range.length);
+		if (i == 0) {
+			return SAME;
+		}
+		if (i > 0) {
+			return DESCENDING;
+		}
 	}
 
-	return -1;
+	return ASCENDING;
 }
 
 /**
@@ -172,7 +179,7 @@ static BOOL hasPrefix(const String *self, const String *prefix) {
 	}
 
 	RANGE range = { 0, prefix->len };
-	return $(String, self, compareTo, prefix, range) == 0;
+	return $(String, self, compareTo, prefix, range) == SAME;
 }
 
 /**
@@ -185,7 +192,7 @@ static BOOL hasSuffix(const String *self, const String *suffix) {
 	}
 
 	RANGE range = { self->len - suffix->len, suffix->len };
-	return $(String, self, compareTo, suffix, range) == 0;
+	return $(String, self, compareTo, suffix, range) == SAME;
 }
 
 /**

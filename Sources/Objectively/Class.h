@@ -24,8 +24,6 @@
 #ifndef _Objectively_Class_h_
 #define _Objectively_Class_h_
 
-#include <stdarg.h>
-
 #include <Objectively/Types.h>
 
 /**

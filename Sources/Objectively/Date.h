@@ -21,69 +21,74 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Types_h_
-#define _Objectively_Types_h_
+#ifndef _Objectively_Date_h
+#define _Objectively_Date_h
 
-#if defined(__linux__)
-#define _GNU_SOURCE
-#endif
-
-#include <stddef.h>
-#include <stdint.h>
+#include <Objectively/object.h>
 
 /**
- * @brief The id type from Objective-C.
+ * @brief Microseconds per second.
  */
-typedef void *id;
+#define MSEC_PER_SEC 1000000
 
 /**
- * @brief The boolean type from Objective-C.
+ * @brief Seconds per day.
  */
-typedef enum {
-	NO, YES
-} BOOL;
+#define SEC_PER_DAY (60 * 60 * 24)
+
+typedef struct Date Date;
+typedef struct DateInterface DateInterface;
+
+typedef struct timeval Time;
 
 /**
- * @brief An offset and length into contiguous collections.
+ * @brief The Date type.
  */
-typedef struct {
+struct Date {
 
 	/**
-	 * @brief The offset.
+	 * @brief The parent.
 	 */
-	unsigned offset;
+	Object object;
+
+	Time time;
+};
+
+/**
+ * @brief The Date type.
+ */
+struct DateInterface {
 
 	/**
-	 * @brief The length.
+	 * @brief The parent.
 	 */
-	unsigned length;
-} RANGE;
+	ObjectInterface objectInterface;
+
+	/**
+	 * @brief Compares this Date to another.
+	 *
+	 * @param other The Date to compare to.
+	 *
+	 * @return The ordering of this Date compared to other.
+	 */
+	ORDER (*compareTo)(const Date *self, const Date *other);
+
+	/**
+	 * Initializes a Date with the current time.
+	 */
+	Date *(*init)(Date *self);
+
+	/**
+	 * Initializes a Date with the specified time.
+	 *
+	 * @param time The desired Time.
+	 */
+	Date *(*initWithTime)(Date *self, Time *time);
+};
 
 /**
- * @brief Comparison constants.
+ * @brief The Date Class.
  */
-typedef enum {
-	ASCENDING = -1,
-	SAME,
-	DESCENDING
-} ORDER;
-
-/**
- * @return The length of an array.
- */
-#define lengthof(array) \
-	(sizeof(array) / sizeof((array)[0]))
-
-/**
- * @return The maximum of the two parameters.
- */
-#define max(a, b) \
-   ({ typeof(a) _a = (a); typeof(b) _b = (b); _a > _b ? _a : _b; })
-
-/**
- * @return The minimum of the two parameters.
- */
-#define min(a, b) \
-   ({ typeof(a) _a = (a); typeof(b) _b = (b); _a < _b ? _a : _b; })
+extern Class __Date;
 
 #endif

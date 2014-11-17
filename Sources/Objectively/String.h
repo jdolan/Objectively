@@ -89,9 +89,9 @@ struct StringInterface {
 	 * @param other The String to compare to.
 	 * @param range The character range to compare.
 	 *
-	 * @return Greater than, equal to, or less than zero.
+	 * @return The ordering of this String compared to other.
 	 */
-	int (*compareTo)(const String *self, const String *other, RANGE range);
+	ORDER (*compareTo)(const String *self, const String *other, RANGE range);
 
 	/**
 	 * @brief Checks this String for the given prefix.
