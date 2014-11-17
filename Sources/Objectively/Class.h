@@ -171,7 +171,7 @@ extern void retain(id obj);
  * @brief Invoke an instance method.
  */
 #define $(type, obj, method, ...) \
-	(interfaceof(type, obj))->method((type *) obj, ## __VA_ARGS__)
+	(interfaceof(type, obj))->method(cast(type, obj), ## __VA_ARGS__)
 
 /**
  * @brief Invoke a Superclass instance method.

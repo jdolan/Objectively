@@ -127,25 +127,20 @@ id __cast(Class *clazz, const id obj) {
 	initialize(clazz);
 
 	if (obj) {
+		const Class *c = ((Object *) obj)->clazz;
+		while (c) {
 
-		Object *object = (Object *) obj;
-		if (object->clazz) {
+			assert(c->locals.magic == CLASS_MAGIC);
 
-			const Class *c = object->clazz;
-			while (c) {
+			// as a special case, we optimize for __Object
 
-				assert(c->locals.magic == CLASS_MAGIC);
-
-				// as a special case, we optimize for __Object
-
-				if (c == clazz || clazz == &__Object) {
-					break;
-				}
-
-				c = c->superclass;
+			if (c == clazz || clazz == &__Object) {
+				break;
 			}
-			assert(c);
+
+			c = c->superclass;
 		}
+		assert(c);
 	}
 
 	return (id) obj;
