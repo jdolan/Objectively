@@ -67,8 +67,8 @@ START_TEST(thread)
 		$(Thread, thread, join, &ret);
 		ck_assert_int_eq(YES, (BOOL) ret);
 
-		//release(thread);
-		//release(condition);
+		release(thread);
+		release(condition);
 
 	}END_TEST
 

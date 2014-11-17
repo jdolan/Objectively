@@ -147,13 +147,13 @@ extern void retain(id obj);
  * @brief Allocate a type.
  */
 #define alloc(type) \
-	(type *) __alloc((Class *) &__##type)
+	(type *) __alloc(&__##type)
 
 /**
  * @brief Safely cast to a type.
  */
 #define cast(type, obj) \
-	__cast((Class *) &__##type, (const id) obj)
+	(type *) __cast((Class *) &__##type, (const id) obj)
 
 /**
  * @brief Resolve the Class of an Object instance.
@@ -177,7 +177,6 @@ extern void retain(id obj);
  * @brief Invoke a Superclass instance method.
  */
 #define super(type, obj, method, ...) \
-	((type##Interface *) classof(obj)->superclass->interface) \
-		->method((type *) obj, ## __VA_ARGS__)
+	((type##Interface *) __##type.interface)->method(cast(type, obj), ## __VA_ARGS__)
 
 #endif
