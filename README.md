@@ -133,5 +133,10 @@ Concurrency:
  * Lock - Locks (pthreads).
  * Thread - Threads (pthreads).
 
+Date and time:
+
+ * Date - Microsecond-precision dates.
+ * DateFormatter - Date formatting and parsing.
+
 Miscellaneous:
  * Log - Configurable logging.
