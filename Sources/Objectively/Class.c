@@ -122,7 +122,7 @@ id __alloc(Class *clazz) {
 
 	Class *c = object->clazz;
 	while (c) {
-		*(id *) &obj[c->interfaceOffset] = c->interface;
+		*(id *) &(obj + c->interfaceOffset) = c->interface;
 		c = c->superclass;
 	}
 
