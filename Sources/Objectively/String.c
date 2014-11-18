@@ -39,7 +39,7 @@
 static Object *copy(const Object *self) {
 
 	String *this = (String *) self;
-	String *that = $(String, alloc(String), initWithFormat, this->str);
+	String *that = $(alloc(String), initWithFormat, this->str);
 
 	return (Object *) that;
 }
@@ -94,7 +94,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		const String *that = (String *) other;
 
 		RANGE range = { 0, this->len };
-		return $(String, this, compareTo, that, range) == SAME;
+		return $(this, compareTo, that, range) == SAME;
 	}
 
 	return NO;
@@ -121,7 +121,7 @@ static String *appendFormat(String *self, const char *fmt, ...) {
 		string->str = str;
 		string->len = strlen(string->str);
 
-		$(String, self, appendString, string);
+		$(self, appendString, string);
 
 		release(string);
 	}
@@ -183,7 +183,7 @@ static BOOL hasPrefix(const String *self, const String *prefix) {
 	}
 
 	RANGE range = { 0, prefix->len };
-	return $(String, self, compareTo, prefix, range) == SAME;
+	return $(self, compareTo, prefix, range) == SAME;
 }
 
 /**
@@ -196,7 +196,7 @@ static BOOL hasSuffix(const String *self, const String *suffix) {
 	}
 
 	RANGE range = { self->len - suffix->len, suffix->len };
-	return $(String, self, compareTo, suffix, range) == SAME;
+	return $(self, compareTo, suffix, range) == SAME;
 }
 
 /**
@@ -204,7 +204,7 @@ static BOOL hasSuffix(const String *self, const String *suffix) {
  */
 static String *init(String *self) {
 
-	return $(String, self, initWithCharacters, NULL);
+	return $(self, initWithCharacters, NULL);
 }
 
 /**
@@ -212,7 +212,7 @@ static String *init(String *self) {
  */
 static String *initWithCharacters(String *self, const char *chars) {
 
-	return $(String, self, initWithMemory, chars ? strdup(chars) : NULL);
+	return $(self, initWithMemory, chars ? strdup(chars) : NULL);
 }
 
 /**
@@ -230,7 +230,7 @@ static String *initWithFormat(String *self, const char *fmt, ...) {
 		va_end(args);
 	}
 
-	return $(String, self, initWithMemory, str);
+	return $(self, initWithMemory, str);
 }
 
 /**
@@ -299,6 +299,7 @@ Class __String = {
 	.name = "String",
 	.superclass = &__Object,
 	.instanceSize = sizeof(String),
+	.interfaceOffset = offsetof(String, interface),
 	.interfaceSize = sizeof(StringInterface),
 	.initialize = initialize,
 };

@@ -28,7 +28,7 @@
 
 START_TEST(_log)
 	{
-		Log *log = $(Log, alloc(Log), initWithName, "test");
+		Log *log = $(alloc(Log), initWithName, "test");
 		ck_assert(log);
 
 		ck_assert_str_eq("test", log->name);
@@ -37,14 +37,14 @@ START_TEST(_log)
 		ck_assert(log->file);
 		ck_assert_int_eq(0, ftell(log->file));
 
-		$(Log, log, info, "hello %s", "world!");
-		$(Log, log, flush);
+		$(log, info, "hello %s", "world!");
+		$(log, flush);
 
 		long int len = ftell(log->file);
 		ck_assert_int_gt(len, 0);
 
-		$(Log, log, debug, "hello again");
-		$(Log, log, flush);
+		$(log, debug, "hello again");
+		$(log, flush);
 
 		long int len2 = ftell(log->file);
 		ck_assert_int_eq(len, len2);

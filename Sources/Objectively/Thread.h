@@ -53,6 +53,11 @@ struct Thread {
 	Object object;
 
 	/**
+	 * @brief The typed interface.
+	 */
+	ThreadInterface *interface;
+
+	/**
 	 * @brief The user data.
 	 */
 	id data;

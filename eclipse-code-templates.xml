@@ -4,6 +4,8 @@
 
 #include &lt;Objectively/${file_base}.h&gt;
 
+#define __Class __${file_base}
+
 #pragma mark - Object instance methods
 
 /**
@@ -52,9 +54,12 @@ Class __${file_base} = {
 	.name = "${file_base}",
 	.superclass = &amp;__Object,
 	.instanceSize = sizeof(${file_base}),
+	.interfaceOffset = offsetof(${file_base}, interface),
 	.interfaceSize = sizeof(${file_base}Interface),
 	.initialize = initialize,
 };
+
+#undef __Class
 </template><template autoinsert="false" context="org.eclipse.cdt.core.cHeader.contenttype_context" deleted="false" description="" enabled="true" name="Objectively Type Header">${filecomment}
 
 #ifndef _${project_name}_${file_base}_h
@@ -74,6 +79,11 @@ struct ${file_base} {
 	 * @brief The parent.
 	 */
 	Object object;
+
+	/**
+	 * @brief The typed interface.
+	 */
+	${file_base}Interface *interface;
 
 	//.. 
 };

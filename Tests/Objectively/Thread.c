@@ -33,14 +33,13 @@ static id run(Thread *self) {
 	BOOL stop = NO;
 	while (!stop) {
 
-		$(Lock, condition, lock);
+		$((Lock *) condition, lock);
 
 		if (++(*(int *) self->data) == 0xbeaf) {
-			$(Condition, condition, signal);
-			stop = YES;
+			$(condition, signal); stop = YES;
 		}
 
-		$(Lock, condition, unlock);
+		$((Lock *) condition, unlock);
 	}
 
 	return (id) YES;
@@ -48,23 +47,23 @@ static id run(Thread *self) {
 
 START_TEST(thread)
 	{
-		condition = $(Condition, alloc(Condition), init);
+		condition = $(alloc(Condition), init);
 		ck_assert(condition);
 
-		$(Lock, condition, lock);
+		$((Lock *) condition, lock);
 
 		int criticalSection = 0;
 
-		Thread *thread = $(Thread, alloc(Thread), initWithFunction, run, &criticalSection);
+		Thread *thread = $(alloc(Thread), initWithFunction, run, &criticalSection);
 		ck_assert(thread);
 
-		$(Thread, thread, start);
+		$(thread, start);
 
-		$(Condition, condition, wait);
+		$(condition, wait);
 		ck_assert_int_eq(0xbeaf, criticalSection);
 
 		id ret;
-		$(Thread, thread, join, &ret);
+		$(thread, join, &ret);
 		ck_assert_int_eq(YES, (BOOL) ret);
 
 		release(thread);

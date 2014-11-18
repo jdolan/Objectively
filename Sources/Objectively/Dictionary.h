@@ -59,6 +59,11 @@ struct Dictionary {
 	Object object;
 
 	/**
+	 * @brief The typed interface.
+	 */
+	DictionaryInterface *interface;
+
+	/**
 	 * @brief The capacity, or number of bins, in this Dictionary.
 	 */
 	size_t capacity;

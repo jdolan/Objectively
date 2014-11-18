@@ -9,13 +9,15 @@ typedef struct HelloInterface HelloInterface;
 
 struct Hello {
 	Object object;
+	HelloInterface *interface;
+
 	const char *greeting;
 };
 
 struct HelloInterface {
 	ObjectInterface objectInterface;
 
-        Hello *(*init)(Hello *self);
+	Hello *(*init)(Hello *self);
 	Hello *(*initWithGreeting)(Hello *self, const char *greeting);
 
 	void (*sayHello)(const Hello *self);
@@ -30,14 +32,14 @@ extern Class __Hello;
 #pragma mark - Hello initializers
 
 static Hello *init(Hello *self) {
-	return $(Hello, self, initWithGreeting, NULL);
+	return $(self, initWithGreeting, NULL);
 }
 
 static Hello *initWithGreeting(Hello *self, const char *greeting) {
 
 	self = (Hello *) super(Object, self, init);
 	if (self) {
-		self->greeting = greeting ?: "hello";
+		self->greeting = greeting ? : "hello";
 	}
 	return self;
 }
@@ -63,6 +65,7 @@ Class __Hello = {
 	.name = "Hello",
 	.superclass = &__Object,
 	.instanceSize = sizeof(Hello),
+	.interfaceOffset = offsetof(Hello, interface),
 	.interfaceSize = sizeof(HelloInterface),
 	.initialize = initialize,
 };
@@ -73,7 +76,7 @@ Class __Hello = {
 
 int main(int argc, char **argv) {
 
-	Hello *hello = $(Hello, alloc(Hello), initWithGreeting, "Hello World!");
-	$(Hello, hello, sayHello);
+	Hello *hello = $(alloc(Hello), initWithGreeting, "Hello World!");
+	$(hello, sayHello);
 	release(hello);
 }

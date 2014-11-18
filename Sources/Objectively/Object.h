@@ -48,6 +48,11 @@ struct Object {
 	Class *clazz;
 
 	/**
+	 * @brief The typed interface.
+	 */
+	ObjectInterface *interface;
+
+	/**
 	 * @brief The reference count of this Object.
 	 */
 	unsigned referenceCount;

@@ -42,7 +42,7 @@ static Date *dateFromString(const DateFormatter *self, const char *str) {
 			.tv_sec = mktime(&time)
 		};
 
-		return $(Date, alloc(Date), initWithTime, &t);
+		return $(alloc(Date), initWithTime, &t);
 	}
 
 	return NULL;
@@ -80,7 +80,7 @@ static String *stringFromDate(const DateFormatter *self, const Date *date) {
 
 	strftime(str, len, self->fmt, &time);
 
-	return $(String, alloc(String), initWithMemory, str);
+	return $(alloc(String), initWithMemory, str);
 }
 
 #pragma mark - DateFormatter Class methods
@@ -103,6 +103,7 @@ Class __DateFormatter = {
 	.name = "DateFormatter",
 	.superclass = &__Object,
 	.instanceSize = sizeof(DateFormatter),
+	.interfaceOffset = offsetof(DateFormatter, interface),
 	.interfaceSize = sizeof(DateFormatterInterface),
 	.initialize = initialize,
 };

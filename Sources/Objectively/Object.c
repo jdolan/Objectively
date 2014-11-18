@@ -58,7 +58,7 @@ static void dealloc(Object *self) {
  */
 static String *description(const Object *self) {
 
-	return $(String, alloc(String), initWithFormat, "%s@%p", self->clazz->name, self);
+	return $(alloc(String), initWithFormat, "%s@%p", self->clazz->name, self);
 }
 
 /**
@@ -124,6 +124,7 @@ static void initialize(Class *clazz) {
 Class __Object = {
 	.name = "Object",
 	.instanceSize = sizeof(Object),
+	.interfaceOffset = offsetof(Object, interface),
 	.interfaceSize = sizeof(ObjectInterface),
 	.initialize = initialize,
 };

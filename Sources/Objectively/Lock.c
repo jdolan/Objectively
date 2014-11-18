@@ -126,6 +126,7 @@ Class __Lock = {
 	.name = "Lock",
 	.superclass = &__Object,
 	.instanceSize = sizeof(Lock),
+	.interfaceOffset = offsetof(Lock, interface),
 	.interfaceSize = sizeof(LockInterface),
 	.initialize = initialize,
 };

@@ -62,7 +62,7 @@ static void debug(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(Log, self, log, DEBUG, fmt, args);
+	$(self, log, DEBUG, fmt, args);
 
 	va_end(args);
 }
@@ -75,7 +75,7 @@ static void error(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(Log, self, log, ERROR, fmt, args);
+	$(self, log, ERROR, fmt, args);
 
 	va_end(args);
 }
@@ -88,7 +88,7 @@ static void fatal(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(Log, self, log, FATAL, fmt, args);
+	$(self, log, FATAL, fmt, args);
 
 	va_end(args);
 }
@@ -110,7 +110,7 @@ static void info(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(Log, self, log, INFO, fmt, args);
+	$(self, log, INFO, fmt, args);
 
 	va_end(args);
 }
@@ -120,7 +120,7 @@ static void info(const Log *self, const char *fmt, ...) {
  */
 static Log *init(Log *self) {
 
-	return $(Log, self, initWithName, NULL);
+	return $(self, initWithName, NULL);
 }
 
 /**
@@ -201,7 +201,7 @@ static void trace(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(Log, self, log, TRACE, fmt, args);
+	$(self, log, TRACE, fmt, args);
 
 	va_end(args);
 }
@@ -214,7 +214,7 @@ static void warn(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(Log, self, log, WARN, fmt, args);
+	$(self, log, WARN, fmt, args);
 
 	va_end(args);
 }
@@ -248,6 +248,7 @@ Class __Log = {
 	.name = "Log",
 	.superclass = &__Object,
 	.instanceSize = sizeof(Log),
+	.interfaceOffset = offsetof(Log, interface),
 	.interfaceSize = sizeof(LogInterface),
 	.initialize = initialize,
 };

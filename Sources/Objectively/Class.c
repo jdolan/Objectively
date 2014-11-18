@@ -77,6 +77,7 @@ static void initialize(Class *clazz) {
 		assert(clazz->name);
 		assert(clazz->instanceSize);
 		assert(clazz->interfaceSize);
+		assert(clazz->interfaceOffset);
 
 		clazz->interface = calloc(1, clazz->interfaceSize);
 		assert(clazz->interface);
@@ -116,8 +117,16 @@ id __alloc(Class *clazz) {
 	id obj = calloc(1, clazz->instanceSize);
 	assert(obj);
 
-	((Object *) obj)->clazz = clazz;
-	((Object *) obj)->referenceCount = 1;
+	Object *object = (Object *) obj;
+	object->clazz = clazz;
+
+	Class *c = object->clazz;
+	while (c) {
+		*(id *) &obj[c->interfaceOffset] = c->interface;
+		c = c->superclass;
+	}
+
+	object->referenceCount = 1;
 
 	return obj;
 }
@@ -151,7 +160,7 @@ void release(id obj) {
 	assert(object);
 
 	if (__sync_add_and_fetch(&object->referenceCount, -1) == 0) {
-		$(Object, object, dealloc);
+		$(object, dealloc);
 	}
 }
 

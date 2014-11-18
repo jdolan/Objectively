@@ -117,6 +117,7 @@ Class __Condition = {
 	.name = "Condition",
 	.superclass = &__Lock,
 	.instanceSize = sizeof(Condition),
+	.interfaceOffset = offsetof(Condition, interface),
 	.interfaceSize = sizeof(ConditionInterface),
 	.initialize = initialize,
 };

@@ -65,7 +65,7 @@ struct Class {
 		/**
 		 * @brief Provides chaining of initialized Classes.
 		 */
-		 Class *next;
+		Class *next;
 
 	} locals;
 
@@ -99,6 +99,11 @@ struct Class {
 	 * @brief The interface handle (do *not* provide).
 	 */
 	id interface;
+
+	/**
+	 * @brief The interface offset (required).
+	 */
+	ptrdiff_t interfaceOffset;
 
 	/**
 	 * @brief The interface size (required).
@@ -145,13 +150,13 @@ extern void retain(id obj);
  * @brief Allocate a type.
  */
 #define alloc(type) \
-	(type *) __alloc(&__##type)
+	((type *) __alloc(&__##type))
 
 /**
  * @brief Safely cast to a type.
  */
 #define cast(type, obj) \
-	(type *) __cast((Class *) &__##type, (const id) obj)
+	((type *) __cast((Class *) &__##type, (const id) obj))
 
 /**
  * @brief Resolve the Class of an Object instance.
@@ -163,18 +168,18 @@ extern void retain(id obj);
  * @brief Resolve the typed interface of a Class.
  */
 #define interfaceof(type, clazz) \
-	(type##Interface *) clazz->interface
+	((type##Interface *) clazz->interface)
 
 /**
  * @brief Invoke an instance method.
  */
-#define $(type, obj, method, ...) \
-	(interfaceof(type, classof(obj)))->method(cast(type, obj), ## __VA_ARGS__)
+#define $(obj, method, ...) \
+	(obj)->interface->method(obj, ## __VA_ARGS__)
 
 /**
  * @brief Invoke a Superclass instance method.
  */
 #define super(type, obj, method, ...) \
-	(interfaceof(type, __Class.superclass))->method(cast(type, obj), ## __VA_ARGS__)
+	interfaceof(type, __Class.superclass)->method(cast(type, obj), ## __VA_ARGS__)
 
 #endif

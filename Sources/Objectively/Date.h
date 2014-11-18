@@ -60,6 +60,11 @@ struct Date {
 	Object object;
 
 	/**
+	 * @brief The typed interface.
+	 */
+	DateInterface *interface;
+
+	/**
 	 * @brief The time.
 	 */
 	Time time;

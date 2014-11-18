@@ -27,20 +27,20 @@
 
 START_TEST(object)
 	{
-		Object *object = $(Object, alloc(Object), init);
+		Object *object = $(alloc(Object), init);
 
 		ck_assert(object);
 		ck_assert_ptr_eq(&__Object, classof(object));
 
-		ck_assert($(Object, object, isEqual, object));
-		ck_assert($(Object, object, isKindOfClass, classof(object)));
+		ck_assert($(object, isEqual, object));
+		ck_assert($(object, isKindOfClass, classof(object)));
 
-		Object *copy = $(Object, object, copy);
+		Object *copy = $(object, copy);
 
 		ck_assert(copy);
 
-		ck_assert(!$(Object, copy, isEqual, object));
-		ck_assert($(Object, copy, isKindOfClass, classof(object)));
+		ck_assert(!$(copy, isEqual, object));
+		ck_assert($(copy, isKindOfClass, classof(object)));
 
 		release(copy);
 		release(object);

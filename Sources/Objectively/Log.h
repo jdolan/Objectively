@@ -48,6 +48,11 @@ struct Log {
 	Object object;
 
 	/**
+	 * @brief The typed interface.
+	 */
+	LogInterface *interface;
+
+	/**
 	 * @brief The format string, defaults to `LOG_FORMAT_DEFAULT`.
 	 *
 	 * This string is post-processed after date substitution is performed by

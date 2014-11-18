@@ -31,7 +31,7 @@
 
 #define DICTIONARY_CHUNK_SIZE 64
 
-#define HASH(key) ( $(Object, key, hash) % self->capacity )
+#define HASH(key) ( $((Object *) key, hash) % self->capacity )
 
 #pragma mark - Object instance methods
 
@@ -42,8 +42,7 @@ static void dealloc(Object *self) {
 
 	Dictionary *this = (Dictionary *) self;
 
-	$(Dictionary, self, removeAllObjects);
-
+	$(this, removeAllObjects);
 	free(this->elements);
 
 	super(Object, self, dealloc);
@@ -55,8 +54,7 @@ static void dealloc(Object *self) {
  * @brief DictionaryEnumerator for allKeys.
  */
 static BOOL allKeys_enumerator(const Dictionary *dict, id obj, id key, id data) {
-	$(Array, data, addObject, key);
-	return NO;
+	$((Array *) data, addObject, key); return NO;
 }
 
 /**
@@ -66,7 +64,7 @@ static Array *allKeys(const Dictionary *self) {
 
 	Array *keys = alloc(Array);
 
-	$(Dictionary, self, enumerateObjectsAndKeys, allKeys_enumerator, NULL);
+	$(self, enumerateObjectsAndKeys, allKeys_enumerator, NULL);
 
 	return keys;
 }
@@ -75,8 +73,7 @@ static Array *allKeys(const Dictionary *self) {
  * @brief DictionaryEnumerator for allObjects.
  */
 static BOOL allObjects_enumerator(const Dictionary *dict, id obj, id key, id data) {
-	$(Array, data, addObject, obj);
-	return NO;
+	$((Array *) data, addObject, obj); return NO;
 }
 
 /**
@@ -86,7 +83,7 @@ static Array *allObjects(const Dictionary *self) {
 
 	Array *objects = alloc(Array);
 
-	$(Dictionary, self, enumerateObjectsAndKeys, allObjects_enumerator, objects);
+	$(self, enumerateObjectsAndKeys, allObjects_enumerator, objects);
 
 	return objects;
 }
@@ -106,8 +103,8 @@ static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator
 
 			for (size_t j = 0; j < array->count; j += 2) {
 
-				id key = $(Array, array, objectAtIndex, j);
-				id obj = $(Array, array, objectAtIndex, j + 1);
+				id key = $(array, objectAtIndex, j);
+				id obj = $(array, objectAtIndex, j + 1);
 
 				if (enumerator(self, obj, key, data)) {
 					return;
@@ -134,11 +131,11 @@ static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumer
 
 			for (size_t j = 0; j < array->count; j += 2) {
 
-				id key = $(Array, array, objectAtIndex, j);
-				id obj = $(Array, array, objectAtIndex, j + 1);
+				id key = $(array, objectAtIndex, j);
+				id obj = $(array, objectAtIndex, j + 1);
 
 				if (enumerator(self, obj, key, data)) {
-					$(Dictionary, dictionary, setObjectForKey, obj, key);
+					$(dictionary, setObjectForKey, obj, key);
 				}
 			}
 		}
@@ -151,7 +148,7 @@ static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumer
  * @see DictionaryInterface::init(Dictionary *)
  */
 static Dictionary *init(Dictionary *self) {
-	return $(Dictionary, self, initWithCapacity, DICTIONARY_CHUNK_SIZE);
+	return $(self, initWithCapacity, DICTIONARY_CHUNK_SIZE);
 }
 
 /**
@@ -179,9 +176,9 @@ static id objectForKey(const Dictionary *self, const id key) {
 	Array *array = self->elements[HASH(key)];
 	if (array != NULL) {
 
-		int index = $(Array, array, indexOfObject, key);
+		int index = $(array, indexOfObject, key);
 		if (index > -1) {
-			return $(Array, array, objectAtIndex, index + 1);
+			return $(array, objectAtIndex, index + 1);
 		}
 	}
 
@@ -198,7 +195,7 @@ static void removeAllObjects(Dictionary *self) {
 		Array *array = self->elements[i];
 		if (array != NULL) {
 
-			$(Array, array, removeAllObjects);
+			$(array, removeAllObjects);
 
 			release(array);
 			self->elements[i] = NULL;
@@ -218,11 +215,11 @@ static void removeObjectForKey(Dictionary *self, const id key) {
 	Array *array = self->elements[HASH(key)];
 	if (array != NULL) {
 
-		int index = $(Array, array, indexOfObject, key);
+		int index = $(array, indexOfObject, key);
 		if (index > -1) {
 
-			$(Array, array, removeObjectAtIndex, index);
-			$(Array, array, removeObjectAtIndex, index);
+			$(array, removeObjectAtIndex, index);
+			$(array, removeObjectAtIndex, index);
 
 			if (array->count == 0) {
 				release(array);
@@ -247,12 +244,12 @@ static void setObjectForKey(Dictionary *self, const id obj, const id key) {
 		array = self->elements[HASH(key)] = alloc(Array);
 	}
 
-	int index = $(Array, array, indexOfObject, key);
+	int index = $(array, indexOfObject, key);
 	if (index > -1) {
-		$(Array, array, setObjectAtIndex, obj, index + 1);
+		$(array, setObjectAtIndex, obj, index + 1);
 	} else {
-		$(Array, array, addObject, key);
-		$(Array, array, addObject, obj);
+		$(array, addObject, key);
+		$(array, addObject, obj);
 
 		self->count++;
 	}
@@ -272,7 +269,7 @@ static void setObjectsForKeys(Dictionary *self, ...) {
 		if (obj) {
 
 			id key = va_arg(args, id);
-			$(Dictionary, self, setObjectForKey, obj, key);
+			$(self, setObjectForKey, obj, key);
 		} else {
 			break;
 		}
@@ -311,6 +308,7 @@ Class __Dictionary = {
 	.name = "Dictionary",
 	.superclass = &__Object,
 	.instanceSize = sizeof(Dictionary),
+	.interfaceOffset = offsetof(Dictionary, interface),
 	.interfaceSize = sizeof(DictionaryInterface),
 	.initialize = initialize,
 };

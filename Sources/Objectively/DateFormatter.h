@@ -49,6 +49,11 @@ struct DateFormatter {
 	Object object;
 
 	/**
+	 * @brief The typed interface.
+	 */
+	DateFormatterInterface *interface;
+
+	/**
 	 * @brief The format string.
 	 */
 	const char *fmt;

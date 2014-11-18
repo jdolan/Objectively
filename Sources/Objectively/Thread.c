@@ -87,7 +87,7 @@ static void detach(Thread *self) {
  */
 static Thread *init(Thread *self) {
 
-	return $(Thread, self, initWithFunction, NULL, NULL);
+	return $(self, initWithFunction, NULL, NULL);
 }
 
 /**
@@ -200,6 +200,7 @@ Class __Thread = {
 	.name = "Thread",
 	.superclass = &__Object,
 	.instanceSize = sizeof(Thread),
+	.interfaceOffset = offsetof(Thread, interface),
 	.interfaceSize = sizeof(ThreadInterface),
 	.initialize = initialize,
 };

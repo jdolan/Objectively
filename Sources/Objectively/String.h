@@ -45,6 +45,11 @@ struct String {
 	Object object;
 
 	/**
+	 * @brief The typed interface.
+	 */
+	StringInterface *interface;
+
+	/**
 	 * @brief The backing character array length.
 	 */
 	size_t len;

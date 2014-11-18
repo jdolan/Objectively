@@ -43,7 +43,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		const Date *this = (Date *) self;
 		const Date *that = (Date *) other;
 
-		return $(Date, this, compareTo, that) == SAME;
+		return $(this, compareTo, that) == SAME;
 	}
 
 	return NO;
@@ -78,7 +78,7 @@ static ORDER compareTo(const Date *self, const Date *other) {
  * @see DateInterface::init(Date *)
  */
 static Date *init(Date *self) {
-	return $(Date, self, initWithTime, NULL);
+	return $(self, initWithTime, NULL);
 }
 
 /**
@@ -120,6 +120,7 @@ Class __Date = {
 	.name = "Date",
 	.superclass = &__Object,
 	.instanceSize = sizeof(Date),
+	.interfaceOffset = offsetof(Date, interface),
 	.interfaceSize = sizeof(DateInterface),
 	.initialize = initialize,
 };

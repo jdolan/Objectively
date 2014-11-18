@@ -51,9 +51,9 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	$(Array, self, removeAllObjects);
-
 	Array *this = (Array *) self;
+
+	$(this, removeAllObjects);
 
 	free(this->elements);
 
@@ -85,7 +85,7 @@ static void addObject(Array *self, const id obj) {
  */
 static BOOL containsObject(const Array *self, const id obj) {
 
-	return $(Array, self, indexOfObject, obj) != -1;
+	return $(self, indexOfObject, obj) != -1;
 }
 
 /**
@@ -113,7 +113,7 @@ static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, id da
 
 	for (size_t i = 0; i < self->count; i++) {
 		if (enumerator(self, self->elements[i], data)) {
-			$(Array, array, addObject, self->elements[i]);
+			$(array, addObject, self->elements[i]);
 		}
 	}
 
@@ -130,7 +130,7 @@ static int indexOfObject(const Array *self, const id obj) {
 	assert(object);
 
 	for (size_t i = 0; i < self->count; i++) {
-		if ($(Object, object, isEqual, (Object * ) self->elements[i])) {
+		if ($(object, isEqual, (Object * ) self->elements[i])) {
 			return (int) i;
 		}
 	}
@@ -143,7 +143,7 @@ static int indexOfObject(const Array *self, const id obj) {
  */
 static Array *init(Array *self) {
 
-	return $(Array, self, initWithCapacity, ARRAY_CHUNK_SIZE);
+	return $(self, initWithCapacity, ARRAY_CHUNK_SIZE);
 }
 
 /**
@@ -177,7 +177,7 @@ static id objectAtIndex(const Array *self, const int index) {
 static void removeAllObjects(Array *self) {
 
 	for (size_t i = self->count; i > 0; i--) {
-		$(Array, self, removeObjectAtIndex, i - 1);
+		$(self, removeObjectAtIndex, i - 1);
 	}
 }
 
@@ -186,9 +186,9 @@ static void removeAllObjects(Array *self) {
  */
 static void removeObject(Array *self, const id obj) {
 
-	int index = $(Array, self, indexOfObject, obj);
+	int index = $(self, indexOfObject, obj);
 	if (index != -1) {
-		$(Array, self, removeObjectAtIndex, index);
+		$(self, removeObjectAtIndex, index);
 	}
 }
 
@@ -275,6 +275,7 @@ Class __Array = {
 	.name = "Array",
 	.superclass = &__Object,
 	.instanceSize = sizeof(Array),
+	.interfaceOffset = offsetof(Array, interface),
 	.interfaceSize = sizeof(ArrayInterface),
 	.initialize = initialize,
 };
