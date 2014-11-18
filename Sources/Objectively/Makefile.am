@@ -7,6 +7,7 @@ pkginclude_HEADERS = \
 	Class.h \
 	Condition.h \
 	Date.h \
+	DateFormatter.h \
 	Dictionary.h \
 	Lock.h \
 	Log.h \
@@ -23,6 +24,7 @@ libObjectively_la_SOURCES = \
 	Class.c \
 	Condition.c \
 	Date.c \
+	DateFormatter.c \
 	Dictionary.c \
 	Lock.c \
 	Log.c \

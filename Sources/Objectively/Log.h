@@ -26,7 +26,7 @@
 
 #include <stdio.h>
 
-#include <objectively/object.h>
+#include <objectively/Object.h>
 
 typedef enum {
 	TRACE, DEBUG, INFO, WARN, ERROR, FATAL

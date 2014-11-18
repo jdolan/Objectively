@@ -47,7 +47,9 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	free(((String *) self)->str);
+	String *this = (String *) self;
+
+	free(this->str);
 
 	super(Object, self, dealloc);
 }
@@ -200,7 +202,15 @@ static BOOL hasSuffix(const String *self, const String *suffix) {
  */
 static String *init(String *self) {
 
-	return $(String, self, initWithFormat, NULL);
+	return $(String, self, initWithCharacters, NULL);
+}
+
+/**
+ * @see StringInterface::initWithCharacters(String *, const char *)
+ */
+static String *initWithCharacters(String *self, const char *chars) {
+
+	return $(String, self, initWithMemory, chars ? strdup(chars) : NULL);
 }
 
 /**
@@ -208,15 +218,28 @@ static String *init(String *self) {
  */
 static String *initWithFormat(String *self, const char *fmt, ...) {
 
+	char *str = NULL;
+
+	if (fmt) {
+		va_list args;
+
+		va_start(args, fmt);
+		vasprintf(&str, fmt, args);
+		va_end(args);
+	}
+
+	return $(String, self, initWithMemory, str);
+}
+
+/**
+ * @see StringInterface::initWithMemory(String *self, id mem)
+ */
+static String *initWithMemory(String *self, id mem) {
+
 	self = (String *) super(Object, self, init);
 	if (self) {
-		if (fmt) {
-			va_list args;
-
-			va_start(args, fmt);
-			vasprintf(&self->str, fmt, args);
-			va_end(args);
-
+		if (mem) {
+			self->str = (char *) mem;
 			self->len = strlen(self->str);
 		}
 	}
@@ -264,7 +287,9 @@ static void initialize(Class *clazz) {
 	string->hasPrefix = hasPrefix;
 	string->hasSuffix = hasSuffix;
 	string->init = init;
+	string->initWithCharacters = initWithCharacters;
 	string->initWithFormat = initWithFormat;
+	string->initWithMemory = initWithMemory;
 	string->substring = substring;
 }
 
@@ -273,5 +298,4 @@ Class __String = {
 	.superclass = &__Object,
 	.instanceSize = sizeof(String),
 	.interfaceSize = sizeof(StringInterface),
-	.initialize = initialize,
-};
+	.initialize = initialize, };

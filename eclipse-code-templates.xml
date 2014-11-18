@@ -60,7 +60,7 @@ Class __${file_base} = {
 #ifndef _${project_name}_${file_base}_h
 #define _${project_name}_${file_base}_h
 
-#include &lt;Objectively/object.h&gt;
+#include &lt;Objectively/Object.h&gt;
 
 typedef struct ${file_base} ${file_base};
 typedef struct ${file_base}Interface ${file_base}Interface;

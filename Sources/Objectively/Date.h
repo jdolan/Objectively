@@ -24,7 +24,7 @@
 #ifndef _Objectively_Date_h
 #define _Objectively_Date_h
 
-#include <Objectively/object.h>
+#include <Objectively/Object.h>
 
 /**
  * @brief Microseconds per second.
@@ -51,6 +51,9 @@ struct Date {
 	 */
 	Object object;
 
+	/**
+	 * @brief The time.
+	 */
 	Time time;
 };
 
@@ -75,15 +78,29 @@ struct DateInterface {
 
 	/**
 	 * Initializes a Date with the current time.
+	 *
+	 * @return The initialized Date, or NULL on error.
 	 */
 	Date *(*init)(Date *self);
+
+	/**
+	 * Initializes a Date by parsing the specified format string.
+	 *
+	 * @param str The string representation of this Date.
+	 * @param fmt The format pattern.
+	 *
+	 * @return The initialized Date, or NULL on error.
+	 */
+	Date *(*initWithString)(Date *self, const char *str, const char *fmt);
 
 	/**
 	 * Initializes a Date with the specified time.
 	 *
 	 * @param time The desired Time.
+	 *
+	 * @return The initialized Date, or NULL on error.
 	 */
-	Date *(*initWithTime)(Date *self, Time *time);
+	Date *(*initWithTime)(Date *self, const Time *time);
 };
 
 /**

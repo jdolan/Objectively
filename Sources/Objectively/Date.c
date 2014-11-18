@@ -83,7 +83,7 @@ static Date *init(Date *self) {
 /**
  * @see DateInterface::initWithTime(Date *, Time *)
  */
-static Date *initWithTime(Date *self, Time *time) {
+static Date *initWithTime(Date *self, const Time *time) {
 
 	self = (Date *) super(Object, self, init);
 	if (self) {
