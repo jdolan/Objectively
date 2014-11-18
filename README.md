@@ -26,6 +26,7 @@ Types in Objectively are comprised of 3 components:
 
     struct Hello {
         Object object;
+        HelloInterface *interface;
         
         const char *greeting;
     };
@@ -74,6 +75,7 @@ To implement a type, define its initializer, instance methods and Class initiali
         .name = "Hello",
         .superclass = &__Object,
         .instanceSize = sizeof(Hello),
+        .interfaceOffset = offsetof(Hello, interface),
         .interfaceSize = sizeof(HelloInterface),
         .initialize = initialize
     };
@@ -81,8 +83,8 @@ To implement a type, define its initializer, instance methods and Class initiali
 Using a type
 ---
 
-    Hello *hello = $(Hello, alloc(Hello), initWithGreeting, "hello world!");
-    $(Hello, hello, sayHello);
+    Hello *hello = $(alloc(Hello), initWithGreeting, "hello world!");
+    $(hello, sayHello);
     release(hello);
 
 
@@ -96,7 +98,7 @@ Invoking a method
 ---
 To invoke a method, use the `$` macro.
 
-    $(Object, self, isEqual, other);
+    $(self, isEqual, other);
 
 Overriding a method
 ---
