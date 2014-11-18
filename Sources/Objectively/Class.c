@@ -114,17 +114,15 @@ id __alloc(Class *clazz) {
 	initialize(clazz);
 
 	id obj = calloc(1, clazz->instanceSize);
-	if (obj) {
-		((Object *) obj)->clazz = clazz;
-		((Object *) obj)->referenceCount = 1;
-	}
+	assert(obj);
+
+	((Object *) obj)->clazz = clazz;
+	((Object *) obj)->referenceCount = 1;
 
 	return obj;
 }
 
 id __cast(Class *clazz, const id obj) {
-
-	initialize(clazz);
 
 	if (obj) {
 		const Class *c = ((Object *) obj)->clazz;
