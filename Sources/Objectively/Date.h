@@ -24,6 +24,8 @@
 #ifndef _Objectively_Date_h
 #define _Objectively_Date_h
 
+#include <sys/time.h>
+
 #include <Objectively/Object.h>
 
 /**

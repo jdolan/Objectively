@@ -1,25 +1,19 @@
 AUTOMAKE_OPTIONS = nostdinc
 
-noinst_PROGRAMS = \
-	Hello
-
-Hello_SOURCES = \
-	Hello.c
-Hello_CFLAGS = \
-	-I../../Sources
-Hello_LDADD = \
-	../../Sources/Objectively/.libs/*.o
-
-TEST_CFLAGS = \
+CFLAGS = \
 	-I../../Sources \
 	@CHECK_CFLAGS@
 	
-TEST_LDADD = \
-	@CHECK_LIBS@ \
-	../../Sources/Objectively/.libs/*.o
+LDADD = \
+	../../Sources/Objectively/.libs/*.o \
+	@CHECK_LIBS@
+
+noinst_PROGRAMS = \
+	Hello
 
 TESTS = \
 	Array \
+	Date \
 	Dictionary \
 	Log \
 	Object \
@@ -27,45 +21,3 @@ TESTS = \
 	Thread
 
 check_PROGRAMS = $(TESTS)
-
-Array_SOURCES = \
-	Array.c
-Array_CFLAGS = \
-	$(TEST_CFLAGS)
-Array_LDADD = \
-	$(TEST_LDADD)
-
-Dictionary_SOURCES = \
-	Dictionary.c
-Dictionary_CFLAGS = \
-	$(TEST_CFLAGS)
-Dictionary_LDADD = \
-	$(TEST_LDADD)
-
-Log_SOURCES = \
-	Log.c
-Log_CFLAGS = \
-	$(TEST_CFLAGS)
-Log_LDADD = \
-	$(TEST_LDADD)
-	
-Object_SOURCES = \
-	Object.c
-Object_CFLAGS = \
-	$(TEST_CFLAGS)
-Object_LDADD = \
-	$(TEST_LDADD)
-
-String_SOURCES = \
-	String.c
-String_CFLAGS = \
-	$(TEST_CFLAGS)
-String_LDADD = \
-	$(TEST_LDADD)
-
-Thread_SOURCES = \
-	Thread.c
-Thread_CFLAGS = \
-	$(TEST_CFLAGS)
-Thread_LDADD = \
-	$(TEST_LDADD)

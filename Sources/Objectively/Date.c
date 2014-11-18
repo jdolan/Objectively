@@ -22,7 +22,6 @@
  */
 
 #include <assert.h>
-#include <sys/time.h>
 
 #include <Objectively/Date.h>
 

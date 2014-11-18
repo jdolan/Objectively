@@ -48,11 +48,13 @@ static void sayHello(const Hello *self) {
 
 #pragma mark - Hello class methods
 
-static void initialize(Class *self) {
+static void initialize(Class *clazz) {
 
-	((HelloInterface *) self->interface)->init = init;
-	((HelloInterface *) self->interface)->initWithGreeting = initWithGreeting;
-	((HelloInterface *) self->interface)->sayHello = sayHello;
+	HelloInterface *hello = (HelloInterface *) clazz->interface;
+
+	hello->init = init;
+	hello->initWithGreeting = initWithGreeting;
+	hello->sayHello = sayHello;
 }
 
 Class __Hello = {
