@@ -29,7 +29,9 @@
 #include <time.h>
 #include <unistd.h>
 
-#include <objectively/Log.h>
+#include <Objectively/Log.h>
+
+#define __Class __Log
 
 #pragma mark - Object instance methods
 
@@ -249,3 +251,5 @@ Class __Log = {
 	.interfaceSize = sizeof(LogInterface),
 	.initialize = initialize,
 };
+
+#undef __Class

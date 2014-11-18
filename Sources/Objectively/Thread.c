@@ -29,6 +29,8 @@
 
 #include <Objectively/Thread.h>
 
+#define __Class __Thread
+
 #pragma mark - Object instance methods
 
 /**
@@ -119,7 +121,7 @@ static void join(Thread *self, id *status) {
  */
 static void kill(Thread *self, int signal) {
 
-	int err = pthread_kill(*((pthread_t *)self->thread), signal);
+	int err = pthread_kill(*((pthread_t *) self->thread), signal);
 	assert(err == 0);
 }
 
@@ -201,3 +203,5 @@ Class __Thread = {
 	.interfaceSize = sizeof(ThreadInterface),
 	.initialize = initialize,
 };
+
+#undef __Class

@@ -160,21 +160,21 @@ extern void retain(id obj);
 	((Object *) obj)->clazz
 
 /**
- * @brief Resolve the typed interface of an Object instance.
+ * @brief Resolve the typed interface of a Class.
  */
-#define interfaceof(type, obj) \
-	(type##Interface *) classof(obj)->interface
+#define interfaceof(type, clazz) \
+	(type##Interface *) clazz->interface
 
 /**
  * @brief Invoke an instance method.
  */
 #define $(type, obj, method, ...) \
-	(interfaceof(type, obj))->method(cast(type, obj), ## __VA_ARGS__)
+	(interfaceof(type, classof(obj)))->method(cast(type, obj), ## __VA_ARGS__)
 
 /**
  * @brief Invoke a Superclass instance method.
  */
 #define super(type, obj, method, ...) \
-	((type##Interface *) __##type.interface)->method(cast(type, obj), ## __VA_ARGS__)
+	(interfaceof(type, __Class.superclass))->method(cast(type, obj), ## __VA_ARGS__)
 
 #endif

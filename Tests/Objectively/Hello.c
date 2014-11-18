@@ -25,6 +25,8 @@ extern Class __Hello;
 
 // Hello.c
 
+#define __Class __Hello
+
 #pragma mark - Hello initializers
 
 static Hello *init(Hello *self) {
@@ -64,6 +66,8 @@ Class __Hello = {
 	.interfaceSize = sizeof(HelloInterface),
 	.initialize = initialize,
 };
+
+#undef __Class
 
 #pragma mark - main
 

@@ -28,6 +28,8 @@
 #include <Objectively/Object.h>
 #include <Objectively/String.h>
 
+#define __Class __Object
+
 #pragma mark - Object instance methods
 
 /**
@@ -125,3 +127,5 @@ Class __Object = {
 	.interfaceSize = sizeof(ObjectInterface),
 	.initialize = initialize,
 };
+
+#undef __Class

@@ -25,6 +25,8 @@
 
 #include <Objectively/Date.h>
 
+#define __Class __Date
+
 #pragma mark - Object instance methods
 
 /**
@@ -107,7 +109,7 @@ static void initialize(Class *clazz) {
 
 	object->isEqual = isEqual;
 
-	DateInterface *date = (DateInterface *)clazz->interface;
+	DateInterface *date = (DateInterface *) clazz->interface;
 
 	date->compareTo = compareTo;
 	date->init = init;
@@ -121,3 +123,6 @@ Class __Date = {
 	.interfaceSize = sizeof(DateInterface),
 	.initialize = initialize,
 };
+
+#undef __Class
+

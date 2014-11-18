@@ -27,6 +27,8 @@
 
 #include <Objectively/Dictionary.h>
 
+#define __Class __Dictionary
+
 #define DICTIONARY_CHUNK_SIZE 64
 
 #define HASH(key) ( $(Object, key, hash) % self->capacity )
@@ -53,7 +55,8 @@ static void dealloc(Object *self) {
  * @brief DictionaryEnumerator for allKeys.
  */
 static BOOL allKeys_enumerator(const Dictionary *dict, id obj, id key, id data) {
-	$(Array, data, addObject, key); return NO;
+	$(Array, data, addObject, key);
+	return NO;
 }
 
 /**
@@ -72,7 +75,8 @@ static Array *allKeys(const Dictionary *self) {
  * @brief DictionaryEnumerator for allObjects.
  */
 static BOOL allObjects_enumerator(const Dictionary *dict, id obj, id key, id data) {
-	$(Array, data, addObject, obj); return NO;
+	$(Array, data, addObject, obj);
+	return NO;
 }
 
 /**
@@ -310,3 +314,6 @@ Class __Dictionary = {
 	.interfaceSize = sizeof(DictionaryInterface),
 	.initialize = initialize,
 };
+
+#undef __Class
+

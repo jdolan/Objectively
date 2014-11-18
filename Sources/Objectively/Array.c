@@ -26,6 +26,8 @@
 
 #include <Objectively/Array.h>
 
+#define __Class __Array
+
 #define ARRAY_CHUNK_SIZE 64
 
 #pragma mark - Object instance methods
@@ -274,5 +276,7 @@ Class __Array = {
 	.superclass = &__Object,
 	.instanceSize = sizeof(Array),
 	.interfaceSize = sizeof(ArrayInterface),
-	.initialize = initialize, };
+	.initialize = initialize,
+};
 
+#undef __Class

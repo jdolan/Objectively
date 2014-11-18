@@ -26,6 +26,8 @@
 
 #include <Objectively/DateFormatter.h>
 
+#define __Class __DateFormatter
+
 #pragma mark - DateFormatter instance methods
 
 /**
@@ -104,3 +106,5 @@ Class __DateFormatter = {
 	.interfaceSize = sizeof(DateFormatterInterface),
 	.initialize = initialize,
 };
+
+#undef __Class

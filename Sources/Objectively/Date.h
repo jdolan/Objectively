@@ -29,6 +29,12 @@
 #include <Objectively/Object.h>
 
 /**
+ * @file
+ *
+ * @brief Microsecond-precision dates.
+ */
+
+/**
  * @brief Microseconds per second.
  */
 #define MSEC_PER_SEC 1000000

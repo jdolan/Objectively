@@ -27,6 +27,12 @@
 #include <Objectively/Date.h>
 #include <Objectively/String.h>
 
+/**
+ * @file
+ *
+ * @brief Date formatting and parsing.
+ */
+
 #define DATEFORMAT_ISO8601 "%Y-%m-%dT%H:%M:%S%z"
 
 typedef struct DateFormatter DateFormatter;

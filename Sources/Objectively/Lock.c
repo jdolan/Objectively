@@ -29,6 +29,8 @@
 
 #include <Objectively/Lock.h>
 
+#define __Class __Lock
+
 #pragma mark - Object instance methods
 
 /**
@@ -125,4 +127,8 @@ Class __Lock = {
 	.superclass = &__Object,
 	.instanceSize = sizeof(Lock),
 	.interfaceSize = sizeof(LockInterface),
-	.initialize = initialize, };
+	.initialize = initialize,
+};
+
+#undef __Class
+

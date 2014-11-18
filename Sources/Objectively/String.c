@@ -29,6 +29,8 @@
 
 #include <Objectively/String.h>
 
+#define __Class __String
+
 #pragma mark - Object instance methods
 
 /**
@@ -298,4 +300,7 @@ Class __String = {
 	.superclass = &__Object,
 	.instanceSize = sizeof(String),
 	.interfaceSize = sizeof(StringInterface),
-	.initialize = initialize, };
+	.initialize = initialize,
+};
+
+#undef __Class
