@@ -131,7 +131,7 @@ struct DictionaryInterface {
 	/**
 	 * Initializes this Dictionary.
 	 *
-	 * @return The initialized Dictionary, or NULL on error.
+	 * @return The initialized Dictionary, or `NULL` on error.
 	 */
 	Dictionary *(*init)(Dictionary *self);
 
@@ -140,7 +140,7 @@ struct DictionaryInterface {
 	 *
 	 * @param capacity The initial capacity.
 	 *
-	 * @return The initialized Dictionary, or NULL on error.
+	 * @return The initialized Dictionary, or `NULL` on error.
 	 */
 	Dictionary *(*initWithCapacity)(Dictionary *self, size_t capacity);
 

@@ -119,7 +119,7 @@ struct StringInterface {
 	/**
 	 * @brief Initializes this String.
 	 *
-	 * @return The initialized String, or NULL on error.
+	 * @return The initialized String, or `NULL` on error.
 	 */
 	String *(*init)(String *self);
 
@@ -128,7 +128,7 @@ struct StringInterface {
 	 *
 	 * @param chars The characters.
 	 *
-	 * @return The initialized String, or NULL on error.
+	 * @return The initialized String, or `NULL` on error.
 	 */
 	String *(*initWithCharacters)(String *self, const char *chars);
 
@@ -138,7 +138,7 @@ struct StringInterface {
 	 * @param self The newly allocated instance.
 	 * @param fmt The formatted string.
 	 *
-	 * @return The initialized String, or NULL on error.
+	 * @return The initialized String, or `NULL` on error.
 	 */
 	String *(*initWithFormat)(String *self, const char *fmt, ...);
 
@@ -147,7 +147,7 @@ struct StringInterface {
 	 *
 	 * @param mem The dynamically allocated memory.
 	 *
-	 * @return The initialized String, or NULL on error.
+	 * @return The initialized String, or `NULL` on error.
 	 */
 	String *(*initWithMemory)(String *self, id mem);
 

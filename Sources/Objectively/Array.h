@@ -100,7 +100,7 @@ struct ArrayInterface {
 	void (*addObject)(Array *self, const id obj);
 
 	/**
-	 * @return YES if this Array contains the given Object, NO otherwise.
+	 * @return `YES` if this Array contains the given Object, `NO` otherwise.
 	 */
 	BOOL (*containsObject)(const Array *self, const id obj);
 
@@ -125,14 +125,14 @@ struct ArrayInterface {
 	Array *(*filterObjects)(const Array *self, ArrayEnumerator enumerator, id data);
 
 	/**
-	 * @return The index of the given Object, or -1 if not found.
+	 * @return The index of the given Object, or `-1` if not found.
 	 */
 	int (*indexOfObject)(const Array *self, const id obj);
 
 	/**
 	 * @brief Initializes this Array.
 	 *
-	 * @return The initialized instance, or NULL on error.
+	 * @return The initialized instance, or `NULL` on error.
 	 */
 	Array *(*init)(Array *self);
 
@@ -141,7 +141,7 @@ struct ArrayInterface {
 	 *
 	 * @param capacity The desired initial capacity.
 	 *
-	 * @return The initialized instance, or NULL on error.
+	 * @return The initialized instance, or `NULL` on error.
 	 */
 	Array *(*initWithCapacity)(Array *self, size_t capacity);
 

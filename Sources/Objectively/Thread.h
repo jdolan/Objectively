@@ -116,7 +116,7 @@ struct ThreadInterface {
 	/**
 	 * Initializes this Thread.
 	 *
-	 * @return The initialized instance, or NULL on error.
+	 * @return The initialized instance, or `NULL` on error.
 	 */
 	Thread *(*init)(Thread *self);
 
@@ -126,7 +126,7 @@ struct ThreadInterface {
 	 * @param function The ThreadFunction to run.
 	 * @param data The user data.
 	 *
-	 * @return The initialized instance, or NULL on error.
+	 * @return The initialized instance, or `NULL` on error.
 	 */
 	Thread *(*initWithFunction)(Thread *self, ThreadFunction function, id data);
 

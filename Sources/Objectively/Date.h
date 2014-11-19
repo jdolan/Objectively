@@ -44,10 +44,13 @@
  */
 #define SEC_PER_DAY (60 * 60 * 24)
 
+/**
+ * @brief Time (seconds and microseconds).
+ */
+typedef struct timeval Time;
+
 typedef struct Date Date;
 typedef struct DateInterface DateInterface;
-
-typedef struct timeval Time;
 
 /**
  * @brief The Date type.
@@ -92,7 +95,7 @@ struct DateInterface {
 	/**
 	 * Initializes a Date with the current time.
 	 *
-	 * @return The initialized Date, or NULL on error.
+	 * @return The initialized Date, or `NULL` on error.
 	 */
 	Date *(*init)(Date *self);
 
@@ -102,7 +105,7 @@ struct DateInterface {
 	 * @param str The string representation of this Date.
 	 * @param fmt The format pattern.
 	 *
-	 * @return The initialized Date, or NULL on error.
+	 * @return The initialized Date, or `NULL` on error.
 	 */
 	Date *(*initWithString)(Date *self, const char *str, const char *fmt);
 
@@ -111,7 +114,7 @@ struct DateInterface {
 	 *
 	 * @param time The desired Time.
 	 *
-	 * @return The initialized Date, or NULL on error.
+	 * @return The initialized Date, or `NULL` on error.
 	 */
 	Date *(*initWithTime)(Date *self, const Time *time);
 };

@@ -33,6 +33,9 @@
  * @brief Date formatting and parsing.
  */
 
+/**
+ * @brief ISO8601 date format.
+ */
 #define DATEFORMAT_ISO8601 "%Y-%m-%dT%H:%M:%S%z"
 
 typedef struct DateFormatter DateFormatter;
@@ -74,7 +77,7 @@ struct DateFormatterInterface {
 	 *
 	 * @param str The string to parse.
 	 *
-	 * @return A Date instance, or NULL on error.
+	 * @return A Date instance, or `NULL` on error.
 	 */
 	Date *(*dateFromString)(const DateFormatter *self, const char *str);
 
@@ -83,7 +86,7 @@ struct DateFormatterInterface {
 	 *
 	 * @param fmt The format string.
 	 *
-	 * @return The initialized DateFormatter, or NULL on error.
+	 * @return The initialized DateFormatter, or `NULL` on error.
 	 *
 	 * @see strftime
 	 */
@@ -94,7 +97,7 @@ struct DateFormatterInterface {
 	 *
 	 * @param date The Date to format.
 	 *
-	 * @return The String representation of the Date, or NULL on error.
+	 * @return The String representation of the Date, or `NULL` on error.
 	 */
 	String *(*stringFromDate)(const DateFormatter *self, const Date *date);
 };

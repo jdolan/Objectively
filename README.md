@@ -22,16 +22,17 @@ Declaring a type
 
 Types in Objectively are comprised of 3 components:
 
-1) The instance struct, containing the parent type and any additional instance variables.
+1) The instance struct, containing the parent type, the type interface and any additional instance variables.
 
     struct Hello {
         Object object;
+        
         HelloInterface *interface;
         
         const char *greeting;
     };
     
-2) The interface struct, containing the parent interface, an initlializer and any additional methods.
+2) The interface struct, containing the parent interface, an initializer and any additional methods.
 
     struct HelloInterface {
         ObjectInterface objectInterface;
@@ -52,6 +53,8 @@ To implement a type, define its initializer, instance methods and Class initiali
 
     #include <stdio.h>
     #include <Objectively.h>
+    
+    #define __Class __Hello
             
     static Hello *initWithGreeting(Hello *self, const char *greeting) {
         
@@ -79,6 +82,8 @@ To implement a type, define its initializer, instance methods and Class initiali
         .interfaceSize = sizeof(HelloInterface),
         .initialize = initialize
     };
+    
+    #undef __Class
     
 Using a type
 ---

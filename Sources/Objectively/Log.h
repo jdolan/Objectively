@@ -129,7 +129,7 @@ struct LogInterface {
 	 *
 	 * @param name The Log name.
 	 *
-	 * @return The initialized Log, or NULL on error.
+	 * @return The initialized Log, or `NULL` on error.
 	 */
 	Log *(*initWithName)(Log *self, const char *name);
 

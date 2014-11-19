@@ -78,7 +78,7 @@ struct ConditionInterface {
 	/**
 	 * @brief Initializes this Condition.
 	 *
-	 * @return The initialized instance, or NULL on error.
+	 * @return The initialized instance, or `NULL` on error.
 	 */
 	Condition *(*init)(Condition *self);
 
