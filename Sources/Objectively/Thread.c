@@ -31,7 +31,7 @@
 
 #define __Class __Thread
 
-#pragma mark - Object instance methods
+#pragma mark - ObjectInterface
 
 /**
  * @see ObjectInterface::copy(const Object *)
@@ -54,7 +54,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - Thread instance methods
+#pragma mark - ThreadInterface
 
 /**
  * @see ThreadInterface::cancel(Thread *)
@@ -173,7 +173,7 @@ static void start(Thread *self) {
 	assert(err == 0);
 }
 
-#pragma mark - Object class methods
+#pragma mark - Class lifecycle
 
 /**
  * @see Class::initialize(Class *)

@@ -44,7 +44,7 @@ static Hello *initWithGreeting(Hello *self, const char *greeting) {
 	return self;
 }
 
-#pragma mark - Hello instance methods
+#pragma mark - HelloInterface
 
 static void sayHello(const Hello *self) {
 	printf("%s\n", self->greeting);

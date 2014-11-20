@@ -156,7 +156,7 @@ extern void retain(id obj);
  * @brief Safely cast to a type.
  */
 #define cast(type, obj) \
-	((type *) __cast((Class *) &__##type, (const id) obj))
+	((type *) __cast(&__##type, (const id) obj))
 
 /**
  * @brief Resolve the Class of an Object instance.

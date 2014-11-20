@@ -30,7 +30,7 @@
 
 #define __Class __Object
 
-#pragma mark - Object instance methods
+#pragma mark - ObjectInterface
 
 /**
  * @see ObjectInterface::copy(const Object *)
@@ -103,7 +103,7 @@ static BOOL isKindOfClass(const Object *self, const Class *clazz) {
 	return NO;
 }
 
-#pragma mark - Object class methods
+#pragma mark - Class lifecycle
 
 /**
  * @see Class::initialize(Class *)

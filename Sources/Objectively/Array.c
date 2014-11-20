@@ -30,7 +30,7 @@
 
 #define ARRAY_CHUNK_SIZE 64
 
-#pragma mark - Object instance methods
+#pragma mark - ObjectInterface
 
 /**
  * @see ObjectInterface::copy(const Object *)
@@ -60,7 +60,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - Array instance methods
+#pragma mark - ArrayInterface
 
 /**
  * @see ArrayInterface::addObject(Array *, const id)
@@ -242,7 +242,7 @@ static void setObjectAtIndex(Array *self, const id obj, const int index) {
 	self->elements[index] = obj;
 }
 
-#pragma mark - Array class methods
+#pragma mark - Class lifecycle
 
 /**
  * @see Class::initialize(Class *)

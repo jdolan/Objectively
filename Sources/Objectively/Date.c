@@ -27,7 +27,7 @@
 
 #define __Class __Date
 
-#pragma mark - Object instance methods
+#pragma mark - ObjectInterface
 
 /**
  * @see ObjectInterface::isEqual(const Object *, const Object *)
@@ -49,7 +49,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 	return NO;
 }
 
-#pragma mark - Date instance methods
+#pragma mark - DateInterface
 
 /**
  * @see DateInterface::compareTo(const Date *, const Date *)
@@ -98,7 +98,7 @@ static Date *initWithTime(Date *self, const Time *time) {
 	return self;
 }
 
-#pragma mark - Date Class methods
+#pragma mark - Class lifecycle
 
 /**
  * see Class::initialize(Class *)

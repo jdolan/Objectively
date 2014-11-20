@@ -28,7 +28,7 @@
 
 #define __Class __DateFormatter
 
-#pragma mark - DateFormatter instance methods
+#pragma mark - DateFormatterInterface
 
 /**
  * @see DateFormatterInterface::dateFromString(const DateFormatter *, const char *)
@@ -83,7 +83,7 @@ static String *stringFromDate(const DateFormatter *self, const Date *date) {
 	return $(alloc(String), initWithMemory, str);
 }
 
-#pragma mark - DateFormatter Class methods
+#pragma mark - Class lifecycle
 
 /**
  * see Class::initialize(Class *)

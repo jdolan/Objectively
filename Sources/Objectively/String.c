@@ -31,7 +31,7 @@
 
 #define __Class __String
 
-#pragma mark - Object instance methods
+#pragma mark - ObjectInterface
 
 /**
  * @see ObjectInterface::copy(const Object *)
@@ -100,7 +100,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 	return NO;
 }
 
-#pragma mark - String instance methods
+#pragma mark - StringInterface
 
 /**
  * @see StringInterface::appendFormat(String *, const char *, ...)
@@ -267,7 +267,7 @@ static String *substring(const String *self, RANGE range) {
 	return substring;
 }
 
-#pragma mark - String class methods
+#pragma mark - Class lifecycle
 
 /**
  * @see Class::initialize(Class *)

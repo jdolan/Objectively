@@ -33,7 +33,7 @@
 
 #define __Class __Log
 
-#pragma mark - Object instance methods
+#pragma mark - ObjectInterface
 
 /**
  * @see ObjectInterface::dealloc(Object *)
@@ -52,7 +52,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - Log instance methods
+#pragma mark - LogInterface
 
 /**
  * @see LogInterface::debug(const Log *, const char *, ...)
@@ -219,7 +219,7 @@ static void warn(const Log *self, const char *fmt, ...) {
 	va_end(args);
 }
 
-#pragma mark - Log Class methods
+#pragma mark - Class lifecycle
 
 /**
  * see Class::initialize(Class *)

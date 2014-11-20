@@ -32,7 +32,7 @@
 
 #define __Class __Condition
 
-#pragma mark - Object instance methods
+#pragma mark - ObjectInterface
 
 /**
  * @see ObjectInterface::dealloc(Object *)
@@ -47,7 +47,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - Condition instance methods
+#pragma mark - ConditionInterface
 
 /**
  * @see ConditionInterface::broadcast(Condition *)
@@ -94,7 +94,7 @@ static void _wait(Condition *self) {
 	assert(err == 0);
 }
 
-#pragma mark - Condition Class methods
+#pragma mark - Class lifecycle
 
 /**
  * @see Class::initialize(Class *)

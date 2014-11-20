@@ -31,7 +31,7 @@
 
 #define __Class __Lock
 
-#pragma mark - Object instance methods
+#pragma mark - ObjectInterface
 
 /**
  * @see ObjectInterface::copy(const Object *)
@@ -53,7 +53,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - Lock instance methods
+#pragma mark - LockInterface
 
 /**
  * @see LockInterface::init(Lock *)
@@ -102,7 +102,7 @@ static void unlock(Lock *self) {
 	assert(err == 0);
 }
 
-#pragma mark - Object class methods
+#pragma mark - Class lifecycle
 
 /**
  * @see Class::initialize(Class *)

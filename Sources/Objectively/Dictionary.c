@@ -33,7 +33,7 @@
 
 #define HASH(key) ( $((Object *) key, hash) % self->capacity )
 
-#pragma mark - Object instance methods
+#pragma mark - ObjectInterface
 
 /**
  * @see ObjectInterface::dealloc(Object *)
@@ -48,7 +48,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - Dictionary instance methods
+#pragma mark - DictionaryInterface
 
 /**
  * @brief DictionaryEnumerator for allKeys.
@@ -278,7 +278,7 @@ static void setObjectsForKeys(Dictionary *self, ...) {
 	va_end(args);
 }
 
-#pragma mark - Dictionary class methods
+#pragma mark - Class lifecycle
 
 /**
  * @see Class::initialize(Class *)
