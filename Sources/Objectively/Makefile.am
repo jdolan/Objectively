@@ -36,6 +36,5 @@ libObjectively_la_CFLAGS = \
 	-I ..
 
 libObjectively_la_LDFLAGS = \
-	-pthread \
 	-shared
 
