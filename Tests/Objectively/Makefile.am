@@ -1,15 +1,3 @@
-AUTOMAKE_OPTIONS = nostdinc
-
-CFLAGS = \
-	-I../../Sources \
-	@CHECK_CFLAGS@
-	
-LDADD = \
-	../../Sources/Objectively/.libs/*.o \
-	@CHECK_LIBS@
-
-noinst_PROGRAMS = \
-	Hello
 
 TESTS = \
 	Array \
@@ -19,5 +7,16 @@ TESTS = \
 	Object \
 	String \
 	Thread
+
+CFLAGS += \
+	-I$(includedir) \
+	@CHECK_CFLAGS@
+
+LDADD = \
+	-L$(libdir) -lObjectively \
+	@CHECK_LIBS@
+
+noinst_PROGRAMS = \
+	Hello
 
 check_PROGRAMS = $(TESTS)

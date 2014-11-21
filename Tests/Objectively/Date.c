@@ -27,15 +27,15 @@
 
 START_TEST(date)
 	{
-		DateFormatter *dateFormatter = $(alloc(DateFormatter), initWithFormat, DATEFORMAT_ISO8601);
+		DateFormatter *dateFormatter = $(alloc(DateFormatter), initWithFormat, NULL);
 
 		ck_assert(dateFormatter);
 		ck_assert_ptr_eq(&__DateFormatter, classof(dateFormatter));
 
 		ck_assert_str_eq(DATEFORMAT_ISO8601, dateFormatter->fmt);
 
-		Date *date1 = $(dateFormatter, dateFromString, "1980-06-24T10:37:00-05:00");
-		Date *date2 = $(dateFormatter, dateFromString, "1985-03-15T06:48:00-05:00");
+		Date *date1 = $(dateFormatter, dateFromCharacters, "1980-06-24T10:37:00-0400");
+		Date *date2 = $(dateFormatter, dateFromCharacters, "1985-03-15T06:48:00-0500");
 
 		ck_assert(date1);
 		ck_assert(date2);

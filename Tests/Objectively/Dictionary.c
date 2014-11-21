@@ -24,7 +24,8 @@
 #include <check.h>
 #include <stdio.h>
 
-#include <Objectively.h>
+#include <Objectively/Dictionary.h>
+#include <Objectively/String.h>
 
 static BOOL enumerator(const Dictionary *dictionary, id obj, id key, id data) {
 

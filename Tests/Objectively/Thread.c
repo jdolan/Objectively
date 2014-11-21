@@ -24,7 +24,8 @@
 #include <check.h>
 #include <stdio.h>
 
-#include <Objectively.h>
+#include <Objectively/Condition.h>
+#include <Objectively/Thread.h>
 
 Condition *condition;
 

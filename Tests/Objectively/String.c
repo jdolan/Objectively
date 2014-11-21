@@ -23,7 +23,7 @@
 
 #include <check.h>
 
-#include <Objectively.h>
+#include <Objectively/String.h>
 
 START_TEST(string)
 	{
@@ -37,10 +37,11 @@ START_TEST(string)
 		$(string, appendFormat, " %s", "world!");
 		ck_assert_str_eq("hello world!", string->str);
 
-		Object *copy = $((Object *) string, copy);
+		String *copy = (String *) $((Object * ) string, copy);
 
-		ck_assert($((Object *) string, isEqual, copy));
-		ck_assert_int_eq($((Object *) string, hash), $(copy, hash));
+		ck_assert_str_eq("hello world!", copy->str);
+		ck_assert($((Object *) string, isEqual, (Object *) copy));
+		ck_assert_int_eq($((Object *) string, hash), $((Object *) copy, hash));
 
 		release(copy);
 
@@ -57,6 +58,26 @@ START_TEST(string)
 		String *substring = $(string, substring, range);
 		ck_assert_str_eq("world!hello", substring->str);
 
+		Array *components = $(string, componentsSeparatedByCharacters, "!");
+		ck_assert_int_eq(3, components->count);
+
+		for (int i = 0; i < components->count; i++) {
+			String *component = $(components, objectAtIndex, i);
+
+			switch (i) {
+				case 0:
+				case 1:
+					ck_assert_str_eq("hello world", component->str);
+					break;
+				case 2:
+					ck_assert_str_eq("", component->str);
+					break;
+				default:
+					break;
+			}
+		}
+
+		release(components);
 		release(substring);
 		release(prefix);
 		release(suffix);

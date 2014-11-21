@@ -24,7 +24,7 @@
 #include <check.h>
 #include <stdio.h>
 
-#include <Objectively.h>
+#include <Objectively/Array.h>
 
 BOOL enumerator(const Array *array, id obj, id data) {
 	(*(int *) data)++; return NO;
