@@ -118,15 +118,14 @@ id __alloc(Class *clazz) {
 	assert(obj);
 
 	Object *object = (Object *) obj;
+
 	object->clazz = clazz;
-
-	Class *c = object->clazz;
-	while (c) {
-		*(id *) &obj[c->interfaceOffset] = c->interface;
-		c = c->superclass;
-	}
-
 	object->referenceCount = 1;
+
+	id interface = clazz->interface;
+	do {
+		*(id *) &obj[clazz->interfaceOffset] = interface;
+	} while ((clazz = clazz->superclass));
 
 	return obj;
 }
