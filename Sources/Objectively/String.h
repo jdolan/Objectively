@@ -24,7 +24,10 @@
 #ifndef _Objectively_String_h_
 #define _Objectively_String_h_
 
-#include <Objectively/Object.h>
+#include <ctype.h>
+#include <xlocale.h>
+
+#include <Objectively/Array.h>
 
 /**
  * @file
@@ -52,7 +55,12 @@ struct String {
 	/**
 	 * @brief The backing character array length.
 	 */
-	size_t len;
+	size_t length;
+
+	/**
+	 * @brief The locale.
+	 */
+	locale_t locale;
 
 	/**
 	 * @brief The backing character array.
@@ -68,7 +76,7 @@ struct StringInterface {
 	/**
 	 * @brief The super Interface.
 	 */
-	struct ObjectInterface objectInterface;
+	ObjectInterface objectInterface;
 
 	/**
 	 * @brief Appends the specified formatted string.
@@ -97,6 +105,24 @@ struct StringInterface {
 	 * @return The ordering of this String compared to other.
 	 */
 	ORDER (*compareTo)(const String *self, const String *other, RANGE range);
+
+	/**
+	 * Returns the components of this String that were separated by `chars`.
+	 *
+	 * @param chars The separating characters.
+	 *
+	 * @return An Array of substrings that were separated by `chars`.
+	 */
+	Array *(*componentsSeparatedByCharacters)(const String *self, const char *chars);
+
+	/**
+	 * Returns the components of this String that were separated by `string`.
+	 *
+	 * @param string The separating string.
+	 *
+	 * @return An Array of substrings that were separated by `string`.
+	 */
+	Array *(*componentsSeparatedByString)(const String *self, const String *string);
 
 	/**
 	 * @brief Checks this String for the given prefix.
@@ -152,6 +178,31 @@ struct StringInterface {
 	String *(*initWithMemory)(String *self, id mem);
 
 	/**
+	 * @return A lowercase representation of this String.
+	 */
+	String *(*lowercaseString)(const String *self);
+
+	/**
+	 * Finds and returns the first occurrence of `chars` in this String.
+	 *
+	 * @param chars The characters to search for.
+	 * @param range The range in which to search.
+	 *
+	 * @return A RANGE specifying the first occurrence of `chars` in this String.
+	 */
+	RANGE (*rangeOfCharacters)(const String *self, const char *chars, const RANGE range);
+
+	/**
+	 * Finds and returns the first occurrence of `string` in this String.
+	 *
+	 * @param string The String to search for.
+	 * @param range The range in which to search.
+	 *
+	 * @return A RANGE specifying the first occurrence of `string` in this String.
+	 */
+	RANGE (*rangeOfString)(const String *self, const String *string, RANGE range);
+
+	/**
 	 * @brief Creates a new String from a subset of this one.
 	 *
 	 * @param range The character range.
@@ -159,6 +210,11 @@ struct StringInterface {
 	 * @return The new String.
 	 */
 	String *(*substring)(const String *self, RANGE range);
+
+	/**
+	 * @return An uppercase representation of this String.
+	 */
+	String *(*uppercaseString)(const String *self);
 };
 
 /**

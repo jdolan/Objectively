@@ -39,7 +39,7 @@
 static Object *copy(const Object *self) {
 
 	String *this = (String *) self;
-	String *that = $(alloc(String), initWithFormat, this->str);
+	String *that = $(alloc(String), initWithCharacters, this->str);
 
 	return (Object *) that;
 }
@@ -64,7 +64,7 @@ static int hash(const Object *self) {
 	String *this = (String *) self;
 
 	int hash = 13;
-	for (size_t i = 0; i < this->len; i++) {
+	for (size_t i = 0; i < this->length; i++) {
 
 		int shift;
 		if (i & 1) {
@@ -88,13 +88,16 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		return YES;
 	}
 
-	if (other && other->clazz == self->clazz) {
+	if (other && self->clazz == other->clazz) {
 
 		const String *this = (String *) self;
 		const String *that = (String *) other;
 
-		RANGE range = { 0, this->len };
-		return $(this, compareTo, that, range) == SAME;
+		if (this->locale == that->locale) {
+
+			RANGE range = { 0, this->length };
+			return $(this, compareTo, that, range) == SAME;
+		}
 	}
 
 	return NO;
@@ -119,7 +122,7 @@ static String *appendFormat(String *self, const char *fmt, ...) {
 		String *string = alloc(String);
 
 		string->str = str;
-		string->len = strlen(string->str);
+		string->length = strlen(string->str);
 
 		$(self, appendString, string);
 
@@ -134,20 +137,20 @@ static String *appendFormat(String *self, const char *fmt, ...) {
  */
 static String *appendString(String *self, const String *other) {
 
-	if (other->len) {
-		if (self->len) {
-			const size_t size = self->len + other->len + 1;
+	if (other->length) {
+		if (self->length) {
+			const size_t size = self->length + other->length + 1;
 
 			self->str = realloc(self->str, size);
 			assert(self->str);
 
-			memcpy(self->str + self->len, other->str, other->len);
+			memcpy(self->str + self->length, other->str, other->length);
 			self->str[size - 1] = '\0';
 		} else {
 			self->str = strdup(other->str);
 		}
 
-		self->len = strlen(self->str);
+		self->length = strlen(self->str);
 	}
 
 	return self;
@@ -158,10 +161,10 @@ static String *appendString(String *self, const String *other) {
  */
 static ORDER compareTo(const String *self, const String *other, RANGE range) {
 
-	assert(range.offset + range.length <= self->len);
+	assert(range.location + range.length <= self->length);
 
 	if (other) {
-		const int i = strncmp(self->str + range.offset, other->str, range.length);
+		const int i = strncmp(self->str + range.location, other->str, range.length);
 		if (i == 0) {
 			return SAME;
 		}
@@ -174,15 +177,57 @@ static ORDER compareTo(const String *self, const String *other, RANGE range) {
 }
 
 /**
+ * @see StringInterface::componentsSeparatedByCharacters(const String *, const char *)
+ */
+static Array *componentsSeparatedByCharacters(const String *self, const char *chars) {
+
+	assert(chars);
+
+	Array *components = $(alloc(Array), init);
+
+	RANGE search = { .location = 0, .length = self->length };
+	RANGE result = $(self, rangeOfCharacters, chars, search);
+
+	while (result.length) {
+		search.length = result.location - search.location;
+
+		String *component = $(self, substring, search);
+		$(components, addObject, component);
+		release(component);
+
+		search.location = result.location + result.length;
+		search.length = self->length - search.location;
+
+		result = $(self, rangeOfCharacters, chars, search);
+	}
+
+	String *component = $(self, substring, search);
+	$(components, addObject, component);
+	release(component);
+
+	return components;
+}
+
+/**
+ * @see StringInterface::componentsSeparatedByString(const String *, const String *)
+ */
+static Array *componentsSeparatedByString(const String *self, const String *string) {
+
+	assert(string);
+
+	return $(self, componentsSeparatedByCharacters, string->str);
+}
+
+/**
  * @see StringInterface::hasPrefix(const String *, const String *)
  */
 static BOOL hasPrefix(const String *self, const String *prefix) {
 
-	if (prefix->len > self->len) {
+	if (prefix->length > self->length) {
 		return NO;
 	}
 
-	RANGE range = { 0, prefix->len };
+	RANGE range = { 0, prefix->length };
 	return $(self, compareTo, prefix, range) == SAME;
 }
 
@@ -191,11 +236,11 @@ static BOOL hasPrefix(const String *self, const String *prefix) {
  */
 static BOOL hasSuffix(const String *self, const String *suffix) {
 
-	if (suffix->len > self->len) {
+	if (suffix->length > self->length) {
 		return NO;
 	}
 
-	RANGE range = { self->len - suffix->len, suffix->len };
+	RANGE range = { self->length - suffix->length, suffix->length };
 	return $(self, compareTo, suffix, range) == SAME;
 }
 
@@ -240,9 +285,11 @@ static String *initWithMemory(String *self, id mem) {
 
 	self = (String *) super(Object, self, init);
 	if (self) {
+		self->locale = LC_GLOBAL_LOCALE;
+
 		if (mem) {
 			self->str = (char *) mem;
-			self->len = strlen(self->str);
+			self->length = strlen(self->str);
 		}
 	}
 
@@ -250,21 +297,84 @@ static String *initWithMemory(String *self, id mem) {
 }
 
 /**
+ * @see StringInterface::lowercaseString(const String *)
+ */
+static String *lowercaseString(const String *self) {
+
+	String *string = (String *) $((Object *) self, copy);
+
+	for (size_t i = 0; i < string->length; i++) {
+		string->str[i] = tolower_l(string->str[i], self->locale);
+	}
+
+	return string;
+}
+
+/**
+ * @see StringInterface::rangeOfCharacters(const String *, const char *, const RANGE)
+ */
+static RANGE rangeOfCharacters(const String *self, const char *chars, const RANGE range) {
+
+	assert(chars);
+	assert(range.location > -1);
+	assert(range.length > -1);
+	assert(range.location + range.length <= self->length);
+
+	RANGE match = { -1, 0 };
+	const size_t len = strlen(chars);
+
+	const char *str = self->str + range.location;
+	for (size_t i = 0; i < range.length; i++, str++) {
+		if (strncmp(str, chars, len) == 0) {
+			match.location = range.location + i;
+			match.length = len;
+			break;
+		}
+	}
+
+	return match;
+}
+
+/**
+ * @see StringInterface::rangeOfString(const String *, const String *, const RANGE)
+ */
+static RANGE rangeOfString(const String *self, const String *string, const RANGE range) {
+
+	assert(string);
+
+	return $(self, rangeOfCharacters, string->str, range);
+}
+
+/**
  * @see StringInterface::substring(const String *, RANGE)
  */
-static String *substring(const String *self, RANGE range) {
+static String *substring(const String *self, const RANGE range) {
 
-	assert(range.offset + range.length <= self->len);
+	assert(range.location + range.length <= self->length);
 
 	char *str = calloc(1, range.length + 1);
-	memcpy(str, self->str + range.offset, range.length);
+	memcpy(str, self->str + range.location, range.length);
 
 	String *substring = alloc(String);
 
 	substring->str = str;
-	substring->len = strlen(str);
+	substring->length = strlen(str);
 
 	return substring;
+}
+
+/**
+ * @see StringInterface::uppercaseString(const String *)
+ */
+static String *uppercaseString(const String *self) {
+
+	String *string = (String *) $((Object *) self, copy);
+
+	for (size_t i = 0; i < string->length; i++) {
+		string->str[i] = toupper_l(string->str[i], self->locale);
+	}
+
+	return string;
 }
 
 #pragma mark - Class lifecycle
@@ -286,13 +396,19 @@ static void initialize(Class *clazz) {
 	string->appendFormat = appendFormat;
 	string->appendString = appendString;
 	string->compareTo = compareTo;
+	string->componentsSeparatedByCharacters = componentsSeparatedByCharacters;
+	string->componentsSeparatedByString = componentsSeparatedByString;
 	string->hasPrefix = hasPrefix;
 	string->hasSuffix = hasSuffix;
 	string->init = init;
 	string->initWithCharacters = initWithCharacters;
 	string->initWithFormat = initWithFormat;
 	string->initWithMemory = initWithMemory;
+	string->lowercaseString = lowercaseString;
+	string->rangeOfCharacters = rangeOfCharacters;
+	string->rangeOfString = rangeOfString;
 	string->substring = substring;
+	string->uppercaseString = uppercaseString;
 }
 
 Class __String = {

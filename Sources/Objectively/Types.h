@@ -44,19 +44,19 @@ typedef enum {
 } BOOL;
 
 /**
- * @brief An offset and length into contiguous collections.
+ * @brief A location and length into contiguous collections.
  */
 typedef struct {
 
 	/**
-	 * @brief The offset.
+	 * @brief The location.
 	 */
-	unsigned offset;
+	int location;
 
 	/**
 	 * @brief The length.
 	 */
-	unsigned length;
+	int length;
 } RANGE;
 
 /**
@@ -65,7 +65,7 @@ typedef struct {
 typedef enum {
 	ASCENDING = -1,
 	SAME,
-	DESCENDING
+	DESCENDING,
 } ORDER;
 
 /**
