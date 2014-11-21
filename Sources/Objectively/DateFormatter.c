@@ -31,12 +31,12 @@
 #pragma mark - DateFormatterInterface
 
 /**
- * @see DateFormatterInterface::dateFromString(const DateFormatter *, const char *)
+ * @see DateFormatterInterface::dateFromCharacters(const DateFormatter *, const char *)
  */
-static Date *dateFromString(const DateFormatter *self, const char *str) {
+static Date *dateFromCharacters(const DateFormatter *self, const char *chars) {
 	struct tm time;
 
-	const char *res = strptime(str, self->fmt, &time);
+	const char *res = strptime(chars, self->fmt, &time);
 	if (res) {
 		const Time t = {
 			.tv_sec = mktime(&time)
@@ -49,14 +49,23 @@ static Date *dateFromString(const DateFormatter *self, const char *str) {
 }
 
 /**
+ * @see DateFormatterInterface::dateFromString(const DateFormatter *, const String *)
+ */
+static Date *dateFromString(const DateFormatter *self, const String *string) {
+
+	assert(string);
+
+	return $(self, dateFromCharacters, string->str);
+}
+
+/**
  * @see DateFormatterInterface::initWithFormat(DateFormatter *, const char *fmt)
  */
 static DateFormatter *initWithFormat(DateFormatter *self, const char *fmt) {
 
 	self = (DateFormatter *) super(Object, self, init);
 	if (self) {
-		self->fmt = fmt;
-		assert(self->fmt);
+		self->fmt = fmt ?: DATEFORMAT_ISO8601;
 	}
 
 	return self;
@@ -73,12 +82,13 @@ static String *stringFromDate(const DateFormatter *self, const Date *date) {
 	id res = localtime_r(&seconds, &time);
 	assert(res == &time);
 
-	const size_t len = strftime(NULL, 0, self->fmt, &time);
-
-	char *str = calloc(len, 1);
+	char *str = calloc(128, 1);
 	assert(str);
 
-	strftime(str, len, self->fmt, &time);
+	const size_t len = strftime(str, 128, self->fmt, &time);
+
+	str = realloc(str, len);
+	assert(str);
 
 	return $(alloc(String), initWithMemory, str);
 }
@@ -92,6 +102,7 @@ static void initialize(Class *clazz) {
 
 	DateFormatterInterface *dateFormatter = (DateFormatterInterface *) clazz->interface;
 
+	dateFormatter->dateFromCharacters = dateFromCharacters;
 	dateFormatter->dateFromString = dateFromString;
 	dateFormatter->initWithFormat = initWithFormat;
 	dateFormatter->stringFromDate = stringFromDate;

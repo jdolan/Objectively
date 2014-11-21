@@ -73,13 +73,22 @@ struct DateFormatterInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * Parses a Date from the specified string.
+	 * Parses a Date from `chars`.
 	 *
-	 * @param str The string to parse.
+	 * @param chars The characters to parse.
 	 *
 	 * @return A Date instance, or `NULL` on error.
 	 */
-	Date *(*dateFromString)(const DateFormatter *self, const char *str);
+	Date *(*dateFromCharacters)(const DateFormatter *self, const char *chars);
+
+	/**
+	 * Parses a Date from the specified String.
+	 *
+	 * @param string The String to parse.
+	 *
+	 * @return A Date instance, or `NULL` on error.
+	 */
+	Date *(*dateFromString)(const DateFormatter *self, const String *string);
 
 	/**
 	 * Initializes a DateFormatter with the specified format string.
