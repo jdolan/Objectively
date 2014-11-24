@@ -16,7 +16,6 @@ LDADD = \
 	-L$(libdir) -lObjectively \
 	@CHECK_LIBS@
 
-noinst_PROGRAMS = \
+check_PROGRAMS = \
+	$(TESTS) \
 	Hello
-
-check_PROGRAMS = $(TESTS)
