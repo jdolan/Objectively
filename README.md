@@ -127,6 +127,7 @@ Core library
 Objectively provides a small but useful core library:
 
  * Object - Hurr.
+ * Number - Double-precision numbers.
  * String - Mutable strings.
 
 Collections:
@@ -147,3 +148,4 @@ Date and time:
 
 Miscellaneous:
  * Log - Configurable logging.
+ * Regex - POSIX extended regular expressions.

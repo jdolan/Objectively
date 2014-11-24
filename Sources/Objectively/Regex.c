@@ -204,6 +204,7 @@ Class __Regex = {
 	.instanceSize = sizeof(Regex),
 	.interfaceOffset = offsetof(Regex, interface),
 	.interfaceSize = sizeof(RegexInterface),
-	.initialize = initialize, };
+	.initialize = initialize,
+};
 
 #undef __Class
