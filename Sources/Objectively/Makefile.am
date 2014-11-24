@@ -9,9 +9,13 @@ pkginclude_HEADERS = \
 	Date.h \
 	DateFormatter.h \
 	Dictionary.h \
+	Hash.h \
 	Lock.h \
 	Log.h \
+	Number.h \
+	NumberFormatter.h \
 	Object.h \
+	Regex.h \
 	String.h \
 	Thread.h \
 	Types.h
@@ -26,9 +30,13 @@ libObjectively_la_SOURCES = \
 	Date.c \
 	DateFormatter.c \
 	Dictionary.c \
+	Hash.c \
 	Lock.c \
 	Log.c \
+	Number.c \
+	NumberFormatter.c \
 	Object.c \
+	Regex.c \
 	String.c \
 	Thread.c
 

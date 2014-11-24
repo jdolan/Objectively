@@ -55,7 +55,7 @@ static Date *dateFromString(const DateFormatter *self, const String *string) {
 
 	assert(string);
 
-	return $(self, dateFromCharacters, string->str);
+	return $(self, dateFromCharacters, string->chars);
 }
 
 /**

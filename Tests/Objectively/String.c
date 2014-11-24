@@ -32,21 +32,21 @@ START_TEST(string)
 		ck_assert(string);
 		ck_assert_ptr_eq(&__String, classof(string));
 
-		ck_assert_str_eq("hello", string->str);
+		ck_assert_str_eq("hello", string->chars);
 
 		$(string, appendFormat, " %s", "world!");
-		ck_assert_str_eq("hello world!", string->str);
+		ck_assert_str_eq("hello world!", string->chars);
 
 		String *copy = (String *) $((Object * ) string, copy);
 
-		ck_assert_str_eq("hello world!", copy->str);
+		ck_assert_str_eq("hello world!", copy->chars);
 		ck_assert($((Object *) string, isEqual, (Object *) copy));
 		ck_assert_int_eq($((Object *) string, hash), $((Object *) copy, hash));
 
 		release(copy);
 
 		$(string, appendString, string);
-		ck_assert_str_eq("hello world!hello world!", string->str);
+		ck_assert_str_eq("hello world!hello world!", string->chars);
 
 		String *prefix = $(alloc(String), initWithFormat, "hello");
 		ck_assert($(string, hasPrefix, prefix));
@@ -56,7 +56,7 @@ START_TEST(string)
 
 		RANGE range = { 6, 11 };
 		String *substring = $(string, substring, range);
-		ck_assert_str_eq("world!hello", substring->str);
+		ck_assert_str_eq("world!hello", substring->chars);
 
 		Array *components = $(string, componentsSeparatedByCharacters, "!");
 		ck_assert_int_eq(3, components->count);
@@ -67,10 +67,10 @@ START_TEST(string)
 			switch (i) {
 				case 0:
 				case 1:
-					ck_assert_str_eq("hello world", component->str);
+					ck_assert_str_eq("hello world", component->chars);
 					break;
 				case 2:
-					ck_assert_str_eq("", component->str);
+					ck_assert_str_eq("", component->chars);
 					break;
 				default:
 					break;

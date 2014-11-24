@@ -27,6 +27,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <Objectively/Hash.h>
 #include <Objectively/String.h>
 
 #define __Class __String
@@ -39,7 +40,7 @@
 static Object *copy(const Object *self) {
 
 	String *this = (String *) self;
-	String *that = $(alloc(String), initWithCharacters, this->str);
+	String *that = $(alloc(String), initWithCharacters, this->chars);
 
 	return (Object *) that;
 }
@@ -51,7 +52,7 @@ static void dealloc(Object *self) {
 
 	String *this = (String *) self;
 
-	free(this->str);
+	free(this->chars);
 
 	super(Object, self, dealloc);
 }
@@ -63,20 +64,9 @@ static int hash(const Object *self) {
 
 	String *this = (String *) self;
 
-	int hash = 13;
-	for (size_t i = 0; i < this->length; i++) {
+	const RANGE range = { 0, this->length };
 
-		int shift;
-		if (i & 1) {
-			shift = 16 + (i % 16);
-		} else {
-			shift = (i % 16);
-		}
-
-		hash += ((int) this->str[i]) << shift;
-	}
-
-	return hash;
+	return HashForCharacters(HASH_SEED, this->chars, range);
 }
 
 /**
@@ -95,7 +85,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 
 		if (this->locale == that->locale) {
 
-			RANGE range = { 0, this->length };
+			const RANGE range = { 0, this->length };
 			return $(this, compareTo, that, range) == SAME;
 		}
 	}
@@ -121,8 +111,8 @@ static String *appendFormat(String *self, const char *fmt, ...) {
 	if (str) {
 		String *string = alloc(String);
 
-		string->str = str;
-		string->length = strlen(string->str);
+		string->chars = str;
+		string->length = strlen(string->chars);
 
 		$(self, appendString, string);
 
@@ -141,16 +131,16 @@ static String *appendString(String *self, const String *other) {
 		if (self->length) {
 			const size_t size = self->length + other->length + 1;
 
-			self->str = realloc(self->str, size);
-			assert(self->str);
+			self->chars = realloc(self->chars, size);
+			assert(self->chars);
 
-			memcpy(self->str + self->length, other->str, other->length);
-			self->str[size - 1] = '\0';
+			memcpy(self->chars + self->length, other->chars, other->length);
+			self->chars[size - 1] = '\0';
 		} else {
-			self->str = strdup(other->str);
+			self->chars = strdup(other->chars);
 		}
 
-		self->length = strlen(self->str);
+		self->length = strlen(self->chars);
 	}
 
 	return self;
@@ -164,7 +154,7 @@ static ORDER compareTo(const String *self, const String *other, RANGE range) {
 	assert(range.location + range.length <= self->length);
 
 	if (other) {
-		const int i = strncmp(self->str + range.location, other->str, range.length);
+		const int i = strncmp(self->chars + range.location, other->chars, range.length);
 		if (i == 0) {
 			return SAME;
 		}
@@ -185,7 +175,7 @@ static Array *componentsSeparatedByCharacters(const String *self, const char *ch
 
 	Array *components = $(alloc(Array), init);
 
-	RANGE search = { .location = 0, .length = self->length };
+	RANGE search = { 0, self->length };
 	RANGE result = $(self, rangeOfCharacters, chars, search);
 
 	while (result.length) {
@@ -215,7 +205,7 @@ static Array *componentsSeparatedByString(const String *self, const String *stri
 
 	assert(string);
 
-	return $(self, componentsSeparatedByCharacters, string->str);
+	return $(self, componentsSeparatedByCharacters, string->chars);
 }
 
 /**
@@ -288,8 +278,8 @@ static String *initWithMemory(String *self, id mem) {
 		self->locale = LC_GLOBAL_LOCALE;
 
 		if (mem) {
-			self->str = (char *) mem;
-			self->length = strlen(self->str);
+			self->chars = (char *) mem;
+			self->length = strlen(self->chars);
 		}
 	}
 
@@ -304,7 +294,7 @@ static String *lowercaseString(const String *self) {
 	String *string = (String *) $((Object *) self, copy);
 
 	for (size_t i = 0; i < string->length; i++) {
-		string->str[i] = tolower_l(string->str[i], self->locale);
+		string->chars[i] = tolower_l(string->chars[i], self->locale);
 	}
 
 	return string;
@@ -323,7 +313,7 @@ static RANGE rangeOfCharacters(const String *self, const char *chars, const RANG
 	RANGE match = { -1, 0 };
 	const size_t len = strlen(chars);
 
-	const char *str = self->str + range.location;
+	const char *str = self->chars + range.location;
 	for (size_t i = 0; i < range.length; i++, str++) {
 		if (strncmp(str, chars, len) == 0) {
 			match.location = range.location + i;
@@ -342,7 +332,7 @@ static RANGE rangeOfString(const String *self, const String *string, const RANGE
 
 	assert(string);
 
-	return $(self, rangeOfCharacters, string->str, range);
+	return $(self, rangeOfCharacters, string->chars, range);
 }
 
 /**
@@ -353,11 +343,11 @@ static String *substring(const String *self, const RANGE range) {
 	assert(range.location + range.length <= self->length);
 
 	char *str = calloc(1, range.length + 1);
-	memcpy(str, self->str + range.location, range.length);
+	memcpy(str, self->chars + range.location, range.length);
 
 	String *substring = alloc(String);
 
-	substring->str = str;
+	substring->chars = str;
 	substring->length = strlen(str);
 
 	return substring;
@@ -371,7 +361,7 @@ static String *uppercaseString(const String *self) {
 	String *string = (String *) $((Object *) self, copy);
 
 	for (size_t i = 0; i < string->length; i++) {
-		string->str[i] = toupper_l(string->str[i], self->locale);
+		string->chars[i] = toupper_l(string->chars[i], self->locale);
 	}
 
 	return string;

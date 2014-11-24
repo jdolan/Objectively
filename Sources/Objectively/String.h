@@ -65,7 +65,7 @@ struct String {
 	/**
 	 * @brief The backing character array.
 	 */
-	char *str;
+	char *chars;
 };
 
 /**
@@ -102,7 +102,7 @@ struct StringInterface {
 	 * @param other The String to compare to.
 	 * @param range The character range to compare.
 	 *
-	 * @return The ordering of this String compared to other.
+	 * @return The ordering of this String compared to `other`.
 	 */
 	ORDER (*compareTo)(const String *self, const String *other, RANGE range);
 

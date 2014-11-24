@@ -5,6 +5,7 @@ TESTS = \
 	Dictionary \
 	Log \
 	Object \
+	Regex \
 	String \
 	Thread
 

@@ -25,42 +25,38 @@
 
 #include <Objectively.h>
 
-START_TEST(date)
+START_TEST(regex)
 	{
-		DateFormatter *dateFormatter = $(alloc(DateFormatter), initWithFormat, NULL);
+		Regex *regex = $(alloc(Regex), initWithPattern, "([a-z]*)://(.*)", 0);
+		ck_assert(regex);
 
-		ck_assert(dateFormatter);
-		ck_assert_ptr_eq(&__DateFormatter, classof(dateFormatter));
+		ck_assert_int_eq(2, regex->numberOfSubExpressions);
 
-		ck_assert_str_eq(DATEFORMAT_ISO8601, dateFormatter->fmt);
+		String *url = $(alloc(String), initWithCharacters, "http://github.com");
 
-		Date *date1 = $(dateFormatter, dateFromCharacters, "1980-06-24T10:37:00-0400");
-		Date *date2 = $(dateFormatter, dateFromCharacters, "1985-03-15T06:48:00-0500");
+		RANGE *matches;
+		ck_assert($(regex, matchesString, url, 0, &matches));
 
-		ck_assert(date1);
-		ck_assert(date2);
+		String *scheme = $(url, substring, matches[1]);
+		ck_assert_str_eq("http", scheme->chars);
 
-		ck_assert($(date1, compareTo, date1) == SAME);
-		ck_assert($(date1, compareTo, date2) == ASCENDING);
+		String *host = $(url, substring, matches[2]);
+		ck_assert_str_eq("github.com", host->chars);
 
-		$(dateFormatter, initWithFormat, "%B");
-
-		String *string = $(dateFormatter, stringFromDate, date1);
-		ck_assert_str_eq("June", string->chars);
-
-		release(string);
-		release(date1);
-		release(date2);
-		release(dateFormatter);
+		free(matches);
+		release(scheme);
+		release(host);
+		release(url);
+		release(regex);
 
 	}END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("date");
-	tcase_add_test(tcase, date);
+	TCase *tcase = tcase_create("regex");
+	tcase_add_test(tcase, regex);
 
-	Suite *suite = suite_create("date");
+	Suite *suite = suite_create("regex");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);

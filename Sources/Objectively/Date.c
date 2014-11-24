@@ -24,10 +24,26 @@
 #include <assert.h>
 
 #include <Objectively/Date.h>
+#include <Objectively/Hash.h>
 
 #define __Class __Date
 
 #pragma mark - ObjectInterface
+
+/**
+ * @see ObjectInterface::hash(const Object *)
+ */
+static int hash(const Object *self) {
+
+	Date *this = (Date *) self;
+
+	int hash = HASH_SEED;
+
+	hash = HashForInteger(hash, this->time.tv_sec);
+	hash = HashForInteger(hash, this->time.tv_usec);
+
+	return hash;
+}
 
 /**
  * @see ObjectInterface::isEqual(const Object *, const Object *)
@@ -107,6 +123,7 @@ static void initialize(Class *clazz) {
 
 	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
+	object->hash = hash;
 	object->isEqual = isEqual;
 
 	DateInterface *date = (DateInterface *) clazz->interface;

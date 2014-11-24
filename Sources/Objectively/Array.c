@@ -37,13 +37,14 @@
  */
 static Object *copy(const Object *self) {
 
-	Array *array = (Array *) super(Object, self, copy);
+	Array *this = (Array *) self;
+	Array *that = $(alloc(Array), initWithCapacity, this->capacity);
 
-	for (size_t i = 0; i < array->count; i++) {
-		retain(array->elements[i]);
+	for (size_t i = 0; i < this->count; i++) {
+		$(that, addObject, this->elements[i]);
 	}
 
-	return (Object *) array;
+	return (Object *) that;
 }
 
 /**
