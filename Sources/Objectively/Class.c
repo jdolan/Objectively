@@ -50,17 +50,23 @@ static void teardown(void) {
 	while (c) {
 		if (c->interface) {
 			free(c->interface);
+			c->interface = NULL;
 		}
+		c->locals.magic = 0;
 		c = c->locals.next;
 	}
 
-	pthread_exit(NULL);
+	if (getenv("AM_TESTS") == NULL) {
+		pthread_exit(NULL);
+	}
 }
 
 /**
  * @brief Called when initializing `Object` to setup Objectively.
  */
 static void setup(void) {
+
+	__classes = NULL;
 
 	atexit(teardown);
 }
