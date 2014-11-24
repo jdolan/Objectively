@@ -22,6 +22,7 @@
  */
 
 #include <check.h>
+#include <stdlib.h>
 
 #include <Objectively.h>
 

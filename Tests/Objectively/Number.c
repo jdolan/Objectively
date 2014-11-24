@@ -21,29 +21,46 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_h_
-#define _Objectively_h_
+#include <check.h>
+#include <stdlib.h>
 
-/**
- * @file
- *
- * @brief Objectively: Ultra-lightweight object oriented framework for c99.
- */
+#include <Objectively.h>
 
-#include <Objectively/Array.h>
-#include <Objectively/Class.h>
-#include <Objectively/Condition.h>
-#include <Objectively/Date.h>
-#include <Objectively/DateFormatter.h>
-#include <Objectively/Dictionary.h>
-#include <Objectively/Lock.h>
-#include <Objectively/Log.h>
-#include <Objectively/Number.h>
-#include <Objectively/NumberFormatter.h>
-#include <Objectively/Object.h>
-#include <Objectively/Regex.h>
-#include <Objectively/String.h>
-#include <Objectively/Thread.h>
-#include <Objectively/Types.h>
+START_TEST(number)
+	{
+		Number *number1 = $(alloc(Number), initWithValue, 1.001);
+		ck_assert(number);
 
-#endif
+		const float f = $(number1, floatValue);
+		ck_assert(f > 1.0009 && f < 1.0011);
+		ck_assert(1 == $(number1, intValue));
+		ck_assert(YES == $(number1, boolValue));
+
+		Number *number2 = $(alloc(Number), initWithValue, 1.001);
+		ck_assert(number2);
+
+		ck_assert_int_eq($((Object *) number1, hash), $((Object *) number2, hash));
+		ck_assert($((Object *) number1, isEqual, (Object *) number2));
+
+		release(number1);
+		release(number2);
+
+	}END_TEST
+
+int main(int argc, char **argv) {
+
+	TCase *tcase = tcase_create("number");
+	tcase_add_test(tcase, number);
+
+	Suite *suite = suite_create("number");
+	suite_add_tcase(suite, tcase);
+
+	SRunner *runner = srunner_create(suite);
+
+	srunner_run_all(runner, CK_VERBOSE);
+	int failed = srunner_ntests_failed(runner);
+
+	srunner_free(runner);
+
+	return failed;
+}

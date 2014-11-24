@@ -81,7 +81,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
  * @see NumberInterface::boolValue(const Number *)
  */
 static BOOL boolValue(const Number *self) {
-	return (BOOL) self->value;
+	return self->value ? YES : NO;
 }
 
 /**
