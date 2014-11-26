@@ -27,7 +27,6 @@
 
 #include <Objectively/Hash.h>
 #include <Objectively/Regex.h>
-#include <Objectively/String.h>
 
 #define __Class __Regex
 

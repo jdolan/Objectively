@@ -149,3 +149,7 @@ Date and time:
 Miscellaneous:
  * Log - Configurable logging.
  * Regex - POSIX extended regular expressions.
+ 
+API documentation
+---
+The API documentation can be generated with [Doxygen](http://www.doxygen.org) by running `make html`.

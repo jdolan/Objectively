@@ -52,7 +52,7 @@ extern int HashForCharacters(int hash, const char *chars, const RANGE range);
  * @brief Accumulates the hash value of `decimal` into `hash`.
  *
  * @param hash The hash accumulator.
- * @param chars The decimal to hash.
+ * @param decimal The decimal to hash.
  *
  * @return The accumulated hash value.
  */
@@ -69,10 +69,10 @@ extern int HashForDecimal(int hash, const double decimal);
 extern int HashForInteger(int hash, const long integer);
 
 /**
- * @brief Accumulates the hash value of `integer` into `hash`.
+ * @brief Accumulates the hash value of `object` into `hash`.
  *
  * @param hash The hash accumulator.
- * @param integer The integer to hash.
+ * @param object The Object to hash.
  *
  * @return The accumulated hash value.
  */
