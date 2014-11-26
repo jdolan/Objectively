@@ -18,6 +18,7 @@ pkginclude_HEADERS = \
 	Regex.h \
 	String.h \
 	Thread.h \
+	URL.h \
 	Types.h
 
 lib_LTLIBRARIES = \
@@ -38,7 +39,8 @@ libObjectively_la_SOURCES = \
 	Object.c \
 	Regex.c \
 	String.c \
-	Thread.c
+	Thread.c \
+	URL.c
 
 libObjectively_la_CFLAGS = \
 	-I ..

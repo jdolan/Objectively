@@ -45,5 +45,6 @@
 #include <Objectively/String.h>
 #include <Objectively/Thread.h>
 #include <Objectively/Types.h>
+#include <Objectively/URL.h>
 
 #endif
