@@ -25,8 +25,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <pthread.h>
-
 #include <Objectively/Class.h>
 #include <Objectively/Object.h>
 
@@ -54,10 +52,6 @@ static void teardown(void) {
 		}
 		c->locals.magic = 0;
 		c = c->locals.next;
-	}
-
-	if (getenv("AM_TESTS") == NULL) {
-		pthread_exit(NULL);
 	}
 }
 
