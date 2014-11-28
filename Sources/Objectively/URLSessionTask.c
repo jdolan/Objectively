@@ -34,23 +34,25 @@
 #pragma mark - ObjectInterface
 
 /**
+ * @see ObjectInterface::copy(const Object *)
+ */
+static Object *copy(const Object *self) {
+
+	return NULL;
+}
+
+/**
  * @see ObjectInterface::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
 	URLSessionTask *this = (URLSessionTask *) self;
 
-	if (this->locals.handle) {
-		curl_easy_cleanup(this->locals.handle);
-	}
-
-	if (this->locals.httpHeaders) {
-		curl_slist_free_all(this->locals.httpHeaders);
-	}
-
 	if (this->error) {
 		free(this->error);
 	}
+
+	release(this->locals.thread);
 
 	release(this->request);
 	release(this->session);
@@ -66,16 +68,76 @@ static void dealloc(Object *self) {
 static void cancel(URLSessionTask *self) {
 
 	if (self->state == TASK_RUNNING || self->state == TASK_SUSPENDED) {
-		curl_multi_remove_handle(self->session->locals.handle, self->locals.handle);
 
+		// TODO
 		self->state = TASK_CANCELING;
 	}
-
 }
 
 /**
- * @brief A helper to populate the headers list for CURL. This list is
- * retained for the life of the task, and freed in `dealloc`.
+ * @brief Thread function which coordinates this task.
+ */
+static id run(Thread *thread) {
+
+	URLSessionTask *self = thread->data;
+
+	$(self, setup);
+
+	assert(self->locals.handle);
+	const CURLcode result = curl_easy_perform(self->locals.handle);
+
+	$(self, teardown);
+
+	if (self->completion) {
+		self->completion(self, result == CURLE_OK);
+	}
+
+	return NULL;
+}
+
+/**
+ * @see URLSessionTaskInterface::initWithRequestInSession(URLSessionTask *, URLRequest *, URLSession *)
+ */
+static URLSessionTask *initWithRequestInSession(URLSessionTask *self,
+		struct URLRequest *request,
+		struct URLSession *session) {
+
+	assert(request);
+	assert(session);
+
+	self = (URLSessionTask *) super(Object, self, init);
+	if (self) {
+		self->locals.thread = $(alloc(Thread), initWithFunction, run, self);
+
+		self->error = calloc(CURL_ERROR_SIZE, 1);
+		assert(self->error);
+
+		self->request = request;
+		retain(request);
+
+		self->session = session;
+		retain(session);
+
+		self->state = TASK_SUSPENDED;
+	}
+
+	return self;
+}
+
+/**
+ * @see URLSessionTaskInterface::resume(URLSessionTask *)
+ */
+static void resume(URLSessionTask *self) {
+
+	if (self->state == TASK_SUSPENDED) {
+		$(self->locals.thread, start);
+
+		self->state = TASK_RUNNING;
+	}
+}
+
+/**
+ * @brief A helper to populate the headers list for CURL.
  */
 static BOOL httpHeaders_enumerator(const Dictionary *dictionary, id obj, id key, id data) {
 
@@ -91,93 +153,68 @@ static BOOL httpHeaders_enumerator(const Dictionary *dictionary, id obj, id key,
 }
 
 /**
- * @see URLSessionTaskInterface::initWithRequestInSession(URLSessionTask *, URLRequest *, URLSession *)
+ * @see URLSessionTaskInterface::setup(URLSessionTask *)
  */
-static URLSessionTask *initWithRequestInSession(URLSessionTask *self,
-		struct URLRequest *request,
-		struct URLSession *session) {
+static void setup(URLSessionTask *self) {
 
-	assert(request);
-	assert(session);
+	self->locals.handle = curl_easy_init();
+	assert(self->locals.handle);
 
-	self = (URLSessionTask *) super(Object, self, init);
-	if (self) {
+	curl_easy_setopt(self->locals.handle, CURLOPT_ERRORBUFFER, self->error);
 
-		self->error = calloc(CURL_ERROR_SIZE, 1);
-		assert(self->error);
+	curl_easy_setopt(self->locals.handle, CURLOPT_FOLLOWLOCATION, YES);
 
-		self->request = request;
-		retain(request);
+	if (self->request->httpHeaders) {
+		struct curl_slist *httpHeaders = NULL;
 
-		self->session = session;
-		retain(session);
+		$(self->request->httpHeaders, enumerateObjectsAndKeys, httpHeaders_enumerator, &httpHeaders);
 
-		self->state = TASK_SUSPENDED;
+		curl_easy_setopt(self->locals.handle, CURLOPT_HTTPHEADER, httpHeaders);
 
-		self->locals.handle = curl_easy_init();
-		assert(self->locals.handle);
-
-		curl_easy_setopt(self->locals.handle, CURLOPT_PRIVATE, self);
-		curl_easy_setopt(self->locals.handle, CURLOPT_ERRORBUFFER, self->error);
-
-		if (request->httpHeaders) {
-			struct curl_slist *httpHeaders = NULL;
-
-			$(request->httpHeaders, enumerateObjectsAndKeys, httpHeaders_enumerator, &httpHeaders);
-
-			curl_easy_setopt(self->locals.handle, CURLOPT_HTTPHEADER, httpHeaders);
-
-			self->locals.httpHeaders = httpHeaders;
-		}
-
-		switch (request->httpMethod) {
-			case HTTP_GET:
-				curl_easy_setopt(self->locals.handle, CURLOPT_HTTPGET, YES);
-				break;
-			case HTTP_POST:
-				curl_easy_setopt(self->locals.handle, CURLOPT_HTTPPOST, YES);
-				break;
-			case HTTP_PUT:
-				curl_easy_setopt(self->locals.handle, CURLOPT_CUSTOMREQUEST, "PUT");
-				break;
-			case HTTP_DELETE:
-				curl_easy_setopt(self->locals.handle, CURLOPT_CUSTOMREQUEST, "DELETE");
-				break;
-			default:
-				break;
-		}
-
-		curl_easy_setopt(self->locals.handle, CURLOPT_URL, request->url->urlString->chars);
+		self->locals.httpHeaders = httpHeaders;
 	}
 
-	return self;
+	switch (self->request->httpMethod) {
+		case HTTP_POST:
+			curl_easy_setopt(self->locals.handle, CURLOPT_POST, YES);
+			break;
+		case HTTP_PUT:
+			curl_easy_setopt(self->locals.handle, CURLOPT_CUSTOMREQUEST, "PUT");
+			break;
+		case HTTP_DELETE:
+			curl_easy_setopt(self->locals.handle, CURLOPT_CUSTOMREQUEST, "DELETE");
+			break;
+		default:
+			break;
+	}
+
+	curl_easy_setopt(self->locals.handle, CURLOPT_URL, self->request->url->urlString->chars);
 }
 
 /**
- * @see URLSessionTaskInterface::resume(URLSessionTask *)
+ * @see URLSessionTask::teardown(URLSessionTask *)
  */
-static void resume(URLSessionTask *self) {
+static void teardown(URLSessionTask *self) {
 
-	if (self->state == TASK_SUSPENDED) {
-		const CURLMcode add = curl_multi_add_handle(self->session->locals.handle, self->locals.handle);
-		assert(add == CURLM_OK);
+	if (self->locals.handle) {
+		curl_easy_cleanup(self->locals.handle);
+	}
 
-		const CURLMcode perform = curl_multi_perform(self->session->locals.handle, NULL);
-		assert(perform == CURLM_OK);
-
-		self->state = TASK_RUNNING;
+	if (self->locals.httpHeaders) {
+		curl_slist_free_all(self->locals.httpHeaders);
 	}
 }
 
 #pragma mark - Class lifecycle
 
 /**
- * see Class::initialize(Class *)
+ * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
 
 	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
+	object->copy = copy;
 	object->dealloc = dealloc;
 
 	URLSessionTaskInterface *task = (URLSessionTaskInterface *) clazz->interface;
@@ -185,6 +222,8 @@ static void initialize(Class *clazz) {
 	task->cancel = cancel;
 	task->initWithRequestInSession = initWithRequestInSession;
 	task->resume = resume;
+	task->setup = setup;
+	task->teardown = teardown;
 }
 
 Class __URLSessionTask = {

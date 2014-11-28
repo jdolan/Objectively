@@ -22,58 +22,61 @@
  */
 
 #include <assert.h>
+#include <curl/curl.h>
 
 #include <Objectively/URLSessionDownloadTask.h>
 
 #define __Class __URLSessionDownloadTask
 
-#pragma mark - ObjectInterface
-
-/**
- * @see ObjectInterface::dealloc(Object *)
- */
-static void dealloc(Object *self) {
-
-	URLSessionDownloadTask *this = (URLSessionDownloadTask *) self;
-
-	if (this->file) {
-		fclose(this->file);
-	}
-
-	super(Object, self, dealloc);
-}
-
 #pragma mark - URLSessionTaskInterface
 
 /**
- * @see URLSessionTaskInterface::initWithRequestInSession(URLSessionTask *, struct URLRequest *, struct URLSession *)
+ * @brief The `CURLOPT_WRITEFUNCTION` callback.
  */
-static URLSessionTask *initWithRequestInSession(URLSessionTask *self,
-		struct URLRequest *request,
-		struct URLSession *session) {
+static size_t writeFunction(char *data, size_t size, size_t count, id self) {
 
-	self = super(URLSessionTask, self, initWithRequestInSession, request, session);
-	if (self) {
+	URLSessionDownloadTask *this = (URLSessionDownloadTask *) self;
 
-		URLSessionDownloadTask *this = (URLSessionDownloadTask *) self;
+	const size_t bytesReceived = size * count;
+	this->urlSessionTask.bytesReceived += bytesReceived;
 
-		// TODO
-	}
+	return fwrite(data, size, count, this->file);
+}
 
-	return self;
+/**
+ * @see URLSessionTaskInterface::setup(URLSessionTask *)
+ */
+static void setup(URLSessionTask *self) {
+
+	super(URLSessionTask, self, setup);
+
+	curl_easy_setopt(self->locals.handle, CURLOPT_WRITEFUNCTION, writeFunction);
+	curl_easy_setopt(self->locals.handle, CURLOPT_WRITEDATA, self);
+}
+
+/**
+ * @see URLSessionTaskInterface::teardown(URLSessionTask *)
+ */
+static void teardown(URLSessionTask *self) {
+
+	super(URLSessionTask, self, teardown);
+
+	URLSessionDownloadTask *this = (URLSessionDownloadTask *) self;
+
+	fclose(this->file);
 }
 
 #pragma mark - Class lifecycle
 
 /**
- * see Class::initialize(Class *)
+ * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	URLSessionTaskInterface *sessionTask = (URLSessionTaskInterface *) clazz->interface;
 
-	((URLSessionTaskInterface *) clazz->interface)->initWithRequestInSession =
-			initWithRequestInSession;
+	sessionTask->setup = setup;
+	sessionTask->teardown = teardown;
 }
 
 Class __URLSessionDownloadTask = {
@@ -82,6 +85,7 @@ Class __URLSessionDownloadTask = {
 	.instanceSize = sizeof(URLSessionDownloadTask),
 	.interfaceOffset = offsetof(URLSessionDownloadTask, interface),
 	.interfaceSize = sizeof(URLSessionDownloadTaskInterface),
-	.initialize = initialize, };
+	.initialize = initialize,
+};
 
 #undef __Class

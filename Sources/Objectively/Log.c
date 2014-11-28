@@ -223,7 +223,7 @@ static void warn(const Log *self, const char *fmt, ...) {
 #pragma mark - Class lifecycle
 
 /**
- * see Class::initialize(Class *)
+ * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
 

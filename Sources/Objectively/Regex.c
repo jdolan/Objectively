@@ -178,7 +178,7 @@ static BOOL matchesString(const Regex *self, const String *string, int options, 
 #pragma mark - Class lifecycle
 
 /**
- * see Class::initialize(Class *)
+ * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
 

@@ -117,7 +117,7 @@ static Date *initWithTime(Date *self, const Time *time) {
 #pragma mark - Class lifecycle
 
 /**
- * see Class::initialize(Class *)
+ * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
 

@@ -85,7 +85,7 @@ static ${file_base} *init(${file_base} *self) {
 #pragma mark - Class lifecycle
 
 /**
- * see Class::initialize(Class *)
+ * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
 

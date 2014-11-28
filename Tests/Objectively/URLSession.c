@@ -45,20 +45,38 @@ START_TEST(urlSession)
 		URL *url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/objectively");
 		ck_assert(url);
 
-		URLSessionDataTask *task = $(session, dataTaskWithURL, url);
-		ck_assert(task);
+		URLSessionDataTask *dataTask = $(session, dataTaskWithURL, url);
+		ck_assert(dataTask);
 
-		task->urlSessionTask.completion = completion;
+		dataTask->urlSessionTask.completion = completion;
 
 		condition = $(alloc(Condition), init);
 
-		$((URLSessionTask *) task, resume);
+		$((URLSessionTask *) dataTask, resume);
 
 		$(condition, wait);
 
-		release(condition);
-		release(task);
+		release(dataTask);
 		release(url);
+
+		url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/objectively/raw/master/README.md");
+		ck_assert(url);
+
+		URLSessionDownloadTask *downloadTask = $(session, downloadTaskWithURL, url);
+
+		downloadTask->file = fopen("/tmp/README.md", "w");
+		ck_assert(downloadTask->file);
+
+		downloadTask->urlSessionTask.completion = completion;
+
+		$((URLSessionTask *) downloadTask, resume);
+
+		$(condition, wait);
+
+		release(downloadTask);
+		release(url);
+
+		release(condition);
 		release(session);
 
 	}END_TEST

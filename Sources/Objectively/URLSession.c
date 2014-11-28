@@ -29,12 +29,9 @@
 
 #include <curl/curl.h>
 
-#include <Objectively/Log.h>
 #include <Objectively/URLSession.h>
 
 #define __Class __URLSession
-
-static Log *log;
 
 #pragma mark - ObjectInterface
 
@@ -95,98 +92,13 @@ static URLSessionDownloadTask *downloadTaskWithURL(URLSession *self, URL *url) {
 }
 
 /**
- * @brief The ThreadFunction for this URLSession.
- */
-static id run(Thread *thread) {
-
-	URLSession *self = (URLSession *) thread->data;
-
-	self->locals.handle = curl_multi_init();
-	assert(self->locals.handle);
-
-	$(log, info, "begin");
-	while (YES) {
-
-		struct timeval timeout = { 1, 0 };
-
-		long millis;
-		curl_multi_timeout(self->locals.handle, &millis);
-
-		if (millis >= 0) {
-			timeout.tv_sec = millis / 1000;
-			timeout.tv_usec = (millis % 1000) * 1000;
-		}
-
-		fd_set read, write, except;
-		int max;
-
-		FD_ZERO(&read);
-		FD_ZERO(&write);
-		FD_ZERO(&except);
-
-		curl_multi_fdset(self->locals.handle, &read, &write, &except, &max);
-
-		if (max == -1) {
-			select(0, NULL, NULL, NULL, &timeout);
-			continue;
-		}
-
-		$(log, debug, "select %d", max);
-		const int err = select(max + 1, &read, &write, &except, &timeout);
-		if (err >= 0) {
-
-			$(log, debug, "perform");
-			int dontCare;
-			const CURLMcode code = curl_multi_perform(self->locals.handle, &dontCare);
-			if (code == CURLM_OK) {
-
-				while (YES) {
-
-					$(log, debug, "info");
-					CURLMsg *msg = curl_multi_info_read(self->locals.handle, &dontCare);
-					if (msg == NULL) {
-						break;
-					}
-
-					URLSessionTask *task;
-					curl_easy_getinfo(msg->easy_handle, CURLINFO_PRIVATE, (char ** ) &task);
-
-					assert(task);
-
-					if (msg->msg == CURLMSG_DONE) {
-						if (task->completion) {
-							$(log, debug, "completion");
-							task->completion(task, msg->data.result == CURLE_OK);
-						}
-					}
-				}
-			} else {
-				$(log, error, "%s: curl_multi_perform: %s", __func__, curl_multi_strerror(code));
-			}
-		} else {
-			switch (errno) {
-				case EAGAIN:
-				case EINTR:
-					break;
-				default:
-					$(log, error, "%s: select: %s", __func__, strerror(errno));
-					break;
-			}
-		}
-	}
-
-	return NULL;
-}
-
-/**
  * @see URLSessionInterface::init(URLSession *)
  */
 static URLSession *init(URLSession *self) {
 
 	self = (URLSession *) super(Object, self, init);
 	if (self) {
-		self->thread = $(alloc(Thread), initWithFunction, run, self);
-		$(self->thread, start);
+
 	}
 
 	return self;
@@ -197,15 +109,13 @@ static URLSession *init(URLSession *self) {
  */
 static void invalidateAndCancel(URLSession *self) {
 
-	if (self->locals.handle) {
-		curl_multi_cleanup(self->locals.handle);
-	}
+	// TODO
 }
 
 #pragma mark - Class lifecycle
 
 /**
- * see Class::initialize(Class *)
+ * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
 
@@ -220,9 +130,6 @@ static void initialize(Class *clazz) {
 	session->init = init;
 	session->invalidateAndCancel = invalidateAndCancel;
 
-	log = $(alloc(Log), initWithName, clazz->name);
-	log->level = DEBUG;
-
 	const CURLcode code = curl_global_init(CURL_GLOBAL_ALL);
 	assert(code == CURLE_OK);
 }
@@ -231,8 +138,6 @@ static void initialize(Class *clazz) {
  * @see Class::destroy(Class *)
  */
 static void destroy(Class *clazz) {
-
-	release(log);
 
 	curl_global_cleanup();
 }

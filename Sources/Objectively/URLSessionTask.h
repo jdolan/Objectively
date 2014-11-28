@@ -25,6 +25,7 @@
 #define _Objectively_URLSessionTask_h
 
 #include <Objectively/Object.h>
+#include <Objectively/Thread.h>
 
 /**
  * @file
@@ -74,6 +75,8 @@ struct URLSessionTask {
 	struct {
 		id handle;
 		id httpHeaders;
+
+		Thread *thread;
 	} locals;
 
 	/**
@@ -143,6 +146,20 @@ struct URLSessionTaskInterface {
 	 * @brief Starts or resumes this task.
 	 */
 	void (*resume)(URLSessionTask *self);
+
+	/**
+	 * @brief Sets up this task.
+	 *
+	 * @private
+	 */
+	void (*setup)(URLSessionTask *self);
+
+	/**
+	 * @brief Tears down this task.
+	 *
+	 * @private
+	 */
+	void (*teardown)(URLSessionTask *self);
 };
 
 /**

@@ -28,7 +28,6 @@ typedef struct URLSession URLSession;
 typedef struct URLSessionInterface URLSessionInterface;
 
 #include <Objectively/Object.h>
-#include <Objectively/Thread.h>
 #include <Objectively/URLRequest.h>
 #include <Objectively/URLSessionTask.h>
 #include <Objectively/URLSessionDataTask.h>
@@ -48,18 +47,6 @@ struct URLSession {
 	 * @brief The typed interface.
 	 */
 	URLSessionInterface *interface;
-
-	/**
-	 * @private
-	 */
-	struct {
-		id handle;
-	} locals;
-
-	/**
-	 * @brief The Thread which processes tasks within this session.
-	 */
-	Thread *thread;
 };
 
 /**
@@ -119,7 +106,6 @@ struct URLSessionInterface {
 	 * Invalidates this URLSession and cancels all pending tasks.
 	 */
 	void (*invalidateAndCancel)(URLSession *self);
-
 };
 
 /**

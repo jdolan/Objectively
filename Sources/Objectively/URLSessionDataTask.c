@@ -35,14 +35,6 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
- */
-static Object *copy(const Object *self) {
-
-	return NULL;
-}
-
-/**
  * @see ObjectInterface::dealloc(Object *)
  */
 static void dealloc(Object *self) {
@@ -90,37 +82,30 @@ static size_t writeFunction(char *data, size_t size, size_t count, id self) {
 }
 
 /**
- * @see URLSessionTaskInterface::initWithRequestInSession(URLSessionTask *, struct URLRequest *, struct URLSession *)
+ * @see URLSessionTaskInterface::setup(URLSessionTask *)
  */
-static URLSessionTask *initWithRequestInSession(URLSessionTask *self,
-		struct URLRequest *request,
-		struct URLSession *session) {
+static void setup(URLSessionTask *self) {
 
-	self = super(URLSessionTask, self, initWithRequestInSession, request, session);
-	if (self) {
+	super(URLSessionTask, self, setup);
 
-		curl_easy_setopt(self->locals.handle, CURLOPT_WRITEFUNCTION, writeFunction);
-		curl_easy_setopt(self->locals.handle, CURLOPT_WRITEDATA, self);
-	}
-
-	return self;
+	curl_easy_setopt(self->locals.handle, CURLOPT_WRITEFUNCTION, writeFunction);
+	curl_easy_setopt(self->locals.handle, CURLOPT_WRITEDATA, self);
 }
 
 #pragma mark - Class lifecycle
 
 /**
- * see Class::initialize(Class *)
+ * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
 
 	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
-	object->copy = copy;
 	object->dealloc = dealloc;
 
 	URLSessionTaskInterface *sessionTask = (URLSessionTaskInterface *) clazz->interface;
 
-	sessionTask->initWithRequestInSession = initWithRequestInSession;
+	sessionTask->setup = setup;
 }
 
 Class __URLSessionDataTask = {

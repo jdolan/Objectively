@@ -86,7 +86,7 @@ void setHTTPHeader(URLRequest *self, const char *name, const char *value) {
 #pragma mark - Class lifecycle
 
 /**
- * see Class::initialize(Class *)
+ * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
 
