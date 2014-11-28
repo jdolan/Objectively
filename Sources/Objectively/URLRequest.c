@@ -1,0 +1,112 @@
+/*
+ * Objectively: Ultra-lightweight object oriented framework for c99.
+ * Copyright (C) 2014 Jay Dolan <jay@jaydolan.com>
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ *
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ *
+ * 1. The origin of this software must not be misrepresented; you must not
+ * claim that you wrote the original software. If you use this software
+ * in a product, an acknowledgment in the product documentation would be
+ * appreciated but is not required.
+ *
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ * misrepresented as being the original software.
+ *
+ * 3. This notice may not be removed or altered from any source distribution.
+ */
+
+#include <assert.h>
+
+#include <Objectively/URLRequest.h>
+
+#define __Class __URLRequest
+
+#pragma mark - ObjectInterface
+
+/**
+ * @see ObjectInterface::dealloc(Object *)
+ */
+static void dealloc(Object *self) {
+
+	URLRequest *this = (URLRequest *) self;
+
+	if (this->httpHeaders) {
+		release(this->httpHeaders);
+	}
+
+	if (this->url) {
+		release(this->url);
+	}
+
+	super(Object, self, dealloc);
+}
+
+#pragma mark - URLRequestInterface
+
+/**
+ * @see URLRequestInterface::initWithURL(URLRequest *, URL *url)
+ */
+static URLRequest *initWithURL(URLRequest *self, URL *url) {
+
+	assert(url);
+
+	self = (URLRequest *) super(Object, self, init);
+	if (self) {
+		self->url = url;
+		retain(url);
+	}
+
+	return self;
+}
+
+/**
+ * @see URLRequestInterface::setHTTPHeader(URLRequest *, const char *name, const char *value)
+ */
+void setHTTPHeader(URLRequest *self, const char *name, const char *value) {
+
+	if (self->httpHeaders == NULL) {
+		self->httpHeaders = $(alloc(Dictionary), init);
+	}
+
+	String *object = $(alloc(String), initWithCharacters, value);
+	String *key = $(alloc(String), initWithCharacters, name);
+
+	$(self->httpHeaders, setObjectForKey, object, key);
+
+	release(object);
+	release(key);
+}
+
+#pragma mark - Class lifecycle
+
+/**
+ * see Class::initialize(Class *)
+ */
+static void initialize(Class *clazz) {
+
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+
+	object->dealloc = dealloc;
+
+	URLRequestInterface *request = (URLRequestInterface *) clazz->interface;
+
+	request->initWithURL = initWithURL;
+	request->setHTTPHeader = setHTTPHeader;
+}
+
+Class __URLRequest = {
+	.name = "URLRequest",
+	.superclass = &__Object,
+	.instanceSize = sizeof(URLRequest),
+	.interfaceOffset = offsetof(URLRequest, interface),
+	.interfaceSize = sizeof(URLRequestInterface),
+	.initialize = initialize,
+};
+
+#undef __Class

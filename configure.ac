@@ -17,6 +17,7 @@ AM_SILENT_RULES([yes])
 AC_CHECK_HEADERS([pthread.h])
 
 PKG_CHECK_MODULES([CHECK], [check >= 0.9.4])
+PKG_CHECK_MODULES([CURL], [libcurl >= 7.16.0])
 
 AC_CONFIG_FILES([
 	Makefile

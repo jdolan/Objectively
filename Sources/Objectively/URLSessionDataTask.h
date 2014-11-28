@@ -21,31 +21,57 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_h_
-#define _Objectively_h_
+#ifndef _Objectively_URLSessionDataTask_h
+#define _Objectively_URLSessionDataTask_h
+
+#include <Objectively/URLSessionTask.h>
+
+typedef struct URLSessionDataTask URLSessionDataTask;
+typedef struct URLSessionDataTaskInterface URLSessionDataTaskInterface;
 
 /**
- * @file
- *
- * @brief Objectively: Ultra-lightweight object oriented framework for c99.
+ * @brief The URLSessionDataTask type.
  */
+struct URLSessionDataTask {
 
-#include <Objectively/Array.h>
-#include <Objectively/Class.h>
-#include <Objectively/Condition.h>
-#include <Objectively/Date.h>
-#include <Objectively/DateFormatter.h>
-#include <Objectively/Dictionary.h>
-#include <Objectively/Lock.h>
-#include <Objectively/Log.h>
-#include <Objectively/Number.h>
-#include <Objectively/NumberFormatter.h>
-#include <Objectively/Object.h>
-#include <Objectively/Regex.h>
-#include <Objectively/String.h>
-#include <Objectively/Thread.h>
-#include <Objectively/Types.h>
-#include <Objectively/URL.h>
-#include <Objectively/URLSession.h>
+	/**
+	 * @brief The parent.
+	 */
+	URLSessionTask urlSessionTask;
+
+	/**
+	 * @brief The typed interface.
+	 */
+	URLSessionDataTaskInterface *interface;
+
+	/**
+	 * @brief The data received.
+	 */
+	id data;
+
+	/**
+	 * @brief The allocated size of the data element, which is always greater
+	 * than or equal to `bytesReceived`.
+	 *
+	 * @private
+	 */
+	size_t size;
+};
+
+/**
+ * @brief The URLSessionDataTask type.
+ */
+struct URLSessionDataTaskInterface {
+
+	/**
+	 * @brief The parent.
+	 */
+	URLSessionTaskInterface urlSessionTaskInterface;
+};
+
+/**
+ * @brief The URLSessionDataTask Class.
+ */
+extern Class __URLSessionDataTask;
 
 #endif

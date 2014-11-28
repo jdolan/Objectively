@@ -92,9 +92,7 @@ struct ObjectInterface {
 	/**
 	 * @brief Initializes this Object.
 	 *
-	 * @param self The newly allocated instance.
-	 *
-	 * @return The initialized instance, or the unmodified pointer on error.
+	 * @return The initialized Object, or the unmodified pointer on error.
 	 */
 	Object *(*init)(Object *self);
 

@@ -110,7 +110,7 @@ struct URLInterface {
 	 *
 	 * @param chars The URL characters.
 	 *
-	 * @return The newly initialized instance, or `NULL` on error.
+	 * @return The initialized URL, or `NULL` on error.
 	 */
 	URL *(*initWithCharacters)(URL *self, const char *chars);
 
@@ -119,7 +119,7 @@ struct URLInterface {
 	 *
 	 * @param string The URL String.
 	 *
-	 * @return The newly initialized instance, or `NULL` on error.
+	 * @return The initialized URL, or `NULL` on error.
 	 */
 	URL *(*initWithString)(URL *self, const String *string);
 

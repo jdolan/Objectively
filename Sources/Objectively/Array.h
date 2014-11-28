@@ -132,7 +132,7 @@ struct ArrayInterface {
 	/**
 	 * @brief Initializes this Array.
 	 *
-	 * @return The initialized instance, or `NULL` on error.
+	 * @return The initialized Array, or `NULL` on error.
 	 */
 	Array *(*init)(Array *self);
 
@@ -141,7 +141,7 @@ struct ArrayInterface {
 	 *
 	 * @param capacity The desired initial capacity.
 	 *
-	 * @return The initialized instance, or `NULL` on error.
+	 * @return The initialized Array, or `NULL` on error.
 	 */
 	Array *(*initWithCapacity)(Array *self, size_t capacity);
 

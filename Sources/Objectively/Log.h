@@ -120,7 +120,7 @@ struct LogInterface {
 	/**
 	 * @brief Initializes this Log.
 	 *
-	 * @return The newly initialized Log.
+	 * @return The initialized Log, or `NULL` on error.
 	 */
 	Log *(*init)(Log *self);
 

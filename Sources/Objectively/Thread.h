@@ -38,9 +38,9 @@ typedef struct ThreadInterface ThreadInterface;
 /**
  * @brief A function pointer for Thread execution.
  *
- * @param data User data.
+ * @param thread The Thread.
  */
-typedef id (*ThreadFunction)(Thread *self);
+typedef id (*ThreadFunction)(Thread *thread);
 
 /**
  * @brief The Thread type.
@@ -116,7 +116,7 @@ struct ThreadInterface {
 	/**
 	 * Initializes this Thread.
 	 *
-	 * @return The initialized instance, or `NULL` on error.
+	 * @return The initialized Thread, or `NULL` on error.
 	 */
 	Thread *(*init)(Thread *self);
 
@@ -126,7 +126,7 @@ struct ThreadInterface {
 	 * @param function The ThreadFunction to run.
 	 * @param data The user data.
 	 *
-	 * @return The initialized instance, or `NULL` on error.
+	 * @return The initialized Thread, or `NULL` on error.
 	 */
 	Thread *(*initWithFunction)(Thread *self, ThreadFunction function, id data);
 

@@ -69,7 +69,7 @@ struct LockInterface {
 	/**
 	 * @brief Initializes this Lock.
 	 *
-	 * @return The initialized instance, or `NULL` on error.
+	 * @return The initialized Lock, or `NULL` on error.
 	 */
 	Lock *(*init)(Lock *self);
 

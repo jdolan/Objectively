@@ -12,7 +12,8 @@ TESTS = \
 	Regex \
 	String \
 	Thread \
-	URL
+	URL \
+	URLSession
 
 CFLAGS += \
 	-I$(includedir) \

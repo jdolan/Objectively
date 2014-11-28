@@ -161,7 +161,6 @@ struct StringInterface {
 	/**
 	 * @brief Initializes this String with the specified format string.
 	 *
-	 * @param self The newly allocated instance.
 	 * @param fmt The formatted string.
 	 *
 	 * @return The initialized String, or `NULL` on error.

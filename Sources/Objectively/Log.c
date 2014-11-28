@@ -191,6 +191,7 @@ static void _log(const Log *self, LogLevel level, const char *fmt, va_list args)
 	}
 
 	fputc('\n', self->file);
+	fflush(self->file);
 }
 
 /**

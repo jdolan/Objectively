@@ -19,6 +19,11 @@ pkginclude_HEADERS = \
 	String.h \
 	Thread.h \
 	URL.h \
+	URLRequest.h \
+	URLSession.h \
+	URLSessionTask.h \
+	URLSessionDataTask.h \
+	URLSessionDownloadTask.h \
 	Types.h
 
 lib_LTLIBRARIES = \
@@ -40,11 +45,19 @@ libObjectively_la_SOURCES = \
 	Regex.c \
 	String.c \
 	Thread.c \
-	URL.c
+	URL.c \
+	URLRequest.c \
+	URLSession.c \
+	URLSessionTask.c \
+	URLSessionDataTask.c \
+	URLSessionDownloadTask.c
 
 libObjectively_la_CFLAGS = \
-	-I ..
+	-I .. \
+	@CURL_CFLAGS@
 
 libObjectively_la_LDFLAGS = \
 	-shared
 
+libObjectively_la_LIBADD = \
+	@CURL_LIBS@

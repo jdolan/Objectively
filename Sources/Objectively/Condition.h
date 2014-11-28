@@ -24,7 +24,7 @@
 #ifndef _Objectively_Condition_h
 #define _Objectively_Condition_h
 
-#include <objectively/lock.h>
+#include <Objectively/Lock.h>
 
 /**
  * @file
@@ -78,7 +78,7 @@ struct ConditionInterface {
 	/**
 	 * @brief Initializes this Condition.
 	 *
-	 * @return The initialized instance, or `NULL` on error.
+	 * @return The initialized Condition, or `NULL` on error.
 	 */
 	Condition *(*init)(Condition *self);
 

@@ -21,31 +21,51 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_h_
-#define _Objectively_h_
+#ifndef _Objectively_URLSessionDownloadTask_h
+#define _Objectively_URLSessionDownloadTask_h
+
+#include <stdio.h>
+
+#include <Objectively/URLSessionTask.h>
+
+typedef struct URLSessionDownloadTask URLSessionDownloadTask;
+typedef struct URLSessionDownloadTaskInterface URLSessionDownloadTaskInterface;
 
 /**
- * @file
- *
- * @brief Objectively: Ultra-lightweight object oriented framework for c99.
+ * @brief The URLSessionDownloadTask type.
  */
+struct URLSessionDownloadTask {
 
-#include <Objectively/Array.h>
-#include <Objectively/Class.h>
-#include <Objectively/Condition.h>
-#include <Objectively/Date.h>
-#include <Objectively/DateFormatter.h>
-#include <Objectively/Dictionary.h>
-#include <Objectively/Lock.h>
-#include <Objectively/Log.h>
-#include <Objectively/Number.h>
-#include <Objectively/NumberFormatter.h>
-#include <Objectively/Object.h>
-#include <Objectively/Regex.h>
-#include <Objectively/String.h>
-#include <Objectively/Thread.h>
-#include <Objectively/Types.h>
-#include <Objectively/URL.h>
-#include <Objectively/URLSession.h>
+	/**
+	 * @brief The parent.
+	 */
+	URLSessionTask urlSessionTask;
+
+	/**
+	 * @brief The typed interface.
+	 */
+	URLSessionDownloadTaskInterface *interface;
+
+	/**
+	 * @brief The target FILE.
+	 */
+	FILE *file;
+};
+
+/**
+ * @brief The URLSessionDownloadTask type.
+ */
+struct URLSessionDownloadTaskInterface {
+
+	/**
+	 * @brief The parent.
+	 */
+	URLSessionTaskInterface urlSessionTaskInterface;
+};
+
+/**
+ * @brief The URLSessionDownloadTask Class.
+ */
+extern Class __URLSessionDownloadTask;
 
 #endif
