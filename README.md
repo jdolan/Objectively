@@ -146,7 +146,14 @@ Date and time:
  * Date - Microsecond-precision dates.
  * DateFormatter - Date formatting and parsing.
 
-Miscellaneous:
+Network:
+
+ * URLSession - URL downloading (libcurl).
+ * URLSessionTask - URL downloading (libcurl).
+ * URLSessionDataTask - In-memory URL downloads.
+ * URLSessionDownloadTask - File-backed URL downloads.
+
+Utilities:
  * Log - Configurable logging.
  * Regex - POSIX extended regular expressions.
  
