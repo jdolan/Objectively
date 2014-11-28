@@ -70,12 +70,25 @@ struct URLSessionTask {
 	URLSessionTaskInterface *interface;
 
 	/**
+	 * Local members.
+	 *
 	 * @private
 	 */
 	struct {
+
+		/**
+		 * @brief The backing libcurl handle.
+		 */
 		id handle;
+
+		/**
+		 * @brief HTTP headers, in libcurl list structure.
+		 */
 		id httpHeaders;
 
+		/**
+		 * @brief The Thread that executes this task.
+		 */
 		Thread *thread;
 	} locals;
 
