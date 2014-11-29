@@ -24,6 +24,7 @@
 #ifndef _Objectively_URLRequest_h
 #define _Objectively_URLRequest_h
 
+#include <Objectively/Data.h>
 #include <Objectively/Dictionary.h>
 #include <Objectively/URL.h>
 
@@ -59,7 +60,7 @@ struct URLRequest {
 	/**
 	 * @brief The HTTP body, sent as `POST` or `PUT` data.
 	 */
-	id httpBody;
+	Data *httpBody;
 
 	/**
 	 * @brief The HTTP headers.

@@ -33,9 +33,11 @@
 #include <Objectively/Array.h>
 #include <Objectively/Class.h>
 #include <Objectively/Condition.h>
+#include <Objectively/Data.h>
 #include <Objectively/Date.h>
 #include <Objectively/DateFormatter.h>
 #include <Objectively/Dictionary.h>
+#include <Objectively/Error.h>
 #include <Objectively/Lock.h>
 #include <Objectively/Log.h>
 #include <Objectively/Number.h>
@@ -46,6 +48,11 @@
 #include <Objectively/Thread.h>
 #include <Objectively/Types.h>
 #include <Objectively/URL.h>
+#include <Objectively/URLRequest.h>
 #include <Objectively/URLSession.h>
+#include <Objectively/URLSessionDataTask.h>
+#include <Objectively/URLSessionDownloadTask.h>
+#include <Objectively/URLSessionTask.h>
+#include <Objectively/URLSessionUploadTask.h>
 
 #endif

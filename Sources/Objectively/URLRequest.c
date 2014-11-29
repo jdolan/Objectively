@@ -30,6 +30,26 @@
 #pragma mark - ObjectInterface
 
 /**
+ * @see ObjectInterface::copy(const Object *)
+ */
+static Object *copy(const Object *self) {
+
+	URLRequest *this = (URLRequest *) self;
+
+	URLRequest *that = $(alloc(URLRequest), initWithURL, this->url);
+
+	if (this->httpBody) {
+		that->httpBody = (Data *) $((Object *) this->httpBody, copy);
+	}
+
+	if (this->httpHeaders) {
+		that->httpHeaders = (Dictionary *) $((Object *) this->httpHeaders, copy);
+	}
+
+	return (Object *) that;
+}
+
+/**
  * @see ObjectInterface::dealloc(Object *)
  */
 static void dealloc(Object *self) {
@@ -92,6 +112,7 @@ static void initialize(Class *clazz) {
 
 	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
+	object->copy = copy;
 	object->dealloc = dealloc;
 
 	URLRequestInterface *request = (URLRequestInterface *) clazz->interface;

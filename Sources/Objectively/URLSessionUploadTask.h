@@ -21,74 +21,51 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Types_h_
-#define _Objectively_Types_h_
+#ifndef _Objectively_URLSessionUploadTask_h
+#define _Objectively_URLSessionUploadTask_h
 
-#if defined(__linux__)
-#define _GNU_SOURCE
-#endif
+#include <stdio.h>
 
-#include <stddef.h>
-#include <stdint.h>
+#include <Objectively/URLSessionTask.h>
 
-/**
- * @brief The id type from Objective-C.
- */
-typedef void *id;
+typedef struct URLSessionUploadTask URLSessionUploadTask;
+typedef struct URLSessionUploadTaskInterface URLSessionUploadTaskInterface;
 
 /**
- * @brief The byte type.
+ * @brief The URLSessionUploadTask type.
  */
-typedef unsigned char byte;
-
-/**
- * @brief The boolean type from Objective-C.
- */
-typedef enum {
-	NO, YES
-} BOOL;
-
-/**
- * @brief A location and length into contiguous collections.
- */
-typedef struct {
+struct URLSessionUploadTask {
 
 	/**
-	 * @brief The location.
+	 * @brief The parent.
 	 */
-	int location;
+	URLSessionTask urlSessionTask;
 
 	/**
-	 * @brief The length.
+	 * @brief The typed interface.
 	 */
-	int length;
-} RANGE;
+	URLSessionUploadTaskInterface *interface;
+
+	/**
+	 * @brief The target FILE.
+	 */
+	FILE *file;
+};
 
 /**
- * @brief Comparison constants.
+ * @brief The URLSessionUploadTask type.
  */
-typedef enum {
-	ASCENDING = -1,
-	SAME,
-	DESCENDING,
-} ORDER;
+struct URLSessionUploadTaskInterface {
+
+	/**
+	 * @brief The parent.
+	 */
+	URLSessionTaskInterface urlSessionTaskInterface;
+};
 
 /**
- * @return The length of an array.
+ * @brief The URLSessionUploadTask Class.
  */
-#define lengthof(array) \
-	(sizeof(array) / sizeof((array)[0]))
-
-/**
- * @return The maximum of the two parameters.
- */
-#define max(a, b) \
-   ({ typeof(a) _a = (a); typeof(b) _b = (b); _a > _b ? _a : _b; })
-
-/**
- * @return The minimum of the two parameters.
- */
-#define min(a, b) \
-   ({ typeof(a) _a = (a); typeof(b) _b = (b); _a < _b ? _a : _b; })
+extern Class __URLSessionUploadTask;
 
 #endif

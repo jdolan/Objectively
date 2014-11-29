@@ -6,6 +6,7 @@ TESTS = \
 	Array \
 	Date \
 	Dictionary \
+	Data \
 	Log \
 	Number \
 	Object \

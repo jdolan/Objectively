@@ -50,7 +50,11 @@ int HashForDecimal(int hash, const double decimal) {
 	return hash + 31 * (int) decimal;
 }
 
-int HashForObject(int hash, const Object *object) {
+int HashForObject(int hash, const id obj) {
 
-	return hash + 31 * $(object, hash);
+	if (obj) {
+		return hash + 31 * $(cast(Object, obj), hash);
+	}
+
+	return 0;
 }

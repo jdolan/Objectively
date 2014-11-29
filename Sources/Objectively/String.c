@@ -52,7 +52,9 @@ static void dealloc(Object *self) {
 
 	String *this = (String *) self;
 
-	free(this->chars);
+	if (this->chars) {
+		free(this->chars);
+	}
 
 	super(Object, self, dealloc);
 }
@@ -147,9 +149,9 @@ static String *appendString(String *self, const String *other) {
 }
 
 /**
- * @see StringInterface::compareTo(const String *, const String *, RANGE)
+ * @see StringInterface::compareTo(const String *, const String *, const RANGE)
  */
-static ORDER compareTo(const String *self, const String *other, RANGE range) {
+static ORDER compareTo(const String *self, const String *other, const RANGE range) {
 
 	assert(range.location + range.length <= self->length);
 
@@ -243,11 +245,52 @@ static String *init(String *self) {
 }
 
 /**
+ * @see StringInterface::initWithBytes(String *, const byte *, size_t)
+ */
+static String *initWithBytes(String *self, const byte *bytes, size_t length) {
+
+	id mem = NULL;
+	if (bytes) {
+
+		mem = malloc(length + 1);
+		assert(mem);
+
+		memcpy(mem, bytes, length);
+		*(char *) (mem + length) = '\0';
+	}
+
+	return $(self, initWithMemory, mem);
+}
+
+/**
  * @see StringInterface::initWithCharacters(String *, const char *)
  */
 static String *initWithCharacters(String *self, const char *chars) {
 
 	return $(self, initWithMemory, chars ? strdup(chars) : NULL);
+}
+
+/**
+ * @see StringInterface::initWithContentsOfFile(String *, const char *)
+ */
+static String *initWithContentsOfFile(String *self, const char *path) {
+
+	Data *data = $(alloc(Data), initWithContentsOfFile, path);
+	if (data) {
+		return $(self, initWithData, data);
+	}
+
+	return NULL;
+}
+
+/**
+ * @see StringInterface::initWithData(String *, const Data *)
+ */
+static String *initWithData(String *self, const Data *data) {
+
+	assert(data);
+
+	return $(self, initWithBytes, data->bytes, data->length);
 }
 
 /**
@@ -367,6 +410,23 @@ static String *uppercaseString(const String *self) {
 	return string;
 }
 
+/**
+ * @see StringInterface::writeToFile(const String *, const char *)
+ */
+static BOOL writeToFile(const String *self, const char *path) {
+
+	FILE *file = fopen(path, "w");
+	if (file) {
+
+		const size_t write = fwrite(self->chars, self->length, 1, file);
+		if (write == self->length) {
+			return YES;
+		}
+	}
+
+	return NO;
+}
+
 #pragma mark - Class lifecycle
 
 /**
@@ -391,7 +451,10 @@ static void initialize(Class *clazz) {
 	string->hasPrefix = hasPrefix;
 	string->hasSuffix = hasSuffix;
 	string->init = init;
+	string->initWithBytes = initWithBytes;
 	string->initWithCharacters = initWithCharacters;
+	string->initWithContentsOfFile = initWithContentsOfFile;
+	string->initWithData = initWithData;
 	string->initWithFormat = initWithFormat;
 	string->initWithMemory = initWithMemory;
 	string->lowercaseString = lowercaseString;
@@ -399,6 +462,7 @@ static void initialize(Class *clazz) {
 	string->rangeOfString = rangeOfString;
 	string->substring = substring;
 	string->uppercaseString = uppercaseString;
+	string->writeToFile = writeToFile;
 }
 
 Class __String = {

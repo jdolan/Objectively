@@ -72,10 +72,10 @@ extern int HashForInteger(int hash, const long integer);
  * @brief Accumulates the hash value of `object` into `hash`.
  *
  * @param hash The hash accumulator.
- * @param object The Object to hash.
+ * @param obj The Object to hash.
  *
  * @return The accumulated hash value.
  */
-extern int HashForObject(int hash, const Object *object);
+extern int HashForObject(int hash, const id obj);
 
 #endif

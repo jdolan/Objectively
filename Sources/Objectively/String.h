@@ -28,6 +28,7 @@
 #include <xlocale.h>
 
 #include <Objectively/Array.h>
+#include <Objectively/Data.h>
 
 /**
  * @file
@@ -104,7 +105,7 @@ struct StringInterface {
 	 *
 	 * @return The ordering of this String compared to `other`.
 	 */
-	ORDER (*compareTo)(const String *self, const String *other, RANGE range);
+	ORDER (*compareTo)(const String *self, const String *other, const RANGE range);
 
 	/**
 	 * Returns the components of this String that were separated by `chars`.
@@ -150,6 +151,17 @@ struct StringInterface {
 	String *(*init)(String *self);
 
 	/**
+	 * @brief Initializes this String by copying `length` of `bytes`. The
+	 * resulting String will always be null-terminated.
+	 *
+	 * @param bytes The bytes.
+	 * @param length The length of `bytes` to copy.
+	 *
+	 * @return The initialized String, or `NULL` on error.
+	 */
+	String *(*initWithBytes)(String *self, const byte *bytes, size_t length);
+
+	/**
 	 * @brief Initializes this String with the specified characters.
 	 *
 	 * @param chars The characters.
@@ -157,6 +169,24 @@ struct StringInterface {
 	 * @return The initialized String, or `NULL` on error.
 	 */
 	String *(*initWithCharacters)(String *self, const char *chars);
+
+	/**
+	 * @brief Initializes this String with the contents of `path`.
+	 *
+	 * @param path The path of the file to load.
+	 *
+	 * @return The initialized String, or `NULL` on error.
+	 */
+	String *(*initWithContentsOfFile)(String *self, const char *path);
+
+	/**
+	 * @brief Initializes this String with the given Data.
+	 *
+	 * @param data The Data object.
+	 *
+	 * @return The initialized String, or `NULL` on error.
+	 */
+	String *(*initWithData)(String *self, const Data *data);
 
 	/**
 	 * @brief Initializes this String with the specified format string.
@@ -170,7 +200,7 @@ struct StringInterface {
 	/**
 	 * @brief Initializes this String with the specified buffer.
 	 *
-	 * @param mem The dynamically allocated memory.
+	 * @param mem The null-terminated, dynamically allocated memory.
 	 *
 	 * @return The initialized String, or `NULL` on error.
 	 */
@@ -214,6 +244,15 @@ struct StringInterface {
 	 * @return An uppercase representation of this String.
 	 */
 	String *(*uppercaseString)(const String *self);
+
+	/**
+	 * @brief Writes this String to `path`.
+	 *
+	 * @param path The path of the file to write.
+	 *
+	 * @return `YES` on success, `NO` on error.
+	 */
+	BOOL (*writeToFile)(const String *self, const char *path);
 };
 
 /**

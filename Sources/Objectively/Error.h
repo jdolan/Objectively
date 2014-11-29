@@ -21,74 +21,71 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Types_h_
-#define _Objectively_Types_h_
+#ifndef _Objectively_Error_h
+#define _Objectively_Error_h
 
-#if defined(__linux__)
-#define _GNU_SOURCE
-#endif
+#include <Objectively/Object.h>
+#include <Objectively/String.h>
 
-#include <stddef.h>
-#include <stdint.h>
-
-/**
- * @brief The id type from Objective-C.
- */
-typedef void *id;
+typedef struct Error Error;
+typedef struct ErrorInterface ErrorInterface;
 
 /**
- * @brief The byte type.
+ * @brief The Error type.
  */
-typedef unsigned char byte;
-
-/**
- * @brief The boolean type from Objective-C.
- */
-typedef enum {
-	NO, YES
-} BOOL;
-
-/**
- * @brief A location and length into contiguous collections.
- */
-typedef struct {
+struct Error {
 
 	/**
-	 * @brief The location.
+	 * @brief The parent.
 	 */
-	int location;
+	Object object;
 
 	/**
-	 * @brief The length.
+	 * @brief The typed interface.
 	 */
-	int length;
-} RANGE;
+	ErrorInterface *interface;
+
+	/**
+	 * @brief The error code.
+	 */
+	int code;
+
+	/**
+	 * @brief The error domain.
+	 */
+	String *domain;
+
+	/**
+	 * @brief The error message.
+	 */
+	String *message;
+};
 
 /**
- * @brief Comparison constants.
+ * @brief The Error type.
  */
-typedef enum {
-	ASCENDING = -1,
-	SAME,
-	DESCENDING,
-} ORDER;
+struct ErrorInterface {
+
+	/**
+	 * @brief The parent.
+	 */
+	ObjectInterface objectInterface;
+
+	/**
+	 * @brief Initializes an Error with the given details.
+	 *
+	 * @param domain The Error domain (required).
+	 * @param code The error code.
+	 * @param message The error message.
+	 *
+	 * @return The initialized Error, or `NULL` on error.
+	 */
+	Error *(*initWithDomain)(Error *self, const char *domain, int code, const char *message);
+};
 
 /**
- * @return The length of an array.
+ * @brief The Error Class.
  */
-#define lengthof(array) \
-	(sizeof(array) / sizeof((array)[0]))
-
-/**
- * @return The maximum of the two parameters.
- */
-#define max(a, b) \
-   ({ typeof(a) _a = (a); typeof(b) _b = (b); _a > _b ? _a : _b; })
-
-/**
- * @return The minimum of the two parameters.
- */
-#define min(a, b) \
-   ({ typeof(a) _a = (a); typeof(b) _b = (b); _a < _b ? _a : _b; })
+extern Class __Error;
 
 #endif

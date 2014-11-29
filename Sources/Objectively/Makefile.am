@@ -6,9 +6,11 @@ pkginclude_HEADERS = \
 	Array.h \
 	Class.h \
 	Condition.h \
+	Data.h \
 	Date.h \
 	DateFormatter.h \
 	Dictionary.h \
+	Error.h \
 	Hash.h \
 	Lock.h \
 	Log.h \
@@ -21,9 +23,10 @@ pkginclude_HEADERS = \
 	URL.h \
 	URLRequest.h \
 	URLSession.h \
-	URLSessionTask.h \
 	URLSessionDataTask.h \
 	URLSessionDownloadTask.h \
+	URLSessionTask.h \
+	URLSessionUploadTask.h \
 	Types.h
 
 lib_LTLIBRARIES = \
@@ -33,9 +36,11 @@ libObjectively_la_SOURCES = \
 	Array.c \
 	Class.c \
 	Condition.c \
+	Data.c \
 	Date.c \
 	DateFormatter.c \
 	Dictionary.c \
+	Error.c \
 	Hash.c \
 	Lock.c \
 	Log.c \
@@ -48,9 +53,10 @@ libObjectively_la_SOURCES = \
 	URL.c \
 	URLRequest.c \
 	URLSession.c \
-	URLSessionTask.c \
 	URLSessionDataTask.c \
-	URLSessionDownloadTask.c
+	URLSessionDownloadTask.c \
+	URLSessionTask.c \
+	URLSessionUploadTask.c
 
 libObjectively_la_CFLAGS = \
 	-I .. \
