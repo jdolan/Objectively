@@ -125,7 +125,7 @@ static URLSession *init(URLSession *self) {
  */
 static void invalidateAndCancel(URLSession *self) {
 
-	assert(self != __sharedInstance);
+	assert(__sharedInstance != self);
 
 	// TODO
 }

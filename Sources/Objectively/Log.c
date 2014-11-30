@@ -30,6 +30,7 @@
 #include <unistd.h>
 
 #include <Objectively/Log.h>
+#include <Objectively/Once.h>
 
 #define __Class __Log
 
@@ -43,7 +44,7 @@ static void dealloc(Object *self) {
 	Log *this = (Log *) self;
 
 	if (!isatty(fileno(this->file))) {
-		int err = fclose(this->file);
+		const int err = fclose(this->file);
 		assert(err == 0);
 	}
 
@@ -53,6 +54,21 @@ static void dealloc(Object *self) {
 }
 
 #pragma mark - LogInterface
+
+static Log *__sharedInstance;
+
+/**
+ * @see LogInterface::sharedInstance(void)
+ */
+static Log *sharedInstance(void) {
+	static Once once;
+
+	DispatchOnce(once, {
+		__sharedInstance = $(alloc(Log), init);
+	});
+
+	return __sharedInstance;
+}
 
 /**
  * @see LogInterface::debug(const Log *, const char *, ...)
@@ -233,6 +249,7 @@ static void initialize(Class *clazz) {
 
 	LogInterface *log = (LogInterface *) clazz->interface;
 
+	log->sharedInstance = sharedInstance;
 	log->debug = debug;
 	log->error = error;
 	log->fatal = fatal;
@@ -245,6 +262,16 @@ static void initialize(Class *clazz) {
 	log->warn = warn;
 }
 
+/**
+ * @see Class::destroy(Class *)
+ */
+static void destroy(Class *clazz) {
+
+	if (__sharedInstance) {
+		release(__sharedInstance);
+	}
+}
+
 Class __Log = {
 	.name = "Log",
 	.superclass = &__Object,
@@ -252,6 +279,7 @@ Class __Log = {
 	.interfaceOffset = offsetof(Log, interface),
 	.interfaceSize = sizeof(LogInterface),
 	.initialize = initialize,
+	.destroy = destroy,
 };
 
 #undef __Class

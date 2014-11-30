@@ -93,6 +93,11 @@ struct LogInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @return The shared Log instance.
+	 */
+	Log *(*sharedInstance)(void);
+
+	/**
 	 * @brief Log a debug message.
 	 */
 	void (*debug)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
