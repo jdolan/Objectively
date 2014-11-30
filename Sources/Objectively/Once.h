@@ -21,39 +21,24 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_h_
-#define _Objectively_h_
+#ifndef _Objectively_Once_h_
+#define _Objectively_Once_h_
+
+#include <Objectively/Types.h>
 
 /**
- * @file
- *
- * @brief Objectively: Ultra-lightweight object oriented framework for c99.
+ * @brief
  */
+typedef long long int Once;
 
-#include <Objectively/Array.h>
-#include <Objectively/Class.h>
-#include <Objectively/Condition.h>
-#include <Objectively/Data.h>
-#include <Objectively/Date.h>
-#include <Objectively/DateFormatter.h>
-#include <Objectively/Dictionary.h>
-#include <Objectively/Error.h>
-#include <Objectively/Lock.h>
-#include <Objectively/Log.h>
-#include <Objectively/Number.h>
-#include <Objectively/NumberFormatter.h>
-#include <Objectively/Object.h>
-#include <Objectively/Once.h>
-#include <Objectively/Regex.h>
-#include <Objectively/String.h>
-#include <Objectively/Thread.h>
-#include <Objectively/Types.h>
-#include <Objectively/URL.h>
-#include <Objectively/URLRequest.h>
-#include <Objectively/URLSession.h>
-#include <Objectively/URLSessionDataTask.h>
-#include <Objectively/URLSessionDownloadTask.h>
-#include <Objectively/URLSessionTask.h>
-#include <Objectively/URLSessionUploadTask.h>
+/**
+ * @brief
+ */
+#define DispatchOnce(once, block) \
+	if (__sync_val_compare_and_swap(&once, 0, -1) == 0) { \
+		block; once = 1; \
+	} else { \
+		while (once != 1) ; \
+	}
 
 #endif

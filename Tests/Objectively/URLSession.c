@@ -39,7 +39,7 @@ void completion(URLSessionTask *task, BOOL success) {
 
 START_TEST(urlSession)
 	{
-		URLSession *session = $(alloc(URLSession), init);
+		URLSession *session = $$(URLSession, sharedInstance);
 		ck_assert(session);
 
 		URL *url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/objectively");
@@ -77,7 +77,6 @@ START_TEST(urlSession)
 		release(url);
 
 		release(condition);
-		release(session);
 
 	}END_TEST
 

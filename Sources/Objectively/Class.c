@@ -65,10 +65,7 @@ static void setup(void) {
 	atexit(teardown);
 }
 
-/**
- * @brief Initializes the class by setting up its magic and archetype.
- */
-static void initialize(Class *clazz) {
+void __init(Class *clazz) {
 
 	assert(clazz);
 
@@ -93,7 +90,7 @@ static void initialize(Class *clazz) {
 			assert(super->instanceSize <= clazz->instanceSize);
 			assert(super->interfaceSize <= clazz->interfaceSize);
 
-			initialize(super);
+			__init(super);
 
 			memcpy(clazz->interface, super->interface, super->interfaceSize);
 		}
@@ -104,7 +101,7 @@ static void initialize(Class *clazz) {
 		clazz->locals.magic = CLASS_MAGIC;
 
 	} else {
-		while (__sync_fetch_and_or(&clazz->locals.magic, 0) != CLASS_MAGIC) {
+		while (clazz->locals.magic != CLASS_MAGIC) {
 			;
 		}
 	}
@@ -112,7 +109,7 @@ static void initialize(Class *clazz) {
 
 id __alloc(Class *clazz) {
 
-	initialize(clazz);
+	__init(clazz);
 
 	id obj = calloc(1, clazz->instanceSize);
 	assert(obj);

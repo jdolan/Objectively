@@ -17,6 +17,7 @@ pkginclude_HEADERS = \
 	Number.h \
 	NumberFormatter.h \
 	Object.h \
+	Once.h \
 	Regex.h \
 	String.h \
 	Thread.h \

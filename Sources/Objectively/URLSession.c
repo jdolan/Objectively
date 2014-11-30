@@ -29,6 +29,7 @@
 
 #include <curl/curl.h>
 
+#include <Objectively/Once.h>
 #include <Objectively/URLSession.h>
 
 #define __Class __URLSession
@@ -48,6 +49,21 @@ static void dealloc(Object *self) {
 }
 
 #pragma mark - URLSessionInterface
+
+static URLSession *__sharedInstance;
+
+/**
+ * @see URLSessionInterface::sharedInstance(void)
+ */
+static URLSession *sharedInstance(void) {
+	static Once once;
+
+	DispatchOnce(once, {
+		__sharedInstance = $(alloc(URLSession), init);
+	});
+
+	return __sharedInstance;
+}
 
 /**
  * @see URLSessionInterface::dataTaskWithRequest(URLSession *, URLRequest *)
@@ -109,6 +125,8 @@ static URLSession *init(URLSession *self) {
  */
 static void invalidateAndCancel(URLSession *self) {
 
+	assert(self != __sharedInstance);
+
 	// TODO
 }
 
@@ -123,6 +141,7 @@ static void initialize(Class *clazz) {
 
 	URLSessionInterface *session = (URLSessionInterface *) clazz->interface;
 
+	session->sharedInstance = sharedInstance;
 	session->dataTaskWithRequest = dataTaskWithRequest;
 	session->dataTaskWithURL = dataTaskWithURL;
 	session->downloadTaskWithRequest = downloadTaskWithRequest;
@@ -138,6 +157,10 @@ static void initialize(Class *clazz) {
  * @see Class::destroy(Class *)
  */
 static void destroy(Class *clazz) {
+
+	if (__sharedInstance) {
+		release(__sharedInstance);
+	}
 
 	curl_global_cleanup();
 }

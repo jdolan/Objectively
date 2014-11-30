@@ -122,6 +122,11 @@ struct Class {
 };
 
 /**
+ * @brief Initializes the given Class.
+ */
+extern void __init(Class *clazz);
+
+/**
  * @brief Instantiate a type through the given Class.
  */
 extern id __alloc(Class *clazz);
@@ -168,7 +173,7 @@ extern void retain(id obj);
  * @brief Resolve the typed interface of a Class.
  */
 #define interfaceof(type, clazz) \
-	((type##Interface *) clazz->interface)
+	((type##Interface *) (clazz)->interface)
 
 /**
  * @brief Invoke an instance method.
@@ -177,6 +182,15 @@ extern void retain(id obj);
 	({ \
 		__typeof__(obj) _obj = obj; \
 		_obj->interface->method(_obj, ## __VA_ARGS__); \
+	})
+
+/**
+ * @brief Invoke a Class method.
+ */
+#define $$(type, method, ...) \
+	({ \
+		__init(&__##type); \
+		interfaceof(type, &__##type)->method(__VA_ARGS__); \
 	})
 
 /**

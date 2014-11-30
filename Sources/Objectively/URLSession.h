@@ -60,6 +60,11 @@ struct URLSessionInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @return The shared URLSession instance.
+	 */
+	URLSession *(*sharedInstance)(void);
+
+	/**
 	 * @brief Creates a URLSessionDataTask for the given URLRequest.
 	 *
 	 * @param request The URLRequest to perform.
