@@ -22,6 +22,8 @@
  */
 
 #include <assert.h>
+#include <string.h>
+
 #include <curl/curl.h>
 
 #include <Objectively/URLSessionUploadTask.h>
@@ -31,16 +33,24 @@
 #pragma mark - URLSessionTaskInterface
 
 /**
- * @brief The `CURLOPT_WRITEFUNCTION` callback.
+ * @brief The `CURLOPT_READFUNCTION` callback.
  */
-static size_t writeFunction(char *data, size_t size, size_t count, id self) {
+static size_t readFunction(char *data, size_t size, size_t count, id self) {
 
 	URLSessionUploadTask *this = (URLSessionUploadTask *) self;
+	size_t bytesSent;
 
-	const size_t bytesReceived = size * count;
-	this->urlSessionTask.bytesReceived += bytesReceived;
+	if (this->data) {
+		const size_t remaining = this->data->length - this->urlSessionTask.bytesSent;
+		bytesSent = min(remaining, size * count);
 
-	return fwrite(data, size, count, this->file);
+		memcpy(data, this->data + this->urlSessionTask.bytesSent, bytesSent);
+	} else {
+		bytesSent = fread(data, size, count, this->file);
+	}
+
+	this->urlSessionTask.bytesSent += bytesSent;
+	return bytesSent;
 }
 
 /**
@@ -50,8 +60,16 @@ static void setup(URLSessionTask *self) {
 
 	super(URLSessionTask, self, setup);
 
-	curl_easy_setopt(self->locals.handle, CURLOPT_WRITEFUNCTION, writeFunction);
-	curl_easy_setopt(self->locals.handle, CURLOPT_WRITEDATA, self);
+	URLSessionUploadTask *this = (URLSessionUploadTask *) self;
+
+	if (this->data) {
+		assert(this->file == NULL);
+	} else {
+		assert(this->file);
+	}
+
+	curl_easy_setopt(self->locals.handle, CURLOPT_READFUNCTION, readFunction);
+	curl_easy_setopt(self->locals.handle, CURLOPT_READDATA, self);
 }
 
 /**
