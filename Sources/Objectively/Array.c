@@ -25,6 +25,7 @@
 #include <stdlib.h>
 
 #include <Objectively/Array.h>
+#include <Objectively/Hash.h>
 
 #define __Class __Array
 
@@ -37,7 +38,7 @@
  */
 static Object *copy(const Object *self) {
 
-	Array *this = (Array *) self;
+	const Array *this = (Array *) self;
 	Array *that = $(alloc(Array), initWithCapacity, this->capacity);
 
 	for (size_t i = 0; i < this->count; i++) {
@@ -59,6 +60,55 @@ static void dealloc(Object *self) {
 	free(this->elements);
 
 	super(Object, self, dealloc);
+}
+
+/**
+ * @see ObjectInterface::hash(const Object *)
+ */
+static int hash(const Object *self) {
+
+	Array *this = (Array *) self;
+
+	int hash = HASH_SEED;
+
+	for (size_t i = 0; i < this->count; i++) {
+		hash = HashForObject(hash, this->elements[i]);
+	}
+
+	return hash;
+}
+
+/**
+ * @see ObjectInterface::isEqual(const Object *, const Object *)
+ */
+static BOOL isEqual(const Object *self, const Object *other) {
+
+	if (super(Object, self, isEqual, other)) {
+		return YES;
+	}
+
+	if (other && (self->clazz == other->clazz)) {
+
+		const Array *this = (Array *) self;
+		const Array *that = (Array *) other;
+
+		if (this->count == that->count) {
+
+			for (size_t i = 0; i < this->count; i++) {
+
+				const Object *thisObject = this->elements[i];
+				const Object *thatObject = that->elements[i];
+
+				if ($(thisObject, isEqual, thatObject) == NO) {
+					return NO;
+				}
+			}
+
+			return YES;
+		}
+	}
+
+	return NO;
 }
 
 #pragma mark - ArrayInterface
@@ -254,6 +304,8 @@ static void initialize(Class *clazz) {
 
 	object->copy = copy;
 	object->dealloc = dealloc;
+	object->hash = hash;
+	object->isEqual = isEqual;
 
 	ArrayInterface *array = (ArrayInterface *) clazz->interface;
 

@@ -26,6 +26,7 @@
 #include <stdlib.h>
 
 #include <Objectively/Dictionary.h>
+#include <Objectively/Hash.h>
 
 #define __Class __Dictionary
 
@@ -34,6 +35,25 @@
 #define HASH(key) ( $((Object *) key, hash) % self->capacity )
 
 #pragma mark - ObjectInterface
+
+/**
+ * @see ObjectInterface::copy(const Object *)
+ */
+static Object *copy(const Object *self) {
+
+	const Dictionary *this = (Dictionary *) self;
+	Dictionary *that = $(alloc(Dictionary), initWithCapacity, this->capacity);
+
+	for (size_t i = 0; i < this->capacity; i++) {
+
+		Array *array = this->elements[i];
+		if (array != NULL) {
+			that->elements[i] = $((Object *) array, copy);
+		}
+	}
+
+	return (Object *) that;
+}
 
 /**
  * @see ObjectInterface::dealloc(Object *)
@@ -46,6 +66,62 @@ static void dealloc(Object *self) {
 	free(this->elements);
 
 	super(Object, self, dealloc);
+}
+
+/**
+ * @see ObjectInterface::hash(const Object *)
+ */
+static int hash(const Object *self) {
+
+	const Dictionary *this = (Dictionary *) self;
+
+	int hash = HASH_SEED;
+
+	for (size_t i = 0; i < this->capacity; i++) {
+		if (this->elements[i]) {
+			hash = HashForObject(hash, this->elements[i]);
+		}
+	}
+
+	return hash;
+}
+
+/**
+ * @see ObjectInterface::isEqual(const Object *, const Object *)
+ */
+static BOOL isEqual(const Object *self, const Object *other) {
+
+	if (super(Object, self, isEqual, other)) {
+		return YES;
+	}
+
+	if (other && (self->clazz == other->clazz)) {
+
+		const Dictionary *this = (Dictionary *) self;
+		const Dictionary *that = (Dictionary *) that;
+
+		if (this->count == that->count) {
+
+			Array *keys = $(this, allKeys);
+
+			for (size_t i = 0; i < keys->count; i++) {
+				const id key = $(keys, objectAtIndex, i);
+
+				const Object *thisObject = $(this, objectForKey, key);
+				const Object *thatObject = $(that, objectForKey, key);
+
+				if ($(thisObject, isEqual, thatObject) == NO) {
+					release(keys);
+					return NO;
+				}
+			}
+
+			release(keys);
+			return YES;
+		}
+	}
+
+	return NO;
 }
 
 #pragma mark - DictionaryInterface
@@ -287,7 +363,10 @@ static void initialize(Class *clazz) {
 
 	ObjectInterface *object = (ObjectInterface *) clazz->interface;
 
+	object->copy = copy;
 	object->dealloc = dealloc;
+	object->hash = hash;
+	object->isEqual = isEqual;
 
 	DictionaryInterface *dictionary = (DictionaryInterface *) clazz->interface;
 
