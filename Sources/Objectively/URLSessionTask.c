@@ -96,11 +96,10 @@ static id run(Thread *thread) {
 }
 
 /**
- * @see URLSessionTaskInterface::initWithRequestInSession(URLSessionTask *, URLRequest *, URLSession *)
+ * @see URLSessionTaskInterface::initWithRequestInSession(URLSessionTask *, URLRequest *, URLSession *, URLSessionTaskCompletion)
  */
-static URLSessionTask *initWithRequestInSession(URLSessionTask *self,
-		struct URLRequest *request,
-		struct URLSession *session) {
+static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URLRequest *request,
+		struct URLSession *session, URLSessionTaskCompletion completion) {
 
 	assert(request);
 	assert(session);
@@ -117,6 +116,8 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self,
 
 		self->session = session;
 		retain(session);
+
+		self->completion = completion;
 
 		self->state = TASK_SUSPENDED;
 	}
@@ -164,15 +165,22 @@ static void setup(URLSessionTask *self) {
 
 	curl_easy_setopt(self->locals.handle, CURLOPT_FOLLOWLOCATION, YES);
 
-	if (self->request->httpHeaders) {
-		struct curl_slist *httpHeaders = NULL;
+	struct curl_slist *httpHeaders = NULL;
+	const Dictionary *headers = NULL;
 
-		$(self->request->httpHeaders, enumerateObjectsAndKeys, httpHeaders_enumerator, &httpHeaders);
-
-		curl_easy_setopt(self->locals.handle, CURLOPT_HTTPHEADER, httpHeaders);
-
-		self->locals.httpHeaders = httpHeaders;
+	headers = self->session->configuration->httpHeaders;
+	if (headers) {
+		$(headers, enumerateObjectsAndKeys, httpHeaders_enumerator, &httpHeaders);
 	}
+
+	headers = self->request->httpHeaders;
+	if (headers) {
+		$(headers, enumerateObjectsAndKeys, httpHeaders_enumerator, &httpHeaders);
+	}
+
+	curl_easy_setopt(self->locals.handle, CURLOPT_HTTPHEADER, httpHeaders);
+
+	self->locals.httpHeaders = httpHeaders;
 
 	switch (self->request->httpMethod) {
 		case HTTP_POST:

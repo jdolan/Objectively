@@ -29,6 +29,7 @@ typedef struct URLSessionInterface URLSessionInterface;
 
 #include <Objectively/Object.h>
 #include <Objectively/URLRequest.h>
+#include <Objectively/URLSessionConfiguration.h>
 #include <Objectively/URLSessionTask.h>
 #include <Objectively/URLSessionDataTask.h>
 #include <Objectively/URLSessionDownloadTask.h>
@@ -47,6 +48,11 @@ struct URLSession {
 	 * @brief The typed interface.
 	 */
 	URLSessionInterface *interface;
+
+	/**
+	 * @brief The session configuration.
+	 */
+	URLSessionConfiguration *configuration;
 };
 
 /**
@@ -68,44 +74,61 @@ struct URLSessionInterface {
 	 * @brief Creates a URLSessionDataTask for the given URLRequest.
 	 *
 	 * @param request The URLRequest to perform.
+	 * @param completion The completion handler.
 	 *
 	 * @return The URLSessionDataTask, or `NULL` on error.
 	 */
-	URLSessionDataTask *(*dataTaskWithRequest)(URLSession *self, URLRequest *request);
+	URLSessionDataTask *(*dataTaskWithRequest)(URLSession *self, URLRequest *request,
+			URLSessionTaskCompletion completion);
 
 	/**
 	 * @brief Creates a URLSessionDataTask for the given URL.
 	 *
 	 * @param url The URL to `GET`.
+	 * @param completion The completion handler.
 	 *
 	 * @return The URLSessionDataTask, or `NULL` on error.
 	 */
-	URLSessionDataTask *(*dataTaskWithURL)(URLSession *self, URL *url);
+	URLSessionDataTask *(*dataTaskWithURL)(URLSession *self, URL *url,
+			URLSessionTaskCompletion completion);
 
 	/**
 	 * @brief Creates a URLSessionDownloadTask for the given URLRequest.
 	 *
 	 * @param request The URLRequest to perform.
+	 * @param completion The completion handler.
 	 *
 	 * @return The URLSessionDownloadTask, or `NULL` on error.
 	 */
-	URLSessionDownloadTask *(*downloadTaskWithRequest)(URLSession *self, URLRequest *request);
+	URLSessionDownloadTask *(*downloadTaskWithRequest)(URLSession *self, URLRequest *request,
+			URLSessionTaskCompletion completion);
 
 	/**
 	 * @brief Creates a URLSessionDownloadTask for the given URL.
 	 *
 	 * @param url The URL to `GET`.
+	 * @param completion The completion handler.
 	 *
 	 * @return The URLSessionDownloadTask, or `NULL` on error.
 	 */
-	URLSessionDownloadTask *(*downloadTaskWithURL)(URLSession *self, URL *url);
+	URLSessionDownloadTask *(*downloadTaskWithURL)(URLSession *self, URL *url,
+			URLSessionTaskCompletion completion);
 
 	/**
-	 * @brief Initializes this URLSession.
+	 * @brief Initializes this URLSession with a default configuration.
 	 *
 	 * @return The initialized URLSession, or `NULL` on error.
 	 */
 	URLSession *(*init)(URLSession *self);
+
+	/**
+	 * @brief Initializes this URLSession with the given configuration.
+	 *
+	 * @param configuration The URLSessionConfiguration.
+	 *
+	 * @return The initialized URLSession, or `NULL` on error.
+	 */
+	URLSession *(*initWithConfiguration)(URLSession *self, URLSessionConfiguration *configuration);
 
 	/**
 	 * Invalidates this URLSession and cancels all pending tasks.

@@ -51,6 +51,7 @@
 #include <Objectively/URL.h>
 #include <Objectively/URLRequest.h>
 #include <Objectively/URLSession.h>
+#include <Objectively/URLSessionConfiguration.h>
 #include <Objectively/URLSessionDataTask.h>
 #include <Objectively/URLSessionDownloadTask.h>
 #include <Objectively/URLSessionTask.h>

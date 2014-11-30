@@ -21,31 +21,20 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_URLRequest_h
-#define _Objectively_URLRequest_h
+#ifndef _Objectively_URLSessionConfiguration_h
+#define _Objectively_URLSessionConfiguration_h
 
-#include <Objectively/Data.h>
 #include <Objectively/Dictionary.h>
-#include <Objectively/URL.h>
+#include <Objectively/Object.h>
+#include <Objectively/String.h>
 
-typedef struct URLRequest URLRequest;
-typedef struct URLRequestInterface URLRequestInterface;
-
-/**
- * The HTTP method verbs.
- */
-typedef enum {
-	HTTP_NONE,
-	HTTP_GET,
-	HTTP_POST,
-	HTTP_PUT,
-	HTTP_DELETE
-} HTTPMethod;
+typedef struct URLSessionConfiguration URLSessionConfiguration;
+typedef struct URLSessionConfigurationInterface URLSessionConfigurationInterface;
 
 /**
- * @brief The URLRequest type.
+ * @brief The URLSessionConfiguration type.
  */
-struct URLRequest {
+struct URLSessionConfiguration {
 
 	/**
 	 * @brief The parent.
@@ -55,33 +44,38 @@ struct URLRequest {
 	/**
 	 * @brief The typed interface.
 	 */
-	URLRequestInterface *interface;
+	URLSessionConfigurationInterface *interface;
 
 	/**
-	 * @brief The HTTP body, sent as `POST` or `PUT` data.
+	 * @brief Credentials for URLRequests requiring authentication.
 	 */
-	Data *httpBody;
+	struct {
+		/**
+		 * @brief The username.
+		 */
+		String *username;
+
+		/**
+		 * @brief The password.
+		 */
+		String *password;
+	} credentials;
 
 	/**
-	 * @brief The HTTP headers.
+	 * @brief The HTTP headers added to every request.
 	 */
 	Dictionary *httpHeaders;
 
 	/**
-	 * @brief The HTTP method.
+	 * @brief The maximum number of HTTP connections to open per host.
 	 */
-	HTTPMethod httpMethod;
-
-	/**
-	 * @brief The URL.
-	 */
-	URL *url;
+	int httpMaximumConnectionsPerHost;
 };
 
 /**
- * @brief The URLRequest type.
+ * @brief The URLSessionConfiguration type.
  */
-struct URLRequestInterface {
+struct URLSessionConfigurationInterface {
 
 	/**
 	 * @brief The parent.
@@ -89,26 +83,16 @@ struct URLRequestInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @brief Initializes this URLRequest with the specified URL.
+	 * @brief Initializes this URLSessionConfiguration.
 	 *
-	 * @param url The URL.
-	 *
-	 * @return The initialized URLRequest, or `NULL` on error.
+	 * @return The initialized configuration, or `NULL` on error.
 	 */
-	URLRequest *(*initWithURL)(URLRequest *self, URL *url);
-
-	/**
-	 * @brief Sets a value for the specified HTTP header.
-	 *
-	 * @param value The HTTP header value.
-	 * @param field The HTTP header field.
-	 */
-	void (*setValueForHTTPHeaderField)(URLRequest *self, const char *value, const char *field);
+	URLSessionConfiguration *(*init)(URLSessionConfiguration *self);
 };
 
 /**
- * @brief The URLRequest Class.
+ * @brief The URLSessionConfiguration Class.
  */
-extern Class __URLRequest;
+extern Class __URLSessionConfiguration;
 
 #endif

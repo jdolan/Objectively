@@ -66,66 +66,91 @@ static URLSession *sharedInstance(void) {
 }
 
 /**
- * @see URLSessionInterface::dataTaskWithRequest(URLSession *, URLRequest *)
+ * @see URLSessionInterface::dataTaskWithRequest(URLSession *, URLRequest *, URLSessionTaskCompletion)
  */
-static URLSessionDataTask *dataTaskWithRequest(URLSession *self, URLRequest *request) {
+static URLSessionDataTask *dataTaskWithRequest(URLSession *self, URLRequest *request,
+		URLSessionTaskCompletion completion) {
 
 	URLSessionTask *task = (URLSessionTask *) alloc(URLSessionDataTask);
-	return (URLSessionDataTask *) $(task, initWithRequestInSession, request, self);
+
+	return (URLSessionDataTask *) $(task, initWithRequestInSession, request, self, completion);
 }
 
 /**
- * @see URLSessionInterface::dataTaskWithURL(URLSession *, URL *)
+ * @see URLSessionInterface::dataTaskWithURL(URLSession *, URL *, URLSessionTaskCompletion)
  */
-static URLSessionDataTask *dataTaskWithURL(URLSession *self, URL *url) {
+static URLSessionDataTask *dataTaskWithURL(URLSession *self, URL *url,
+		URLSessionTaskCompletion completion) {
 
 	URLRequest *request = $(alloc(URLRequest), initWithURL, url);
-	URLSessionDataTask *task = $(self, dataTaskWithRequest, request);
+
+	URLSessionDataTask *task = $(self, dataTaskWithRequest, request, completion);
 
 	release(request);
+
 	return task;
 }
 
 /**
- * @see URLSessionInterface::downloadTaskWithRequest(URLSession *, URLRequest *)
+ * @see URLSessionInterface::downloadTaskWithRequest(URLSession *, URLRequest *, URLSessionTaskCompletion)
  */
-static URLSessionDownloadTask *downloadTaskWithRequest(URLSession *self, URLRequest *request) {
+static URLSessionDownloadTask *downloadTaskWithRequest(URLSession *self, URLRequest *request,
+		URLSessionTaskCompletion completion) {
 
 	URLSessionTask *task = (URLSessionTask *) alloc(URLSessionDownloadTask);
-	return (URLSessionDownloadTask *) $(task, initWithRequestInSession, request, self);
+
+	return (URLSessionDownloadTask *) $(task, initWithRequestInSession, request, self, completion);
 }
 
 /**
- * @see URLSessionInterface::downloadTaskWithURL(URLSession *, URL *)
+ * @see URLSessionInterface::downloadTaskWithURL(URLSession *, URL *, URLSessionTaskCompletion)
  */
-static URLSessionDownloadTask *downloadTaskWithURL(URLSession *self, URL *url) {
+static URLSessionDownloadTask *downloadTaskWithURL(URLSession *self, URL *url,
+		URLSessionTaskCompletion completion) {
 
 	URLRequest *request = $(alloc(URLRequest), initWithURL, url);
-	URLSessionDownloadTask *task = $(self, downloadTaskWithRequest, request);
+
+	URLSessionDownloadTask *task = $(self, downloadTaskWithRequest, request, completion);
 
 	release(request);
+
 	return task;
 }
 
 /**
- * @see URLSessionInterface::init(URLSession *)
+ * @see URLSession::init(URLSession *)
  */
 static URLSession *init(URLSession *self) {
 
+	URLSessionConfiguration *configuration = $(alloc(URLSessionConfiguration), init);
+
+	self = $(self, initWithConfiguration, configuration);
+
+	release(configuration);
+
+	return self;
+}
+
+/**
+ * @see URLSessionInterface::initWithConfiguration(URLSession *, URLSessionConfiguration *)
+ */
+static URLSession *initWithConfiguration(URLSession *self, URLSessionConfiguration *configuration) {
+
+	assert(configuration);
+
 	self = (URLSession *) super(Object, self, init);
 	if (self) {
-
+		self->configuration = configuration;
+		retain(configuration);
 	}
 
 	return self;
 }
 
 /**
- * @see URLSessionInterface::init(URLSession *)
+ * @see URLSessionInterface::invalidateAndCancel(URLSession *)
  */
 static void invalidateAndCancel(URLSession *self) {
-
-	assert(__sharedInstance != self);
 
 	// TODO
 }
@@ -147,6 +172,7 @@ static void initialize(Class *clazz) {
 	session->downloadTaskWithRequest = downloadTaskWithRequest;
 	session->downloadTaskWithURL = downloadTaskWithURL;
 	session->init = init;
+	session->initWithConfiguration = initWithConfiguration;
 	session->invalidateAndCancel = invalidateAndCancel;
 
 	const CURLcode code = curl_global_init(CURL_GLOBAL_ALL);

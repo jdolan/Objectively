@@ -146,14 +146,14 @@ struct URLSessionTaskInterface {
 	/**
 	 * @brief Initializes this task with the given URLRequest.
 	 *
-	 * @param request The URLRequest.
-	 * @param session The URLSession.
+	 * @param request The request.
+	 * @param session The session.
+	 * @param completion The completion handler.
 	 *
 	 * @return The initialized task, or `NULL` on error.
 	 */
-	URLSessionTask *(*initWithRequestInSession)(URLSessionTask *self,
-			struct URLRequest *request,
-			struct URLSession *session);
+	URLSessionTask *(*initWithRequestInSession)(URLSessionTask *self, struct URLRequest *request,
+			struct URLSession *session, URLSessionTaskCompletion completion);
 
 	/**
 	 * @brief Starts or resumes this task.

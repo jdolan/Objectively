@@ -88,14 +88,14 @@ static URLRequest *initWithURL(URLRequest *self, URL *url) {
 /**
  * @see URLRequestInterface::setHTTPHeader(URLRequest *, const char *name, const char *value)
  */
-void setHTTPHeader(URLRequest *self, const char *name, const char *value) {
+void setValueForHTTPHeaderField(URLRequest *self, const char *value, const char *field) {
 
 	if (self->httpHeaders == NULL) {
 		self->httpHeaders = $(alloc(Dictionary), init);
 	}
 
 	String *object = $(alloc(String), initWithCharacters, value);
-	String *key = $(alloc(String), initWithCharacters, name);
+	String *key = $(alloc(String), initWithCharacters, field);
 
 	$(self->httpHeaders, setObjectForKey, object, key);
 
@@ -118,7 +118,7 @@ static void initialize(Class *clazz) {
 	URLRequestInterface *request = (URLRequestInterface *) clazz->interface;
 
 	request->initWithURL = initWithURL;
-	request->setHTTPHeader = setHTTPHeader;
+	request->setValueForHTTPHeaderField = setValueForHTTPHeaderField;
 }
 
 Class __URLRequest = {
