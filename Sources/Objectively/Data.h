@@ -76,6 +76,13 @@ struct DataInterface {
 	void (*appendBytes)(Data *self, const byte *bytes, size_t length);
 
 	/**
+	 * @brief Initializes this Data with length `0`.
+	 *
+	 * @return The initialized Data, or `NULL` on error.
+	 */
+	Data *(*init)(Data *self);
+
+	/**
 	 * @brief Initializes this Data by copying `bytes`.
 	 *
 	 * @param bytes The bytes.

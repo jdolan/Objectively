@@ -116,6 +116,13 @@ static void appendBytes(Data *self, const byte *bytes, size_t length) {
 }
 
 /**
+ * @see DataInterface::init(Data *)
+ */
+static Data *init(Data *self) {
+	return $(self, initWithMemory, NULL, 0);
+}
+
+/**
  * @see DataInterface::initWithBytes(Data *, const byte *, const size_t)
  */
 static Data *initWithBytes(Data *self, const byte *bytes, size_t length) {
@@ -210,6 +217,7 @@ static void initialize(Class *clazz) {
 	DataInterface *data = (DataInterface *) clazz->interface;
 
 	data->appendBytes = appendBytes;
+	data->init = init;
 	data->initWithBytes = initWithBytes;
 	data->initWithContentsOfFile = initWithContentsOfFile;
 	data->initWithMemory = initWithMemory;

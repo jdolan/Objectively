@@ -12,6 +12,7 @@ pkginclude_HEADERS = \
 	Dictionary.h \
 	Error.h \
 	Hash.h \
+	JSON.h \
 	Lock.h \
 	Log.h \
 	Number.h \
@@ -44,6 +45,7 @@ libObjectively_la_SOURCES = \
 	Dictionary.c \
 	Error.c \
 	Hash.c \
+	JSON.c \
 	Lock.c \
 	Log.c \
 	Number.c \
