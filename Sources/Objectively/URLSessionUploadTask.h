@@ -29,6 +29,11 @@
 #include <Objectively/Data.h>
 #include <Objectively/URLSessionTask.h>
 
+/**
+ * @file
+ *
+ * @brief Use upload tasks to send files directly from disk.
+ */
 typedef struct URLSessionUploadTask URLSessionUploadTask;
 typedef struct URLSessionUploadTaskInterface URLSessionUploadTaskInterface;
 

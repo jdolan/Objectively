@@ -28,6 +28,12 @@
 #include <Objectively/Dictionary.h>
 #include <Objectively/URL.h>
 
+/**
+ * @file
+ *
+ * @brief A protocol-agnostic abstraction for requesting resources via URLs.
+ */
+
 typedef struct URLRequest URLRequest;
 typedef struct URLRequestInterface URLRequestInterface;
 

@@ -29,7 +29,9 @@
 /**
  * @file
  *
- * Mediate access to a critical section by enforcing mutual exclusion.
+ * @brief POSIX Threads.
+ *
+ * Asynchronous computing via multiple threads of execution.
  */
 
 typedef struct Thread Thread;

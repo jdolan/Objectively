@@ -30,7 +30,7 @@
 /**
  * @file
  *
- * URL session tasks are handles to pending URL operations.
+ * @brief URL session tasks are handles to pending URL operations.
  */
 
 typedef struct URLSessionTask URLSessionTask;

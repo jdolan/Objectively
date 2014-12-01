@@ -21,82 +21,57 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Condition_h
-#define _Objectively_Condition_h
+#ifndef _Objectively_Null_h
+#define _Objectively_Null_h
 
-#include <Objectively/Lock.h>
+#include <Objectively/Object.h>
 
 /**
  * @file
  *
- * @brief POSIX Threads conditional variables.
+ * @brief The Null sentinel.
  *
- * Conditions combine a Lock with a signaling mechanism, so that Threads may
- * inform one another when a condition is met.
+ * Use this Object when you must place `NULL` into collections.
  */
 
-typedef struct Condition Condition;
-typedef struct ConditionInterface ConditionInterface;
+typedef struct Null Null;
+typedef struct NullInterface NullInterface;
 
 /**
- * @brief The Condition type.
- *
- * @extends Lock
+ * @brief The Null type.
  */
-struct Condition {
+struct Null {
 
 	/**
 	 * @brief The parent.
 	 */
-	Lock lock;
+	Object object;
 
 	/**
 	 * @brief The typed interface.
 	 */
-	ConditionInterface *interface;
-
-	/**
-	 * @brief The backing condition.
-	 */
-	id condition;
+	NullInterface *interface;
 };
 
 /**
- * @brief The Condition type.
+ * @brief The Null type.
  */
-struct ConditionInterface {
+struct NullInterface {
 
 	/**
 	 * @brief The parent.
 	 */
-	LockInterface lockInterface;
+	ObjectInterface objectInterface;
 
 	/**
-	 * @brief Signals all Threads waiting on this Condition.
+	 * @return The Null singleton.
 	 */
-	void (*broadcast)(Condition *self);
-
-	/**
-	 * @brief Initializes this Condition.
-	 *
-	 * @return The initialized Condition, or `NULL` on error.
-	 */
-	Condition *(*init)(Condition *self);
-
-	/**
-	 * @brief Signals a single Thread waiting on this Condition.
-	 */
-	void (*signal)(Condition *self);
-
-	/**
-	 * @brief Waits indefinitely for this Condition to be signaled.
-	 */
-	void (*wait)(Condition *self);
+	Null *(*null)(void);
 };
 
 /**
- * @brief The Condition Class.
+ * @brief The Null Class.
  */
-extern Class __Condition;
+extern Class __Null;
 
 #endif

@@ -28,10 +28,24 @@
 
 #include <objectively/Object.h>
 
+/**
+ * @file
+ *
+ * @brief A Log4J-inspired logging API.
+ */
+
+/**
+ * @brief Every Log has a threshold for generating messages. Messages
+ * beneath the set threshold level are not output. The default level
+ * for newly initialized Logs is `INFO`.
+ */
 typedef enum {
 	TRACE, DEBUG, INFO, WARN, ERROR, FATAL
 } LogLevel;
 
+/**
+ * @brief The default Log format.
+ */
 #define LOG_FORMAT_DEFAULT "%c %%n [%%l]: %%m"
 
 typedef struct Log Log;

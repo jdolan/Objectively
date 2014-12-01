@@ -29,6 +29,8 @@
 /**
  * @file
  *
+ * @brief POSIX Threads locks.
+ *
  * Mediate access to a critical section by enforcing mutual exclusion.
  */
 

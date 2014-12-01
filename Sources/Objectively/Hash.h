@@ -29,7 +29,7 @@
 /**
  * @file
  *
- * Utilities for calculating hash values.
+ * @brief Utilities for calculating hash values.
  */
 
 /**

@@ -8,6 +8,7 @@ TESTS = \
 	Dictionary \
 	Data \
 	Log \
+	Null \
 	Number \
 	Object \
 	Regex \

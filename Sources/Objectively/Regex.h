@@ -32,7 +32,7 @@
 /**
  * @file
  *
- * Extended POSIX regular expressions.
+ * @brief Extended POSIX regular expressions.
  */
 
 typedef struct Regex Regex;

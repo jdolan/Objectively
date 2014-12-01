@@ -28,6 +28,12 @@
 #include <Objectively/Object.h>
 #include <Objectively/String.h>
 
+/**
+ * @file
+ *
+ * @brief Configuration bundle for URLSession.
+ */
+
 typedef struct URLSessionConfiguration URLSessionConfiguration;
 typedef struct URLSessionConfigurationInterface URLSessionConfigurationInterface;
 
@@ -62,7 +68,7 @@ struct URLSessionConfiguration {
 	} credentials;
 
 	/**
-	 * @brief The HTTP headers added to every request.
+	 * @brief The HTTP headers added to every HTTP URLRequest.
 	 */
 	Dictionary *httpHeaders;
 

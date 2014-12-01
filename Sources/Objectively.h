@@ -38,8 +38,11 @@
 #include <Objectively/DateFormatter.h>
 #include <Objectively/Dictionary.h>
 #include <Objectively/Error.h>
+#include <Objectively/Hash.h>
+#include <Objectively/JSONFormatter.h>
 #include <Objectively/Lock.h>
 #include <Objectively/Log.h>
+#include <Objectively/Null.h>
 #include <Objectively/Number.h>
 #include <Objectively/NumberFormatter.h>
 #include <Objectively/Object.h>

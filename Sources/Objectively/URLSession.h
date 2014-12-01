@@ -24,6 +24,12 @@
 #ifndef _Objectively_URLSession_h
 #define _Objectively_URLSession_h
 
+/**
+ * @file
+ *
+ * @brief URLSession provides an API for loading resources via URLs.
+ */
+
 typedef struct URLSession URLSession;
 typedef struct URLSessionInterface URLSessionInterface;
 

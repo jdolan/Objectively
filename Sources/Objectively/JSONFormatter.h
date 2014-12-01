@@ -21,21 +21,30 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_JSON_h
-#define _Objectively_JSON_h
+#ifndef _Objectively_JSONFormatter_h
+#define _Objectively_JSONFormatter_h
 
 #include <Objectively/Data.h>
 #include <Objectively/Object.h>
 
-#define JSON_PRETTY 1
-
-typedef struct JSON JSON;
-typedef struct JSONInterface JSONInterface;
+/**
+ * @file
+ *
+ * @brief JSON serialization.
+ */
 
 /**
- * @brief The JSON type.
+ * @brief Enables pretty (indented) formatting of JSON output.
  */
-struct JSON {
+#define JSON_PRETTY 1
+
+typedef struct JSONFormatter JSONFormatter;
+typedef struct JSONFormatterInterface JSONFormatterInterface;
+
+/**
+ * @brief The JSONFormatter type.
+ */
+struct JSONFormatter {
 
 	/**
 	 * @brief The parent.
@@ -45,15 +54,13 @@ struct JSON {
 	/**
 	 * @brief The typed interface.
 	 */
-	JSONInterface *interface;
-
-//..
+	JSONFormatterInterface *interface;
 };
 
 /**
- * @brief The JSON type.
+ * @brief The JSONFormatter type.
  */
-struct JSONInterface {
+struct JSONFormatterInterface {
 
 	/**
 	 * @brief The parent.
@@ -61,40 +68,41 @@ struct JSONInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @return The shared JSON instance.
+	 * @return The shared JSONFormatter instance.
 	 */
-	JSON *(*sharedInstance)(void);
+	JSONFormatter *(*sharedInstance)(void);
 
 	/**
+	 * @brief Serializes the given Object to JSON Data.
 	 *
-	 * @param obj
+	 * @param obj The Object to serialize.
 	 *
-	 * @return
+	 * @return The resulting JSON Data.
 	 */
-	Data *(*dataFromObject)(JSON *self, const id obj);
-
+	Data *(*dataFromObject)(JSONFormatter *self, const id obj);
 
 	/**
+	 * @brief Initializes this JSONFormatter with the given options.
 	 *
 	 * @param options A bitwise-or of `JSON_PRETTY`, ..
 	 *
-	 * @return The initialized JSON, or `NULL
+	 * @return The initialized JSONFormatter, or `NULL
 	 */
-	JSON *(*initWithOptions)(JSON *self, int options);
+	JSONFormatter *(*initWithOptions)(JSONFormatter *self, int options);
 
 	/**
+	 * @brief Parses an Object from the specified Data.
 	 *
-	 * @param data
+	 * @param data The JSON Data.
 	 *
-	 * @return
+	 * @return The Object, or `NULL` on error.
 	 */
-	id (*objectFromData)(JSON *self, const Data *data);
-
+	id (*objectFromData)(JSONFormatter *self, const Data *data);
 };
 
 /**
- * @brief The JSON Class.
+ * @brief The JSONFormatter Class.
  */
-extern Class __JSON;
+extern Class __JSONFormatter;
 
 #endif

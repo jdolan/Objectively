@@ -27,12 +27,18 @@
 #include <Objectively/Types.h>
 
 /**
- * @brief
+ * @file
+ *
+ * @brief Helpers for at-most-once semantics.
+ */
+
+/**
+ * @brief The Once type.
  */
 typedef long long int Once;
 
 /**
- * @brief
+ * @brief Executes the given `block` at most one time.
  */
 #define DispatchOnce(once, block) \
 	if (__sync_val_compare_and_swap(&once, 0, -1) == 0) { \

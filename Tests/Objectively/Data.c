@@ -28,8 +28,8 @@
 
 START_TEST(data)
 	{
-		Data *data1 = $(alloc(Data), initWithBytes, (const byte *) "abcdef", 6);
-		Data *data2 = $(alloc(Data), initWithBytes, (const byte *) "ghijkl", 6);
+		Data *data1 = $(alloc(Data), initWithBytes, (byte *) "abcdef", 6);
+		Data *data2 = $(alloc(Data), initWithBytes, (byte *) "ghijkl", 6);
 
 		ck_assert(data1);
 		ck_assert(data2);
@@ -55,10 +55,10 @@ START_TEST(data)
 
 		unlink(path);
 
-		$(data1, appendBytes, "123", 3);
+		$(data1, appendBytes, (byte *) "123", 3);
 
 		ck_assert_int_eq(9, data1->length);
-		ck_assert(strncmp("abcdef123", data1->bytes, 9) == 0);
+		ck_assert(strncmp("abcdef123", (char *) data1->bytes, 9) == 0);
 
 		release(data1);
 

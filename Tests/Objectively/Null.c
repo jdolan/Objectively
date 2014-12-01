@@ -21,58 +21,36 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_URLSessionDataTask_h
-#define _Objectively_URLSessionDataTask_h
+#include <check.h>
 
-#include <Objectively/Data.h>
-#include <Objectively/URLSessionTask.h>
+#include <Objectively.h>
 
-/**
- * @file
- *
- * @brief Use data tasks to send and receive Data in-memory.
- *
- * Data tasks are well suited for web service invocations.
- */
+START_TEST(date)
+	{
+		Null *null1 = $$(Null, null);
+		ck_assert(null1);
 
-typedef struct URLSessionDataTask URLSessionDataTask;
-typedef struct URLSessionDataTaskInterface URLSessionDataTaskInterface;
+		Null *null2 = $$(Null, null);
+		ck_assert(null2);
 
-/**
- * @brief The URLSessionDataTask type.
- */
-struct URLSessionDataTask {
+		ck_assert($((Object *) null1, isEqual, (Object *) null2));
 
-	/**
-	 * @brief The parent.
-	 */
-	URLSessionTask urlSessionTask;
+	}END_TEST
 
-	/**
-	 * @brief The typed interface.
-	 */
-	URLSessionDataTaskInterface *interface;
+int main(int argc, char **argv) {
 
-	/**
-	 * @brief The data received.
-	 */
-	Data *data;
-};
+	TCase *tcase = tcase_create("date");
+	tcase_add_test(tcase, date);
 
-/**
- * @brief The URLSessionDataTask type.
- */
-struct URLSessionDataTaskInterface {
+	Suite *suite = suite_create("date");
+	suite_add_tcase(suite, tcase);
 
-	/**
-	 * @brief The parent.
-	 */
-	URLSessionTaskInterface urlSessionTaskInterface;
-};
+	SRunner *runner = srunner_create(suite);
 
-/**
- * @brief The URLSessionDataTask Class.
- */
-extern Class __URLSessionDataTask;
+	srunner_run_all(runner, CK_VERBOSE);
+	int failed = srunner_ntests_failed(runner);
 
-#endif
+	srunner_free(runner);
+
+	return failed;
+}

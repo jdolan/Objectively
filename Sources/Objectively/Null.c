@@ -23,58 +23,36 @@
 
 #include <assert.h>
 
-#include <Objectively/JSON.h>
+#include <Objectively/Null.h>
+#include <Objectively/Once.h>
 
-#define __Class __JSON
+#define __Class __Null
 
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see ObjectInterface::copy(const Object *)
  */
-static void dealloc(Object *self) {
+static Object *copy(const Object *self) {
 
-	// TODO
-
-	super(Object, self, dealloc);
+	return (Object *) self;
 }
 
-#pragma mark - JSONInterface
+#pragma mark - NullInterface
+
+static Null *__instance;
 
 /**
- * @see JSONInterface::dataFromObject(JSON *, const id)
+ * @see NullInterface::null(void)
  */
-static Data *dataFromObject(JSON *self, const id obj) {
+static Null *null(void) {
+	static Once once;
 
-	Data *data = $(alloc(Data), init);
+	DispatchOnce(once, {
+		__instance = (Null *) $((Object *) alloc(Null), init);
+	});
 
-	// TODO
-
-	return data;
-}
-
-/**
- * @see JSONInterface::initWithOptions(JSON *)
- */
-static JSON *initWithOptions(JSON *self, int options) {
-
-	self = (JSON *) super(Object, self, init);
-	if (self) {
-
-		//..
-	}
-
-	return self;
-}
-
-/**
- * @see JSONInterface::objectFromData(JSON *, const Data *)
- */
-static id objectFromData(JSON *self, const Data *data) {
-
-	// TODO
-
-	return NULL;
+	return __instance;
 }
 
 #pragma mark - Class lifecycle
@@ -84,22 +62,29 @@ static id objectFromData(JSON *self, const Data *data) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->copy = copy;
 
-	JSONInterface *json = (JSONInterface *) clazz->interface;
-
-	json->dataFromObject = dataFromObject;
-	json->initWithOptions = initWithOptions;
-	json->objectFromData = objectFromData;
+	((NullInterface *) clazz->interface)->null = null;
 }
 
-Class __JSON = {
-	.name = "JSON",
+/**
+ * @see Class::destroy(Class *)
+ */
+static void destroy(Class *clazz) {
+
+	if (__instance) {
+		release(__instance);
+	}
+}
+
+Class __Null = {
+	.name = "Null",
 	.superclass = &__Object,
-	.instanceSize = sizeof(JSON),
-	.interfaceOffset = offsetof(JSON, interface),
-	.interfaceSize = sizeof(JSONInterface),
+	.instanceSize = sizeof(Null),
+	.interfaceOffset = offsetof(Null, interface),
+	.interfaceSize = sizeof(NullInterface),
 	.initialize = initialize,
+	.destroy = destroy,
 };
 
 #undef __Class

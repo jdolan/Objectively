@@ -32,6 +32,12 @@
 #include <stdint.h>
 
 /**
+ * @file
+ *
+ * @brief Objectively base types.
+ */
+
+/**
  * @brief The id type from Objective-C.
  */
 typedef void *id;

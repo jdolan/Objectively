@@ -29,7 +29,7 @@
 /**
  * @file
  *
- * A wrapper for placing numeric primitives into collections, etc.
+ * @brief A wrapper for placing numeric primitives into collections, etc.
  */
 
 typedef struct Number Number;

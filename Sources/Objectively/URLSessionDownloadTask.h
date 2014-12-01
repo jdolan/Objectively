@@ -28,6 +28,12 @@
 
 #include <Objectively/URLSessionTask.h>
 
+/**
+ * @file
+ *
+ * @brief Use download tasks to save remote resources to file.
+ */
+
 typedef struct URLSessionDownloadTask URLSessionDownloadTask;
 typedef struct URLSessionDownloadTaskInterface URLSessionDownloadTaskInterface;
 
