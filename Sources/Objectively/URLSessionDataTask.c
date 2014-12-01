@@ -30,8 +30,6 @@
 
 #define __Class __URLSessionDataTask
 
-#define BLOCK_SIZE CURL_MAX_WRITE_SIZE
-
 #pragma mark - ObjectInterface
 
 /**
@@ -42,7 +40,7 @@ static void dealloc(Object *self) {
 	URLSessionDataTask *this = (URLSessionDataTask *) self;
 
 	if (this->data) {
-		free(this->data);
+		release(this->data);
 	}
 
 	super(Object, self, dealloc);
@@ -57,27 +55,16 @@ static size_t writeFunction(char *data, size_t size, size_t count, id self) {
 
 	URLSessionDataTask *this = (URLSessionDataTask *) self;
 
+	const byte *bytes = (byte *) data;
 	const size_t bytesReceived = size * count;
 
-	const size_t newBytesReceived = this->urlSessionTask.bytesReceived + bytesReceived;
-	const size_t newSize = (newBytesReceived / BLOCK_SIZE + 1) * BLOCK_SIZE;
-
-	if (newSize != this->size) {
-
-		if (this->data == NULL) {
-			this->data = malloc(newSize);
-		} else {
-			this->data = realloc(this->data, newSize);
-		}
-
-		assert(this->data);
-		this->size = newSize;
+	if (this->data == NULL) {
+		this->data = $(alloc(Data), initWithBytes, (byte *) data, bytesReceived);
+	} else {
+		$(this->data, appendBytes, (byte *) data, bytesReceived);
 	}
 
-	id ptr = this->data + this->urlSessionTask.bytesReceived;
-	memcpy(ptr, data, bytesReceived);
-
-	this->urlSessionTask.bytesReceived = newBytesReceived;
+	this->urlSessionTask.bytesReceived += bytesReceived;
 	return bytesReceived;
 }
 

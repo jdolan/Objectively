@@ -24,6 +24,7 @@
 #ifndef _Objectively_URLSessionDataTask_h
 #define _Objectively_URLSessionDataTask_h
 
+#include <Objectively/Data.h>
 #include <Objectively/URLSessionTask.h>
 
 typedef struct URLSessionDataTask URLSessionDataTask;
@@ -47,15 +48,7 @@ struct URLSessionDataTask {
 	/**
 	 * @brief The data received.
 	 */
-	id data;
-
-	/**
-	 * @brief The allocated size of the data element, which is always greater
-	 * than or equal to `bytesReceived`.
-	 *
-	 * @private
-	 */
-	size_t size;
+	Data *data;
 };
 
 /**

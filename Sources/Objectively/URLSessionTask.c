@@ -162,8 +162,13 @@ static void setup(URLSessionTask *self) {
 	assert(self->locals.handle);
 
 	curl_easy_setopt(self->locals.handle, CURLOPT_ERRORBUFFER, self->error);
-
 	curl_easy_setopt(self->locals.handle, CURLOPT_FOLLOWLOCATION, YES);
+
+	Data *body = self->request->httpBody;
+	if (body) {
+		curl_easy_setopt(self->locals.handle, CURLOPT_POSTFIELDS, body->bytes);
+		curl_easy_setopt(self->locals.handle, CURLOPT_POSTFIELDSIZE, body->length);
+	}
 
 	struct curl_slist *httpHeaders = NULL;
 	const Dictionary *headers = NULL;
@@ -187,10 +192,13 @@ static void setup(URLSessionTask *self) {
 			curl_easy_setopt(self->locals.handle, CURLOPT_POST, YES);
 			break;
 		case HTTP_PUT:
-			curl_easy_setopt(self->locals.handle, CURLOPT_CUSTOMREQUEST, "PUT");
+			curl_easy_setopt(self->locals.handle, CURLOPT_PUT, YES);
 			break;
 		case HTTP_DELETE:
 			curl_easy_setopt(self->locals.handle, CURLOPT_CUSTOMREQUEST, "DELETE");
+			break;
+		case HTTP_HEAD:
+			curl_easy_setopt(self->locals.handle, CURLOPT_NOBODY, YES);
 			break;
 		default:
 			break;

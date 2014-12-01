@@ -37,10 +37,10 @@ static size_t writeFunction(char *data, size_t size, size_t count, id self) {
 
 	URLSessionDownloadTask *this = (URLSessionDownloadTask *) self;
 
-	const size_t bytesReceived = size * count;
-	this->urlSessionTask.bytesReceived += bytesReceived;
+	const size_t bytesWritten = fwrite(data, size, count, this->file);
+	this->urlSessionTask.bytesReceived += bytesWritten;
 
-	return fwrite(data, size, count, this->file);
+	return bytesWritten;
 }
 
 /**
@@ -50,20 +50,12 @@ static void setup(URLSessionTask *self) {
 
 	super(URLSessionTask, self, setup);
 
-	curl_easy_setopt(self->locals.handle, CURLOPT_WRITEFUNCTION, writeFunction);
-	curl_easy_setopt(self->locals.handle, CURLOPT_WRITEDATA, self);
-}
-
-/**
- * @see URLSessionTaskInterface::teardown(URLSessionTask *)
- */
-static void teardown(URLSessionTask *self) {
-
-	super(URLSessionTask, self, teardown);
-
 	URLSessionDownloadTask *this = (URLSessionDownloadTask *) self;
 
-	fclose(this->file);
+	assert(this->file);
+
+	curl_easy_setopt(self->locals.handle, CURLOPT_WRITEFUNCTION, writeFunction);
+	curl_easy_setopt(self->locals.handle, CURLOPT_WRITEDATA, self);
 }
 
 #pragma mark - Class lifecycle
@@ -73,10 +65,7 @@ static void teardown(URLSessionTask *self) {
  */
 static void initialize(Class *clazz) {
 
-	URLSessionTaskInterface *sessionTask = (URLSessionTaskInterface *) clazz->interface;
-
-	sessionTask->setup = setup;
-	sessionTask->teardown = teardown;
+	((URLSessionTaskInterface *) clazz->interface)->setup = setup;
 }
 
 Class __URLSessionDownloadTask = {

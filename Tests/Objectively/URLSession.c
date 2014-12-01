@@ -69,6 +69,8 @@ START_TEST(urlSession)
 
 		$(condition, wait);
 
+		fclose(downloadTask->file);
+
 		release(downloadTask);
 		release(url);
 

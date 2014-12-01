@@ -38,19 +38,11 @@
 static size_t readFunction(char *data, size_t size, size_t count, id self) {
 
 	URLSessionUploadTask *this = (URLSessionUploadTask *) self;
-	size_t bytesSent;
 
-	if (this->data) {
-		const size_t remaining = this->data->length - this->urlSessionTask.bytesSent;
-		bytesSent = min(remaining, size * count);
+	const size_t bytesRead = fread(data, size, count, this->file);
+	this->urlSessionTask.bytesSent += bytesRead;
 
-		memcpy(data, this->data + this->urlSessionTask.bytesSent, bytesSent);
-	} else {
-		bytesSent = fread(data, size, count, this->file);
-	}
-
-	this->urlSessionTask.bytesSent += bytesSent;
-	return bytesSent;
+	return bytesRead;
 }
 
 /**
@@ -62,26 +54,10 @@ static void setup(URLSessionTask *self) {
 
 	URLSessionUploadTask *this = (URLSessionUploadTask *) self;
 
-	if (this->data) {
-		assert(this->file == NULL);
-	} else {
-		assert(this->file);
-	}
+	assert(this->file);
 
 	curl_easy_setopt(self->locals.handle, CURLOPT_READFUNCTION, readFunction);
 	curl_easy_setopt(self->locals.handle, CURLOPT_READDATA, self);
-}
-
-/**
- * @see URLSessionTaskInterface::teardown(URLSessionTask *)
- */
-static void teardown(URLSessionTask *self) {
-
-	super(URLSessionTask, self, teardown);
-
-	URLSessionUploadTask *this = (URLSessionUploadTask *) self;
-
-	fclose(this->file);
 }
 
 #pragma mark - Class lifecycle
@@ -91,10 +67,7 @@ static void teardown(URLSessionTask *self) {
  */
 static void initialize(Class *clazz) {
 
-	URLSessionTaskInterface *sessionTask = (URLSessionTaskInterface *) clazz->interface;
-
-	sessionTask->setup = setup;
-	sessionTask->teardown = teardown;
+	((URLSessionTaskInterface *) clazz->interface)->setup = setup;
 }
 
 Class __URLSessionUploadTask = {

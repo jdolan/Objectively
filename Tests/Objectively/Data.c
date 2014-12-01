@@ -37,23 +37,30 @@ START_TEST(data)
 		ck_assert_int_eq(6, data1->length);
 
 		ck_assert($((Object *) data1, isEqual, (Object *) data2) == NO);
+		release(data2);
 
 		Data *copy = (Data *) $((Object * ) data1, copy);
 		ck_assert(copy);
 
 		ck_assert($((Object *) data1, isEqual, (Object *) copy) == YES);
+		release(copy);
 
 		const char *path = "/tmp/Objectively_Data.test";
 		ck_assert($(data1, writeToFile, path) == YES);
 
-		Data *data3 = $(alloc(Data), initWithContentsOfFile, path);
-		ck_assert($((Object *) data1, isEqual, (Object *) data3));
+		data2 = $(alloc(Data), initWithContentsOfFile, path);
+
+		ck_assert($((Object *) data1, isEqual, (Object *) data2) == YES);
+		release(data2);
 
 		unlink(path);
+
+		$(data1, appendBytes, "123", 3);
+
+		ck_assert_int_eq(9, data1->length);
+		ck_assert(strncmp("abcdef123", data1->bytes, 9) == 0);
+
 		release(data1);
-		release(data2);
-		release(data3);
-		release(copy);
 
 	}END_TEST
 

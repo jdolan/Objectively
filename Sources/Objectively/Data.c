@@ -97,9 +97,28 @@ static BOOL isEqual(const Object *self, const Object *other) {
 #pragma mark - DataInterface
 
 /**
+ * @see DataInterface::appendBytes(Data *, const byte *, size_t)
+ */
+static void appendBytes(Data *self, const byte *bytes, size_t length) {
+
+	if (self->bytes == NULL) {
+		self->bytes = malloc(length);
+	} else {
+		self->bytes = realloc(self->bytes, self->length + length);
+	}
+
+	assert(self->bytes);
+
+	id ptr = self->bytes + self->length;
+	memcpy(ptr, bytes, length);
+
+	self->length += length;
+}
+
+/**
  * @see DataInterface::initWithBytes(Data *, const byte *, const size_t)
  */
-static Data *initWithBytes(Data *self, const byte *bytes, const size_t length) {
+static Data *initWithBytes(Data *self, const byte *bytes, size_t length) {
 
 	id mem = malloc(length);
 	assert(mem);
@@ -190,6 +209,7 @@ static void initialize(Class *clazz) {
 
 	DataInterface *data = (DataInterface *) clazz->interface;
 
+	data->appendBytes = appendBytes;
 	data->initWithBytes = initWithBytes;
 	data->initWithContentsOfFile = initWithContentsOfFile;
 	data->initWithMemory = initWithMemory;

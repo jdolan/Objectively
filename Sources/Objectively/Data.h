@@ -68,6 +68,14 @@ struct DataInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @brief Appends the given bytes to this Data.
+	 *
+	 * @param bytes The bytes to append.
+	 * @param length The length of bytes to append.
+	 */
+	void (*appendBytes)(Data *self, const byte *bytes, size_t length);
+
+	/**
 	 * @brief Initializes this Data by copying `bytes`.
 	 *
 	 * @param bytes The bytes.

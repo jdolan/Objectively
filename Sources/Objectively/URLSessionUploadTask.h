@@ -48,16 +48,7 @@ struct URLSessionUploadTask {
 	URLSessionUploadTaskInterface *interface;
 
 	/**
-	 * @brief The data to upload.
-	 *
-	 * @remark Set either `data` or `file`, but not both.
-	 */
-	Data *data;
-
-	/**
 	 * @brief The FILE to upload.
-	 *
-	 * @remark Set either `data` or `file`, but not both.
 	 */
 	FILE *file;
 };
