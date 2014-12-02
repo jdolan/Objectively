@@ -127,7 +127,7 @@ Core library
 Objectively provides a small but useful core library:
 
  * Object - Hurr.
- * Number - Double-precision numbers.
+ * Null - The `NULL` sentinel.
  * String - Mutable strings.
 
 Collections:
@@ -148,13 +148,24 @@ Date and time:
 
 Network:
 
+ * URL - Uniform Resource Locators.
+ * URLRequest - Load resources via URLs.
  * URLSession - URL downloading (libcurl).
+ * URLSessionConfiguration - Session management.
  * URLSessionTask - URL downloading (libcurl).
- * URLSessionDataTask - In-memory URL downloads.
- * URLSessionDownloadTask - File-backed URL downloads.
+ * URLSessionDataTask - In-memory URL downloads (libcurl).
+ * URLSessionDownloadTask - File-backed URL downloads (libcurl).
+ * URLSessionUploadTask - File-backed URL uploads (libcurl).
+ 
+Numerics:
+
+ * Number - Double-precision numbers.
+ * NumberFormatter - Number formatting and parsing.
 
 Utilities:
+ * Hash - Utilities for calculating hash values.
  * Log - Configurable logging.
+ * Once - Utilities for at-most-once semantics.
  * Regex - POSIX extended regular expressions.
  
 API documentation

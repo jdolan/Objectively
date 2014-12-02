@@ -1,13 +1,16 @@
 *.log
 *.trs
 Array
+Boolean
 Conditional
 Data
 Date
 Dictionary
 Hello
+JSONFormatter
 Lock
 Log
+Null
 Number
 Object
 Regex

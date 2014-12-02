@@ -4,9 +4,11 @@ AM_TESTS_ENVIRONMENT = \
 
 TESTS = \
 	Array \
+	Boolean \
 	Date \
 	Dictionary \
 	Data \
+	JSONFormatter \
 	Log \
 	Null \
 	Number \

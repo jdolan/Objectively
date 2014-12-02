@@ -55,6 +55,11 @@ struct JSONFormatter {
 	 * @brief The typed interface.
 	 */
 	JSONFormatterInterface *interface;
+
+	/**
+	 * @brief A bitwise-or of `JSON_PRETTY`, ..
+	 */
+	int options;
 };
 
 /**
