@@ -106,13 +106,8 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	if (__no) {
-		release(__no);
-	}
-
-	if (__yes) {
-		release(__yes);
-	}
+	release(__no);
+	release(__yes);
 }
 
 Class __Boolean = {

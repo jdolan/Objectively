@@ -50,29 +50,12 @@ static void dealloc(Object *self) {
 
 	URL *this = (URL *) self;
 
-	if (this->fragment) {
-		release(this->fragment);
-	}
-
-	if (this->host) {
-		release(this->host);
-	}
-
-	if (this->path) {
-		release(this->path);
-	}
-
-	if (this->query) {
-		release(this->query);
-	}
-
-	if (this->scheme) {
-		release(this->scheme);
-	}
-
-	if (this->urlString) {
-		release(this->urlString);
-	}
+	release(this->fragment);
+	release(this->host);
+	release(this->path);
+	release(this->query);
+	release(this->scheme);
+	release(this->urlString);
 
 	super(Object, self, dealloc);
 }

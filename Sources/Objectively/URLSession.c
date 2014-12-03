@@ -184,9 +184,7 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	if (__sharedInstance) {
-		release(__sharedInstance);
-	}
+	release(__sharedInstance);
 
 	curl_global_cleanup();
 }

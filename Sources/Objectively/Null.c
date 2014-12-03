@@ -40,7 +40,7 @@ static Object *copy(const Object *self) {
 
 #pragma mark - NullInterface
 
-static Null *__instance;
+static Null *__null__;
 
 /**
  * @see NullInterface::null(void)
@@ -49,10 +49,10 @@ static Null *null(void) {
 	static Once once;
 
 	DispatchOnce(once, {
-		__instance = (Null *) $((Object *) alloc(Null), init);
+		__null__ = (Null *) $((Object *) alloc(Null), init);
 	});
 
-	return __instance;
+	return __null__;
 }
 
 #pragma mark - Class lifecycle
@@ -72,9 +72,7 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	if (__instance) {
-		release(__instance);
-	}
+	release(__null__);
 }
 
 Class __Null = {

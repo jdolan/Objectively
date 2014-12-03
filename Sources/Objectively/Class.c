@@ -151,12 +151,14 @@ id __cast(Class *clazz, const id obj) {
 
 void release(id obj) {
 
-	Object *object = cast(Object, obj);
+	if (obj) {
+		Object *object = cast(Object, obj);
 
-	assert(object);
+		assert(object);
 
-	if (__sync_add_and_fetch(&object->referenceCount, -1) == 0) {
-		$(object, dealloc);
+		if (__sync_add_and_fetch(&object->referenceCount, -1) == 0) {
+			$(object, dealloc);
+		}
 	}
 }
 

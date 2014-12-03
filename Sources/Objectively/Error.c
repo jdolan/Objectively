@@ -50,10 +50,7 @@ static void dealloc(Object *self) {
 	Error *this = (Error *) self;
 
 	release(this->domain);
-
-	if (this->message) {
-		release(this->message);
-	}
+	release(this->message);
 
 	super(Object, self, dealloc);
 }

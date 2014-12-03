@@ -31,9 +31,6 @@ static BOOL enumerator(const Dictionary *dictionary, id obj, id key, id data) {
 
 	(* (int *) data)++;
 
-	release(obj);
-	release(key);
-
 	return NO;
 }
 
@@ -100,8 +97,8 @@ START_TEST(dictionary)
 
 			$(dict, setObjectForKey, object, key);
 
-			//release(object);
-			//release(key);
+			release(object);
+			release(key);
 		}
 
 		int counter = 0;

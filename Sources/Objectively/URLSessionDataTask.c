@@ -39,9 +39,7 @@ static void dealloc(Object *self) {
 
 	URLSessionDataTask *this = (URLSessionDataTask *) self;
 
-	if (this->data) {
-		release(this->data);
-	}
+	release(this->data);
 
 	super(Object, self, dealloc);
 }

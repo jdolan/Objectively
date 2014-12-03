@@ -56,13 +56,8 @@ static void dealloc(Object *self) {
 
 	URLRequest *this = (URLRequest *) self;
 
-	if (this->httpHeaders) {
-		release(this->httpHeaders);
-	}
-
-	if (this->url) {
-		release(this->url);
-	}
+	release(this->httpHeaders);
+	release(this->url);
 
 	super(Object, self, dealloc);
 }

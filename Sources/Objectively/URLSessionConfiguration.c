@@ -21,17 +21,9 @@ static void dealloc(Object *self) {
 
 	URLSessionConfiguration *this = (URLSessionConfiguration *) self;
 
-	if (this->credentials.username) {
-		release(this->credentials.username);
-	}
-
-	if (this->credentials.password) {
-		release(this->credentials.password);
-	}
-
-	if (this->httpHeaders) {
-		release(this->httpHeaders);
-	}
+	release(this->credentials.username);
+	release(this->credentials.password);
+	release(this->httpHeaders);
 
 	super(Object, self, dealloc);
 }

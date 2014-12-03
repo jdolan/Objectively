@@ -53,7 +53,6 @@ static void dealloc(Object *self) {
 	}
 
 	release(this->locals.thread);
-
 	release(this->request);
 	release(this->session);
 
