@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_JSONFormatter_h
-#define _Objectively_JSONFormatter_h
+#ifndef _Objectively_JSONSerialization_h
+#define _Objectively_JSONSerialization_h
 
 #include <Objectively/Data.h>
 #include <Objectively/Object.h>
@@ -36,15 +36,15 @@
 /**
  * @brief Enables pretty (indented) formatting of JSON output.
  */
-#define JSON_PRETTY 1
+#define JSON_WRITE_PRETTY 1
 
-typedef struct JSONFormatter JSONFormatter;
-typedef struct JSONFormatterInterface JSONFormatterInterface;
+typedef struct JSONSerialization JSONSerialization;
+typedef struct JSONSerializationInterface JSONSerializationInterface;
 
 /**
- * @brief The JSONFormatter type.
+ * @brief The JSONSerialization type.
  */
-struct JSONFormatter {
+struct JSONSerialization {
 
 	/**
 	 * @brief The parent.
@@ -54,18 +54,13 @@ struct JSONFormatter {
 	/**
 	 * @brief The typed interface.
 	 */
-	JSONFormatterInterface *interface;
-
-	/**
-	 * @brief A bitwise-or of `JSON_PRETTY`, ..
-	 */
-	int options;
+	JSONSerializationInterface *interface;
 };
 
 /**
- * @brief The JSONFormatter type.
+ * @brief The JSONSerialization type.
  */
-struct JSONFormatterInterface {
+struct JSONSerializationInterface {
 
 	/**
 	 * @brief The parent.
@@ -73,41 +68,29 @@ struct JSONFormatterInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @return The shared JSONFormatter instance.
-	 */
-	JSONFormatter *(*sharedInstance)(void);
-
-	/**
 	 * @brief Serializes the given Object to JSON Data.
 	 *
 	 * @param obj The Object to serialize.
+	 * @param options A bitwise-or of `JSON_WRITE_*`.
 	 *
 	 * @return The resulting JSON Data.
 	 */
-	Data *(*dataFromObject)(JSONFormatter *self, const id obj);
-
-	/**
-	 * @brief Initializes this JSONFormatter with the given options.
-	 *
-	 * @param options A bitwise-or of `JSON_PRETTY`, ..
-	 *
-	 * @return The initialized JSONFormatter, or `NULL
-	 */
-	JSONFormatter *(*initWithOptions)(JSONFormatter *self, int options);
+	Data *(*dataFromObject)(const id obj, int options);
 
 	/**
 	 * @brief Parses an Object from the specified Data.
 	 *
 	 * @param data The JSON Data.
+	 * @param options A bitwise-or of `JSON_READ_*`.
 	 *
 	 * @return The Object, or `NULL` on error.
 	 */
-	id (*objectFromData)(JSONFormatter *self, const Data *data);
+	id (*objectFromData)(const Data *data, int options);
 };
 
 /**
- * @brief The JSONFormatter Class.
+ * @brief The JSONSerialization Class.
  */
-extern Class __JSONFormatter;
+extern Class __JSONSerialization;
 
 #endif

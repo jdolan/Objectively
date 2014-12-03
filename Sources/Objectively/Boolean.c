@@ -25,6 +25,7 @@
 
 #include <Objectively/Boolean.h>
 #include <Objectively/Once.h>
+#include <Objectively/String.h>
 
 #define __Class __Boolean
 
@@ -36,6 +37,16 @@
 static Object *copy(const Object *self) {
 
 	return (Object *) self;
+}
+
+/**
+ * @see ObjectInterface::description(const Object *)
+ */
+static String *description(const Object *self) {
+
+	const Boolean *this = (Boolean *) self;
+
+	return $(alloc(String), initWithCharacters, this->bool ? "YES" : "NO");
 }
 
 #pragma mark - BooleanInterface
@@ -79,7 +90,10 @@ static Boolean *yes(void) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+
+	object->copy = copy;
+	object->description = description;
 
 	BooleanInterface *boolean = (BooleanInterface *) clazz->interface;
 

@@ -27,6 +27,7 @@
 
 #include <Objectively/Dictionary.h>
 #include <Objectively/Hash.h>
+#include <Objectively/String.h>
 
 #define __Class __Dictionary
 
@@ -66,6 +67,40 @@ static void dealloc(Object *self) {
 	free(this->elements);
 
 	super(Object, self, dealloc);
+}
+
+/**
+ * @brief A DictionaryEnumerator for description.
+ */
+static BOOL description_enumerator(const Dictionary *dict, id obj, id key, id data) {
+
+	String *desc = (String *) data;
+
+	String *objDesc = $((Object *) obj, description);
+	String *keyDesc = $((Object *) key, description);
+
+	$(desc, appendFormat, "%s: %s, ", keyDesc->chars, objDesc->chars);
+
+	release(objDesc);
+	release(keyDesc);
+
+	return NO;
+}
+
+/**
+ * @see ObjectInterface::description(const Object *)
+ */
+static String *description(const Object *self) {
+
+	const Dictionary *this = (Dictionary *) self;
+
+	String *desc = $(alloc(String), initWithCharacters, "{");
+
+	$(this, enumerateObjectsAndKeys, description_enumerator, desc);
+
+	$(desc, appendFormat, "}");
+
+	return desc;
 }
 
 /**
@@ -365,6 +400,7 @@ static void initialize(Class *clazz) {
 
 	object->copy = copy;
 	object->dealloc = dealloc;
+	object->description = description;
 	object->hash = hash;
 	object->isEqual = isEqual;
 

@@ -47,13 +47,9 @@ static Object *copy(const Object *self) {
  */
 static String *description(const Object *self) {
 
-	String *desc = super(Object, self, description);
-
 	const Regex *this = (Regex *) self;
 
-	$(desc, appendFormat, ": %s", this->pattern);
-
-	return desc;
+	return $(alloc(String), initWithCharacters, this->pattern);
 }
 
 /**

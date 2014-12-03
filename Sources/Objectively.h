@@ -40,7 +40,7 @@
 #include <Objectively/Dictionary.h>
 #include <Objectively/Error.h>
 #include <Objectively/Hash.h>
-#include <Objectively/JSONFormatter.h>
+#include <Objectively/JSONSerialization.h>
 #include <Objectively/Lock.h>
 #include <Objectively/Log.h>
 #include <Objectively/Null.h>

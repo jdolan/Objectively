@@ -26,6 +26,7 @@
 
 #include <Objectively/Array.h>
 #include <Objectively/Hash.h>
+#include <Objectively/String.h>
 
 #define __Class __Array
 
@@ -60,6 +61,30 @@ static void dealloc(Object *self) {
 	free(this->elements);
 
 	super(Object, self, dealloc);
+}
+
+/**
+ * @see ObjectInterface::description(const Object *)
+ */
+static String *description(const Object *self) {
+
+	const Array *this = (Array *) self;
+
+	String *desc = $(alloc(String), initWithCharacters, "[");
+
+	for (size_t i = 0; i < this->count; i++) {
+		String *objDesc = $((Object *) this->elements[i], description);
+
+		$(desc, appendString, objDesc);
+		release(objDesc);
+
+		if (i < this->count - 1) {
+			$(desc, appendFormat, ", ");
+		}
+	}
+
+	$(desc, appendFormat, "]");
+	return desc;
 }
 
 /**
@@ -304,6 +329,7 @@ static void initialize(Class *clazz) {
 
 	object->copy = copy;
 	object->dealloc = dealloc;
+	object->description = description;
 	object->hash = hash;
 	object->isEqual = isEqual;
 

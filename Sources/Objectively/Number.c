@@ -32,17 +32,13 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::description(Object *)
+ * @see ObjectInterface::description(const Object *)
  */
 static String *description(const Object *self) {
 
-	String *desc = super(Object, self, description);
-
 	Number *this = (Number *) self;
 
-	$(desc, appendFormat, ": %.5d", this->value);
-
-	return desc;
+	return $(alloc(String), initWithFormat, "%.5f", this->value);
 }
 
 /**

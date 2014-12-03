@@ -7,7 +7,7 @@ Data
 Date
 Dictionary
 Hello
-JSONFormatter
+JSONSerialization
 Lock
 Log
 Null

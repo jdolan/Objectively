@@ -60,6 +60,14 @@ static void dealloc(Object *self) {
 }
 
 /**
+ * @see ObjectInterface::description(const Object *)
+ */
+static String *description(const Object *self) {
+
+	return (String *) $(self, copy);
+}
+
+/**
  * @see ObjectInterface::hash(const Object *)
  */
 static int hash(const Object *self) {
@@ -438,6 +446,7 @@ static void initialize(Class *clazz) {
 
 	object->copy = copy;
 	object->dealloc = dealloc;
+	object->description = description;
 	object->hash = hash;
 	object->isEqual = isEqual;
 

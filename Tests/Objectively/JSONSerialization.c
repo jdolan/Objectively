@@ -32,6 +32,16 @@ START_TEST(json)
 		Data *data = $(alloc(Data), initWithContentsOfFile, path);
 		ck_assert(data->length);
 
+		Dictionary *dict = $$(JSONSerialization, objectFromData, data, 0);
+		ck_assert(dict->count);
+
+		String *desc = $((Object *) dict, description);
+		printf("%s\n", desc->chars);
+		release(desc);
+
+		release(data);
+		release(dict);
+
 	}END_TEST
 
 int main(int argc, char **argv) {
