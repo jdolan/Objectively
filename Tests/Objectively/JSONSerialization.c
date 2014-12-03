@@ -38,11 +38,17 @@ START_TEST(json)
 		Data *json = $$(JSONSerialization, dataFromObject, dict, 0);
 		$(json, appendBytes, (byte *) "\0", 1);
 
-		printf("%s\n", (char *) json->bytes);
+		Dictionary *copy = $$(JSONSerialization, objectFromData, json, 0);
+		ck_assert_int_eq(dict->count, copy->count);
+
+		ck_assert($((Object *) dict, isEqual, (Object *) copy));
+
+		printf("I am the smartest man alive.\n");
 
 		release(data);
-		release(dict);
 		release(json);
+		release(dict);
+		release(copy);
 
 	}END_TEST
 

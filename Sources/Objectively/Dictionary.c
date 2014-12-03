@@ -133,7 +133,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 	if (other && (self->clazz == other->clazz)) {
 
 		const Dictionary *this = (Dictionary *) self;
-		const Dictionary *that = (Dictionary *) that;
+		const Dictionary *that = (Dictionary *) other;
 
 		if (this->count == that->count) {
 
