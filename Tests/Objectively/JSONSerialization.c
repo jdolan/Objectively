@@ -36,8 +36,6 @@ START_TEST(json)
 		ck_assert(dict->count);
 
 		Data *json = $$(JSONSerialization, dataFromObject, dict, 0);
-		$(json, appendBytes, (byte *) "\0", 1);
-
 		Dictionary *copy = $$(JSONSerialization, objectFromData, json, 0);
 		ck_assert_int_eq(dict->count, copy->count);
 
