@@ -224,12 +224,8 @@ static Dictionary *readObject(JSONReader *reader) {
 		const int b = readByteUntil(reader, ":");
 		assert(b == ':');
 
-		Object *obj = readElement(reader);
+		id obj = readElement(reader);
 		assert(obj);
-
-		/*String *desc = $(obj, description);
-		printf("  { %s: %s }\n", key->chars, desc->chars);
-		release(desc);*/
 
 		$(object, setObjectForKey, obj, key);
 
@@ -258,10 +254,6 @@ static Array *readArray(JSONReader *reader) {
 			break;
 		}
 
-		/*String *desc = $(obj, description);
-		printf("  [] %s\n", desc->chars);
-		release(desc);*/
-
 		$(array, addObject, obj);
 
 		release(obj);
@@ -273,7 +265,7 @@ static Array *readArray(JSONReader *reader) {
 /**
  * @brief Reads an element from `reader`. An element is any valid JSON type.
  *
- * @return The element, or `NULL` on error.
+ * @return The element, or `NULL` if no element is available..
  */
 static id readElement(JSONReader *reader) {
 
