@@ -38,15 +38,164 @@
 #pragma mark - JSONSerializationInterface
 
 /**
+ * @brief A writer for generating JSON Data.
+ */
+typedef struct {
+	Data *data;
+	int options;
+	size_t depth;
+} JSONWriter;
+
+static void writeElement(JSONWriter *writer, const id obj);
+
+/**
+ * Writes `null` to `writer`.
+ *
+ * @param null The Null to write.
+ */
+static void writeNull(JSONWriter *writer, const Null *null) {
+
+	$(writer->data, appendBytes, (byte *) "null", 4);
+}
+
+/**
+ * Writes `bool` to `writer`.
+ *
+ * @param bool The Boolean to write.
+ */
+static void writeBoolean(JSONWriter *writer, const Boolean *bool) {
+
+	if (bool->bool) {
+		$(writer->data, appendBytes, (byte *) "true", 4);
+	} else {
+		$(writer->data, appendBytes, (byte *) "false", 5);
+	}
+}
+
+/**
+ * Writes `string` to `writer`.
+ *
+ * @param string The String to write.
+ */
+static void writeString(JSONWriter *writer, const String *string) {
+
+	$(writer->data, appendBytes, (byte *) "\"", 1);
+	$(writer->data, appendBytes, (byte *) string->chars, string->length);
+	$(writer->data, appendBytes, (byte *) "\"", 1);
+}
+
+/**
+ * Writes `number` to `writer`.
+ *
+ * @param number The Number to write.
+ */
+static void writeNumber(JSONWriter *writer, const Number *number) {
+
+	String *string = $(alloc(String), initWithFormat, "%.5f", number->value);
+
+	$(writer->data, appendBytes, (byte *) string->chars, string->length);
+
+	release(string);
+}
+
+/**
+ * Writes the label (field name) `label` to `writer`.
+ *
+ * @param label The label to write.
+ */
+static void writeLabel(JSONWriter *writer, const String *label) {
+
+	writeString(writer, label);
+	$(writer->data, appendBytes, (byte *) ": ", 2);
+}
+
+/**
+ * Writes `object` to `writer`.
+ *
+ * @param object The object (Dictionary) to write.
+ */
+static void writeObject(JSONWriter *writer, const Dictionary *object) {
+
+	$(writer->data, appendBytes, (byte * ) "{", 1);
+
+	Array *keys = $(object, allKeys);
+	for (size_t i = 0; i < keys->count; i++) {
+
+		const id key = $(keys, objectAtIndex, i);
+		writeLabel(writer, (String *) key);
+
+		const id obj = $(object, objectForKey, key);
+		writeElement(writer, obj);
+
+		if (i < keys->count - 1) {
+			$(writer->data, appendBytes, (byte *) ", ", 2);
+		}
+	}
+
+	release(keys);
+
+	$(writer->data, appendBytes, (byte * ) "}", 1);
+}
+
+/**
+ * Writes `array` to `writer`.
+ *
+ * @param array The Array to write.
+ */
+static void writeArray(JSONWriter *writer, const Array *array) {
+
+	$(writer->data, appendBytes, (byte * ) "[", 1);
+
+	for (size_t i = 0; i < array->count; i++) {
+
+		writeElement(writer, $(array, objectAtIndex, i));
+
+		if (i < array->count - 1) {
+			$(writer->data, appendBytes, (byte *) ", ", 2);
+		}
+	}
+
+	$(writer->data, appendBytes, (byte * ) "]", 1);
+}
+
+/**
+ * Writes the specified JSON element to `writer`.
+ *
+ * @param obj The JSON element to write.
+ */
+static void writeElement(JSONWriter *writer, const id obj) {
+
+	const Object *object = cast(Object, obj);
+	if (object) {
+		if ($(object, isKindOfClass, &__Dictionary)) {
+			writeObject(writer, (Dictionary *) object);
+		} else if ($(object, isKindOfClass, &__Array)) {
+			writeArray(writer, (Array *) object);
+		} else if ($(object, isKindOfClass, &__String)) {
+			writeString(writer, (String *) object);
+		} else if ($(object, isKindOfClass, &__Number)) {
+			writeNumber(writer, (Number *) object);
+		} else if ($(object, isKindOfClass, &__Boolean)) {
+			writeBoolean(writer, (Boolean *) object);
+		} else if ($(object, isKindOfClass, &__Null)) {
+			writeNull(writer, (Null *) object);
+		}
+	}
+}
+
+/**
  * @see JSONSerializationInterface::dataFromObject(const id, int options)
  */
 static Data *dataFromObject(const id obj, int options) {
 
-	Data *data = $(alloc(Data), init);
+	JSONWriter writer = {
+		.data = $(alloc(Data), init),
+		.options = options
+	};
 
-	// TODO
+	writeObject(&writer, obj);
 
-	return data;
+	return writer.data;
 }
 
 /**
@@ -270,12 +419,12 @@ static Array *readArray(JSONReader *reader) {
 static id readElement(JSONReader *reader) {
 
 	const int b = readByteUntil(reader, "{[\"tfn0123456789.-]}");
-	if (b == '"') {
-		return readString(reader);
-	} else if (b == '{') {
+	if (b == '{') {
 		return readObject(reader);
 	} else if (b == '[') {
 		return readArray(reader);
+	} else if (b == '\"') {
+		return readString(reader);
 	} else if (b == 't' || b == 'f') {
 		return readBoolean(reader);
 	} else if (b == 'n') {

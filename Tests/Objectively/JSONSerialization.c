@@ -35,12 +35,14 @@ START_TEST(json)
 		Dictionary *dict = $$(JSONSerialization, objectFromData, data, 0);
 		ck_assert(dict->count);
 
-		String *desc = $((Object *) dict, description);
-		printf("%s\n", desc->chars);
-		release(desc);
+		Data *json = $$(JSONSerialization, dataFromObject, dict, 0);
+		$(json, appendBytes, (byte *) "\0", 1);
+
+		printf("%s\n", (char *) json->bytes);
 
 		release(data);
 		release(dict);
+		release(json);
 
 	}END_TEST
 

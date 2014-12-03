@@ -173,9 +173,9 @@ static BOOL allKeys_enumerator(const Dictionary *dict, id obj, id key, id data) 
  */
 static Array *allKeys(const Dictionary *self) {
 
-	Array *keys = alloc(Array);
+	Array *keys = $(alloc(Array), initWithCapacity, self->count);
 
-	$(self, enumerateObjectsAndKeys, allKeys_enumerator, NULL);
+	$(self, enumerateObjectsAndKeys, allKeys_enumerator, keys);
 
 	return keys;
 }
@@ -192,7 +192,7 @@ static BOOL allObjects_enumerator(const Dictionary *dict, id obj, id key, id dat
  */
 static Array *allObjects(const Dictionary *self) {
 
-	Array *objects = alloc(Array);
+	Array *objects = $(alloc(Array), initWithCapacity, self->count);
 
 	$(self, enumerateObjectsAndKeys, allObjects_enumerator, objects);
 

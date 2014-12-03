@@ -28,6 +28,12 @@
 
 #include <Objectively/Object.h>
 
+/**
+ * @file
+ *
+ * @brief Mutable data buffers.
+ */
+
 typedef struct Data Data;
 typedef struct DataInterface DataInterface;
 
@@ -52,7 +58,12 @@ struct Data {
 	byte *bytes;
 
 	/**
-	 * @brief The length of bytes.
+	 * @brief The capacity of `bytes`, which is always `>= length`.
+	 */
+	size_t capacity;
+
+	/**
+	 * @brief The length of `bytes`.
 	 */
 	size_t length;
 };
@@ -72,6 +83,10 @@ struct DataInterface {
 	 *
 	 * @param bytes The bytes to append.
 	 * @param length The length of bytes to append.
+	 *
+	 * @remark Data are grown in blocks as bytes are appended. This provides
+	 * a significant performance gain when frequently appending small chunks
+	 * of bytes. Consider using Data when constructing very long Strings, etc.
 	 */
 	void (*appendBytes)(Data *self, const byte *bytes, size_t length);
 
@@ -93,6 +108,15 @@ struct DataInterface {
 	Data *(*initWithBytes)(Data *self, const byte *bytes, size_t length);
 
 	/**
+	 * @brief Initializes this Data with the given capacity.
+	 *
+	 * @param capacity The capacity in bytes.
+	 *
+	 * @return The initialized Data, or `NULL` on error.
+	 */
+	Data *(*initWithCapacity)(Data *self, size_t capacity);
+
+	/**
 	 * @brief Initializes this Data with the contents of `path`.
 	 *
 	 * @param path The path of the file to read into memory.
@@ -105,11 +129,12 @@ struct DataInterface {
 	 * @brief Initializes this Data, taking ownership of the specified memory.
 	 *
 	 * @param mem The dynamically allocated memory to back this Data.
-	 * @param length The length of `mem`.
+	 * @param capacity The size of the allocated memory block.
+	 * @param length The number of bytes of `mem` that are used.
 	 *
 	 * @return The initialized Data, or `NULL` on error.
 	 */
-	Data *(*initWithMemory)(Data *self, id mem, size_t length);
+	Data *(*initWithMemory)(Data *self, id mem, size_t capacity, size_t length);
 
 	/**
 	 * @brief Writes this Data to `path`.
