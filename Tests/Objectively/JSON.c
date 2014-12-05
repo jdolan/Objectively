@@ -32,21 +32,24 @@ START_TEST(json)
 		Data *data = $(alloc(Data), initWithContentsOfFile, path);
 		ck_assert(data->length);
 
-		Dictionary *dict = $$(JSONSerialization, objectFromData, data, 0);
-		ck_assert(dict->count);
-
-		Data *json = $$(JSONSerialization, dataFromObject, dict, 0);
-		Dictionary *copy = $$(JSONSerialization, objectFromData, json, 0);
-		ck_assert_int_eq(dict->count, copy->count);
-
-		ck_assert($((Object *) dict, isEqual, (Object *) copy));
-
-		printf("I am the smartest man alive.\n");
+		Dictionary *dict0 = $$(JSONSerialization, objectFromData, data, 0);
+		ck_assert(dict0->count);
 
 		release(data);
-		release(json);
-		release(dict);
-		release(copy);
+		data = $$(JSONSerialization, dataFromObject, dict0, 0);
+
+		Dictionary *dict1 = $$(JSONSerialization, objectFromData, data, 0);
+		release(data);
+
+		ck_assert_int_eq(dict0->count, dict1->count);
+		ck_assert($((Object *) dict0, isEqual, (Object *) dict1));
+
+		Number *dataStoreInitConns = $$(JSONPath, objectWithPath, dict0, "$.web-app.servlet[0].init-param.dataStoreInitConns");
+		ck_assert(dataStoreInitConns);
+		ck_assert_int_eq(10, (int) dataStoreInitConns->value);
+
+		release(dict0);
+		release(dict1);
 
 	}END_TEST
 

@@ -13,6 +13,7 @@ pkginclude_HEADERS = \
 	Dictionary.h \
 	Error.h \
 	Hash.h \
+	JSONPath.h \
 	JSONSerialization.h \
 	Lock.h \
 	Log.h \
@@ -48,6 +49,7 @@ libObjectively_la_SOURCES = \
 	Dictionary.c \
 	Error.c \
 	Hash.c \
+	JSONPath.c \
 	JSONSerialization.c \
 	Lock.c \
 	Log.c \

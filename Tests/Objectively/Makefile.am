@@ -8,7 +8,7 @@ TESTS = \
 	Date \
 	Dictionary \
 	Data \
-	JSONSerialization \
+	JSON \
 	Log \
 	Null \
 	Number \

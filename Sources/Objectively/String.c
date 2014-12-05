@@ -283,9 +283,30 @@ static String *initWithCharacters(String *self, const char *chars) {
  */
 static String *initWithContentsOfFile(String *self, const char *path) {
 
-	Data *data = $(alloc(Data), initWithContentsOfFile, path);
-	if (data) {
-		return $(self, initWithData, data);
+	assert(path);
+
+	FILE *file = fopen(path, "r");
+	if (file) {
+		id mem = NULL;
+
+		fseek(file, 0, SEEK_END);
+		const size_t length = ftell(file);
+
+		if (length) {
+			mem = malloc(length + 1);
+			assert(mem);
+
+			fseek(file, 0, SEEK_SET);
+
+			const size_t read = fread(mem, 1, length, file);
+			assert(read == length);
+
+			*(char *) (mem + length) = '\0';
+		}
+
+		fclose(file);
+
+		return $(self, initWithMemory, mem);
 	}
 
 	return NULL;
@@ -393,15 +414,10 @@ static String *substring(const String *self, const RANGE range) {
 
 	assert(range.location + range.length <= self->length);
 
-	char *str = calloc(1, range.length + 1);
-	memcpy(str, self->chars + range.location, range.length);
+	id mem = calloc(range.length + 1, 1);
+	memcpy(mem, self->chars + range.location, range.length);
 
-	String *substring = alloc(String);
-
-	substring->chars = str;
-	substring->length = strlen(str);
-
-	return substring;
+	return $(alloc(String), initWithMemory, mem);
 }
 
 /**
