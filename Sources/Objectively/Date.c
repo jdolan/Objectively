@@ -68,6 +68,21 @@ static BOOL isEqual(const Object *self, const Object *other) {
 #pragma mark - DateInterface
 
 /**
+ * @see DateInterface::dateWithTimeSinceNow(const Time *)
+ */
+static Date *dateWithTimeSinceNow(const Time *interval) {
+
+	Date *date = $(alloc(Date), init);
+	if (date) {
+		if (interval) {
+			timeradd(&date->time, interval, &date->time);
+		}
+	}
+
+	return date;
+}
+
+/**
  * @see DateInterface::compareTo(const Date *, const Date *)
  */
 static ORDER compareTo(const Date *self, const Date *other) {
@@ -128,6 +143,7 @@ static void initialize(Class *clazz) {
 
 	DateInterface *date = (DateInterface *) clazz->interface;
 
+	date->dateWithTimeSinceNow = dateWithTimeSinceNow;
 	date->compareTo = compareTo;
 	date->init = init;
 	date->initWithTime = initWithTime;

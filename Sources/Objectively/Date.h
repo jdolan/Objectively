@@ -84,6 +84,13 @@ struct DateInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @brief Instantiates a Date with the given Time since now.
+	 *
+	 * @return The new Date instance, or NULL on error.
+	 */
+	Date *(*dateWithTimeSinceNow)(const Time *interval);
+
+	/**
 	 * @brief Compares this Date to another.
 	 *
 	 * @param other The Date to compare to.
