@@ -24,6 +24,7 @@
 #ifndef _Objectively_Condition_h
 #define _Objectively_Condition_h
 
+#include <Objectively/Date.h>
 #include <Objectively/Lock.h>
 
 /**
@@ -92,6 +93,15 @@ struct ConditionInterface {
 	 * @brief Waits indefinitely for this Condition to be signaled.
 	 */
 	void (*wait)(Condition *self);
+
+	/**
+	 * @brief Waits until the specified Date for this Condition to be signaled.
+	 *
+	 * @param date The Date until which to wait.
+	 *
+	 * @return `YES` if this Condition was signaled before `date`, `NO` otherwise.
+	 */
+	BOOL (*waitUntilDate)(Condition *self, const Date *date);
 };
 
 /**

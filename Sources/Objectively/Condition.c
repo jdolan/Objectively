@@ -23,6 +23,7 @@
 
 #include <assert.h>
 
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -94,6 +95,24 @@ static void _wait(Condition *self) {
 	assert(err == 0);
 }
 
+/**
+ * @see ConditionInterface::waitUntilDate(Condition *, const Date *)
+ */
+static BOOL waitUntilDate(Condition *self, const Date *date) {
+
+	Lock *lock = (Lock *) self;
+
+	const struct timespec time = {
+		.tv_sec = date->time.tv_sec,
+		.tv_nsec = date->time.tv_usec * 1000
+	};
+
+	int err = pthread_cond_timedwait(self->condition, lock->lock, &time);
+	assert(err == 0 || err == ETIMEDOUT);
+
+	return err == 0;
+}
+
 #pragma mark - Class lifecycle
 
 /**
@@ -111,6 +130,7 @@ static void initialize(Class *clazz) {
 	condition->init = init;
 	condition->signal = _signal;
 	condition->wait = _wait;
+	condition->waitUntilDate = waitUntilDate;
 }
 
 Class __Condition = {
