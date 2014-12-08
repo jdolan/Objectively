@@ -38,9 +38,9 @@ typedef struct Thread Thread;
 typedef struct ThreadInterface ThreadInterface;
 
 /**
- * @brief A function pointer for Thread execution.
+ * @brief The function type for Thread execution.
  *
- * @param thread The Thread.
+ * @param thread The executing Thread.
  */
 typedef id (*ThreadFunction)(Thread *thread);
 

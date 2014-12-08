@@ -13,6 +13,7 @@ TESTS = \
 	Null \
 	Number \
 	Object \
+	Operation \
 	Regex \
 	String \
 	Thread \

@@ -48,6 +48,8 @@
 #include <Objectively/Number.h>
 #include <Objectively/NumberFormatter.h>
 #include <Objectively/Object.h>
+#include <Objectively/Operation.h>
+#include <Objectively/OperationQueue.h>
 #include <Objectively/Once.h>
 #include <Objectively/Regex.h>
 #include <Objectively/String.h>

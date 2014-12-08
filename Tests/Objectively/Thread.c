@@ -33,16 +33,15 @@ Condition *condition;
 static id increment(Thread *self) {
 
 	BOOL stop = NO;
+
 	while (!stop) {
 
-		$((Lock * ) condition, lock);
-
-		if (++(*(int *) self->data) == 0xbeaf) {
-			$(condition, signal);
-			stop = YES;
-		}
-
-		$((Lock * ) condition, unlock);
+		WithLock(condition, {
+			if (++(*(int *) self->data) == 0xbeaf) {
+				$(condition, signal);
+				stop = YES;
+			}
+		});
 	}
 
 	return (id) YES;
@@ -53,8 +52,6 @@ START_TEST(thread)
 		condition = $(alloc(Condition), init);
 		ck_assert(condition);
 
-		$((Lock * ) condition, lock);
-
 		int criticalSection = 0;
 
 		Thread *thread = $(alloc(Thread), initWithFunction, increment, &criticalSection);
@@ -62,7 +59,7 @@ START_TEST(thread)
 
 		$(thread, start);
 
-		$(condition, wait);
+		WithLock(condition, $(condition, wait));
 		ck_assert_int_eq(0xbeaf, criticalSection);
 
 		id ret;
@@ -78,7 +75,7 @@ static id signalBeforeDate(Thread *self) {
 
 	usleep(((Date *) self->data)->time.tv_usec / 2);
 
-	$(condition, signal);
+	WithLock(condition, $(condition, signal));
 
 	return NULL;
 }
@@ -92,7 +89,9 @@ START_TEST(cond)
 		Date *date = $$(Date, dateWithTimeSinceNow, &time);
 		ck_assert(date);
 
-		ck_assert($(condition, waitUntilDate, date) == NO);
+		WithLock(condition, {
+			ck_assert($(condition, waitUntilDate, date) == NO);
+		});
 
 		release(date);
 
@@ -104,7 +103,9 @@ START_TEST(cond)
 
 		$(thread, start);
 
-		ck_assert($(condition, waitUntilDate, date));
+		WithLock(condition, {
+			ck_assert($(condition, waitUntilDate, date));
+		});
 
 		$(thread, join, NULL);
 

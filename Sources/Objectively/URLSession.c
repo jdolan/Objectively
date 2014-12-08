@@ -50,7 +50,7 @@ static void dealloc(Object *self) {
 
 #pragma mark - URLSessionInterface
 
-static URLSession *__session__;
+static URLSession *__sharedInstance;
 
 /**
  * @see URLSessionInterface::sharedInstance(void)
@@ -59,10 +59,10 @@ static URLSession *sharedInstance(void) {
 	static Once once;
 
 	DispatchOnce(once, {
-		__session__ = $(alloc(URLSession), init);
+		__sharedInstance = $(alloc(URLSession), init);
 	});
 
-	return __session__;
+	return __sharedInstance;
 }
 
 /**
@@ -184,7 +184,7 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	release(__session__);
+	release(__sharedInstance);
 
 	curl_global_cleanup();
 }

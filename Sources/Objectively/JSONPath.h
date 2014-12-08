@@ -69,7 +69,7 @@ struct JSONPathInterface {
 	 *
 	 * @return The nested property, or `NULL` if not found.
 	 *
-	 * Accessing a nested Object from JSON Data:
+	 * Accessing a nested Boolean from JSON Data:
 	 *
 	 *     id obj = $$(JSONSerialization, objectFromData, data, 0);
 	 *     Boolean *bool = $$(JSONPath, objectWithPath, obj, "$.foo.bar[1].baz");

@@ -21,6 +21,8 @@ pkginclude_HEADERS = \
 	Number.h \
 	NumberFormatter.h \
 	Object.h \
+	Operation.h \
+	OperationQueue.h \
 	Once.h \
 	Regex.h \
 	String.h \
@@ -57,6 +59,8 @@ libObjectively_la_SOURCES = \
 	Number.c \
 	NumberFormatter.c \
 	Object.c \
+	Operation.c \
+	OperationQueue.c \
 	Regex.c \
 	String.c \
 	Thread.c \

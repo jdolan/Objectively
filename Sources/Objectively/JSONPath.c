@@ -34,7 +34,7 @@
 
 #pragma mark - JSONPathInterface
 
-static Regex *__regex__;
+static Regex *__regex;
 
 /**
  * @see JSONPathInterface::objectWithPath(const id, const char *)
@@ -47,7 +47,7 @@ static id objectWithPath(const id root, const char *path) {
 	while (obj) {
 
 		RANGE *matches;
-		if ($(__regex__, matchesCharacters, c, 0, &matches) == NO) {
+		if ($(__regex, matchesCharacters, c, 0, &matches) == NO) {
 			break;
 		}
 
@@ -96,7 +96,7 @@ static void initialize(Class *clazz) {
 	static Once once;
 
 	DispatchOnce(once, {
-		__regex__ = $(alloc(Regex), initWithPattern, "(.[^.\[]+|\[[0-9]+\\])", 0);
+		__regex = $(alloc(Regex), initWithPattern, "(.[^.\[]+|\[[0-9]+\\])", 0);
 	});
 }
 
@@ -105,7 +105,7 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	release(__regex__);
+	release(__regex);
 }
 
 Class __JSONPath = {

@@ -74,6 +74,8 @@ struct ConditionInterface {
 
 	/**
 	 * @brief Signals all Threads waiting on this Condition.
+	 *
+	 * @remark This method should only be called when the Condition is locked.
 	 */
 	void (*broadcast)(Condition *self);
 
@@ -86,11 +88,15 @@ struct ConditionInterface {
 
 	/**
 	 * @brief Signals a single Thread waiting on this Condition.
+	 *
+	 * @remark This method should only be called when the Condition is locked.
 	 */
 	void (*signal)(Condition *self);
 
 	/**
 	 * @brief Waits indefinitely for this Condition to be signaled.
+	 *
+	 * @remark This method should only be called when the Condition is locked.
 	 */
 	void (*wait)(Condition *self);
 
@@ -100,6 +106,8 @@ struct ConditionInterface {
 	 * @param date The Date until which to wait.
 	 *
 	 * @return `YES` if this Condition was signaled before `date`, `NO` otherwise.
+	 *
+	 * @remark This method should only be called when the Condition is locked.
 	 */
 	BOOL (*waitUntilDate)(Condition *self, const Date *date);
 };
