@@ -71,7 +71,8 @@ struct Operation {
 	} locals;
 
 	/**
-	 * @brief If `YES`, this Operation will be expected to set its own TODO
+	 * @brief If `YES`, this Operation will be expected to coordinate its own
+	 * concurrency and internal state management by overriding `start`.
 	 */
 	BOOL asynchronous;
 
@@ -111,22 +112,71 @@ struct OperationInterface {
 	 */
 	ObjectInterface objectInterface;
 
+	/**
+	 * @brief Makes this Operation dependent on the completion of `dependency`.
+	 *
+	 * @param dependency The Operation to await.
+	 */
 	void (*addDependency)(Operation *self, Operation *dependency);
 
+	/**
+	 * @brief Cancels this Operation, allowing it to complete immediately.
+	 */
 	void (*cancel)(Operation *self);
 
+	/**
+	 *@return An instantaneous copy of this Operations' dependencies.
+	 */
 	Array *(*dependencies)(const Operation *self);
 
+	/**
+	 * @brief Initializes this Operation.
+	 *
+	 * @return The initialized Operation, or `NULL` on error.
+	 *
+	 * @remark Asynchronous subclasses should invoke this initializer.
+	 */
 	Operation *(*init)(Operation *self);
 
+	/**
+	 * @brief Initializes a *synchronous* Operation with the given `function`.
+	 *
+	 * @param function The OperationFunction to perform
+	 * @param data The user data.
+	 *
+	 * @return The initialized Operation, or `NULL` on error.
+	 */
 	Operation *(*initWithFunction)(Operation *self, OperationFunction function, id data);
 
+	/**
+	 * @return `YES` when all criteria for this Operation to `start` are met.
+	 */
 	BOOL (*isReady)(const Operation *self);
 
+	/**
+	 * @brief Removes the dependency on `dependency`.
+	 *
+	 * @param dependency The dependency.
+	 */
 	void (*removeDependency)(Operation *self, Operation *dependency);
 
+	/**
+	 * @brief Starts this Operation.
+	 *
+	 * @remark The default implementation of this method checks the state of
+	 * the Operation and, if all criteria are met, dispatches the configured
+	 * `function` synchronously. When this method returns, the Operation
+	 * `isFinished` and has removed itself from any queues it belonged to.
+	 *
+	 * @remark Asynchronous Operations should override this method and
+	 * coordinate their own state transitions and queue removal. This method
+	 * must not be invoked by `super`.
+	 */
 	void (*start)(Operation *self);
 
+	/**
+	 * @brief Blocks the current thread until this Operation `isFinished`.
+	 */
 	void (*waitUntilFinished)(const Operation *self);
 };
 

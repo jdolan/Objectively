@@ -25,10 +25,15 @@
 #define _Objectively_OperationQueue_h
 
 #include <Objectively/Condition.h>
-#include <Objectively/Lock.h>
 #include <Objectively/Object.h>
 #include <Objectively/Operation.h>
 #include <Objectively/Thread.h>
+
+/**
+ * @file
+ *
+ * @brief OperationQueues provide a thread of execution for Operations.
+ */
 
 typedef struct OperationQueue OperationQueue;
 typedef struct OperationQueueInterface OperationQueueInterface;
