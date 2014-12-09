@@ -1,0 +1,175 @@
+/*
+ * Objectively: Ultra-lightweight object oriented framework for c99.
+ * Copyright (C) 2014 Jay Dolan <jay@jaydolan.com>
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ *
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ *
+ * 1. The origin of this software must not be misrepresented; you must not
+ * claim that you wrote the original software. If you use this software
+ * in a product, an acknowledgment in the product documentation would be
+ * appreciated but is not required.
+ *
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ * misrepresented as being the original software.
+ *
+ * 3. This notice may not be removed or altered from any source distribution.
+ */
+
+#include <assert.h>
+#include <stdlib.h>
+
+#include <Objectively/MutableArray.h>
+
+#define __Class __MutableArray
+
+#define ARRAY_CHUNK_SIZE 64
+
+#pragma mark - MutableArrayInterface
+
+/**
+ * @see MutableArrayInterface::addObject(MutableArray *, const id)
+ */
+static void addObject(MutableArray *self, const id obj) {
+
+	if (self->array.count == self->capacity) {
+
+		self->capacity += ARRAY_CHUNK_SIZE;
+		self->array.elements = realloc(self->array.elements, self->capacity * sizeof(id));
+
+		assert(self->array.elements);
+	}
+
+	retain(obj);
+
+	self->array.elements[self->array.count++] = obj;
+}
+
+/**
+ * @see MutableArrayInterface::init(MutableArray *)
+ */
+static MutableArray *init(MutableArray *self) {
+
+	return $(self, initWithCapacity, ARRAY_CHUNK_SIZE);
+}
+
+/**
+ * @see MutableArrayInterface::initWithCapacity(MutableArray *, size_t)
+ */
+static MutableArray *initWithCapacity(MutableArray *self, size_t capacity) {
+
+	self = (MutableArray *) super(Object, self, init);
+	if (self) {
+		self->capacity = self->initialCapacity = capacity;
+		self->array.elements = malloc(self->capacity * sizeof(id));
+		assert(self->array.elements);
+	}
+
+	return self;
+}
+
+/**
+ * @see MutableArrayInterface::removeAllObjects(MutableArray *)
+ */
+static void removeAllObjects(MutableArray *self) {
+
+	for (size_t i = self->array.count; i > 0; i--) {
+		$(self, removeObjectAtIndex, i - 1);
+	}
+}
+
+/**
+ * @see MutableArrayInterface::removeObject(MutableArray *, const id)
+ */
+static void removeObject(MutableArray *self, const id obj) {
+
+	int index = $((Array *) self, indexOfObject, obj);
+	if (index != -1) {
+		$(self, removeObjectAtIndex, index);
+	}
+}
+
+/**
+ * @see MutableArrayInterface::removeObjectAtIndex(MutableArray *, const int)
+ */
+static void removeObjectAtIndex(MutableArray *self, const int index) {
+
+	assert(index > -1);
+	assert(index < self->array.count);
+
+	release(self->array.elements[index]);
+
+	for (size_t i = index; i < self->array.count; i++) {
+		self->array.elements[i] = self->array.elements[i + 1];
+	}
+
+	self->array.count--;
+}
+
+/**
+ * @see MutableArrayInterface::resize(MutableArray *)
+ */
+static void resize(MutableArray *self) {
+
+	size_t chunks = (self->array.count / ARRAY_CHUNK_SIZE) + 1;
+	size_t capacity = chunks * ARRAY_CHUNK_SIZE;
+
+	capacity = max(capacity, self->initialCapacity);
+	if (capacity != self->capacity) {
+
+		self->capacity = capacity;
+		self->array.elements = realloc(self->array.elements, self->capacity * sizeof(id));
+
+		assert(self->array.elements);
+	}
+}
+
+/**
+ * @see MutableArrayInterface::setObjectAtIndex(MutableArray *, const id, const int)
+ */
+static void setObjectAtIndex(MutableArray *self, const id obj, const int index) {
+
+	assert(index > -1);
+	assert(index < self->array.count);
+
+	retain(obj);
+
+	release(self->array.elements[index]);
+
+	self->array.elements[index] = obj;
+}
+
+#pragma mark - Class lifecycle
+
+/**
+ * @see Class::initialize(Class *)
+ */
+static void initialize(Class *clazz) {
+
+	MutableArrayInterface *mutableArray = (MutableArrayInterface *) clazz->interface;
+
+	mutableArray->addObject = addObject;
+	mutableArray->init = init;
+	mutableArray->initWithCapacity = initWithCapacity;
+	mutableArray->removeAllObjects = removeAllObjects;
+	mutableArray->removeObject = removeObject;
+	mutableArray->removeObjectAtIndex = removeObjectAtIndex;
+	mutableArray->resize = resize;
+	mutableArray->setObjectAtIndex = setObjectAtIndex;
+}
+
+Class __MutableArray = {
+	.name = "MutableArray",
+	.superclass = &__Array,
+	.instanceSize = sizeof(MutableArray),
+	.interfaceOffset = offsetof(MutableArray, interface),
+	.interfaceSize = sizeof(MutableArrayInterface),
+	.initialize = initialize,
+};
+
+#undef __Class

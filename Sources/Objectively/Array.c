@@ -22,15 +22,15 @@
  */
 
 #include <assert.h>
+#include <stdarg.h>
 #include <stdlib.h>
 
 #include <Objectively/Array.h>
 #include <Objectively/Hash.h>
+#include <Objectively/MutableArray.h>
 #include <Objectively/String.h>
 
 #define __Class __Array
-
-#define ARRAY_CHUNK_SIZE 64
 
 #pragma mark - ObjectInterface
 
@@ -40,13 +40,8 @@
 static Object *copy(const Object *self) {
 
 	const Array *this = (Array *) self;
-	Array *that = $(alloc(Array), initWithCapacity, this->capacity);
 
-	for (size_t i = 0; i < this->count; i++) {
-		$(that, addObject, this->elements[i]);
-	}
-
-	return (Object *) that;
+	return (Object *) $(alloc(Array), initWithArray, this);
 }
 
 /**
@@ -56,7 +51,9 @@ static void dealloc(Object *self) {
 
 	Array *this = (Array *) self;
 
-	$(this, removeAllObjects);
+	for (size_t i = 0; i < this->count; i++) {
+		release(this->elements[i]);
+	}
 
 	free(this->elements);
 
@@ -139,24 +136,6 @@ static BOOL isEqual(const Object *self, const Object *other) {
 #pragma mark - ArrayInterface
 
 /**
- * @see ArrayInterface::addObject(Array *, const id)
- */
-static void addObject(Array *self, const id obj) {
-
-	if (self->count == self->capacity) {
-
-		self->capacity += ARRAY_CHUNK_SIZE;
-		self->elements = realloc(self->elements, self->capacity * sizeof(id));
-
-		assert(self->elements);
-	}
-
-	retain(obj);
-
-	self->elements[self->count++] = obj;
-}
-
-/**
  * @see ArrayInterface::containsObject(const Array *, const id)
  */
 static BOOL containsObject(const Array *self, const id obj) {
@@ -185,7 +164,7 @@ static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, id da
 
 	assert(enumerator);
 
-	Array *array = alloc(Array);
+	MutableArray *array = $(alloc(MutableArray), init);
 
 	for (size_t i = 0; i < self->count; i++) {
 		if (enumerator(self, self->elements[i], data)) {
@@ -193,7 +172,7 @@ static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, id da
 		}
 	}
 
-	return array;
+	return (Array *) array;
 }
 
 /**
@@ -215,24 +194,59 @@ static int indexOfObject(const Array *self, const id obj) {
 }
 
 /**
- * @see ArrayInterface::init(Array *)
+ * @see ArrayInterface::initWithArray(Array *, const Array *)
  */
-static Array *init(Array *self) {
-
-	return $(self, initWithCapacity, ARRAY_CHUNK_SIZE);
-}
-
-/**
- * @see ArrayInterface::initWithCapacity(Array *, size_t)
- */
-static Array *initWithCapacity(Array *self, size_t capacity) {
+static Array *initWithArray(Array *self, const Array *array) {
 
 	self = (Array *) super(Object, self, init);
 	if (self) {
-		self->capacity = self->initialCapacity = capacity;
-		self->elements = malloc(self->capacity * sizeof(id));
+		self->count = array->count;
+
+		self->elements = calloc(self->count, sizeof(id));
 		assert(self->elements);
+
+		for (size_t i = 0; i < self->count; i++) {
+			retain(self->elements[i] = array->elements[i]);
+		}
 	}
+
+	return self;
+}
+
+/**
+ * @see ArrayInterface::initWithObjects(Array *, ...)
+ */
+static Array *initWithObjects(Array *self, ...) {
+
+	self = (Array *) super(Object, self, init);
+	if (self) {
+
+		va_list args;
+		va_start(args, self);
+
+		while (YES) {
+			id obj = va_arg(args, id);
+			if (obj) {
+				self->count++;
+			} else {
+				break;
+			}
+		}
+
+		va_end(args);
+
+		self->elements = calloc(self->count, sizeof(id));
+		assert(self->elements);
+
+		va_start(args, self);
+
+		for (size_t i = 0; i < self->count; i++) {
+			retain(self->elements[i] = va_arg(args, id));
+		}
+
+		va_end(args);
+	}
+
 	return self;
 }
 
@@ -245,77 +259,6 @@ static id objectAtIndex(const Array *self, const int index) {
 	assert(index < self->count);
 
 	return self->elements[index];
-}
-
-/**
- * @see ArrayInterface::removeAllObjects(Array *)
- */
-static void removeAllObjects(Array *self) {
-
-	for (size_t i = self->count; i > 0; i--) {
-		$(self, removeObjectAtIndex, i - 1);
-	}
-}
-
-/**
- * @see ArrayInterface::removeObject(Array *, const id)
- */
-static void removeObject(Array *self, const id obj) {
-
-	int index = $(self, indexOfObject, obj);
-	if (index != -1) {
-		$(self, removeObjectAtIndex, index);
-	}
-}
-
-/**
- * @see ArrayInterface::removeObjectAtIndex(Array *, const int)
- */
-static void removeObjectAtIndex(Array *self, const int index) {
-
-	assert(index > -1);
-	assert(index < self->count);
-
-	release(self->elements[index]);
-
-	for (size_t i = index; i < self->count; i++) {
-		self->elements[i] = self->elements[i + 1];
-	}
-
-	self->count--;
-}
-
-/**
- * @see ArrayInterface::resize(Array *)
- */
-static void resize(Array *self) {
-
-	size_t chunks = (self->count / ARRAY_CHUNK_SIZE) + 1;
-	size_t capacity = chunks * ARRAY_CHUNK_SIZE;
-
-	capacity = max(capacity, self->initialCapacity);
-	if (capacity != self->capacity) {
-
-		self->capacity = capacity;
-		self->elements = realloc(self->elements, self->capacity * sizeof(id));
-
-		assert(self->elements);
-	}
-}
-
-/**
- * @see ArrayInterface::setObjectAtIndex(Array *, const id, const int)
- */
-static void setObjectAtIndex(Array *self, const id obj, const int index) {
-
-	assert(index > -1);
-	assert(index < self->count);
-
-	retain(obj);
-
-	release(self->elements[index]);
-
-	self->elements[index] = obj;
 }
 
 #pragma mark - Class lifecycle
@@ -335,19 +278,13 @@ static void initialize(Class *clazz) {
 
 	ArrayInterface *array = (ArrayInterface *) clazz->interface;
 
-	array->addObject = addObject;
 	array->containsObject = containsObject;
 	array->enumerateObjects = enumerateObjects;
 	array->filterObjects = filterObjects;
 	array->indexOfObject = indexOfObject;
-	array->init = init;
-	array->initWithCapacity = initWithCapacity;
+	array->initWithArray = initWithArray;
+	array->initWithObjects = initWithObjects;
 	array->objectAtIndex = objectAtIndex;
-	array->removeAllObjects = removeAllObjects;
-	array->removeObject = removeObject;
-	array->removeObjectAtIndex = removeObjectAtIndex;
-	array->resize = resize;
-	array->setObjectAtIndex = setObjectAtIndex;
 }
 
 Class __Array = {

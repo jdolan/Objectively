@@ -27,6 +27,7 @@
 
 #include <Objectively/Dictionary.h>
 #include <Objectively/Hash.h>
+#include <Objectively/MutableArray.h>
 #include <Objectively/String.h>
 
 #define __Class __Dictionary
@@ -47,7 +48,7 @@ static Object *copy(const Object *self) {
 
 	for (size_t i = 0; i < this->capacity; i++) {
 
-		Array *array = this->elements[i];
+		MutableArray *array = this->elements[i];
 		if (array != NULL) {
 			that->elements[i] = $((Object *) array, copy);
 		}
@@ -165,7 +166,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
  * @brief DictionaryEnumerator for allKeys.
  */
 static BOOL allKeys_enumerator(const Dictionary *dict, id obj, id key, id data) {
-	$((Array *) data, addObject, key); return NO;
+	$((MutableArray *) data, addObject, key); return NO;
 }
 
 /**
@@ -173,18 +174,18 @@ static BOOL allKeys_enumerator(const Dictionary *dict, id obj, id key, id data) 
  */
 static Array *allKeys(const Dictionary *self) {
 
-	Array *keys = $(alloc(Array), initWithCapacity, self->count);
+	MutableArray *keys = $(alloc(MutableArray), initWithCapacity, self->count);
 
 	$(self, enumerateObjectsAndKeys, allKeys_enumerator, keys);
 
-	return keys;
+	return (Array *) keys;
 }
 
 /**
  * @brief DictionaryEnumerator for allObjects.
  */
 static BOOL allObjects_enumerator(const Dictionary *dict, id obj, id key, id data) {
-	$((Array *) data, addObject, obj); return NO;
+	$((MutableArray *) data, addObject, obj); return NO;
 }
 
 /**
@@ -192,11 +193,11 @@ static BOOL allObjects_enumerator(const Dictionary *dict, id obj, id key, id dat
  */
 static Array *allObjects(const Dictionary *self) {
 
-	Array *objects = $(alloc(Array), initWithCapacity, self->count);
+	MutableArray *objects = $(alloc(MutableArray), initWithCapacity, self->count);
 
 	$(self, enumerateObjectsAndKeys, allObjects_enumerator, objects);
 
-	return objects;
+	return (Array *) objects;
 }
 
 /**
@@ -305,9 +306,6 @@ static void removeAllObjects(Dictionary *self) {
 
 		Array *array = self->elements[i];
 		if (array != NULL) {
-
-			$(array, removeAllObjects);
-
 			release(array);
 			self->elements[i] = NULL;
 		}
@@ -323,16 +321,16 @@ static void removeObjectForKey(Dictionary *self, const id key) {
 
 	assert(cast(Object, key));
 
-	Array *array = self->elements[HASH(key)];
+	MutableArray *array = self->elements[HASH(key)];
 	if (array != NULL) {
 
-		int index = $(array, indexOfObject, key);
+		int index = $((Array *) array, indexOfObject, key);
 		if (index > -1) {
 
 			$(array, removeObjectAtIndex, index);
 			$(array, removeObjectAtIndex, index);
 
-			if (array->count == 0) {
+			if (((Array *) array)->count == 0) {
 				release(array);
 				self->elements[HASH(key)] = NULL;
 			}
@@ -350,12 +348,12 @@ static void setObjectForKey(Dictionary *self, const id obj, const id key) {
 	assert(cast(Object, obj));
 	assert(cast(Object, key));
 
-	Array *array = self->elements[HASH(key)];
+	MutableArray *array = self->elements[HASH(key)];
 	if (array == NULL) {
-		array = self->elements[HASH(key)] = alloc(Array);
+		array = self->elements[HASH(key)] = $(alloc(MutableArray), init);
 	}
 
-	int index = $(array, indexOfObject, key);
+	int index = $((Array *) array, indexOfObject, key);
 	if (index > -1) {
 		$(array, setObjectAtIndex, obj, index + 1);
 	} else {

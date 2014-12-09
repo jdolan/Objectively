@@ -66,7 +66,7 @@ struct OperationQueue {
 		/**
 		 * @brief The Operations.
 		 */
-		Array *operations;
+		MutableArray *operations;
 
 		/**
 		 * @brief The backing Thread.

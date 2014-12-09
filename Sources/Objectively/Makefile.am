@@ -17,6 +17,7 @@ pkginclude_HEADERS = \
 	JSONSerialization.h \
 	Lock.h \
 	Log.h \
+	MutableArray.h \
 	Null.h \
 	Number.h \
 	NumberFormatter.h \
@@ -55,6 +56,7 @@ libObjectively_la_SOURCES = \
 	JSONSerialization.c \
 	Lock.c \
 	Log.c \
+	MutableArray.c \
 	Null.c \
 	Number.c \
 	NumberFormatter.c \

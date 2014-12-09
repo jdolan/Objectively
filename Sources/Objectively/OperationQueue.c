@@ -150,7 +150,7 @@ static OperationQueue *init(OperationQueue *self) {
 		self->locals.condition = $(alloc(Condition), init);
 		assert(self->locals.condition);
 
-		self->locals.operations = $(alloc(Array), init);
+		self->locals.operations = $(alloc(MutableArray), init);
 		assert(self->locals.operations);
 
 		self->locals.thread = $(alloc(Thread), initWithFunction, run, self);
@@ -170,7 +170,7 @@ static int operationCount(const OperationQueue *self) {
 	int count;
 
 	WithLock(self->locals.condition, {
-		count = self->locals.operations->count;
+		count = ((Array *) self->locals.operations)->count;
 	});
 
 	return count;
@@ -209,7 +209,8 @@ static void removeOperation(OperationQueue *self, Operation *operation) {
  */
 static void waitUntilAllOperationsAreFinished(OperationQueue *self) {
 
-	while (self->locals.operations->count > 0) {
+	Array *operations = (Array *) self->locals.operations;
+	while (operations->count > 0) {
 
 		WithLock(self->locals.condition, {
 			$(self->locals.condition, wait);

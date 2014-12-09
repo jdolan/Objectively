@@ -60,8 +60,10 @@ static void addDependency(Operation *self, Operation *dependency) {
 
 	assert(dependency);
 
-	assert($(dependency->locals.dependencies, indexOfObject, self) == -1);
-	assert($(self->locals.dependencies, indexOfObject, dependency) == -1);
+	const Array *dependencies = (Array *) self->locals.dependencies;
+
+	assert($(dependencies, indexOfObject, self) == -1);
+	assert($(dependencies, indexOfObject, dependency) == -1);
 
 	$(self->locals.dependencies, addObject, dependency);
 }
@@ -101,7 +103,7 @@ static Operation *init(Operation *self) {
 		self->locals.condition = $(alloc(Condition), init);
 		assert(self->locals.condition);
 
-		self->locals.dependencies = $(alloc(Array), init);
+		self->locals.dependencies = $(alloc(MutableArray), init);
 		assert(self->locals.dependencies);
 	}
 
@@ -135,9 +137,10 @@ static BOOL isReady(const Operation *self) {
 		return YES;
 	}
 
-	for (size_t i = 0; i < self->locals.dependencies->count; i++) {
+	const Array *dependencies = (Array *) self->locals.dependencies;
+	for (size_t i = 0; i < dependencies->count; i++) {
 
-		Operation *dependency = $(self->locals.dependencies, objectAtIndex, i);
+		Operation *dependency = $(dependencies, objectAtIndex, i);
 		if (dependency->isFinished == NO) {
 			return NO;
 		}

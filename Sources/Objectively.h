@@ -44,6 +44,7 @@
 #include <Objectively/JSONSerialization.h>
 #include <Objectively/Lock.h>
 #include <Objectively/Log.h>
+#include <Objectively/MutableArray.h>
 #include <Objectively/Null.h>
 #include <Objectively/Number.h>
 #include <Objectively/NumberFormatter.h>

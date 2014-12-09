@@ -24,8 +24,8 @@
 #ifndef _Objectively_Operation_h
 #define _Objectively_Operation_h
 
-#include <Objectively/Array.h>
 #include <Objectively/Condition.h>
+#include <Objectively/MutableArray.h>
 #include <Objectively/Object.h>
 
 typedef struct Operation Operation;
@@ -66,7 +66,7 @@ struct Operation {
 		/**
 		 * @brief Contains Operations which must finish before this one can start.
 		 */
-		Array *dependencies;
+		MutableArray *dependencies;
 
 	} locals;
 

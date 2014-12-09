@@ -62,11 +62,6 @@ struct Array {
 	ArrayInterface *interface;
 
 	/**
-	 * @brief The Array capacity.
-	 */
-	size_t capacity;
-
-	/**
 	 * @brief The count of elements.
 	 */
 	size_t count;
@@ -77,11 +72,6 @@ struct Array {
 	 * @private
 	 */
 	id *elements;
-
-	/**
-	 * @brief The Array initial capacity.
-	 */
-	size_t initialCapacity;
 };
 
 /**
@@ -93,11 +83,6 @@ struct ArrayInterface {
 	 * @brief The parent.
 	 */
 	ObjectInterface objectInterface;
-
-	/**
-	 * @brief Adds the specified Object to this Array.
-	 */
-	void (*addObject)(Array *self, const id obj);
 
 	/**
 	 * @return `YES` if this Array contains the given Object, `NO` otherwise.
@@ -130,20 +115,20 @@ struct ArrayInterface {
 	int (*indexOfObject)(const Array *self, const id obj);
 
 	/**
-	 * @brief Initializes this Array.
+	 * Initializes this Array to contain the Objects in `array`.
+	 *
+	 * @param array An Array.
 	 *
 	 * @return The initialized Array, or `NULL` on error.
 	 */
-	Array *(*init)(Array *self);
+	Array *(*initWithArray)(Array *self, const Array *array);
 
 	/**
-	 * @brief Initializes this Array with the specified capacity.
-	 *
-	 * @param capacity The desired initial capacity.
+	 * @brief Initializes this Array with the specified objects.
 	 *
 	 * @return The initialized Array, or `NULL` on error.
 	 */
-	Array *(*initWithCapacity)(Array *self, size_t capacity);
+	Array *(*initWithObjects)(Array *self, ...);
 
 	/**
 	 * @param index The index of the desired Object.
@@ -151,41 +136,6 @@ struct ArrayInterface {
 	 * @return The Object at the specified index.
 	 */
 	id (*objectAtIndex)(const Array *self, const int index);
-
-	/**
-	 * @brief Removes all Objects from this Array.
-	 */
-	void (*removeAllObjects)(Array *self);
-
-	/**
-	 * @brief Removes the specified Object from this Array.
-	 */
-	void (*removeObject)(Array *self, const id obj);
-
-	/**
-	 * @brief Removes the Object at the specified index.
-	 *
-	 * @param index The index of the Object to remove.
-	 */
-	void (*removeObjectAtIndex)(Array *self, const int index);
-
-	/**
-	 * @brief Resizes this Array to an appropriate capacity based on count.
-	 *
-	 * @remark This operation is entirely optional, but can reclaim memory
-	 * after large removal operations have executed.
-	 */
-	void (*resize)(Array *self);
-
-	/**
-	 * @brief Replaces the Object at the specified index.
-	 *
-	 * @param obj The Object with which to replace.
-	 * @param index The index of the Object to replace.
-	 *
-	 * @remark The index must not exceed the size of the Array.
-	 */
-	void (*setObjectAtIndex)(Array *self, const id obj, const int index);
 };
 
 /**
