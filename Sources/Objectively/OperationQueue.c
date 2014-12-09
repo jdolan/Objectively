@@ -49,7 +49,6 @@ static void dealloc(Object *self) {
 	$(this->locals.thread, join, NULL);
 
 	release(this->locals.thread);
-
 	release(this->locals.condition);
 	release(this->locals.operations);
 
@@ -89,15 +88,13 @@ static void addOperation(OperationQueue *self, Operation *operation) {
  */
 static void cancelAllOperations(OperationQueue *self) {
 
-	WithLock(self->locals.condition, {
-		Array *operations = $(self, operations);
+	Array *operations = $(self, operations);
 
-		for (size_t i = 0; i < operations->count; i++) {
-			$((Operation *) $(operations, objectAtIndex, i), cancel);
-		}
+	for (size_t i = 0; i < operations->count; i++) {
+		$((Operation *) $(operations, objectAtIndex, i), cancel);
+	}
 
-		release(operations);
-	});
+	release(operations);
 }
 
 /**
@@ -116,6 +113,7 @@ static id run(Thread *thread) {
 
 			release(operations);
 			operations = $(self, operations);
+
 			for (size_t i = 0; i < operations->count; i++) {
 
 				Operation *operation = $(operations, objectAtIndex, i);
@@ -126,16 +124,16 @@ static id run(Thread *thread) {
 			}
 
 			release(operations);
-
-			const Time interval = { .tv_usec = 10 };
-			Date *date = $$(Date, dateWithTimeSinceNow, &interval);
-
-			WithLock(self->locals.condition, {
-				$(self->locals.condition, waitUntilDate, date);
-			});
-
-			release(date);
 		}
+
+		const Time interval = { .tv_usec = 10 };
+		Date *date = $$(Date, dateWithTimeSinceNow, &interval);
+
+		WithLock(self->locals.condition, {
+			$(self->locals.condition, waitUntilDate, date);
+		});
+
+		release(date);
 	}
 
 	return NULL;
@@ -162,6 +160,20 @@ static OperationQueue *init(OperationQueue *self) {
 	}
 
 	return self;
+}
+
+/**
+ * @see OperationQueueInterface::operationCount(const OperationQueue *)
+ */
+static int operationCount(const OperationQueue *self) {
+
+	int count;
+
+	WithLock(self->locals.condition, {
+		count = self->locals.operations->count;
+	});
+
+	return count;
 }
 
 /**
@@ -223,6 +235,7 @@ static void initialize(Class *clazz) {
 	queue->addOperation = addOperation;
 	queue->cancelAllOperations = cancelAllOperations;
 	queue->init = init;
+	queue->operationCount = operationCount;
 	queue->operations = operations;
 	queue->removeOperation = removeOperation;
 	queue->waitUntilAllOperationsAreFinished = waitUntilAllOperationsAreFinished;

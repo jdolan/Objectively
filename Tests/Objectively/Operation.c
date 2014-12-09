@@ -59,10 +59,45 @@ START_TEST(producerConsumer)
 
 	}END_TEST
 
+
+static void suspendResume_func(Operation *operation) {
+
+	(*(int *) operation->data)++;
+}
+
+START_TEST(suspendResume)
+	{
+		OperationQueue *queue = $(alloc(OperationQueue), init);
+		ck_assert(queue);
+
+		queue->isSuspended = YES;
+		int counter = 0;
+
+		Operation *operation;
+		for (int i = 0; i < 5; i++) {
+			operation = $(alloc(Operation), initWithFunction, suspendResume_func, &counter);
+
+			$(queue, addOperation, operation);
+
+			release(operation);
+		}
+
+		ck_assert_int_eq(5, $(queue, operationCount));
+
+		queue->isSuspended = NO;
+
+		$(queue, waitUntilAllOperationsAreFinished);
+
+		ck_assert_int_eq(0, $(queue, operationCount));
+
+		release(queue);
+	}END_TEST
+
 int main(int argc, char **argv) {
 
 	TCase *tcase = tcase_create("operation");
 	tcase_add_test(tcase, producerConsumer);
+	tcase_add_test(tcase, suspendResume);
 
 	Suite *suite = suite_create("operation");
 	suite_add_tcase(suite, tcase);

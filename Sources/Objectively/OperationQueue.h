@@ -115,6 +115,11 @@ struct OperationQueueInterface {
 	OperationQueue *(*init)(OperationQueue *self);
 
 	/**
+	 * @return The instantaneous `count` of this OperationQueue's Operations.
+	 */
+	int (*operationCount)(const OperationQueue *self);
+
+	/**
 	 * @return An instantaneous copy of this OperationQueue's Operations.
 	 */
 	Array *(*operations)(const OperationQueue *self);
