@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_URLRequest_h
-#define _Objectively_URLRequest_h
+#ifndef _Objectively_URLRequest_h_
+#define _Objectively_URLRequest_h_
 
 #include <Objectively/Data.h>
 #include <Objectively/Dictionary.h>
@@ -51,6 +51,8 @@ typedef enum {
 
 /**
  * @brief The URLRequest type.
+ *
+ * @ingroup URLSession
  */
 struct URLRequest {
 
@@ -86,7 +88,9 @@ struct URLRequest {
 };
 
 /**
- * @brief The URLRequest type.
+ * @brief The URLRequest interface.
+ *
+ * @ingroup URLSession
  */
 struct URLRequestInterface {
 
@@ -101,6 +105,8 @@ struct URLRequestInterface {
 	 * @param url The URL.
 	 *
 	 * @return The initialized URLRequest, or `NULL` on error.
+	 *
+	 * @relates URLRequest
 	 */
 	URLRequest *(*initWithURL)(URLRequest *self, URL *url);
 
@@ -109,6 +115,8 @@ struct URLRequestInterface {
 	 *
 	 * @param value The HTTP header value.
 	 * @param field The HTTP header field.
+	 *
+	 * @relates URLRequest
 	 */
 	void (*setValueForHTTPHeaderField)(URLRequest *self, const char *value, const char *field);
 };

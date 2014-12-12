@@ -25,10 +25,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <Objectively/Array.h>
 #include <Objectively/Boolean.h>
-#include <Objectively/Dictionary.h>
 #include <Objectively/JSONSerialization.h>
+#include <Objectively/MutableDictionary.h>
+#include <Objectively/MutableArray.h>
 #include <Objectively/Null.h>
 #include <Objectively/Number.h>
 #include <Objectively/String.h>
@@ -359,7 +359,7 @@ static String *readLabel(JSONReader *reader) {
  */
 static Dictionary *readObject(JSONReader *reader) {
 
-	Dictionary *object = $(alloc(Dictionary), init);
+	MutableDictionary *object = $(alloc(MutableDictionary), init);
 
 	while (YES) {
 
@@ -382,7 +382,7 @@ static Dictionary *readObject(JSONReader *reader) {
 		release(obj);
 	}
 
-	return object;
+	return (Dictionary *) object;
 }
 
 /**
@@ -392,7 +392,7 @@ static Dictionary *readObject(JSONReader *reader) {
  */
 static Array *readArray(JSONReader *reader) {
 
-	Array *array = $(alloc(Array), init);
+	MutableArray *array = $(alloc(MutableArray), init);
 
 	while (YES) {
 
@@ -408,7 +408,7 @@ static Array *readArray(JSONReader *reader) {
 		release(obj);
 	}
 
-	return array;
+	return (Array *) array;
 }
 
 /**

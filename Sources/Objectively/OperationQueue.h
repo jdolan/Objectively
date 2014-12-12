@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_OperationQueue_h
-#define _Objectively_OperationQueue_h
+#ifndef _Objectively_OperationQueue_h_
+#define _Objectively_OperationQueue_h_
 
 #include <Objectively/Condition.h>
 #include <Objectively/Object.h>
@@ -40,6 +40,8 @@ typedef struct OperationQueueInterface OperationQueueInterface;
 
 /**
  * @brief The OperationQueue type.
+ *
+ * @ingroup Concurrency
  */
 struct OperationQueue {
 
@@ -66,7 +68,7 @@ struct OperationQueue {
 		/**
 		 * @brief The Operations.
 		 */
-		Array *operations;
+		MutableArray *operations;
 
 		/**
 		 * @brief The backing Thread.
@@ -82,7 +84,9 @@ struct OperationQueue {
 };
 
 /**
- * @brief The OperationQueue type.
+ * @brief The OperationQueue interface.
+ *
+ * @ingroup Concurrency
  */
 struct OperationQueueInterface {
 
@@ -97,6 +101,8 @@ struct OperationQueueInterface {
 	 * @remark This method should only be called from a synchronous Operation
 	 * that was dispatched via an OperationQueue. This method uses thread-local
 	 * storage.
+	 *
+	 * @relates OperationQueue
 	 */
 	OperationQueue *(*currentQueue)(void);
 
@@ -104,11 +110,15 @@ struct OperationQueueInterface {
 	 * @brief Adds an Operation to this queue.
 	 *
 	 * @param operation The Operation to add.
+	 *
+	 * @relates OperationQueue
 	 */
 	void (*addOperation)(OperationQueue *self, Operation *operation);
 
 	/**
 	 * @brief Cancels all pending Operations residing within this Queue.
+	 *
+	 * @relates OperationQueue
 	 */
 	void (*cancelAllOperations)(OperationQueue *self);
 
@@ -116,16 +126,22 @@ struct OperationQueueInterface {
 	 * @brief Initializes this OperationQueue.
 	 *
 	 * @return The initialized OperationQueue, or `NULL` on error.
+	 *
+	 * @relates OperationQueue
 	 */
 	OperationQueue *(*init)(OperationQueue *self);
 
 	/**
 	 * @return The instantaneous `count` of this OperationQueue's Operations.
+	 *
+	 * @relates OperationQueue
 	 */
 	int (*operationCount)(const OperationQueue *self);
 
 	/**
 	 * @return An instantaneous copy of this OperationQueue's Operations.
+	 *
+	 * @relates OperationQueue
 	 */
 	Array *(*operations)(const OperationQueue *self);
 
@@ -133,14 +149,17 @@ struct OperationQueueInterface {
 	 * @brief Removes the Operation from this queue.
 	 *
 	 * @param operation The Operation to remove.
+	 *
+	 * @relates OperationQueue
 	 */
 	void (*removeOperation)(OperationQueue *self, Operation *operation);
 
 	/**
 	 * @brief Waits until all Operations submitted to this queue have finished.
+	 *
+	 * @relates OperationQueue
 	 */
 	void (*waitUntilAllOperationsAreFinished)(OperationQueue *self);
-
 };
 
 /**

@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Data_h
-#define _Objectively_Data_h
+#ifndef _Objectively_Data_h_
+#define _Objectively_Data_h_
 
 #include <stdio.h>
 
@@ -69,7 +69,7 @@ struct Data {
 };
 
 /**
- * @brief The Data type.
+ * @brief The Data interface.
  */
 struct DataInterface {
 
@@ -87,6 +87,8 @@ struct DataInterface {
 	 * @remark Data are grown in blocks as bytes are appended. This provides
 	 * a significant performance gain when frequently appending small chunks
 	 * of bytes. Consider using Data when constructing very long Strings, etc.
+	 *
+	 * @relates Data
 	 */
 	void (*appendBytes)(Data *self, const byte *bytes, size_t length);
 
@@ -94,6 +96,8 @@ struct DataInterface {
 	 * @brief Initializes this Data with length `0`.
 	 *
 	 * @return The initialized Data, or `NULL` on error.
+	 *
+	 * @relates Data
 	 */
 	Data *(*init)(Data *self);
 
@@ -104,6 +108,8 @@ struct DataInterface {
 	 * @param length The length of bytes.
 	 *
 	 * @return The initialized Data, or `NULL` on error.
+	 *
+	 * @relates Data
 	 */
 	Data *(*initWithBytes)(Data *self, const byte *bytes, size_t length);
 
@@ -113,6 +119,8 @@ struct DataInterface {
 	 * @param capacity The capacity in bytes.
 	 *
 	 * @return The initialized Data, or `NULL` on error.
+	 *
+	 * @relates Data
 	 */
 	Data *(*initWithCapacity)(Data *self, size_t capacity);
 
@@ -122,6 +130,8 @@ struct DataInterface {
 	 * @param path The path of the file to read into memory.
 	 *
 	 * @return The initialized Data, or `NULL` on error.
+	 *
+	 * @relates Data
 	 */
 	Data *(*initWithContentsOfFile)(Data *self, const char *path);
 
@@ -133,6 +143,8 @@ struct DataInterface {
 	 * @param length The number of bytes of `mem` that are used.
 	 *
 	 * @return The initialized Data, or `NULL` on error.
+	 *
+	 * @relates Data
 	 */
 	Data *(*initWithMemory)(Data *self, id mem, size_t capacity, size_t length);
 
@@ -142,6 +154,8 @@ struct DataInterface {
 	 * @param path The path of the file to write.
 	 *
 	 * @return `YES` on success, `NO` on error.
+	 *
+	 * @relates Data
 	 */
 	BOOL (*writeToFile)(const Data *self, const char *path);
 };

@@ -51,6 +51,8 @@ typedef struct LockInterface LockInterface;
 
 /**
  * @brief The Lock type.
+ *
+ * @ingroup Concurrency
  */
 struct Lock {
 
@@ -72,6 +74,8 @@ struct Lock {
 
 /**
  * @brief The Lock interface.
+ *
+ * @ingroup Concurrency
  */
 struct LockInterface {
 
@@ -84,11 +88,15 @@ struct LockInterface {
 	 * @brief Initializes this Lock.
 	 *
 	 * @return The initialized Lock, or `NULL` on error.
+	 *
+	 * @relates Lock
 	 */
 	Lock *(*init)(Lock *self);
 
 	/**
 	 * @brief Acquire this lock, waiting indefinitely.
+	 *
+	 * @relates Lock
 	 */
 	void (*lock)(Lock *self);
 
@@ -96,11 +104,15 @@ struct LockInterface {
 	 * @brief Attempt to acquire this lock immediately.
 	 *
 	 * @return `YES` if the Lock was acquired, `NO` otherwise.
+	 *
+	 * @relates Lock
 	 */
 	BOOL (*tryLock)(Lock *self);
 
 	/**
 	 * @brief Release this Lock.
+	 *
+	 * @relates Lock
 	 */
 	void (*unlock)(Lock *self);
 };

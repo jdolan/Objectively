@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_URLSessionDownloadTask_h
-#define _Objectively_URLSessionDownloadTask_h
+#ifndef _Objectively_URLSessionDownloadTask_h_
+#define _Objectively_URLSessionDownloadTask_h_
 
 #include <stdio.h>
 
@@ -39,6 +39,9 @@ typedef struct URLSessionDownloadTaskInterface URLSessionDownloadTaskInterface;
 
 /**
  * @brief The URLSessionDownloadTask type.
+ *
+ * @extends URLSessionTask
+ * @ingroup URLSession
  */
 struct URLSessionDownloadTask {
 
@@ -59,7 +62,11 @@ struct URLSessionDownloadTask {
 };
 
 /**
- * @brief The URLSessionDownloadTask type.
+ * @brief The URLSessionDownloadTask interface.
+ *
+ * @extends URLSessionTaskInterface
+ *
+ * @ingroup URLSession
  */
 struct URLSessionDownloadTaskInterface {
 

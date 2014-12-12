@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Log_h
-#define _Objectively_Log_h
+#ifndef _Objectively_Log_h_
+#define _Objectively_Log_h_
 
 #include <stdio.h>
 
@@ -97,7 +97,7 @@ struct Log {
 };
 
 /**
- * @brief The Log type.
+ * @brief The Log interface.
  */
 struct LogInterface {
 
@@ -108,31 +108,43 @@ struct LogInterface {
 
 	/**
 	 * @return The shared Log instance.
+	 *
+	 * @relates Log
 	 */
 	Log *(*sharedInstance)(void);
 
 	/**
 	 * @brief Log a debug message.
+	 *
+	 * @relates Log
 	 */
 	void (*debug)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
 	/**
 	 * @brief Log an error message.
+	 *
+	 * @relates Log
 	 */
 	void (*error)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
 	/**
 	 * @brief Log a fatal message.
+	 *
+	 * @relates Log
 	 */
 	void (*fatal)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
 	/**
 	 * @brief Flushes and pending output to this Log's file.
+	 *
+	 * @relates Log
 	 */
 	void (*flush)(const Log *self);
 
 	/**
 	 * @brief Log an info message.
+	 *
+	 * @relates Log
 	 */
 	void (*info)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
@@ -140,6 +152,8 @@ struct LogInterface {
 	 * @brief Initializes this Log.
 	 *
 	 * @return The initialized Log, or `NULL` on error.
+	 *
+	 * @relates Log
 	 */
 	Log *(*init)(Log *self);
 
@@ -149,6 +163,8 @@ struct LogInterface {
 	 * @param name The Log name.
 	 *
 	 * @return The initialized Log, or `NULL` on error.
+	 *
+	 * @relates Log
 	 */
 	Log *(*initWithName)(Log *self, const char *name);
 
@@ -157,16 +173,22 @@ struct LogInterface {
 	 *
 	 * @param level The severity of the message, which must be greater than or
 	 * equal to the configured level of this Log.
+	 *
+	 * @relates Log
 	 */
 	void (*log)(const Log *self, LogLevel level, const char *fmt, va_list args);
 
 	/**
 	 * @brief Log a trace message.
+	 *
+	 * @relates Log
 	 */
 	void (*trace)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
 	/**
 	 * @brief Log a warn message.
+	 *
+	 * @relates Log
 	 */
 	void (*warn)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 };

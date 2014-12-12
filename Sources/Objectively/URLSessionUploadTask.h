@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_URLSessionUploadTask_h
-#define _Objectively_URLSessionUploadTask_h
+#ifndef _Objectively_URLSessionUploadTask_h_
+#define _Objectively_URLSessionUploadTask_h_
 
 #include <stdio.h>
 
@@ -39,6 +39,9 @@ typedef struct URLSessionUploadTaskInterface URLSessionUploadTaskInterface;
 
 /**
  * @brief The URLSessionUploadTask type.
+ *
+ * @extends URLSessionTask
+ * @ingroup URLSession
  */
 struct URLSessionUploadTask {
 
@@ -59,7 +62,11 @@ struct URLSessionUploadTask {
 };
 
 /**
- * @brief The URLSessionUploadTask type.
+ * @brief The URLSessionUploadTask interface.
+ *
+ * @extends URLSessionTaskInterface
+ *
+ * @ingroup URLSession
  */
 struct URLSessionUploadTaskInterface {
 

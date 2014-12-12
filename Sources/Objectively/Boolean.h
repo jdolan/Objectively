@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Boolean_h
-#define _Objectively_Boolean_h
+#ifndef _Objectively_Boolean_h_
+#define _Objectively_Boolean_h_
 
 #include <Objectively/Object.h>
 
@@ -57,7 +57,7 @@ struct Boolean {
 };
 
 /**
- * @brief The Boolean type.
+ * @brief The Boolean interface.
  */
 struct BooleanInterface {
 
@@ -68,11 +68,15 @@ struct BooleanInterface {
 
 	/**
 	 * @return The `NO` Boolean.
+	 *
+	 * @relates Boolean
 	 */
 	Boolean *(*no)(void);
 
 	/**
 	 * @return The `YES` Boolean.
+	 *
+	 * @relates Boolean
 	 */
 	Boolean *(*yes)(void);
 };

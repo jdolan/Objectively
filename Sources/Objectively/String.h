@@ -85,6 +85,8 @@ struct StringInterface {
 	 * @param fmt The format sequence.
 	 *
 	 * @return The resulting String.
+	 *
+	 * @relates String
 	 */
 	String *(*appendFormat)(String *self, const char *fmt, ...);
 
@@ -94,6 +96,8 @@ struct StringInterface {
 	 * @param other The String to append.
 	 *
 	 * @return The resulting String.
+	 *
+	 * @relates String
 	 */
 	String *(*appendString)(String *self, const String *other);
 
@@ -104,6 +108,8 @@ struct StringInterface {
 	 * @param range The character range to compare.
 	 *
 	 * @return The ordering of this String compared to `other`.
+	 *
+	 * @relates String
 	 */
 	ORDER (*compareTo)(const String *self, const String *other, const RANGE range);
 
@@ -113,6 +119,8 @@ struct StringInterface {
 	 * @param chars The separating characters.
 	 *
 	 * @return An Array of substrings that were separated by `chars`.
+	 *
+	 * @relates String
 	 */
 	Array *(*componentsSeparatedByCharacters)(const String *self, const char *chars);
 
@@ -122,6 +130,8 @@ struct StringInterface {
 	 * @param string The separating string.
 	 *
 	 * @return An Array of substrings that were separated by `string`.
+	 *
+	 * @relates String
 	 */
 	Array *(*componentsSeparatedByString)(const String *self, const String *string);
 
@@ -131,6 +141,8 @@ struct StringInterface {
 	 * @param prefix The Prefix to check.
 	 *
 	 * @return YES if this String starts with prefix, NO otherwise.
+	 *
+	 * @relates String
 	 */
 	BOOL (*hasPrefix)(const String *self, const String *prefix);
 
@@ -140,6 +152,8 @@ struct StringInterface {
 	 * @param suffix The suffix to check.
 	 *
 	 * @return YES if this String ends with suffix, NO otherwise.
+	 *
+	 * @relates String
 	 */
 	BOOL (*hasSuffix)(const String *self, const String *suffix);
 
@@ -147,6 +161,8 @@ struct StringInterface {
 	 * @brief Initializes this String.
 	 *
 	 * @return The initialized String, or `NULL` on error.
+	 *
+	 * @relates String
 	 */
 	String *(*init)(String *self);
 
@@ -158,6 +174,8 @@ struct StringInterface {
 	 * @param length The length of `bytes` to copy.
 	 *
 	 * @return The initialized String, or `NULL` on error.
+	 *
+	 * @relates String
 	 */
 	String *(*initWithBytes)(String *self, const byte *bytes, size_t length);
 
@@ -167,6 +185,8 @@ struct StringInterface {
 	 * @param chars The characters.
 	 *
 	 * @return The initialized String, or `NULL` on error.
+	 *
+	 * @relates String
 	 */
 	String *(*initWithCharacters)(String *self, const char *chars);
 
@@ -176,6 +196,8 @@ struct StringInterface {
 	 * @param path The path of the file to load.
 	 *
 	 * @return The initialized String, or `NULL` on error.
+	 *
+	 * @relates String
 	 */
 	String *(*initWithContentsOfFile)(String *self, const char *path);
 
@@ -185,6 +207,8 @@ struct StringInterface {
 	 * @param data The Data object.
 	 *
 	 * @return The initialized String, or `NULL` on error.
+	 *
+	 * @relates String
 	 */
 	String *(*initWithData)(String *self, const Data *data);
 
@@ -194,6 +218,8 @@ struct StringInterface {
 	 * @param fmt The formatted string.
 	 *
 	 * @return The initialized String, or `NULL` on error.
+	 *
+	 * @relates String
 	 */
 	String *(*initWithFormat)(String *self, const char *fmt, ...);
 
@@ -203,11 +229,15 @@ struct StringInterface {
 	 * @param mem The null-terminated, dynamically allocated memory.
 	 *
 	 * @return The initialized String, or `NULL` on error.
+	 *
+	 * @relates String
 	 */
 	String *(*initWithMemory)(String *self, id mem);
 
 	/**
 	 * @return A lowercase representation of this String.
+	 *
+	 * @relates String
 	 */
 	String *(*lowercaseString)(const String *self);
 
@@ -218,6 +248,8 @@ struct StringInterface {
 	 * @param range The range in which to search.
 	 *
 	 * @return A RANGE specifying the first occurrence of `chars` in this String.
+	 *
+	 * @relates String
 	 */
 	RANGE (*rangeOfCharacters)(const String *self, const char *chars, const RANGE range);
 
@@ -228,6 +260,8 @@ struct StringInterface {
 	 * @param range The range in which to search.
 	 *
 	 * @return A RANGE specifying the first occurrence of `string` in this String.
+	 *
+	 * @relates String
 	 */
 	RANGE (*rangeOfString)(const String *self, const String *string, RANGE range);
 
@@ -237,11 +271,15 @@ struct StringInterface {
 	 * @param range The character range.
 	 *
 	 * @return The new String.
+	 *
+	 * @relates String
 	 */
 	String *(*substring)(const String *self, RANGE range);
 
 	/**
 	 * @return An uppercase representation of this String.
+	 *
+	 * @relates String
 	 */
 	String *(*uppercaseString)(const String *self);
 
@@ -251,6 +289,8 @@ struct StringInterface {
 	 * @param path The path of the file to write.
 	 *
 	 * @return `YES` on success, `NO` on error.
+	 *
+	 * @relates String
 	 */
 	BOOL (*writeToFile)(const String *self, const char *path);
 };

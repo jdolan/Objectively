@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_URLSessionTask_h
-#define _Objectively_URLSessionTask_h
+#ifndef _Objectively_URLSessionTask_h_
+#define _Objectively_URLSessionTask_h_
 
 #include <Objectively/Object.h>
 #include <Objectively/Thread.h>
@@ -56,6 +56,8 @@ typedef void (*URLSessionTaskCompletion)(URLSessionTask *task, BOOL success);
 
 /**
  * @brief The URLSessionTask type.
+ *
+ * @ingroup URLSession
  */
 struct URLSessionTask {
 
@@ -129,7 +131,9 @@ struct URLSessionTask {
 };
 
 /**
- * @brief The URLSessionTask type.
+ * @brief The URLSessionTask interface.
+ *
+ * @ingroup URLSession
  */
 struct URLSessionTaskInterface {
 
@@ -140,6 +144,8 @@ struct URLSessionTaskInterface {
 
 	/**
 	 * @brief Cancels this task.
+	 *
+	 * @relates URLSessionTask
 	 */
 	void (*cancel)(URLSessionTask *self);
 
@@ -151,12 +157,16 @@ struct URLSessionTaskInterface {
 	 * @param completion The completion handler.
 	 *
 	 * @return The initialized task, or `NULL` on error.
+	 *
+	 * @relates URLSessionTask
 	 */
 	URLSessionTask *(*initWithRequestInSession)(URLSessionTask *self, struct URLRequest *request,
 			struct URLSession *session, URLSessionTaskCompletion completion);
 
 	/**
 	 * @brief Starts or resumes this task.
+	 *
+	 * @relates URLSessionTask
 	 */
 	void (*resume)(URLSessionTask *self);
 
@@ -164,6 +174,8 @@ struct URLSessionTaskInterface {
 	 * @brief Sets up this task.
 	 *
 	 * @private
+	 *
+	 * @relates URLSessionTask
 	 */
 	void (*setup)(URLSessionTask *self);
 
@@ -171,6 +183,8 @@ struct URLSessionTaskInterface {
 	 * @brief Tears down this task.
 	 *
 	 * @private
+	 *
+	 * @relates URLSessionTask
 	 */
 	void (*teardown)(URLSessionTask *self);
 };

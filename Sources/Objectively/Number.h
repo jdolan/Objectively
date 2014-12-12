@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Number_h
-#define _Objectively_Number_h
+#ifndef _Objectively_Number_h_
+#define _Objectively_Number_h_
 
 #include <Objectively/Object.h>
 
@@ -57,7 +57,7 @@ struct Number {
 };
 
 /**
- * @brief The Number type.
+ * @brief The Number interface.
  */
 struct NumberInterface {
 
@@ -68,11 +68,15 @@ struct NumberInterface {
 
 	/**
 	 * @return This Number's BOOL value.
+	 *
+	 * @relates Number
 	 */
 	BOOL (*boolValue)(const Number *self);
 
 	/**
 	 * @return This Number's char value.
+	 *
+	 * @relates Number
 	 */
 	char (*charValue)(const Number *self);
 
@@ -82,21 +86,29 @@ struct NumberInterface {
 	 * @param other The Number to compare to.
 	 *
 	 * @return The ordering of this Number compared to `other`.
+	 *
+	 * @relates Number
 	 */
 	ORDER (*compareTo)(const Number *self, const Number *other);
 
 	/**
 	 * @return This Number's double value.
+	 *
+	 * @relates Number
 	 */
 	double (*doubleValue)(const Number *self);
 
 	/**
 	 * @return This Number's floating point value.
+	 *
+	 * @relates Number
 	 */
 	float (*floatValue)(const Number *self);
 
 	/**
 	 * @return This Number's long value.
+	 *
+	 * @relates Number
 	 */
 	long (*longValue)(const Number *self);
 
@@ -106,16 +118,22 @@ struct NumberInterface {
 	 * @param value The value.
 	 *
 	 * @return The initialized Number, or `NULL` on error.
+	 *
+	 * @relates Number
 	 */
 	Number *(*initWithValue)(Number *self, double value);
 
 	/**
 	 * @return This Number's integer value.
+	 *
+	 * @relates Number
 	 */
 	int (*intValue)(const Number *self);
 
 	/**
 	 * @return This Number's short value.
+	 *
+	 * @relates Number
 	 */
 	short (*shortValue)(const Number *self);
 };

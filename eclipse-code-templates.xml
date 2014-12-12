@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="false" context="org.eclipse.cdt.core.cHeader.contenttype_context" deleted="false" description="" enabled="true" name="Objectively Type Header">${filecomment}
 
-#ifndef _${project_name}_${file_base}_h
-#define _${project_name}_${file_base}_h
+#ifndef _${project_name}_${file_base}_h_
+#define _${project_name}_${file_base}_h_
 
 #include &lt;Objectively/Object.h&gt;
 
@@ -27,7 +27,7 @@ struct ${file_base} {
 };
 
 /**
- * @brief The ${file_base} type.
+ * @brief The ${file_base} interface.
  */
 struct ${file_base}Interface {
 

@@ -28,6 +28,7 @@
 #include <string.h>
 
 #include <Objectively/Hash.h>
+#include <Objectively/MutableArray.h>
 #include <Objectively/String.h>
 
 #define __Class __String
@@ -183,7 +184,7 @@ static Array *componentsSeparatedByCharacters(const String *self, const char *ch
 
 	assert(chars);
 
-	Array *components = $(alloc(Array), init);
+	MutableArray *components = $(alloc(MutableArray), init);
 
 	RANGE search = { 0, self->length };
 	RANGE result = $(self, rangeOfCharacters, chars, search);
@@ -205,7 +206,7 @@ static Array *componentsSeparatedByCharacters(const String *self, const char *ch
 	$(components, addObject, component);
 	release(component);
 
-	return components;
+	return (Array *) components;
 }
 
 /**

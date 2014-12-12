@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Error_h
-#define _Objectively_Error_h
+#ifndef _Objectively_Error_h_
+#define _Objectively_Error_h_
 
 #include <Objectively/Object.h>
 #include <Objectively/String.h>
@@ -62,7 +62,7 @@ struct Error {
 };
 
 /**
- * @brief The Error type.
+ * @brief The Error interface.
  */
 struct ErrorInterface {
 
@@ -79,6 +79,8 @@ struct ErrorInterface {
 	 * @param message The error message.
 	 *
 	 * @return The initialized Error, or `NULL` on error.
+	 *
+	 * @relates Error
 	 */
 	Error *(*initWithDomain)(Error *self, const char *domain, int code, const char *message);
 };

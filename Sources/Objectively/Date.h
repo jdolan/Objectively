@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Date_h
-#define _Objectively_Date_h
+#ifndef _Objectively_Date_h_
+#define _Objectively_Date_h_
 
 #include <sys/time.h>
 
@@ -74,7 +74,7 @@ struct Date {
 };
 
 /**
- * @brief The Date type.
+ * @brief The Date interface.
  */
 struct DateInterface {
 
@@ -87,6 +87,8 @@ struct DateInterface {
 	 * @brief Instantiates a Date with the given Time since now.
 	 *
 	 * @return The new Date instance, or NULL on error.
+	 *
+	 * @relates Date
 	 */
 	Date *(*dateWithTimeSinceNow)(const Time *interval);
 
@@ -96,6 +98,8 @@ struct DateInterface {
 	 * @param other The Date to compare to.
 	 *
 	 * @return The ordering of this Date compared to other.
+	 *
+	 * @relates Date
 	 */
 	ORDER (*compareTo)(const Date *self, const Date *other);
 
@@ -103,6 +107,8 @@ struct DateInterface {
 	 * Initializes a Date with the current time.
 	 *
 	 * @return The initialized Date, or `NULL` on error.
+	 *
+	 * @relates Date
 	 */
 	Date *(*init)(Date *self);
 
@@ -113,6 +119,8 @@ struct DateInterface {
 	 * @param fmt The format pattern.
 	 *
 	 * @return The initialized Date, or `NULL` on error.
+	 *
+	 * @relates Date
 	 */
 	Date *(*initWithString)(Date *self, const char *str, const char *fmt);
 
@@ -122,6 +130,8 @@ struct DateInterface {
 	 * @param time The desired Time.
 	 *
 	 * @return The initialized Date, or `NULL` on error.
+	 *
+	 * @relates Date
 	 */
 	Date *(*initWithTime)(Date *self, const Time *time);
 };

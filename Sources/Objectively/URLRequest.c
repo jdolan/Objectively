@@ -23,6 +23,7 @@
 
 #include <assert.h>
 
+#include <Objectively/MutableDictionary.h>
 #include <Objectively/URLRequest.h>
 
 #define __Class __URLRequest
@@ -86,13 +87,13 @@ static URLRequest *initWithURL(URLRequest *self, URL *url) {
 void setValueForHTTPHeaderField(URLRequest *self, const char *value, const char *field) {
 
 	if (self->httpHeaders == NULL) {
-		self->httpHeaders = $(alloc(Dictionary), init);
+		self->httpHeaders = (Dictionary *) $(alloc(MutableDictionary), init);
 	}
 
 	String *object = $(alloc(String), initWithCharacters, value);
 	String *key = $(alloc(String), initWithCharacters, field);
 
-	$(self->httpHeaders, setObjectForKey, object, key);
+	$((MutableDictionary *) self->httpHeaders, setObjectForKey, object, key);
 
 	release(object);
 	release(key);

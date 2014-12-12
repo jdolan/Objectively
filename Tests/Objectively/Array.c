@@ -24,7 +24,7 @@
 #include <check.h>
 #include <stdio.h>
 
-#include <Objectively/Array.h>
+#include <Objectively.h>
 
 BOOL enumerator(const Array *array, id obj, id data) {
 	(*(int *) data)++; return NO;
@@ -32,12 +32,12 @@ BOOL enumerator(const Array *array, id obj, id data) {
 
 START_TEST(array)
 	{
-		Array *array = $(alloc(Array), initWithCapacity, 5);
+		MutableArray *array = $(alloc(MutableArray), initWithCapacity, 5);
 
 		ck_assert(array);
-		ck_assert_ptr_eq(&__Array, classof(array));
+		ck_assert_ptr_eq(&__MutableArray, classof(array));
 
-		ck_assert_int_eq(0, array->count);
+		ck_assert_int_eq(0, ((Array *) array)->count);
 		ck_assert_int_eq(5, array->capacity);
 
 		Object *one = $(alloc(Object), init);
@@ -48,15 +48,15 @@ START_TEST(array)
 		$(array, addObject, two);
 		$(array, addObject, three);
 
-		ck_assert_int_eq(3, array->count);
+		ck_assert_int_eq(3, ((Array *) array)->count);
 
-		ck_assert($(array, containsObject, one));
-		ck_assert($(array, containsObject, two));
-		ck_assert($(array, containsObject, three));
+		ck_assert($((Array *) array, containsObject, one));
+		ck_assert($((Array *) array, containsObject, two));
+		ck_assert($((Array *) array, containsObject, three));
 
-		ck_assert_int_eq(0, $(array, indexOfObject, one));
-		ck_assert_int_eq(1, $(array, indexOfObject, two));
-		ck_assert_int_eq(2, $(array, indexOfObject, three));
+		ck_assert_int_eq(0, $((Array *) array, indexOfObject, one));
+		ck_assert_int_eq(1, $((Array *) array, indexOfObject, two));
+		ck_assert_int_eq(2, $((Array *) array, indexOfObject, three));
 
 		ck_assert_int_eq(2, one->referenceCount);
 		ck_assert_int_eq(2, two->referenceCount);
@@ -64,18 +64,18 @@ START_TEST(array)
 
 		$(array, removeObject, one);
 
-		ck_assert(!$(array, containsObject, one));
+		ck_assert(!$((Array *) array, containsObject, one));
 		ck_assert_int_eq(1, one->referenceCount);
-		ck_assert_int_eq(2, array->count);
+		ck_assert_int_eq(2, ((Array *) array)->count);
 
 		$(array, removeAllObjects);
 
-		ck_assert_int_eq(0, array->count);
+		ck_assert_int_eq(0, ((Array *) array)->count);
 
-		ck_assert(!$(array, containsObject, two));
+		ck_assert(!$((Array *) array, containsObject, two));
 		ck_assert_int_eq(1, two->referenceCount);
 
-		ck_assert(!$(array, containsObject, three));
+		ck_assert(!$((Array *) array, containsObject, three));
 		ck_assert_int_eq(1, three->referenceCount);
 
 		release(one);
@@ -92,17 +92,17 @@ START_TEST(array)
 			release(obj);
 		}
 
-		ck_assert_int_eq(1024, array->count);
+		ck_assert_int_eq(1024, ((Array *) array)->count);
 
 		int count = 0;
 
-		$(array, enumerateObjects, enumerator, &count);
+		$((Array *) array, enumerateObjects, enumerator, &count);
 
-		ck_assert_int_eq(array->count, count);
+		ck_assert_int_eq(((Array *) array)->count, count);
 
 		$(array, removeAllObjects);
 
-		ck_assert_int_eq(array->count, 0);
+		ck_assert_int_eq(((Array *) array)->count, 0);
 
 		release(array);
 

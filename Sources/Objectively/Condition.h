@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Condition_h
-#define _Objectively_Condition_h
+#ifndef _Objectively_Condition_h_
+#define _Objectively_Condition_h_
 
 #include <Objectively/Date.h>
 #include <Objectively/Lock.h>
@@ -43,6 +43,7 @@ typedef struct ConditionInterface ConditionInterface;
  * @brief The Condition type.
  *
  * @extends Lock
+ * @ingroup Concurrency
  */
 struct Condition {
 
@@ -63,7 +64,11 @@ struct Condition {
 };
 
 /**
- * @brief The Condition type.
+ * @brief The Condition interface.
+ *
+ * @extends LockInterface
+ *
+ * @ingroup Concurrency
  */
 struct ConditionInterface {
 
@@ -76,6 +81,8 @@ struct ConditionInterface {
 	 * @brief Signals all Threads waiting on this Condition.
 	 *
 	 * @remark This method should only be called when the Condition is locked.
+	 *
+	 * @relates Condition
 	 */
 	void (*broadcast)(Condition *self);
 
@@ -83,6 +90,8 @@ struct ConditionInterface {
 	 * @brief Initializes this Condition.
 	 *
 	 * @return The initialized Condition, or `NULL` on error.
+	 *
+	 * @relates Condition
 	 */
 	Condition *(*init)(Condition *self);
 
@@ -90,6 +99,8 @@ struct ConditionInterface {
 	 * @brief Signals a single Thread waiting on this Condition.
 	 *
 	 * @remark This method should only be called when the Condition is locked.
+	 *
+	 * @relates Condition
 	 */
 	void (*signal)(Condition *self);
 
@@ -97,6 +108,8 @@ struct ConditionInterface {
 	 * @brief Waits indefinitely for this Condition to be signaled.
 	 *
 	 * @remark This method should only be called when the Condition is locked.
+	 *
+	 * @relates Condition
 	 */
 	void (*wait)(Condition *self);
 
@@ -108,6 +121,8 @@ struct ConditionInterface {
 	 * @return `YES` if this Condition was signaled before `date`, `NO` otherwise.
 	 *
 	 * @remark This method should only be called when the Condition is locked.
+	 *
+	 * @relates Condition
 	 */
 	BOOL (*waitUntilDate)(Condition *self, const Date *date);
 };
