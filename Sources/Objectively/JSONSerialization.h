@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_JSONSerialization_h
-#define _Objectively_JSONSerialization_h
+#ifndef _Objectively_JSONSerialization_h_
+#define _Objectively_JSONSerialization_h_
 
 #include <Objectively/Data.h>
 #include <Objectively/Object.h>
@@ -31,6 +31,12 @@
  * @file
  *
  * @brief JSON serialization.
+ */
+
+/**
+ * @defgroup JSON
+ *
+ * @brief JSON serialization and introspection.
  */
 
 /**
@@ -43,6 +49,8 @@ typedef struct JSONSerializationInterface JSONSerializationInterface;
 
 /**
  * @brief The JSONSerialization type.
+ *
+ * @ingroup JSON
  */
 struct JSONSerialization {
 
@@ -58,7 +66,9 @@ struct JSONSerialization {
 };
 
 /**
- * @brief The JSONSerialization type.
+ * @brief The JSONSerialization interface.
+ *
+ * @ingroup JSON
  */
 struct JSONSerializationInterface {
 
@@ -74,6 +84,8 @@ struct JSONSerializationInterface {
 	 * @param options A bitwise-or of `JSON_WRITE_*`.
 	 *
 	 * @return The resulting JSON Data.
+	 *
+	 * @relates JSONSerialization
 	 */
 	Data *(*dataFromObject)(const id obj, int options);
 
@@ -84,6 +96,8 @@ struct JSONSerializationInterface {
 	 * @param options A bitwise-or of `JSON_READ_*`.
 	 *
 	 * @return The Object, or `NULL` on error.
+	 *
+	 * @relates JSONSerialization
 	 */
 	id (*objectFromData)(const Data *data, int options);
 };

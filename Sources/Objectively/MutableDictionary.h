@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_MutableDictionary_h
-#define _Objectively_MutableDictionary_h
+#ifndef _Objectively_MutableDictionary_h_
+#define _Objectively_MutableDictionary_h_
 
 #include <Objectively/Dictionary.h>
 
@@ -31,6 +31,8 @@ typedef struct MutableDictionaryInterface MutableDictionaryInterface;
 
 /**
  * @brief The MutableDictionary type.
+ *
+ * @extends Dictionary
  */
 struct MutableDictionary {
 
@@ -46,7 +48,9 @@ struct MutableDictionary {
 };
 
 /**
- * @brief The MutableDictionary type.
+ * @brief The MutableDictionary interface.
+ *
+ * @extends DictionaryInterface
  */
 struct MutableDictionaryInterface {
 
@@ -59,6 +63,8 @@ struct MutableDictionaryInterface {
 	 * Initializes this Dictionary.
 	 *
 	 * @return The initialized Dictionary, or `NULL` on error.
+	 *
+	 * @relates MutableDictionary
 	 */
 	MutableDictionary *(*init)(MutableDictionary *self);
 
@@ -68,26 +74,36 @@ struct MutableDictionaryInterface {
 	 * @param capacity The initial capacity.
 	 *
 	 * @return The initialized Dictionary, or `NULL` on error.
+	 *
+	 * @relates MutableDictionary
 	 */
 	MutableDictionary *(*initWithCapacity)(MutableDictionary *self, size_t capacity);
 
 	/**
 	 * @brief Removes all Objects from this Dictionary.
+	 *
+	 * @relates MutableDictionary
 	 */
 	void (*removeAllObjects)(MutableDictionary *self);
 
 	/**
 	 * @brief Removes the specified Object from this Dictionary.
+	 *
+	 * @relates MutableDictionary
 	 */
 	void (*removeObjectForKey)(MutableDictionary *self, const id key);
 
 	/**
 	 * @brief Sets a pair in this Dictionary.
+	 *
+	 * @relates MutableDictionary
 	 */
 	void (*setObjectForKey)(MutableDictionary *self, const id obj, const id key);
 
 	/**
 	 * @brief Sets pairs in this Dictionary from the NULL-terminated list.
+	 *
+	 * @relates MutableDictionary
 	 */
 	void (*setObjectsForKeys)(MutableDictionary *self, ...);
 };

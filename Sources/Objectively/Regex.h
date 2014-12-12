@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Regex_h
-#define _Objectively_Regex_h
+#ifndef _Objectively_Regex_h_
+#define _Objectively_Regex_h_
 
 #include <regex.h>
 
@@ -91,6 +91,8 @@ struct RegexInterface {
 	 * @param options A bitwise-or of `REG_ICASE`, `REG_NEWLINE`.
 	 *
 	 * @return The initialized regular expression, or `NULL` on error.
+	 *
+	 * @relates Regex
 	 */
 	Regex *(*initWithPattern)(Regex *self, const char *pattern, const int cflags);
 
@@ -110,6 +112,8 @@ struct RegexInterface {
 	 * free `matches` when done with it.
 	 *
 	 * @see regexec(3)
+	 *
+	 * @relates Regex
 	 */
 	BOOL (*matchesCharacters)(const Regex *self, const char *chars, int options, RANGE **matches);
 
@@ -126,7 +130,10 @@ struct RegexInterface {
 	 * `numberOfSubExpressions + 1` RANGEs. `matches[0]` will identify the
 	 * RANGE of `chars` that matched the entire pattern. `matches[1..n]` will
 	 * identify the RANGE of each corresponding sub-expression. The caller must
-	 * free `matches` when done with it.	 */
+	 * free `matches` when done with it.
+	 *
+	 * @relates Regex
+	 */
 	BOOL (*matchesString)(const Regex *self, const String *string, int options, RANGE **matches);
 };
 

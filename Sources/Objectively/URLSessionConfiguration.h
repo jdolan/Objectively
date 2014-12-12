@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_URLSessionConfiguration_h
-#define _Objectively_URLSessionConfiguration_h
+#ifndef _Objectively_URLSessionConfiguration_h_
+#define _Objectively_URLSessionConfiguration_h_
 
 #include <Objectively/Dictionary.h>
 #include <Objectively/Object.h>
@@ -39,6 +39,8 @@ typedef struct URLSessionConfigurationInterface URLSessionConfigurationInterface
 
 /**
  * @brief The URLSessionConfiguration type.
+ *
+ * @ingroup URLSession
  */
 struct URLSessionConfiguration {
 
@@ -79,7 +81,9 @@ struct URLSessionConfiguration {
 };
 
 /**
- * @brief The URLSessionConfiguration type.
+ * @brief The URLSessionConfiguration interface.
+ *
+ * @ingroup URLSession
  */
 struct URLSessionConfigurationInterface {
 
@@ -92,6 +96,8 @@ struct URLSessionConfigurationInterface {
 	 * @brief Initializes this URLSessionConfiguration.
 	 *
 	 * @return The initialized configuration, or `NULL` on error.
+	 *
+	 * @relates URLSessionConfiguration
 	 */
 	URLSessionConfiguration *(*init)(URLSessionConfiguration *self);
 };

@@ -21,13 +21,19 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_URLSession_h
-#define _Objectively_URLSession_h
+#ifndef _Objectively_URLSession_h_
+#define _Objectively_URLSession_h_
 
 /**
  * @file
  *
  * @brief URLSession provides an API for loading resources via URLs.
+ */
+
+/**
+ * @defgroup URLSession
+ *
+ * @brief Asynchronous loading of resources via URLs.
  */
 
 typedef struct URLSession URLSession;
@@ -42,6 +48,8 @@ typedef struct URLSessionInterface URLSessionInterface;
 
 /**
  * @brief The URLSession type.
+ *
+ * @ingroup URLSession
  */
 struct URLSession {
 
@@ -62,7 +70,9 @@ struct URLSession {
 };
 
 /**
- * @brief The URLSession type.
+ * @brief The URLSession interface.
+ *
+ * @ingroup URLSession
  */
 struct URLSessionInterface {
 
@@ -73,6 +83,8 @@ struct URLSessionInterface {
 
 	/**
 	 * @return The shared URLSession instance.
+	 *
+	 * @relates URLSession
 	 */
 	URLSession *(*sharedInstance)(void);
 
@@ -83,6 +95,8 @@ struct URLSessionInterface {
 	 * @param completion The completion handler.
 	 *
 	 * @return The URLSessionDataTask, or `NULL` on error.
+	 *
+	 * @relates URLSession
 	 */
 	URLSessionDataTask *(*dataTaskWithRequest)(URLSession *self, URLRequest *request,
 			URLSessionTaskCompletion completion);
@@ -94,6 +108,8 @@ struct URLSessionInterface {
 	 * @param completion The completion handler.
 	 *
 	 * @return The URLSessionDataTask, or `NULL` on error.
+	 *
+	 * @relates URLSession
 	 */
 	URLSessionDataTask *(*dataTaskWithURL)(URLSession *self, URL *url,
 			URLSessionTaskCompletion completion);
@@ -105,6 +121,8 @@ struct URLSessionInterface {
 	 * @param completion The completion handler.
 	 *
 	 * @return The URLSessionDownloadTask, or `NULL` on error.
+	 *
+	 * @relates URLSession
 	 */
 	URLSessionDownloadTask *(*downloadTaskWithRequest)(URLSession *self, URLRequest *request,
 			URLSessionTaskCompletion completion);
@@ -116,6 +134,8 @@ struct URLSessionInterface {
 	 * @param completion The completion handler.
 	 *
 	 * @return The URLSessionDownloadTask, or `NULL` on error.
+	 *
+	 * @relates URLSession
 	 */
 	URLSessionDownloadTask *(*downloadTaskWithURL)(URLSession *self, URL *url,
 			URLSessionTaskCompletion completion);
@@ -124,6 +144,8 @@ struct URLSessionInterface {
 	 * @brief Initializes this URLSession with a default configuration.
 	 *
 	 * @return The initialized URLSession, or `NULL` on error.
+	 *
+	 * @relates URLSession
 	 */
 	URLSession *(*init)(URLSession *self);
 
@@ -133,11 +155,15 @@ struct URLSessionInterface {
 	 * @param configuration The URLSessionConfiguration.
 	 *
 	 * @return The initialized URLSession, or `NULL` on error.
+	 *
+	 * @relates URLSession
 	 */
 	URLSession *(*initWithConfiguration)(URLSession *self, URLSessionConfiguration *configuration);
 
 	/**
 	 * Invalidates this URLSession and cancels all pending tasks.
+	 *
+	 * @relates URLSession
 	 */
 	void (*invalidateAndCancel)(URLSession *self);
 };

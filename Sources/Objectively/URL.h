@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_URL_h
-#define _Objectively_URL_h
+#ifndef _Objectively_URL_h_
+#define _Objectively_URL_h_
 
 #include <Objectively/Array.h>
 #include <Objectively/Object.h>
@@ -41,6 +41,8 @@ typedef struct URLInterface URLInterface;
 
 /**
  * @brief The URL type.
+ *
+ * @ingroup URLSession
  */
 struct URL {
 
@@ -91,7 +93,7 @@ struct URL {
 };
 
 /**
- * @brief The URL type.
+ * @brief The URL interface.
  */
 struct URLInterface {
 
@@ -102,6 +104,8 @@ struct URLInterface {
 
 	/**
 	 * @return The base URL (scheme, host, and port) of this URL.
+	 *
+	 * @relates URL
 	 */
 	URL *(*baseURL)(const URL *self);
 
@@ -111,6 +115,8 @@ struct URLInterface {
 	 * @param chars The URL characters.
 	 *
 	 * @return The initialized URL, or `NULL` on error.
+	 *
+	 * @relates URL
 	 */
 	URL *(*initWithCharacters)(URL *self, const char *chars);
 
@@ -120,11 +126,15 @@ struct URLInterface {
 	 * @param string The URL String.
 	 *
 	 * @return The initialized URL, or `NULL` on error.
+	 *
+	 * @relates URL
 	 */
 	URL *(*initWithString)(URL *self, const String *string);
 
 	/**
 	 * @return The `path` components of this URL.
+	 *
+	 * @relates URL
 	 */
 	Array *(*pathComponents)(const URL *self);
 };

@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_JSONPath_h
-#define _Objectively_JSONPath_h
+#ifndef _Objectively_JSONPath_h_
+#define _Objectively_JSONPath_h_
 
 #include <Objectively/Object.h>
 
@@ -37,6 +37,8 @@ typedef struct JSONPathInterface JSONPathInterface;
 
 /**
  * @brief The JSONPath type.
+ *
+ * @ingroup JSON
  */
 struct JSONPath {
 
@@ -52,7 +54,9 @@ struct JSONPath {
 };
 
 /**
- * @brief The JSONPath type.
+ * @brief The JSONPath interface.
+ *
+ * @ingroup JSON
  */
 struct JSONPathInterface {
 
@@ -76,6 +80,8 @@ struct JSONPathInterface {
 	 *
 	 * Use dot-notation (`.`) for accessing Dictionaries, and square braces (`[n]`)
 	 * for accessing Arrays.
+	 *
+	 * @relates JSONPath
 	 */
 	id (*objectWithPath)(const id root, const char *path);
 };

@@ -95,11 +95,15 @@ struct DictionaryInterface {
 
 	/**
 	 * @return An Array containing all keys in this Dictionary.
+	 *
+	 * @relates Dictionary
 	 */
 	Array *(*allKeys)(const Dictionary *self);
 
 	/**
 	 * @return An Array containing all Objects in this Dictionary.
+	 *
+	 * @relates Dictionary
 	 */
 	Array *(*allObjects)(const Dictionary *self);
 
@@ -110,6 +114,8 @@ struct DictionaryInterface {
 	 * @param data User data.
 	 *
 	 * @remark The enumerator should return `YES` to break the iteration.
+	 *
+	 * @relates Dictionary
 	 */
 	void (*enumerateObjectsAndKeys)(const Dictionary *self, DictionaryEnumerator enumerator,
 			id data);
@@ -121,6 +127,8 @@ struct DictionaryInterface {
 	 * @param data User data.
 	 *
 	 * @return The new, filtered Dictionary.
+	 *
+	 * @relates Dictionary
 	 */
 	Dictionary *(*filterObjectsAndKeys)(const Dictionary *self, DictionaryEnumerator enumerator,
 			id data);
@@ -131,6 +139,8 @@ struct DictionaryInterface {
 	 * @param dictionary A Dictionary.
 	 *
 	 * @return The initialized Dictionary, or `NULL` on error.
+	 *
+	 * @relates Dictionary
 	 */
 	Dictionary *(*initWithDictionary)(Dictionary *self, const Dictionary *dictionary);
 
@@ -139,11 +149,15 @@ struct DictionaryInterface {
 	 * Objects and keys.
 	 *
 	 * @return The initialized Dictionary, or `NULL` on error.
+	 *
+	 * @relates Dictionary
 	 */
 	Dictionary *(*initWithObjectsAndKeys)(Dictionary *self, ...);
 
 	/**
 	 * @return The Object stored at the specified key in this Dictionary.
+	 *
+	 * @relates Dictionary
 	 */
 	id (*objectForKey)(const Dictionary *self, const id key);
 };

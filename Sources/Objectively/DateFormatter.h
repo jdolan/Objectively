@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_DateFormatter_h
-#define _Objectively_DateFormatter_h
+#ifndef _Objectively_DateFormatter_h_
+#define _Objectively_DateFormatter_h_
 
 #include <Objectively/Date.h>
 #include <Objectively/String.h>
@@ -63,7 +63,7 @@ struct DateFormatter {
 };
 
 /**
- * @brief The DateFormatter type.
+ * @brief The DateFormatter interface.
  */
 struct DateFormatterInterface {
 
@@ -78,6 +78,8 @@ struct DateFormatterInterface {
 	 * @param chars The characters to parse.
 	 *
 	 * @return A Date instance, or `NULL` on error.
+	 *
+	 * @relates DateFormatter
 	 */
 	Date *(*dateFromCharacters)(const DateFormatter *self, const char *chars);
 
@@ -87,6 +89,8 @@ struct DateFormatterInterface {
 	 * @param string The String to parse.
 	 *
 	 * @return A Date instance, or `NULL` on error.
+	 *
+	 * @relates DateFormatter
 	 */
 	Date *(*dateFromString)(const DateFormatter *self, const String *string);
 
@@ -98,6 +102,8 @@ struct DateFormatterInterface {
 	 * @return The initialized DateFormatter, or `NULL` on error.
 	 *
 	 * @see strftime
+	 *
+	 * @relates DateFormatter
 	 */
 	DateFormatter *(*initWithFormat)(DateFormatter *self, const char *fmt);
 
@@ -107,6 +113,8 @@ struct DateFormatterInterface {
 	 * @param date The Date to format.
 	 *
 	 * @return The String representation of the Date, or `NULL` on error.
+	 *
+	 * @relates DateFormatter
 	 */
 	String *(*stringFromDate)(const DateFormatter *self, const Date *date);
 };

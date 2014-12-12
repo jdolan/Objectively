@@ -86,6 +86,8 @@ struct ArrayInterface {
 
 	/**
 	 * @return `YES` if this Array contains the given Object, `NO` otherwise.
+	 *
+	 * @relates Array
 	 */
 	BOOL (*containsObject)(const Array *self, const id obj);
 
@@ -96,6 +98,8 @@ struct ArrayInterface {
 	 * @param data User data.
 	 *
 	 * @remark The enumerator should return `YES` to break the iteration.
+	 *
+	 * @relates Array
 	 */
 	void (*enumerateObjects)(const Array *self, ArrayEnumerator enumerator, id data);
 
@@ -106,11 +110,15 @@ struct ArrayInterface {
 	 * @param data User data.
 	 *
 	 * @return The new, filtered Array.
+	 *
+	 * @relates Array
 	 */
 	Array *(*filterObjects)(const Array *self, ArrayEnumerator enumerator, id data);
 
 	/**
 	 * @return The index of the given Object, or `-1` if not found.
+	 *
+	 * @relates Array
 	 */
 	int (*indexOfObject)(const Array *self, const id obj);
 
@@ -120,6 +128,8 @@ struct ArrayInterface {
 	 * @param array An Array.
 	 *
 	 * @return The initialized Array, or `NULL` on error.
+	 *
+	 * @relates Array
 	 */
 	Array *(*initWithArray)(Array *self, const Array *array);
 
@@ -127,6 +137,8 @@ struct ArrayInterface {
 	 * @brief Initializes this Array with the specified objects.
 	 *
 	 * @return The initialized Array, or `NULL` on error.
+	 *
+	 * @relates Array
 	 */
 	Array *(*initWithObjects)(Array *self, ...);
 
@@ -134,6 +146,8 @@ struct ArrayInterface {
 	 * @param index The index of the desired Object.
 	 *
 	 * @return The Object at the specified index.
+	 *
+	 * @relates Array
 	 */
 	id (*objectAtIndex)(const Array *self, const int index);
 };

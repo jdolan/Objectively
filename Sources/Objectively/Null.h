@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Null_h
-#define _Objectively_Null_h
+#ifndef _Objectively_Null_h_
+#define _Objectively_Null_h_
 
 #include <Objectively/Object.h>
 
@@ -54,7 +54,7 @@ struct Null {
 };
 
 /**
- * @brief The Null type.
+ * @brief The Null interface.
  */
 struct NullInterface {
 
@@ -65,6 +65,8 @@ struct NullInterface {
 
 	/**
 	 * @return The Null singleton.
+	 *
+	 * @relates Null
 	 */
 	Null *(*null)(void);
 };

@@ -34,6 +34,11 @@
  * Asynchronous computing via multiple threads of execution.
  */
 
+/**
+ * @defgroup Concurrency
+ *
+ * @brief Parallel computing and synchronization via POSIX Threads.
+ */
 typedef struct Thread Thread;
 typedef struct ThreadInterface ThreadInterface;
 
@@ -46,6 +51,8 @@ typedef id (*ThreadFunction)(Thread *thread);
 
 /**
  * @brief The Thread type.
+ *
+ * @ingroup Concurrency
  */
 struct Thread {
 
@@ -97,6 +104,8 @@ struct Thread {
 
 /**
  * @brief The Thread interface.
+ *
+ * @ingroup Concurrency
  */
 struct ThreadInterface {
 
@@ -107,11 +116,15 @@ struct ThreadInterface {
 
 	/**
 	 * @brief Cancel this Thread from another Thread.
+	 *
+	 * @relates Thread
 	 */
 	void (*cancel)(Thread *self);
 
 	/**
 	 * @brief Daemonize this Thread.
+	 *
+	 * @relates Thread
 	 */
 	void (*detach)(Thread *self);
 
@@ -119,6 +132,8 @@ struct ThreadInterface {
 	 * Initializes this Thread.
 	 *
 	 * @return The initialized Thread, or `NULL` on error.
+	 *
+	 * @relates Thread
 	 */
 	Thread *(*init)(Thread *self);
 
@@ -129,6 +144,8 @@ struct ThreadInterface {
 	 * @param data The user data.
 	 *
 	 * @return The initialized Thread, or `NULL` on error.
+	 *
+	 * @relates Thread
 	 */
 	Thread *(*initWithFunction)(Thread *self, ThreadFunction function, id data);
 
@@ -137,6 +154,8 @@ struct ThreadInterface {
 	 *
 	 * @param status If not NULL, the return value of this Thread's
 	 * ThreadFunction is returned here.
+	 *
+	 * @relates Thread
 	 */
 	void (*join)(Thread *self, id *status);
 
@@ -144,11 +163,15 @@ struct ThreadInterface {
 	 * @brief Sends the given signal to this Thread.
 	 *
 	 * @param signal The signal to send.
+	 *
+	 * @relates Thread
 	 */
 	void (*kill)(Thread *self, int signal);
 
 	/**
 	 * @brief Start this Thread.
+	 *
+	 * @relates Thread
 	 */
 	void (*start)(Thread *self);
 };

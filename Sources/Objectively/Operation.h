@@ -21,12 +21,18 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Operation_h
-#define _Objectively_Operation_h
+#ifndef _Objectively_Operation_h_
+#define _Objectively_Operation_h_
 
 #include <Objectively/Condition.h>
 #include <Objectively/MutableArray.h>
 #include <Objectively/Object.h>
+
+/**
+ * @file
+ *
+ * @brief An abstraction for discrete units of work, or tasks.
+ */
 
 typedef struct Operation Operation;
 typedef struct OperationInterface OperationInterface;
@@ -40,6 +46,8 @@ typedef void (*OperationFunction)(Operation *operation);
 
 /**
  * @brief The Operation type.
+ *
+ * @ingroup Concurrency
  */
 struct Operation {
 
@@ -103,7 +111,9 @@ struct Operation {
 };
 
 /**
- * @brief The Operation type.
+ * @brief The Operation interface.
+ *
+ * @ingroup Concurrency
  */
 struct OperationInterface {
 
@@ -116,16 +126,22 @@ struct OperationInterface {
 	 * @brief Makes this Operation dependent on the completion of `dependency`.
 	 *
 	 * @param dependency The Operation to await.
+	 *
+	 * @relates Operation
 	 */
 	void (*addDependency)(Operation *self, Operation *dependency);
 
 	/**
 	 * @brief Cancels this Operation, allowing it to complete immediately.
+	 *
+	 * @relates Operation
 	 */
 	void (*cancel)(Operation *self);
 
 	/**
-	 *@return An instantaneous copy of this Operations' dependencies.
+	 * @return An instantaneous copy of this Operations' dependencies.
+	 *
+	 * @relates Operation
 	 */
 	Array *(*dependencies)(const Operation *self);
 
@@ -135,6 +151,8 @@ struct OperationInterface {
 	 * @return The initialized Operation, or `NULL` on error.
 	 *
 	 * @remark Asynchronous subclasses should invoke this initializer.
+	 *
+	 * @relates Operation
 	 */
 	Operation *(*init)(Operation *self);
 
@@ -145,11 +163,15 @@ struct OperationInterface {
 	 * @param data The user data.
 	 *
 	 * @return The initialized Operation, or `NULL` on error.
+	 *
+	 * @relates Operation
 	 */
 	Operation *(*initWithFunction)(Operation *self, OperationFunction function, id data);
 
 	/**
 	 * @return `YES` when all criteria for this Operation to `start` are met.
+	 *
+	 * @relates Operation
 	 */
 	BOOL (*isReady)(const Operation *self);
 
@@ -157,6 +179,8 @@ struct OperationInterface {
 	 * @brief Removes the dependency on `dependency`.
 	 *
 	 * @param dependency The dependency.
+	 *
+	 * @relates Operation
 	 */
 	void (*removeDependency)(Operation *self, Operation *dependency);
 
@@ -171,11 +195,15 @@ struct OperationInterface {
 	 * @remark Asynchronous Operations should override this method and
 	 * coordinate their own state transitions and queue removal. This method
 	 * must not be invoked by `super`.
+	 *
+	 * @relates Operation
 	 */
 	void (*start)(Operation *self);
 
 	/**
 	 * @brief Blocks the current thread until this Operation `isFinished`.
+	 *
+	 * @relates Operation
 	 */
 	void (*waitUntilFinished)(const Operation *self);
 };

@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_MutableArray_h
-#define _Objectively_MutableArray_h
+#ifndef _Objectively_MutableArray_h_
+#define _Objectively_MutableArray_h_
 
 #include <Objectively/Array.h>
 
@@ -37,6 +37,8 @@ typedef struct MutableArrayInterface MutableArrayInterface;
 
 /**
  * @brief The MutableArray type.
+ *
+ * @extends Array
  */
 struct MutableArray {
 
@@ -57,7 +59,9 @@ struct MutableArray {
 };
 
 /**
- * @brief The MutableArray type.
+ * @brief The MutableArray interface.
+ *
+ * @extends ArrayInterface
  */
 struct MutableArrayInterface {
 
@@ -68,6 +72,8 @@ struct MutableArrayInterface {
 
 	/**
 	 * @brief Adds the specified Object to this Array.
+	 *
+	 * @relates MutableArray
 	 */
 	void (*addObject)(MutableArray *self, const id obj);
 
@@ -75,6 +81,8 @@ struct MutableArrayInterface {
 	 * @brief Initializes this MutableArray.
 	 *
 	 * @return The initialized MutableArray, or `NULL` on error.
+	 *
+	 * @relates MutableArray
 	 */
 	MutableArray *(*init)(MutableArray *self);
 
@@ -84,16 +92,22 @@ struct MutableArrayInterface {
 	 * @param capacity The desired initial capacity.
 	 *
 	 * @return The initialized Array, or `NULL` on error.
+	 *
+	 * @relates MutableArray
 	 */
 	MutableArray *(*initWithCapacity)(MutableArray *self, size_t capacity);
 
 	/**
 	 * @brief Removes all Objects from this Array.
+	 *
+	 * @relates MutableArray
 	 */
 	void (*removeAllObjects)(MutableArray *self);
 
 	/**
 	 * @brief Removes the specified Object from this Array.
+	 *
+	 * @relates MutableArray
 	 */
 	void (*removeObject)(MutableArray *self, const id obj);
 
@@ -101,6 +115,8 @@ struct MutableArrayInterface {
 	 * @brief Removes the Object at the specified index.
 	 *
 	 * @param index The index of the Object to remove.
+	 *
+	 * @relates MutableArray
 	 */
 	void (*removeObjectAtIndex)(MutableArray *self, const int index);
 
@@ -111,6 +127,8 @@ struct MutableArrayInterface {
 	 * @param index The index of the Object to replace.
 	 *
 	 * @remark The index must not exceed the size of the Array.
+	 *
+	 * @relates MutableArray
 	 */
 	void (*setObjectAtIndex)(MutableArray *self, const id obj, const int index);
 };

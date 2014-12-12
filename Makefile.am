@@ -7,3 +7,5 @@ SUBDIRS = \
 html:
 	doxygen
 
+html-release:
+	rsync -rz Documentation/html/ jaydolan.com:/var/www/projects/objectively

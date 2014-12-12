@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_URLSessionDataTask_h
-#define _Objectively_URLSessionDataTask_h
+#ifndef _Objectively_URLSessionDataTask_h_
+#define _Objectively_URLSessionDataTask_h_
 
 #include <Objectively/Data.h>
 #include <Objectively/URLSessionTask.h>
@@ -40,6 +40,9 @@ typedef struct URLSessionDataTaskInterface URLSessionDataTaskInterface;
 
 /**
  * @brief The URLSessionDataTask type.
+ *
+ * @extends URLSessionTask
+ * @ingroup URLSession
  */
 struct URLSessionDataTask {
 
@@ -60,7 +63,11 @@ struct URLSessionDataTask {
 };
 
 /**
- * @brief The URLSessionDataTask type.
+ * @brief The URLSessionDataTask interface.
+ *
+ * @extends URLSessionTaskInterface
+ *
+ * @ingroup URLSession
  */
 struct URLSessionDataTaskInterface {
 

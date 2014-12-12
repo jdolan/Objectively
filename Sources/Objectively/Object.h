@@ -71,21 +71,29 @@ struct ObjectInterface {
 	 * @param self The instance.
 	 *
 	 * @return The copy.
+	 *
+	 * @relates Object
 	 */
 	Object *(*copy)(const Object *self);
 
 	/**
 	 * @brief Frees all resources held by this Object.
+	 *
+	 * @relates Object
 	 */
 	void (*dealloc)(Object *self);
 
 	/**
 	 * @return A brief description of this Object.
+	 *
+	 * @relates Object
 	 */
 	String *(*description)(const Object *self);
 
 	/**
 	 * @return An integer hash for use in hash tables, etc.
+	 *
+	 * @relates Object
 	 */
 	int (*hash)(const Object *self);
 
@@ -93,6 +101,8 @@ struct ObjectInterface {
 	 * @brief Initializes this Object.
 	 *
 	 * @return The initialized Object, or the unmodified pointer on error.
+	 *
+	 * @relates Object
 	 */
 	Object *(*init)(Object *self);
 
@@ -100,6 +110,8 @@ struct ObjectInterface {
 	 * @brief Tests equality of the other Object.
 	 *
 	 * @return YES if other is deemed equal, NO otherwise.
+	 *
+	 * @relates Object
 	 */
 	BOOL (*isEqual)(const Object *self, const Object *other);
 
@@ -107,6 +119,8 @@ struct ObjectInterface {
 	 * @brief Tests for class hierarchy membership.
 	 *
 	 * @return YES if this instance belongs to class' hierarchy, NO otherwise.
+	 *
+	 * @relates Object
 	 */
 	BOOL (*isKindOfClass)(const Object *self, const Class *clazz);
 };

@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_NumberFormatter_h
-#define _Objectively_NumberFormatter_h
+#ifndef _Objectively_NumberFormatter_h_
+#define _Objectively_NumberFormatter_h_
 
 #include <Objectively/Number.h>
 #include <Objectively/String.h>
@@ -73,7 +73,7 @@ struct NumberFormatter {
 };
 
 /**
- * @brief The NumberFormatter type.
+ * @brief The NumberFormatter interface.
  */
 struct NumberFormatterInterface {
 
@@ -88,6 +88,8 @@ struct NumberFormatterInterface {
 	 * @param chars The characters to parse.
 	 *
 	 * @return A Number instance, or `NULL` on error.
+	 *
+	 * @relates NumberFormatter
 	 */
 	Number *(*numberFromCharacters)(const NumberFormatter *self, const char *chars);
 
@@ -97,6 +99,8 @@ struct NumberFormatterInterface {
 	 * @param string The String to parse.
 	 *
 	 * @return A Number instance, or `NULL` on error.
+	 *
+	 * @relates NumberFormatter
 	 */
 	Number *(*numberFromString)(const NumberFormatter *self, const String *string);
 
@@ -108,6 +112,8 @@ struct NumberFormatterInterface {
 	 * @return The initialized NumberFormatter, or `NULL` on error.
 	 *
 	 * @see strftime
+	 *
+	 * @relates NumberFormatter
 	 */
 	NumberFormatter *(*initWithFormat)(NumberFormatter *self, const char *fmt);
 
@@ -117,6 +123,8 @@ struct NumberFormatterInterface {
 	 * @param number The Number to format.
 	 *
 	 * @return The String representation of the Number, or `NULL` on error.
+	 *
+	 * @relates NumberFormatter
 	 */
 	String *(*stringFromNumber)(const NumberFormatter *self, const Number *number);
 };
