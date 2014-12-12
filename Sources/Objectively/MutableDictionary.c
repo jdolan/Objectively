@@ -31,7 +31,9 @@
 
 #define __Class __MutableDictionary
 
-#define DICTIONARY_DEFAULT_CAPACITY 64
+#define MUTABLEDICTIONARY_DEFAULT_CAPACITY 64
+#define MUTABLEDICTIONARY_GROW_FACTOR 2.0
+#define MUTABLEDICTIONARY_MAX_LOAD 0.75
 
 #pragma mark - MutableDictionaryInterface
 
@@ -40,7 +42,7 @@
  */
 static MutableDictionary *init(MutableDictionary *self) {
 
-	return $(self, initWithCapacity, DICTIONARY_DEFAULT_CAPACITY);
+	return $(self, initWithCapacity, MUTABLEDICTIONARY_DEFAULT_CAPACITY);
 }
 
 /**
@@ -104,12 +106,52 @@ static void removeObjectForKey(MutableDictionary *self, const id key) {
 }
 
 /**
+ * @brief Resizes this Dictionary, if necessary, based on its load factor.
+ */
+static void resize(MutableDictionary *self) {
+
+	const float load = self->dictionary.count / self->dictionary.capacity;
+	if (load >= MUTABLEDICTIONARY_MAX_LOAD) {
+
+		size_t capacity = self->dictionary.capacity;
+		id *elements = self->dictionary.elements;
+
+		self->dictionary.capacity = self->dictionary.capacity * MUTABLEDICTIONARY_GROW_FACTOR;
+		self->dictionary.count = 0;
+
+		self->dictionary.elements = calloc(self->dictionary.capacity, sizeof(Array *));
+		assert(self->dictionary.elements);
+
+		for (size_t i = 0; i < capacity; i++) {
+
+			Array *array = elements[i];
+			if (array) {
+
+				for (size_t j = 0; j < array->count; j += 2) {
+
+					id key = $(array, objectAtIndex, j);
+					id obj = $(array, objectAtIndex, j + 1);
+
+					$(self, setObjectForKey, obj, key);
+				}
+
+				release(array);
+			}
+		}
+
+		free(elements);
+	}
+}
+
+/**
  * @see MutableDictionaryInterface::setObjectForKey(MutableDictionary *, const id, const id)
  */
 static void setObjectForKey(MutableDictionary *self, const id obj, const id key) {
 
 	assert(cast(Object, obj));
 	assert(cast(Object, key));
+
+	resize(self);
 
 	Dictionary *dict = (Dictionary *) self;
 
