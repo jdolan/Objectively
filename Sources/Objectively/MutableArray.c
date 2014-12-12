@@ -37,17 +37,18 @@
  */
 static void addObject(MutableArray *self, const id obj) {
 
-	if (self->array.count == self->capacity) {
+	Array *array = (Array *) self;
+	if (array->count == self->capacity) {
 
 		self->capacity += ARRAY_CHUNK_SIZE;
-		self->array.elements = realloc(self->array.elements, self->capacity * sizeof(id));
 
-		assert(self->array.elements);
+		array->elements = realloc(array->elements, self->capacity * sizeof(id));
+		assert(array->elements);
 	}
 
 	retain(obj);
 
-	self->array.elements[self->array.count++] = obj;
+	array->elements[array->count++] = obj;
 }
 
 /**
@@ -65,7 +66,8 @@ static MutableArray *initWithCapacity(MutableArray *self, size_t capacity) {
 
 	self = (MutableArray *) super(Object, self, init);
 	if (self) {
-		self->capacity = self->initialCapacity = capacity;
+		self->capacity = capacity;
+
 		self->array.elements = malloc(self->capacity * sizeof(id));
 		assert(self->array.elements);
 	}
@@ -112,24 +114,6 @@ static void removeObjectAtIndex(MutableArray *self, const int index) {
 }
 
 /**
- * @see MutableArrayInterface::resize(MutableArray *)
- */
-static void resize(MutableArray *self) {
-
-	size_t chunks = (self->array.count / ARRAY_CHUNK_SIZE) + 1;
-	size_t capacity = chunks * ARRAY_CHUNK_SIZE;
-
-	capacity = max(capacity, self->initialCapacity);
-	if (capacity != self->capacity) {
-
-		self->capacity = capacity;
-		self->array.elements = realloc(self->array.elements, self->capacity * sizeof(id));
-
-		assert(self->array.elements);
-	}
-}
-
-/**
  * @see MutableArrayInterface::setObjectAtIndex(MutableArray *, const id, const int)
  */
 static void setObjectAtIndex(MutableArray *self, const id obj, const int index) {
@@ -159,7 +143,6 @@ static void initialize(Class *clazz) {
 	mutableArray->removeAllObjects = removeAllObjects;
 	mutableArray->removeObject = removeObject;
 	mutableArray->removeObjectAtIndex = removeObjectAtIndex;
-	mutableArray->resize = resize;
 	mutableArray->setObjectAtIndex = setObjectAtIndex;
 }
 

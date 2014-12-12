@@ -29,7 +29,7 @@
 /**
  * @file
  *
- * @brief A mutable array implementation.
+ * @brief Immutable Arrays.
  */
 
 typedef struct Array Array;
@@ -67,7 +67,7 @@ struct Array {
 	size_t count;
 
 	/**
-	 * @brief The Array elements.
+	 * @brief The backing pointer array.
 	 *
 	 * @private
 	 */

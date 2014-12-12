@@ -26,6 +26,12 @@
 
 #include <Objectively/Array.h>
 
+/**
+ * @file
+ *
+ * @brief Mutable Arrays.
+ */
+
 typedef struct MutableArray MutableArray;
 typedef struct MutableArrayInterface MutableArrayInterface;
 
@@ -48,11 +54,6 @@ struct MutableArray {
 	 * @brief The Array capacity.
 	 */
 	size_t capacity;
-
-	/**
-	 * @brief The Array initial capacity.
-	 */
-	size_t initialCapacity;
 };
 
 /**
@@ -102,14 +103,6 @@ struct MutableArrayInterface {
 	 * @param index The index of the Object to remove.
 	 */
 	void (*removeObjectAtIndex)(MutableArray *self, const int index);
-
-	/**
-	 * @brief Resizes this Array to an appropriate capacity based on count.
-	 *
-	 * @remark This operation is entirely optional, but can reclaim memory
-	 * after large removal operations have executed.
-	 */
-	void (*resize)(MutableArray *self);
 
 	/**
 	 * @brief Replaces the Object at the specified index.

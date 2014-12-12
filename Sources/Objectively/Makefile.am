@@ -18,6 +18,7 @@ pkginclude_HEADERS = \
 	Lock.h \
 	Log.h \
 	MutableArray.h \
+	MutableDictionary.h \
 	Null.h \
 	Number.h \
 	NumberFormatter.h \
@@ -57,6 +58,7 @@ libObjectively_la_SOURCES = \
 	Lock.c \
 	Log.c \
 	MutableArray.c \
+	MutableDictionary.c \
 	Null.c \
 	Number.c \
 	NumberFormatter.c \

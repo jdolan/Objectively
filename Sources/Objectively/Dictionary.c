@@ -28,13 +28,10 @@
 #include <Objectively/Dictionary.h>
 #include <Objectively/Hash.h>
 #include <Objectively/MutableArray.h>
+#include <Objectively/MutableDictionary.h>
 #include <Objectively/String.h>
 
 #define __Class __Dictionary
-
-#define DICTIONARY_CHUNK_SIZE 64
-
-#define HASH(key) ( $((Object *) key, hash) % self->capacity )
 
 #pragma mark - ObjectInterface
 
@@ -44,15 +41,8 @@
 static Object *copy(const Object *self) {
 
 	const Dictionary *this = (Dictionary *) self;
-	Dictionary *that = $(alloc(Dictionary), initWithCapacity, this->capacity);
 
-	for (size_t i = 0; i < this->capacity; i++) {
-
-		MutableArray *array = this->elements[i];
-		if (array != NULL) {
-			that->elements[i] = $((Object *) array, copy);
-		}
-	}
+	Dictionary *that = $(alloc(Dictionary), initWithDictionary, this);
 
 	return (Object *) that;
 }
@@ -64,7 +54,10 @@ static void dealloc(Object *self) {
 
 	Dictionary *this = (Dictionary *) self;
 
-	$(this, removeAllObjects);
+	for (size_t i = 0; i < this->capacity; i++) {
+		release(this->elements[i]);
+	}
+
 	free(this->elements);
 
 	super(Object, self, dealloc);
@@ -111,7 +104,7 @@ static int hash(const Object *self) {
 
 	const Dictionary *this = (Dictionary *) self;
 
-	int hash = HASH_SEED;
+	int hash = HashForInteger(HASH_SEED, this->count);
 
 	for (size_t i = 0; i < this->capacity; i++) {
 		if (this->elements[i]) {
@@ -234,7 +227,7 @@ static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumer
 
 	assert(enumerator);
 
-	Dictionary *dictionary = alloc(Dictionary);
+	MutableDictionary *dictionary = $(alloc(MutableDictionary), init);
 
 	for (size_t i = 0; i < self->capacity; i++) {
 
@@ -253,26 +246,62 @@ static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumer
 		}
 	}
 
-	return dictionary;
+	return (Dictionary *) dictionary;
 }
 
 /**
- * @see DictionaryInterface::init(Dictionary *)
+ * @see DictionaryInterface::initWithDictionary(Dictionary *, const Dictionary *)
  */
-static Dictionary *init(Dictionary *self) {
-	return $(self, initWithCapacity, DICTIONARY_CHUNK_SIZE);
-}
-
-/**
- * @see DicionaryInterface::initWithCapacity(Dictionary *, size_t)
- */
-static Dictionary *initWithCapacity(Dictionary *self, size_t capacity) {
+static Dictionary *initWithDictionary(Dictionary *self, const Dictionary *dictionary) {
 
 	self = (Dictionary *) super(Object, self, init);
 	if (self) {
-		self->capacity = self->initialCapacity = capacity;
-		self->elements = calloc(1, self->capacity * sizeof(id));
-		assert(self->elements);
+		if (dictionary) {
+
+			self->capacity = dictionary->capacity;
+
+			self->elements = calloc(self->capacity, sizeof(Array *));
+			assert(self->elements);
+
+			for (size_t i = 0; i < dictionary->capacity; i++) {
+
+				Array *array = dictionary->elements[i];
+				if (array != NULL) {
+					self->elements[i] = $((Object *) array, copy);
+				}
+			}
+
+			self->count = dictionary->count;
+		}
+	}
+
+	return self;
+}
+
+/**
+ * @see DictionaryInterface::initWithObjectsAndKeys(Dictionary *, ...)
+ */
+static Dictionary *initWithObjectsAndKeys(Dictionary *self, ...) {
+
+	self = (Dictionary *) super(Object, self, init);
+	if (self) {
+
+		va_list args;
+		va_start(args, self);
+
+		while (YES) {
+
+			id obj = va_arg(args, id);
+			if (obj) {
+
+				id key = va_arg(args, id);
+				$$(MutableDictionary, setObjectForKey, (MutableDictionary *) self, obj, key);
+			} else {
+				break;
+			}
+		}
+
+		va_end(args);
 	}
 
 	return self;
@@ -285,7 +314,9 @@ static id objectForKey(const Dictionary *self, const id key) {
 
 	assert(cast(Object, key));
 
-	Array *array = self->elements[HASH(key)];
+	const size_t bin = HashForObject(HASH_SEED, key) % self->capacity;
+
+	Array *array = self->elements[bin];
 	if (array != NULL) {
 
 		int index = $(array, indexOfObject, key);
@@ -295,96 +326,6 @@ static id objectForKey(const Dictionary *self, const id key) {
 	}
 
 	return NULL;
-}
-
-/**
- * @see DictionaryInterface::removeAllObjects(Dictionary *)
- */
-static void removeAllObjects(Dictionary *self) {
-
-	for (size_t i = 0; i < self->capacity; i++) {
-
-		Array *array = self->elements[i];
-		if (array != NULL) {
-			release(array);
-			self->elements[i] = NULL;
-		}
-	}
-
-	self->count = 0;
-}
-
-/**
- * @see DictionaryInterface::removeObjectForKey(Dictionary *, const id)
- */
-static void removeObjectForKey(Dictionary *self, const id key) {
-
-	assert(cast(Object, key));
-
-	MutableArray *array = self->elements[HASH(key)];
-	if (array != NULL) {
-
-		int index = $((Array *) array, indexOfObject, key);
-		if (index > -1) {
-
-			$(array, removeObjectAtIndex, index);
-			$(array, removeObjectAtIndex, index);
-
-			if (((Array *) array)->count == 0) {
-				release(array);
-				self->elements[HASH(key)] = NULL;
-			}
-
-			self->count--;
-		}
-	}
-}
-
-/**
- * @see DictionaryInterface::setObjectForKey(Dictionary *, const id, const id)
- */
-static void setObjectForKey(Dictionary *self, const id obj, const id key) {
-
-	assert(cast(Object, obj));
-	assert(cast(Object, key));
-
-	MutableArray *array = self->elements[HASH(key)];
-	if (array == NULL) {
-		array = self->elements[HASH(key)] = $(alloc(MutableArray), init);
-	}
-
-	int index = $((Array *) array, indexOfObject, key);
-	if (index > -1) {
-		$(array, setObjectAtIndex, obj, index + 1);
-	} else {
-		$(array, addObject, key);
-		$(array, addObject, obj);
-
-		self->count++;
-	}
-}
-
-/**
- * @see DictionaryInterface::setObjectsForKeys(Dictionary *, ...)
- */
-static void setObjectsForKeys(Dictionary *self, ...) {
-
-	va_list args;
-	va_start(args, self);
-
-	while (YES) {
-
-		id obj = va_arg(args, id);
-		if (obj) {
-
-			id key = va_arg(args, id);
-			$(self, setObjectForKey, obj, key);
-		} else {
-			break;
-		}
-	}
-
-	va_end(args);
 }
 
 #pragma mark - Class lifecycle
@@ -408,13 +349,9 @@ static void initialize(Class *clazz) {
 	dictionary->allObjects = allObjects;
 	dictionary->enumerateObjectsAndKeys = enumerateObjectsAndKeys;
 	dictionary->filterObjectsAndKeys = filterObjectsAndKeys;
-	dictionary->init = init;
-	dictionary->initWithCapacity = initWithCapacity;
+	dictionary->initWithDictionary = initWithDictionary;
+	dictionary->initWithObjectsAndKeys = initWithObjectsAndKeys;
 	dictionary->objectForKey = objectForKey;
-	dictionary->removeAllObjects = removeAllObjects;
-	dictionary->removeObjectForKey = removeObjectForKey;
-	dictionary->setObjectForKey = setObjectForKey;
-	dictionary->setObjectsForKeys = setObjectsForKeys;
 }
 
 Class __Dictionary = {

@@ -64,7 +64,9 @@ struct Dictionary {
 	DictionaryInterface *interface;
 
 	/**
-	 * @brief The capacity, or number of bins, in this Dictionary.
+	 * The internal size (number of bins).
+	 *
+	 * @private
 	 */
 	size_t capacity;
 
@@ -79,11 +81,6 @@ struct Dictionary {
 	 * @private
 	 */
 	id *elements;
-
-	/**
-	 * @brief The initial capacity, or number of bins, in this Dictionary.
-	 */
-	size_t initialCapacity;
 };
 
 /**
@@ -129,45 +126,26 @@ struct DictionaryInterface {
 			id data);
 
 	/**
-	 * Initializes this Dictionary.
+	 * @brief Initializes this Dictionary to contain elements of `dictionary`.
+	 *
+	 * @param dictionary A Dictionary.
 	 *
 	 * @return The initialized Dictionary, or `NULL` on error.
 	 */
-	Dictionary *(*init)(Dictionary *self);
+	Dictionary *(*initWithDictionary)(Dictionary *self, const Dictionary *dictionary);
 
 	/**
-	 * Initializes this Dictionary with the specified capacity.
-	 *
-	 * @param capacity The initial capacity.
+	 * @brief Initializes this Dictionary with the `NULL`-terminated list of
+	 * Objects and keys.
 	 *
 	 * @return The initialized Dictionary, or `NULL` on error.
 	 */
-	Dictionary *(*initWithCapacity)(Dictionary *self, size_t capacity);
+	Dictionary *(*initWithObjectsAndKeys)(Dictionary *self, ...);
 
 	/**
 	 * @return The Object stored at the specified key in this Dictionary.
 	 */
 	id (*objectForKey)(const Dictionary *self, const id key);
-
-	/**
-	 * @brief Removes all Objects from this Dictionary.
-	 */
-	void (*removeAllObjects)(Dictionary *self);
-
-	/**
-	 * @brief Removes the specified Object from this Dictionary.
-	 */
-	void (*removeObjectForKey)(Dictionary *self, const id key);
-
-	/**
-	 * @brief Sets a pair in this Dictionary.
-	 */
-	void (*setObjectForKey)(Dictionary *self, const id obj, const id key);
-
-	/**
-	 * @brief Sets pairs in this Dictionary from the NULL-terminated list.
-	 */
-	void (*setObjectsForKeys)(Dictionary *self, ...);
 };
 
 /**
