@@ -30,6 +30,22 @@
 
 #define ARRAY_CHUNK_SIZE 64
 
+#pragma mark - ObjectInterface
+
+/**
+ * @see ObjectInterface::copy(const Object *)
+ */
+static Object *copy(const Object *self) {
+
+	Array *this = (Array *)  self;
+
+	MutableArray *copy = $(alloc(MutableArray), initWithCapacity, this->count);
+
+	$(copy, addObjectsFromArray, this);
+
+	return (Object *) copy;
+}
+
 #pragma mark - MutableArrayInterface
 
 /**
@@ -51,6 +67,17 @@ static void addObject(MutableArray *self, const id obj) {
 	array->elements[array->count++] = obj;
 }
 
+/**
+ * @see MutableArrayInterface::addObjectsFromArrayy
+ */
+static void addObjectsFromArray(MutableArray *self, const Array *array) {
+
+	if (array) {
+		for (size_t i = 0; i < array->count; i++) {
+			$(self, addObject, array->elements[i]);
+		}
+	}
+}
 /**
  * @see MutableArrayInterface::init(MutableArray *)
  */
@@ -135,9 +162,14 @@ static void setObjectAtIndex(MutableArray *self, const id obj, const int index) 
  */
 static void initialize(Class *clazz) {
 
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+
+	object->copy = copy;
+
 	MutableArrayInterface *mutableArray = (MutableArrayInterface *) clazz->interface;
 
 	mutableArray->addObject = addObject;
+	mutableArray->addObjectsFromArray = addObjectsFromArray;
 	mutableArray->init = init;
 	mutableArray->initWithCapacity = initWithCapacity;
 	mutableArray->removeAllObjects = removeAllObjects;

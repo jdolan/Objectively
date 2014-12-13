@@ -35,7 +35,39 @@
 #define MUTABLEDICTIONARY_GROW_FACTOR 2.0
 #define MUTABLEDICTIONARY_MAX_LOAD 0.75
 
+#pragma mark - ObjectInterface
+
+/**
+ * @see ObjectInterface::copy(const Object *)
+ */
+static Object *copy(const Object *self) {
+
+	Dictionary *this = (Dictionary *) self;
+
+	MutableDictionary *copy = $(alloc(MutableDictionary), initWithCapacity, this->capacity);
+
+	$(copy, addEntriesFromDictionary, this);
+
+	return (Object *) copy;
+}
+
 #pragma mark - MutableDictionaryInterface
+
+/**
+ * @brief DictionaryEnumerator for addEntriesFromDictionary.
+ */
+static BOOL addEntriesFromDictionary_enumerator(const Dictionary *dict, id obj, id key, id data) {
+
+	$((MutableDictionary *) data, setObjectForKey, obj, key); return NO;
+}
+
+/**
+ * @see MutableDictionaryInterface::addEntriesFromDictionary(MutableDictionary *, const Dictionary *)
+ */
+static void addEntriesFromDictionary(MutableDictionary *self, const Dictionary *dictionary) {
+
+	$(dictionary, enumerateObjectsAndKeys, addEntriesFromDictionary_enumerator, self);
+}
 
 /**
  * @see MutableDictionaryInterface::init(MutableDictionary *)
@@ -203,8 +235,13 @@ static void setObjectsForKeys(MutableDictionary *self, ...) {
  */
 static void initialize(Class *clazz) {
 
+	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+
+	object->copy = copy;
+
 	MutableDictionaryInterface *mutableDictionary = (MutableDictionaryInterface *) clazz->interface;
 
+	mutableDictionary->addEntriesFromDictionary = addEntriesFromDictionary;
 	mutableDictionary->init = init;
 	mutableDictionary->initWithCapacity = initWithCapacity;
 	mutableDictionary->removeAllObjects = removeAllObjects;

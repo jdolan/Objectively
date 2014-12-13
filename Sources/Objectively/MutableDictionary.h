@@ -70,7 +70,14 @@ struct MutableDictionaryInterface {
 	DictionaryInterface dictionaryInterface;
 
 	/**
-	 * Initializes this Dictionary.
+	 * @brief Adds the key-value entries from `dictionary` to this Dictionary.
+	 *
+	 * @param dictionary A Dictionary.
+	 */
+	void (*addEntriesFromDictionary)(MutableDictionary *self, const Dictionary *dictionary);
+
+	/**
+	 * @brief Initializes this Dictionary.
 	 *
 	 * @return The initialized Dictionary, or `NULL` on error.
 	 *
@@ -79,7 +86,7 @@ struct MutableDictionaryInterface {
 	MutableDictionary *(*init)(MutableDictionary *self);
 
 	/**
-	 * Initializes this Dictionary with the specified capacity.
+	 * @brief Initializes this Dictionary with the specified capacity.
 	 *
 	 * @param capacity The initial capacity.
 	 *

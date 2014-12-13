@@ -82,6 +82,13 @@ struct MutableArrayInterface {
 	void (*addObject)(MutableArray *self, const id obj);
 
 	/**
+	 * @brief Adds the Objects contained in `array` to this Array.
+	 *
+	 * @param array An Array.
+	 */
+	void (*addObjectsFromArray)(MutableArray *self, const Array *array);
+
+	/**
 	 * @brief Initializes this MutableArray.
 	 *
 	 * @return The initialized MutableArray, or `NULL` on error.
