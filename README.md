@@ -2,7 +2,7 @@ Objectively
 ===
 Ultra-lightweight object oriented framework for the C programming language.
 
-[Foundation-inspired](http://jaydolan.com/projects/objectively) core library.
+Foundation-inspired [core library](http://jaydolan.com/projects/objectively).
 
 Zlib [license](COPYING).
 
