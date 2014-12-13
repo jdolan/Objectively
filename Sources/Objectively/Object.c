@@ -37,9 +37,10 @@
  */
 static Object *copy(const Object *self) {
 
-	size_t size = self->clazz->instanceSize;
+	id obj = calloc(1, self->clazz->instanceSize);
+	assert(obj);
 
-	Object *object = memcpy(calloc(1, size), self, size);
+	Object *object = memcpy(obj, self, self->clazz->instanceSize);
 	object->referenceCount = 1;
 
 	return object;
