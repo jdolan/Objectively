@@ -2,7 +2,7 @@ Objectively
 ===
 Ultra-lightweight object oriented framework for the C programming language.
 
-[Foundation-inspired](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/ObjC_classic/index.html) core library.
+[Foundation-inspired](http://jaydolan.com/projects/objectively) core library.
 
 Zlib license.
 
