@@ -4,22 +4,28 @@ Ultra-lightweight object oriented framework for the C programming language.
 
 Foundation-inspired [core library](http://jaydolan.com/projects/objectively).
 
-Zlib [license](https://github.com/jdolan/objectively/tree/master/COPYING).
+Zlib [license](./COPYING).
 
 Adding Objectively to your project
 ---
 
 1) Do the Autotools dance.
 
-    ./configure; make; sudo make install
+```shell
+./configure; make; sudo make install
+```
 
 2) Include the main header file in your source.
 
-    #include <Objectively.h>
+```c
+#include <Objectively.h>
+```
 
 3) Compile and link with Objectively.
 
-    gcc `pkg-config --cflags --libs Objectively` -o myprogram *.c
+```shell
+gcc `pkg-config --cflags --libs Objectively` -o myprogram *.c
+```
 
 Declaring a type
 ---
@@ -93,6 +99,7 @@ Implementing a type
 
 To implement a type, implement its instance and Class methods and Class initializer:
 
+```c
     #include <stdio.h>
     #include <Objectively.h>
     
@@ -146,17 +153,18 @@ To implement a type, implement its instance and Class methods and Class initiali
     };
     
     #undef __class
-    
+```
+
 Using a type
 ---
-
+```c
     Hello *hello = $$(Hello, helloWithGreeting, NULL);
     
     $(hello, sayHello);
     
     release(hello);
-
-See [Hello.c](https://github.com/jdolan/objectively/tree/master/Tests/Objectively/Hello.c) for the full source to this example.
+```
+See [Hello.c](Tests/Objectively/Hello.c) for the full source to this example.
 
 Initialization
 ---
@@ -166,27 +174,29 @@ Invoking an instance method
 ---
 To invoke an instance method, use the `$` macro.
 
+```c
     $(condition, waitUntilDate, date);
+```
 
 Invoking a Class method
 ---
 To invoke a Class method, use the `$$` macro.
-
+```c
     Dictionary *dict = $$(JSONSerialization, objectWithData, data);
-
+```
 Overriding a method
 ---
 To override a method, overwrite the function pointer from within your Class' `initialize` method.
-
+```c
     ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
     ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
-
+```
 Calling super
 ---
 To invoke a supertype's method implementation, use the `super` macro.
-
+```c
     super(Object, self, dealloc);
-    
+```
 Managing memory
 ---
 Objectively uses reference counting to govern object retention. Newly instantiated Objects have a reference count of 1. To retain a strong reference to an Object, call `retain(obj)`. To relinquish it, call `release(obj)`. Once an Object's reference count reaches 0, it is deallocated. Remember to balance every `retain` with a `release`.
@@ -194,7 +204,7 @@ Objectively uses reference counting to govern object retention. Newly instantiat
 Shared instances
 ---
 A shared instance or _singleton pattern_ can be achieved through Class methods and _release-on-destroy_.
-
+```c
     static URLSession *__sharedInstance;
     
     /**
@@ -220,7 +230,7 @@ A shared instance or _singleton pattern_ can be achieved through Class methods a
     // ...
     
     URLSession *session = $$(URLSession, sharedInstance);
-
+```
 See [Once.h](Sources/Objectively/Once.h) for details on `DispatchOnce`.
     
 API documentation
