@@ -1,6 +1,10 @@
 Objectively
 ===
-Ultra-lightweight object oriented framework for the C programming language. Cocoa-inspired API. Zlib license.
+Ultra-lightweight object oriented framework for the C programming language.
+
+Cocoa-inspired core library.
+
+Zlib license.
 
 Adding Objectively to your project
 ---
