@@ -33,13 +33,13 @@
 /**
  * @file
  *
- * @brief A mutable string implementation.
+ * @brief Mutable strings.
  */
 
 typedef struct StringInterface StringInterface;
 
 /**
- * @brief The String type.
+ * @brief Mutable strings.
  */
 struct String {
 

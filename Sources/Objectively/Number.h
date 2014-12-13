@@ -36,7 +36,7 @@ typedef struct Number Number;
 typedef struct NumberInterface NumberInterface;
 
 /**
- * @brief The Number type.
+ * @brief A wrapper for placing numeric primitives into collections, etc.
  */
 struct Number {
 

@@ -39,9 +39,9 @@ typedef struct OperationQueue OperationQueue;
 typedef struct OperationQueueInterface OperationQueueInterface;
 
 /**
- * @brief The OperationQueue type.
+ * @brief OperationQueues provide a thread of execution for Operations.
  *
- * @ingroup Concurrency
+ * @ingroup Threads
  */
 struct OperationQueue {
 
@@ -86,7 +86,7 @@ struct OperationQueue {
 /**
  * @brief The OperationQueue interface.
  *
- * @ingroup Concurrency
+ * @ingroup Threads
  */
 struct OperationQueueInterface {
 

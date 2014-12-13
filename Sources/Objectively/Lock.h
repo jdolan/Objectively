@@ -50,9 +50,11 @@ typedef struct Lock Lock;
 typedef struct LockInterface LockInterface;
 
 /**
- * @brief The Lock type.
+ * @brief POSIX Threads locks.
  *
- * @ingroup Concurrency
+ * Mediate access to a critical section by enforcing mutual exclusion.
+ *
+ * @ingroup Threads
  */
 struct Lock {
 
@@ -75,7 +77,7 @@ struct Lock {
 /**
  * @brief The Lock interface.
  *
- * @ingroup Concurrency
+ * @ingroup Threads
  */
 struct LockInterface {
 

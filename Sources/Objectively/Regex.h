@@ -39,7 +39,7 @@ typedef struct Regex Regex;
 typedef struct RegexInterface RegexInterface;
 
 /**
- * @brief The Regex type.
+ * @brief Extended POSIX regular expressions.
  */
 struct Regex {
 

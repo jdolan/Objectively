@@ -29,7 +29,13 @@
 /**
  * @file
  *
- * @brief Immutable Arrays.
+ * @brief Immutable arrays.
+ */
+
+/**
+ * @defgroup Collections
+ *
+ * @brief Abstract data types for aggregating Objects.
  */
 
 typedef struct Array Array;
@@ -47,7 +53,9 @@ typedef struct ArrayInterface ArrayInterface;
 typedef BOOL (*ArrayEnumerator)(const Array *array, id obj, id data);
 
 /**
- * @brief The Array type.
+ * @brief Immutable arrays.
+ *
+ * @ingroup Collections
  */
 struct Array {
 
@@ -76,6 +84,8 @@ struct Array {
 
 /**
  * @brief The Array interface.
+ *
+ * @ingroup Collections
  */
 struct ArrayInterface {
 

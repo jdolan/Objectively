@@ -29,7 +29,7 @@
 
 #include <Objectively/Thread.h>
 
-#define __Class __Thread
+#define __class __Thread
 
 #pragma mark - ObjectInterface
 
@@ -205,4 +205,4 @@ Class __Thread = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class

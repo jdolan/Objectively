@@ -30,7 +30,7 @@
 #include <Objectively/MutableArray.h>
 #include <Objectively/String.h>
 
-#define __Class __Array
+#define __class __Array
 
 #pragma mark - ObjectInterface
 
@@ -296,4 +296,4 @@ Class __Array = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class

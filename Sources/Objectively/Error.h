@@ -27,11 +27,17 @@
 #include <Objectively/Object.h>
 #include <Objectively/String.h>
 
+/**
+ * @file
+ *
+ * @brief Encapsulation for error conditions.
+ */
+
 typedef struct Error Error;
 typedef struct ErrorInterface ErrorInterface;
 
 /**
- * @brief The Error type.
+ * @brief Encapsulation for error conditions.
  */
 struct Error {
 

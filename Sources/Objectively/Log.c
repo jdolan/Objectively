@@ -32,7 +32,7 @@
 #include <Objectively/Log.h>
 #include <Objectively/Once.h>
 
-#define __Class __Log
+#define __class __Log
 
 #pragma mark - ObjectInterface
 
@@ -280,4 +280,4 @@ Class __Log = {
 	.destroy = destroy,
 };
 
-#undef __Class
+#undef __class

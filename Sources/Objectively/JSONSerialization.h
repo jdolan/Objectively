@@ -48,7 +48,7 @@ typedef struct JSONSerialization JSONSerialization;
 typedef struct JSONSerializationInterface JSONSerializationInterface;
 
 /**
- * @brief The JSONSerialization type.
+ * @brief JSON serialization.
  *
  * @ingroup JSON
  */

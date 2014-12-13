@@ -35,7 +35,7 @@
  */
 
 /**
- * @defgroup Concurrency
+ * @defgroup Threads
  *
  * @brief Parallel computing and synchronization via POSIX Threads.
  */
@@ -50,9 +50,11 @@ typedef struct ThreadInterface ThreadInterface;
 typedef id (*ThreadFunction)(Thread *thread);
 
 /**
- * @brief The Thread type.
+ * @brief POSIX Threads.
  *
- * @ingroup Concurrency
+ * Asynchronous computing via multiple threads of execution.
+ *
+ * @ingroup Threads
  */
 struct Thread {
 
@@ -105,7 +107,7 @@ struct Thread {
 /**
  * @brief The Thread interface.
  *
- * @ingroup Concurrency
+ * @ingroup Threads
  */
 struct ThreadInterface {
 

@@ -26,7 +26,7 @@
 
 #include <Objectively/MutableArray.h>
 
-#define __Class __MutableArray
+#define __class __MutableArray
 
 #define ARRAY_CHUNK_SIZE 64
 
@@ -155,4 +155,4 @@ Class __MutableArray = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class

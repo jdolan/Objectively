@@ -26,13 +26,21 @@
 
 #include <Objectively/Dictionary.h>
 
+/**
+ * @file
+ *
+ * @brief Mutable key-value stores.
+ */
+
 typedef struct MutableDictionary MutableDictionary;
 typedef struct MutableDictionaryInterface MutableDictionaryInterface;
 
 /**
- * @brief The MutableDictionary type.
+ * @brief Mutable key-value stores.
  *
  * @extends Dictionary
+ *
+ * @ingroup Collections
  */
 struct MutableDictionary {
 
@@ -51,6 +59,8 @@ struct MutableDictionary {
  * @brief The MutableDictionary interface.
  *
  * @extends DictionaryInterface
+ *
+ * @ingroup Collections
  */
 struct MutableDictionaryInterface {
 
@@ -92,6 +102,13 @@ struct MutableDictionaryInterface {
 	 * @relates MutableDictionary
 	 */
 	void (*removeObjectForKey)(MutableDictionary *self, const id key);
+
+	/**
+	 * @brief Resizes this Dictionary, if necessary, based on its load factor.
+	 *
+	 * @private
+	 */
+	void (*resize)(MutableDictionary *self);
 
 	/**
 	 * @brief Sets a pair in this Dictionary.

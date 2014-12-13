@@ -33,7 +33,7 @@
 #include <Objectively/Number.h>
 #include <Objectively/String.h>
 
-#define __Class __JSONSerialization
+#define __class __JSONSerialization
 
 #pragma mark - JSONSerializationInterface
 
@@ -473,4 +473,4 @@ Class __JSONSerialization = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class

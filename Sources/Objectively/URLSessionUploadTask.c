@@ -28,7 +28,7 @@
 
 #include <Objectively/URLSessionUploadTask.h>
 
-#define __Class __URLSessionUploadTask
+#define __class __URLSessionUploadTask
 
 #pragma mark - URLSessionTaskInterface
 
@@ -79,4 +79,4 @@ Class __URLSessionUploadTask = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class

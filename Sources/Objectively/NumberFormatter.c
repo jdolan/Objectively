@@ -28,7 +28,7 @@
 
 #include <Objectively/NumberFormatter.h>
 
-#define __Class __NumberFormatter
+#define __class __NumberFormatter
 
 #pragma mark - NumberFormatterInterface
 
@@ -101,4 +101,4 @@ Class __NumberFormatter = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class

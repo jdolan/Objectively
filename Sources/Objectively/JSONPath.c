@@ -30,7 +30,7 @@
 #include <Objectively/Once.h>
 #include <Objectively/Regex.h>
 
-#define __Class __JSONPath
+#define __class __JSONPath
 
 #pragma mark - JSONPathInterface
 
@@ -118,4 +118,4 @@ Class __JSONPath = {
 	.destroy = destroy,
 };
 
-#undef __Class
+#undef __class

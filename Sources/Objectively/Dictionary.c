@@ -31,7 +31,7 @@
 #include <Objectively/MutableDictionary.h>
 #include <Objectively/String.h>
 
-#define __Class __Dictionary
+#define __class __Dictionary
 
 #pragma mark - ObjectInterface
 
@@ -363,5 +363,5 @@ Class __Dictionary = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class
 

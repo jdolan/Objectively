@@ -29,7 +29,7 @@
 #include <Objectively/URLSession.h>
 #include <Objectively/URLSessionTask.h>
 
-#define __Class __URLSessionTask
+#define __class __URLSessionTask
 
 #pragma mark - ObjectInterface
 
@@ -249,4 +249,4 @@ Class __URLSessionTask = {
 	.interfaceSize = sizeof(URLSessionTaskInterface),
 	.initialize = initialize, };
 
-#undef __Class
+#undef __class

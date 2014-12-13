@@ -27,7 +27,7 @@
 /**
  * @file
  *
- * @brief URLSession provides an API for loading resources via URLs.
+ * @brief A management context for loading resources via URLs.
  */
 
 /**
@@ -47,7 +47,7 @@ typedef struct URLSessionInterface URLSessionInterface;
 #include <Objectively/URLSessionDownloadTask.h>
 
 /**
- * @brief The URLSession type.
+ * @brief A management context for loading resources via URLs.
  *
  * @ingroup URLSession
  */

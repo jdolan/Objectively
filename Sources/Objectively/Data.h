@@ -38,7 +38,7 @@ typedef struct Data Data;
 typedef struct DataInterface DataInterface;
 
 /**
- * @brief The Data type.
+ * @brief Mutable data buffers.
  */
 struct Data {
 

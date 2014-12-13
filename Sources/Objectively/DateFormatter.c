@@ -26,7 +26,7 @@
 
 #include <Objectively/DateFormatter.h>
 
-#define __Class __DateFormatter
+#define __class __DateFormatter
 
 #pragma mark - DateFormatterInterface
 
@@ -119,4 +119,4 @@ Class __DateFormatter = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class

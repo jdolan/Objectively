@@ -36,7 +36,7 @@ typedef struct JSONPath JSONPath;
 typedef struct JSONPathInterface JSONPathInterface;
 
 /**
- * @brief The JSONPath type.
+ * @brief A minimal JSONPath implementation.
  *
  * @ingroup JSON
  */

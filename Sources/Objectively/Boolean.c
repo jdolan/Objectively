@@ -27,7 +27,7 @@
 #include <Objectively/Once.h>
 #include <Objectively/String.h>
 
-#define __Class __Boolean
+#define __class __Boolean
 
 #pragma mark - ObjectInterface
 
@@ -120,4 +120,4 @@ Class __Boolean = {
 	.destroy = destroy,
 };
 
-#undef __Class
+#undef __class

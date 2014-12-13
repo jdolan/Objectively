@@ -31,7 +31,7 @@
 
 #include <objectively/Condition.h>
 
-#define __Class __Condition
+#define __class __Condition
 
 #pragma mark - ObjectInterface
 
@@ -142,5 +142,5 @@ Class __Condition = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class
 

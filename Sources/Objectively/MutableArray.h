@@ -29,16 +29,18 @@
 /**
  * @file
  *
- * @brief Mutable Arrays.
+ * @brief Mutable arrays.
  */
 
 typedef struct MutableArray MutableArray;
 typedef struct MutableArrayInterface MutableArrayInterface;
 
 /**
- * @brief The MutableArray type.
+ * @brief Mutable arrays.
  *
  * @extends Array
+ *
+ * @ingroup Collections
  */
 struct MutableArray {
 
@@ -62,6 +64,8 @@ struct MutableArray {
  * @brief The MutableArray interface.
  *
  * @extends ArrayInterface
+ *
+ * @ingroup Collections
  */
 struct MutableArrayInterface {
 

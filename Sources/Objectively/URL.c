@@ -27,7 +27,7 @@
 #include <Objectively/Regex.h>
 #include <Objectively/URL.h>
 
-#define __Class __URL
+#define __class __URL
 
 static Regex *__regex;
 
@@ -250,4 +250,4 @@ Class __URL = {
 	.destroy = destroy,
 };
 
-#undef __Class
+#undef __class

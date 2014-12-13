@@ -30,7 +30,7 @@
 /**
  * @file
  *
- * @brief A mutable dictionary implementation.
+ * @brief Immutable key-value stores.
  */
 
 typedef struct Dictionary Dictionary;
@@ -49,7 +49,9 @@ typedef struct DictionaryInterface DictionaryInterface;
 typedef BOOL (*DictionaryEnumerator)(const Dictionary *dictionary, id obj, id key, id data);
 
 /**
- * @brief The Dictionary type.
+ * @brief Immutable key-value stores.
+ *
+ * @ingroup Collections
  */
 struct Dictionary {
 
@@ -85,6 +87,8 @@ struct Dictionary {
 
 /**
  * @brief The Dictionary interface.
+ *
+ * @ingroup Collections
  */
 struct DictionaryInterface {
 

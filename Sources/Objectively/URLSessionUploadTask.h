@@ -38,9 +38,10 @@ typedef struct URLSessionUploadTask URLSessionUploadTask;
 typedef struct URLSessionUploadTaskInterface URLSessionUploadTaskInterface;
 
 /**
- * @brief The URLSessionUploadTask type.
+ * @brief Use upload tasks to send files directly from disk.
  *
  * @extends URLSessionTask
+ *
  * @ingroup URLSession
  */
 struct URLSessionUploadTask {

@@ -10,7 +10,7 @@
 
 #include <Objectively/URLSessionConfiguration.h>
 
-#define __Class __URLSessionConfiguration
+#define __class __URLSessionConfiguration
 
 #pragma mark - ObjectInterface
 
@@ -64,4 +64,4 @@ Class __URLSessionConfiguration = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class

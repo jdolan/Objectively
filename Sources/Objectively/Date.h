@@ -31,7 +31,7 @@
 /**
  * @file
  *
- * @brief Microsecond-precision dates.
+ * @brief Microsecond-precision immutable dates.
  */
 
 /**
@@ -53,7 +53,7 @@ typedef struct Date Date;
 typedef struct DateInterface DateInterface;
 
 /**
- * @brief The Date type.
+ * @brief Microsecond-precision immutable dates.
  */
 struct Date {
 

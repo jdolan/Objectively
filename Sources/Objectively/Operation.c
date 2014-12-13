@@ -26,7 +26,7 @@
 #include <Objectively/Operation.h>
 #include <Objectively/OperationQueue.h>
 
-#define __Class __Operation
+#define __class __Operation
 
 #pragma mark - ObjectInterface
 
@@ -235,4 +235,4 @@ Class __Operation = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class

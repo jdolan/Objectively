@@ -36,7 +36,7 @@ typedef struct Boolean Boolean;
 typedef struct BooleanInterface BooleanInterface;
 
 /**
- * @brief The Boolean type.
+ * @brief A wrapper for placing boolean primitives into collections, etc.
  */
 struct Boolean {
 

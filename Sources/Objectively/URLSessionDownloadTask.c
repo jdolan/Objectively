@@ -26,7 +26,7 @@
 
 #include <Objectively/URLSessionDownloadTask.h>
 
-#define __Class __URLSessionDownloadTask
+#define __class __URLSessionDownloadTask
 
 #pragma mark - URLSessionTaskInterface
 
@@ -77,4 +77,4 @@ Class __URLSessionDownloadTask = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class

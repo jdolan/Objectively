@@ -55,7 +55,7 @@ typedef enum {
 typedef void (*URLSessionTaskCompletion)(URLSessionTask *task, BOOL success);
 
 /**
- * @brief The URLSessionTask type.
+ * @brief URL session tasks are handles to pending URL operations.
  *
  * @ingroup URLSession
  */

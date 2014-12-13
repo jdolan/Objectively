@@ -28,7 +28,7 @@
 #include <Objectively/Hash.h>
 #include <Objectively/Regex.h>
 
-#define __Class __Regex
+#define __class __Regex
 
 #pragma mark - ObjectInterface
 
@@ -202,4 +202,4 @@ Class __Regex = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class

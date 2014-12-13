@@ -197,6 +197,6 @@ extern void retain(id obj);
  * @brief Invoke a Superclass instance method.
  */
 #define super(type, obj, method, ...) \
-	interfaceof(type, __Class.superclass)->method(cast(type, obj), ## __VA_ARGS__)
+	interfaceof(type, __class.superclass)->method(cast(type, obj), ## __VA_ARGS__)
 
 #endif

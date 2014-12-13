@@ -26,7 +26,7 @@
 #include <Objectively/Once.h>
 #include <Objectively/OperationQueue.h>
 
-#define __Class __OperationQueue
+#define __class __OperationQueue
 
 #pragma mark - ObjectInterface
 
@@ -250,4 +250,4 @@ Class __OperationQueue = {
 	.interfaceSize = sizeof(OperationQueueInterface),
 	.initialize = initialize, };
 
-#undef __Class
+#undef __class

@@ -28,7 +28,7 @@
 
 #include <Objectively/URLSessionDataTask.h>
 
-#define __Class __URLSessionDataTask
+#define __class __URLSessionDataTask
 
 #pragma mark - ObjectInterface
 
@@ -102,4 +102,4 @@ Class __URLSessionDataTask = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class

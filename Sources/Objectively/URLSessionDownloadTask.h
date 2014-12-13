@@ -38,7 +38,7 @@ typedef struct URLSessionDownloadTask URLSessionDownloadTask;
 typedef struct URLSessionDownloadTaskInterface URLSessionDownloadTaskInterface;
 
 /**
- * @brief The URLSessionDownloadTask type.
+ * @brief Use download tasks to save remote resources to file.
  *
  * @extends URLSessionTask
  * @ingroup URLSession

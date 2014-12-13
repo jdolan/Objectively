@@ -28,7 +28,7 @@
 #include <Objectively/Object.h>
 #include <Objectively/String.h>
 
-#define __Class __Object
+#define __class __Object
 
 #pragma mark - ObjectInterface
 
@@ -129,4 +129,4 @@ Class __Object = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class

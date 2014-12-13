@@ -26,7 +26,7 @@
 #include <Objectively/Error.h>
 #include <Objectively/Hash.h>
 
-#define __Class __Error
+#define __class __Error
 
 #pragma mark - ObjectInterface
 
@@ -170,4 +170,4 @@ Class __Error = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class

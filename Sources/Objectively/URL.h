@@ -40,7 +40,9 @@ typedef struct URL URL;
 typedef struct URLInterface URLInterface;
 
 /**
- * @brief The URL type.
+ * @brief Uniform Resource Locators (RFC 3986).
+ *
+ * @see http://www.ietf.org/rfc/rfc3986.txt
  *
  * @ingroup URLSession
  */

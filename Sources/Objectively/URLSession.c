@@ -32,7 +32,7 @@
 #include <Objectively/Once.h>
 #include <Objectively/URLSession.h>
 
-#define __Class __URLSession
+#define __class __URLSession
 
 #pragma mark - ObjectInterface
 
@@ -199,4 +199,4 @@ Class __URLSession = {
 	.destroy = destroy,
 };
 
-#undef __Class
+#undef __class

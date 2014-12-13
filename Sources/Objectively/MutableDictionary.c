@@ -29,7 +29,7 @@
 #include <Objectively/MutableArray.h>
 #include <Objectively/MutableDictionary.h>
 
-#define __Class __MutableDictionary
+#define __class __MutableDictionary
 
 #define MUTABLEDICTIONARY_DEFAULT_CAPACITY 64
 #define MUTABLEDICTIONARY_GROW_FACTOR 2.0
@@ -106,7 +106,7 @@ static void removeObjectForKey(MutableDictionary *self, const id key) {
 }
 
 /**
- * @brief Resizes this Dictionary, if necessary, based on its load factor.
+ * @see MutableDictionaryInterface::resize(MutableDictionary *)
  */
 static void resize(MutableDictionary *self) {
 
@@ -151,7 +151,7 @@ static void setObjectForKey(MutableDictionary *self, const id obj, const id key)
 	assert(cast(Object, obj));
 	assert(cast(Object, key));
 
-	resize(self);
+	$(self, resize);
 
 	Dictionary *dict = (Dictionary *) self;
 
@@ -209,6 +209,7 @@ static void initialize(Class *clazz) {
 	mutableDictionary->initWithCapacity = initWithCapacity;
 	mutableDictionary->removeAllObjects = removeAllObjects;
 	mutableDictionary->removeObjectForKey = removeObjectForKey;
+	mutableDictionary->resize = resize;
 	mutableDictionary->setObjectForKey = setObjectForKey;
 	mutableDictionary->setObjectsForKeys = setObjectsForKeys;
 }
@@ -222,4 +223,4 @@ Class __MutableDictionary = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class

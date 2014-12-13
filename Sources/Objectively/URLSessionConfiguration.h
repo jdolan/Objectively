@@ -38,7 +38,7 @@ typedef struct URLSessionConfiguration URLSessionConfiguration;
 typedef struct URLSessionConfigurationInterface URLSessionConfigurationInterface;
 
 /**
- * @brief The URLSessionConfiguration type.
+ * @brief Configuration bundle for URLSession.
  *
  * @ingroup URLSession
  */

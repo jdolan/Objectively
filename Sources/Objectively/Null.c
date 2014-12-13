@@ -26,7 +26,7 @@
 #include <Objectively/Null.h>
 #include <Objectively/Once.h>
 
-#define __Class __Null
+#define __class __Null
 
 #pragma mark - ObjectInterface
 
@@ -85,4 +85,4 @@ Class __Null = {
 	.destroy = destroy,
 };
 
-#undef __Class
+#undef __class

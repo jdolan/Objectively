@@ -39,9 +39,12 @@ typedef struct URLSessionDataTask URLSessionDataTask;
 typedef struct URLSessionDataTaskInterface URLSessionDataTaskInterface;
 
 /**
- * @brief The URLSessionDataTask type.
+ * @brief Use data tasks to send and receive Data in-memory.
+ *
+ * Data tasks are well suited for web service invocations.
  *
  * @extends URLSessionTask
+ *
  * @ingroup URLSession
  */
 struct URLSessionDataTask {

@@ -29,7 +29,7 @@
 
 #include <Objectively/Lock.h>
 
-#define __Class __Lock
+#define __class __Lock
 
 #pragma mark - ObjectInterface
 
@@ -131,5 +131,5 @@ Class __Lock = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class
 

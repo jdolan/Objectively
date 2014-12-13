@@ -38,7 +38,9 @@ typedef struct Null Null;
 typedef struct NullInterface NullInterface;
 
 /**
- * @brief The Null type.
+ * @brief The Null sentinel.
+ *
+ * Use this Object when you must place `NULL` into collections.
  */
 struct Null {
 

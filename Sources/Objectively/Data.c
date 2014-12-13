@@ -28,7 +28,7 @@
 #include <Objectively/Data.h>
 #include <Objectively/Hash.h>
 
-#define __Class __Data
+#define __class __Data
 
 #define DATA_BLOCK_SIZE 4096
 
@@ -254,4 +254,4 @@ Class __Data = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class

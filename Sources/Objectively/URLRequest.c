@@ -26,7 +26,7 @@
 #include <Objectively/MutableDictionary.h>
 #include <Objectively/URLRequest.h>
 
-#define __Class __URLRequest
+#define __class __URLRequest
 
 #pragma mark - ObjectInterface
 
@@ -126,4 +126,4 @@ Class __URLRequest = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class

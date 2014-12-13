@@ -32,6 +32,8 @@
  * @file
  *
  * @brief An abstraction for discrete units of work, or tasks.
+ *
+ * Operations are typically executed via an OperationQueue.
  */
 
 typedef struct Operation Operation;
@@ -45,9 +47,11 @@ typedef struct OperationInterface OperationInterface;
 typedef void (*OperationFunction)(Operation *operation);
 
 /**
- * @brief The Operation type.
+ * @brief An abstraction for discrete units of work, or tasks.
  *
- * @ingroup Concurrency
+ * Operations are typically executed via an OperationQueue.
+ *
+ * @ingroup Threads
  */
 struct Operation {
 
@@ -113,7 +117,7 @@ struct Operation {
 /**
  * @brief The Operation interface.
  *
- * @ingroup Concurrency
+ * @ingroup Threads
  */
 struct OperationInterface {
 

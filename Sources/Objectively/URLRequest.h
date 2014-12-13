@@ -50,7 +50,7 @@ typedef enum {
 } HTTPMethod;
 
 /**
- * @brief The URLRequest type.
+ * @brief A protocol-agnostic abstraction for requesting resources via URLs.
  *
  * @ingroup URLSession
  */

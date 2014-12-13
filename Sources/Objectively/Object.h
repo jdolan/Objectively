@@ -30,15 +30,18 @@
 /**
  * @file
  *
- * @brief Object is the root instance type. Every subclass of Object must
- * declare a structure that begins with `Object object;`.
+ * @brief Object is the _root Class_ of the Objectively Class hierarchy.
+ *
+ * Every Class descends from Object, and every instance can be cast to Object.
  */
 
 typedef struct ObjectInterface ObjectInterface;
 typedef struct Object Object;
 
 /**
- * @brief The Object type.
+ * @brief Object is the _root Class_ of the Objectively Class hierarchy.
+ *
+ * Every Class descends from Object, and every instance can be cast to Object.
  */
 struct Object {
 

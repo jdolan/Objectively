@@ -31,12 +31,13 @@
 /**
  * @file
  *
- * @brief A Log4J-inspired logging API.
+ * @brief A Log4J-inspired log appender.
  */
 
 /**
- * @brief Every Log has a threshold for generating messages. Messages
- * beneath the set threshold level are not output. The default level
+ * @brief Every Log has a threshold for generating messages.
+ *
+ * Messages beneath the set threshold level are not output. The default level
  * for newly initialized Logs is `INFO`.
  */
 typedef enum {
@@ -52,7 +53,7 @@ typedef struct Log Log;
 typedef struct LogInterface LogInterface;
 
 /**
- * @brief The Log type.
+ * @brief A Log4J-inspired log appender.
  */
 struct Log {
 

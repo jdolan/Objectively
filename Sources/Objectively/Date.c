@@ -26,7 +26,7 @@
 #include <Objectively/Date.h>
 #include <Objectively/Hash.h>
 
-#define __Class __Date
+#define __class __Date
 
 #pragma mark - ObjectInterface
 
@@ -158,5 +158,5 @@ Class __Date = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class
 

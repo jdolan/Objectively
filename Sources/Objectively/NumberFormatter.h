@@ -52,7 +52,7 @@ typedef struct NumberFormatter NumberFormatter;
 typedef struct NumberFormatterInterface NumberFormatterInterface;
 
 /**
- * @brief The NumberFormatter type.
+ * @brief Number formatting and parsing.
  */
 struct NumberFormatter {
 

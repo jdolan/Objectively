@@ -31,19 +31,20 @@
  * @file
  *
  * @brief POSIX Threads conditional variables.
- *
- * Conditions combine a Lock with a signaling mechanism, so that Threads may
- * inform one another when a condition is met.
  */
 
 typedef struct Condition Condition;
 typedef struct ConditionInterface ConditionInterface;
 
 /**
- * @brief The Condition type.
+ * @brief POSIX Threads conditional variables.
+ *
+ * Conditions combine a Lock with a signaling mechanism, so that Threads may
+ * inform one another when a condition is met.
  *
  * @extends Lock
- * @ingroup Concurrency
+ *
+ * @ingroup Threads
  */
 struct Condition {
 
@@ -68,7 +69,7 @@ struct Condition {
  *
  * @extends LockInterface
  *
- * @ingroup Concurrency
+ * @ingroup Threads
  */
 struct ConditionInterface {
 
