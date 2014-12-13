@@ -57,6 +57,8 @@ typedef void (*URLSessionTaskCompletion)(URLSessionTask *task, BOOL success);
 /**
  * @brief URL session tasks are handles to pending URL operations.
  *
+ * @extends Object
+ *
  * @ingroup URLSession
  */
 struct URLSessionTask {

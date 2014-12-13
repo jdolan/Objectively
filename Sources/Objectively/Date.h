@@ -54,6 +54,8 @@ typedef struct DateInterface DateInterface;
 
 /**
  * @brief Microsecond-precision immutable dates.
+ *
+ * @extends Object
  */
 struct Date {
 

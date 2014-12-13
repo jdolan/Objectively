@@ -53,6 +53,8 @@ typedef struct NumberFormatterInterface NumberFormatterInterface;
 
 /**
  * @brief Number formatting and parsing.
+ *
+ * @extends Object
  */
 struct NumberFormatter {
 

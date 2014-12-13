@@ -52,6 +52,8 @@ typedef enum {
 /**
  * @brief A protocol-agnostic abstraction for requesting resources via URLs.
  *
+ * @extends Object
+ *
  * @ingroup URLSession
  */
 struct URLRequest {

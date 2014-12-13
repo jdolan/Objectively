@@ -38,6 +38,8 @@ typedef struct JSONPathInterface JSONPathInterface;
 /**
  * @brief A minimal JSONPath implementation.
  *
+ * @extends Object
+ *
  * @ingroup JSON
  */
 struct JSONPath {

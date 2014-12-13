@@ -33,7 +33,7 @@
  */
 
 /**
- * @defgroup Collections
+ * @defgroup Collections Collections
  *
  * @brief Abstract data types for aggregating Objects.
  */
@@ -54,6 +54,8 @@ typedef BOOL (*ArrayEnumerator)(const Array *array, id obj, id data);
 
 /**
  * @brief Immutable arrays.
+ *
+ * @extends Object
  *
  * @ingroup Collections
  */

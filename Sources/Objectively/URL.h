@@ -44,6 +44,8 @@ typedef struct URLInterface URLInterface;
  *
  * @see http://www.ietf.org/rfc/rfc3986.txt
  *
+ * @extends Object
+ *
  * @ingroup URLSession
  */
 struct URL {

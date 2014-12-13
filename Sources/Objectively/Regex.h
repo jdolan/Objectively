@@ -40,6 +40,8 @@ typedef struct RegexInterface RegexInterface;
 
 /**
  * @brief Extended POSIX regular expressions.
+ *
+ * @extends Object
  */
 struct Regex {
 

@@ -37,6 +37,8 @@ typedef struct NumberInterface NumberInterface;
 
 /**
  * @brief A wrapper for placing numeric primitives into collections, etc.
+ *
+ * @extends Object
  */
 struct Number {
 

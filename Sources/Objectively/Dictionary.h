@@ -51,6 +51,8 @@ typedef BOOL (*DictionaryEnumerator)(const Dictionary *dictionary, id obj, id ke
 /**
  * @brief Immutable key-value stores.
  *
+ * @extends Object
+ *
  * @ingroup Collections
  */
 struct Dictionary {

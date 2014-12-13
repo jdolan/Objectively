@@ -35,7 +35,7 @@
  */
 
 /**
- * @defgroup Threads
+ * @defgroup Threads POSIX Threads
  *
  * @brief Parallel computing and synchronization via POSIX Threads.
  */
@@ -53,6 +53,8 @@ typedef id (*ThreadFunction)(Thread *thread);
  * @brief POSIX Threads.
  *
  * Asynchronous computing via multiple threads of execution.
+ *
+ * @extends Object
  *
  * @ingroup Threads
  */

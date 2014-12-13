@@ -43,6 +43,8 @@ typedef struct DateFormatterInterface DateFormatterInterface;
 
 /**
  * @brief Date formatting and parsing.
+ *
+ * @extends Object
  */
 struct DateFormatter {
 

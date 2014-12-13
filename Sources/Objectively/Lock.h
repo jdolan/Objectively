@@ -54,6 +54,8 @@ typedef struct LockInterface LockInterface;
  *
  * Mediate access to a critical section by enforcing mutual exclusion.
  *
+ * @extends Object
+ *
  * @ingroup Threads
  */
 struct Lock {

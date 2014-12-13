@@ -39,6 +39,8 @@ typedef struct DataInterface DataInterface;
 
 /**
  * @brief Mutable data buffers.
+ *
+ * @extends Object
  */
 struct Data {
 

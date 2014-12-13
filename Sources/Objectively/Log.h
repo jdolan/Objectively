@@ -26,7 +26,7 @@
 
 #include <stdio.h>
 
-#include <objectively/Object.h>
+#include <Objectively/Object.h>
 
 /**
  * @file
@@ -54,6 +54,8 @@ typedef struct LogInterface LogInterface;
 
 /**
  * @brief A Log4J-inspired log appender.
+ *
+ * @extends Object
  */
 struct Log {
 

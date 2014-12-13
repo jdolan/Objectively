@@ -40,6 +40,8 @@ typedef struct URLSessionConfigurationInterface URLSessionConfigurationInterface
 /**
  * @brief Configuration bundle for URLSession.
  *
+ * @extends Object
+ *
  * @ingroup URLSession
  */
 struct URLSessionConfiguration {

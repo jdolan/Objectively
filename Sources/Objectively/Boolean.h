@@ -37,6 +37,8 @@ typedef struct BooleanInterface BooleanInterface;
 
 /**
  * @brief A wrapper for placing boolean primitives into collections, etc.
+ *
+ * @extends Object
  */
 struct Boolean {
 

@@ -41,6 +41,8 @@ typedef struct NullInterface NullInterface;
  * @brief The Null sentinel.
  *
  * Use this Object when you must place `NULL` into collections.
+ *
+ * @extends Object
  */
 struct Null {
 

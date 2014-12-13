@@ -7,5 +7,8 @@ SUBDIRS = \
 html:
 	doxygen
 
+html-clean:
+	rm -rf Documentation/html
+
 html-release:
 	rsync -rz Documentation/html/ jaydolan.com:/var/www/projects/objectively

@@ -58,6 +58,8 @@ struct HelloInterface {
 
 	/**
 	 * @brief Prints this Hello's greeting to the console.
+	 *
+	 * @relates Hello
 	 */
 	void (*sayHello)(const Hello *self);
 };

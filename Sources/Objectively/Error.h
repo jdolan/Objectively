@@ -38,6 +38,8 @@ typedef struct ErrorInterface ErrorInterface;
 
 /**
  * @brief Encapsulation for error conditions.
+ *
+ * @extends Object
  */
 struct Error {
 

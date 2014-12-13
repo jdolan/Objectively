@@ -51,6 +51,8 @@ typedef void (*OperationFunction)(Operation *operation);
  *
  * Operations are typically executed via an OperationQueue.
  *
+ * @extends Object
+ *
  * @ingroup Threads
  */
 struct Operation {

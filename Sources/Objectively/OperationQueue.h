@@ -41,6 +41,8 @@ typedef struct OperationQueueInterface OperationQueueInterface;
 /**
  * @brief OperationQueues provide a thread of execution for Operations.
  *
+ * @extends Object
+ *
  * @ingroup Threads
  */
 struct OperationQueue {

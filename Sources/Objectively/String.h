@@ -40,6 +40,8 @@ typedef struct StringInterface StringInterface;
 
 /**
  * @brief Mutable strings.
+ *
+ * @extends Object
  */
 struct String {
 

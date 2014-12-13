@@ -9,11 +9,11 @@
       <tab type="namespacelist" visible="yes" title="" intro=""/>
       <tab type="namespacemembers" visible="yes" title="" intro=""/>
     </tab>
-    <tab type="classes" visible="yes" title="">
-      <tab type="classlist" visible="yes" title="" intro=""/>
-      <tab type="classindex" visible="$ALPHABETICAL_INDEX" title=""/> 
+    <tab type="classes" visible="yes" title="Classes">
+      <tab type="classlist" visible="no" title="" intro=""/>
+      <tab type="classindex" visible="$ALPHABETICAL_INDEX" title="Class Index"/> 
       <tab type="hierarchy" visible="yes" title="" intro=""/>
-      <tab type="classmembers" visible="yes" title="" intro=""/>
+      <tab type="classmembers" visible="no" title="" intro=""/>
     </tab>
     <tab type="files" visible="yes" title="">
       <tab type="filelist" visible="yes" title="" intro=""/>
@@ -24,8 +24,11 @@
 
   <!-- Layout definition for a class page -->
   <class>
-    <briefdescription visible="yes"/>
     <includes visible="$SHOW_INCLUDE_FILES"/>
+    <briefdescription visible="no"/>
+    <detaileddescription title="Overview"/>
+    <inheritancegraph visible="$CLASS_GRAPH"/>
+    <collaborationgraph visible="$COLLABORATION_GRAPH"/>
     <memberdecl>
       <nestedclasses visible="yes" title=""/>
       <publictypes title=""/>
@@ -35,7 +38,7 @@
       <signals title=""/>
       <publicmethods title=""/>
       <publicstaticmethods title=""/>
-      <publicattributes title=""/>
+      <publicattributes title="Properties"/>
       <publicstaticattributes title=""/>
       <protectedtypes title=""/>
       <protectedslots title=""/>
@@ -54,16 +57,13 @@
       <privateslots title=""/>
       <privatemethods title=""/>
       <privatestaticmethods title=""/>
-      <privateattributes title=""/>
+      <privateattributes title="Private Properties"/>
       <privatestaticattributes title=""/>
-      <friends title=""/>
-      <related title="" subtitle=""/>
+      <friends title="" visible="no" />
+      <related title="Methods" subtitle=" "/>
       <membergroups visible="yes"/>
     </memberdecl>
-    <detaileddescription title=""/>
-    <inheritancegraph visible="$CLASS_GRAPH"/>
-    <collaborationgraph visible="$COLLABORATION_GRAPH"/>
-    <memberdef>
+    <!-- <memberdef>
       <inlineclasses title=""/>
       <typedefs title=""/>
       <enums title=""/>
@@ -75,7 +75,7 @@
       <variables title=""/>
       <properties title=""/>
       <events title=""/>
-    </memberdef>
+    </memberdef> -->
     <allmemberslink visible="yes"/>
     <usedfiles visible="$SHOW_USED_FILES"/>
     <authorsection visible="yes"/>

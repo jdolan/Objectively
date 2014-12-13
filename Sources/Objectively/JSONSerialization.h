@@ -34,7 +34,7 @@
  */
 
 /**
- * @defgroup JSON
+ * @defgroup JSON JSON
  *
  * @brief JSON serialization and introspection.
  */
@@ -49,6 +49,8 @@ typedef struct JSONSerializationInterface JSONSerializationInterface;
 
 /**
  * @brief JSON serialization.
+ *
+ * @extends Object
  *
  * @ingroup JSON
  */

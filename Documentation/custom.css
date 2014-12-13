@@ -1022,7 +1022,7 @@ table.fieldtable {
 div.summary
 {
 	float: right;
-	font-size: 8pt;
+	font-size: 100%;
 	padding-right: 5px;
 	width: 50%;
 	text-align: right;
@@ -1035,7 +1035,7 @@ div.summary a
 
 div.ingroups
 {
-	font-size: 8pt;
+	font-size: 85%;
 	width: 50%;
 	text-align: left;
 }

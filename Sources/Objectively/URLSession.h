@@ -31,7 +31,7 @@
  */
 
 /**
- * @defgroup URLSession
+ * @defgroup URLSession URL Loading
  *
  * @brief Asynchronous loading of resources via URLs.
  */
@@ -48,6 +48,8 @@ typedef struct URLSessionInterface URLSessionInterface;
 
 /**
  * @brief A management context for loading resources via URLs.
+ *
+ * @extends Object
  *
  * @ingroup URLSession
  */
