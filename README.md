@@ -4,7 +4,7 @@ Ultra-lightweight object oriented framework for the C programming language.
 
 [Foundation-inspired](http://jaydolan.com/projects/objectively) core library.
 
-Zlib license.
+Zlib [license](COPYING).
 
 Adding Objectively to your project
 ---

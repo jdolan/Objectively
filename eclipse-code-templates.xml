@@ -5,11 +5,17 @@
 
 #include &lt;Objectively/Object.h&gt;
 
+/**
+ * @file
+ * 
+ * @brief ..
+ */
+
 typedef struct ${file_base} ${file_base};
 typedef struct ${file_base}Interface ${file_base}Interface;
 
 /**
- * @brief The ${file_base} type.
+ * @brief ..
  */
 struct ${file_base} {
 
@@ -36,6 +42,15 @@ struct ${file_base}Interface {
 	 */
 	ObjectInterface objectInterface;
 
+	/**
+	 * @brief Initializes this ${file_base}.
+	 *
+	 * @return The initialized ${file_base}, or `NULL` on error.
+	 *
+	 * @relates ${file_base}
+	 */
+	${file_base} *(*init)(${file_base} *self);
+
 	// ..
 };
 
@@ -50,7 +65,7 @@ extern Class __${file_base};
 
 #include &lt;Objectively/${file_base}.h&gt;
 
-#define __Class __${file_base}
+#define __class __${file_base}
 
 #pragma mark - ObjectInterface
 
@@ -105,5 +120,5 @@ Class __${file_base} = {
 	.initialize = initialize,
 };
 
-#undef __Class
+#undef __class
 </template></templates>
