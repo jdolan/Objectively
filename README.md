@@ -162,7 +162,7 @@ Invoking an instance method
 ---
 To invoke an instance method, use the `$` macro.
 
-    $(self, isEqual, other);
+    $(condition, waitUntilDate, date);
 
 Invoking a Class method
 ---
