@@ -4,7 +4,7 @@ Ultra-lightweight object oriented framework for the C programming language.
 
 Foundation-inspired [core library](http://jaydolan.com/projects/objectively).
 
-Zlib [license](./COPYING).
+Zlib [license](https://github.com/jdolan/objectively/COPYING).
 
 Adding Objectively to your project
 ---
@@ -156,7 +156,7 @@ Using a type
     
     release(hello);
 
-See [Hello.c](Tests/Objectively/Hello.c) for the full source to this example.
+See [Hello.c](https://github.com/jdolan/objectively/Tests/Objectively/Hello.c) for the full source to this example.
 
 Initialization
 ---
