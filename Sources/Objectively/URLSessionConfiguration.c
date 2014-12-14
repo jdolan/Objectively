@@ -10,7 +10,7 @@
 
 #include <Objectively/URLSessionConfiguration.h>
 
-#define __class __URLSessionConfiguration
+#define _Class _URLSessionConfiguration
 
 #pragma mark - ObjectInterface
 
@@ -55,13 +55,13 @@ static void initialize(Class *clazz) {
 	((URLSessionConfigurationInterface *) clazz->interface)->init = init;
 }
 
-Class __URLSessionConfiguration = {
+Class _URLSessionConfiguration = {
 	.name = "URLSessionConfiguration",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(URLSessionConfiguration),
 	.interfaceOffset = offsetof(URLSessionConfiguration, interface),
 	.interfaceSize = sizeof(URLSessionConfigurationInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

@@ -142,6 +142,6 @@ struct RegexInterface {
 /**
  * @brief The Regex Class.
  */
-extern Class __Regex;
+extern Class _Regex;
 
 #endif

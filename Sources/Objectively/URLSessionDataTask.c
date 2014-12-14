@@ -28,7 +28,7 @@
 
 #include <Objectively/URLSessionDataTask.h>
 
-#define __class __URLSessionDataTask
+#define _Class _URLSessionDataTask
 
 #pragma mark - ObjectInterface
 
@@ -93,13 +93,13 @@ static void initialize(Class *clazz) {
 	sessionTask->setup = setup;
 }
 
-Class __URLSessionDataTask = {
+Class _URLSessionDataTask = {
 	.name = "URLSessionDataTask",
-	.superclass = &__URLSessionTask,
+	.superclass = &_URLSessionTask,
 	.instanceSize = sizeof(URLSessionDataTask),
 	.interfaceOffset = offsetof(URLSessionDataTask, interface),
 	.interfaceSize = sizeof(URLSessionDataTaskInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

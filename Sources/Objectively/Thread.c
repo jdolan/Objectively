@@ -29,7 +29,7 @@
 
 #include <Objectively/Thread.h>
 
-#define __class __Thread
+#define _Class _Thread
 
 #pragma mark - ObjectInterface
 
@@ -196,13 +196,13 @@ static void initialize(Class *clazz) {
 	thread->start = start;
 }
 
-Class __Thread = {
+Class _Thread = {
 	.name = "Thread",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(Thread),
 	.interfaceOffset = offsetof(Thread, interface),
 	.interfaceSize = sizeof(ThreadInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

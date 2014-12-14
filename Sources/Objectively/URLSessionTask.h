@@ -194,6 +194,6 @@ struct URLSessionTaskInterface {
 /**
  * @brief The URLSessionTask Class.
  */
-extern Class __URLSessionTask;
+extern Class _URLSessionTask;
 
 #endif

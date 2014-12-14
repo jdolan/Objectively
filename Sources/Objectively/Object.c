@@ -28,7 +28,7 @@
 #include <Objectively/Object.h>
 #include <Objectively/String.h>
 
-#define __class __Object
+#define _Class _Object
 
 #pragma mark - ObjectInterface
 
@@ -122,7 +122,7 @@ static void initialize(Class *clazz) {
 	object->isKindOfClass = isKindOfClass;
 }
 
-Class __Object = {
+Class _Object = {
 	.name = "Object",
 	.instanceSize = sizeof(Object),
 	.interfaceOffset = offsetof(Object, interface),
@@ -130,4 +130,4 @@ Class __Object = {
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

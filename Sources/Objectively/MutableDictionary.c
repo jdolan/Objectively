@@ -29,7 +29,7 @@
 #include <Objectively/MutableArray.h>
 #include <Objectively/MutableDictionary.h>
 
-#define __class __MutableDictionary
+#define _Class _MutableDictionary
 
 #define MUTABLEDICTIONARY_DEFAULT_CAPACITY 64
 #define MUTABLEDICTIONARY_GROW_FACTOR 2.0
@@ -251,13 +251,13 @@ static void initialize(Class *clazz) {
 	mutableDictionary->setObjectsForKeys = setObjectsForKeys;
 }
 
-Class __MutableDictionary = {
+Class _MutableDictionary = {
 	.name = "MutableDictionary",
-	.superclass = &__Dictionary,
+	.superclass = &_Dictionary,
 	.instanceSize = sizeof(MutableDictionary),
 	.interfaceOffset = offsetof(MutableDictionary, interface),
 	.interfaceSize = sizeof(MutableDictionaryInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

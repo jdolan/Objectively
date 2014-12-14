@@ -126,6 +126,6 @@ struct URLRequestInterface {
 /**
  * @brief The URLRequest Class.
  */
-extern Class __URLRequest;
+extern Class _URLRequest;
 
 #endif

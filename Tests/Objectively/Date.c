@@ -30,7 +30,7 @@ START_TEST(date)
 		DateFormatter *dateFormatter = $(alloc(DateFormatter), initWithFormat, NULL);
 
 		ck_assert(dateFormatter);
-		ck_assert_ptr_eq(&__DateFormatter, classof(dateFormatter));
+		ck_assert_ptr_eq(&_DateFormatter, classof(dateFormatter));
 
 		ck_assert_str_eq(DATEFORMAT_ISO8601, dateFormatter->fmt);
 

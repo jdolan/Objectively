@@ -135,6 +135,6 @@ struct MutableDictionaryInterface {
 /**
  * @brief The MutableDictionary Class.
  */
-extern Class __MutableDictionary;
+extern Class _MutableDictionary;
 
 #endif

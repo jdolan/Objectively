@@ -199,6 +199,6 @@ struct LogInterface {
 /**
  * @brief The Log Class.
  */
-extern Class __Log;
+extern Class _Log;
 
 #endif

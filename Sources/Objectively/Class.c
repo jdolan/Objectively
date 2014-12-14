@@ -28,7 +28,7 @@
 #include <Objectively/Class.h>
 #include <Objectively/Object.h>
 
-static Class *__classes;
+static Class *_classes;
 
 /**
  * @brief Called `atexit` to teardown Objectively.
@@ -36,7 +36,7 @@ static Class *__classes;
 static void teardown(void) {
 	Class *c;
 
-	c = __classes;
+	c = _classes;
 	while (c) {
 		if (c->destroy) {
 			c->destroy(c);
@@ -44,7 +44,7 @@ static void teardown(void) {
 		c = c->locals.next;
 	}
 
-	c = __classes;
+	c = _classes;
 	while (c) {
 		if (c->interface) {
 			free(c->interface);
@@ -60,12 +60,12 @@ static void teardown(void) {
  */
 static void setup(void) {
 
-	__classes = NULL;
+	_classes = NULL;
 
 	atexit(teardown);
 }
 
-void __init(Class *clazz) {
+void _init(Class *clazz) {
 
 	assert(clazz);
 
@@ -81,7 +81,7 @@ void __init(Class *clazz) {
 
 		Class *super = clazz->superclass;
 
-		if (clazz == &__Object) {
+		if (clazz == &_Object) {
 			assert(super == NULL);
 			setup();
 		} else {
@@ -90,14 +90,14 @@ void __init(Class *clazz) {
 			assert(super->instanceSize <= clazz->instanceSize);
 			assert(super->interfaceSize <= clazz->interfaceSize);
 
-			__init(super);
+			_init(super);
 
 			memcpy(clazz->interface, super->interface, super->interfaceSize);
 		}
 
 		clazz->initialize(clazz);
 
-		clazz->locals.next = __sync_lock_test_and_set(&__classes, clazz);
+		clazz->locals.next = __sync_lock_test_and_set(&_classes, clazz);
 		clazz->locals.magic = CLASS_MAGIC;
 
 	} else {
@@ -107,9 +107,9 @@ void __init(Class *clazz) {
 	}
 }
 
-id __alloc(Class *clazz) {
+id _alloc(Class *clazz) {
 
-	__init(clazz);
+	_init(clazz);
 
 	id obj = calloc(1, clazz->instanceSize);
 	assert(obj);
@@ -127,7 +127,7 @@ id __alloc(Class *clazz) {
 	return obj;
 }
 
-id __cast(Class *clazz, const id obj) {
+id _cast(Class *clazz, const id obj) {
 
 	if (obj) {
 		const Class *c = ((Object *) obj)->clazz;
@@ -135,9 +135,9 @@ id __cast(Class *clazz, const id obj) {
 
 			assert(c->locals.magic == CLASS_MAGIC);
 
-			// as a special case, we optimize for __Object
+			// as a special case, we optimize for _Object
 
-			if (c == clazz || clazz == &__Object) {
+			if (c == clazz || clazz == &_Object) {
 				break;
 			}
 

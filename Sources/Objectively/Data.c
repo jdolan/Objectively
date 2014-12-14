@@ -28,7 +28,7 @@
 #include <Objectively/Data.h>
 #include <Objectively/Hash.h>
 
-#define __class __Data
+#define _Class _Data
 
 #define DATA_BLOCK_SIZE 4096
 
@@ -245,13 +245,13 @@ static void initialize(Class *clazz) {
 	data->writeToFile = writeToFile;
 }
 
-Class __Data = {
+Class _Data = {
 	.name = "Data",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(Data),
 	.interfaceOffset = offsetof(Data, interface),
 	.interfaceSize = sizeof(DataInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

@@ -26,7 +26,7 @@
 #include <Objectively/Once.h>
 #include <Objectively/OperationQueue.h>
 
-#define __class __OperationQueue
+#define _Class _OperationQueue
 
 #pragma mark - ObjectInterface
 
@@ -57,14 +57,14 @@ static void dealloc(Object *self) {
 
 #pragma mark - OperationQueueInterface
 
-__thread OperationQueue *__currentQueue;
+__thread OperationQueue *_currentQueue;
 
 /**
  * @see OperationQueueInterface::currentQueue(void)
  */
 static OperationQueue *currentQueue(void) {
 
-	return __currentQueue;
+	return _currentQueue;
 }
 
 /**
@@ -102,7 +102,7 @@ static void cancelAllOperations(OperationQueue *self) {
  */
 static id run(Thread *thread) {
 
-	OperationQueue *self = __currentQueue = thread->data;
+	OperationQueue *self = _currentQueue = thread->data;
 
 	while (YES) {
 
@@ -242,12 +242,12 @@ static void initialize(Class *clazz) {
 	queue->waitUntilAllOperationsAreFinished = waitUntilAllOperationsAreFinished;
 }
 
-Class __OperationQueue = {
+Class _OperationQueue = {
 	.name = "OperationQueue",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(OperationQueue),
 	.interfaceOffset = offsetof(OperationQueue, interface),
 	.interfaceSize = sizeof(OperationQueueInterface),
 	.initialize = initialize, };
 
-#undef __class
+#undef _Class

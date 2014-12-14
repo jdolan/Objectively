@@ -124,6 +124,6 @@ struct DateFormatterInterface {
 /**
  * @brief The DateFormatter Class.
  */
-extern Class __DateFormatter;
+extern Class _DateFormatter;
 
 #endif

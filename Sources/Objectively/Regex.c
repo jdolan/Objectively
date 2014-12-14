@@ -28,7 +28,7 @@
 #include <Objectively/Hash.h>
 #include <Objectively/Regex.h>
 
-#define __class __Regex
+#define _Class _Regex
 
 #pragma mark - ObjectInterface
 
@@ -193,13 +193,13 @@ static void initialize(Class *clazz) {
 	regex->matchesString = matchesString;
 }
 
-Class __Regex = {
+Class _Regex = {
 	.name = "Regex",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(Regex),
 	.interfaceOffset = offsetof(Regex, interface),
 	.interfaceSize = sizeof(RegexInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

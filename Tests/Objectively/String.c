@@ -30,7 +30,7 @@ START_TEST(string)
 		String *string = $(alloc(String), initWithFormat, "hello");
 
 		ck_assert(string);
-		ck_assert_ptr_eq(&__String, classof(string));
+		ck_assert_ptr_eq(&_String, classof(string));
 
 		ck_assert_str_eq("hello", string->chars);
 

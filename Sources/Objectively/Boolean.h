@@ -86,6 +86,6 @@ struct BooleanInterface {
 /**
  * @brief The Boolean Class.
  */
-extern Class __Boolean;
+extern Class _Boolean;
 
 #endif

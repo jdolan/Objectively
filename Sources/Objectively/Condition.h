@@ -131,6 +131,6 @@ struct ConditionInterface {
 /**
  * @brief The Condition Class.
  */
-extern Class __Condition;
+extern Class _Condition;
 
 #endif

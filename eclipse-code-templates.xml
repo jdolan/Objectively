@@ -57,7 +57,7 @@ struct ${file_base}Interface {
 /**
  * @brief The ${file_base} Class.
  */
-extern Class __${file_base};
+extern Class _${file_base};
 
 #endif</template><template autoinsert="false" context="org.eclipse.cdt.core.cSource.contenttype_context" deleted="false" description="" enabled="true" name="Objectively Type Source">${filecomment}
 
@@ -65,7 +65,7 @@ extern Class __${file_base};
 
 #include &lt;Objectively/${file_base}.h&gt;
 
-#define __class __${file_base}
+#define _class _${file_base}
 
 #pragma mark - ObjectInterface
 
@@ -111,14 +111,14 @@ static void initialize(Class *clazz) {
 	//..
 }
 
-Class __${file_base} = {
+Class _${file_base} = {
 	.name = "${file_base}",
-	.superclass = &amp;__Object,
+	.superclass = &amp;_Object,
 	.instanceSize = sizeof(${file_base}),
 	.interfaceOffset = offsetof(${file_base}, interface),
 	.interfaceSize = sizeof(${file_base}Interface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _class
 </template></templates>

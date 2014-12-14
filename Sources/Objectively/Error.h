@@ -96,6 +96,6 @@ struct ErrorInterface {
 /**
  * @brief The Error Class.
  */
-extern Class __Error;
+extern Class _Error;
 
 #endif

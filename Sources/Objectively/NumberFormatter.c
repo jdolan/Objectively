@@ -28,7 +28,7 @@
 
 #include <Objectively/NumberFormatter.h>
 
-#define __class __NumberFormatter
+#define _Class _NumberFormatter
 
 #pragma mark - NumberFormatterInterface
 
@@ -92,13 +92,13 @@ static void initialize(Class *clazz) {
 	numberFormatter->stringFromNumber = stringFromNumber;
 }
 
-Class __NumberFormatter = {
+Class _NumberFormatter = {
 	.name = "NumberFormatter",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(NumberFormatter),
 	.interfaceOffset = offsetof(NumberFormatter, interface),
 	.interfaceSize = sizeof(NumberFormatterInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

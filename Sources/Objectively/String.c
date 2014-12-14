@@ -31,7 +31,7 @@
 #include <Objectively/MutableArray.h>
 #include <Objectively/String.h>
 
-#define __class __String
+#define _Class _String
 
 #pragma mark - ObjectInterface
 
@@ -491,13 +491,13 @@ static void initialize(Class *clazz) {
 	string->writeToFile = writeToFile;
 }
 
-Class __String = {
+Class _String = {
 	.name = "String",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(String),
 	.interfaceOffset = offsetof(String, interface),
 	.interfaceSize = sizeof(StringInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

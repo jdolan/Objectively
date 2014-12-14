@@ -131,6 +131,6 @@ struct ObjectInterface {
 /**
  * @brief The Object Class.
  */
-extern Class __Object;
+extern Class _Object;
 
 #endif

@@ -31,7 +31,7 @@
 #include <Objectively/MutableDictionary.h>
 #include <Objectively/String.h>
 
-#define __class __Dictionary
+#define _Class _Dictionary
 
 #pragma mark - ObjectInterface
 
@@ -354,14 +354,14 @@ static void initialize(Class *clazz) {
 	dictionary->objectForKey = objectForKey;
 }
 
-Class __Dictionary = {
+Class _Dictionary = {
 	.name = "Dictionary",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(Dictionary),
 	.interfaceOffset = offsetof(Dictionary, interface),
 	.interfaceSize = sizeof(DictionaryInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class
 

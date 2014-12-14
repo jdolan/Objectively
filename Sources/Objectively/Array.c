@@ -30,7 +30,7 @@
 #include <Objectively/MutableArray.h>
 #include <Objectively/String.h>
 
-#define __class __Array
+#define _Class _Array
 
 #pragma mark - ObjectInterface
 
@@ -287,13 +287,13 @@ static void initialize(Class *clazz) {
 	array->objectAtIndex = objectAtIndex;
 }
 
-Class __Array = {
+Class _Array = {
 	.name = "Array",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(Array),
 	.interfaceOffset = offsetof(Array, interface),
 	.interfaceSize = sizeof(ArrayInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

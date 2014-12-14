@@ -167,6 +167,6 @@ struct OperationQueueInterface {
 /**
  * @brief The OperationQueue Class.
  */
-extern Class __OperationQueue;
+extern Class _OperationQueue;
 
 #endif

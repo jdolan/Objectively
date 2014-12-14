@@ -27,7 +27,7 @@
 #include <Objectively/Once.h>
 #include <Objectively/String.h>
 
-#define __class __Boolean
+#define _Class _Boolean
 
 #pragma mark - ObjectInterface
 
@@ -51,7 +51,7 @@ static String *description(const Object *self) {
 
 #pragma mark - BooleanInterface
 
-static Boolean *__no;
+static Boolean *_no;
 
 /**
  * @see BooleanInterface::no(void)
@@ -60,14 +60,14 @@ static Boolean *no(void) {
 	static Once once;
 
 	DispatchOnce(once, {
-		__no = (Boolean *) $((Object *) alloc(Boolean), init);
-		__no->bool = NO;
+		_no = (Boolean *) $((Object *) alloc(Boolean), init);
+		_no->bool = NO;
 	});
 
-	return __no;
+	return _no;
 }
 
-static Boolean *__yes;
+static Boolean *_yes;
 
 /**
  * @see BooleanInterface::yes(void)
@@ -76,11 +76,11 @@ static Boolean *yes(void) {
 	static Once once;
 
 	DispatchOnce(once, {
-		__yes = (Boolean *) $((Object *) alloc(Boolean), init);
-		__yes->bool = YES;
+		_yes = (Boolean *) $((Object *) alloc(Boolean), init);
+		_yes->bool = YES;
 	});
 
-	return __yes;
+	return _yes;
 }
 
 #pragma mark - Class lifecycle
@@ -106,13 +106,13 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	release(__no);
-	release(__yes);
+	release(_no);
+	release(_yes);
 }
 
-Class __Boolean = {
+Class _Boolean = {
 	.name = "Boolean",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(Boolean),
 	.interfaceOffset = offsetof(Boolean, interface),
 	.interfaceSize = sizeof(BooleanInterface),
@@ -120,4 +120,4 @@ Class __Boolean = {
 	.destroy = destroy,
 };
 
-#undef __class
+#undef _Class

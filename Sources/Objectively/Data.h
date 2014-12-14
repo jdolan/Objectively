@@ -165,6 +165,6 @@ struct DataInterface {
 /**
  * @brief The Data Class.
  */
-extern Class __Data;
+extern Class _Data;
 
 #endif

@@ -91,6 +91,6 @@ struct JSONPathInterface {
 /**
  * @brief The JSONPath Class.
  */
-extern Class __JSONPath;
+extern Class _JSONPath;
 
 #endif

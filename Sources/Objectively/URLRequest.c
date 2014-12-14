@@ -26,7 +26,7 @@
 #include <Objectively/MutableDictionary.h>
 #include <Objectively/URLRequest.h>
 
-#define __class __URLRequest
+#define _Class _URLRequest
 
 #pragma mark - ObjectInterface
 
@@ -117,13 +117,13 @@ static void initialize(Class *clazz) {
 	request->setValueForHTTPHeaderField = setValueForHTTPHeaderField;
 }
 
-Class __URLRequest = {
+Class _URLRequest = {
 	.name = "URLRequest",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(URLRequest),
 	.interfaceOffset = offsetof(URLRequest, interface),
 	.interfaceSize = sizeof(URLRequestInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

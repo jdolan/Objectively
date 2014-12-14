@@ -30,11 +30,11 @@
 #include <Objectively/Once.h>
 #include <Objectively/Regex.h>
 
-#define __class __JSONPath
+#define _Class _JSONPath
 
 #pragma mark - JSONPathInterface
 
-static Regex *__regex;
+static Regex *_regex;
 
 /**
  * @see JSONPathInterface::objectWithPath(const id, const char *)
@@ -47,7 +47,7 @@ static id objectWithPath(const id root, const char *path) {
 	while (obj) {
 
 		RANGE *matches;
-		if ($(__regex, matchesCharacters, c, 0, &matches) == NO) {
+		if ($(_regex, matchesCharacters, c, 0, &matches) == NO) {
 			break;
 		}
 
@@ -96,7 +96,7 @@ static void initialize(Class *clazz) {
 	static Once once;
 
 	DispatchOnce(once, {
-		__regex = $(alloc(Regex), initWithPattern, "(.[^.\[]+|\[[0-9]+\\])", 0);
+		_regex = $(alloc(Regex), initWithPattern, "(.[^.\[]+|\[[0-9]+\\])", 0);
 	});
 }
 
@@ -105,12 +105,12 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	release(__regex);
+	release(_regex);
 }
 
-Class __JSONPath = {
+Class _JSONPath = {
 	.name = "JSONPath",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(JSONPath),
 	.interfaceOffset = offsetof(JSONPath, interface),
 	.interfaceSize = sizeof(JSONPathInterface),
@@ -118,4 +118,4 @@ Class __JSONPath = {
 	.destroy = destroy,
 };
 
-#undef __class
+#undef _Class

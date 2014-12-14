@@ -27,9 +27,9 @@
 #include <Objectively/Regex.h>
 #include <Objectively/URL.h>
 
-#define __class __URL
+#define _Class _URL
 
-static Regex *__regex;
+static Regex *_regex;
 
 #pragma mark - ObjectInterface
 
@@ -137,7 +137,7 @@ static URL *initWithCharacters(URL *self, const char *chars) {
 	if (self) {
 
 		RANGE *matches;
-		if ($(__regex, matchesCharacters, chars, 0, &matches)) {
+		if ($(_regex, matchesCharacters, chars, 0, &matches)) {
 
 			self->urlString = $(alloc(String), initWithCharacters, chars);
 
@@ -229,7 +229,7 @@ static void initialize(Class *clazz) {
 	url->initWithString = initWithString;
 	url->pathComponents = pathComponents;
 
-	__regex = $(alloc(Regex), initWithPattern, "([a-z]+)://([^:/\?]+)?(:[0-9]+)?(/[^\?#]+)?([^#]+)?(#.*)?", 0);
+	_regex = $(alloc(Regex), initWithPattern, "([a-z]+)://([^:/\?]+)?(:[0-9]+)?(/[^\?#]+)?([^#]+)?(#.*)?", 0);
 }
 
 /**
@@ -237,12 +237,12 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	release(__regex);
+	release(_regex);
 }
 
-Class __URL = {
+Class _URL = {
 	.name = "URL",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(URL),
 	.interfaceOffset = offsetof(URL, interface),
 	.interfaceSize = sizeof(URLInterface),
@@ -250,4 +250,4 @@ Class __URL = {
 	.destroy = destroy,
 };
 
-#undef __class
+#undef _Class

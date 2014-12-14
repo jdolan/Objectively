@@ -167,6 +167,6 @@ struct ArrayInterface {
 /**
  * @brief The Array Class.
  */
-extern Class __Array;
+extern Class _Array;
 
 #endif

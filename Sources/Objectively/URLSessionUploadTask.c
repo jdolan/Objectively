@@ -28,7 +28,7 @@
 
 #include <Objectively/URLSessionUploadTask.h>
 
-#define __class __URLSessionUploadTask
+#define _Class _URLSessionUploadTask
 
 #pragma mark - URLSessionTaskInterface
 
@@ -70,13 +70,13 @@ static void initialize(Class *clazz) {
 	((URLSessionTaskInterface *) clazz->interface)->setup = setup;
 }
 
-Class __URLSessionUploadTask = {
+Class _URLSessionUploadTask = {
 	.name = "URLSessionUploadTask",
-	.superclass = &__URLSessionTask,
+	.superclass = &_URLSessionTask,
 	.instanceSize = sizeof(URLSessionUploadTask),
 	.interfaceOffset = offsetof(URLSessionUploadTask, interface),
 	.interfaceSize = sizeof(URLSessionUploadTaskInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

@@ -107,6 +107,6 @@ struct JSONSerializationInterface {
 /**
  * @brief The JSONSerialization Class.
  */
-extern Class __JSONSerialization;
+extern Class _JSONSerialization;
 
 #endif

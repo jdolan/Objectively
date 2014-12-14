@@ -35,7 +35,7 @@ START_TEST(array)
 		MutableArray *array = $(alloc(MutableArray), initWithCapacity, 5);
 
 		ck_assert(array);
-		ck_assert_ptr_eq(&__MutableArray, classof(array));
+		ck_assert_ptr_eq(&_MutableArray, classof(array));
 
 		ck_assert_int_eq(0, ((Array *) array)->count);
 		ck_assert_int_eq(5, array->capacity);

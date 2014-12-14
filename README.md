@@ -103,7 +103,7 @@ struct HelloInterface {
 /**
  * @brief The Hello Class.
  */
-extern Class __Hello;
+extern Class _Hello;
 ```
 
 Implementing a type
@@ -115,7 +115,7 @@ To implement a type, implement its instance and Class methods and Class initiali
 #include <stdio.h>
 #include <Objectively.h>
 
-#define __class __Hello
+#define _class _Hello
 
 /**
  * @see HelloInterface::helloWithGreeting(const char *)
@@ -157,16 +157,16 @@ static void initialize(Class *clazz) {
 	hello->sayHello = sayHello;
 }
 
-Class __Hello = {
+Class _Hello = {
 	.name = "Hello",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(Hello),
 	.interfaceOffset = offsetof(Hello, interface),
 	.interfaceSize = sizeof(HelloInterface),
 	.initialize = initialize,
 };
     
-#undef __class
+#undef _class
 ```
 
 Using a type
@@ -226,7 +226,7 @@ Shared instances
 A shared instance or _singleton pattern_ can be achieved through Class methods and _release-on-destroy_.
 
 ```c
-static URLSession *__sharedInstance;
+static URLSession *_sharedInstance;
 
 /**
  * @see URLSessionInterface::sharedInstance(void)
@@ -235,17 +235,17 @@ static *URLSession sharedInstance(void) {
     static Once once;
 
 	DispatchOnce(once, {
-		__sharedInstance = $(alloc(URLSession), init);
+		_sharedInstance = $(alloc(URLSession), init);
 	});
 
-	return __sharedInstance;
+	return _sharedInstance;
 }
 
 /**
  * @see Class::destroy(Class *)
  */
 static void destroy(Class *clazz) {
-	release(__sharedInstance);
+	release(_sharedInstance);
 }
 
 // ...

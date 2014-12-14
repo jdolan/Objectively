@@ -173,6 +173,6 @@ struct URLSessionInterface {
 /**
  * @brief The URLSession Class.
  */
-extern Class __URLSession;
+extern Class _URLSession;
 
 #endif

@@ -32,7 +32,7 @@
 #include <Objectively/Once.h>
 #include <Objectively/URLSession.h>
 
-#define __class __URLSession
+#define _Class _URLSession
 
 #pragma mark - ObjectInterface
 
@@ -50,7 +50,7 @@ static void dealloc(Object *self) {
 
 #pragma mark - URLSessionInterface
 
-static URLSession *__sharedInstance;
+static URLSession *_sharedInstance;
 
 /**
  * @see URLSessionInterface::sharedInstance(void)
@@ -59,10 +59,10 @@ static URLSession *sharedInstance(void) {
 	static Once once;
 
 	DispatchOnce(once, {
-		__sharedInstance = $(alloc(URLSession), init);
+		_sharedInstance = $(alloc(URLSession), init);
 	});
 
-	return __sharedInstance;
+	return _sharedInstance;
 }
 
 /**
@@ -184,14 +184,14 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	release(__sharedInstance);
+	release(_sharedInstance);
 
 	curl_global_cleanup();
 }
 
-Class __URLSession = {
+Class _URLSession = {
 	.name = "URLSession",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(URLSession),
 	.interfaceOffset = offsetof(URLSession, interface),
 	.interfaceSize = sizeof(URLSessionInterface),
@@ -199,4 +199,4 @@ Class __URLSession = {
 	.destroy = destroy,
 };
 
-#undef __class
+#undef _Class

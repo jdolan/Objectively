@@ -26,7 +26,7 @@
 
 #include <Objectively/DateFormatter.h>
 
-#define __class __DateFormatter
+#define _Class _DateFormatter
 
 #pragma mark - DateFormatterInterface
 
@@ -110,13 +110,13 @@ static void initialize(Class *clazz) {
 	tzset();
 }
 
-Class __DateFormatter = {
+Class _DateFormatter = {
 	.name = "DateFormatter",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(DateFormatter),
 	.interfaceOffset = offsetof(DateFormatter, interface),
 	.interfaceSize = sizeof(DateFormatterInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

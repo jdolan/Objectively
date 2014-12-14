@@ -26,7 +26,7 @@
 #include <Objectively/Error.h>
 #include <Objectively/Hash.h>
 
-#define __class __Error
+#define _Class _Error
 
 #pragma mark - ObjectInterface
 
@@ -161,13 +161,13 @@ static void initialize(Class *clazz) {
 	error->initWithDomain = initWithDomain;
 }
 
-Class __Error = {
+Class _Error = {
 	.name = "Error",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(Error),
 	.interfaceOffset = offsetof(Error, interface),
 	.interfaceSize = sizeof(ErrorInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

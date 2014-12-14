@@ -141,6 +141,6 @@ struct DateInterface {
 /**
  * @brief The Date Class.
  */
-extern Class __Date;
+extern Class _Date;
 
 #endif

@@ -29,7 +29,7 @@
 #include <Objectively/URLSession.h>
 #include <Objectively/URLSessionTask.h>
 
-#define __class __URLSessionTask
+#define _Class _URLSessionTask
 
 #pragma mark - ObjectInterface
 
@@ -241,12 +241,12 @@ static void initialize(Class *clazz) {
 	task->teardown = teardown;
 }
 
-Class __URLSessionTask = {
+Class _URLSessionTask = {
 	.name = "URLSessionTask",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(URLSessionTask),
 	.interfaceOffset = offsetof(URLSessionTask, interface),
 	.interfaceSize = sizeof(URLSessionTaskInterface),
 	.initialize = initialize, };
 
-#undef __class
+#undef _Class

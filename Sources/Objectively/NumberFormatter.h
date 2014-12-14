@@ -134,6 +134,6 @@ struct NumberFormatterInterface {
 /**
  * @brief The NumberFormatter Class.
  */
-extern Class __NumberFormatter;
+extern Class _NumberFormatter;
 
 #endif

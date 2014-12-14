@@ -26,7 +26,7 @@
 
 #include <Objectively/MutableArray.h>
 
-#define __class __MutableArray
+#define _Class _MutableArray
 
 #define ARRAY_CHUNK_SIZE 64
 
@@ -178,13 +178,13 @@ static void initialize(Class *clazz) {
 	mutableArray->setObjectAtIndex = setObjectAtIndex;
 }
 
-Class __MutableArray = {
+Class _MutableArray = {
 	.name = "MutableArray",
-	.superclass = &__Array,
+	.superclass = &_Array,
 	.instanceSize = sizeof(MutableArray),
 	.interfaceOffset = offsetof(MutableArray, interface),
 	.interfaceSize = sizeof(MutableArrayInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

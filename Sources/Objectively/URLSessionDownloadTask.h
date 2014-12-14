@@ -79,6 +79,6 @@ struct URLSessionDownloadTaskInterface {
 /**
  * @brief The URLSessionDownloadTask Class.
  */
-extern Class __URLSessionDownloadTask;
+extern Class _URLSessionDownloadTask;
 
 #endif

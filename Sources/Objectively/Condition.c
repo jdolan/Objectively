@@ -31,7 +31,7 @@
 
 #include <Objectively/Condition.h>
 
-#define __class __Condition
+#define _Class _Condition
 
 #pragma mark - ObjectInterface
 
@@ -133,14 +133,14 @@ static void initialize(Class *clazz) {
 	condition->waitUntilDate = waitUntilDate;
 }
 
-Class __Condition = {
+Class _Condition = {
 	.name = "Condition",
-	.superclass = &__Lock,
+	.superclass = &_Lock,
 	.instanceSize = sizeof(Condition),
 	.interfaceOffset = offsetof(Condition, interface),
 	.interfaceSize = sizeof(ConditionInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class
 

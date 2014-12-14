@@ -26,7 +26,7 @@
 #include <Objectively/Operation.h>
 #include <Objectively/OperationQueue.h>
 
-#define __class __Operation
+#define _Class _Operation
 
 #pragma mark - ObjectInterface
 
@@ -226,13 +226,13 @@ static void initialize(Class *clazz) {
 	operation->waitUntilFinished = waitUntilFinished;
 }
 
-Class __Operation = {
+Class _Operation = {
 	.name = "Operation",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(Operation),
 	.interfaceOffset = offsetof(Operation, interface),
 	.interfaceSize = sizeof(OperationInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

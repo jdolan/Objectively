@@ -143,6 +143,6 @@ struct NumberInterface {
 /**
  * @brief The Number Class.
  */
-extern Class __Number;
+extern Class _Number;
 
 #endif

@@ -26,7 +26,7 @@
 
 #include <Objectively/URLSessionDownloadTask.h>
 
-#define __class __URLSessionDownloadTask
+#define _Class _URLSessionDownloadTask
 
 #pragma mark - URLSessionTaskInterface
 
@@ -68,13 +68,13 @@ static void initialize(Class *clazz) {
 	((URLSessionTaskInterface *) clazz->interface)->setup = setup;
 }
 
-Class __URLSessionDownloadTask = {
+Class _URLSessionDownloadTask = {
 	.name = "URLSessionDownloadTask",
-	.superclass = &__URLSessionTask,
+	.superclass = &_URLSessionTask,
 	.instanceSize = sizeof(URLSessionDownloadTask),
 	.interfaceOffset = offsetof(URLSessionDownloadTask, interface),
 	.interfaceSize = sizeof(URLSessionDownloadTaskInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

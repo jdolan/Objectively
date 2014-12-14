@@ -116,7 +116,7 @@ struct Class {
 	const char *name;
 
 	/**
-	 * @brief The superclass (required). e.g. `&__Object`.
+	 * @brief The superclass (required). e.g. `&_Object`.
 	 */
 	Class *superclass;
 };
@@ -124,17 +124,17 @@ struct Class {
 /**
  * @brief Initializes the given Class.
  */
-extern void __init(Class *clazz);
+extern void _init(Class *clazz);
 
 /**
  * @brief Instantiate a type through the given Class.
  */
-extern id __alloc(Class *clazz);
+extern id _alloc(Class *clazz);
 
 /**
  * @brief Perform a type-checking cast.
  */
-extern id __cast(Class *clazz, const id obj);
+extern id _cast(Class *clazz, const id obj);
 
 /**
  * @brief Atomically decrement the given Object's reference count. If the
@@ -155,13 +155,13 @@ extern void retain(id obj);
  * @brief Allocate a type.
  */
 #define alloc(type) \
-	((type *) __alloc(&__##type))
+	((type *) _alloc(&_##type))
 
 /**
  * @brief Safely cast to a type.
  */
 #define cast(type, obj) \
-	((type *) __cast(&__##type, (const id) obj))
+	((type *) _cast(&_##type, (const id) obj))
 
 /**
  * @brief Resolve the Class of an Object instance.
@@ -180,7 +180,7 @@ extern void retain(id obj);
  */
 #define $(obj, method, ...) \
 	({ \
-		__typeof__(obj) _obj = obj; \
+		typeof(obj) _obj = obj; \
 		_obj->interface->method(_obj, ## __VA_ARGS__); \
 	})
 
@@ -189,14 +189,14 @@ extern void retain(id obj);
  */
 #define $$(type, method, ...) \
 	({ \
-		__init(&__##type); \
-		interfaceof(type, &__##type)->method(__VA_ARGS__); \
+		_init(&_##type); \
+		interfaceof(type, &_##type)->method(__VA_ARGS__); \
 	})
 
 /**
  * @brief Invoke a Superclass instance method.
  */
 #define super(type, obj, method, ...) \
-	interfaceof(type, __class.superclass)->method(cast(type, obj), ## __VA_ARGS__)
+	interfaceof(type, _Class.superclass)->method(cast(type, obj), ## __VA_ARGS__)
 
 #endif

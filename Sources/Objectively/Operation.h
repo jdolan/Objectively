@@ -217,6 +217,6 @@ struct OperationInterface {
 /**
  * @brief The Operation Class.
  */
-extern Class __Operation;
+extern Class _Operation;
 
 #endif

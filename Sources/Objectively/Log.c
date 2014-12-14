@@ -32,7 +32,7 @@
 #include <Objectively/Log.h>
 #include <Objectively/Once.h>
 
-#define __class __Log
+#define _Class _Log
 
 #pragma mark - ObjectInterface
 
@@ -55,7 +55,7 @@ static void dealloc(Object *self) {
 
 #pragma mark - LogInterface
 
-static Log *__sharedInstance;
+static Log *_sharedInstance;
 
 /**
  * @see LogInterface::sharedInstance(void)
@@ -64,10 +64,10 @@ static Log *sharedInstance(void) {
 	static Once once;
 
 	DispatchOnce(once, {
-		__sharedInstance = $(alloc(Log), init);
+		_sharedInstance = $(alloc(Log), init);
 	});
 
-	return __sharedInstance;
+	return _sharedInstance;
 }
 
 /**
@@ -267,12 +267,12 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	release(__sharedInstance);
+	release(_sharedInstance);
 }
 
-Class __Log = {
+Class _Log = {
 	.name = "Log",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(Log),
 	.interfaceOffset = offsetof(Log, interface),
 	.interfaceSize = sizeof(LogInterface),
@@ -280,4 +280,4 @@ Class __Log = {
 	.destroy = destroy,
 };
 
-#undef __class
+#undef _Class

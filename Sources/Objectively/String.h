@@ -300,6 +300,6 @@ struct StringInterface {
 /**
  * @brief The String Class.
  */
-extern Class __String;
+extern Class _String;
 
 #endif

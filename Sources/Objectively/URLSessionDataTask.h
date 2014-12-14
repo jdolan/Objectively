@@ -83,6 +83,6 @@ struct URLSessionDataTaskInterface {
 /**
  * @brief The URLSessionDataTask Class.
  */
-extern Class __URLSessionDataTask;
+extern Class _URLSessionDataTask;
 
 #endif

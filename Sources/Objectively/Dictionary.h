@@ -171,6 +171,6 @@ struct DictionaryInterface {
 /**
  * @brief The Dictionary Class.
  */
-extern Class __Dictionary;
+extern Class _Dictionary;
 
 #endif

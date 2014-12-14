@@ -29,7 +29,7 @@
 
 #include <Objectively/Lock.h>
 
-#define __class __Lock
+#define _Class _Lock
 
 #pragma mark - ObjectInterface
 
@@ -122,14 +122,14 @@ static void initialize(Class *clazz) {
 	interface->unlock = unlock;
 }
 
-Class __Lock = {
+Class _Lock = {
 	.name = "Lock",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(Lock),
 	.interfaceOffset = offsetof(Lock, interface),
 	.interfaceSize = sizeof(LockInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class
 

@@ -26,7 +26,7 @@
 #include <Objectively/Null.h>
 #include <Objectively/Once.h>
 
-#define __class __Null
+#define _Class _Null
 
 #pragma mark - ObjectInterface
 
@@ -40,7 +40,7 @@ static Object *copy(const Object *self) {
 
 #pragma mark - NullInterface
 
-static Null *__null__;
+static Null *_null;
 
 /**
  * @see NullInterface::null(void)
@@ -49,10 +49,10 @@ static Null *null(void) {
 	static Once once;
 
 	DispatchOnce(once, {
-		__null__ = (Null *) $((Object *) alloc(Null), init);
+		_null = (Null *) $((Object *) alloc(Null), init);
 	});
 
-	return __null__;
+	return _null;
 }
 
 #pragma mark - Class lifecycle
@@ -72,12 +72,12 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	release(__null__);
+	release(_null);
 }
 
-Class __Null = {
+Class _Null = {
 	.name = "Null",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(Null),
 	.interfaceOffset = offsetof(Null, interface),
 	.interfaceSize = sizeof(NullInterface),
@@ -85,4 +85,4 @@ Class __Null = {
 	.destroy = destroy,
 };
 
-#undef __class
+#undef _Class

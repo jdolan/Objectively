@@ -27,7 +27,7 @@
 #include <Objectively/Number.h>
 #include <Objectively/String.h>
 
-#define __class __Number
+#define _Class _Number
 
 #pragma mark - ObjectInterface
 
@@ -177,13 +177,13 @@ static void initialize(Class *clazz) {
 	number->shortValue = shortValue;
 }
 
-Class __Number = {
+Class _Number = {
 	.name = "Number",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(Number),
 	.interfaceOffset = offsetof(Number, interface),
 	.interfaceSize = sizeof(NumberInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

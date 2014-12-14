@@ -107,6 +107,6 @@ struct URLSessionConfigurationInterface {
 /**
  * @brief The URLSessionConfiguration Class.
  */
-extern Class __URLSessionConfiguration;
+extern Class _URLSessionConfiguration;
 
 #endif

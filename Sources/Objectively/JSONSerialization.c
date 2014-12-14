@@ -33,7 +33,7 @@
 #include <Objectively/Number.h>
 #include <Objectively/String.h>
 
-#define __class __JSONSerialization
+#define _Class _JSONSerialization
 
 #pragma mark - JSONSerializationInterface
 
@@ -167,17 +167,17 @@ static void writeElement(JSONWriter *writer, const id obj) {
 
 	const Object *object = cast(Object, obj);
 	if (object) {
-		if ($(object, isKindOfClass, &__Dictionary)) {
+		if ($(object, isKindOfClass, &_Dictionary)) {
 			writeObject(writer, (Dictionary *) object);
-		} else if ($(object, isKindOfClass, &__Array)) {
+		} else if ($(object, isKindOfClass, &_Array)) {
 			writeArray(writer, (Array *) object);
-		} else if ($(object, isKindOfClass, &__String)) {
+		} else if ($(object, isKindOfClass, &_String)) {
 			writeString(writer, (String *) object);
-		} else if ($(object, isKindOfClass, &__Number)) {
+		} else if ($(object, isKindOfClass, &_Number)) {
 			writeNumber(writer, (Number *) object);
-		} else if ($(object, isKindOfClass, &__Boolean)) {
+		} else if ($(object, isKindOfClass, &_Boolean)) {
 			writeBoolean(writer, (Boolean *) object);
-		} else if ($(object, isKindOfClass, &__Null)) {
+		} else if ($(object, isKindOfClass, &_Null)) {
 			writeNull(writer, (Null *) object);
 		}
 	}
@@ -464,13 +464,13 @@ static void initialize(Class *clazz) {
 	json->objectFromData = objectFromData;
 }
 
-Class __JSONSerialization = {
+Class _JSONSerialization = {
 	.name = "JSONSerialization",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(JSONSerialization),
 	.interfaceOffset = offsetof(JSONSerialization, interface),
 	.interfaceSize = sizeof(JSONSerializationInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class

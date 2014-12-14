@@ -124,6 +124,6 @@ struct LockInterface {
 /**
  * @brief The Lock Class.
  */
-extern Class __Lock;
+extern Class _Lock;
 
 #endif

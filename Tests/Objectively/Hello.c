@@ -67,11 +67,11 @@ struct HelloInterface {
 /**
  * @brief The Hello Class.
  */
-extern Class __Hello;
+extern Class _Hello;
 
 // Hello.c
 
-#define __class __Hello
+#define _Class _Hello
 
 #pragma mark - HelloInterface
 
@@ -115,16 +115,16 @@ static void initialize(Class *clazz) {
 	hello->sayHello = sayHello;
 }
 
-Class __Hello = {
+Class _Hello = {
 	.name = "Hello",
-	.superclass = &__Object,
+	.superclass = &_Object,
 	.instanceSize = sizeof(Hello),
 	.interfaceOffset = offsetof(Hello, interface),
 	.interfaceSize = sizeof(HelloInterface),
 	.initialize = initialize,
 };
 
-#undef __class
+#undef _Class
 
 #pragma mark - main
 

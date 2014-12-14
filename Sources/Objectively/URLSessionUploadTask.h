@@ -80,6 +80,6 @@ struct URLSessionUploadTaskInterface {
 /**
  * @brief The URLSessionUploadTask Class.
  */
-extern Class __URLSessionUploadTask;
+extern Class _URLSessionUploadTask;
 
 #endif
