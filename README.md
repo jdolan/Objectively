@@ -115,7 +115,7 @@ To implement a type, implement its instance and Class methods and Class initiali
 #include <stdio.h>
 #include <Objectively.h>
 
-#define _class _Hello
+#define _Class _Hello
 
 /**
  * @see HelloInterface::helloWithGreeting(const char *)
@@ -166,7 +166,7 @@ Class _Hello = {
 	.initialize = initialize,
 };
     
-#undef _class
+#undef _Class
 ```
 
 Using a type
