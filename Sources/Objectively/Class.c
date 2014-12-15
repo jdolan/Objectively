@@ -65,7 +65,7 @@ static void setup(void) {
 	atexit(teardown);
 }
 
-void _init(Class *clazz) {
+void _initialize(Class *clazz) {
 
 	assert(clazz);
 
@@ -90,7 +90,7 @@ void _init(Class *clazz) {
 			assert(super->instanceSize <= clazz->instanceSize);
 			assert(super->interfaceSize <= clazz->interfaceSize);
 
-			_init(super);
+			_initialize(super);
 
 			memcpy(clazz->interface, super->interface, super->interfaceSize);
 		}
@@ -109,7 +109,7 @@ void _init(Class *clazz) {
 
 id _alloc(Class *clazz) {
 
-	_init(clazz);
+	_initialize(clazz);
 
 	id obj = calloc(1, clazz->instanceSize);
 	assert(obj);

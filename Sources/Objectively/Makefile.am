@@ -78,7 +78,7 @@ libObjectively_la_SOURCES = \
 	URLSessionUploadTask.c
 
 libObjectively_la_CFLAGS = \
-	-I .. \
+	-I .. -I ../.. \
 	@CURL_CFLAGS@
 
 libObjectively_la_LDFLAGS = \

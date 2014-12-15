@@ -124,7 +124,7 @@ struct Class {
 /**
  * @brief Initializes the given Class.
  */
-extern void _init(Class *clazz);
+extern void _initialize(Class *clazz);
 
 /**
  * @brief Instantiate a type through the given Class.
@@ -189,7 +189,7 @@ extern void retain(id obj);
  */
 #define $$(type, method, ...) \
 	({ \
-		_init(&_##type); \
+		_initialize(&_##type); \
 		interfaceof(type, &_##type)->method(__VA_ARGS__); \
 	})
 

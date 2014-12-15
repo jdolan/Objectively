@@ -23,6 +23,7 @@
 
 #include <assert.h>
 #include <errno.h>
+#include <signal.h>
 #include <stdlib.h>
 
 #include <pthread.h>
@@ -119,7 +120,7 @@ static void join(Thread *self, id *status) {
 /**
  * @see Thread::kill(Thread *, int)
  */
-static void kill(Thread *self, int signal) {
+static void _kill(Thread *self, int signal) {
 
 	int err = pthread_kill(*((pthread_t *) self->thread), signal);
 	assert(err == 0);
@@ -192,7 +193,7 @@ static void initialize(Class *clazz) {
 	thread->init = init;
 	thread->initWithFunction = initWithFunction;
 	thread->join = join;
-	thread->kill = kill;
+	thread->kill = _kill;
 	thread->start = start;
 }
 

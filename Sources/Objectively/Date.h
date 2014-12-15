@@ -25,6 +25,7 @@
 #define _Objectively_Date_h_
 
 #include <sys/time.h>
+#include <time.h>
 
 #include <Objectively/Object.h>
 
