@@ -91,7 +91,7 @@ static int hash(const Object *self) {
 
 	Array *this = (Array *) self;
 
-	int hash = HASH_SEED;
+	int hash = HashForInteger(HASH_SEED, this->count);
 
 	for (size_t i = 0; i < this->count; i++) {
 		hash = HashForObject(hash, this->elements[i]);
@@ -200,13 +200,16 @@ static Array *initWithArray(Array *self, const Array *array) {
 
 	self = (Array *) super(Object, self, init);
 	if (self) {
+
 		self->count = array->count;
+		if (self->count) {
 
-		self->elements = calloc(self->count, sizeof(id));
-		assert(self->elements);
+			self->elements = calloc(self->count, sizeof(id));
+			assert(self->elements);
 
-		for (size_t i = 0; i < self->count; i++) {
-			retain(self->elements[i] = array->elements[i]);
+			for (size_t i = 0; i < self->count; i++) {
+				retain(self->elements[i] = array->elements[i]);
+			}
 		}
 	}
 
@@ -235,16 +238,19 @@ static Array *initWithObjects(Array *self, ...) {
 
 		va_end(args);
 
-		self->elements = calloc(self->count, sizeof(id));
-		assert(self->elements);
+		if (self->count) {
 
-		va_start(args, self);
+			self->elements = calloc(self->count, sizeof(id));
+			assert(self->elements);
 
-		for (size_t i = 0; i < self->count; i++) {
-			retain(self->elements[i] = va_arg(args, id));
+			va_start(args, self);
+
+			for (size_t i = 0; i < self->count; i++) {
+				retain(self->elements[i] = va_arg(args, id));
+			}
+
+			va_end(args);
 		}
-
-		va_end(args);
 	}
 
 	return self;

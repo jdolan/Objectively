@@ -46,6 +46,7 @@
 #include <Objectively/Log.h>
 #include <Objectively/MutableArray.h>
 #include <Objectively/MutableDictionary.h>
+#include <Objectively/MutableSet.h>
 #include <Objectively/Null.h>
 #include <Objectively/Number.h>
 #include <Objectively/NumberFormatter.h>
@@ -54,6 +55,7 @@
 #include <Objectively/OperationQueue.h>
 #include <Objectively/Once.h>
 #include <Objectively/Regex.h>
+#include <Objectively/Set.h>
 #include <Objectively/String.h>
 #include <Objectively/Thread.h>
 #include <Objectively/Types.h>

@@ -15,6 +15,7 @@ TESTS = \
 	Object \
 	Operation \
 	Regex \
+	Set \
 	String \
 	Thread \
 	URL \
@@ -29,5 +30,4 @@ LDADD = \
 	@CHECK_LIBS@
 
 check_PROGRAMS = \
-	$(TESTS) \
-	Hello
+	$(TESTS)

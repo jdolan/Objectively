@@ -26,55 +26,51 @@
 
 #include <Objectively.h>
 
-BOOL enumerator(const Array *array, id obj, id data) {
+BOOL enumerator(const Set *set, id obj, id data) {
 	(*(int *) data)++; return NO;
 }
 
-START_TEST(array)
+START_TEST(set)
 	{
-		MutableArray *array = $(alloc(MutableArray), init);
+		MutableSet *set = $(alloc(MutableSet), initWithCapacity, 5);
 
-		ck_assert(array);
-		ck_assert_ptr_eq(&_MutableArray, classof(array));
+		ck_assert(set);
+		ck_assert_ptr_eq(&_MutableSet, classof(set));
 
-		ck_assert_int_eq(0, ((Array *) array)->count);
+		ck_assert_int_eq(0, ((Set *) set)->count);
 
 		Object *one = $(alloc(Object), init);
 		Object *two = $(alloc(Object), init);
 		Object *three = $(alloc(Object), init);
 
-		$(array, addObject, one);
-		$(array, addObject, two);
-		$(array, addObject, three);
+		$(set, addObject, one);
+		$(set, addObject, two);
+		$(set, addObject, three);
 
-		ck_assert_int_eq(3, ((Array *) array)->count);
+		ck_assert_int_eq(3, ((Set *) set)->count);
 
-		ck_assert($((Array *) array, containsObject, one));
-		ck_assert($((Array *) array, containsObject, two));
-		ck_assert($((Array *) array, containsObject, three));
-
-		ck_assert_int_eq(0, $((Array *) array, indexOfObject, one));
-		ck_assert_int_eq(1, $((Array *) array, indexOfObject, two));
-		ck_assert_int_eq(2, $((Array *) array, indexOfObject, three));
+		ck_assert($((Set *) set, containsObject, one));
+		ck_assert($((Set *) set, containsObject, two));
+		ck_assert($((Set *) set, containsObject, three));
 
 		ck_assert_int_eq(2, one->referenceCount);
 		ck_assert_int_eq(2, two->referenceCount);
 		ck_assert_int_eq(2, three->referenceCount);
 
-		$(array, removeObject, one);
+		$(set, removeObject, one);
 
-		ck_assert(!$((Array *) array, containsObject, one));
+		ck_assert(!$((Set *) set, containsObject, one));
 		ck_assert_int_eq(1, one->referenceCount);
-		ck_assert_int_eq(2, ((Array *) array)->count);
+		ck_assert_int_eq(2, ((Set *) set)->count);
 
-		$(array, removeAllObjects);
+		$(set, removeAllObjects);
 
-		ck_assert_int_eq(0, ((Array *) array)->count);
+		ck_assert_int_eq(0, ((Set *) set)->count);
 
-		ck_assert(!$((Array *) array, containsObject, two));
+		ck_assert(!$((Set *) set, containsObject, two));
 		ck_assert_int_eq(1, two->referenceCount);
 
-		ck_assert(!$((Array *) array, containsObject, three));
+		ck_assert(!$((Set *) set, containsObject, three));
 		ck_assert_int_eq(1, three->referenceCount);
 
 		release(one);
@@ -86,33 +82,33 @@ START_TEST(array)
 			id obj = alloc(Object);
 			ck_assert(obj);
 
-			$(array, addObject, obj);
+			$(set, addObject, obj);
 
 			release(obj);
 		}
 
-		ck_assert_int_eq(1024, ((Array *) array)->count);
+		ck_assert_int_eq(1024, ((Set *) set)->count);
 
 		int count = 0;
 
-		$((Array *) array, enumerateObjects, enumerator, &count);
+		$((Set *) set, enumerateObjects, enumerator, &count);
 
-		ck_assert_int_eq(((Array *) array)->count, count);
+		ck_assert_int_eq(((Set *) set)->count, count);
 
-		$(array, removeAllObjects);
+		$(set, removeAllObjects);
 
-		ck_assert_int_eq(((Array *) array)->count, 0);
+		ck_assert_int_eq(((Set *) set)->count, 0);
 
-		release(array);
+		release(set);
 
 	}END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("array");
-	tcase_add_test(tcase, array);
+	TCase *tcase = tcase_create("set");
+	tcase_add_test(tcase, set);
 
-	Suite *suite = suite_create("array");
+	Suite *suite = suite_create("set");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);

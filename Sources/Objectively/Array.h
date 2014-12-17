@@ -77,7 +77,7 @@ struct Array {
 	size_t count;
 
 	/**
-	 * @brief The backing pointer array.
+	 * @brief The elements.
 	 *
 	 * @private
 	 */
@@ -135,7 +135,7 @@ struct ArrayInterface {
 	int (*indexOfObject)(const Array *self, const id obj);
 
 	/**
-	 * Initializes this Array to contain the Objects in `array`.
+	 * @brief Initializes this Array to contain the Objects in `array`.
 	 *
 	 * @param array An Array.
 	 *

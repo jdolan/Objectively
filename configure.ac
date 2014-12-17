@@ -23,6 +23,7 @@ PKG_CHECK_MODULES([CURL], [libcurl >= 7.16.0])
 
 AC_CONFIG_FILES([
 	Makefile
+	Examples/Makefile
 	Sources/Makefile
 	Sources/Objectively/Makefile
 	Sources/Objectively.pc

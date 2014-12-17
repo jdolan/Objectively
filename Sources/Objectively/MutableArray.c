@@ -93,10 +93,13 @@ static MutableArray *initWithCapacity(MutableArray *self, size_t capacity) {
 
 	self = (MutableArray *) super(Object, self, init);
 	if (self) {
-		self->capacity = capacity;
 
-		self->array.elements = malloc(self->capacity * sizeof(id));
-		assert(self->array.elements);
+		self->capacity = capacity;
+		if (self->capacity) {
+
+			self->array.elements = malloc(self->capacity * sizeof(id));
+			assert(self->array.elements);
+		}
 	}
 
 	return self;

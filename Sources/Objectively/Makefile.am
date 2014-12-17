@@ -19,6 +19,7 @@ pkginclude_HEADERS = \
 	Log.h \
 	MutableArray.h \
 	MutableDictionary.h \
+	MutableSet.h \
 	Null.h \
 	Number.h \
 	NumberFormatter.h \
@@ -27,6 +28,7 @@ pkginclude_HEADERS = \
 	OperationQueue.h \
 	Once.h \
 	Regex.h \
+	Set.h \
 	String.h \
 	Thread.h \
 	URL.h \
@@ -59,6 +61,7 @@ libObjectively_la_SOURCES = \
 	Log.c \
 	MutableArray.c \
 	MutableDictionary.c \
+	MutableSet.c \
 	Null.c \
 	Number.c \
 	NumberFormatter.c \
@@ -66,6 +69,7 @@ libObjectively_la_SOURCES = \
 	Operation.c \
 	OperationQueue.c \
 	Regex.c \
+	Set.c \
 	String.c \
 	Thread.c \
 	URL.c \

@@ -204,7 +204,7 @@ static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator
 	for (size_t i = 0; i < self->capacity; i++) {
 
 		Array *array = self->elements[i];
-		if (array != NULL) {
+		if (array) {
 
 			for (size_t j = 0; j < array->count; j += 2) {
 
@@ -232,7 +232,7 @@ static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumer
 	for (size_t i = 0; i < self->capacity; i++) {
 
 		Array *array = self->elements[i];
-		if (array != NULL) {
+		if (array) {
 
 			for (size_t j = 0; j < array->count; j += 2) {
 
@@ -266,7 +266,7 @@ static Dictionary *initWithDictionary(Dictionary *self, const Dictionary *dictio
 			for (size_t i = 0; i < dictionary->capacity; i++) {
 
 				Array *array = dictionary->elements[i];
-				if (array != NULL) {
+				if (array) {
 					self->elements[i] = $((Object *) array, copy);
 				}
 			}
@@ -312,12 +312,10 @@ static Dictionary *initWithObjectsAndKeys(Dictionary *self, ...) {
  */
 static id objectForKey(const Dictionary *self, const id key) {
 
-	assert(cast(Object, key));
-
 	const size_t bin = HashForObject(HASH_SEED, key) % self->capacity;
 
 	Array *array = self->elements[bin];
-	if (array != NULL) {
+	if (array) {
 
 		int index = $(array, indexOfObject, key);
 		if (index > -1) {

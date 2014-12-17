@@ -59,11 +59,9 @@ static void dealloc(Object *self) {
 static void addDependency(Operation *self, Operation *dependency) {
 
 	assert(dependency);
+	assert(dependency != self);
 
-	const Array *dependencies = (Array *) self->locals.dependencies;
-
-	assert($(dependencies, indexOfObject, self) == -1);
-	assert($(dependencies, indexOfObject, dependency) == -1);
+	assert($((Array *) self->locals.dependencies, indexOfObject, dependency) == -1);
 
 	$(self->locals.dependencies, addObject, dependency);
 }

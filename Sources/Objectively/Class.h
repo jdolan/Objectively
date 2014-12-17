@@ -184,6 +184,9 @@ extern void retain(id obj);
 		_obj->interface->method(_obj, ## __VA_ARGS__); \
 	})
 
+#define _call(obj, method, ...) \
+	$(obj, method, __VA_ARGS__)
+
 /**
  * @brief Invoke a Class method.
  */

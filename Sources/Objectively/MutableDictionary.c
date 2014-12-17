@@ -84,9 +84,13 @@ static MutableDictionary *initWithCapacity(MutableDictionary *self, size_t capac
 
 	self = (MutableDictionary *) super(Object, self, init);
 	if (self) {
+
 		self->dictionary.capacity = capacity;
-		self->dictionary.elements = calloc(capacity, sizeof(Array *));
-		assert(self->dictionary.elements);
+		if (self->dictionary.capacity) {
+
+			self->dictionary.elements = calloc(self->dictionary.capacity, sizeof(Array *));
+			assert(self->dictionary.elements);
+		}
 	}
 
 	return self;
@@ -100,7 +104,7 @@ static void removeAllObjects(MutableDictionary *self) {
 	for (size_t i = 0; i < self->dictionary.capacity; i++) {
 
 		Array *array = self->dictionary.elements[i];
-		if (array != NULL) {
+		if (array) {
 			release(array);
 			self->dictionary.elements[i] = NULL;
 		}
@@ -114,12 +118,10 @@ static void removeAllObjects(MutableDictionary *self) {
  */
 static void removeObjectForKey(MutableDictionary *self, const id key) {
 
-	assert(cast(Object, key));
-
 	const size_t bin = HashForObject(HASH_SEED, key) % self->dictionary.capacity;
 
 	MutableArray *array = self->dictionary.elements[bin];
-	if (array != NULL) {
+	if (array) {
 
 		int index = $((Array *) array, indexOfObject, key);
 		if (index > -1) {
@@ -142,36 +144,41 @@ static void removeObjectForKey(MutableDictionary *self, const id key) {
  */
 static void resize(MutableDictionary *self) {
 
-	const float load = self->dictionary.count / self->dictionary.capacity;
-	if (load >= MUTABLEDICTIONARY_MAX_LOAD) {
+	if (self->dictionary.capacity) {
 
-		size_t capacity = self->dictionary.capacity;
-		id *elements = self->dictionary.elements;
+		const float load = self->dictionary.count / self->dictionary.capacity;
+		if (load >= MUTABLEDICTIONARY_MAX_LOAD) {
 
-		self->dictionary.capacity = self->dictionary.capacity * MUTABLEDICTIONARY_GROW_FACTOR;
-		self->dictionary.count = 0;
+			size_t capacity = self->dictionary.capacity;
+			id *elements = self->dictionary.elements;
 
-		self->dictionary.elements = calloc(self->dictionary.capacity, sizeof(Array *));
-		assert(self->dictionary.elements);
+			self->dictionary.capacity = self->dictionary.capacity * MUTABLEDICTIONARY_GROW_FACTOR;
+			self->dictionary.count = 0;
 
-		for (size_t i = 0; i < capacity; i++) {
+			self->dictionary.elements = calloc(self->dictionary.capacity, sizeof(Array *));
+			assert(self->dictionary.elements);
 
-			Array *array = elements[i];
-			if (array) {
+			for (size_t i = 0; i < capacity; i++) {
 
-				for (size_t j = 0; j < array->count; j += 2) {
+				Array *array = elements[i];
+				if (array) {
 
-					id key = $(array, objectAtIndex, j);
-					id obj = $(array, objectAtIndex, j + 1);
+					for (size_t j = 0; j < array->count; j += 2) {
 
-					$(self, setObjectForKey, obj, key);
+						id key = $(array, objectAtIndex, j);
+						id obj = $(array, objectAtIndex, j + 1);
+
+						$(self, setObjectForKey, obj, key);
+					}
+
+					release(array);
 				}
-
-				release(array);
 			}
-		}
 
-		free(elements);
+			free(elements);
+		}
+	} else {
+		$(self, initWithCapacity, MUTABLEDICTIONARY_DEFAULT_CAPACITY);
 	}
 }
 
@@ -179,9 +186,6 @@ static void resize(MutableDictionary *self) {
  * @see MutableDictionaryInterface::setObjectForKey(MutableDictionary *, const id, const id)
  */
 static void setObjectForKey(MutableDictionary *self, const id obj, const id key) {
-
-	assert(cast(Object, obj));
-	assert(cast(Object, key));
 
 	$(self, resize);
 

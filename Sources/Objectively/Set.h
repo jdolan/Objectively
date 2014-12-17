@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Dictionary_h_
-#define _Objectively_Dictionary_h_
+#ifndef _Objectively_Set_h_
+#define _Objectively_Set_h_
 
 #include <Objectively/Array.h>
 #include <Objectively/Object.h>
@@ -30,32 +30,37 @@
 /**
  * @file
  *
- * @brief Immutable key-value stores.
+ * @brief Immutable sets.
  */
 
-typedef struct Dictionary Dictionary;
-typedef struct DictionaryInterface DictionaryInterface;
+/**
+ * @defgroup Collections Collections
+ *
+ * @brief Abstract data types for aggregating Objects.
+ */
+
+typedef struct Set Set;
+typedef struct SetInterface SetInterface;
 
 /**
- * A function pointer for Dictionary enumeration (iteration).
+ * @brief A function pointer for Set enumeration (iteration).
  *
- * @param dictionary The Dictionary.
+ * @param set The Set.
  * @param obj The Object for the current iteration.
- * @param key The key for the current iteration.
  * @param data User data.
  *
  * @return See the documentation for the enumeration methods.
  */
-typedef BOOL (*DictionaryEnumerator)(const Dictionary *dictionary, id obj, id key, id data);
+typedef BOOL (*SetEnumerator)(const Set *set, id obj, id data);
 
 /**
- * @brief Immutable key-value stores.
+ * @brief Immutable sets.
  *
  * @extends Object
  *
  * @ingroup Collections
  */
-struct Dictionary {
+struct Set {
 
 	/**
 	 * @brief The parent.
@@ -65,7 +70,7 @@ struct Dictionary {
 	/**
 	 * @brief The typed interface.
 	 */
-	DictionaryInterface *interface;
+	SetInterface *interface;
 
 	/**
 	 * @brief The internal size (number of bins).
@@ -88,11 +93,11 @@ struct Dictionary {
 };
 
 /**
- * @brief The Dictionary interface.
+ * @brief The Set interface.
  *
  * @ingroup Collections
  */
-struct DictionaryInterface {
+struct SetInterface {
 
 	/**
 	 * @brief The parent.
@@ -100,77 +105,78 @@ struct DictionaryInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @return An Array containing all keys in this Dictionary.
+	 * @return An Array containing all Objects in this Set.
 	 *
-	 * @relates Dictionary
+	 * @relates Set
 	 */
-	Array *(*allKeys)(const Dictionary *self);
+	Array *(*allObjects)(const Set *self);
 
 	/**
-	 * @return An Array containing all Objects in this Dictionary.
+	 * @return `YES` if this Set contains the given Object, `NO` otherwise.
 	 *
-	 * @relates Dictionary
+	 * @relates Set
 	 */
-	Array *(*allObjects)(const Dictionary *self);
+	BOOL (*containsObject)(const Set *self, const id obj);
 
 	/**
-	 * @brief Enumerate the pairs of this Dictionary with the given function.
+	 * @brief Enumerate the elements of this Set with the given function.
 	 *
 	 * @param enumerator The enumerator function.
 	 * @param data User data.
 	 *
 	 * @remark The enumerator should return `YES` to break the iteration.
 	 *
-	 * @relates Dictionary
+	 * @relates Set
 	 */
-	void (*enumerateObjectsAndKeys)(const Dictionary *self, DictionaryEnumerator enumerator,
-			id data);
+	void (*enumerateObjects)(const Set *self, SetEnumerator enumerator, id data);
 
 	/**
-	 * @brief Creates a new Dictionary with pairs that pass the filter function.
+	 * @brief Creates a new Set with elements that pass the filter function.
 	 *
 	 * @param enumerator The enumerator function.
 	 * @param data User data.
 	 *
-	 * @return The new, filtered Dictionary.
+	 * @return The new, filtered Set.
 	 *
-	 * @relates Dictionary
+	 * @relates Set
 	 */
-	Dictionary *(*filterObjectsAndKeys)(const Dictionary *self, DictionaryEnumerator enumerator,
-			id data);
+	Set *(*filterObjects)(const Set *self, SetEnumerator enumerator, id data);
 
 	/**
-	 * @brief Initializes this Dictionary to contain elements of `dictionary`.
+	 * @brief Initializes this Set to contain the Objects in `array`.
 	 *
-	 * @param dictionary A Dictionary.
+	 * @param array An Array.
 	 *
-	 * @return The initialized Dictionary, or `NULL` on error.
+	 * @return The initialized Set, or `NULL` on error.
 	 *
-	 * @relates Dictionary
+	 * @relates Set
 	 */
-	Dictionary *(*initWithDictionary)(Dictionary *self, const Dictionary *dictionary);
+	Set *(*initWithArray)(Set *self, const Array *array);
 
 	/**
-	 * @brief Initializes this Dictionary with the `NULL`-terminated list of
-	 * Objects and keys.
+	 * @brief Initializes this Set to contain the Objects in `set`.
 	 *
-	 * @return The initialized Dictionary, or `NULL` on error.
+	 * @param set A Set.
 	 *
-	 * @relates Dictionary
+	 * @return The initialized Set, or `NULL` on error.
+	 *
+	 * @relates Set
 	 */
-	Dictionary *(*initWithObjectsAndKeys)(Dictionary *self, ...);
+	Set *(*initWithSet)(Set *self, const Set *set);
 
 	/**
-	 * @return The Object stored at the specified key in this Dictionary.
+	 * @brief Initializes this Set with the specified objects.
 	 *
-	 * @relates Dictionary
+	 * @return The initialized Set, or `NULL` on error.
+	 *
+	 * @relates Set
 	 */
-	id (*objectForKey)(const Dictionary *self, const id key);
+	Set *(*initWithObjects)(Set *self, ...);
 };
 
 /**
- * @brief The Dictionary Class.
+ * @brief The Set Class.
  */
-extern Class _Dictionary;
+extern Class _Set;
 
 #endif

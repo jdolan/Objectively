@@ -6,7 +6,6 @@ Conditional
 Data
 Date
 Dictionary
-Hello
 JSON
 Lock
 Log
@@ -15,6 +14,7 @@ Number
 Object
 Operation
 Regex
+Set
 String
 Thread
 URL

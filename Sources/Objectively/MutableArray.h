@@ -56,6 +56,8 @@ struct MutableArray {
 
 	/**
 	 * @brief The Array capacity.
+	 *
+	 * @private
 	 */
 	size_t capacity;
 };

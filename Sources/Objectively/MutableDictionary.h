@@ -114,6 +114,8 @@ struct MutableDictionaryInterface {
 	 * @brief Resizes this Dictionary, if necessary, based on its load factor.
 	 *
 	 * @private
+	 *
+	 * @relates MutableDictionary
 	 */
 	void (*resize)(MutableDictionary *self);
 

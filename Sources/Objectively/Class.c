@@ -85,7 +85,7 @@ void _initialize(Class *clazz) {
 			assert(super == NULL);
 			setup();
 		} else {
-			assert(super != NULL);
+			assert(super);
 
 			assert(super->instanceSize <= clazz->instanceSize);
 			assert(super->interfaceSize <= clazz->interfaceSize);
