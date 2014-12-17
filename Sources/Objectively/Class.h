@@ -184,6 +184,11 @@ extern void retain(id obj);
 		_obj->interface->method(_obj, ## __VA_ARGS__); \
 	})
 
+/**
+ * @brief Invoke an instance method with arguments.
+ *
+ * @remark This is useful when nesting method invocations.
+ */
 #define _call(obj, method, ...) \
 	$(obj, method, __VA_ARGS__)
 

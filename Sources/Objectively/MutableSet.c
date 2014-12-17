@@ -82,8 +82,7 @@ static void addObjectsFromArray(MutableSet *self, const Array *array) {
 
 	if (array) {
 		for (size_t i = 0; i < array->count; i++) {
-			id obj = $(array, objectAtIndex, i);
-			$(self, addObject, obj);
+			_call(self, addObject, $(array, objectAtIndex, i));
 		}
 	}
 }
@@ -91,7 +90,7 @@ static void addObjectsFromArray(MutableSet *self, const Array *array) {
 /**
  * @brief SetEnumerator for addObjectsFromSet.
  */
-static BOOL addObjectsFromSet_enumerator(const Set *dict, id obj, id data) {
+static BOOL addObjectsFromSet_enumerator(const Set *set, id obj, id data) {
 
 	$((MutableSet *) data, addObject, obj); return NO;
 }

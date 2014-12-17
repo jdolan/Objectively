@@ -201,7 +201,6 @@ static Set *filterObjects(const Set *self, SetEnumerator enumerator, id data) {
 		if (array) {
 
 			for (size_t j = 0; j < array->count; j++) {
-
 				id obj = $(array, objectAtIndex, j);
 
 				if (enumerator(self, obj, data)) {
