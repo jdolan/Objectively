@@ -51,11 +51,15 @@ struct URLSessionDataTask {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	URLSessionTask urlSessionTask;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	URLSessionDataTaskInterface *interface;
 
@@ -67,15 +71,11 @@ struct URLSessionDataTask {
 
 /**
  * @brief The URLSessionDataTask interface.
- *
- * @extends URLSessionTaskInterface
- *
- * @ingroup URLSession
  */
 struct URLSessionDataTaskInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	URLSessionTaskInterface urlSessionTaskInterface;
 };

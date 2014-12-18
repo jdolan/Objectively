@@ -24,6 +24,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
+#include <Objectively/MutableString.h>
 #include <Objectively/Regex.h>
 #include <Objectively/URL.h>
 
@@ -107,7 +108,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
  */
 static URL *baseURL(const URL *self) {
 
-	String *string = $(alloc(String), init);
+	MutableString *string = $(alloc(MutableString), init);
 
 	$(string, appendString, self->scheme);
 	$(string, appendFormat, "://");
@@ -120,7 +121,8 @@ static URL *baseURL(const URL *self) {
 		$(string, appendFormat, ":%u", self->port);
 	}
 
-	URL *baseURL = $(alloc(URL), initWithString, string);
+	URL *baseURL = $(alloc(URL), initWithString, (String *) string);
+
 	release(string);
 
 	return baseURL;

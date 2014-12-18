@@ -28,7 +28,7 @@
 #include <Objectively/Array.h>
 #include <Objectively/Hash.h>
 #include <Objectively/MutableArray.h>
-#include <Objectively/String.h>
+#include <Objectively/MutableString.h>
 
 #define _Class _Array
 
@@ -67,7 +67,8 @@ static String *description(const Object *self) {
 
 	const Array *this = (Array *) self;
 
-	String *desc = $(alloc(String), initWithCharacters, "[");
+	MutableString *desc = $(alloc(MutableString), init);
+	$(desc, appendFormat, "[");
 
 	for (size_t i = 0; i < this->count; i++) {
 		String *objDesc = $((Object *) this->elements[i], description);
@@ -81,7 +82,7 @@ static String *description(const Object *self) {
 	}
 
 	$(desc, appendFormat, "]");
-	return desc;
+	return (String *) desc;
 }
 
 /**

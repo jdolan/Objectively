@@ -52,11 +52,15 @@ struct URL {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	URLInterface *interface;
 
@@ -102,7 +106,7 @@ struct URL {
 struct URLInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

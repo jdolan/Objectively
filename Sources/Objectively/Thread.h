@@ -62,11 +62,15 @@ struct Thread {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	ThreadInterface *interface;
 
@@ -102,19 +106,19 @@ struct Thread {
 
 	/**
 	 * @brief The backing thread.
+	 *
+	 * @private
 	 */
 	id thread;
 };
 
 /**
  * @brief The Thread interface.
- *
- * @ingroup Threads
  */
 struct ThreadInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

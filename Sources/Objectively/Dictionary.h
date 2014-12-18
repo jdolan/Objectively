@@ -59,11 +59,15 @@ struct Dictionary {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	DictionaryInterface *interface;
 
@@ -89,13 +93,11 @@ struct Dictionary {
 
 /**
  * @brief The Dictionary interface.
- *
- * @ingroup Collections
  */
 struct DictionaryInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

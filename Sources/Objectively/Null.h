@@ -48,11 +48,15 @@ struct Null {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	NullInterface *interface;
 };
@@ -63,7 +67,7 @@ struct Null {
 struct NullInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

@@ -65,17 +65,19 @@ struct URLSessionTask {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	URLSessionTaskInterface *interface;
 
 	/**
-	 * Local members.
-	 *
 	 * @private
 	 */
 	struct {
@@ -134,13 +136,11 @@ struct URLSessionTask {
 
 /**
  * @brief The URLSessionTask interface.
- *
- * @ingroup URLSession
  */
 struct URLSessionTaskInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

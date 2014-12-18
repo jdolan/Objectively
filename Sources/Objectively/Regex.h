@@ -47,11 +47,15 @@ struct Regex {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	RegexInterface *interface;
 
@@ -82,7 +86,7 @@ struct Regex {
 struct RegexInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

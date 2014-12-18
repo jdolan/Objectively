@@ -52,11 +52,15 @@ struct Object {
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	ObjectInterface *interface;
 
 	/**
 	 * @brief The reference count of this Object.
+	 *
+	 * @private
 	 */
 	unsigned referenceCount;
 };

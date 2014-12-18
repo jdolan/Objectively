@@ -60,11 +60,15 @@ struct URLRequest {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	URLRequestInterface *interface;
 
@@ -91,13 +95,11 @@ struct URLRequest {
 
 /**
  * @brief The URLRequest interface.
- *
- * @ingroup URLSession
  */
 struct URLRequestInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

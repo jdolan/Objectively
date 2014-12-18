@@ -38,22 +38,26 @@ typedef struct MutableDataInterface MutableDataInterface;
 /**
  * @brief Mutable data buffers.
  *
- * @extends Object
+ * @extends Data
  */
 struct MutableData {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Data data;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	MutableDataInterface *interface;
 
 	/**
-	 * @brief The capacity of `bytes`, which is always `>= length`.
+	 * @brief The capacity, which is always `>= self->data.length`.
 	 *
 	 * @private
 	 */
@@ -66,7 +70,7 @@ struct MutableData {
 struct MutableDataInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	DataInterface dataInterface;
 

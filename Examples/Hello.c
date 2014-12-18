@@ -34,7 +34,7 @@ struct Hello {
 struct HelloInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

@@ -49,11 +49,15 @@ struct OperationQueue {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	OperationQueueInterface *interface;
 
@@ -87,13 +91,11 @@ struct OperationQueue {
 
 /**
  * @brief The OperationQueue interface.
- *
- * @ingroup Threads
  */
 struct OperationQueueInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

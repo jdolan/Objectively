@@ -58,24 +58,26 @@ struct JSONSerialization {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	JSONSerializationInterface *interface;
 };
 
 /**
  * @brief The JSONSerialization interface.
- *
- * @ingroup JSON
  */
 struct JSONSerializationInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

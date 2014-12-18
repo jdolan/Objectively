@@ -46,26 +46,26 @@ struct MutableSet {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Set set;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	MutableSetInterface *interface;
 };
 
 /**
  * @brief The MutableSet interface.
- *
- * @extends SetInterface
- *
- * @ingroup Collections
  */
 struct MutableSetInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	SetInterface setInterface;
 

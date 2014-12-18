@@ -24,12 +24,11 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include <Objectively/MutableData.h>
 
 #define _Class _MutableData
-
-#define DATA_BLOCK_SIZE 4096
 
 #pragma mark - ObjectInterface
 
@@ -86,12 +85,14 @@ static MutableData *initWithCapacity(MutableData *self, size_t capacity) {
 	return self;
 }
 
+static size_t pageSize;
+
 /**
  * @see MutableDataInterface::setLength(MutableData *, size_t)
  */
 static void setLength(MutableData *self, size_t length) {
 
-	const size_t newCapacity = (length / DATA_BLOCK_SIZE + 1) * DATA_BLOCK_SIZE;
+	const size_t newCapacity = (length / pageSize + 1) * pageSize;
 	if (newCapacity > self->capacity) {
 
 		if (self->data.bytes == NULL) {
@@ -127,6 +128,8 @@ static void initialize(Class *clazz) {
 	mutableData->init = init;
 	mutableData->initWithCapacity = initWithCapacity;
 	mutableData->setLength = setLength;
+
+	pageSize = sysconf(_SC_PAGESIZE);
 }
 
 Class _MutableData = {

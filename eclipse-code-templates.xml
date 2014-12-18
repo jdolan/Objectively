@@ -1,65 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="false" context="org.eclipse.cdt.core.cHeader.contenttype_context" deleted="false" description="" enabled="true" name="Objectively Type Header">${filecomment}
-
-#ifndef _${project_name}_${file_base}_h_
-#define _${project_name}_${file_base}_h_
-
-#include &lt;Objectively/Object.h&gt;
-
-/**
- * @file
- * 
- * @brief ..
- */
-
-typedef struct ${file_base} ${file_base};
-typedef struct ${file_base}Interface ${file_base}Interface;
-
-/**
- * @brief ..
- */
-struct ${file_base} {
-
-	/**
-	 * @brief The parent.
-	 */
-	Object object;
-
-	/**
-	 * @brief The typed interface.
-	 */
-	${file_base}Interface *interface;
-
-	//.. 
-};
-
-/**
- * @brief The ${file_base} interface.
- */
-struct ${file_base}Interface {
-
-	/**
-	 * @brief The parent.
-	 */
-	ObjectInterface objectInterface;
-
-	/**
-	 * @brief Initializes this ${file_base}.
-	 *
-	 * @return The initialized ${file_base}, or `NULL` on error.
-	 *
-	 * @relates ${file_base}
-	 */
-	${file_base} *(*init)(${file_base} *self);
-
-	// ..
-};
-
-/**
- * @brief The ${file_base} Class.
- */
-extern Class _${file_base};
-
-#endif</template><template autoinsert="false" context="org.eclipse.cdt.core.cSource.contenttype_context" deleted="false" description="" enabled="true" name="Objectively Type Source">${filecomment}
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="false" context="org.eclipse.cdt.core.cSource.contenttype_context" deleted="false" description="" enabled="true" name="Objectively Type Source">${filecomment}
 
 #include &lt;assert.h&gt;
 
@@ -121,4 +60,69 @@ Class _${file_base} = {
 };
 
 #undef _class
-</template></templates>
+</template><template autoinsert="false" context="org.eclipse.cdt.core.cHeader.contenttype_context" deleted="false" description="" enabled="true" name="Objectively Type Header">${filecomment}
+
+#ifndef _${project_name}_${file_base}_h_
+#define _${project_name}_${file_base}_h_
+
+#include &lt;Objectively/Object.h&gt;
+
+/**
+ * @file
+ * 
+ * @brief ..
+ */
+
+typedef struct ${file_base} ${file_base};
+typedef struct ${file_base}Interface ${file_base}Interface;
+
+/**
+ * @brief ..
+ */
+struct ${file_base} {
+
+	/**
+	 * @brief The parent.
+	 *
+	 * @private
+	 */
+	Object object;
+
+	/**
+	 * @brief The typed interface.
+	 *
+	 * @private
+	 */
+	${file_base}Interface *interface;
+
+	//.. 
+};
+
+/**
+ * @brief The ${file_base} interface.
+ */
+struct ${file_base}Interface {
+
+	/**
+	 * @brief The parent interface.
+	 */
+	ObjectInterface objectInterface;
+
+	/**
+	 * @brief Initializes this ${file_base}.
+	 *
+	 * @return The initialized ${file_base}, or `NULL` on error.
+	 *
+	 * @relates ${file_base}
+	 */
+	${file_base} *(*init)(${file_base} *self);
+
+	// ..
+};
+
+/**
+ * @brief The ${file_base} Class.
+ */
+extern Class _${file_base};
+
+#endif</template></templates>

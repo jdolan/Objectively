@@ -46,24 +46,26 @@ struct JSONPath {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	JSONPathInterface *interface;
 };
 
 /**
  * @brief The JSONPath interface.
- *
- * @ingroup JSON
  */
 struct JSONPathInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

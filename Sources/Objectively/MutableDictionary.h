@@ -46,21 +46,21 @@ struct MutableDictionary {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Dictionary dictionary;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	MutableDictionaryInterface *interface;
 };
 
 /**
  * @brief The MutableDictionary interface.
- *
- * @extends DictionaryInterface
- *
- * @ingroup Collections
  */
 struct MutableDictionaryInterface {
 

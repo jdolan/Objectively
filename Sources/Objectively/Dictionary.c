@@ -29,7 +29,7 @@
 #include <Objectively/Hash.h>
 #include <Objectively/MutableArray.h>
 #include <Objectively/MutableDictionary.h>
-#include <Objectively/String.h>
+#include <Objectively/MutableString.h>
 
 #define _Class _Dictionary
 
@@ -68,7 +68,7 @@ static void dealloc(Object *self) {
  */
 static BOOL description_enumerator(const Dictionary *dict, id obj, id key, id data) {
 
-	String *desc = (String *) data;
+	MutableString *desc = (MutableString *) data;
 
 	String *objDesc = $((Object *) obj, description);
 	String *keyDesc = $((Object *) key, description);
@@ -88,13 +88,15 @@ static String *description(const Object *self) {
 
 	const Dictionary *this = (Dictionary *) self;
 
-	String *desc = $(alloc(String), initWithCharacters, "{");
+	MutableString *desc = $(alloc(MutableString), init);
+
+	$(desc, appendFormat, "{");
 
 	$(this, enumerateObjectsAndKeys, description_enumerator, desc);
 
 	$(desc, appendFormat, "}");
 
-	return desc;
+	return (String *) desc;
 }
 
 /**

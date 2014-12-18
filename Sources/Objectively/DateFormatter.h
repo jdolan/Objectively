@@ -45,16 +45,22 @@ typedef struct DateFormatterInterface DateFormatterInterface;
  * @brief Date formatting and parsing.
  *
  * @extends Object
+ *
+ * @ingroup Date
  */
 struct DateFormatter {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	DateFormatterInterface *interface;
 
@@ -70,7 +76,7 @@ struct DateFormatter {
 struct DateFormatterInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

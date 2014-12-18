@@ -48,6 +48,7 @@
 #include <Objectively/MutableData.h>
 #include <Objectively/MutableDictionary.h>
 #include <Objectively/MutableSet.h>
+#include <Objectively/MutableString.h>
 #include <Objectively/Null.h>
 #include <Objectively/Number.h>
 #include <Objectively/NumberFormatter.h>

@@ -44,11 +44,15 @@ struct Boolean {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	BooleanInterface *interface;
 
@@ -64,7 +68,7 @@ struct Boolean {
 struct BooleanInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

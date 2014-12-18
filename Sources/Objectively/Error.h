@@ -45,11 +45,15 @@ struct Error {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	ErrorInterface *interface;
 
@@ -75,7 +79,7 @@ struct Error {
 struct ErrorInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

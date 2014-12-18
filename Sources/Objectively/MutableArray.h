@@ -46,11 +46,15 @@ struct MutableArray {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Array array;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	MutableArrayInterface *interface;
 
@@ -64,15 +68,11 @@ struct MutableArray {
 
 /**
  * @brief The MutableArray interface.
- *
- * @extends ArrayInterface
- *
- * @ingroup Collections
  */
 struct MutableArrayInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ArrayInterface arrayInterface;
 

@@ -64,11 +64,15 @@ struct Set {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	SetInterface *interface;
 
@@ -94,13 +98,11 @@ struct Set {
 
 /**
  * @brief The Set interface.
- *
- * @ingroup Collections
  */
 struct SetInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

@@ -60,11 +60,15 @@ struct NumberFormatter {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	NumberFormatterInterface *interface;
 
@@ -80,7 +84,7 @@ struct NumberFormatter {
 struct NumberFormatterInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

@@ -63,11 +63,15 @@ struct Array {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	ArrayInterface *interface;
 
@@ -86,13 +90,11 @@ struct Array {
 
 /**
  * @brief The Array interface.
- *
- * @ingroup Collections
  */
 struct ArrayInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

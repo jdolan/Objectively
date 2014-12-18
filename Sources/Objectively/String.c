@@ -110,57 +110,6 @@ static BOOL isEqual(const Object *self, const Object *other) {
 #pragma mark - StringInterface
 
 /**
- * @see StringInterface::appendFormat(String *, const char *, ...)
- */
-static String *appendFormat(String *self, const char *fmt, ...) {
-
-	va_list args;
-	va_start(args, fmt);
-
-	char *str;
-	vasprintf(&str, fmt, args);
-
-	va_end(args);
-
-	if (str) {
-		String *string = alloc(String);
-
-		string->chars = str;
-		string->length = strlen(string->chars);
-
-		$(self, appendString, string);
-
-		release(string);
-	}
-
-	return self;
-}
-
-/**
- * @see StringInterface::appendString(String *, const String *)
- */
-static String *appendString(String *self, const String *other) {
-
-	if (other->length) {
-		if (self->length) {
-			const size_t size = self->length + other->length + 1;
-
-			self->chars = realloc(self->chars, size);
-			assert(self->chars);
-
-			memcpy(self->chars + self->length, other->chars, other->length);
-			self->chars[size - 1] = '\0';
-		} else {
-			self->chars = strdup(other->chars);
-		}
-
-		self->length = strlen(self->chars);
-	}
-
-	return self;
-}
-
-/**
  * @see StringInterface::compareTo(const String *, const String *, const RANGE)
  */
 static ORDER compareTo(const String *self, const String *other, const RANGE range) {
@@ -246,14 +195,6 @@ static BOOL hasSuffix(const String *self, const String *suffix) {
 
 	RANGE range = { self->length - suffix->length, suffix->length };
 	return $(self, compareTo, suffix, range) == SAME;
-}
-
-/**
- * @see StringInterface::init(String *)
- */
-static String *init(String *self) {
-
-	return $(self, initWithCharacters, NULL);
 }
 
 /**
@@ -418,7 +359,7 @@ static String *substring(const String *self, const RANGE range) {
 
 	assert(range.location + range.length <= self->length);
 
-	id mem = calloc(range.length + 1, 1);
+	id mem = calloc(range.length + 1, sizeof(char));
 	memcpy(mem, self->chars + range.location, range.length);
 
 	return $(alloc(String), initWithMemory, mem);
@@ -472,14 +413,11 @@ static void initialize(Class *clazz) {
 
 	StringInterface *string = (StringInterface *) clazz->interface;
 
-	string->appendFormat = appendFormat;
-	string->appendString = appendString;
 	string->compareTo = compareTo;
 	string->componentsSeparatedByCharacters = componentsSeparatedByCharacters;
 	string->componentsSeparatedByString = componentsSeparatedByString;
 	string->hasPrefix = hasPrefix;
 	string->hasSuffix = hasSuffix;
-	string->init = init;
 	string->initWithBytes = initWithBytes;
 	string->initWithCharacters = initWithCharacters;
 	string->initWithContentsOfFile = initWithContentsOfFile;

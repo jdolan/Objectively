@@ -34,18 +34,6 @@
  * Mediate access to a critical section by enforcing mutual exclusion.
  */
 
-/**
- * @brief Wraps `statements` with calls to `lock` and `unlock`.
- *
- * @param _lock The Lock instance.
- * @param statements The statements to perform while the Lock is held.
- */
-#define WithLock(_lock, statements) { \
-	$((Lock *) _lock, lock); \
-		statements; \
-	$((Lock *) _lock, unlock); \
-}
-
 typedef struct Lock Lock;
 typedef struct LockInterface LockInterface;
 
@@ -62,29 +50,33 @@ struct Lock {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	LockInterface *interface;
 
 	/**
 	 * @brief The backing lock.
+	 *
+	 * @private
 	 */
 	id lock;
 };
 
 /**
  * @brief The Lock interface.
- *
- * @ingroup Threads
  */
 struct LockInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 
@@ -125,5 +117,17 @@ struct LockInterface {
  * @brief The Lock Class.
  */
 extern Class _Lock;
+
+/**
+ * @brief Wraps `statements` with calls to `lock` and `unlock`.
+ *
+ * @param _lock The Lock instance.
+ * @param statements The statements to perform while the Lock is held.
+ */
+#define WithLock(_lock, statements) { \
+	$((Lock *) _lock, lock); \
+		statements; \
+	$((Lock *) _lock, unlock); \
+}
 
 #endif

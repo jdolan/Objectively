@@ -23,19 +23,20 @@
 
 #include <check.h>
 
-#include <Objectively/String.h>
+#include <Objectively/MutableString.h>
 
 START_TEST(string)
 	{
-		String *string = $(alloc(String), initWithFormat, "hello");
+		MutableString *string = $$(MutableString, string);
 
 		ck_assert(string);
-		ck_assert_ptr_eq(&_String, classof(string));
+		ck_assert_ptr_eq(&_MutableString, classof(string));
 
-		ck_assert_str_eq("hello", string->chars);
+		$(string, appendFormat, "hello");
+		ck_assert_str_eq("hello", string->string.chars);
 
 		$(string, appendFormat, " %s", "world!");
-		ck_assert_str_eq("hello world!", string->chars);
+		ck_assert_str_eq("hello world!", string->string.chars);
 
 		String *copy = (String *) $((Object * ) string, copy);
 
@@ -45,20 +46,20 @@ START_TEST(string)
 
 		release(copy);
 
-		$(string, appendString, string);
-		ck_assert_str_eq("hello world!hello world!", string->chars);
+		$(string, appendString, (String *) string);
+		ck_assert_str_eq("hello world!hello world!", string->string.chars);
 
 		String *prefix = $(alloc(String), initWithFormat, "hello");
-		ck_assert($(string, hasPrefix, prefix));
+		ck_assert($((String *) string, hasPrefix, prefix));
 
 		String *suffix = $(alloc(String), initWithFormat, "world!");
-		ck_assert($(string, hasSuffix, suffix));
+		ck_assert($((String *) string, hasSuffix, suffix));
 
 		RANGE range = { 6, 11 };
-		String *substring = $(string, substring, range);
+		String *substring = $((String *) string, substring, range);
 		ck_assert_str_eq("world!hello", substring->chars);
 
-		Array *components = $(string, componentsSeparatedByCharacters, "!");
+		Array *components = $((String *) string, componentsSeparatedByCharacters, "!");
 		ck_assert_int_eq(3, components->count);
 
 		for (int i = 0; i < components->count; i++) {

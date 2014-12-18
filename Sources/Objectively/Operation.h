@@ -59,11 +59,15 @@ struct Operation {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	OperationInterface *interface;
 
@@ -118,13 +122,11 @@ struct Operation {
 
 /**
  * @brief The Operation interface.
- *
- * @ingroup Threads
  */
 struct OperationInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

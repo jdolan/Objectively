@@ -21,6 +21,7 @@ pkginclude_HEADERS = \
 	MutableData.h \
 	MutableDictionary.h \
 	MutableSet.h \
+	MutableString.h \
 	Null.h \
 	Number.h \
 	NumberFormatter.h \
@@ -64,6 +65,7 @@ libObjectively_la_SOURCES = \
 	MutableData.c \
 	MutableDictionary.c \
 	MutableSet.c \
+	MutableString.c \
 	Null.c \
 	Number.c \
 	NumberFormatter.c \

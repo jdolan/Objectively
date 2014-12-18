@@ -36,6 +36,10 @@
  */
 
 /**
+ * @defgroup Date Date & Time
+ */
+
+/**
  * @brief Microseconds per second.
  */
 #define MSEC_PER_SEC 1000000
@@ -57,16 +61,22 @@ typedef struct DateInterface DateInterface;
  * @brief Microsecond-precision immutable dates.
  *
  * @extends Object
+ *
+ * @ingroup Date
  */
 struct Date {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	DateInterface *interface;
 
@@ -82,7 +92,7 @@ struct Date {
 struct DateInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

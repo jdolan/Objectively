@@ -31,14 +31,14 @@
 /**
  * @file
  *
- * @brief Mutable data buffers.
+ * @brief Immutable data buffers.
  */
 
 typedef struct Data Data;
 typedef struct DataInterface DataInterface;
 
 /**
- * @brief Mutable data buffers.
+ * @brief Immutable data buffers.
  *
  * @extends Object
  */
@@ -46,11 +46,15 @@ struct Data {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	DataInterface *interface;
 
@@ -71,7 +75,7 @@ struct Data {
 struct DataInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 

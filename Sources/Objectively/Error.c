@@ -25,6 +25,7 @@
 
 #include <Objectively/Error.h>
 #include <Objectively/Hash.h>
+#include <Objectively/MutableString.h>
 
 #define _Class _Error
 
@@ -62,14 +63,15 @@ static String *description(const Object *self) {
 
 	Error *this = (Error *) self;
 
-	String *description = $(alloc(String), initWithFormat, "%s: %d", this->domain->chars,
-			this->code);
+	MutableString *desc = $(alloc(MutableString), init);
+
+	$(desc, appendFormat, "%s: %d", this->domain->chars, this->code);
 
 	if (this->message) {
-		$(description, appendFormat, ": %s", this->message->chars);
+		$(desc, appendFormat, ": %s", this->message->chars);
 	}
 
-	return description;
+	return (String *) desc;
 }
 
 /**

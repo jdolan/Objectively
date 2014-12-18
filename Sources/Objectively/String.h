@@ -47,11 +47,15 @@ struct String {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	StringInterface *interface;
 
@@ -77,31 +81,9 @@ struct String {
 struct StringInterface {
 
 	/**
-	 * @brief The super Interface.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
-
-	/**
-	 * @brief Appends the specified formatted string.
-	 *
-	 * @param fmt The format sequence.
-	 *
-	 * @return The resulting String.
-	 *
-	 * @relates String
-	 */
-	String *(*appendFormat)(String *self, const char *fmt, ...);
-
-	/**
-	 * @brief Appends the specified String.
-	 *
-	 * @param other The String to append.
-	 *
-	 * @return The resulting String.
-	 *
-	 * @relates String
-	 */
-	String *(*appendString)(String *self, const String *other);
 
 	/**
 	 * @brief Compares this String lexicographically to another.
@@ -158,15 +140,6 @@ struct StringInterface {
 	 * @relates String
 	 */
 	BOOL (*hasSuffix)(const String *self, const String *suffix);
-
-	/**
-	 * @brief Initializes this String.
-	 *
-	 * @return The initialized String, or `NULL` on error.
-	 *
-	 * @relates String
-	 */
-	String *(*init)(String *self);
 
 	/**
 	 * @brief Initializes this String by copying `length` of `bytes`. The
@@ -265,7 +238,7 @@ struct StringInterface {
 	 *
 	 * @relates String
 	 */
-	RANGE (*rangeOfString)(const String *self, const String *string, RANGE range);
+	RANGE (*rangeOfString)(const String *self, const String *string, const RANGE range);
 
 	/**
 	 * @brief Creates a new String from a subset of this one.

@@ -50,31 +50,33 @@ struct Condition {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Lock lock;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	ConditionInterface *interface;
 
 	/**
 	 * @brief The backing condition.
+	 *
+	 * @private
 	 */
 	id condition;
 };
 
 /**
  * @brief The Condition interface.
- *
- * @extends LockInterface
- *
- * @ingroup Threads
  */
 struct ConditionInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	LockInterface lockInterface;
 

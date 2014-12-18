@@ -48,11 +48,15 @@ struct URLSessionConfiguration {
 
 	/**
 	 * @brief The parent.
+	 *
+	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
+	 *
+	 * @private
 	 */
 	URLSessionConfigurationInterface *interface;
 
@@ -84,13 +88,11 @@ struct URLSessionConfiguration {
 
 /**
  * @brief The URLSessionConfiguration interface.
- *
- * @ingroup URLSession
  */
 struct URLSessionConfigurationInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
 
