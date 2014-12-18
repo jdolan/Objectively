@@ -99,36 +99,6 @@ static BOOL isEqual(const Object *self, const Object *other) {
 #pragma mark - DataInterface
 
 /**
- * @see DataInterface::appendBytes(Data *, const byte *, size_t)
- */
-static void appendBytes(Data *self, const byte *bytes, size_t length) {
-
-	const size_t newLength = self->length + length;
-	const size_t newCapacity = (newLength / DATA_BLOCK_SIZE + 1) * DATA_BLOCK_SIZE;
-	if (self->capacity != newCapacity) {
-
-		if (self->bytes == NULL) {
-			self->bytes = malloc(newCapacity);
-		} else {
-			self->bytes = realloc(self->bytes, newCapacity);
-		}
-
-		assert(self->bytes);
-		self->capacity = newCapacity;
-	}
-
-	memcpy(self->bytes + self->length, bytes, length);
-	self->length = newLength;
-}
-
-/**
- * @see DataInterface::init(Data *)
- */
-static Data *init(Data *self) {
-	return $(self, initWithCapacity, 0);
-}
-
-/**
  * @see DataInterface::initWithBytes(Data *, const byte *, const size_t)
  */
 static Data *initWithBytes(Data *self, const byte *bytes, size_t length) {
@@ -138,18 +108,7 @@ static Data *initWithBytes(Data *self, const byte *bytes, size_t length) {
 
 	memcpy(mem, bytes, length);
 
-	return $(self, initWithMemory, mem, length, length);
-}
-
-/**
- * @see DataInterface::initWithCapacity(Data *, size_t)
- */
-static Data *initWithCapacity(Data *self, size_t capacity) {
-
-	id mem = malloc(capacity);
-	assert(mem);
-
-	return $(self, initWithMemory, mem, capacity, 0);
+	return $(self, initWithMemory, mem, length);
 }
 
 /**
@@ -178,23 +137,20 @@ static Data *initWithContentsOfFile(Data *self, const char *path) {
 
 		fclose(file);
 
-		return $(self, initWithMemory, mem, length, length);
+		return $(self, initWithMemory, mem, length);
 	}
 
 	return NULL;
 }
 
 /**
- * @see DataInterface::initWithMemory(Data *, id, size_t, size_t)
+ * @see DataInterface::initWithMemory(Data *, id, size_t)
  */
-static Data *initWithMemory(Data *self, id mem, size_t capacity, size_t length) {
-
-	assert(length <= capacity);
+static Data *initWithMemory(Data *self, id mem, size_t length) {
 
 	self = (Data *) super(Object, self, init);
 	if (self) {
 		self->bytes = mem;
-		self->capacity = capacity;
 		self->length = length;
 	}
 
@@ -236,10 +192,7 @@ static void initialize(Class *clazz) {
 
 	DataInterface *data = (DataInterface *) clazz->interface;
 
-	data->appendBytes = appendBytes;
-	data->init = init;
 	data->initWithBytes = initWithBytes;
-	data->initWithCapacity = initWithCapacity;
 	data->initWithContentsOfFile = initWithContentsOfFile;
 	data->initWithMemory = initWithMemory;
 	data->writeToFile = writeToFile;

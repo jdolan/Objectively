@@ -58,7 +58,12 @@ static void addObject(MutableArray *self, const id obj) {
 
 		self->capacity += ARRAY_CHUNK_SIZE;
 
-		array->elements = realloc(array->elements, self->capacity * sizeof(id));
+		if (array->elements) {
+			array->elements = realloc(array->elements, self->capacity * sizeof(id));
+		} else {
+			array->elements = malloc(self->capacity * sizeof(id));
+		}
+
 		assert(array->elements);
 	}
 
@@ -83,7 +88,7 @@ static void addObjectsFromArray(MutableArray *self, const Array *array) {
  */
 static MutableArray *init(MutableArray *self) {
 
-	return $(self, initWithCapacity, ARRAY_CHUNK_SIZE);
+	return $(self, initWithCapacity, 0);
 }
 
 /**

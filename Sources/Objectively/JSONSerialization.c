@@ -27,6 +27,7 @@
 
 #include <Objectively/Boolean.h>
 #include <Objectively/JSONSerialization.h>
+#include <Objectively/MutableData.h>
 #include <Objectively/MutableDictionary.h>
 #include <Objectively/MutableArray.h>
 #include <Objectively/Null.h>
@@ -41,7 +42,7 @@
  * @brief A writer for generating JSON Data.
  */
 typedef struct {
-	Data *data;
+	MutableData *data;
 	int options;
 	size_t depth;
 } JSONWriter;
@@ -189,13 +190,13 @@ static void writeElement(JSONWriter *writer, const id obj) {
 static Data *dataFromObject(const id obj, int options) {
 
 	JSONWriter writer = {
-		.data = $(alloc(Data), init),
+		.data = $(alloc(MutableData), init),
 		.options = options
 	};
 
 	writeObject(&writer, obj);
 
-	return writer.data;
+	return (Data *) writer.data;
 }
 
 /**

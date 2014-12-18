@@ -26,6 +26,7 @@
 #include <string.h>
 #include <curl/curl.h>
 
+#include <Objectively/MutableData.h>
 #include <Objectively/URLSessionDataTask.h>
 
 #define _Class _URLSessionDataTask
@@ -57,10 +58,10 @@ static size_t writeFunction(char *data, size_t size, size_t count, id self) {
 	const size_t bytesReceived = size * count;
 
 	if (this->data == NULL) {
-		this->data = $(alloc(Data), initWithBytes, (byte *) data, bytesReceived);
-	} else {
-		$(this->data, appendBytes, (byte *) data, bytesReceived);
+		this->data = (Data *) $(alloc(MutableData), init);
 	}
+
+	$((MutableData *) this->data, appendBytes, (byte *) data, bytesReceived);
 
 	this->urlSessionTask.bytesReceived += bytesReceived;
 	return bytesReceived;

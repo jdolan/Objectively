@@ -45,6 +45,7 @@
 #include <Objectively/Lock.h>
 #include <Objectively/Log.h>
 #include <Objectively/MutableArray.h>
+#include <Objectively/MutableData.h>
 #include <Objectively/MutableDictionary.h>
 #include <Objectively/MutableSet.h>
 #include <Objectively/Null.h>

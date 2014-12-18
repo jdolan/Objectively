@@ -51,16 +51,18 @@ START_TEST(data)
 		data2 = $(alloc(Data), initWithContentsOfFile, path);
 
 		ck_assert($((Object *) data1, isEqual, (Object *) data2) == YES);
+		release(data1);
 		release(data2);
 
 		unlink(path);
 
-		$(data1, appendBytes, (byte *) "123", 3);
+		MutableData *data3 = $(alloc(MutableData), init);
+		$(data3, appendBytes, (byte *) "123", 3);
 
-		ck_assert_int_eq(9, data1->length);
-		ck_assert(strncmp("abcdef123", (char *) data1->bytes, 9) == 0);
+		ck_assert_int_eq(3, data3->data.length);
+		ck_assert(strncmp("123", (char *) data3->data.bytes, 3) == 0);
 
-		release(data1);
+		release(data3);
 
 	}END_TEST
 
