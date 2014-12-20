@@ -116,6 +116,28 @@ struct DictionaryInterface {
 	Array *(*allObjects)(const Dictionary *self);
 
 	/**
+	 * @brief Returns a new Dictionary containing all pairs from `dictionary`.
+	 *
+	 * @param dictionary A Dictionary.
+	 *
+	 * @return The new Dictionary, or `NULL` on error.
+	 *
+	 * @relates Dictionary
+	 */
+	Dictionary *(*dictionaryWithDictionary)(const Dictionary *dictionary);
+
+	/**
+	 * @brief Returns a new Dictionary containing pairs from the given arguments.
+	 *
+	 * @param obj The first in a `NULL`-terminated list of Objects and keys.
+	 *
+	 * @return The new Dictionary, or `NULL` on error.
+	 *
+	 * @relates Dictionary
+	 */
+	Dictionary *(*dictionaryWithObjectsAndKeys)(id obj, ...);
+
+	/**
 	 * @brief Enumerate the pairs of this Dictionary with the given function.
 	 *
 	 * @param enumerator The enumerator function.

@@ -196,6 +196,39 @@ static Array *allObjects(const Dictionary *self) {
 }
 
 /**
+ * @see DictionaryInterface::dictionaryWithDictionary(const Dictionary *)
+ */
+static Dictionary *dictionaryWithDictionary(const Dictionary *dictionary) {
+
+	return $(alloc(Dictionary), initWithDictionary, dictionary);
+}
+
+/**
+ * @see DictionaryInterface::dictionaryWithObjectsAndKeys(id, ...)
+ */
+static Dictionary *dictionaryWithObjectsAndKeys(id obj, ...) {
+
+	Dictionary *dict = (Dictionary *) super(Object, alloc(Dictionary), init);
+	if (dict) {
+
+		va_list args;
+		va_start(args, obj);
+
+		while (obj) {
+			id key = va_arg(args, id);
+
+			$$(MutableDictionary, setObjectForKey, (MutableDictionary *) dict, obj, key);
+
+			obj = va_arg(args, id);
+		}
+
+		va_end(args);
+	}
+
+	return dict;
+}
+
+/**
  * @see DictionaryInterface::enumerateObjectsAndKeys(const Dictionary *, DictionaryEnumerator, id)
  */
 static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator enumerator,
@@ -347,6 +380,8 @@ static void initialize(Class *clazz) {
 
 	dictionary->allKeys = allKeys;
 	dictionary->allObjects = allObjects;
+	dictionary->dictionaryWithDictionary = dictionaryWithDictionary;
+	dictionary->dictionaryWithObjectsAndKeys = dictionaryWithObjectsAndKeys;
 	dictionary->enumerateObjectsAndKeys = enumerateObjectsAndKeys;
 	dictionary->filterObjectsAndKeys = filterObjectsAndKeys;
 	dictionary->initWithDictionary = initWithDictionary;

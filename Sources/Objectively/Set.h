@@ -156,6 +156,15 @@ struct SetInterface {
 	Set *(*initWithArray)(Set *self, const Array *array);
 
 	/**
+	 * @brief Initializes this Set with the specified objects.
+	 *
+	 * @return The initialized Set, or `NULL` on error.
+	 *
+	 * @relates Set
+	 */
+	Set *(*initWithObjects)(Set *self, ...);
+
+	/**
 	 * @brief Initializes this Set to contain the Objects in `set`.
 	 *
 	 * @param set A Set.
@@ -167,13 +176,37 @@ struct SetInterface {
 	Set *(*initWithSet)(Set *self, const Set *set);
 
 	/**
-	 * @brief Initializes this Set with the specified objects.
+	 * @brief Returns a new Set with the contents of `array`.
 	 *
-	 * @return The initialized Set, or `NULL` on error.
+	 * @param array An Array.
+	 *
+	 * @return The new Set, or `NULL` on error.
 	 *
 	 * @relates Set
 	 */
-	Set *(*initWithObjects)(Set *self, ...);
+	Set *(*setWithArray)(const Array *array);
+
+	/**
+	 * @brief Returns a new Set containing the specified Objects.
+	 *
+	 * @param obj A `NULL`-terminated list of Objects.
+	 *
+	 * @return The new Set, or `NULL` on error.
+	 *
+	 * @relates Set
+	 */
+	Set *(*setWithObjects)(id obj, ...);
+
+	/**
+	 * @brief Returns a new Set with the contents of `set`.
+	 *
+	 * @param set A set.
+	 *
+	 * @return The new Set, or `NULL` on error.
+	 *
+	 * @relates Set
+	 */
+	Set *(*setWithSet)(const Set *set);
 };
 
 /**

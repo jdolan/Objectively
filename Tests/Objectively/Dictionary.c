@@ -1,5 +1,5 @@
 /*
- * Objectively: Ultra-lightweight object oriented framework for c99.
+ * Objectively: Ultra-lightweight obj oriented framework for c99.
  * Copyright (C) 2014 Jay Dolan <jay@jaydolan.com>
  *
  * This software is provided 'as-is', without any express or implied
@@ -24,26 +24,21 @@
 #include <check.h>
 #include <stdio.h>
 
-#include <Objectively/MutableDictionary.h>
+#include <Objectively/Dictionary.h>
 #include <Objectively/String.h>
 
 static BOOL enumerator(const Dictionary *dictionary, id obj, id key, id data) {
 
-	(* (int *) data)++;
+	(* (int *) data)++; return NO;
+}
 
-	return NO;
+static BOOL filter(const Dictionary *dictionary, id obj, id key, id data) {
+
+	return strcmp("two", ((String *) key)->chars) == 0;
 }
 
 START_TEST(dictionary)
 	{
-		MutableDictionary *dict = $(alloc(MutableDictionary), initWithCapacity, 4);
-
-		ck_assert(dict);
-		ck_assert_ptr_eq(&_MutableDictionary, classof(dict));
-
-		ck_assert_int_eq(0, ((Dictionary *) dict)->count);
-		ck_assert_int_eq(4, ((Dictionary *) dict)->capacity);
-
 		Object *objectOne = alloc(Object);
 		Object *objectTwo = alloc(Object);
 		Object *objectThree = alloc(Object);
@@ -52,35 +47,21 @@ START_TEST(dictionary)
 		String *keyTwo = $(alloc(String), initWithFormat, "two");
 		String *keyThree = $(alloc(String), initWithFormat, "three");
 
-		$(dict, setObjectForKey, objectOne, keyOne);
-		$(dict, setObjectForKey, objectTwo, keyTwo);
-		$(dict, setObjectForKey, objectThree, keyThree);
+		Dictionary *dict = $$(Dictionary, dictionaryWithObjectsAndKeys,
+				objectOne, keyOne, objectTwo, keyTwo, objectThree, keyThree, NULL);
 
-		ck_assert_int_eq(3, ((Dictionary *) dict)->count);
+		ck_assert(dict);
+		ck_assert_ptr_eq(&_Dictionary, classof(dict));
 
-		ck_assert_ptr_eq(objectOne, $((Dictionary *) dict, objectForKey, keyOne));
-		ck_assert_ptr_eq(objectTwo, $((Dictionary *) dict, objectForKey, keyTwo));
-		ck_assert_ptr_eq(objectThree, $((Dictionary *) dict, objectForKey, keyThree));
+		ck_assert_int_eq(3, dict->count);
+
+		ck_assert_ptr_eq(objectOne, $(dict, objectForKey, keyOne));
+		ck_assert_ptr_eq(objectTwo, $(dict, objectForKey, keyTwo));
+		ck_assert_ptr_eq(objectThree, $(dict, objectForKey, keyThree));
 
 		ck_assert_int_eq(2, objectOne->referenceCount);
 		ck_assert_int_eq(2, objectTwo->referenceCount);
 		ck_assert_int_eq(2, objectThree->referenceCount);
-
-		$(dict, removeObjectForKey, keyOne);
-
-		ck_assert_ptr_eq(NULL, $((Dictionary *) dict, objectForKey, keyOne));
-		ck_assert_int_eq(1, objectOne->referenceCount);
-		ck_assert_int_eq(2, ((Dictionary *) dict)->count);
-
-		$(dict, removeAllObjects);
-
-		ck_assert_int_eq(0, ((Dictionary *) dict)->count);
-
-		ck_assert_ptr_eq(NULL, $((Dictionary *) dict, objectForKey, keyTwo));
-		ck_assert_int_eq(1, objectTwo->referenceCount);
-
-		ck_assert_ptr_eq(NULL, $((Dictionary *) dict, objectForKey, keyThree));
-		ck_assert_int_eq(1, objectThree->referenceCount);
 
 		release(objectOne);
 		release(objectTwo);
@@ -90,28 +71,19 @@ START_TEST(dictionary)
 		release(keyTwo);
 		release(keyThree);
 
-		for (int i = 0; i < 1024; i++) {
-
-			Object *object = $(alloc(Object), init);
-			String *key = $(alloc(String), initWithFormat, "%d", i);
-
-			$(dict, setObjectForKey, object, key);
-
-			release(object);
-			release(key);
-		}
-
 		int counter = 0;
 
-		$((Dictionary *) dict, enumerateObjectsAndKeys, enumerator, &counter);
+		$(dict, enumerateObjectsAndKeys, enumerator, &counter);
 
-		ck_assert_int_eq(1024, counter);
+		ck_assert_int_eq(dict->count, counter);
 
-		$(dict, removeAllObjects);
+		Dictionary *filtered = $(dict, filterObjectsAndKeys, filter, NULL);
 
-		ck_assert_int_eq(((Dictionary *) dict)->count, 0);
+		ck_assert_int_eq(1, filtered->count);
+		ck_assert($(filtered, objectForKey, keyTwo) == objectTwo);
 
 		release(dict);
+		release(filtered);
 
 	}END_TEST
 

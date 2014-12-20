@@ -54,13 +54,50 @@ static Object *copy(const Object *self) {
 #pragma mark - MutableSetInterface
 
 /**
+ * @brief A helper for resizing Sets as Objects are added to them.
+ *
+ * @remark Static method invocations are used for all operations.
+ */
+static void addObject_resize(Set *set) {
+
+	if (set->capacity) {
+
+		const float load = set->count / set->capacity;
+		if (load >= MUTABLESET_MAX_LOAD) {
+
+			size_t capacity = set->capacity;
+			id *elements = set->elements;
+
+			set->capacity = set->capacity * MUTABLESET_GROW_FACTOR;
+			set->count = 0;
+
+			set->elements = calloc(set->capacity, sizeof(Array *));
+			assert(set->elements);
+
+			for (size_t i = 0; i < capacity; i++) {
+
+				Array *array = elements[i];
+				if (array) {
+					$$(MutableSet, addObjectsFromArray, (MutableSet *) set, array);
+					release(array);
+				}
+			}
+
+			free(elements);
+		}
+	} else {
+		$$(MutableSet, initWithCapacity, (MutableSet *) set, MUTABLESET_DEFAULT_CAPACITY);
+	}
+}
+
+/**
  * @see MutableSetInterface::addObject(MutableSet *, const id)
  */
 static void addObject(MutableSet *self, const id obj) {
 
-	$(self, resize);
-
 	Set *set = (Set *) self;
+
+	addObject_resize(set);
 
 	const size_t bin = HashForObject(HASH_SEED, obj) % set->capacity;
 
@@ -175,38 +212,19 @@ static void removeObject(MutableSet *self, const id obj) {
 }
 
 /**
- * @see MutableSetInterface::resize(MutableSet *)
+ * @see MutableSetInterface::set(void)
  */
-static void resize(MutableSet *self) {
+static MutableSet *set(void) {
 
-	if (self->set.capacity) {
+	return $(alloc(MutableSet), init);
+}
 
-		const float load = self->set.count / self->set.capacity;
-		if (load >= MUTABLESET_MAX_LOAD) {
+/**
+ * @see MutableSetInterface::initWithCapacity(size_t)
+ */
+static MutableSet *setWithCapacity(size_t capacity) {
 
-			size_t capacity = self->set.capacity;
-			id *elements = self->set.elements;
-
-			self->set.capacity = self->set.capacity * MUTABLESET_GROW_FACTOR;
-			self->set.count = 0;
-
-			self->set.elements = calloc(self->set.capacity, sizeof(Array *));
-			assert(self->set.elements);
-
-			for (size_t i = 0; i < capacity; i++) {
-
-				Array *array = elements[i];
-				if (array) {
-					$(self, addObjectsFromArray, array);
-					release(array);
-				}
-			}
-
-			free(elements);
-		}
-	} else {
-		$(self, initWithCapacity, MUTABLESET_DEFAULT_CAPACITY);
-	}
+	return $(alloc(MutableSet), initWithCapacity, capacity);
 }
 
 #pragma mark - Class lifecycle
@@ -229,7 +247,8 @@ static void initialize(Class *clazz) {
 	mutableSet->initWithCapacity = initWithCapacity;
 	mutableSet->removeAllObjects = removeAllObjects;
 	mutableSet->removeObject = removeObject;
-	mutableSet->resize = resize;
+	mutableSet->set = set;
+	mutableSet->setWithCapacity = setWithCapacity;
 }
 
 Class _MutableSet = {

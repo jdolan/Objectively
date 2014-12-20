@@ -136,6 +136,57 @@ static BOOL isEqual(const Object *self, const Object *other) {
 
 #pragma mark - ArrayInterface
 
+
+/**
+ * @see ArrayInterface::arrayWithArray(const Array *)
+ */
+static Array *arrayWithArray(const Array *array) {
+
+	return $(alloc(Array), initWithArray, array);
+}
+
+/**
+ * @see ArrayInterface::arrayWithObjects(id, ...)
+ */
+static Array *arrayWithObjects(id obj, ...) {
+
+	Array *array = (Array *) super(Object, alloc(Array), init);
+	if (array) {
+
+		va_list args;
+		va_start(args, obj);
+
+		id object = obj;
+
+		while (object) {
+			array->count++;
+			object = va_arg(args, id);
+		}
+
+		va_end(args);
+
+		if (array->count) {
+
+			array->elements = calloc(array->count, sizeof(id));
+			assert(array->elements);
+
+			va_start(args, obj);
+
+			object = obj;
+			id *elt = array->elements;
+
+			while (object) {
+				retain(*elt++ = object);
+				object = va_arg(args, id);
+			}
+
+			va_end(args);
+		}
+	}
+
+	return array;
+}
+
 /**
  * @see ArrayInterface::containsObject(const Array *, const id)
  */
@@ -228,13 +279,8 @@ static Array *initWithObjects(Array *self, ...) {
 		va_list args;
 		va_start(args, self);
 
-		while (YES) {
-			id obj = va_arg(args, id);
-			if (obj) {
-				self->count++;
-			} else {
-				break;
-			}
+		while (va_arg(args, id)) {
+			self->count++;
 		}
 
 		va_end(args);
@@ -285,6 +331,8 @@ static void initialize(Class *clazz) {
 
 	ArrayInterface *array = (ArrayInterface *) clazz->interface;
 
+	array->arrayWithArray = arrayWithArray;
+	array->arrayWithObjects = arrayWithObjects;
 	array->containsObject = containsObject;
 	array->enumerateObjects = enumerateObjects;
 	array->filterObjects = filterObjects;

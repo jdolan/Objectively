@@ -72,6 +72,8 @@ struct MutableSetInterface {
 	/**
 	 * @brief Adds the specified Object to this Set.
 	 *
+	 * @param obj An Object.
+	 *
 	 * @relates MutableSet
 	 */
 	void (*addObject)(MutableSet *self, const id obj);
@@ -80,6 +82,8 @@ struct MutableSetInterface {
 	 * @brief Adds the Objects contained in `array` to this Set.
 	 *
 	 * @param array An Array.
+	 *
+	 * @relates MutableSet
 	 */
 	void (*addObjectsFromArray)(MutableSet *self, const Array *array);
 
@@ -87,6 +91,8 @@ struct MutableSetInterface {
 	 * @brief Adds the Objects contained in `set` to this Set.
 	 *
 	 * @param set An Set.
+	 *
+	 * @relates MutableSet
 	 */
 	void (*addObjectsFromSet)(MutableSet *self, const Set *set);
 
@@ -120,18 +126,31 @@ struct MutableSetInterface {
 	/**
 	 * @brief Removes the specified Object from this Set.
 	 *
+	 * @param obj An Object to remove.
+	 *
 	 * @relates MutableSet
 	 */
 	void (*removeObject)(MutableSet *self, const id obj);
 
 	/**
-	 * @brief Resizes this Set, if necessary, based on its load factor.
+	 * @brief Returns a new MutableSet.
 	 *
-	 * @private
+	 * @return The new MutableSet, or `NULL` on error.
 	 *
 	 * @relates MutableSet
 	 */
-	void (*resize)(MutableSet *self);
+	MutableSet *(*set)(void);
+
+	/**
+	 * @brief Returns a new MutableSet with the given `capacity`.
+	 *
+	 * @param capacity The desired initial capacity.
+	 *
+	 * @return The new MutableSet, or `NULL` on error.
+	 *
+	 * @relates MutableSet
+	 */
+	MutableSet *(*setWithCapacity)(size_t capacity);
 };
 
 /**

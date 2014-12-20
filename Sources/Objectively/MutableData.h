@@ -98,6 +98,26 @@ struct MutableDataInterface {
 	void (*appendData)(MutableData *self, const Data *data);
 
 	/**
+	 * @brief Returns a new MutableData.
+	 *
+	 * @return The new MutableData, or `NULL` on error.
+	 *
+	 * @relates MutableData
+	 */
+	MutableData *(*data)(void);
+
+	/**
+	 * @brief Returns a new MutableData with the given `capacity`.
+	 *
+	 * @param capacity The desired capacity in bytes.
+	 *
+	 * @return The new MutableData, or `NULL` on error.
+	 *
+	 * @relates
+	 */
+	MutableData *(*dataWithCapacity)(size_t capacity);
+
+	/**
 	 * @brief Initializes this Data with length `0`.
 	 *
 	 * @return The initialized Data, or `NULL` on error.

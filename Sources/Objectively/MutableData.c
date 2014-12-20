@@ -59,6 +59,30 @@ static void appendBytes(MutableData *self, const byte *bytes, size_t length) {
 }
 
 /**
+ * @see MutableDataInterface::appendData(MutableData *, const Data *)
+ */
+static void appendData(MutableData *self, const Data *data) {
+
+	$(self, appendBytes, data->bytes, data->length);
+}
+
+/**
+ * @see MutableDataInterface::data(void)
+ */
+static MutableData *data(void) {
+
+	return $(alloc(MutableData), init);
+}
+
+/**
+ * @see MutableDataInterface::dataWithCapacity(size_t)
+ */
+static MutableData *dataWithCapacity(size_t capacity) {
+
+	return $(alloc(MutableData), initWithCapacity, capacity);
+}
+
+/**
  * @see MutableDataInterface::init(MutableData *)
  */
 static MutableData *init(MutableData *self) {
@@ -125,6 +149,9 @@ static void initialize(Class *clazz) {
 	MutableDataInterface *mutableData = (MutableDataInterface *) clazz->interface;
 
 	mutableData->appendBytes = appendBytes;
+	mutableData->appendData = appendData;
+	mutableData->data = data;
+	mutableData->dataWithCapacity = dataWithCapacity;
 	mutableData->init = init;
 	mutableData->initWithCapacity = initWithCapacity;
 	mutableData->setLength = setLength;

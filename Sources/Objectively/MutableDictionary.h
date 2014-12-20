@@ -70,64 +70,75 @@ struct MutableDictionaryInterface {
 	DictionaryInterface dictionaryInterface;
 
 	/**
-	 * @brief Adds the key-value entries from `dictionary` to this Dictionary.
+	 * @brief Adds the key-value entries from `dictionary` to this MutableDictionary.
 	 *
 	 * @param dictionary A Dictionary.
 	 */
 	void (*addEntriesFromDictionary)(MutableDictionary *self, const Dictionary *dictionary);
 
 	/**
-	 * @brief Initializes this Dictionary.
+	 * @brief Returns a new MutableDictionary.
 	 *
-	 * @return The initialized Dictionary, or `NULL` on error.
+	 * @return The new MutableDictionary, or `NULL` on error.
+	 *
+	 * @relates MutableDictionary
+	 */
+	MutableDictionary *(*dictionary)(void);
+
+	/**
+	 * @brief Returns a new MutableDictionary with the given `capacity`.
+	 *
+	 * @param capacity The desired initial capacity.
+	 *
+	 * @return The new MutableDictionary, or `NULL` on error.
+	 *
+	 * @relates MutableDictionary
+	 */
+	MutableDictionary *(*dictionaryWithCapacity)(size_t capacity);
+
+	/**
+	 * @brief Initializes this MutableDictionary.
+	 *
+	 * @return The initialized MutableDictionary, or `NULL` on error.
 	 *
 	 * @relates MutableDictionary
 	 */
 	MutableDictionary *(*init)(MutableDictionary *self);
 
 	/**
-	 * @brief Initializes this Dictionary with the specified capacity.
+	 * @brief Initializes this MutableDictionary with the specified capacity.
 	 *
 	 * @param capacity The initial capacity.
 	 *
-	 * @return The initialized Dictionary, or `NULL` on error.
+	 * @return The initialized MutableDictionary, or `NULL` on error.
 	 *
 	 * @relates MutableDictionary
 	 */
 	MutableDictionary *(*initWithCapacity)(MutableDictionary *self, size_t capacity);
 
 	/**
-	 * @brief Removes all Objects from this Dictionary.
+	 * @brief Removes all Objects from this MutableDictionary.
 	 *
 	 * @relates MutableDictionary
 	 */
 	void (*removeAllObjects)(MutableDictionary *self);
 
 	/**
-	 * @brief Removes the specified Object from this Dictionary.
+	 * @brief Removes the specified Object from this MutableDictionary.
 	 *
 	 * @relates MutableDictionary
 	 */
 	void (*removeObjectForKey)(MutableDictionary *self, const id key);
 
 	/**
-	 * @brief Resizes this Dictionary, if necessary, based on its load factor.
-	 *
-	 * @private
-	 *
-	 * @relates MutableDictionary
-	 */
-	void (*resize)(MutableDictionary *self);
-
-	/**
-	 * @brief Sets a pair in this Dictionary.
+	 * @brief Sets a pair in this MutableDictionary.
 	 *
 	 * @relates MutableDictionary
 	 */
 	void (*setObjectForKey)(MutableDictionary *self, const id obj, const id key);
 
 	/**
-	 * @brief Sets pairs in this Dictionary from the NULL-terminated list.
+	 * @brief Sets pairs in this MutableDictionary from the NULL-terminated list.
 	 *
 	 * @relates MutableDictionary
 	 */

@@ -9,6 +9,11 @@ Dictionary
 JSON
 Lock
 Log
+MutableArray
+MutableData
+MutableDictionary
+MutableSet
+MutableString
 Null
 Number
 Object

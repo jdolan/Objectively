@@ -83,6 +83,23 @@ static void addObjectsFromArray(MutableArray *self, const Array *array) {
 		}
 	}
 }
+
+/**
+ * @see MutableArrayInterface::array(void)
+ */
+static MutableArray *array(void) {
+
+	return $(alloc(MutableArray), init);
+}
+
+/**
+ * @see MutableArrayInterface::arrayWithCapacity(size_t)
+ */
+static MutableArray *arrayWithCapacity(size_t capacity) {
+
+	return $(alloc(MutableArray), initWithCapacity, capacity);
+}
+
 /**
  * @see MutableArrayInterface::init(MutableArray *)
  */
@@ -178,6 +195,8 @@ static void initialize(Class *clazz) {
 
 	mutableArray->addObject = addObject;
 	mutableArray->addObjectsFromArray = addObjectsFromArray;
+	mutableArray->array = array;
+	mutableArray->arrayWithCapacity = arrayWithCapacity;
 	mutableArray->init = init;
 	mutableArray->initWithCapacity = initWithCapacity;
 	mutableArray->removeAllObjects = removeAllObjects;

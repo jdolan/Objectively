@@ -99,8 +99,8 @@ static void appendString(MutableString *self, const String *string) {
 
 	if (string->length) {
 
-		const size_t newLength = self->string.length + string->length + 1;
-		const size_t newCapacity = (newLength / pageSize + 1) * pageSize;
+		const size_t newSize = self->string.length + string->length + 1;
+		const size_t newCapacity = (newSize / pageSize + 1) * pageSize;
 
 		if (newCapacity > self->capacity) {
 
@@ -115,7 +115,7 @@ static void appendString(MutableString *self, const String *string) {
 		}
 
 		memcpy(self->string.chars + self->string.length, string->chars, string->length);
-		self->string.chars[newLength - 1] = '\0';
+		self->string.chars[newSize - 1] = '\0';
 
 		self->string.length += string->length;
 	}

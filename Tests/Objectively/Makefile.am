@@ -10,6 +10,10 @@ TESTS = \
 	Data \
 	JSON \
 	Log \
+	MutableArray \
+	MutableData \
+	MutableDictionary \
+	MutableSet \
 	Null \
 	Number \
 	Object \

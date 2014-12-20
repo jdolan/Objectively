@@ -22,49 +22,48 @@
  */
 
 #include <unistd.h>
+#include <stdlib.h>
 
 #include <check.h>
 
 #include <Objectively.h>
 
-START_TEST(data)
+START_TEST(mutableData)
 	{
-		Data *data1 = $(alloc(Data), initWithBytes, (byte *) "abcdef", 6);
-		Data *data2 = $(alloc(Data), initWithBytes, (byte *) "ghijkl", 6);
+		MutableData *data = $(alloc(MutableData), init);
+		$(data, appendBytes, (byte *) "123", 3);
 
-		ck_assert(data1);
-		ck_assert(data2);
+		ck_assert_int_eq(3, data->data.length);
+		ck_assert(strncmp("123", (char *) data->data.bytes, 3) == 0);
 
-		ck_assert_int_eq(6, data1->length);
+		$(data, setLength, 128);
+		ck_assert_int_eq(128, data->data.length);
+		ck_assert_int_eq(0, data->data.bytes[data->data.length - 1]);
 
-		ck_assert($((Object *) data1, isEqual, (Object *) data2) == NO);
-		release(data2);
+		id mem = malloc(8192 * sizeof(byte));
+		ck_assert(mem);
 
-		data2 = (Data *) $((Object * ) data1, copy);
-		ck_assert(data2);
+		memset(mem, 1, 8192 * sizeof(byte));
 
-		ck_assert($((Object *) data1, isEqual, (Object *) data2) == YES);
-		release(data2);
+		Data *append = $(alloc(Data), initWithMemory, mem, 8192);
+		ck_assert(append);
 
-		const char *path = "/tmp/Objectively_Data.test";
-		ck_assert($(data1, writeToFile, path) == YES);
+		$(data, appendData, append);
+		release(append);
 
-		data2 = $(alloc(Data), initWithContentsOfFile, path);
+		ck_assert_int_eq(8192 + 128, data->data.length);
+		ck_assert_int_eq(1, data->data.bytes[data->data.length - 1]);
 
-		unlink(path);
+		release(data);
 
-		ck_assert($((Object *) data1, isEqual, (Object *) data2) == YES);
-
-		release(data1);
-		release(data2);
 	}END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("data");
-	tcase_add_test(tcase, data);
+	TCase *tcase = tcase_create("mutableData");
+	tcase_add_test(tcase, mutableData);
 
-	Suite *suite = suite_create("data");
+	Suite *suite = suite_create("mutableData");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);

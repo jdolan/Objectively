@@ -27,61 +27,88 @@
 #include <Objectively.h>
 
 BOOL enumerator(const Set *set, id obj, id data) {
-
 	(*(int *) data)++; return NO;
 }
 
-BOOL filter(const Set *set, id obj, id data) {
-
-	return obj == data;
-}
-
-START_TEST(set)
+START_TEST(mutableSet)
 	{
+		MutableSet *set = $$(MutableSet, setWithCapacity, 5);
+
+		ck_assert(set);
+		ck_assert_ptr_eq(&_MutableSet, classof(set));
+
+		ck_assert_int_eq(0, ((Set *) set)->count);
+
 		Object *one = $(alloc(Object), init);
 		Object *two = $(alloc(Object), init);
 		Object *three = $(alloc(Object), init);
 
-		Set *set = $$(Set, setWithObjects, one, two, three, three, NULL);
+		$(set, addObject, one);
+		$(set, addObject, two);
+		$(set, addObject, three);
 
-		ck_assert(set);
-		ck_assert_ptr_eq(&_Set, classof(set));
+		ck_assert_int_eq(3, ((Set *) set)->count);
 
-		ck_assert_int_eq(3, set->count);
-
-		ck_assert($(set, containsObject, one));
-		ck_assert($(set, containsObject, two));
-		ck_assert($(set, containsObject, three));
+		ck_assert($((Set *) set, containsObject, one));
+		ck_assert($((Set *) set, containsObject, two));
+		ck_assert($((Set *) set, containsObject, three));
 
 		ck_assert_int_eq(2, one->referenceCount);
 		ck_assert_int_eq(2, two->referenceCount);
 		ck_assert_int_eq(2, three->referenceCount);
 
+		$(set, removeObject, one);
+
+		ck_assert(!$((Set *) set, containsObject, one));
+		ck_assert_int_eq(1, one->referenceCount);
+		ck_assert_int_eq(2, ((Set *) set)->count);
+
+		$(set, removeAllObjects);
+
+		ck_assert_int_eq(0, ((Set *) set)->count);
+
+		ck_assert(!$((Set *) set, containsObject, two));
+		ck_assert_int_eq(1, two->referenceCount);
+
+		ck_assert(!$((Set *) set, containsObject, three));
+		ck_assert_int_eq(1, three->referenceCount);
+
 		release(one);
 		release(two);
 		release(three);
 
+		for (int i = 0; i < 1024; i++) {
+
+			id obj = alloc(Object);
+			ck_assert(obj);
+
+			$(set, addObject, obj);
+
+			release(obj);
+		}
+
+		ck_assert_int_eq(1024, ((Set *) set)->count);
+
 		int count = 0;
-		$(set, enumerateObjects, enumerator, &count);
 
-		ck_assert_int_eq(set->count, count);
+		$((Set *) set, enumerateObjects, enumerator, &count);
 
-		Set *filtered = $(set, filterObjects, filter, two);
+		ck_assert_int_eq(((Set *) set)->count, count);
 
-		ck_assert_int_eq(1, filtered->count);
-		ck_assert($(filtered, containsObject, two));
+		$(set, removeAllObjects);
 
-		release(filtered);
+		ck_assert_int_eq(((Set *) set)->count, 0);
+
 		release(set);
 
 	}END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("set");
-	tcase_add_test(tcase, set);
+	TCase *tcase = tcase_create("mutableSet");
+	tcase_add_test(tcase, mutableSet);
 
-	Suite *suite = suite_create("set");
+	Suite *suite = suite_create("mutableSet");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);

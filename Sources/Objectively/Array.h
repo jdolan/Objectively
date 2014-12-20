@@ -99,6 +99,28 @@ struct ArrayInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @brief Returns a new Array containing the contents of `array`.
+	 *
+	 * @param array An Array.
+	 *
+	 * @return The new Array, or `NULL` on error.
+	 *
+	 * @relates Array
+	 */
+	Array *(*arrayWithArray)(const Array *array);
+
+	/**
+	 * @brief Returns a new Array containing the given Objects.
+	 *
+	 * @param obj The first in a `NULL`-terminated sequence of Objects.
+	 *
+	 * @return The new Array, or `NULL` on error.
+	 *
+	 * @relates Array
+	 */
+	Array *(*arrayWithObjects)(id obj, ...);
+
+	/**
 	 * @return `YES` if this Array contains the given Object, `NO` otherwise.
 	 *
 	 * @relates Array

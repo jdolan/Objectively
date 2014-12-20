@@ -77,14 +77,34 @@ struct MutableArrayInterface {
 	ArrayInterface arrayInterface;
 
 	/**
-	 * @brief Adds the specified Object to this Array.
+	 * @brief Returns a new MutableArray.
+	 *
+	 * @return The new MutableArray, or `NULL` on error.
+	 *
+	 * @relates MutableArray
+	 */
+	MutableArray *(*array)(void);
+
+	/**
+	 * @brief Returns a new MutableArray with the given `capacity`.
+	 *
+	 * @param capacity The desired initial capacity.
+	 *
+	 * @return The new MutableArray, or `NULL` on error.
+	 *
+	 * @relates MutableArray
+	 */
+	MutableArray *(*arrayWithCapacity)(size_t capacity);
+
+	/**
+	 * @brief Adds the specified Object to this MutableArray.
 	 *
 	 * @relates MutableArray
 	 */
 	void (*addObject)(MutableArray *self, const id obj);
 
 	/**
-	 * @brief Adds the Objects contained in `array` to this Array.
+	 * @brief Adds the Objects contained in `array` to this MutableArray.
 	 *
 	 * @param array An Array.
 	 */
@@ -100,7 +120,7 @@ struct MutableArrayInterface {
 	MutableArray *(*init)(MutableArray *self);
 
 	/**
-	 * @brief Initializes this Array with the specified capacity.
+	 * @brief Initializes this MutableArray with the specified capacity.
 	 *
 	 * @param capacity The desired initial capacity.
 	 *
@@ -111,14 +131,14 @@ struct MutableArrayInterface {
 	MutableArray *(*initWithCapacity)(MutableArray *self, size_t capacity);
 
 	/**
-	 * @brief Removes all Objects from this Array.
+	 * @brief Removes all Objects from this MutableArray.
 	 *
 	 * @relates MutableArray
 	 */
 	void (*removeAllObjects)(MutableArray *self);
 
 	/**
-	 * @brief Removes the specified Object from this Array.
+	 * @brief Removes the specified Object from this MutableArray.
 	 *
 	 * @relates MutableArray
 	 */
@@ -139,7 +159,7 @@ struct MutableArrayInterface {
 	 * @param obj The Object with which to replace.
 	 * @param index The index of the Object to replace.
 	 *
-	 * @remark The index must not exceed the size of the Array.
+	 * @remark The index must not exceed the size of the MutableArray.
 	 *
 	 * @relates MutableArray
 	 */

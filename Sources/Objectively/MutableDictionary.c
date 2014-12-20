@@ -70,6 +70,22 @@ static void addEntriesFromDictionary(MutableDictionary *self, const Dictionary *
 }
 
 /**
+ * @see MutableDictionaryInterface::dictionary(void)
+ */
+static MutableDictionary *dictionary(void) {
+
+	return $(alloc(MutableDictionary), init);
+}
+
+/**
+ * @see MutableDictionaryInterface::dictionaryWithCapacity(size_t)
+ */
+static MutableDictionary *dictionaryWithCapacity(size_t capacity) {
+
+	return $(alloc(MutableDictionary), initWithCapacity, capacity);
+}
+
+/**
  * @see MutableDictionaryInterface::init(MutableDictionary *)
  */
 static MutableDictionary *init(MutableDictionary *self) {
@@ -140,23 +156,25 @@ static void removeObjectForKey(MutableDictionary *self, const id key) {
 }
 
 /**
- * @see MutableDictionaryInterface::resize(MutableDictionary *)
+ * @brief A helper for resizing Dictionaries as pairs are added to them.
+ *
+ * @remark Static method invocations are used for all operations.
  */
-static void resize(MutableDictionary *self) {
+static void setObjectForKey_resize(Dictionary *dict) {
 
-	if (self->dictionary.capacity) {
+	if (dict->capacity) {
 
-		const float load = self->dictionary.count / self->dictionary.capacity;
+		const float load = dict->count / dict->capacity;
 		if (load >= MUTABLEDICTIONARY_MAX_LOAD) {
 
-			size_t capacity = self->dictionary.capacity;
-			id *elements = self->dictionary.elements;
+			size_t capacity = dict->capacity;
+			id *elements = dict->elements;
 
-			self->dictionary.capacity = self->dictionary.capacity * MUTABLEDICTIONARY_GROW_FACTOR;
-			self->dictionary.count = 0;
+			dict->capacity = dict->capacity * MUTABLEDICTIONARY_GROW_FACTOR;
+			dict->count = 0;
 
-			self->dictionary.elements = calloc(self->dictionary.capacity, sizeof(Array *));
-			assert(self->dictionary.elements);
+			dict->elements = calloc(dict->capacity, sizeof(Array *));
+			assert(dict->elements);
 
 			for (size_t i = 0; i < capacity; i++) {
 
@@ -168,7 +186,7 @@ static void resize(MutableDictionary *self) {
 						id key = $(array, objectAtIndex, j);
 						id obj = $(array, objectAtIndex, j + 1);
 
-						$(self, setObjectForKey, obj, key);
+						$$(MutableDictionary, setObjectForKey, (MutableDictionary *) dict, obj, key);
 					}
 
 					release(array);
@@ -178,7 +196,7 @@ static void resize(MutableDictionary *self) {
 			free(elements);
 		}
 	} else {
-		$(self, initWithCapacity, MUTABLEDICTIONARY_DEFAULT_CAPACITY);
+		$$(MutableDictionary, initWithCapacity, (MutableDictionary *) dict, MUTABLEDICTIONARY_DEFAULT_CAPACITY);
 	}
 }
 
@@ -187,9 +205,9 @@ static void resize(MutableDictionary *self) {
  */
 static void setObjectForKey(MutableDictionary *self, const id obj, const id key) {
 
-	$(self, resize);
-
 	Dictionary *dict = (Dictionary *) self;
+
+	setObjectForKey_resize(dict);
 
 	const size_t bin = HashForObject(HASH_SEED, key) % dict->capacity;
 
@@ -246,11 +264,12 @@ static void initialize(Class *clazz) {
 	MutableDictionaryInterface *mutableDictionary = (MutableDictionaryInterface *) clazz->interface;
 
 	mutableDictionary->addEntriesFromDictionary = addEntriesFromDictionary;
+	mutableDictionary->dictionary = dictionary;
+	mutableDictionary->dictionaryWithCapacity = dictionaryWithCapacity;
 	mutableDictionary->init = init;
 	mutableDictionary->initWithCapacity = initWithCapacity;
 	mutableDictionary->removeAllObjects = removeAllObjects;
 	mutableDictionary->removeObjectForKey = removeObjectForKey;
-	mutableDictionary->resize = resize;
 	mutableDictionary->setObjectForKey = setObjectForKey;
 	mutableDictionary->setObjectsForKeys = setObjectsForKeys;
 }

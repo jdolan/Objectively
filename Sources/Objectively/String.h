@@ -33,13 +33,13 @@
 /**
  * @file
  *
- * @brief Mutable strings.
+ * @brief Immutable UTF-8 strings.
  */
 
 typedef struct StringInterface StringInterface;
 
 /**
- * @brief Mutable strings.
+ * @brief Immutable UTF-8 strings.
  *
  * @extends Object
  */

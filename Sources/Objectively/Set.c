@@ -286,6 +286,44 @@ static Set *initWithObjects(Set *self, ...) {
 	return self;
 }
 
+/**
+ * @see SetInterface::setWithArray(const Array *)
+ */
+static Set *setWithArray(const Array *array) {
+
+	return $(alloc(Set), initWithArray, array);
+}
+
+/**
+ * @see SetInterface::setWithObjects(id, ...)
+ */
+static Set *setWithObjects(id obj, ...) {
+
+	Set *set = (Set *) super(Object, alloc(Set), init);
+	if (set) {
+
+		va_list args;
+		va_start(args, obj);
+
+		while (obj) {
+			$$(MutableSet, addObject, (MutableSet * ) set, obj);
+			obj = va_arg(args, id);
+		}
+
+		va_end(args);
+	}
+
+	return set;
+}
+
+/**
+ * @see SetInterface::setWithSet(const Set *)
+ */
+static Set *setWithSet(const Set *set) {
+
+	return $(alloc(Set), initWithSet, set);
+}
+
 #pragma mark - Class lifecycle
 
 /**
@@ -310,6 +348,9 @@ static void initialize(Class *clazz) {
 	set->initWithArray = initWithArray;
 	set->initWithSet = initWithSet;
 	set->initWithObjects = initWithObjects;
+	set->setWithArray = setWithArray;
+	set->setWithObjects = setWithObjects;
+	set->setWithSet = setWithSet;
 }
 
 Class _Set = {
