@@ -113,7 +113,7 @@ struct MutableDataInterface {
 	 *
 	 * @return The new MutableData, or `NULL` on error.
 	 *
-	 * @relates
+	 * @relates MutableData
 	 */
 	MutableData *(*dataWithCapacity)(size_t capacity);
 

@@ -1,10 +1,10 @@
 Objectively Documentation {#index}
 ===
-Objectively provides object oriented programming constructs for GNU C, and implements a small but useful core library resembling Apple's [Foundation framework](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/ObjC_classic/index.html). It's primary goals are as follows:
+Objectively provides object oriented programming constructs for [GNU C](http://www.gnu.org/software/gnu-c-manual/), and implements a small but useful core library resembling Apple's [Foundation framework](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/ObjC_classic/index.html). It's primary goals are as follows:
 
- * Bring rich object oriented semantics to GNU C
+ * Bring rich object oriented programming semantics to GNU C / C99
  * Provide convenient solutions to challenges commonly faced in modern application development
- * Target popular modern compilers (GCC and Clang)
+ * Embrace popular modern compilers (GCC and Clang), utilizing extensions thoughtfully
 
 Key Features
 ---
