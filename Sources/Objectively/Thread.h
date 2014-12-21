@@ -50,6 +50,13 @@ typedef struct ThreadInterface ThreadInterface;
 typedef id (*ThreadFunction)(Thread *thread);
 
 /**
+ * @brief The function type for Thread cancellation.
+ *
+ * @param thread The cancelled Thread.
+ */
+typedef void (*ThreadCancellation)(Thread *thread);
+
+/**
  * @brief POSIX Threads.
  *
  * Asynchronous computing via multiple threads of execution.
@@ -73,6 +80,11 @@ struct Thread {
 	 * @private
 	 */
 	ThreadInterface *interface;
+
+	/**
+	 * @brief The Thread cancellation.
+	 */
+	ThreadCancellation cancellation;
 
 	/**
 	 * @brief The user data.

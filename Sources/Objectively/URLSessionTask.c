@@ -67,9 +67,9 @@ static void dealloc(Object *self) {
 static void cancel(URLSessionTask *self) {
 
 	if (self->state == TASK_RUNNING || self->state == TASK_SUSPENDED) {
-
-		// TODO
 		self->state = TASK_CANCELING;
+
+		$(self->locals.thread, cancel);
 	}
 }
 
@@ -82,8 +82,9 @@ static id run(Thread *thread) {
 
 	$(self, setup);
 
-	assert(self->locals.handle);
 	const CURLcode result = curl_easy_perform(self->locals.handle);
+
+	self->state = TASK_COMPLETED;
 
 	$(self, teardown);
 
@@ -92,6 +93,26 @@ static id run(Thread *thread) {
 	}
 
 	return NULL;
+}
+
+/**
+ * @brief Thread cancellation handler, ensuring that the completion function
+ * is always called, and only ever called once.
+ */
+static void cleanup(Thread *thread) {
+
+	URLSessionTask *self = thread->data;
+
+	if (self->state != TASK_COMPLETED) {
+
+		self->state = TASK_COMPLETED;
+
+		$(self, teardown);
+
+		if (self->completion) {
+			self->completion(self, NO);
+		}
+	}
 }
 
 /**
@@ -106,6 +127,7 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
 	self = (URLSessionTask *) super(Object, self, init);
 	if (self) {
 		self->locals.thread = $(alloc(Thread), initWithFunction, run, self);
+		self->locals.thread->cancellation = cleanup;
 
 		self->error = calloc(CURL_ERROR_SIZE, 1);
 		assert(self->error);
@@ -213,10 +235,12 @@ static void teardown(URLSessionTask *self) {
 
 	if (self->locals.handle) {
 		curl_easy_cleanup(self->locals.handle);
+		self->locals.handle = NULL;
 	}
 
 	if (self->locals.httpHeaders) {
 		curl_slist_free_all(self->locals.httpHeaders);
+		self->locals.httpHeaders = NULL;
 	}
 }
 

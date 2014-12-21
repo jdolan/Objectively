@@ -133,7 +133,16 @@ static void cleanup(id obj) {
 
 	Thread *self = (Thread *) obj;
 
+	if (self->isCancelled) {
+
+		if (self->cancellation) {
+			self->cancellation(self);
+		}
+	}
+
 	self->isExecuting = NO;
+
+	self->isFinished = YES;
 }
 
 /**
@@ -151,9 +160,7 @@ static id run(id obj) {
 
 	ret = self->function(self);
 
-	pthread_cleanup_pop(cleanup);
-
-	self->isFinished = YES;
+	pthread_cleanup_pop(1);
 
 	return ret;
 }
