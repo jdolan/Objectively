@@ -1,5 +1,5 @@
 /*
- * Objectively: Ultra-lightweight object oriented framework for c99.
+ * Objectively: Ultra-lightweight object oriented framework for GNU C.
  * Copyright (C) 2014 Jay Dolan <jay@jaydolan.com>
  *
  * This software is provided 'as-is', without any express or implied
@@ -42,64 +42,23 @@
  */
 static Object *copy(const Object *self) {
 
-	MutableString *this = (MutableString *) self;
+	String *this = (String *) self;
 
-	return (Object *) $(alloc(MutableString), initWithString, (String *) self);
+	return (Object *) $(alloc(MutableString), initWithString, this);
 }
 
 #pragma mark - MutableStringInterface
 
-/**
- * @see MutableStringInterface::string(void)
- */
-static MutableString *string(void) {
-
-	return $(alloc(MutableString), init);
-}
-
-/**
- * @see MutableStringInterface::stringWithCapacity(size_t)
- */
-static MutableString *stringWithCapacity(size_t capacity) {
-
-	return $(alloc(MutableString), initWithCapacity, capacity);
-}
-
-/**
- * @see MutableStringInterface::appendFormat(MutableString *, const char *, ...)
- */
-static void appendFormat(MutableString *self, const char *fmt, ...) {
-
-	va_list args;
-	va_start(args, fmt);
-
-	char *str;
-	vasprintf(&str, fmt, args);
-
-	va_end(args);
-
-	if (str) {
-		String *string = $(alloc(String), initWithMemory, str);
-
-		string->chars = str;
-		string->length = strlen(string->chars);
-
-		$(self, appendString, string);
-
-		release(string);
-	}
-}
-
 static size_t pageSize;
 
 /**
- * @see MutableStringInterface::appendString(MutableString *, const String *)
+ * @see MutableStringInterface::appendBytes(MutableString *, const byte *, size_t)
  */
-static void appendString(MutableString *self, const String *string) {
+static void appendBytes(MutableString *self, const byte *bytes, size_t length) {
 
-	if (string->length) {
+	if (length) {
 
-		const size_t newSize = self->string.length + string->length + 1;
+		const size_t newSize = self->string.length + length + 1;
 		const size_t newCapacity = (newSize / pageSize + 1) * pageSize;
 
 		if (newCapacity > self->capacity) {
@@ -114,10 +73,44 @@ static void appendString(MutableString *self, const String *string) {
 			self->capacity = newCapacity;
 		}
 
-		memcpy(self->string.chars + self->string.length, string->chars, string->length);
+		memcpy(self->string.chars + self->string.length, bytes, length);
 		self->string.chars[newSize - 1] = '\0';
 
-		self->string.length += string->length;
+		self->string.length += length;
+	}
+}
+
+/**
+ * @see MutableStringInterface::appendCharacters(MutableString *, const char *)
+ */
+static void appendCharacters(MutableString *self, const char *chars) {
+
+	$(self, appendBytes, (byte *) chars, strlen(chars));
+}
+
+/**
+ * @see MutableStringInterface::appendFormat(MutableString *, const char *, ...)
+ */
+static void appendFormat(MutableString *self, const char *fmt, ...) {
+
+	va_list args;
+	va_start(args, fmt);
+
+	id mem;
+	const size_t length = vaStringPrintf(&mem, fmt, args);
+
+	va_end(args);
+
+	$(self, appendBytes, (byte *) mem, length);
+}
+
+/**
+ * @see MutableStringInterface::appendString(MutableString *, const String *)
+ */
+static void appendString(MutableString *self, const String *string) {
+
+	if (string) {
+		$(self, appendBytes, (byte *) string->chars, string->length);
 	}
 }
 
@@ -140,7 +133,7 @@ static void deleteCharactersInRange(MutableString *self, const RANGE range) {
  */
 static MutableString *init(MutableString *self) {
 
-	return $(self, initWithString, NULL);
+	return (MutableString *) super(String, self, initWithMemory, NULL, 0);
 }
 
 /**
@@ -148,7 +141,7 @@ static MutableString *init(MutableString *self) {
  */
 static MutableString *initWithString(MutableString *self, const String *string) {
 
-	self = (MutableString *) super(String, self, initWithMemory, NULL);
+	self = $(self, init);
 	if (self) {
 
 		if (string) {
@@ -168,18 +161,34 @@ static void replaceCharactersInRange(MutableString *self, const RANGE range, con
 	assert(range.location >= 0);
 	assert(range.length <= self->string.length);
 
-	assert(string);
-
 	const char *c = self->string.chars + range.location + range.length;
 	String *remainder = $(alloc(String), initWithCharacters, c);
 
 	self->string.length = range.location;
 	self->string.chars[self->string.length] = '\0';
 
-	$(self, appendString, string);
+	if (string) {
+		$(self, appendString, string);
+	}
 	$(self, appendString, remainder);
 
 	release(remainder);
+}
+
+/**
+ * @see MutableStringInterface::string(void)
+ */
+static MutableString *string(void) {
+
+	return $(alloc(MutableString), init);
+}
+
+/**
+ * @see MutableStringInterface::stringWithCapacity(size_t)
+ */
+static MutableString *stringWithCapacity(size_t capacity) {
+
+	return $(alloc(MutableString), initWithCapacity, capacity);
 }
 
 #pragma mark - Class lifecycle
@@ -195,14 +204,16 @@ static void initialize(Class *clazz) {
 
 	MutableStringInterface *mutableString = (MutableStringInterface *) clazz->interface;
 
-	mutableString->string = string;
-	mutableString->stringWithCapacity = stringWithCapacity;
+	mutableString->appendBytes = appendBytes;
+	mutableString->appendCharacters = appendCharacters;
 	mutableString->appendFormat = appendFormat;
 	mutableString->appendString = appendString;
 	mutableString->deleteCharactersInRange = deleteCharactersInRange;
 	mutableString->init = init;
 	mutableString->initWithString = initWithString;
 	mutableString->replaceCharactersInRange = replaceCharactersInRange;
+	mutableString->string = string;
+	mutableString->stringWithCapacity = stringWithCapacity;
 
 	pageSize = sysconf(_SC_PAGESIZE);
 }

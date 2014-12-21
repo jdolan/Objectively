@@ -1,6 +1,6 @@
 Objectively
 ===
-Ultra-lightweight object oriented framework for the C programming language.
+Ultra-lightweight object oriented framework for [GNU C](http://www.gnu.org/software/gnu-c-manual/).
 
 Foundation-inspired [core library](http://jaydolan.com/projects/objectively).
 

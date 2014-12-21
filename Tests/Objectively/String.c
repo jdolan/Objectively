@@ -1,5 +1,5 @@
 /*
- * Objectively: Ultra-lightweight object oriented framework for c99.
+ * Objectively: Ultra-lightweight object oriented framework for GNU C.
  * Copyright (C) 2014 Jay Dolan <jay@jaydolan.com>
  *
  * This software is provided 'as-is', without any express or implied
@@ -21,67 +21,80 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+#include <unistd.h>
 #include <check.h>
 
-#include <Objectively/MutableString.h>
+#include <Objectively.h>
 
 START_TEST(string)
 	{
-		MutableString *string = $$(MutableString, string);
+		String *string = $$(String, stringWithFormat, "hello %s!", "world");
 
 		ck_assert(string);
-		ck_assert_ptr_eq(&_MutableString, classof(string));
-
-		$(string, appendFormat, "hello");
-		ck_assert_str_eq("hello", string->string.chars);
-
-		$(string, appendFormat, " %s", "world!");
-		ck_assert_str_eq("hello world!", string->string.chars);
+		ck_assert_ptr_eq(&_String, classof(string));
 
 		String *copy = (String *) $((Object * ) string, copy);
-
 		ck_assert_str_eq("hello world!", copy->chars);
+
 		ck_assert($((Object *) string, isEqual, (Object *) copy));
 		ck_assert_int_eq($((Object *) string, hash), $((Object *) copy, hash));
 
-		release(copy);
-
-		$(string, appendString, (String *) string);
-		ck_assert_str_eq("hello world!hello world!", string->string.chars);
-
 		String *prefix = $(alloc(String), initWithFormat, "hello");
-		ck_assert($((String *) string, hasPrefix, prefix));
+		ck_assert($(string, hasPrefix, prefix));
 
 		String *suffix = $(alloc(String), initWithFormat, "world!");
-		ck_assert($((String *) string, hasSuffix, suffix));
+		ck_assert($(string, hasSuffix, suffix));
 
-		RANGE range = { 6, 11 };
-		String *substring = $((String *) string, substring, range);
-		ck_assert_str_eq("world!hello", substring->chars);
+		RANGE range = { 6, 5 };
+		String *substring = $(string, substring, range);
+		ck_assert_str_eq("world", substring->chars);
 
-		Array *components = $((String *) string, componentsSeparatedByCharacters, "!");
-		ck_assert_int_eq(3, components->count);
+		RANGE match = $(string, rangeOfString, substring, range);
+		ck_assert_int_eq(range.location, match.location);
+		ck_assert_int_eq(range.length, match.length);
+
+		String *sep = $$(String, stringWithCharacters, " ");
+		Array *components = $(string, componentsSeparatedByString, sep);
+		ck_assert_int_eq(2, components->count);
 
 		for (int i = 0; i < components->count; i++) {
 			String *component = $(components, objectAtIndex, i);
 
 			switch (i) {
 				case 0:
-				case 1:
-					ck_assert_str_eq("hello world", component->chars);
+					ck_assert_str_eq("hello", component->chars);
 					break;
-				case 2:
-					ck_assert_str_eq("", component->chars);
+				case 1:
+					ck_assert_str_eq("world!", component->chars);
 					break;
 				default:
 					break;
 			}
 		}
 
+		String *upper = $(string, uppercaseString);
+		ck_assert_str_eq("HELLO WORLD!", upper->chars);
+
+		String *lower = $(upper, lowercaseString);
+		ck_assert_str_eq("hello world!", lower->chars);
+
+		const char *path = "/tmp/Objectively_String.test";
+		ck_assert($(string, writeToFile, path));
+
+		String *fromFile = $$(String, stringWithContentsOfFile, path);
+		ck_assert_str_eq("hello world!", fromFile->chars);
+
+		unlink(path);
+
+		release(fromFile);
+		release(upper);
+		release(lower);
+		release(sep);
 		release(components);
 		release(substring);
 		release(prefix);
 		release(suffix);
+		release(copy);
 		release(string);
 
 	}END_TEST

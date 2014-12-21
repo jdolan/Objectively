@@ -14,6 +14,7 @@ TESTS = \
 	MutableData \
 	MutableDictionary \
 	MutableSet \
+	MutableString \
 	Null \
 	Number \
 	Object \

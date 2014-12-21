@@ -25,34 +25,44 @@
 
 #include <Objectively.h>
 
-START_TEST(object)
+START_TEST(string)
 	{
-		Object *object = $(alloc(Object), init);
+		MutableString *string = $$(MutableString, string);
 
-		ck_assert(object);
-		ck_assert_ptr_eq(&_Object, classof(object));
+		ck_assert(string);
+		ck_assert_ptr_eq(&_MutableString, classof(string));
 
-		ck_assert($(object, isEqual, object));
-		ck_assert($(object, isKindOfClass, classof(object)));
+		String *hello = $$(String, stringWithCharacters, "hello");
 
-		Object *copy = $(object, copy);
+		$(string, appendString, hello);
+		ck_assert_str_eq("hello", string->string.chars);
 
-		ck_assert(copy);
+		$(string, appendFormat, " %s", "world!");
+		ck_assert_str_eq("hello world!", string->string.chars);
 
-		ck_assert(!$(copy, isEqual, object));
-		ck_assert($(copy, isKindOfClass, classof(object)));
+		String *goodbye = $$(String, stringWithCharacters, "goodbye cruel");
 
+		RANGE range = { 0, 5 };
+		$(string, replaceCharactersInRange, range, goodbye);
+		ck_assert_str_eq("goodbye cruel world!", string->string.chars);
+
+		String *copy = (String *) $((Object * ) string, copy);
+		ck_assert(classof(copy) == &_MutableString);
+		ck_assert($((Object *) string, isEqual, (Object *) copy));
+
+		release(hello);
+		release(goodbye);
+		release(string);
 		release(copy);
-		release(object);
 
 	}END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("object");
-	tcase_add_test(tcase, object);
+	TCase *tcase = tcase_create("string");
+	tcase_add_test(tcase, string);
 
-	Suite *suite = suite_create("object");
+	Suite *suite = suite_create("string");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);

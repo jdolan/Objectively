@@ -1,5 +1,5 @@
 /*
- * Objectively: Ultra-lightweight object oriented framework for c99.
+ * Objectively: Ultra-lightweight object oriented framework for GNU C.
  * Copyright (C) 2014 Jay Dolan <jay@jaydolan.com>
  *
  * This software is provided 'as-is', without any express or implied
@@ -75,20 +75,23 @@ struct MutableStringInterface {
 	StringInterface stringInterface;
 
 	/**
-	 * @brief Returns a new MutableString.
+	 * @brief Appends `bytes` to this MutableString.
 	 *
-	 * @return The new MutableString, or `NULL` on error.
+	 * @param bytes The bytes to append.
+	 * @param length The length of `bytes`, excluding the terminating char.
+	 *
+	 * @relates MutableString
 	 */
-	MutableString *(*string)(void);
+	void (*appendBytes)(MutableString *self, const byte *bytes, size_t length);
 
 	/**
-	 * @brief Returns a new MutableString with the given `capacity`.
+	 * @brief Appends `chars` to this MutableString.
 	 *
-	 * @param capacity The desired capacity, in bytes.
+	 * @param chars The characters to append.
 	 *
-	 * @return The new MutableString, or `NULL` on error.
+	 * @relates MutableString
 	 */
-	MutableString *(*stringWithCapacity)(size_t capacity);
+	void (*appendCharacters)(MutableString *self, const char *chars);
 
 	/**
 	 * @brief Appends the specified formatted string.
@@ -157,6 +160,26 @@ struct MutableStringInterface {
 	 * @relates MutableString
 	 */
 	void (*replaceCharactersInRange)(MutableString *self, const RANGE range, const String *string);
+
+	/**
+	 * @brief Returns a new MutableString.
+	 *
+	 * @return The new MutableString, or `NULL` on error.
+	 *
+	 * @relates MutableString
+	 */
+	MutableString *(*string)(void);
+
+	/**
+	 * @brief Returns a new MutableString with the given `capacity`.
+	 *
+	 * @param capacity The desired capacity, in bytes.
+	 *
+	 * @return The new MutableString, or `NULL` on error.
+	 *
+	 * @relates MutableString
+	 */
+	MutableString *(*stringWithCapacity)(size_t capacity);
 };
 
 /**

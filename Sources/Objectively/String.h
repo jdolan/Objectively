@@ -1,5 +1,5 @@
 /*
- * Objectively: Ultra-lightweight object oriented framework for c99.
+ * Objectively: Ultra-lightweight object oriented framework for GNU C.
  * Copyright (C) 2014 Jay Dolan <jay@jaydolan.com>
  *
  * This software is provided 'as-is', without any express or implied
@@ -142,13 +142,15 @@ struct StringInterface {
 	BOOL (*hasSuffix)(const String *self, const String *suffix);
 
 	/**
-	 * @brief Initializes this String by copying `length` of `bytes`. The
-	 * resulting String will always be null-terminated.
+	 * @brief Initializes this String by copying `length` of `bytes`.
 	 *
 	 * @param bytes The bytes.
 	 * @param length The length of `bytes` to copy.
 	 *
 	 * @return The initialized String, or `NULL` on error.
+	 *
+	 * @remark `length + 1` bytes are allocated so that the resulting String
+	 * is always null-terminated.
 	 *
 	 * @relates String
 	 */
@@ -166,7 +168,7 @@ struct StringInterface {
 	String *(*initWithCharacters)(String *self, const char *chars);
 
 	/**
-	 * @brief Initializes this String with the contents of `path`.
+	 * @brief Initializes this String with the contents of the FILE at `path`.
 	 *
 	 * @param path The path of the file to load.
 	 *
@@ -202,12 +204,15 @@ struct StringInterface {
 	 * @brief Initializes this String with the specified buffer.
 	 *
 	 * @param mem The null-terminated, dynamically allocated memory.
+	 * @param length The length of the String in characters.
 	 *
 	 * @return The initialized String, or `NULL` on error.
 	 *
+	 * @remark `length` should *not* account for the terminating character.
+	 *
 	 * @relates String
 	 */
-	String *(*initWithMemory)(String *self, id mem);
+	String *(*initWithMemory)(String *self, id mem, size_t length);
 
 	/**
 	 * @return A lowercase representation of this String.
@@ -239,6 +244,65 @@ struct StringInterface {
 	 * @relates String
 	 */
 	RANGE (*rangeOfString)(const String *self, const String *string, const RANGE range);
+
+	/**
+	 * @brief Returns a new String by copying `length` of `bytes`.
+	 *
+	 * @param bytes The bytes.
+	 * @param length The length of `bytes` to copy.
+	 *
+	 * @return The new String, or `NULL` on error.
+	 *
+	 * @remark `length + 1` bytes are allocated so that the resulting String
+	 * is always null-terminated.
+	 *
+	 * @relates String
+	 */
+	String *(*stringWithBytes)(const byte *bytes, size_t length);
+
+	/**
+	 * @brief Returns a new String with the given characters.
+	 *
+	 * @param chars A null-terminated C string.
+	 *
+	 * @return The new String, or `NULL` on error.
+	 *
+	 * @relates String
+	 */
+	String *(*stringWithCharacters)(const char *chars);
+
+	/**
+	 * @brief Returns a new String with the contents of the FILE at `path`.
+	 *
+	 * @param path The path name.
+	 *
+	 * @return The new String, or `NULL` on error.
+	 *
+	 * @relates String
+	 */
+	String *(*stringWithContentsOfFile)(const char *path);
+
+	/**
+	 * @brief Returns a new String with the the given Data.
+	 *
+	 * @param data A Data.
+	 *
+	 * @return The new String, or `NULL` on error.
+	 *
+	 * @relates String
+	 */
+	String *(*stringWithData)(const Data *data);
+
+	/**
+	 * @brief Returns a new String with the given format string.
+	 *
+	 * @param fmt The formatted string.
+	 *
+	 * @return The new String, or `NULL` on error.
+	 *
+	 * @relates String
+	 */
+	String *(*stringWithFormat)(const char *fmt, ...);
 
 	/**
 	 * @brief Creates a new String from a subset of this one.
@@ -274,5 +338,16 @@ struct StringInterface {
  * @brief The String Class.
  */
 extern Class _String;
+
+/**
+ * @brief A convenience function built around `vasprintf`.
+ *
+ * @param mem The pointer to receive the dynamically allocated string.
+ * @param fmt The format string.
+ * @param args The format arguments.
+ *
+ * @return The length of the allocated string, in bytes.
+ */
+size_t vaStringPrintf(id *mem, const char *fmt, va_list args);
 
 #endif

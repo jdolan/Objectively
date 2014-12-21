@@ -1,5 +1,5 @@
 /*
- * Objectively: Ultra-lightweight object oriented framework for c99.
+ * Objectively: Ultra-lightweight object oriented framework for GNU C.
  * Copyright (C) 2014 Jay Dolan <jay@jaydolan.com>
  *
  * This software is provided 'as-is', without any express or implied
@@ -212,7 +212,7 @@ static String *initWithBytes(String *self, const byte *bytes, size_t length) {
 		*(char *) (mem + length) = '\0';
 	}
 
-	return $(self, initWithMemory, mem);
+	return $(self, initWithMemory, mem, length);
 }
 
 /**
@@ -220,7 +220,14 @@ static String *initWithBytes(String *self, const byte *bytes, size_t length) {
  */
 static String *initWithCharacters(String *self, const char *chars) {
 
-	return $(self, initWithMemory, chars ? strdup(chars) : NULL);
+	if (chars) {
+		char *str = strdup(chars);
+		assert(str);
+
+		return $(self, initWithMemory, str, strlen(str));
+	}
+
+	return $(self, initWithMemory, NULL, 0);
 }
 
 /**
@@ -243,15 +250,15 @@ static String *initWithContentsOfFile(String *self, const char *path) {
 
 			fseek(file, 0, SEEK_SET);
 
-			const size_t read = fread(mem, 1, length, file);
-			assert(read == length);
+			const size_t read = fread(mem, length, 1, file);
+			assert(read == 1);
 
 			*(char *) (mem + length) = '\0';
 		}
 
 		fclose(file);
 
-		return $(self, initWithMemory, mem);
+		return $(self, initWithMemory, mem, length);
 	}
 
 	return NULL;
@@ -272,23 +279,21 @@ static String *initWithData(String *self, const Data *data) {
  */
 static String *initWithFormat(String *self, const char *fmt, ...) {
 
-	char *str = NULL;
+	va_list args;
+	va_start(args, fmt);
 
-	if (fmt) {
-		va_list args;
+	id mem;
+	const size_t length = vaStringPrintf(&mem, fmt, args);
 
-		va_start(args, fmt);
-		vasprintf(&str, fmt, args);
-		va_end(args);
-	}
+	va_end(args);
 
-	return $(self, initWithMemory, str);
+	return $(self, initWithMemory, mem, length);
 }
 
 /**
- * @see StringInterface::initWithMemory(String *self, id mem)
+ * @see StringInterface::initWithMemory(String *, id, size_t)
  */
-static String *initWithMemory(String *self, id mem) {
+static String *initWithMemory(String *self, id mem, size_t length) {
 
 	self = (String *) super(Object, self, init);
 	if (self) {
@@ -296,7 +301,7 @@ static String *initWithMemory(String *self, id mem) {
 
 		if (mem) {
 			self->chars = (char *) mem;
-			self->length = strlen(self->chars);
+			self->length = length;
 		}
 	}
 
@@ -353,6 +358,54 @@ static RANGE rangeOfString(const String *self, const String *string, const RANGE
 }
 
 /**
+ * @see StringInterface::stringWithBytes(const byte *, size_t)
+ */
+static String *stringWithBytes(const byte *bytes, size_t length) {
+
+	return $(alloc(String), initWithBytes, bytes, length);
+}
+
+/**
+ * @see StringInterface::stringWithCharacters(const char *)
+ */
+static String *stringWithCharacters(const char *chars) {
+
+	return $(alloc(String), initWithCharacters, chars);
+}
+
+/**
+ * @see StringInterface::stringWithContentsOfFile(const char *)
+ */
+static String *stringWithContentsOfFile(const char *path) {
+
+	return $(alloc(String), initWithContentsOfFile, path);
+}
+
+/**
+ * @see StringInterface::stringWithData(const Data *data)
+ */
+static String *stringWithData(const Data *data) {
+
+	return $(alloc(String), initWithData, data);
+}
+
+/**
+ * @see StringInterface::stringWithFormat(const char *fmt, ...)
+ */
+static String *stringWithFormat(const char *fmt, ...) {
+
+	va_list args;
+	va_start(args, fmt);
+
+	id mem;
+	const size_t length = vaStringPrintf(&mem, fmt, args);
+
+	va_end(args);
+
+	return $(alloc(String), initWithMemory, mem, length);
+}
+
+/**
  * @see StringInterface::substring(const String *, RANGE)
  */
 static String *substring(const String *self, const RANGE range) {
@@ -362,7 +415,7 @@ static String *substring(const String *self, const RANGE range) {
 	id mem = calloc(range.length + 1, sizeof(char));
 	memcpy(mem, self->chars + range.location, range.length);
 
-	return $(alloc(String), initWithMemory, mem);
+	return $(alloc(String), initWithMemory, mem, range.length);
 }
 
 /**
@@ -384,16 +437,20 @@ static String *uppercaseString(const String *self) {
  */
 static BOOL writeToFile(const String *self, const char *path) {
 
+	BOOL ret = NO;
+
 	FILE *file = fopen(path, "w");
 	if (file) {
 
 		const size_t write = fwrite(self->chars, self->length, 1, file);
-		if (write == self->length) {
-			return YES;
+		if (write == 1) {
+			ret = YES;
 		}
+
+		fclose(file);
 	}
 
-	return NO;
+	return ret;
 }
 
 #pragma mark - Class lifecycle
@@ -427,6 +484,11 @@ static void initialize(Class *clazz) {
 	string->lowercaseString = lowercaseString;
 	string->rangeOfCharacters = rangeOfCharacters;
 	string->rangeOfString = rangeOfString;
+	string->stringWithBytes = stringWithBytes;
+	string->stringWithCharacters = stringWithCharacters;
+	string->stringWithContentsOfFile = stringWithContentsOfFile;
+	string->stringWithData = stringWithData;
+	string->stringWithFormat = stringWithFormat;
 	string->substring = substring;
 	string->uppercaseString = uppercaseString;
 	string->writeToFile = writeToFile;
@@ -442,3 +504,21 @@ Class _String = {
 };
 
 #undef _Class
+
+/**
+ * @brief A helper for initializing Strings from formatted C strings.
+ */
+size_t vaStringPrintf(id *mem, const char *fmt, va_list args) {
+
+	*mem = NULL;
+	size_t length = 0;
+
+	if (fmt) {
+		int err = vasprintf((char **) mem, fmt, args);
+		if (err >= 0) {
+			length = err;
+		}
+	}
+
+	return length;
+}
