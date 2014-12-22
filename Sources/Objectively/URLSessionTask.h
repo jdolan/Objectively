@@ -37,22 +37,19 @@ typedef struct URLSessionTask URLSessionTask;
 typedef struct URLSessionTaskInterface URLSessionTaskInterface;
 
 /**
- * @brief Task states.
- */
-typedef enum {
-	TASK_RUNNING,
-	TASK_CANCELING,
-	TASK_SUSPENDED,
-	TASK_COMPLETED
-} URLSessionTaskState;
-
-/**
  * @brief A function pointer for URLSessionTask completion.
  *
  * @param task The URLSessionTask.
  * @param success `YES` if the task was successful, `NO` otherwise.
  */
 typedef void (*URLSessionTaskCompletion)(URLSessionTask *task, BOOL success);
+
+/**
+ * @brief A function pointer for URLSessionTask progress.
+ *
+ * @param task The URLSessionTask.
+ */
+typedef void (*URLSessionTaskProgress)(URLSessionTask *task);
 
 /**
  * @brief URL session tasks are handles to pending URL operations.
@@ -99,6 +96,16 @@ struct URLSessionTask {
 	} locals;
 
 	/**
+	 * @brief The count of bytes this task expects to receive.
+	 */
+	size_t bytesExpectedToReceive;
+
+	/**
+	 * @brief The count of bytes this task expects to send.
+	 */
+	size_t bytesExpectedToSend;
+
+	/**
 	 * @brief The count of bytes received.
 	 */
 	size_t bytesReceived;
@@ -119,6 +126,31 @@ struct URLSessionTask {
 	char *error;
 
 	/**
+	 * @brief `YES` when this task has been cancelled, `NO` otherwise.
+	 */
+	BOOL isCancelled;
+
+	/**
+	 * @brief `YES` when this task is executing, `NO` otherwise.
+	 */
+	BOOL isExecuting;
+
+	/**
+	 * @brief `YES` when this task is finished, `NO` otherwise.
+	 */
+	BOOL isFinished;
+
+	/**
+	 * @brief `YES` when this task is suspended, `NO` otherwise.
+	 */
+	BOOL isSuspended;
+
+	/**
+	 * @brief The progress function.
+	 */
+	URLSessionTaskProgress progress;
+
+	/**
 	 * @brief The request.
 	 */
 	struct URLRequest *request;
@@ -127,11 +159,6 @@ struct URLSessionTask {
 	 * @brief The session.
 	 */
 	struct URLSession *session;
-
-	/**
-	 * @brief The state.
-	 */
-	URLSessionTaskState state;
 };
 
 /**
@@ -175,16 +202,23 @@ struct URLSessionTaskInterface {
 	/**
 	 * @brief Sets up this task.
 	 *
-	 * @private
+	 * @protected
 	 *
 	 * @relates URLSessionTask
 	 */
 	void (*setup)(URLSessionTask *self);
 
 	/**
+	 * @brief Suspends this task.
+	 *
+	 * @relates URLSessionTask
+	 */
+	void (*suspend)(URLSessionTask *self);
+
+	/**
 	 * @brief Tears down this task.
 	 *
-	 * @private
+	 * @protected
 	 *
 	 * @relates URLSessionTask
 	 */

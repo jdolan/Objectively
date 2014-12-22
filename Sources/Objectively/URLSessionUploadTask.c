@@ -39,6 +39,12 @@ static size_t readFunction(char *data, size_t size, size_t count, id self) {
 
 	URLSessionUploadTask *this = (URLSessionUploadTask *) self;
 
+	if (this->urlSessionTask.isCancelled) {
+		return CURL_READFUNC_ABORT;
+	} else if (this->urlSessionTask.isSuspended) {
+		return CURL_READFUNC_PAUSE;
+	}
+
 	const size_t bytesRead = fread(data, size, count, this->file);
 	this->urlSessionTask.bytesSent += bytesRead;
 

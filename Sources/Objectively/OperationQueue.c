@@ -104,7 +104,7 @@ static id run(Thread *thread) {
 
 	OperationQueue *self = _currentQueue = thread->data;
 
-	while (YES) {
+	while (thread->isCancelled == NO) {
 
 		if (self->isSuspended == NO) {
 			Array *operations = NULL;

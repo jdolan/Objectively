@@ -105,12 +105,12 @@ struct Operation {
 	OperationFunction function;
 
 	/**
-	 * @brief `YES` when this Thread has been cancelled, `NO` otherwise.
+	 * @brief `YES` when this Operation has been cancelled, `NO` otherwise.
 	 */
 	BOOL isCancelled;
 
 	/**
-	 * @brief `YES` when this Thread is live, `NO` otherwise.
+	 * @brief `YES` when this Operation is executing, `NO` otherwise.
 	 */
 	BOOL isExecuting;
 

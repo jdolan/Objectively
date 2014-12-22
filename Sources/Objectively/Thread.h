@@ -50,13 +50,6 @@ typedef struct ThreadInterface ThreadInterface;
 typedef id (*ThreadFunction)(Thread *thread);
 
 /**
- * @brief The function type for Thread cancellation.
- *
- * @param thread The cancelled Thread.
- */
-typedef void (*ThreadCancellation)(Thread *thread);
-
-/**
  * @brief POSIX Threads.
  *
  * Asynchronous computing via multiple threads of execution.
@@ -82,11 +75,6 @@ struct Thread {
 	ThreadInterface *interface;
 
 	/**
-	 * @brief The Thread cancellation.
-	 */
-	ThreadCancellation cancellation;
-
-	/**
 	 * @brief The user data.
 	 */
 	id data;
@@ -107,7 +95,7 @@ struct Thread {
 	BOOL isDetached;
 
 	/**
-	 * @brief `YES` when this Thread is live, `NO` otherwise.
+	 * @brief `YES` when this Thread is executing, `NO` otherwise.
 	 */
 	BOOL isExecuting;
 
@@ -140,6 +128,15 @@ struct ThreadInterface {
 	 * @relates Thread
 	 */
 	void (*cancel)(Thread *self);
+
+	/**
+	 * @brief Returns the currently executing Thread.
+	 *
+	 * @return The currently executing Thread.
+	 *
+	 * @relates Thread
+	 */
+	Thread *(*currentThread)(void);
 
 	/**
 	 * @brief Daemonize this Thread.

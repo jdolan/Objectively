@@ -66,11 +66,7 @@ static void dealloc(Object *self) {
  */
 static void cancel(URLSessionTask *self) {
 
-	if (self->state == TASK_RUNNING || self->state == TASK_SUSPENDED) {
-		self->state = TASK_CANCELING;
-
-		$(self->locals.thread, cancel);
-	}
+	self->isCancelled = YES;
 }
 
 /**
@@ -80,39 +76,26 @@ static id run(Thread *thread) {
 
 	URLSessionTask *self = thread->data;
 
-	$(self, setup);
+	CURLcode code = CURLE_ABORTED_BY_CALLBACK;
 
-	const CURLcode result = curl_easy_perform(self->locals.handle);
+	if (self->isCancelled == NO) {
 
-	self->state = TASK_COMPLETED;
+		$(self, setup);
 
-	$(self, teardown);
-
-	if (self->completion) {
-		self->completion(self, result == CURLE_OK);
-	}
-
-	return NULL;
-}
-
-/**
- * @brief Thread cancellation handler, ensuring that the completion function
- * is always called, and only ever called once.
- */
-static void cleanup(Thread *thread) {
-
-	URLSessionTask *self = thread->data;
-
-	if (self->state != TASK_COMPLETED) {
-
-		self->state = TASK_COMPLETED;
+		code = curl_easy_perform(self->locals.handle);
 
 		$(self, teardown);
-
-		if (self->completion) {
-			self->completion(self, NO);
-		}
 	}
+
+	self->isFinished = YES;
+
+	if (self->completion) {
+		self->completion(self, code == CURLE_OK);
+	}
+
+	self->isExecuting = NO;
+
+	return NULL;
 }
 
 /**
@@ -127,7 +110,6 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
 	self = (URLSessionTask *) super(Object, self, init);
 	if (self) {
 		self->locals.thread = $(alloc(Thread), initWithFunction, run, self);
-		self->locals.thread->cancellation = cleanup;
 
 		self->error = calloc(CURL_ERROR_SIZE, 1);
 		assert(self->error);
@@ -140,7 +122,7 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
 
 		self->completion = completion;
 
-		self->state = TASK_SUSPENDED;
+		self->isSuspended = YES;
 	}
 
 	return self;
@@ -151,10 +133,15 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
  */
 static void resume(URLSessionTask *self) {
 
-	if (self->state == TASK_SUSPENDED) {
-		$(self->locals.thread, start);
+	if (self->isFinished == NO) {
 
-		self->state = TASK_RUNNING;
+		if (self->isSuspended) {
+			self->isSuspended = NO;
+		}
+
+		if (self->locals.thread->isExecuting == NO) {
+			$(self->locals.thread, start);
+		}
 	}
 }
 
@@ -175,6 +162,31 @@ static BOOL httpHeaders_enumerator(const Dictionary *dictionary, id obj, id key,
 }
 
 /**
+ * @brief The `CURLOPT_XFERINFOFUNCTION`, which updates internal state and
+ * dispatches the task's progress function.
+ *
+ * @remark This is also the mechanism for resuming suspended tasks.
+ */
+static int progress(id self, curl_off_t bytesExpectedToReceive, curl_off_t bytesReceived,
+		curl_off_t bytesExpectedToSend, curl_off_t bytesSent) {
+
+	URLSessionTask *this = (URLSessionTask *) self;
+
+	this->bytesExpectedToReceive = bytesExpectedToReceive;
+	this->bytesExpectedToSend = bytesExpectedToSend;
+
+	if (this->progress) {
+		this->progress(this);
+	}
+
+	if (this->isSuspended == NO) {
+		curl_easy_pause(this->locals.handle, CURLPAUSE_CONT);
+	}
+
+	return 0;
+}
+
+/**
  * @see URLSessionTaskInterface::setup(URLSessionTask *)
  */
 static void setup(URLSessionTask *self) {
@@ -184,6 +196,9 @@ static void setup(URLSessionTask *self) {
 
 	curl_easy_setopt(self->locals.handle, CURLOPT_ERRORBUFFER, self->error);
 	curl_easy_setopt(self->locals.handle, CURLOPT_FOLLOWLOCATION, YES);
+
+	curl_easy_setopt(self->locals.handle, CURLOPT_XFERINFOFUNCTION, progress);
+	curl_easy_setopt(self->locals.handle, CURLOPT_XFERINFODATA, self);
 
 	Data *body = self->request->httpBody;
 	if (body) {
@@ -229,6 +244,14 @@ static void setup(URLSessionTask *self) {
 }
 
 /**
+ * @see URLSessionTaskInterface::suspend(URLSessionTask *)
+ */
+static void suspend(URLSessionTask *self) {
+
+	self->isSuspended = YES;
+}
+
+/**
  * @see URLSessionTask::teardown(URLSessionTask *)
  */
 static void teardown(URLSessionTask *self) {
@@ -262,6 +285,7 @@ static void initialize(Class *clazz) {
 	task->initWithRequestInSession = initWithRequestInSession;
 	task->resume = resume;
 	task->setup = setup;
+	task->suspend = suspend;
 	task->teardown = teardown;
 }
 

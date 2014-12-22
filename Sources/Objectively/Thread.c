@@ -64,10 +64,20 @@ static void cancel(Thread *self) {
 
 	assert(self->isCancelled == NO);
 
-	int err = pthread_cancel(*((pthread_t *) self->thread));
-	assert(err == 0);
+	// int err = pthread_cancel(*((pthread_t *) self->thread));
+	// assert(err == 0);
 
 	self->isCancelled = YES;
+}
+
+__thread Thread *_currentThread;
+
+/**
+ * @see ThreadInterface::currentThread(void)
+ */
+static Thread *currentThread(void) {
+
+	return _currentThread;
 }
 
 /**
@@ -127,40 +137,19 @@ static void _kill(Thread *self, int signal) {
 }
 
 /**
- * @brief Cleans up after execution.
- */
-static void cleanup(id obj) {
-
-	Thread *self = (Thread *) obj;
-
-	if (self->isCancelled) {
-
-		if (self->cancellation) {
-			self->cancellation(self);
-		}
-	}
-
-	self->isExecuting = NO;
-
-	self->isFinished = YES;
-}
-
-/**
  * @brief Wraps the user-specified ThreadFunction, providing cleanup.
  */
 static id run(id obj) {
 
-	Thread *self = (Thread *) obj;
+	Thread *self = _currentThread = (Thread *) obj;
 
 	self->isExecuting = YES;
 
-	id ret = NULL;
+	id ret = self->function(self);
 
-	pthread_cleanup_push(cleanup, self);
+	self->isFinished = YES;
 
-	ret = self->function(self);
-
-	pthread_cleanup_pop(1);
+	self->isExecuting = NO;
 
 	return ret;
 }
@@ -196,6 +185,7 @@ static void initialize(Class *clazz) {
 	ThreadInterface *thread = (ThreadInterface *) clazz->interface;
 
 	thread->cancel = cancel;
+	thread->currentThread = currentThread;
 	thread->detach = detach;
 	thread->init = init;
 	thread->initWithFunction = initWithFunction;
