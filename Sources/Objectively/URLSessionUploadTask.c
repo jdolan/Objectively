@@ -39,12 +39,6 @@ static size_t readFunction(char *data, size_t size, size_t count, id self) {
 
 	URLSessionUploadTask *this = (URLSessionUploadTask *) self;
 
-	if (this->urlSessionTask.isCancelled) {
-		return CURL_READFUNC_ABORT;
-	} else if (this->urlSessionTask.isSuspended) {
-		return CURL_READFUNC_PAUSE;
-	}
-
 	const size_t bytesRead = fread(data, size, count, this->file);
 	this->urlSessionTask.bytesSent += bytesRead;
 
@@ -61,6 +55,16 @@ static void setup(URLSessionTask *self) {
 	URLSessionUploadTask *this = (URLSessionUploadTask *) self;
 
 	assert(this->file);
+
+	int err = fseek(this->file, 0, SEEK_END);
+	assert(err == 0);
+
+	self->bytesExpectedToSend = ftell(this->file);
+
+	err = fseek(this->file, 0, SEEK_SET);
+	assert(err == 0);
+
+	curl_easy_setopt(self->locals.handle, CURLOPT_INFILESIZE_LARGE, self->bytesExpectedToSend);
 
 	curl_easy_setopt(self->locals.handle, CURLOPT_READFUNCTION, readFunction);
 	curl_easy_setopt(self->locals.handle, CURLOPT_READDATA, self);

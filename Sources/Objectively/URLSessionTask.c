@@ -52,7 +52,6 @@ static void dealloc(Object *self) {
 		free(this->error);
 	}
 
-	release(this->locals.thread);
 	release(this->request);
 	release(this->session);
 
@@ -66,37 +65,11 @@ static void dealloc(Object *self) {
  */
 static void cancel(URLSessionTask *self) {
 
-	self->isCancelled = YES;
+	if (self->state == URLSESSIONTASK_RUNNING || self->state == URLSESSIONTASK_SUSPENDED) {
+		self->state = URLSESSIONTASK_CANCELING;
+	}
 }
 
-/**
- * @brief Thread function which coordinates this task.
- */
-static id run(Thread *thread) {
-
-	URLSessionTask *self = thread->data;
-
-	CURLcode code = CURLE_ABORTED_BY_CALLBACK;
-
-	if (self->isCancelled == NO) {
-
-		$(self, setup);
-
-		code = curl_easy_perform(self->locals.handle);
-
-		$(self, teardown);
-	}
-
-	self->isFinished = YES;
-
-	if (self->completion) {
-		self->completion(self, code == CURLE_OK);
-	}
-
-	self->isExecuting = NO;
-
-	return NULL;
-}
 
 /**
  * @see URLSessionTaskInterface::initWithRequestInSession(URLSessionTask *, URLRequest *, URLSession *, URLSessionTaskCompletion)
@@ -109,7 +82,6 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
 
 	self = (URLSessionTask *) super(Object, self, init);
 	if (self) {
-		self->locals.thread = $(alloc(Thread), initWithFunction, run, self);
 
 		self->error = calloc(CURL_ERROR_SIZE, 1);
 		assert(self->error);
@@ -122,7 +94,7 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
 
 		self->completion = completion;
 
-		self->isSuspended = YES;
+		self->state = URLSESSIONTASK_SUSPENDED;
 	}
 
 	return self;
@@ -133,15 +105,8 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
  */
 static void resume(URLSessionTask *self) {
 
-	if (self->isFinished == NO) {
-
-		if (self->isSuspended) {
-			self->isSuspended = NO;
-		}
-
-		if (self->locals.thread->isExecuting == NO) {
-			$(self->locals.thread, start);
-		}
+	if (self->state == URLSESSIONTASK_SUSPENDED) {
+		self->state = URLSESSIONTASK_RUNNING;
 	}
 }
 
@@ -174,14 +139,6 @@ static int progress(id self, curl_off_t bytesExpectedToReceive, curl_off_t bytes
 
 	this->bytesExpectedToReceive = bytesExpectedToReceive;
 	this->bytesExpectedToSend = bytesExpectedToSend;
-
-	if (this->progress) {
-		this->progress(this);
-	}
-
-	if (this->isSuspended == NO) {
-		curl_easy_pause(this->locals.handle, CURLPAUSE_CONT);
-	}
 
 	return 0;
 }
@@ -248,7 +205,9 @@ static void setup(URLSessionTask *self) {
  */
 static void suspend(URLSessionTask *self) {
 
-	self->isSuspended = YES;
+	if (self->state == URLSESSIONTASK_RUNNING) {
+		self->state = URLSESSIONTASK_SUSPENDED;
+	}
 }
 
 /**

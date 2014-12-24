@@ -39,12 +39,6 @@ static size_t writeFunction(char *data, size_t size, size_t count, id self) {
 
 	URLSessionDownloadTask *this = (URLSessionDownloadTask *) self;
 
-	if (this->urlSessionTask.isCancelled) {
-		return CURL_WRITEFUNC_ABORT;
-	} else if (this->urlSessionTask.isSuspended) {
-		return CURL_WRITEFUNC_PAUSE;
-	}
-
 	const size_t bytesWritten = fwrite(data, size, count, this->file);
 	this->urlSessionTask.bytesReceived += bytesWritten;
 

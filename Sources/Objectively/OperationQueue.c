@@ -57,16 +57,6 @@ static void dealloc(Object *self) {
 
 #pragma mark - OperationQueueInterface
 
-__thread OperationQueue *_currentQueue;
-
-/**
- * @see OperationQueueInterface::currentQueue(void)
- */
-static OperationQueue *currentQueue(void) {
-
-	return _currentQueue;
-}
-
 /**
  * @see OperationQueueInterface::addOperation(OperationQueue *, Operation *)
  */
@@ -95,6 +85,16 @@ static void cancelAllOperations(OperationQueue *self) {
 	}
 
 	release(operations);
+}
+
+__thread OperationQueue *_currentQueue;
+
+/**
+ * @see OperationQueueInterface::currentQueue(void)
+ */
+static OperationQueue *currentQueue(void) {
+
+	return _currentQueue;
 }
 
 /**
@@ -232,9 +232,9 @@ static void initialize(Class *clazz) {
 
 	OperationQueueInterface *queue = (OperationQueueInterface *) clazz->interface;
 
-	queue->currentQueue = currentQueue;
 	queue->addOperation = addOperation;
 	queue->cancelAllOperations = cancelAllOperations;
+	queue->currentQueue = currentQueue;
 	queue->init = init;
 	queue->operationCount = operationCount;
 	queue->operations = operations;

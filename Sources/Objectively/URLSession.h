@@ -39,12 +39,15 @@
 typedef struct URLSession URLSession;
 typedef struct URLSessionInterface URLSessionInterface;
 
+#include <Objectively/Lock.h>
+#include <Objectively/MutableArray.h>
 #include <Objectively/Object.h>
 #include <Objectively/URLRequest.h>
 #include <Objectively/URLSessionConfiguration.h>
-#include <Objectively/URLSessionTask.h>
 #include <Objectively/URLSessionDataTask.h>
 #include <Objectively/URLSessionDownloadTask.h>
+#include <Objectively/URLSessionTask.h>
+#include <Objectively/URLSessionUploadTask.h>
 
 /**
  * @brief A management context for loading resources via URLs.
@@ -68,6 +71,33 @@ struct URLSession {
 	 * @private
 	 */
 	URLSessionInterface *interface;
+
+	/**
+	 * @private
+	 */
+	struct {
+
+		/**
+		 * @brief The libcurl handle.
+		 */
+		id handle;
+
+		/**
+		 * @brief The Lock guarding access to `tasks`.
+		 */
+		Lock *lock;
+
+		/**
+		 * @brief The URLSessionTasks.
+		 */
+		MutableArray *tasks;
+
+		/**
+		 * @brief The backing Thread.
+		 */
+		Thread *thread;
+
+	} locals;
 
 	/**
 	 * @brief The session configuration.
@@ -170,6 +200,26 @@ struct URLSessionInterface {
 	 * @relates URLSession
 	 */
 	void (*invalidateAndCancel)(URLSession *self);
+
+	/**
+	 * @return An instantaneous copy of this URLSession's URLSessionTasks.
+	 *
+	 * @relates URLSession
+	 */
+	Array *(*tasks)(const URLSession *self);
+
+	/**
+	 * @brief Creates a URLSessionUploadTask for the given URLRequest.
+	 *
+	 * @param request The URLRequest to perform.
+	 * @param completion The completion handler.
+	 *
+	 * @return The URLSessionUploadTask, or `NULL` on error.
+	 *
+	 * @relates URLSession
+	 */
+	URLSessionUploadTask *(*uploadTaskWithRequest)(URLSession *self, URLRequest *request,
+			URLSessionTaskCompletion completion);
 };
 
 /**

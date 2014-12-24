@@ -45,11 +45,14 @@ typedef struct URLSessionTaskInterface URLSessionTaskInterface;
 typedef void (*URLSessionTaskCompletion)(URLSessionTask *task, BOOL success);
 
 /**
- * @brief A function pointer for URLSessionTask progress.
- *
- * @param task The URLSessionTask.
+ * @brief The various states a URLSessionTask may be in.
  */
-typedef void (*URLSessionTaskProgress)(URLSessionTask *task);
+typedef enum {
+	URLSESSIONTASK_RUNNING,
+	URLSESSIONTASK_SUSPENDED,
+	URLSESSIONTASK_CANCELING,
+	URLSESSIONTASK_COMPLETED
+} URLSessionTaskState;
 
 /**
  * @brief URL session tasks are handles to pending URL operations.
@@ -89,10 +92,6 @@ struct URLSessionTask {
 		 */
 		id httpHeaders;
 
-		/**
-		 * @brief The Thread that executes this task.
-		 */
-		Thread *thread;
 	} locals;
 
 	/**
@@ -126,31 +125,6 @@ struct URLSessionTask {
 	char *error;
 
 	/**
-	 * @brief `YES` when this task has been cancelled, `NO` otherwise.
-	 */
-	BOOL isCancelled;
-
-	/**
-	 * @brief `YES` when this task is executing, `NO` otherwise.
-	 */
-	BOOL isExecuting;
-
-	/**
-	 * @brief `YES` when this task is finished, `NO` otherwise.
-	 */
-	BOOL isFinished;
-
-	/**
-	 * @brief `YES` when this task is suspended, `NO` otherwise.
-	 */
-	BOOL isSuspended;
-
-	/**
-	 * @brief The progress function.
-	 */
-	URLSessionTaskProgress progress;
-
-	/**
 	 * @brief The request.
 	 */
 	struct URLRequest *request;
@@ -159,6 +133,11 @@ struct URLSessionTask {
 	 * @brief The session.
 	 */
 	struct URLSession *session;
+
+	/**
+	 * @brief The state.
+	 */
+	URLSessionTaskState state;
 };
 
 /**

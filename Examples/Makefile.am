@@ -1,5 +1,5 @@
 
-noinst_PROGRAMS = \
+check_PROGRAMS = \
 	Hello
 
 CFLAGS += \

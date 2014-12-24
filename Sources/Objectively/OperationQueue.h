@@ -100,17 +100,6 @@ struct OperationQueueInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @return The current OperationQueue, or NULL if none can be determined.
-	 *
-	 * @remark This method should only be called from a synchronous Operation
-	 * that was dispatched via an OperationQueue. This method uses thread-local
-	 * storage.
-	 *
-	 * @relates OperationQueue
-	 */
-	OperationQueue *(*currentQueue)(void);
-
-	/**
 	 * @brief Adds an Operation to this queue.
 	 *
 	 * @param operation The Operation to add.
@@ -125,6 +114,17 @@ struct OperationQueueInterface {
 	 * @relates OperationQueue
 	 */
 	void (*cancelAllOperations)(OperationQueue *self);
+
+	/**
+	 * @return The current OperationQueue, or NULL if none can be determined.
+	 *
+	 * @remark This method should only be called from a synchronous Operation
+	 * that was dispatched via an OperationQueue. This method uses thread-local
+	 * storage.
+	 *
+	 * @relates OperationQueue
+	 */
+	OperationQueue *(*currentQueue)(void);
 
 	/**
 	 * @brief Initializes this OperationQueue.

@@ -241,14 +241,17 @@ static String *initWithContentsOfFile(String *self, const char *path) {
 	if (file) {
 		id mem = NULL;
 
-		fseek(file, 0, SEEK_END);
+		int err = fseek(file, 0, SEEK_END);
+		assert(err == 0);
+
 		const size_t length = ftell(file);
 
 		if (length) {
 			mem = malloc(length + 1);
 			assert(mem);
 
-			fseek(file, 0, SEEK_SET);
+			int err = fseek(file, 0, SEEK_SET);
+			assert(err == 0);
 
 			const size_t read = fread(mem, length, 1, file);
 			assert(read == 1);
