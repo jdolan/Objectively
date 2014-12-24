@@ -22,11 +22,16 @@
  */
 
 #include <check.h>
+#include <stdlib.h>
 
 #include <Objectively.h>
 
 BOOL enumerator(const Array *array, id obj, id data) {
 	(*(int *) data)++; return NO;
+}
+
+ORDER comparator(const id obj1, const id obj2) {
+	return $((Number *) obj1, compareTo, (Number *) obj2);
 }
 
 START_TEST(mutableArray)
@@ -83,6 +88,30 @@ START_TEST(mutableArray)
 		$(array, removeAllObjects);
 
 		ck_assert_int_eq(((Array *) array)->count, 0);
+
+		srand(time(NULL));
+
+		for (size_t i = 0; i < 100; i++) {
+
+			Number *number = $$(Number, numberWithValue, rand());
+
+			$(array, addObject, number);
+
+			release(number);
+		}
+
+		$(array, sort, comparator);
+
+		int previous = -1;
+
+		for (size_t i = 0; i < ((Array *) array)->count; i++) {
+
+			Number *number = $((Array *) array, objectAtIndex, i);
+
+			ck_assert_int_ge($(number, intValue), previous);
+
+			previous = $(number, intValue);
+		}
 
 		release(array);
 

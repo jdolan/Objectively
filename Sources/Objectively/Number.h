@@ -137,6 +137,17 @@ struct NumberInterface {
 	int (*intValue)(const Number *self);
 
 	/**
+	 * @brief Returns a new Number with the given value.
+	 *
+	 * @param value The value.
+	 *
+	 * @return The new Number, or `NULL` on error.
+	 *
+	 * @relates Number
+	 */
+	Number *(*numberWithValue)(double value);
+
+	/**
 	 * @return This Number's short value.
 	 *
 	 * @relates Number

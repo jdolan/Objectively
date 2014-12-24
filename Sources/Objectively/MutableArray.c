@@ -180,6 +180,33 @@ static void setObjectAtIndex(MutableArray *self, const id obj, const int index) 
 	self->array.elements[index] = obj;
 }
 
+/**
+ * @brief Wraps the Comparator `data` for `qsort` invocation.
+ *
+ * @param data The Comparator.
+ * @param a The pointer to an element of type id.
+ * @param b The pointer to an element of type id.
+ *
+ * @return The ORDER of `a` to `b`.
+ */
+static int qsortComparator(void *data, const void *a, const void *b) {
+
+	Comparator comparator = data;
+
+	const id obj1 = *(const id *) a;
+	const id obj2 = *(const id *) b;
+
+	return comparator(obj1, obj2);
+}
+
+/**
+ * @see MutableArrayInterface::sort(MutableArray *, Comparator)
+ */
+static void sort(MutableArray *self, Comparator comparator) {
+
+	qsort_r(self->array.elements, self->array.count, sizeof(id), comparator, qsortComparator);
+}
+
 #pragma mark - Class lifecycle
 
 /**
@@ -203,6 +230,7 @@ static void initialize(Class *clazz) {
 	mutableArray->removeObject = removeObject;
 	mutableArray->removeObjectAtIndex = removeObjectAtIndex;
 	mutableArray->setObjectAtIndex = setObjectAtIndex;
+	mutableArray->sort = sort;
 }
 
 Class _MutableArray = {

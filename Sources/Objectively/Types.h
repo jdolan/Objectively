@@ -80,6 +80,13 @@ typedef enum {
 } ORDER;
 
 /**
+ * @brief The Comparator function type for ordering Objects.
+ *
+ * @return The ORDER of `obj1` relative to `obj2`.
+ */
+typedef ORDER (*Comparator)(const id obj1, const id obj2);
+
+/**
  * @return The length of an array.
  */
 #define lengthof(array) \

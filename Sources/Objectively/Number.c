@@ -145,6 +145,13 @@ static int intValue(const Number *self) {
 }
 
 /**
+ * @see NumberInterface::numberWithValue(double)
+ */
+static Number *numberWithValue(double value) {
+	return $(alloc(Number), initWithValue, value);
+}
+
+/**
  * @see NumberInterface::shortValue(const Number *)
  */
 static short shortValue(const Number *self) {
@@ -174,6 +181,7 @@ static void initialize(Class *clazz) {
 	number->longValue = longValue;
 	number->initWithValue = initWithValue;
 	number->intValue = intValue;
+	number->numberWithValue = numberWithValue;
 	number->shortValue = shortValue;
 }
 

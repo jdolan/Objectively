@@ -164,6 +164,15 @@ struct MutableArrayInterface {
 	 * @relates MutableArray
 	 */
 	void (*setObjectAtIndex)(MutableArray *self, const id obj, const int index);
+
+	/**
+	 * @brief Sorts this MutableArray in place using `comparator`.
+	 *
+	 * @param comparator A Comparator.
+	 *
+	 * @relates MutableArray
+	 */
+	void (*sort)(MutableArray *self, Comparator comparator);
 };
 
 /**

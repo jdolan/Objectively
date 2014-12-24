@@ -440,20 +440,18 @@ static String *uppercaseString(const String *self) {
  */
 static BOOL writeToFile(const String *self, const char *path) {
 
-	BOOL ret = NO;
-
 	FILE *file = fopen(path, "w");
 	if (file) {
 
 		const size_t write = fwrite(self->chars, self->length, 1, file);
-		if (write == 1) {
-			ret = YES;
-		}
-
 		fclose(file);
+
+		if (write == 1) {
+			return YES;
+		}
 	}
 
-	return ret;
+	return NO;
 }
 
 #pragma mark - Class lifecycle

@@ -168,10 +168,10 @@ static BOOL writeToFile(const Data *self, const char *path) {
 	FILE *file = fopen(path, "w");
 	if (file) {
 
-		const size_t write = fwrite(self->bytes, 1, self->length, file);
+		const size_t write = fwrite(self->bytes, self->length, 1, file);
 		fclose(file);
 
-		if (write == self->length) {
+		if (write == 1) {
 			return YES;
 		}
 	}
