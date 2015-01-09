@@ -32,7 +32,6 @@
  * @brief Mutable strings.
  */
 
-typedef struct MutableString MutableString;
 typedef struct MutableStringInterface MutableStringInterface;
 
 /**
@@ -57,7 +56,9 @@ struct MutableString {
 	MutableStringInterface *interface;
 
 	/**
-	 * @brief The capacity, which is always `>= self->string.length`.
+	 * @brief The capacity of the String, in Unicode code points.
+	 *
+	 * @remark The capacity is always `>= self->string.length`.
 	 *
 	 * @private
 	 */
@@ -75,19 +76,9 @@ struct MutableStringInterface {
 	StringInterface stringInterface;
 
 	/**
-	 * @brief Appends `bytes` to this MutableString.
+	 * @brief Appends the specified UTF-8 encoded C string.
 	 *
-	 * @param bytes The bytes to append.
-	 * @param length The length of `bytes`, excluding the terminating char.
-	 *
-	 * @relates MutableString
-	 */
-	void (*appendBytes)(MutableString *self, const byte *bytes, size_t length);
-
-	/**
-	 * @brief Appends `chars` to this MutableString.
-	 *
-	 * @param chars The characters to append.
+	 * @param chars A UTF-encoded C string.
 	 *
 	 * @relates MutableString
 	 */

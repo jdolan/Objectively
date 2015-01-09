@@ -32,7 +32,7 @@ START_TEST(string)
 		ck_assert(string);
 		ck_assert_ptr_eq(&_MutableString, classof(string));
 
-		String *hello = $$(String, stringWithCharacters, "hello");
+		String *hello = str("hello");
 
 		$(string, appendString, hello);
 		ck_assert_str_eq("hello", string->string.chars);
@@ -40,7 +40,7 @@ START_TEST(string)
 		$(string, appendFormat, " %s", "world!");
 		ck_assert_str_eq("hello world!", string->string.chars);
 
-		String *goodbye = $$(String, stringWithCharacters, "goodbye cruel");
+		String *goodbye = str("goodbye cruel");
 
 		RANGE range = { 0, 5 };
 		$(string, replaceCharactersInRange, range, goodbye);

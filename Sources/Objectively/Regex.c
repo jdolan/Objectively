@@ -49,7 +49,7 @@ static String *description(const Object *self) {
 
 	const Regex *this = (Regex *) self;
 
-	return $(alloc(String), initWithCharacters, this->pattern);
+	return $$(String, stringWithCharacters, this->pattern);
 }
 
 /**
@@ -76,7 +76,7 @@ static int hash(const Object *self) {
 	hash = HashForInteger(hash, this->options);
 
 	const RANGE range = { 0, strlen(this->pattern) };
-	hash = HashForCharacters(hash, this->pattern, range);
+	hash = HashForBytes(hash, (byte *) this->pattern, range);
 
 	return hash;
 }

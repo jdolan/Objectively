@@ -145,11 +145,18 @@ extern void release(id obj);
 /**
  * @brief Atomically increment the given Object's reference count.
  *
+ * @return The Object.
+ *
  * @remark By calling this, the caller is expressing ownership of the Object,
  * and preventing it from being released. Be sure to balance calls to `retain`
  * with calls to `release`.
  */
-extern void retain(id obj);
+extern id retain(id obj);
+
+/**
+ * @brief The page size, in bytes, of the target host.
+ */
+extern size_t _pageSize;
 
 /**
  * @brief Allocate a type.

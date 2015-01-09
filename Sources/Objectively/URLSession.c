@@ -178,8 +178,10 @@ static id run(Thread *thread) {
 				});
 			} else if (task->state == URLSESSIONTASK_SUSPENDED) {
 
-				err = curl_easy_pause(task->locals.handle, CURLPAUSE_ALL);
-				assert(err == CURLE_OK);
+				if (task->locals.handle) {
+					err = curl_easy_pause(task->locals.handle, CURLPAUSE_ALL);
+					assert(err == CURLE_OK);
+				}
 			}
 		}
 

@@ -67,9 +67,7 @@ static void addObject(MutableArray *self, const id obj) {
 		assert(array->elements);
 	}
 
-	retain(obj);
-
-	array->elements[array->count++] = obj;
+	array->elements[array->count++] = retain(obj);
 }
 
 /**

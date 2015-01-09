@@ -275,7 +275,7 @@ static String *readString(JSONReader *reader) {
 	assert(b == '"');
 
 	const size_t length = reader->b - bytes - 1;
-	return $(alloc(String), initWithBytes, bytes + 1, length);
+	return $$(String, stringWithBytes, bytes + 1, length, STRING_ENCODING_UTF8);
 }
 
 /**
@@ -293,7 +293,7 @@ static Number *readNumber(JSONReader *reader) {
 	assert(end > bytes);
 	reader->b = end - 1;
 
-	return $(alloc(Number), initWithValue, d);
+	return $$(Number, numberWithValue, d);
 }
 
 /**
@@ -330,6 +330,7 @@ static Boolean *readBoolean(JSONReader *reader) {
 static Null *readNull(JSONReader *reader) {
 
 	consumeBytes(reader, "null");
+
 	Null *null = $$(Null, null);
 
 	retain(null);

@@ -89,17 +89,6 @@ struct NumberFormatterInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * Parses a Number from `chars`.
-	 *
-	 * @param chars The characters to parse.
-	 *
-	 * @return A Number instance, or `NULL` on error.
-	 *
-	 * @relates NumberFormatter
-	 */
-	Number *(*numberFromCharacters)(const NumberFormatter *self, const char *chars);
-
-	/**
 	 * Parses a Number from the specified String.
 	 *
 	 * @param string The String to parse.

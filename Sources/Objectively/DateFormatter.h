@@ -65,7 +65,7 @@ struct DateFormatter {
 	DateFormatterInterface *interface;
 
 	/**
-	 * @brief The format string.
+	 * @brief The UTF-8 encoded format string.
 	 */
 	const char *fmt;
 };
@@ -81,9 +81,9 @@ struct DateFormatterInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * Parses a Date from `chars`.
+	 * Parses a Date from the specified UTF-8 encoded C string.
 	 *
-	 * @param chars The characters to parse.
+	 * @param string The String to parse.
 	 *
 	 * @return A Date instance, or `NULL` on error.
 	 *

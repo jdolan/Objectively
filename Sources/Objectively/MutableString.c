@@ -29,7 +29,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
 
 #include <Objectively/MutableString.h>
 
@@ -49,43 +48,38 @@ static Object *copy(const Object *self) {
 
 #pragma mark - MutableStringInterface
 
-static size_t pageSize;
-
-/**
- * @see MutableStringInterface::appendBytes(MutableString *, const byte *, size_t)
- */
-static void appendBytes(MutableString *self, const byte *bytes, size_t length) {
-
-	if (length) {
-
-		const size_t newSize = self->string.length + length + 1;
-		const size_t newCapacity = (newSize / pageSize + 1) * pageSize;
-
-		if (newCapacity > self->capacity) {
-
-			if (self->string.length) {
-				self->string.chars = realloc(self->string.chars, newCapacity);
-			} else {
-				self->string.chars = malloc(newCapacity);
-			}
-
-			assert(self->string.chars);
-			self->capacity = newCapacity;
-		}
-
-		memcpy(self->string.chars + self->string.length, bytes, length);
-		self->string.chars[newSize - 1] = '\0';
-
-		self->string.length += length;
-	}
-}
-
 /**
  * @see MutableStringInterface::appendCharacters(MutableString *, const char *)
  */
 static void appendCharacters(MutableString *self, const char *chars) {
 
-	$(self, appendBytes, (byte *) chars, strlen(chars));
+	if (chars) {
+
+		const size_t len = strlen(chars);
+		if (len) {
+
+			const size_t newSize = self->string.length + strlen(chars) + 1;
+			const size_t newCapacity = (newSize / _pageSize + 1) * _pageSize;
+
+			if (newCapacity > self->capacity) {
+
+				if (self->string.length) {
+					self->string.chars = realloc(self->string.chars, newCapacity);
+				} else {
+					self->string.chars = malloc(newCapacity);
+				}
+
+				assert(self->string.chars);
+				self->capacity = newCapacity;
+			}
+
+			id ptr = self->string.chars + self->string.length;
+			memmove(ptr, chars, len);
+
+			self->string.chars[newSize - 1] = '\0';
+			self->string.length += len;
+		}
+	}
 }
 
 /**
@@ -96,12 +90,14 @@ static void appendFormat(MutableString *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	id mem;
-	const size_t length = vaStringPrintf(&mem, fmt, args);
+	char *chars;
 
+	const int len = vasprintf(&chars, fmt, args);
 	va_end(args);
 
-	$(self, appendBytes, (byte *) mem, length);
+	$(self, appendCharacters, chars);
+
+	free(chars);
 }
 
 /**
@@ -110,7 +106,7 @@ static void appendFormat(MutableString *self, const char *fmt, ...) {
 static void appendString(MutableString *self, const String *string) {
 
 	if (string) {
-		$(self, appendBytes, (byte *) string->chars, string->length);
+		$(self, appendCharacters, string->chars);
 	}
 }
 
@@ -123,9 +119,9 @@ static void deleteCharactersInRange(MutableString *self, const RANGE range) {
 	assert(range.length <= self->string.length);
 
 	id ptr = self->string.chars + range.location;
-	const size_t len = self->string.length - range.location - range.length;
+	const size_t length = self->string.length - range.location - range.length;
 
-	memmove(ptr, ptr + range.length, len);
+	memmove(ptr, ptr + range.length, length);
 }
 
 /**
@@ -143,11 +139,7 @@ static MutableString *initWithString(MutableString *self, const String *string) 
 
 	self = $(self, init);
 	if (self) {
-
-		if (string) {
-			self->string.locale = string->locale;
-			$(self, appendString, string);
-		}
+		$(self, appendString, string);
 	}
 
 	return self;
@@ -161,15 +153,12 @@ static void replaceCharactersInRange(MutableString *self, const RANGE range, con
 	assert(range.location >= 0);
 	assert(range.length <= self->string.length);
 
-	const char *c = self->string.chars + range.location + range.length;
-	String *remainder = $(alloc(String), initWithCharacters, c);
+	String *remainder = str(self->string.chars + range.location + range.length);
 
 	self->string.length = range.location;
 	self->string.chars[self->string.length] = '\0';
 
-	if (string) {
-		$(self, appendString, string);
-	}
+	$(self, appendString, string);
 	$(self, appendString, remainder);
 
 	release(remainder);
@@ -204,7 +193,6 @@ static void initialize(Class *clazz) {
 
 	MutableStringInterface *mutableString = (MutableStringInterface *) clazz->interface;
 
-	mutableString->appendBytes = appendBytes;
 	mutableString->appendCharacters = appendCharacters;
 	mutableString->appendFormat = appendFormat;
 	mutableString->appendString = appendString;
@@ -214,8 +202,6 @@ static void initialize(Class *clazz) {
 	mutableString->replaceCharactersInRange = replaceCharactersInRange;
 	mutableString->string = string;
 	mutableString->stringWithCapacity = stringWithCapacity;
-
-	pageSize = sysconf(_SC_PAGESIZE);
 }
 
 Class _MutableString = {

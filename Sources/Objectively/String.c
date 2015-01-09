@@ -24,7 +24,7 @@
 #include "config.h"
 
 #include <assert.h>
-#include <locale.h>
+#include <iconv.h>
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -44,7 +44,7 @@
 static Object *copy(const Object *self) {
 
 	String *this = (String *) self;
-	String *that = $(alloc(String), initWithCharacters, this->chars);
+	String *that = $$(String, stringWithCharacters, this->chars);
 
 	return (Object *) that;
 }
@@ -56,9 +56,7 @@ static void dealloc(Object *self) {
 
 	String *this = (String *) self;
 
-	if (this->chars) {
-		free(this->chars);
-	}
+	free(this->chars);
 
 	super(Object, self, dealloc);
 }
@@ -97,7 +95,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		const String *this = (String *) self;
 		const String *that = (String *) other;
 
-		if (this->locale == that->locale) {
+		if (this->length == that->length) {
 
 			const RANGE range = { 0, this->length };
 			return $(this, compareTo, that, range) == SAME;
@@ -197,22 +195,76 @@ static BOOL hasSuffix(const String *self, const String *suffix) {
 	return $(self, compareTo, suffix, range) == SAME;
 }
 
-/**
- * @see StringInterface::initWithBytes(String *, const byte *, size_t)
- */
-static String *initWithBytes(String *self, const byte *bytes, size_t length) {
+typedef struct {
+	StringEncoding to;
+	StringEncoding from;
+	char *in;
+	char *out;
+	size_t length;
+	size_t size;
+} Transcode;
 
-	id mem = NULL;
+/**
+ * @brief Transcodes input from one character encoding to another via `iconv`.
+ *
+ * @param trans A Transcode struct.
+ *
+ * @return The number of bytes written to `trans->out`.
+ */
+static size_t transcode(Transcode *trans) {
+
+	assert(trans);
+	assert(trans->to);
+	assert(trans->from);
+	assert(trans->out);
+	assert(trans->size);
+
+	iconv_t cd = iconv_open(NameForStringEncoding(trans->to), NameForStringEncoding(trans->from));
+	assert(cd != (iconv_t ) -1);
+
+	char *in = trans->in;
+	char *out = trans->out;
+
+	size_t inBytesRemaining = trans->length;
+	size_t outBytesRemaining = trans->size;
+
+	const size_t ret = iconv(cd, &in, &inBytesRemaining, &out, &outBytesRemaining);
+	assert(ret != (size_t ) -1);
+
+	int err = iconv_close(cd);
+	assert(err == 0);
+
+	return trans->size - outBytesRemaining;
+}
+
+/**
+ * @see StringInterface::initWithBytes(String *, const byte *, size_t, StringEncoding)
+ */
+static String *initWithBytes(String *self, const byte *bytes, size_t length, StringEncoding encoding) {
+
 	if (bytes) {
 
-		mem = malloc(length + 1);
+		Transcode trans = {
+			.to = STRING_ENCODING_UTF8,
+			.from = encoding,
+			.in = (char *) bytes,
+			.out = calloc(length * 4 + 1, sizeof(char)),
+			.length = length,
+			.size = length * 4 + 1
+		};
+
+		assert(trans.out);
+
+		const size_t size = transcode(&trans);
+		assert(size < trans.size);
+
+		id mem = realloc(trans.out, size + 1);
 		assert(mem);
 
-		memcpy(mem, bytes, length);
-		*(char *) (mem + length) = '\0';
+		return $(self, initWithMemory, mem, size);
 	}
 
-	return $(self, initWithMemory, mem, length);
+	return $(self, initWithMemory, NULL, 0);
 }
 
 /**
@@ -221,60 +273,41 @@ static String *initWithBytes(String *self, const byte *bytes, size_t length) {
 static String *initWithCharacters(String *self, const char *chars) {
 
 	if (chars) {
-		char *str = strdup(chars);
-		assert(str);
 
-		return $(self, initWithMemory, str, strlen(str));
-	}
+		id mem = strdup(chars);
+		assert(mem);
 
-	return $(self, initWithMemory, NULL, 0);
-}
-
-/**
- * @see StringInterface::initWithContentsOfFile(String *, const char *)
- */
-static String *initWithContentsOfFile(String *self, const char *path) {
-
-	assert(path);
-
-	FILE *file = fopen(path, "r");
-	if (file) {
-		id mem = NULL;
-
-		int err = fseek(file, 0, SEEK_END);
-		assert(err == 0);
-
-		const size_t length = ftell(file);
-
-		if (length) {
-			mem = malloc(length + 1);
-			assert(mem);
-
-			int err = fseek(file, 0, SEEK_SET);
-			assert(err == 0);
-
-			const size_t read = fread(mem, length, 1, file);
-			assert(read == 1);
-
-			*(char *) (mem + length) = '\0';
-		}
-
-		fclose(file);
+		size_t length = strlen(chars);
 
 		return $(self, initWithMemory, mem, length);
 	}
 
+	return $(self, initWithMemory, NULL, 0);
+
+}
+
+/**
+ * @see StringInterface::initWithContentsOfFile(String *, const char *, StringEncoding)
+ */
+static String *initWithContentsOfFile(String *self, const char *path, StringEncoding encoding) {
+
+	Data *data = $$(Data, dataWithContentsOfFile, path);
+	if (data) {
+		return $(self, initWithData, data, encoding);
+	}
+
+	release(self);
 	return NULL;
 }
 
 /**
- * @see StringInterface::initWithData(String *, const Data *)
+ * @see StringInterface::initWithData(String *, const Data *, StringEncoding)
  */
-static String *initWithData(String *self, const Data *data) {
+static String *initWithData(String *self, const Data *data, StringEncoding encoding) {
 
 	assert(data);
 
-	return $(self, initWithBytes, data->bytes, data->length);
+	return $(self, initWithBytes, data->bytes, data->length, encoding);
 }
 
 /**
@@ -285,22 +318,20 @@ static String *initWithFormat(String *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	id mem;
-	const size_t length = vaStringPrintf(&mem, fmt, args);
+	self = $(self, initWithVaList, fmt, args);
 
 	va_end(args);
 
-	return $(self, initWithMemory, mem, length);
+	return self;
 }
 
 /**
  * @see StringInterface::initWithMemory(String *, id, size_t)
  */
-static String *initWithMemory(String *self, id mem, size_t length) {
+static String *initWithMemory(String *self, const id mem, size_t length) {
 
 	self = (String *) super(Object, self, init);
 	if (self) {
-		self->locale = LC_GLOBAL_LOCALE;
 
 		if (mem) {
 			self->chars = (char *) mem;
@@ -312,17 +343,44 @@ static String *initWithMemory(String *self, id mem, size_t length) {
 }
 
 /**
+ * @see StringInterface::initWithVaList(String *, const char *, va_list)
+ */
+static String *initWithVaList(String *self, const char *fmt, va_list args) {
+
+	self = (String *) super(Object, self, init);
+	if (self) {
+
+		if (fmt) {
+			const int len = vasprintf(&self->chars, fmt, args);
+			assert(len >= 0);
+
+			self->length = len;
+		}
+	}
+
+	return self;
+}
+
+/**
+ * @see StringInterface::lowercaseStringWithLocale(const String *, const Locale)
+ */
+static String *lowercaseStringWithLocale(const String *self, const Locale locale) {
+
+	String *string = (String *) $((Object * ) self, copy);
+
+	for (size_t i = 0; i < string->length; i++) {
+		string->chars[i] = tolower_l(string->chars[i], locale);
+	}
+
+	return string;
+}
+
+/**
  * @see StringInterface::lowercaseString(const String *)
  */
 static String *lowercaseString(const String *self) {
 
-	String *string = (String *) $((Object *) self, copy);
-
-	for (size_t i = 0; i < string->length; i++) {
-		string->chars[i] = tolower_l(string->chars[i], self->locale);
-	}
-
-	return string;
+	return $(self, lowercaseStringWithLocale, LC_GLOBAL_LOCALE);
 }
 
 /**
@@ -361,11 +419,11 @@ static RANGE rangeOfString(const String *self, const String *string, const RANGE
 }
 
 /**
- * @see StringInterface::stringWithBytes(const byte *, size_t)
+ * @see StringInterface::stringWithBytes(const byte *, size_t, StringEncoding)
  */
-static String *stringWithBytes(const byte *bytes, size_t length) {
+static String *stringWithBytes(const byte *bytes, size_t length, StringEncoding encoding) {
 
-	return $(alloc(String), initWithBytes, bytes, length);
+	return $(alloc(String), initWithBytes, bytes, length, encoding);
 }
 
 /**
@@ -377,19 +435,19 @@ static String *stringWithCharacters(const char *chars) {
 }
 
 /**
- * @see StringInterface::stringWithContentsOfFile(const char *)
+ * @see StringInterface::stringWithContentsOfFile(const char *, StringEncoding)
  */
-static String *stringWithContentsOfFile(const char *path) {
+static String *stringWithContentsOfFile(const char *path, StringEncoding encoding) {
 
-	return $(alloc(String), initWithContentsOfFile, path);
+	return $(alloc(String), initWithContentsOfFile, path, encoding);
 }
 
 /**
- * @see StringInterface::stringWithData(const Data *data)
+ * @see StringInterface::stringWithData(const Data *data, StringEncoding)
  */
-static String *stringWithData(const Data *data) {
+static String *stringWithData(const Data *data, StringEncoding encoding) {
 
-	return $(alloc(String), initWithData, data);
+	return $(alloc(String), initWithData, data, encoding);
 }
 
 /**
@@ -400,10 +458,17 @@ static String *stringWithFormat(const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	id mem;
-	const size_t length = vaStringPrintf(&mem, fmt, args);
+	String *string = $(alloc(String), initWithVaList, fmt, args);
 
 	va_end(args);
+
+	return string;
+}
+
+/**
+ * @see StringInterface::stringWithMemory(const id, size_t)
+ */
+static String *stringWithMemory(const id mem, size_t length) {
 
 	return $(alloc(String), initWithMemory, mem, length);
 }
@@ -416,7 +481,9 @@ static String *substring(const String *self, const RANGE range) {
 	assert(range.location + range.length <= self->length);
 
 	id mem = calloc(range.length + 1, sizeof(char));
-	memcpy(mem, self->chars + range.location, range.length);
+	assert(mem);
+
+	strncpy(mem, self->chars + range.location, range.length);
 
 	return $(alloc(String), initWithMemory, mem, range.length);
 }
@@ -426,32 +493,48 @@ static String *substring(const String *self, const RANGE range) {
  */
 static String *uppercaseString(const String *self) {
 
+	return $(self, uppercaseStringWithLocale, LC_GLOBAL_LOCALE);
+}
+
+/**
+ * @see StringInterface::uppercaseStringWithLocale(const String *, const Locale)
+ */
+static String *uppercaseStringWithLocale(const String *self, const Locale locale) {
+
 	String *string = (String *) $((Object *) self, copy);
 
 	for (size_t i = 0; i < string->length; i++) {
-		string->chars[i] = toupper_l(string->chars[i], self->locale);
+		string->chars[i] = toupper_l(string->chars[i], locale);
 	}
 
 	return string;
 }
 
 /**
- * @see StringInterface::writeToFile(const String *, const char *)
+ * @see StringInterface::writeToFile(const String *, const char *, StringEncoding)
  */
-static BOOL writeToFile(const String *self, const char *path) {
+static BOOL writeToFile(const String *self, const char *path, StringEncoding encoding) {
 
-	FILE *file = fopen(path, "w");
-	if (file) {
+	Transcode trans = {
+		.to = encoding,
+		.from = STRING_ENCODING_UTF8,
+		.in = self->chars,
+		.length = self->length,
+		.out = calloc(self->length * 4 + 4, sizeof(char)),
+		.size = self->length * 4 + 4
+	};
 
-		const size_t write = fwrite(self->chars, self->length, 1, file);
-		fclose(file);
+	assert(trans.out);
 
-		if (write == 1) {
-			return YES;
-		}
-	}
+	const size_t size = transcode(&trans);
+	assert(size < trans.size);
 
-	return NO;
+	Data *data = $$(Data, dataWithMemory, trans.out, size);
+
+	const BOOL ret = $(data, writeToFile, path);
+
+	release(data);
+	return ret;
 }
 
 #pragma mark - Class lifecycle
@@ -482,7 +565,9 @@ static void initialize(Class *clazz) {
 	string->initWithData = initWithData;
 	string->initWithFormat = initWithFormat;
 	string->initWithMemory = initWithMemory;
+	string->initWithVaList = initWithVaList;
 	string->lowercaseString = lowercaseString;
+	string->lowercaseStringWithLocale = lowercaseStringWithLocale;
 	string->rangeOfCharacters = rangeOfCharacters;
 	string->rangeOfString = rangeOfString;
 	string->stringWithBytes = stringWithBytes;
@@ -490,8 +575,10 @@ static void initialize(Class *clazz) {
 	string->stringWithContentsOfFile = stringWithContentsOfFile;
 	string->stringWithData = stringWithData;
 	string->stringWithFormat = stringWithFormat;
+	string->stringWithMemory = stringWithMemory;
 	string->substring = substring;
 	string->uppercaseString = uppercaseString;
+	string->uppercaseStringWithLocale = uppercaseStringWithLocale;
 	string->writeToFile = writeToFile;
 }
 
@@ -506,20 +593,55 @@ Class _String = {
 
 #undef _Class
 
-/**
- * @brief A helper for initializing Strings from formatted C strings.
- */
-size_t vaStringPrintf(id *mem, const char *fmt, va_list args) {
+const char *NameForStringEncoding(StringEncoding encoding) {
 
-	*mem = NULL;
-	size_t length = 0;
+	switch (encoding) {
+		case STRING_ENCODING_ASCII:
+			return "ASCII";
+		case STRING_ENCODING_LATIN1:
+			return "ISO-8859-1";
+		case STRING_ENCODING_LATIN2:
+			return "ISO-8859-2";
+		case STRING_ENCODING_MACROMAN:
+			return "MacRoman";
+		case STRING_ENCODING_UTF16:
+			return "UTF-16";
+		case STRING_ENCODING_UTF32:
+			return "UTF-32";
+		case STRING_ENCODING_UTF8:
+			return "UTF-8";
+	}
+}
 
-	if (fmt) {
-		int err = vasprintf((char **) mem, fmt, args);
-		if (err >= 0) {
-			length = err;
-		}
+StringEncoding StringEncodingForName(const char *name) {
+
+	if (strcasecmp("ASCII", name) == 0) {
+		return STRING_ENCODING_ASCII;
+	} else if (strcasecmp("ISO-8859-1", name) == 0) {
+		return STRING_ENCODING_LATIN1;
+	} else if (strcasecmp("ISO-8859-2", name) == 0) {
+		return STRING_ENCODING_LATIN2;
+	} else if (strcasecmp("MacRoman", name) == 0) {
+		return STRING_ENCODING_MACROMAN;
+	} else if (strcasecmp("UTF-16", name) == 0) {
+		return STRING_ENCODING_UTF16;
+	} else if (strcasecmp("UTF-32", name) == 0) {
+		return STRING_ENCODING_UTF32;
+	} else if (strcasecmp("UTF-8", name) == 0) {
+		return STRING_ENCODING_UTF8;
 	}
 
-	return length;
+	return STRING_ENCODING_ASCII;
+}
+
+String *str(const char *fmt, ...) {
+
+	va_list args;
+	va_start(args, fmt);
+
+	String *string = $(alloc(String), initWithVaList, fmt, args);
+
+	va_end(args);
+
+	return string;
 }

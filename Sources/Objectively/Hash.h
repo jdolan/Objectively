@@ -38,6 +38,17 @@
 #define HASH_SEED 13
 
 /**
+ * @brief Accumulates the hash value of `bytes` into `hash`.
+ *
+ * @param hash The hash accumulator.
+ * @param bytes The bytes to hash.
+ * @param range The RANGE to hash.
+ *
+ * @return The accumulated hash value.
+ */
+extern int HashForBytes(int hash, const byte *bytes, const RANGE range);
+
+/**
  * @brief Accumulates the hash value of `chars` into `hash`.
  *
  * @param hash The hash accumulator.

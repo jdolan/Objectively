@@ -68,6 +68,14 @@ static BOOL isEqual(const Object *self, const Object *other) {
 #pragma mark - DateInterface
 
 /**
+ * @see DateInterface::date(void)
+ */
+static Date *date(void) {
+
+	return $$(Date, dateWithTimeSinceNow, NULL);
+}
+
+/**
  * @see DateInterface::dateWithTimeSinceNow(const Time *)
  */
 static Date *dateWithTimeSinceNow(const Time *interval) {
@@ -141,12 +149,13 @@ static void initialize(Class *clazz) {
 	object->hash = hash;
 	object->isEqual = isEqual;
 
-	DateInterface *date = (DateInterface *) clazz->interface;
+	DateInterface *interface = (DateInterface *) clazz->interface;
 
-	date->dateWithTimeSinceNow = dateWithTimeSinceNow;
-	date->compareTo = compareTo;
-	date->init = init;
-	date->initWithTime = initWithTime;
+	interface->date = date;
+	interface->dateWithTimeSinceNow = dateWithTimeSinceNow;
+	interface->compareTo = compareTo;
+	interface->init = init;
+	interface->initWithTime = initWithTime;
 }
 
 Class _Date = {

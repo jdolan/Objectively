@@ -33,7 +33,7 @@ START_TEST(regex)
 
 		ck_assert_int_eq(2, regex->numberOfSubExpressions);
 
-		String *url = $(alloc(String), initWithCharacters, "http://github.com");
+		String *url = str("http://github.com");
 
 		RANGE *matches;
 		ck_assert($(regex, matchesString, url, 0, &matches));

@@ -69,7 +69,7 @@ static int hash(const Object *self) {
 	hash = HashForInteger(hash, this->length);
 
 	const RANGE range = { 0, this->length };
-	hash = HashForCharacters(hash, (char *) this->bytes, range);
+	hash = HashForBytes(hash, this->bytes, range);
 
 	return hash;
 }
@@ -99,7 +99,23 @@ static BOOL isEqual(const Object *self, const Object *other) {
 #pragma mark - DataInterface
 
 /**
- * @see DataInterface::initWithBytes(Data *, const byte *, const size_t)
+ * @see DataInterface::dataWithBytes(const byte *, size_t)
+ */
+static Data *dataWithBytes(const byte *bytes, size_t length) {
+
+	return $(alloc(Data), initWithBytes, bytes, length);
+}
+
+/**
+ * @see DataInterface::dataWithContentsOfFile(const char *)
+ */
+static Data *dataWithContentsOfFile(const char *path) {
+
+	return $(alloc(Data), initWithContentsOfFile, path);
+}
+
+/**
+ * @see DataInterface::initWithBytes(Data *, const byte *, size_t)
  */
 static Data *initWithBytes(Data *self, const byte *bytes, size_t length) {
 
@@ -109,6 +125,14 @@ static Data *initWithBytes(Data *self, const byte *bytes, size_t length) {
 	memcpy(mem, bytes, length);
 
 	return $(self, initWithMemory, mem, length);
+}
+
+/**
+ * @see DataInterface::dataWithMemory(const id, size_t)
+ */
+static Data *dataWithMemory(const id mem, size_t length) {
+
+	return $(alloc(Data), initWithMemory, mem, length);
 }
 
 /**
@@ -143,13 +167,14 @@ static Data *initWithContentsOfFile(Data *self, const char *path) {
 		return $(self, initWithMemory, mem, length);
 	}
 
+	release(self);
 	return NULL;
 }
 
 /**
- * @see DataInterface::initWithMemory(Data *, id, size_t)
+ * @see DataInterface::initWithMemory(Data *, const id, size_t)
  */
-static Data *initWithMemory(Data *self, id mem, size_t length) {
+static Data *initWithMemory(Data *self, const id mem, size_t length) {
 
 	self = (Data *) super(Object, self, init);
 	if (self) {
@@ -195,6 +220,9 @@ static void initialize(Class *clazz) {
 
 	DataInterface *data = (DataInterface *) clazz->interface;
 
+	data->dataWithBytes = dataWithBytes;
+	data->dataWithContentsOfFile = dataWithContentsOfFile;
+	data->dataWithMemory = dataWithMemory;
 	data->initWithBytes = initWithBytes;
 	data->initWithContentsOfFile = initWithContentsOfFile;
 	data->initWithMemory = initWithMemory;

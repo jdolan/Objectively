@@ -97,9 +97,18 @@ struct DateInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @brief Instantiates a Date with the given Time since now.
+	 * @brief Returns a new Date with the current Time.
 	 *
-	 * @return The new Date instance, or NULL on error.
+	 * @return The new Date, or `NULL` on error.
+	 *
+	 * @relates Date
+	 */
+	Date *(*date)(void);
+
+	/**
+	 * @brief Returns a new Date with the given Time since now.
+	 *
+	 * @return The new Date, or `NULL` on error.
 	 *
 	 * @relates Date
 	 */

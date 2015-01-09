@@ -94,7 +94,7 @@ struct ErrorInterface {
 	 *
 	 * @relates Error
 	 */
-	Error *(*initWithDomain)(Error *self, const char *domain, int code, const char *message);
+	Error *(*initWithDomain)(Error *self, String *domain, int code, String *message);
 };
 
 /**

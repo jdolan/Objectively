@@ -54,13 +54,15 @@ static id objectWithPath(const id root, const char *path) {
 		const byte *bytes = (byte *) c + matches[1].location;
 		const size_t length = matches[1].length;
 
-		String *segment = $(alloc(String), initWithBytes, bytes, matches[1].length);
+		String *segment = $$(String, stringWithBytes, bytes, length, STRING_ENCODING_UTF8);
 		c += length;
 
 		if (*segment->chars == '.') {
 
 			Dictionary *dictionary = cast(Dictionary, obj);
-			String *key = $(alloc(String), initWithCharacters, segment->chars + 1);
+
+			const RANGE range = { .location = 1, .length = segment->length - 1 };
+			String *key = $(segment, substring, range);
 
 			obj = $(dictionary, objectForKey, key);
 

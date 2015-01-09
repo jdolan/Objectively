@@ -39,9 +39,9 @@ START_TEST(mutableDictionary)
 		Object *objectTwo = alloc(Object);
 		Object *objectThree = alloc(Object);
 
-		String *keyOne = $(alloc(String), initWithCharacters, "one");
-		String *keyTwo = $(alloc(String), initWithCharacters, "two");
-		String *keyThree = $(alloc(String), initWithCharacters, "three");
+		String *keyOne = str("one");
+		String *keyTwo = str("two");
+		String *keyThree = str("three");
 
 		$(dict, setObjectForKey, objectOne, keyOne);
 		$(dict, setObjectForKey, objectTwo, keyTwo);

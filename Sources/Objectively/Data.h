@@ -80,10 +80,45 @@ struct DataInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @brief Initializes this Data by copying `bytes`.
+	 * @brief Returns a new Data by copying `length` of `bytes`.
 	 *
 	 * @param bytes The bytes.
-	 * @param length The length of bytes.
+	 * @param length The length of `bytes` to copy.
+	 *
+	 * @return The new Data, or `NULL` on error.
+	 *
+	 * @relates Data
+	 */
+	Data *(*dataWithBytes)(const byte *bytes, size_t length);
+
+	/**
+	 * @brief Returns a new Data with the contents of `path`.
+	 *
+	 * @param path The path of the file to read into memory.
+	 *
+	 * @return The new Data, or `NULL` on error.
+	 *
+	 * @relates Data
+	 */
+	Data *(*dataWithContentsOfFile)(const char *path);
+
+	/**
+	 * @brief Returns a new Data, taking ownership of the specified memory.
+	 *
+	 * @param mem The dynamically allocated memory to back this Data.
+	 * @param length The length of `mem` in bytes.
+	 *
+	 * @return The new Data, or `NULL` on error.
+	 *
+	 * @relates Data
+	 */
+	Data *(*dataWithMemory)(const id mem, size_t length);
+
+	/**
+	 * @brief Initializes this Data by copying `length` of `bytes`.
+	 *
+	 * @param bytes The bytes.
+	 * @param length The length of `bytes` to copy.
 	 *
 	 * @return The initialized Data, or `NULL` on error.
 	 *
@@ -112,7 +147,7 @@ struct DataInterface {
 	 *
 	 * @relates Data
 	 */
-	Data *(*initWithMemory)(Data *self, id mem, size_t length);
+	Data *(*initWithMemory)(Data *self, const id mem, size_t length);
 
 	/**
 	 * @brief Writes this Data to `path`.

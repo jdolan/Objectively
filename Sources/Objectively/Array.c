@@ -176,7 +176,7 @@ static Array *arrayWithObjects(id obj, ...) {
 			id *elt = array->elements;
 
 			while (object) {
-				retain(*elt++ = object);
+				*elt++ = retain(object);
 				object = va_arg(args, id);
 			}
 
@@ -260,7 +260,7 @@ static Array *initWithArray(Array *self, const Array *array) {
 			assert(self->elements);
 
 			for (size_t i = 0; i < self->count; i++) {
-				retain(self->elements[i] = array->elements[i]);
+				self->elements[i] = retain(array->elements[i]);
 			}
 		}
 	}
@@ -293,7 +293,7 @@ static Array *initWithObjects(Array *self, ...) {
 			va_start(args, self);
 
 			for (size_t i = 0; i < self->count; i++) {
-				retain(self->elements[i] = va_arg(args, id));
+				self->elements[i] = retain(va_arg(args, id));
 			}
 
 			va_end(args);

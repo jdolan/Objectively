@@ -36,15 +36,15 @@
  * @see DateFormatterInterface::dateFromCharacters(const DateFormatter *, const char *)
  */
 static Date *dateFromCharacters(const DateFormatter *self, const char *chars) {
-	struct tm time;
 
-	const char *res = strptime(chars, self->fmt, &time);
-	if (res) {
-		const Time t = {
-			.tv_sec = mktime(&time)
-		};
+	if (chars) {
+		struct tm time;
 
-		return $(alloc(Date), initWithTime, &t);
+		const char *res = strptime(chars, self->fmt, &time);
+		if (res) {
+			const Time t = { .tv_sec = mktime(&time) };
+			return $(alloc(Date), initWithTime, &t);
+		}
 	}
 
 	return NULL;
@@ -55,9 +55,11 @@ static Date *dateFromCharacters(const DateFormatter *self, const char *chars) {
  */
 static Date *dateFromString(const DateFormatter *self, const String *string) {
 
-	assert(string);
+	if (string) {
+		return $(self, dateFromCharacters, string->chars);
+	}
 
-	return $(self, dateFromCharacters, string->chars);
+	return NULL;
 }
 
 /**
@@ -84,15 +86,14 @@ static String *stringFromDate(const DateFormatter *self, const Date *date) {
 	id res = localtime_r(&seconds, &time);
 	assert(res == &time);
 
-	char *str = calloc(128, 1);
+	char *str = calloc(1024, sizeof(char));
 	assert(str);
 
-	const size_t len = strftime(str, 128, self->fmt, &time);
-
-	str = realloc(str, len);
+	const size_t length = strftime(str, 1024, self->fmt, &time);
+	str = realloc(str, length + 1 * sizeof(char));
 	assert(str);
 
-	return $(alloc(String), initWithMemory, str, len);
+	return $(alloc(String), initWithMemory, str, length);
 }
 
 #pragma mark - Class lifecycle

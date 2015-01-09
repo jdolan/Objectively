@@ -34,8 +34,11 @@ START_TEST(date)
 
 		ck_assert_str_eq(DATEFORMAT_ISO8601, dateFormatter->fmt);
 
-		Date *date1 = $(dateFormatter, dateFromCharacters, "1980-06-24T10:37:00-0400");
-		Date *date2 = $(dateFormatter, dateFromCharacters, "1985-03-15T06:48:00-0500");
+		String *dateString1 = str("1980-06-24T10:37:00-0400");
+		String *dateString2 = str("1985-03-15T06:48:00-0500");
+
+		Date *date1 = $(dateFormatter, dateFromString, dateString1);
+		Date *date2 = $(dateFormatter, dateFromString, dateString2);
 
 		ck_assert(date1);
 		ck_assert(date2);
@@ -48,6 +51,8 @@ START_TEST(date)
 		String *string = $(dateFormatter, stringFromDate, date1);
 		ck_assert_str_eq("June", string->chars);
 
+		release(dateString1);
+		release(dateString2);
 		release(string);
 		release(date1);
 		release(date2);

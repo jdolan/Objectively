@@ -33,13 +33,39 @@
 /**
  * @file
  *
- * @brief Immutable UTF-8 strings.
+ * @brief Immutable strings.
  */
+
+/**
+ * @brief The Unicode type.
+ */
+typedef union {
+	unsigned int codepoint;
+	unsigned char bytes[4];
+} Unicode;
+
+/**
+ * @brief The Locale type.
+ */
+typedef locale_t Locale;
+
+/**
+ * @brief Character encodings for Strings.
+ */
+typedef enum {
+	STRING_ENCODING_ASCII = 1,
+	STRING_ENCODING_LATIN1,
+	STRING_ENCODING_LATIN2,
+	STRING_ENCODING_MACROMAN,
+	STRING_ENCODING_UTF16,
+	STRING_ENCODING_UTF32,
+	STRING_ENCODING_UTF8,
+} StringEncoding;
 
 typedef struct StringInterface StringInterface;
 
 /**
- * @brief Immutable UTF-8 strings.
+ * @brief Immutable strings.
  *
  * @extends Object
  */
@@ -60,19 +86,14 @@ struct String {
 	StringInterface *interface;
 
 	/**
-	 * @brief The backing character array length.
-	 */
-	size_t length;
-
-	/**
-	 * @brief The locale.
-	 */
-	locale_t locale;
-
-	/**
 	 * @brief The backing character array.
 	 */
 	char *chars;
+
+	/**
+	 * @brief The length of the String in bytes.
+	 */
+	size_t length;
 };
 
 /**
@@ -142,24 +163,22 @@ struct StringInterface {
 	BOOL (*hasSuffix)(const String *self, const String *suffix);
 
 	/**
-	 * @brief Initializes this String by copying `length` of `bytes`.
+	 * @brief Initializes this String by decoding `length` of `bytes`.
 	 *
 	 * @param bytes The bytes.
-	 * @param length The length of `bytes` to copy.
+	 * @param length The length of `bytes` to decode.
+	 * @param encoding The character encoding.
 	 *
 	 * @return The initialized String, or `NULL` on error.
 	 *
-	 * @remark `length + 1` bytes are allocated so that the resulting String
-	 * is always null-terminated.
-	 *
 	 * @relates String
 	 */
-	String *(*initWithBytes)(String *self, const byte *bytes, size_t length);
+	String *(*initWithBytes)(String *self, const byte *bytes, size_t length, StringEncoding encoding);
 
 	/**
-	 * @brief Initializes this String with the specified characters.
+	 * @brief Initializes this String by copying `chars`.
 	 *
-	 * @param chars The characters.
+	 * @param chars The null-terminated, UTF-8 encoded C string.
 	 *
 	 * @return The initialized String, or `NULL` on error.
 	 *
@@ -171,23 +190,25 @@ struct StringInterface {
 	 * @brief Initializes this String with the contents of the FILE at `path`.
 	 *
 	 * @param path The path of the file to load.
+	 * @param encoding The character encoding.
 	 *
 	 * @return The initialized String, or `NULL` on error.
 	 *
 	 * @relates String
 	 */
-	String *(*initWithContentsOfFile)(String *self, const char *path);
+	String *(*initWithContentsOfFile)(String *self, const char *path, StringEncoding encoding);
 
 	/**
 	 * @brief Initializes this String with the given Data.
 	 *
 	 * @param data The Data object.
+	 * @param encoding The character encoding.
 	 *
 	 * @return The initialized String, or `NULL` on error.
 	 *
 	 * @relates String
 	 */
-	String *(*initWithData)(String *self, const Data *data);
+	String *(*initWithData)(String *self, const Data *data, StringEncoding encoding);
 
 	/**
 	 * @brief Initializes this String with the specified format string.
@@ -203,23 +224,44 @@ struct StringInterface {
 	/**
 	 * @brief Initializes this String with the specified buffer.
 	 *
-	 * @param mem The null-terminated, dynamically allocated memory.
-	 * @param length The length of the String in characters.
+	 * @param mem The dynamically allocated null-terminated, UTF-8 encoded buffer.
+	 * @param length The length of `mem` in printable characters.
 	 *
 	 * @return The initialized String, or `NULL` on error.
 	 *
-	 * @remark `length` should *not* account for the terminating character.
-	 *
 	 * @relates String
 	 */
-	String *(*initWithMemory)(String *self, id mem, size_t length);
+	String *(*initWithMemory)(String *self, const id mem, size_t length);
 
 	/**
-	 * @return A lowercase representation of this String.
+	 * @brief Initializes this String with the specified arguments list.
+	 *
+	 * @param fmt The format string.
+	 * @param args The format arguments.
+	 *
+	 * @return The initialized String, or `NULL` on error.
+	 *
+	 * @relates String
+	 *
+	 * @see vasprintf
+	 */
+	String *(*initWithVaList)(String *string, const char *fmt, va_list args);
+
+	/**
+	 * @return A lowercase representation of this String in the default Locale.
 	 *
 	 * @relates String
 	 */
 	String *(*lowercaseString)(const String *self);
+
+	/**
+	 * @param locale The desired Locale.
+	 *
+	 * @return A lowercase representation of this String in the given Locale.
+	 *
+	 * @relates String
+	 */
+	String *(*lowercaseStringWithLocale)(const String *self, const Locale locale);
 
 	/**
 	 * Finds and returns the first occurrence of `chars` in this String.
@@ -246,24 +288,22 @@ struct StringInterface {
 	RANGE (*rangeOfString)(const String *self, const String *string, const RANGE range);
 
 	/**
-	 * @brief Returns a new String by copying `length` of `bytes`.
+	 * @brief Returns a new String by decoding `length` of `bytes` to UTF-8.
 	 *
 	 * @param bytes The bytes.
 	 * @param length The length of `bytes` to copy.
+	 * @param encoding The character encoding.
 	 *
 	 * @return The new String, or `NULL` on error.
 	 *
-	 * @remark `length + 1` bytes are allocated so that the resulting String
-	 * is always null-terminated.
-	 *
 	 * @relates String
 	 */
-	String *(*stringWithBytes)(const byte *bytes, size_t length);
+	String *(*stringWithBytes)(const byte *bytes, size_t length, StringEncoding encoding);
 
 	/**
-	 * @brief Returns a new String with the given characters.
+	 * @brief Returns a new String by copying `chars`.
 	 *
-	 * @param chars A null-terminated C string.
+	 * @param chars The null-terminated UTF-8 encoded C string.
 	 *
 	 * @return The new String, or `NULL` on error.
 	 *
@@ -274,35 +314,49 @@ struct StringInterface {
 	/**
 	 * @brief Returns a new String with the contents of the FILE at `path`.
 	 *
-	 * @param path The path name.
+	 * @param path A path name.
+	 * @param encoding The character encoding.
 	 *
 	 * @return The new String, or `NULL` on error.
 	 *
 	 * @relates String
 	 */
-	String *(*stringWithContentsOfFile)(const char *path);
+	String *(*stringWithContentsOfFile)(const char *path, StringEncoding encoding);
 
 	/**
 	 * @brief Returns a new String with the the given Data.
 	 *
 	 * @param data A Data.
+	 * @param encoding The character encoding.
 	 *
 	 * @return The new String, or `NULL` on error.
 	 *
 	 * @relates String
 	 */
-	String *(*stringWithData)(const Data *data);
+	String *(*stringWithData)(const Data *data, StringEncoding encoding);
 
 	/**
 	 * @brief Returns a new String with the given format string.
 	 *
-	 * @param fmt The formatted string.
+	 * @param fmt The format string.
 	 *
 	 * @return The new String, or `NULL` on error.
 	 *
 	 * @relates String
 	 */
 	String *(*stringWithFormat)(const char *fmt, ...);
+
+	/**
+	 * @brief Returns a new String with the given buffer.
+	 *
+	 * @param mem A dynamically allocated, null-terminated UTF-8 encoded buffer.
+	 * @param length The length of `mem` in bytes.
+	 *
+	 * @return The new String, or `NULL` on error.
+	 *
+	 * @relates String
+	 */
+	String *(*stringWithMemory)(const id mem, size_t length);
 
 	/**
 	 * @brief Creates a new String from a subset of this one.
@@ -316,22 +370,32 @@ struct StringInterface {
 	String *(*substring)(const String *self, RANGE range);
 
 	/**
-	 * @return An uppercase representation of this String.
+	 * @return An uppercase representation of this String in the default Locale.
 	 *
 	 * @relates String
 	 */
 	String *(*uppercaseString)(const String *self);
 
 	/**
+	 * @param locale The desired Locale.
+	 *
+	 * @return A uppercase representation of this String in the given Locale.
+	 *
+	 * @relates String
+	 */
+	String *(*uppercaseStringWithLocale)(const String *self, const Locale locale);
+
+	/**
 	 * @brief Writes this String to `path`.
 	 *
 	 * @param path The path of the file to write.
+	 * @param encoding The character encoding.
 	 *
 	 * @return `YES` on success, `NO` on error.
 	 *
 	 * @relates String
 	 */
-	BOOL (*writeToFile)(const String *self, const char *path);
+	BOOL (*writeToFile)(const String *self, const char *path, StringEncoding encoding);
 };
 
 /**
@@ -340,14 +404,26 @@ struct StringInterface {
 extern Class _String;
 
 /**
- * @brief A convenience function built around `vasprintf`.
+ * @param encoding A StringEncoding.
  *
- * @param mem The pointer to receive the dynamically allocated string.
- * @param fmt The format string.
- * @param args The format arguments.
- *
- * @return The length of the allocated string, in bytes.
+ * @return The canonical name for the given encoding.
  */
-size_t vaStringPrintf(id *mem, const char *fmt, va_list args);
+const char *NameForStringEncoding(StringEncoding encoding);
+
+/**
+ * @param name The case-insensitive name of the encoding.
+ *
+ * @return The StringEncoding for the given `name`.
+ */
+StringEncoding StringEncodingForName(const char *name);
+
+/**
+ * @brief A convenience function for instantiating Strings.
+ *
+ * @param fmt The format string.
+ *
+ * @return A new String, or `NULL` on error.
+ */
+String *str(const char *fmt, ...);
 
 #endif

@@ -23,7 +23,7 @@
 
 #include <Objectively/Hash.h>
 
-int HashForCharacters(int hash, const char *chars, const RANGE range) {
+int HashForBytes(int hash, const byte *bytes, const RANGE range) {
 
 	for (size_t i = range.location; i < range.length; i++) {
 
@@ -34,20 +34,25 @@ int HashForCharacters(int hash, const char *chars, const RANGE range) {
 			shift = (i % 16);
 		}
 
-		hash += 31 * ((int) chars[i]) << shift;
+		hash += 31 * ((int) bytes[i]) << shift;
 	}
 
 	return hash;
 }
 
-int HashForInteger(int hash, const long integer) {
+int HashForCharacters(int hash, const char *chars, const RANGE range) {
 
-	return hash + 31 * (int) integer;
+	return HashForBytes(hash, (const byte *) chars, range);
 }
 
 int HashForDecimal(int hash, const double decimal) {
 
 	return hash + 31 * (int) decimal;
+}
+
+int HashForInteger(int hash, const long integer) {
+
+	return hash + 31 * (int) integer;
 }
 
 int HashForObject(int hash, const id obj) {

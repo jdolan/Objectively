@@ -24,9 +24,12 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include <Objectively/Class.h>
 #include <Objectively/Object.h>
+
+size_t _pageSize;
 
 static Class *_classes;
 
@@ -62,6 +65,8 @@ static void setup(void) {
 
 	_classes = NULL;
 
+	_pageSize = sysconf(_SC_PAGESIZE);
+
 	atexit(teardown);
 }
 
@@ -82,7 +87,6 @@ void _initialize(Class *clazz) {
 		Class *super = clazz->superclass;
 
 		if (clazz == &_Object) {
-			assert(super == NULL);
 			setup();
 		} else {
 			assert(super);
@@ -162,11 +166,13 @@ void release(id obj) {
 	}
 }
 
-void retain(id obj) {
+id retain(id obj) {
 
 	Object *object = cast(Object, obj);
 
 	assert(object);
 
 	__sync_add_and_fetch(&object->referenceCount, 1);
+
+	return obj;
 }

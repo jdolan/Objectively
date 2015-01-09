@@ -37,10 +37,9 @@
 static Object *copy(const Object *self) {
 
 	Error *this = (Error *) self;
+	Error *that = $(alloc(Error), initWithDomain, this->domain, this->code, this->message);
 
-	const char *message = this->message ? this->message->chars : NULL;
-
-	return (Object *) $(alloc(Error), initWithDomain, this->domain->chars, this->code, message);
+	return (Object *) that;
 }
 
 /**
@@ -65,10 +64,10 @@ static String *description(const Object *self) {
 
 	MutableString *desc = $(alloc(MutableString), init);
 
-	$(desc, appendFormat, "%s: %d", this->domain->chars, this->code);
+	$(desc, appendFormat, "%ls: %d", this->domain->chars, this->code);
 
 	if (this->message) {
-		$(desc, appendFormat, ": %s", this->message->chars);
+		$(desc, appendFormat, ": %ls", this->message->chars);
 	}
 
 	return (String *) desc;
@@ -123,20 +122,23 @@ static BOOL isEqual(const Object *self, const Object *other) {
 #pragma mark - ErrorInterface
 
 /**
- * @see ErrorInterface::initWithDomain(Error *, const char *, int, cons char *)
+ * @see ErrorInterface::initWithDomain(Error *, String *, int, String *)
  */
-static Error *initWithDomain(Error *self, const char *domain, int code, const char *message) {
+static Error *initWithDomain(Error *self, String *domain, int code, String *message) {
 
 	assert(domain);
 
 	self = (Error *) super(Object, self, init);
 	if (self) {
 
-		self->domain = $(alloc(String), initWithCharacters, domain);
+		self->domain = domain;
+		retain(domain);
+
 		self->code = code;
 
 		if (message) {
-			self->message = $(alloc(String), initWithCharacters, message);
+			self->message = message;
+			retain(message);
 		}
 	}
 

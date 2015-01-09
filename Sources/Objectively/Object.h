@@ -65,7 +65,11 @@ struct Object {
 	unsigned referenceCount;
 };
 
+/**
+ * @brief Immutable Unicode Strings.
+ */
 typedef struct String String;
+typedef struct MutableString MutableString;
 
 /**
  * @brief The Object interface.

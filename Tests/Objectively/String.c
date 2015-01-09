@@ -28,7 +28,7 @@
 
 START_TEST(string)
 	{
-		String *string = $$(String, stringWithFormat, "hello %s!", "world");
+		String *string = str("hello %s!", "world");
 
 		ck_assert(string);
 		ck_assert_ptr_eq(&_String, classof(string));
@@ -39,10 +39,10 @@ START_TEST(string)
 		ck_assert($((Object *) string, isEqual, (Object *) copy));
 		ck_assert_int_eq($((Object *) string, hash), $((Object *) copy, hash));
 
-		String *prefix = $(alloc(String), initWithFormat, "hello");
+		String *prefix = str("hello");
 		ck_assert($(string, hasPrefix, prefix));
 
-		String *suffix = $(alloc(String), initWithFormat, "world!");
+		String *suffix = str("world!");
 		ck_assert($(string, hasSuffix, suffix));
 
 		RANGE range = { 6, 5 };
@@ -53,7 +53,7 @@ START_TEST(string)
 		ck_assert_int_eq(range.location, match.location);
 		ck_assert_int_eq(range.length, match.length);
 
-		String *sep = $$(String, stringWithCharacters, " ");
+		String *sep = str(" ");
 		Array *components = $(string, componentsSeparatedByString, sep);
 		ck_assert_int_eq(2, components->count);
 
@@ -79,9 +79,9 @@ START_TEST(string)
 		ck_assert_str_eq("hello world!", lower->chars);
 
 		const char *path = "/tmp/Objectively_String.test";
-		ck_assert($(string, writeToFile, path));
+		ck_assert($(string, writeToFile, path, STRING_ENCODING_UTF8));
 
-		String *fromFile = $$(String, stringWithContentsOfFile, path);
+		String *fromFile = $$(String, stringWithContentsOfFile, path, STRING_ENCODING_UTF8);
 		ck_assert_str_eq("hello world!", fromFile->chars);
 
 		unlink(path);

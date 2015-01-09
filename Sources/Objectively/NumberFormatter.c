@@ -33,27 +33,20 @@
 #pragma mark - NumberFormatterInterface
 
 /**
- * @see NumberFormatterInterface::numberFromCharacters(const NumberFormatter *, const char *)
- */
-static Number *numberFromCharacters(const NumberFormatter *self, const char *chars) {
-
-	double value;
-	const int res = sscanf(chars, self->fmt, &value);
-	if (res == 1) {
-		return $(alloc(Number), initWithValue, value);
-	}
-
-	return NULL;
-}
-
-/**
  * @see NumberFormatterInterface::numberFromString(const NumberFormatter *, const String *)
  */
 static Number *numberFromString(const NumberFormatter *self, const String *string) {
 
-	assert(string);
+	if (string) {
+		double value;
 
-	return $(self, numberFromCharacters, string->chars);
+		const int res = sscanf(string->chars, self->fmt, &value);
+		if (res == 1) {
+			return $(alloc(Number), initWithValue, value);
+		}
+	}
+
+	return NULL;
 }
 
 /**
@@ -86,7 +79,6 @@ static void initialize(Class *clazz) {
 
 	NumberFormatterInterface *numberFormatter = (NumberFormatterInterface *) clazz->interface;
 
-	numberFormatter->numberFromCharacters = numberFromCharacters;
 	numberFormatter->numberFromString = numberFromString;
 	numberFormatter->initWithFormat = initWithFormat;
 	numberFormatter->stringFromNumber = stringFromNumber;
