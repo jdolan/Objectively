@@ -89,8 +89,8 @@ void setValueForHTTPHeaderField(URLRequest *self, const char *value, const char 
 		self->httpHeaders = (Dictionary *) $(alloc(MutableDictionary), init);
 	}
 
-	String *object = $$(String, stringWithCharacters, value);
-	String *key = $$(String, stringWithCharacters, field);
+	String *object = str(value);
+	String *key = str(field);
 
 	$((MutableDictionary *) self->httpHeaders, setObjectForKey, object, key);
 

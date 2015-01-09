@@ -137,35 +137,51 @@ static id run(Thread *thread) {
 	self->locals.handle = curl_multi_init();
 	assert(self->locals.handle);
 
-	while (thread->isCancelled == NO) {
-		CURLMcode merr;
-		CURLcode err;
+	while (YES) {
 		int ret;
 
 		Array *tasks = $(self, tasks);
 
+		if (tasks->count == 0 && thread->isCancelled) {
+			break;
+		}
+
 		for (size_t i = 0; i < tasks->count; i++) {
 
 			URLSessionTask *task = $(tasks, objectAtIndex, i);
-			if (task->state == URLSESSIONTASK_RUNNING) {
+			if (task->state == URLSESSIONTASK_SUSPENDING) {
+
+				if (task->locals.handle) {
+					const CURLcode err = curl_easy_pause(task->locals.handle, CURLPAUSE_ALL);
+					assert(err == CURLE_OK);
+				}
+
+				task->state = URLSESSIONTASK_SUSPENDED;
+
+			} else if (task->state == URLSESSIONTASK_RESUMING) {
 
 				if (task->locals.handle == NULL) {
 
 					$(task, setup);
 					assert(task->locals.handle);
 
-					merr = curl_multi_add_handle(self->locals.handle, task->locals.handle);
+					const CURLMcode merr = curl_multi_add_handle(self->locals.handle, task->locals.handle);
 					assert(merr == CURLM_OK);
 				} else {
-					err = curl_easy_pause(task->locals.handle, CURLPAUSE_CONT);
+					const CURLcode err = curl_easy_pause(task->locals.handle, CURLPAUSE_CONT);
 					assert(err == CURLE_OK);
 				}
+
+				task->state = URLSESSIONTASK_RESUMED;
+
 			} else if (task->state == URLSESSIONTASK_CANCELING) {
 
-				merr = curl_multi_remove_handle(self->locals.handle, task->locals.handle);
-				assert(merr == CURLM_OK);
+				if (task->locals.handle) {
+					const CURLMcode merr = curl_multi_remove_handle(self->locals.handle, task->locals.handle);
+					assert(merr == CURLM_OK);
+				}
 
-				task->state = URLSESSIONTASK_COMPLETED;
+				task->state = URLSESSIONTASK_CANCELED;
 
 				if (task->completion) {
 					task->completion(task, NO);
@@ -176,16 +192,10 @@ static id run(Thread *thread) {
 				WithLock(self->locals.lock, {
 					$(self->locals.tasks, removeObject, task);
 				});
-			} else if (task->state == URLSESSIONTASK_SUSPENDED) {
-
-				if (task->locals.handle) {
-					err = curl_easy_pause(task->locals.handle, CURLPAUSE_ALL);
-					assert(err == CURLE_OK);
-				}
 			}
 		}
 
-		merr = curl_multi_wait(self->locals.handle, NULL, 0, 0, NULL);
+		CURLMcode merr = curl_multi_wait(self->locals.handle, NULL, 0, 0, NULL);
 		assert(merr == CURLM_OK);
 
 		merr = curl_multi_perform(self->locals.handle, &ret);
@@ -242,14 +252,12 @@ static URLSession *initWithConfiguration(URLSession *self, URLSessionConfigurati
 
 	self = (URLSession *) super(Object, self, init);
 	if (self) {
-		self->configuration = configuration;
-		retain(configuration);
+		self->configuration = retain(configuration);
 
 		self->locals.lock = $(alloc(Lock), init);
-
 		self->locals.tasks = $(alloc(MutableArray), init);
-
 		self->locals.thread = $(alloc(Thread), initWithFunction, run, self);
+
 		$(self->locals.thread, start);
 	}
 
@@ -266,14 +274,7 @@ static void invalidateAndCancel(URLSession *self) {
 	for (size_t i = 0; i < tasks->count; i++) {
 
 		URLSessionTask *task = $(tasks, objectAtIndex, i);
-		switch(task->state) {
-			case URLSESSIONTASK_RUNNING:
-			case URLSESSIONTASK_SUSPENDED:
-				task->state = URLSESSIONTASK_CANCELING;
-				break;
-			default:
-				break;
-		}
+		$(task, cancel);
 	}
 
 	release(tasks);

@@ -318,8 +318,7 @@ static Boolean *readBoolean(JSONReader *reader) {
 			assert(NO);
 	}
 
-	retain(bool);
-	return bool;
+	return retain(bool);
 }
 
 /**
@@ -333,8 +332,7 @@ static Null *readNull(JSONReader *reader) {
 
 	Null *null = $$(Null, null);
 
-	retain(null);
-	return null;
+	return retain(null);
 }
 
 /**

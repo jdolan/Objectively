@@ -65,8 +65,15 @@ static void dealloc(Object *self) {
  */
 static void cancel(URLSessionTask *self) {
 
-	if (self->state == URLSESSIONTASK_RUNNING || self->state == URLSESSIONTASK_SUSPENDED) {
-		self->state = URLSESSIONTASK_CANCELING;
+	switch (self->state) {
+		case URLSESSIONTASK_RESUMING:
+		case URLSESSIONTASK_RESUMED:
+		case URLSESSIONTASK_SUSPENDING:
+		case URLSESSIONTASK_SUSPENDED:
+			self->state = URLSESSIONTASK_CANCELING;
+			break;
+		default:
+			break;
 	}
 }
 
@@ -86,11 +93,8 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
 		self->error = calloc(CURL_ERROR_SIZE, 1);
 		assert(self->error);
 
-		self->request = request;
-		retain(request);
-
-		self->session = session;
-		retain(session);
+		self->request = retain(request);
+		self->session = retain(session);
 
 		self->completion = completion;
 
@@ -105,8 +109,13 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
  */
 static void resume(URLSessionTask *self) {
 
-	if (self->state == URLSESSIONTASK_SUSPENDED) {
-		self->state = URLSESSIONTASK_RUNNING;
+	switch (self->state) {
+		case URLSESSIONTASK_SUSPENDING:
+		case URLSESSIONTASK_SUSPENDED:
+			self->state = URLSESSIONTASK_RESUMING;
+			break;
+		default:
+			break;
 	}
 }
 
@@ -205,8 +214,13 @@ static void setup(URLSessionTask *self) {
  */
 static void suspend(URLSessionTask *self) {
 
-	if (self->state == URLSESSIONTASK_RUNNING) {
-		self->state = URLSESSIONTASK_SUSPENDED;
+	switch (self->state) {
+		case URLSESSIONTASK_RESUMING:
+		case URLSESSIONTASK_RESUMED:
+			self->state = URLSESSIONTASK_SUSPENDING;
+			break;
+		default:
+			break;
 	}
 }
 

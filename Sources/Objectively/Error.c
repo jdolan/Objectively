@@ -131,14 +131,11 @@ static Error *initWithDomain(Error *self, String *domain, int code, String *mess
 	self = (Error *) super(Object, self, init);
 	if (self) {
 
-		self->domain = domain;
-		retain(domain);
-
+		self->domain = retain(domain);
 		self->code = code;
 
 		if (message) {
-			self->message = message;
-			retain(message);
+			self->message = retain(message);
 		}
 	}
 

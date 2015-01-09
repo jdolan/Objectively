@@ -56,7 +56,7 @@ struct MutableString {
 	MutableStringInterface *interface;
 
 	/**
-	 * @brief The capacity of the String, in Unicode code points.
+	 * @brief The capacity of the String, in bytes.
 	 *
 	 * @remark The capacity is always `>= self->string.length`.
 	 *
