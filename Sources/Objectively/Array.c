@@ -110,7 +110,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		return YES;
 	}
 
-	if (other && (self->clazz == other->clazz)) {
+	if (other && $(other, isKindOfClass, &_Array)) {
 
 		const Array *this = (Array *) self;
 		const Array *that = (Array *) other;
@@ -304,6 +304,19 @@ static Array *initWithObjects(Array *self, ...) {
 }
 
 /**
+ * @see ArrayInterface::mutableCopy(const Array *)
+ */
+static MutableArray *mutableCopy(const Array *self) {
+
+	MutableArray *copy = $(alloc(MutableArray), initWithCapacity, self->count);
+	if (copy) {
+		$(copy, addObjectsFromArray, self);
+	}
+
+	return copy;
+}
+
+/**
  * @see ArrayInterface::objectAtIndex(const Array *, const int)
  */
 static id objectAtIndex(const Array *self, const int index) {
@@ -339,6 +352,7 @@ static void initialize(Class *clazz) {
 	array->indexOfObject = indexOfObject;
 	array->initWithArray = initWithArray;
 	array->initWithObjects = initWithObjects;
+	array->mutableCopy = mutableCopy;
 	array->objectAtIndex = objectAtIndex;
 }
 

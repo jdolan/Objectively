@@ -32,7 +32,6 @@
  * @brief Mutable key-value stores.
  */
 
-typedef struct MutableDictionary MutableDictionary;
 typedef struct MutableDictionaryInterface MutableDictionaryInterface;
 
 /**

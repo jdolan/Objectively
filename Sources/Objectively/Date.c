@@ -54,7 +54,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		return YES;
 	}
 
-	if (other && other->clazz == self->clazz) {
+	if (other && $(other, isKindOfClass, &_Date)) {
 
 		const Date *this = (Date *) self;
 		const Date *that = (Date *) other;

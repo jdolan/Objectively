@@ -126,7 +126,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		return YES;
 	}
 
-	if (other && (self->clazz == other->clazz)) {
+	if (other && $(other, isKindOfClass, &_Dictionary)) {
 
 		const Dictionary *this = (Dictionary *) self;
 		const Dictionary *that = (Dictionary *) other;
@@ -343,6 +343,19 @@ static Dictionary *initWithObjectsAndKeys(Dictionary *self, ...) {
 }
 
 /**
+ * @see DictionaryInterface::mutableCopy(const Dictionary *)
+ */
+static MutableDictionary *mutableCopy(const Dictionary *self) {
+
+	MutableDictionary *copy = $(alloc(MutableDictionary), initWithCapacity, self->count);
+	if (copy) {
+		$(copy, addEntriesFromDictionary, self);
+	}
+
+	return copy;
+}
+
+/**
  * @see DictionaryInterface::objectForKey(const Dictionary *, const id)
  */
 static id objectForKey(const Dictionary *self, const id key) {
@@ -386,6 +399,7 @@ static void initialize(Class *clazz) {
 	dictionary->filterObjectsAndKeys = filterObjectsAndKeys;
 	dictionary->initWithDictionary = initWithDictionary;
 	dictionary->initWithObjectsAndKeys = initWithObjectsAndKeys;
+	dictionary->mutableCopy = mutableCopy;
 	dictionary->objectForKey = objectForKey;
 }
 

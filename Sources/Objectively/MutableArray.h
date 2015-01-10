@@ -32,7 +32,6 @@
  * @brief Mutable arrays.
  */
 
-typedef struct MutableArray MutableArray;
 typedef struct MutableArrayInterface MutableArrayInterface;
 
 /**

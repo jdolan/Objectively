@@ -110,6 +110,19 @@ static MutableData *initWithCapacity(MutableData *self, size_t capacity) {
 }
 
 /**
+ * @see MutableDataInterface::initWithData(MutableData *, const Data *)
+ */
+static MutableData *initWithData(MutableData *self, const Data *data) {
+
+	self = $(self, initWithCapacity, data->length);
+	if (self) {
+		$(self, appendData, data);
+	}
+
+	return self;
+}
+
+/**
  * @see MutableDataInterface::setLength(MutableData *, size_t)
  */
 static void setLength(MutableData *self, size_t length) {
@@ -152,6 +165,7 @@ static void initialize(Class *clazz) {
 	mutableData->dataWithCapacity = dataWithCapacity;
 	mutableData->init = init;
 	mutableData->initWithCapacity = initWithCapacity;
+	mutableData->initWithData = initWithData;
 	mutableData->setLength = setLength;
 }
 

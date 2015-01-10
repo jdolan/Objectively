@@ -88,6 +88,8 @@ struct Array {
 	id *elements;
 };
 
+typedef struct MutableArray MutableArray;
+
 /**
  * @brief The Array interface.
  */
@@ -177,6 +179,13 @@ struct ArrayInterface {
 	 * @relates Array
 	 */
 	Array *(*initWithObjects)(Array *self, ...);
+
+	/**
+	 * @return A MutableArray with the contents of this Array.
+	 *
+	 * @relates Array
+	 */
+	MutableArray *(*mutableCopy)(const Array *self);
 
 	/**
 	 * @param index The index of the desired Object.

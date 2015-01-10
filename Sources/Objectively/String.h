@@ -96,6 +96,8 @@ struct String {
 	size_t length;
 };
 
+typedef struct MutableString MutableString;
+
 /**
  * @brief The String interface.
  */
@@ -262,6 +264,13 @@ struct StringInterface {
 	 * @relates String
 	 */
 	String *(*lowercaseStringWithLocale)(const String *self, const Locale locale);
+
+	/**
+	 * @return A MutableString with the contents of this String.
+	 *
+	 * @relates String
+	 */
+	MutableString *(*mutableCopy)(const String *self);
 
 	/**
 	 * Finds and returns the first occurrence of `chars` in this String.

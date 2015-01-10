@@ -69,6 +69,8 @@ struct Data {
 	size_t length;
 };
 
+typedef struct MutableData MutableData;
+
 /**
  * @brief The Data interface.
  */
@@ -148,6 +150,13 @@ struct DataInterface {
 	 * @relates Data
 	 */
 	Data *(*initWithMemory)(Data *self, const id mem, size_t length);
+
+	/**
+	 * @return A MutableData with the contents of this Data.
+	 *
+	 * @relates Data
+	 */
+	MutableData *(*mutableCopy)(const Data *self);
 
 	/**
 	 * @brief Writes this Data to `path`.

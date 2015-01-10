@@ -35,8 +35,8 @@
  * Every Class descends from Object, and every instance can be cast to Object.
  */
 
-typedef struct ObjectInterface ObjectInterface;
 typedef struct Object Object;
+typedef struct ObjectInterface ObjectInterface;
 
 /**
  * @brief Object is the _root Class_ of the Objectively Class hierarchy.
@@ -66,7 +66,6 @@ struct Object {
 };
 
 typedef struct String String;
-typedef struct MutableString MutableString;
 
 /**
  * @brief The Object interface.

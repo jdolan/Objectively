@@ -32,7 +32,6 @@
  * @brief Mutable data buffers.
  */
 
-typedef struct MutableData MutableData;
 typedef struct MutableDataInterface MutableDataInterface;
 
 /**
@@ -136,6 +135,17 @@ struct MutableDataInterface {
 	 * @relates MutableData
 	 */
 	MutableData *(*initWithCapacity)(MutableData *self, size_t capacity);
+
+	/**
+	 * @brief Initializes this Data with the contents of `data`.
+	 *
+	 * @param data A Data.
+	 *
+	 * @return The initialized Data, or `NULL` on error.
+	 *
+	 * @relates MutableData
+	 */
+	MutableData *(*initWithData)(MutableData *self, const Data *data);
 
 	/**
 	 * @brief Sets the length of this Data, truncating or expanding it.

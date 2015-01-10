@@ -91,6 +91,8 @@ struct Dictionary {
 	id *elements;
 };
 
+typedef struct MutableDictionary MutableDictionary;
+
 /**
  * @brief The Dictionary interface.
  */
@@ -183,6 +185,13 @@ struct DictionaryInterface {
 	 * @relates Dictionary
 	 */
 	Dictionary *(*initWithObjectsAndKeys)(Dictionary *self, ...);
+
+	/**
+	 * @return A MutableDictionary with the contents of this Dictionary.
+	 *
+	 * @relates Dictionary
+	 */
+	MutableDictionary *(*mutableCopy)(const Dictionary *self);
 
 	/**
 	 * @return The Object stored at the specified key in this Dictionary.

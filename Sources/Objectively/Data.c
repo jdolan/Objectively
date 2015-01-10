@@ -27,6 +27,7 @@
 
 #include <Objectively/Data.h>
 #include <Objectively/Hash.h>
+#include <Objectively/MutableData.h>
 
 #define _Class _Data
 
@@ -83,7 +84,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		return YES;
 	}
 
-	if (other && (self->clazz == other->clazz)) {
+	if (other && $(other, isKindOfClass, &_Data)) {
 
 		const Data *this = (Data *) self;
 		const Data *that = (Data *) other;
@@ -186,6 +187,14 @@ static Data *initWithMemory(Data *self, const id mem, size_t length) {
 }
 
 /**
+ * @see DataInterface::mutableCopy(const Data *)
+ */
+static MutableData *mutableCopy(const Data *self) {
+
+	return $(alloc(MutableData), initWithData, self);
+}
+
+/**
  * @see DataInterface::writeToFile(const Data *, const char *)
  */
 static BOOL writeToFile(const Data *self, const char *path) {
@@ -226,6 +235,7 @@ static void initialize(Class *clazz) {
 	data->initWithBytes = initWithBytes;
 	data->initWithContentsOfFile = initWithContentsOfFile;
 	data->initWithMemory = initWithMemory;
+	data->mutableCopy = mutableCopy;
 	data->writeToFile = writeToFile;
 }
 

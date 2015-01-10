@@ -32,6 +32,7 @@
 
 #include <Objectively/Hash.h>
 #include <Objectively/MutableArray.h>
+#include <Objectively/MutableString.h>
 #include <Objectively/String.h>
 
 #define _Class _String
@@ -90,7 +91,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		return YES;
 	}
 
-	if (other && self->clazz == other->clazz) {
+	if (other && $(other, isKindOfClass, &_String)) {
 
 		const String *this = (String *) self;
 		const String *that = (String *) other;
@@ -362,6 +363,14 @@ static String *initWithVaList(String *self, const char *fmt, va_list args) {
 }
 
 /**
+ * @see StringInterface::lowercaseString(const String *)
+ */
+static String *lowercaseString(const String *self) {
+
+	return $(self, lowercaseStringWithLocale, LC_GLOBAL_LOCALE);
+}
+
+/**
  * @see StringInterface::lowercaseStringWithLocale(const String *, const Locale)
  */
 static String *lowercaseStringWithLocale(const String *self, const Locale locale) {
@@ -376,11 +385,11 @@ static String *lowercaseStringWithLocale(const String *self, const Locale locale
 }
 
 /**
- * @see StringInterface::lowercaseString(const String *)
+ * @see StringInterface::mutableCopy(const String *)
  */
-static String *lowercaseString(const String *self) {
+static MutableString *mutableCopy(const String *self) {
 
-	return $(self, lowercaseStringWithLocale, LC_GLOBAL_LOCALE);
+	return $(alloc(MutableString), initWithString, self);
 }
 
 /**
@@ -568,6 +577,7 @@ static void initialize(Class *clazz) {
 	string->initWithVaList = initWithVaList;
 	string->lowercaseString = lowercaseString;
 	string->lowercaseStringWithLocale = lowercaseStringWithLocale;
+	string->mutableCopy = mutableCopy;
 	string->rangeOfCharacters = rangeOfCharacters;
 	string->rangeOfString = rangeOfString;
 	string->stringWithBytes = stringWithBytes;
