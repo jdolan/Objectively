@@ -29,13 +29,13 @@
 /**
  * @file
  *
- * @brief Mutable strings.
+ * @brief Mutable UTF-8 strings.
  */
 
 typedef struct MutableStringInterface MutableStringInterface;
 
 /**
- * @brief Mutable strings.
+ * @brief Mutable UTF-8 strings.
  *
  * @extends String
  */

@@ -295,7 +295,7 @@ static Dictionary *initWithDictionary(Dictionary *self, const Dictionary *dictio
 
 			self->capacity = dictionary->capacity;
 
-			self->elements = calloc(self->capacity, sizeof(Array *));
+			self->elements = calloc(self->capacity, sizeof(id));
 			assert(self->elements);
 
 			for (size_t i = 0; i < dictionary->capacity; i++) {

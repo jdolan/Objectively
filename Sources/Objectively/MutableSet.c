@@ -71,7 +71,7 @@ static void addObject_resize(Set *set) {
 			set->capacity = set->capacity * MUTABLESET_GROW_FACTOR;
 			set->count = 0;
 
-			set->elements = calloc(set->capacity, sizeof(Array *));
+			set->elements = calloc(set->capacity, sizeof(id));
 			assert(set->elements);
 
 			for (size_t i = 0; i < capacity; i++) {
@@ -161,7 +161,7 @@ static MutableSet *initWithCapacity(MutableSet *self, size_t capacity) {
 		self->set.capacity = capacity;
 		if (self->set.capacity) {
 
-			self->set.elements = calloc(self->set.capacity, sizeof(Array *));
+			self->set.elements = calloc(self->set.capacity, sizeof(id));
 			assert(self->set.elements);
 		}
 	}

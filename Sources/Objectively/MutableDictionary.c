@@ -104,7 +104,7 @@ static MutableDictionary *initWithCapacity(MutableDictionary *self, size_t capac
 		self->dictionary.capacity = capacity;
 		if (self->dictionary.capacity) {
 
-			self->dictionary.elements = calloc(self->dictionary.capacity, sizeof(Array *));
+			self->dictionary.elements = calloc(self->dictionary.capacity, sizeof(id));
 			assert(self->dictionary.elements);
 		}
 	}
@@ -173,7 +173,7 @@ static void setObjectForKey_resize(Dictionary *dict) {
 			dict->capacity = dict->capacity * MUTABLEDICTIONARY_GROW_FACTOR;
 			dict->count = 0;
 
-			dict->elements = calloc(dict->capacity, sizeof(Array *));
+			dict->elements = calloc(dict->capacity, sizeof(id));
 			assert(dict->elements);
 
 			for (size_t i = 0; i < capacity; i++) {

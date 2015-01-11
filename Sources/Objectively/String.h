@@ -33,16 +33,8 @@
 /**
  * @file
  *
- * @brief Immutable strings.
+ * @brief Immutable UTF-8 strings.
  */
-
-/**
- * @brief The Unicode type.
- */
-typedef union {
-	unsigned int codepoint;
-	unsigned char bytes[4];
-} Unicode;
 
 /**
  * @brief The Locale type.
@@ -65,7 +57,11 @@ typedef enum {
 typedef struct StringInterface StringInterface;
 
 /**
- * @brief Immutable strings.
+ * @brief Immutable UTF-8 strings.
+ *
+ * @remark Because Strings are encoded using UTF-8, they must not be treated as
+ * ASCII C strings. That is, a single Unicode code point will often span
+ * multiple `char`s. Be mindful of this when executing RANGE operations.
  *
  * @extends Object
  */
@@ -86,7 +82,7 @@ struct String {
 	StringInterface *interface;
 
 	/**
-	 * @brief The backing character array.
+	 * @brief The backing null-terminated UTF-8 encoded character array.
 	 */
 	char *chars;
 

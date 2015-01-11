@@ -93,11 +93,13 @@ static void appendFormat(MutableString *self, const char *fmt, ...) {
 	char *chars;
 
 	const int len = vasprintf(&chars, fmt, args);
-	va_end(args);
-
-	$(self, appendCharacters, chars);
+	if (len > 0) {
+		$(self, appendCharacters, chars);
+	}
 
 	free(chars);
+
+	va_end(args);
 }
 
 /**

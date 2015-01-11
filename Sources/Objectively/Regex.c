@@ -90,10 +90,10 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		return YES;
 	}
 
-	if (other && self->clazz == other->clazz) {
+	if (other && $(other, isKindOfClass, &_Regex)) {
 
 		const Regex *this = (Regex *) self;
-		const Regex *that = (Regex *) that;
+		const Regex *that = (Regex *) other;
 
 		if (this->options == that->options) {
 			return strcmp(this->pattern, that->pattern) == 0;
