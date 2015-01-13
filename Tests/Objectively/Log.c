@@ -29,12 +29,12 @@
 START_TEST(_log)
 	{
 		Log *log = $(alloc(Log), initWithName, "test");
-		ck_assert(log);
+		ck_assert(log != NULL);
 
 		ck_assert_str_eq("test", log->name);
 
 		log->file = fopen("/tmp/objectively-test.log", "w");
-		ck_assert(log->file);
+		ck_assert(log->file != NULL);
 		ck_assert_int_eq(0, ftell(log->file));
 
 		$(log, info, "hello %s", "world!");

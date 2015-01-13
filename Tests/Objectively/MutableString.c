@@ -29,7 +29,7 @@ START_TEST(string)
 	{
 		MutableString *string = $$(MutableString, string);
 
-		ck_assert(string);
+		ck_assert(string != NULL);
 		ck_assert_ptr_eq(&_MutableString, classof(string));
 
 		String *hello = str("hello");

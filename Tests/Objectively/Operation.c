@@ -36,7 +36,7 @@ static void consumer_func(Operation *operation) {
 START_TEST(producerConsumer)
 	{
 		OperationQueue *queue = $(alloc(OperationQueue), init);
-		ck_assert(queue);
+		ck_assert(queue != NULL);
 
 		Object *object;
 
@@ -49,7 +49,7 @@ START_TEST(producerConsumer)
 		$(queue, addOperation, producer);
 
 		$(consumer, waitUntilFinished);
-		ck_assert(object);
+		ck_assert(object != NULL);
 
 		release(object);
 		release(producer);
@@ -67,7 +67,7 @@ static void suspendResume_func(Operation *operation) {
 START_TEST(suspendResume)
 	{
 		OperationQueue *queue = $(alloc(OperationQueue), init);
-		ck_assert(queue);
+		ck_assert(queue != NULL);
 
 		queue->isSuspended = YES;
 		int counter = 0;

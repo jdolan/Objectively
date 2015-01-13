@@ -33,7 +33,7 @@ START_TEST(mutableSet)
 	{
 		MutableSet *set = $$(MutableSet, setWithCapacity, 5);
 
-		ck_assert(set);
+		ck_assert(set != NULL);
 		ck_assert_ptr_eq(&_MutableSet, classof(set));
 
 		ck_assert_int_eq(0, ((Set *) set)->count);
@@ -78,8 +78,8 @@ START_TEST(mutableSet)
 
 		for (int i = 0; i < 1024; i++) {
 
-			id obj = alloc(Object);
-			ck_assert(obj);
+			id obj = $(alloc(Object), init);
+			ck_assert(obj != NULL);
 
 			$(set, addObject, obj);
 

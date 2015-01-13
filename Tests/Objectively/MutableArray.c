@@ -38,7 +38,7 @@ START_TEST(mutableArray)
 	{
 		MutableArray *array = $$(MutableArray, array);
 
-		ck_assert(array);
+		ck_assert(array != NULL);
 		ck_assert_ptr_eq(&_MutableArray, classof(array));
 
 		ck_assert_int_eq(0, ((Array *) array)->count);

@@ -29,7 +29,7 @@ START_TEST(date)
 	{
 		DateFormatter *dateFormatter = $(alloc(DateFormatter), initWithFormat, NULL);
 
-		ck_assert(dateFormatter);
+		ck_assert(dateFormatter != NULL);
 		ck_assert_ptr_eq(&_DateFormatter, classof(dateFormatter));
 
 		ck_assert_str_eq(DATEFORMAT_ISO8601, dateFormatter->fmt);
@@ -40,8 +40,8 @@ START_TEST(date)
 		Date *date1 = $(dateFormatter, dateFromString, dateString1);
 		Date *date2 = $(dateFormatter, dateFromString, dateString2);
 
-		ck_assert(date1);
-		ck_assert(date2);
+		ck_assert(date1 != NULL);
+		ck_assert(date2 != NULL);
 
 		ck_assert($(date1, compareTo, date1) == SAME);
 		ck_assert($(date1, compareTo, date2) == ASCENDING);

@@ -43,7 +43,7 @@ START_TEST(array)
 
 		Array *array = $$(Array, arrayWithObjects, one, two, three, NULL);
 
-		ck_assert(array);
+		ck_assert(array != NULL);
 		ck_assert_ptr_eq(&_Array, classof(array));
 
 		ck_assert_int_eq(3, array->count);

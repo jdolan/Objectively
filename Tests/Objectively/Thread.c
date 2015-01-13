@@ -50,12 +50,12 @@ static id increment(Thread *self) {
 START_TEST(thread)
 	{
 		condition = $(alloc(Condition), init);
-		ck_assert(condition);
+		ck_assert(condition != NULL);
 
 		int criticalSection = 0;
 
 		Thread *thread = $(alloc(Thread), initWithFunction, increment, &criticalSection);
-		ck_assert(thread);
+		ck_assert(thread != NULL);
 
 		$(thread, start);
 
@@ -83,11 +83,11 @@ static id signalBeforeDate(Thread *self) {
 START_TEST(cond)
 	{
 		condition = $(alloc(Condition), init);
-		ck_assert(condition);
+		ck_assert(condition != NULL);
 
 		const Time time = { .tv_usec = MSEC_PER_SEC * 0.5 };
 		Date *date = $$(Date, dateWithTimeSinceNow, &time);
-		ck_assert(date);
+		ck_assert(date != NULL);
 
 		WithLock(condition, {
 			ck_assert($(condition, waitUntilDate, date) == NO);
@@ -96,10 +96,10 @@ START_TEST(cond)
 		release(date);
 
 		date = $$(Date, dateWithTimeSinceNow, &time);
-		ck_assert(date);
+		ck_assert(date != NULL);
 
 		Thread *thread = $(alloc(Thread), initWithFunction, signalBeforeDate, date);
-		ck_assert(thread);
+		ck_assert(thread != NULL);
 
 		$(thread, start);
 

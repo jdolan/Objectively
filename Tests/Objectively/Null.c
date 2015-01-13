@@ -28,10 +28,10 @@
 START_TEST(date)
 	{
 		Null *null1 = $$(Null, null);
-		ck_assert(null1);
+		ck_assert(null1 != NULL);
 
 		Null *null2 = $$(Null, null);
-		ck_assert(null2);
+		ck_assert(null2 != NULL);
 
 		ck_assert($((Object *) null1, isEqual, (Object *) null2));
 
