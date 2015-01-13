@@ -21,6 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+#include "config.h"
+
 #include <assert.h>
 #include <stdlib.h>
 
@@ -178,6 +180,37 @@ static void setObjectAtIndex(MutableArray *self, const id obj, const int index) 
 	self->array.elements[index] = obj;
 }
 
+#if defined(__GLIBC__)
+
+/**
+ * @brief Wraps the Comparator `data` for `qsort` invocation.
+ *
+ * @param a The pointer to an element of type id.
+ * @param b The pointer to an element of type id.
+ * @param data The Comparator.
+ *
+ * @return The ORDER of `a` to `b`.
+ */
+static int qsortComparator(const void *a, const void *b, void *data) {
+
+	Comparator comparator = data;
+
+	const id obj1 = *(const id *) a;
+	const id obj2 = *(const id *) b;
+
+	return comparator(obj1, obj2);
+}
+
+/**
+ * @see MutableArrayInterface::sort(MutableArray *, Comparator)
+ */
+static void sort(MutableArray *self, Comparator comparator) {
+
+	qsort_r(self->array.elements, self->array.count, sizeof(id), qsortComparator, comparator);
+}
+
+#else
+
 /**
  * @brief Wraps the Comparator `data` for `qsort` invocation.
  *
@@ -204,6 +237,8 @@ static void sort(MutableArray *self, Comparator comparator) {
 
 	qsort_r(self->array.elements, self->array.count, sizeof(id), comparator, qsortComparator);
 }
+
+#endif
 
 #pragma mark - Class lifecycle
 

@@ -25,6 +25,7 @@
 
 #include <assert.h>
 #include <iconv.h>
+#include <locale.h>
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
