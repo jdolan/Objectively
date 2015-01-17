@@ -41,12 +41,12 @@ START_TEST(mutableData)
 		ck_assert_int_eq(0, data->data.bytes[data->data.length - 1]);
 
 		id mem = malloc(8192 * sizeof(byte));
-		ck_assert(mem);
+		ck_assert(mem != NULL);
 
 		memset(mem, 1, 8192 * sizeof(byte));
 
 		Data *append = $(alloc(Data), initWithMemory, mem, 8192);
-		ck_assert(append);
+		ck_assert(append != NULL);
 
 		$(data, appendData, append);
 		release(append);

@@ -29,7 +29,7 @@ START_TEST(object)
 	{
 		Object *object = $(alloc(Object), init);
 
-		ck_assert(object);
+		ck_assert(object != NULL);
 		ck_assert_ptr_eq(&_Object, classof(object));
 
 		ck_assert($(object, isEqual, object));
@@ -37,7 +37,7 @@ START_TEST(object)
 
 		Object *copy = $(object, copy);
 
-		ck_assert(copy);
+		ck_assert(copy != NULL);
 
 		ck_assert(!$(copy, isEqual, object));
 		ck_assert($(copy, isKindOfClass, classof(object)));

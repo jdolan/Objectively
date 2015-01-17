@@ -48,7 +48,7 @@ START_TEST(dictionary)
 		Dictionary *dict = $$(Dictionary, dictionaryWithObjectsAndKeys,
 				objectOne, keyOne, objectTwo, keyTwo, objectThree, keyThree, NULL);
 
-		ck_assert(dict);
+		ck_assert(dict != NULL);
 		ck_assert_ptr_eq(&_Dictionary, classof(dict));
 
 		ck_assert_int_eq(3, dict->count);

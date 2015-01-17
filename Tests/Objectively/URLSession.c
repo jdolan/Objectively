@@ -40,13 +40,13 @@ void completion(URLSessionTask *task, BOOL success) {
 START_TEST(urlSession)
 	{
 		URLSession *session = $$(URLSession, sharedInstance);
-		ck_assert(session);
+		ck_assert(session != NULL);
 
 		URL *url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/objectively");
-		ck_assert(url);
+		ck_assert(url != NULL);
 
 		URLSessionDataTask *dataTask = $(session, dataTaskWithURL, url, completion);
-		ck_assert(dataTask);
+		ck_assert(dataTask != NULL);
 
 		condition = $(alloc(Condition), init);
 
@@ -58,12 +58,12 @@ START_TEST(urlSession)
 		release(url);
 
 		url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/objectively/raw/master/README.md");
-		ck_assert(url);
+		ck_assert(url != NULL);
 
 		URLSessionDownloadTask *downloadTask = $(session, downloadTaskWithURL, url, completion);
 
 		downloadTask->file = fopen("/tmp/README.md", "w");
-		ck_assert(downloadTask->file);
+		ck_assert(downloadTask->file != NULL);
 
 		$((URLSessionTask *) downloadTask, resume);
 
