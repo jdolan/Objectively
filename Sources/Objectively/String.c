@@ -403,12 +403,17 @@ static String *lowercaseStringWithLocale(const String *self, const Locale locale
 	Data *data = $(self, getData, STRING_ENCODING_WCHAR);
 	assert(data);
 
+	Locale loc = duplocale(locale);
+	assert(loc);
+
 	const size_t codepoints = data->length / sizeof(Unicode);
 	Unicode *unicode = (Unicode *) data->bytes;
 
 	for (size_t i = 0; i < codepoints; i++, unicode++) {
-		*unicode = towlower_l(*unicode, locale);
+		*unicode = towlower_l(*unicode, loc);
 	}
+
+	freelocale(loc);
 
 	String *lowercase = $$(String, stringWithData, data, STRING_ENCODING_WCHAR);
 
@@ -545,12 +550,17 @@ static String *uppercaseStringWithLocale(const String *self, const Locale locale
 	Data *data = $(self, getData, STRING_ENCODING_WCHAR);
 	assert(data);
 
+	Locale loc = duplocale(locale);
+	assert(loc);
+
 	const size_t codepoints = data->length / sizeof(Unicode);
 	Unicode *unicode = (Unicode *) data->bytes;
 
 	for (size_t i = 0; i < codepoints; i++, unicode++) {
-		*unicode = towupper_l(*unicode, locale);
+		*unicode = towupper_l(*unicode, loc);
 	}
+
+	freelocale(loc);
 
 	String *uppercase = $$(String, stringWithData, data, STRING_ENCODING_WCHAR);
 
