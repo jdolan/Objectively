@@ -199,13 +199,20 @@ static MutableData *mutableCopy(const Data *self) {
  */
 static BOOL writeToFile(const Data *self, const char *path) {
 
+	assert(path);
+
 	FILE *file = fopen(path, "w");
 	if (file) {
 
-		const size_t write = fwrite(self->bytes, self->length, 1, file);
+		size_t count = 1;
+
+		if (self->length) {
+			count = fwrite(self->bytes, self->length, 1, file);
+		}
+
 		fclose(file);
 
-		if (write == 1) {
+		if (count == 1) {
 			return YES;
 		}
 	}

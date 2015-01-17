@@ -25,6 +25,7 @@
 #define _Objectively_String_h_
 
 #include <ctype.h>
+#include <wctype.h>
 #include <xlocale.h>
 
 #include <Objectively/Array.h>
@@ -35,6 +36,11 @@
  *
  * @brief Immutable UTF-8 strings.
  */
+
+/**
+ * @brief The Unicode type.
+ */
+typedef wchar_t Unicode;
 
 /**
  * @brief The Locale type.
@@ -52,6 +58,7 @@ typedef enum {
 	STRING_ENCODING_UTF16,
 	STRING_ENCODING_UTF32,
 	STRING_ENCODING_UTF8,
+	STRING_ENCODING_WCHAR,
 } StringEncoding;
 
 typedef struct StringInterface StringInterface;
@@ -117,7 +124,7 @@ struct StringInterface {
 	ORDER (*compareTo)(const String *self, const String *other, const RANGE range);
 
 	/**
-	 * Returns the components of this String that were separated by `chars`.
+	 * @brief Returns the components of this String that were separated by `chars`.
 	 *
 	 * @param chars The separating characters.
 	 *
@@ -128,7 +135,7 @@ struct StringInterface {
 	Array *(*componentsSeparatedByCharacters)(const String *self, const char *chars);
 
 	/**
-	 * Returns the components of this String that were separated by `string`.
+	 * @brief Returns the components of this String that were separated by `string`.
 	 *
 	 * @param string The separating string.
 	 *
@@ -137,6 +144,15 @@ struct StringInterface {
 	 * @relates String
 	 */
 	Array *(*componentsSeparatedByString)(const String *self, const String *string);
+
+	/**
+	 * @brief Returns a Data with this String's contents in the given encoding.
+	 *
+	 * @param encoding The desired StringEncoding.
+	 *
+	 * @return A Data with this String's contents in the given encoding.
+	 */
+	Data *(*getData)(const String *self, StringEncoding encoding);
 
 	/**
 	 * @brief Checks this String for the given prefix.

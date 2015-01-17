@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <wchar.h>
 
 #include <Objectively/Hash.h>
 #include <Objectively/MutableArray.h>
@@ -109,6 +110,48 @@ static BOOL isEqual(const Object *self, const Object *other) {
 
 #pragma mark - StringInterface
 
+typedef struct {
+	StringEncoding to;
+	StringEncoding from;
+	char *in;
+	size_t length;
+	char *out;
+	size_t size;
+} Transcode;
+
+/**
+ * @brief Transcodes input from one character encoding to another via `iconv`.
+ *
+ * @param trans A Transcode struct.
+ *
+ * @return The number of bytes written to `trans->out`.
+ */
+static size_t transcode(Transcode *trans) {
+
+	assert(trans);
+	assert(trans->to);
+	assert(trans->from);
+	assert(trans->out);
+	assert(trans->size);
+
+	iconv_t cd = iconv_open(NameForStringEncoding(trans->to), NameForStringEncoding(trans->from));
+	assert(cd != (iconv_t ) -1);
+
+	char *in = trans->in;
+	char *out = trans->out;
+
+	size_t inBytesRemaining = trans->length;
+	size_t outBytesRemaining = trans->size;
+
+	const size_t ret = iconv(cd, &in, &inBytesRemaining, &out, &outBytesRemaining);
+	assert(ret != (size_t ) -1);
+
+	int err = iconv_close(cd);
+	assert(err == 0);
+
+	return trans->size - outBytesRemaining;
+}
+
 /**
  * @see StringInterface::compareTo(const String *, const String *, const RANGE)
  */
@@ -172,6 +215,28 @@ static Array *componentsSeparatedByString(const String *self, const String *stri
 }
 
 /**
+ * @see StringInterface::getData(const String *, StringEncoding)
+ */
+static Data *getData(const String *self, StringEncoding encoding) {
+
+	Transcode trans = {
+		.to = encoding,
+		.from = STRING_ENCODING_UTF8,
+		.in = self->chars,
+		.length = self->length,
+		.out = calloc(self->length, sizeof(Unicode)),
+		.size = self->length * sizeof(Unicode)
+	};
+
+	assert(trans.out);
+
+	const size_t size = transcode(&trans);
+	assert(size <= trans.size);
+
+	return $$(Data, dataWithMemory, trans.out, size);
+}
+
+/**
  * @see StringInterface::hasPrefix(const String *, const String *)
  */
 static BOOL hasPrefix(const String *self, const String *prefix) {
@@ -197,48 +262,6 @@ static BOOL hasSuffix(const String *self, const String *suffix) {
 	return $(self, compareTo, suffix, range) == SAME;
 }
 
-typedef struct {
-	StringEncoding to;
-	StringEncoding from;
-	char *in;
-	char *out;
-	size_t length;
-	size_t size;
-} Transcode;
-
-/**
- * @brief Transcodes input from one character encoding to another via `iconv`.
- *
- * @param trans A Transcode struct.
- *
- * @return The number of bytes written to `trans->out`.
- */
-static size_t transcode(Transcode *trans) {
-
-	assert(trans);
-	assert(trans->to);
-	assert(trans->from);
-	assert(trans->out);
-	assert(trans->size);
-
-	iconv_t cd = iconv_open(NameForStringEncoding(trans->to), NameForStringEncoding(trans->from));
-	assert(cd != (iconv_t ) -1);
-
-	char *in = trans->in;
-	char *out = trans->out;
-
-	size_t inBytesRemaining = trans->length;
-	size_t outBytesRemaining = trans->size;
-
-	const size_t ret = iconv(cd, &in, &inBytesRemaining, &out, &outBytesRemaining);
-	assert(ret != (size_t ) -1);
-
-	int err = iconv_close(cd);
-	assert(err == 0);
-
-	return trans->size - outBytesRemaining;
-}
-
 /**
  * @see StringInterface::initWithBytes(String *, const byte *, size_t, StringEncoding)
  */
@@ -250,9 +273,9 @@ static String *initWithBytes(String *self, const byte *bytes, size_t length, Str
 			.to = STRING_ENCODING_UTF8,
 			.from = encoding,
 			.in = (char *) bytes,
-			.out = calloc(length * 4 + 1, sizeof(char)),
 			.length = length,
-			.size = length * 4 + 1
+			.out = calloc(length * sizeof(Unicode) + 1, sizeof(char)),
+			.size = length * sizeof(Unicode) + 1
 		};
 
 		assert(trans.out);
@@ -285,7 +308,6 @@ static String *initWithCharacters(String *self, const char *chars) {
 	}
 
 	return $(self, initWithMemory, NULL, 0);
-
 }
 
 /**
@@ -295,11 +317,13 @@ static String *initWithContentsOfFile(String *self, const char *path, StringEnco
 
 	Data *data = $$(Data, dataWithContentsOfFile, path);
 	if (data) {
-		return $(self, initWithData, data, encoding);
+		self = $(self, initWithData, data, encoding);
+		release(data);
+	} else {
+		self = $(self, initWithMemory, NULL, 0);
 	}
 
-	release(self);
-	return NULL;
+	return self;
 }
 
 /**
@@ -376,13 +400,20 @@ static String *lowercaseString(const String *self) {
  */
 static String *lowercaseStringWithLocale(const String *self, const Locale locale) {
 
-	String *string = (String *) $((Object * ) self, copy);
+	Data *data = $(self, getData, STRING_ENCODING_WCHAR);
+	assert(data);
 
-	for (size_t i = 0; i < string->length; i++) {
-		string->chars[i] = tolower_l(string->chars[i], locale);
+	const size_t codepoints = data->length / sizeof(Unicode);
+	Unicode *unicode = (Unicode *) data->bytes;
+
+	for (size_t i = 0; i < codepoints; i++, unicode++) {
+		*unicode = towlower_l(*unicode, locale);
 	}
 
-	return string;
+	String *lowercase = $$(String, stringWithData, data, STRING_ENCODING_WCHAR);
+
+	release(data);
+	return lowercase;
 }
 
 /**
@@ -511,13 +542,20 @@ static String *uppercaseString(const String *self) {
  */
 static String *uppercaseStringWithLocale(const String *self, const Locale locale) {
 
-	String *string = (String *) $((Object *) self, copy);
+	Data *data = $(self, getData, STRING_ENCODING_WCHAR);
+	assert(data);
 
-	for (size_t i = 0; i < string->length; i++) {
-		string->chars[i] = toupper_l(string->chars[i], locale);
+	const size_t codepoints = data->length / sizeof(Unicode);
+	Unicode *unicode = (Unicode *) data->bytes;
+
+	for (size_t i = 0; i < codepoints; i++, unicode++) {
+		*unicode = towupper_l(*unicode, locale);
 	}
 
-	return string;
+	String *uppercase = $$(String, stringWithData, data, STRING_ENCODING_WCHAR);
+
+	release(data);
+	return uppercase;
 }
 
 /**
@@ -525,26 +563,13 @@ static String *uppercaseStringWithLocale(const String *self, const Locale locale
  */
 static BOOL writeToFile(const String *self, const char *path, StringEncoding encoding) {
 
-	Transcode trans = {
-		.to = encoding,
-		.from = STRING_ENCODING_UTF8,
-		.in = self->chars,
-		.length = self->length,
-		.out = calloc(self->length * 4 + 4, sizeof(char)),
-		.size = self->length * 4 + 4
-	};
+	Data *data = $(self, getData, encoding);
+	assert(data);
 
-	assert(trans.out);
-
-	const size_t size = transcode(&trans);
-	assert(size < trans.size);
-
-	Data *data = $$(Data, dataWithMemory, trans.out, size);
-
-	const BOOL ret = $(data, writeToFile, path);
+	const BOOL success = $(data, writeToFile, path);
 
 	release(data);
-	return ret;
+	return success;
 }
 
 #pragma mark - Class lifecycle
@@ -567,6 +592,7 @@ static void initialize(Class *clazz) {
 	string->compareTo = compareTo;
 	string->componentsSeparatedByCharacters = componentsSeparatedByCharacters;
 	string->componentsSeparatedByString = componentsSeparatedByString;
+	string->getData = getData;
 	string->hasPrefix = hasPrefix;
 	string->hasSuffix = hasSuffix;
 	string->initWithBytes = initWithBytes;
@@ -621,6 +647,8 @@ const char *NameForStringEncoding(StringEncoding encoding) {
 			return "UTF-32";
 		case STRING_ENCODING_UTF8:
 			return "UTF-8";
+		case STRING_ENCODING_WCHAR:
+			return "WCHAR_T";
 	}
 }
 
@@ -640,6 +668,8 @@ StringEncoding StringEncodingForName(const char *name) {
 		return STRING_ENCODING_UTF32;
 	} else if (strcasecmp("UTF-8", name) == 0) {
 		return STRING_ENCODING_UTF8;
+	} else if (strcasecmp("WCHAR", name) == 0) {
+		return STRING_ENCODING_WCHAR;
 	}
 
 	return STRING_ENCODING_ASCII;
