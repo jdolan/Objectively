@@ -75,8 +75,8 @@ typedef struct {
  */
 typedef enum {
 	ASCENDING = -1,
-	SAME,
-	DESCENDING,
+	SAME = 0,
+	DESCENDING = 1,
 } ORDER;
 
 /**

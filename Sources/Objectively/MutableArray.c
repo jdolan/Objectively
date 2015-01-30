@@ -180,65 +180,16 @@ static void setObjectAtIndex(MutableArray *self, const id obj, const int index) 
 	self->array.elements[index] = obj;
 }
 
-#if defined(__GLIBC__)
-
-/**
- * @brief Wraps the Comparator `data` for `qsort` invocation.
- *
- * @param a The pointer to an element of type id.
- * @param b The pointer to an element of type id.
- * @param data The Comparator.
- *
- * @return The ORDER of `a` to `b`.
- */
-static int qsortComparator(const void *a, const void *b, void *data) {
-
-	Comparator comparator = data;
-
-	const id obj1 = *(const id *) a;
-	const id obj2 = *(const id *) b;
-
-	return comparator(obj1, obj2);
-}
-
 /**
  * @see MutableArrayInterface::sort(MutableArray *, Comparator)
  */
 static void sort(MutableArray *self, Comparator comparator) {
+	typedef int (*QsortComparator)(const void *a, const void *b);
 
-	qsort_r(self->array.elements, self->array.count, sizeof(id), qsortComparator, comparator);
+	QsortComparator qsortComparator = (QsortComparator) comparator;
+
+	qsort(self->array.elements, self->array.count, sizeof(id), qsortComparator);
 }
-
-#else
-
-/**
- * @brief Wraps the Comparator `data` for `qsort` invocation.
- *
- * @param data The Comparator.
- * @param a The pointer to an element of type id.
- * @param b The pointer to an element of type id.
- *
- * @return The ORDER of `a` to `b`.
- */
-static int qsortComparator(void *data, const void *a, const void *b) {
-
-	Comparator comparator = data;
-
-	const id obj1 = *(const id *) a;
-	const id obj2 = *(const id *) b;
-
-	return comparator(obj1, obj2);
-}
-
-/**
- * @see MutableArrayInterface::sort(MutableArray *, Comparator)
- */
-static void sort(MutableArray *self, Comparator comparator) {
-
-	qsort_r(self->array.elements, self->array.count, sizeof(id), comparator, qsortComparator);
-}
-
-#endif
 
 #pragma mark - Class lifecycle
 
