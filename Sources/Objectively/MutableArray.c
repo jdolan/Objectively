@@ -200,6 +200,20 @@ static void sort(MutableArray *self, Comparator comparator) {
 
 #else
 
+/**
+ * @brief qsort_r comparator.
+ */
+static int _sort(const void *a, const void *b, void *data) {
+	return ((Comparator) data)(*((const id *) a), *((const id *) b));
+}
+
+/**
+ * @see MutableArrayInterface::sort(MutableArray *, Comparator)
+ */
+static void sort(MutableArray *self, Comparator comparator) {
+	qsort_r(self->array.elements, self->array.count, sizeof(id), _sort, comparator);
+}
+
 #endif
 
 #pragma mark - Class lifecycle
