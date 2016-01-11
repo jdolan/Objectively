@@ -32,7 +32,7 @@
  * @brief The Class structure.
  *
  * Classes are the bridge between Objects and their interfaces. They provide
- * an entry point to the framework via the library function <code>new</code>.
+ * an entry point to the framework via the library function <code>_alloc</code>.
  *
  * Each Class describes a type and initializes an interface. Each instance of
  * that type will reference the Class and, in turn, its interface.

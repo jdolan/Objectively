@@ -93,4 +93,5 @@ libObjectively_la_LDFLAGS = \
 	-shared
 
 libObjectively_la_LIBADD = \
+	-liconv -lpthread \
 	@CURL_LIBS@

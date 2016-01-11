@@ -660,6 +660,8 @@ const char *NameForStringEncoding(StringEncoding encoding) {
 		case STRING_ENCODING_WCHAR:
 			return "WCHAR_T";
 	}
+
+	return "ASCII";
 }
 
 StringEncoding StringEncodingForName(const char *name) {

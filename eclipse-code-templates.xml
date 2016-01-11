@@ -2,9 +2,9 @@
 
 #include &lt;assert.h&gt;
 
-#include &lt;Objectively/${file_base}.h&gt;
+#include "${file_base}.h"
 
-#define _class _${file_base}
+#define _Class _${file_base}
 
 #pragma mark - ObjectInterface
 
@@ -59,7 +59,7 @@ Class _${file_base} = {
 	.initialize = initialize,
 };
 
-#undef _class
+#undef _Class
 </template><template autoinsert="false" context="org.eclipse.cdt.core.cHeader.contenttype_context" deleted="false" description="" enabled="true" name="Objectively Type Header">${filecomment}
 
 #ifndef _${project_name}_${file_base}_h_
