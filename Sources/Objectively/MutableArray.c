@@ -180,16 +180,27 @@ static void setObjectAtIndex(MutableArray *self, const id obj, const int index) 
 	self->array.elements[index] = obj;
 }
 
+#if defined(__APPLE__)
+
+/**
+ * @brief qsort_r comparator.
+ */
+static int _sort(void *data, const void *a, const void *b) {
+	return ((Comparator) data)(*((const id *) a), *((const id *) b));
+}
+
 /**
  * @see MutableArrayInterface::sort(MutableArray *, Comparator)
  */
 static void sort(MutableArray *self, Comparator comparator) {
-	typedef int (*QsortComparator)(const void *a, const void *b);
-
-	QsortComparator qsortComparator = (QsortComparator) comparator;
-
-	qsort(self->array.elements, self->array.count, sizeof(id), qsortComparator);
+	qsort_r(self->array.elements, self->array.count, sizeof(id), comparator, _sort);
 }
+
+#elif defined(__WINDOWS__)
+
+#else
+
+#endif
 
 #pragma mark - Class lifecycle
 
