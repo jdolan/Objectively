@@ -27,11 +27,11 @@ TESTS = \
 	URLSession
 
 CFLAGS += \
-	-I$(includedir) \
+	-I$(top_builddir)/Sources \
 	@CHECK_CFLAGS@
 
 LDADD = \
-	-L$(libdir) -lObjectively \
+	$(top_builddir)/Sources/Objectively/libObjectively.la \
 	@CHECK_LIBS@
 
 check_PROGRAMS = \
