@@ -92,16 +92,4 @@ typedef ORDER (*Comparator)(const id obj1, const id obj2);
 #define lengthof(array) \
 	(sizeof(array) / sizeof((array)[0]))
 
-/**
- * @return The maximum of the two parameters.
- */
-#define max(a, b) \
-   ({ typeof(a) _a = (a); typeof(b) _b = (b); _a > _b ? _a : _b; })
-
-/**
- * @return The minimum of the two parameters.
- */
-#define min(a, b) \
-   ({ typeof(a) _a = (a); typeof(b) _b = (b); _a < _b ? _a : _b; })
-
 #endif

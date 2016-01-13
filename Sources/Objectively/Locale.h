@@ -24,7 +24,7 @@
 #ifndef _Objectively_Locale_h_
 #define _Objectively_Locale_h_
 
-#if __MINGW32__
+#if defined(__MINGW32__)
 #include <locale.h>
 typedef _locale_t LOCALE;
 #else

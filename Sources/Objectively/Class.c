@@ -65,7 +65,11 @@ static void setup(void) {
 
 	_classes = NULL;
 
+#if __MINGW32__
+	_pageSize = 4096;
+#else
 	_pageSize = sysconf(_SC_PAGESIZE);
+#endif
 
 	atexit(teardown);
 }
