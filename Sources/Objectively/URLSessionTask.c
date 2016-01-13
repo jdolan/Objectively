@@ -122,7 +122,7 @@ static void resume(URLSessionTask *self) {
 /**
  * @brief A helper to populate the headers list for CURL.
  */
-static _Bool httpHeaders_enumerator(const Dictionary *dictionary, id obj, id key, id data) {
+static _Bool httpHeaders_enumerator(const Dictionary *dictionary, ident obj, ident key, ident data) {
 
 	String *header = $(alloc(String), initWithFormat, "%s: %s",
 			((String * ) key)->chars,
@@ -141,7 +141,7 @@ static _Bool httpHeaders_enumerator(const Dictionary *dictionary, id obj, id key
  *
  * @remark This is also the mechanism for resuming suspended tasks.
  */
-static int progress(id self, curl_off_t bytesExpectedToReceive, curl_off_t bytesReceived,
+static int progress(ident self, curl_off_t bytesExpectedToReceive, curl_off_t bytesReceived,
 		curl_off_t bytesExpectedToSend, curl_off_t bytesSent) {
 
 	URLSessionTask *this = (URLSessionTask *) self;

@@ -97,6 +97,6 @@ extern int HashForInteger(int hash, const long integer);
  *
  * @return The accumulated hash value.
  */
-extern int HashForObject(int hash, const id obj);
+extern int HashForObject(int hash, const ident obj);
 
 #endif

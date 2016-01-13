@@ -67,7 +67,7 @@ struct Condition {
 	 *
 	 * @private
 	 */
-	id condition;
+	ident condition;
 };
 
 /**

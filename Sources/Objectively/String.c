@@ -280,7 +280,7 @@ static String *initWithBytes(String *self, const byte *bytes, size_t length, Str
 		const size_t size = transcode(&trans);
 		assert(size < trans.size);
 
-		id mem = realloc(trans.out, size + 1);
+		ident mem = realloc(trans.out, size + 1);
 		assert(mem);
 
 		return $(self, initWithMemory, mem, size);
@@ -296,7 +296,7 @@ static String *initWithCharacters(String *self, const char *chars) {
 
 	if (chars) {
 
-		id mem = strdup(chars);
+		ident mem = strdup(chars);
 		assert(mem);
 
 		size_t length = strlen(chars);
@@ -351,7 +351,7 @@ static String *initWithFormat(String *self, const char *fmt, ...) {
 /**
  * @see StringInterface::initWithMemory(String *, id, size_t)
  */
-static String *initWithMemory(String *self, const id mem, size_t length) {
+static String *initWithMemory(String *self, const ident mem, size_t length) {
 
 	self = (String *) super(Object, self, init);
 	if (self) {
@@ -509,7 +509,7 @@ static String *stringWithFormat(const char *fmt, ...) {
 /**
  * @see StringInterface::stringWithMemory(const id, size_t)
  */
-static String *stringWithMemory(const id mem, size_t length) {
+static String *stringWithMemory(const ident mem, size_t length) {
 
 	return $(alloc(String), initWithMemory, mem, length);
 }
@@ -521,7 +521,7 @@ static String *substring(const String *self, const RANGE range) {
 
 	assert(range.location + range.length <= self->length);
 
-	id mem = calloc(range.length + 1, sizeof(char));
+	ident mem = calloc(range.length + 1, sizeof(char));
 	assert(mem);
 
 	strncpy(mem, self->chars + range.location, range.length);

@@ -66,12 +66,12 @@ static void addObject_resize(Set *set) {
 		if (load >= MUTABLESET_MAX_LOAD) {
 
 			size_t capacity = set->capacity;
-			id *elements = set->elements;
+			ident *elements = set->elements;
 
 			set->capacity = set->capacity * MUTABLESET_GROW_FACTOR;
 			set->count = 0;
 
-			set->elements = calloc(set->capacity, sizeof(id));
+			set->elements = calloc(set->capacity, sizeof(ident));
 			assert(set->elements);
 
 			for (size_t i = 0; i < capacity; i++) {
@@ -93,7 +93,7 @@ static void addObject_resize(Set *set) {
 /**
  * @see MutableSetInterface::addObject(MutableSet *, const id)
  */
-static void addObject(MutableSet *self, const id obj) {
+static void addObject(MutableSet *self, const ident obj) {
 
 	Set *set = (Set *) self;
 
@@ -127,7 +127,7 @@ static void addObjectsFromArray(MutableSet *self, const Array *array) {
 /**
  * @brief SetEnumerator for addObjectsFromSet.
  */
-static _Bool addObjectsFromSet_enumerator(const Set *set, id obj, id data) {
+static _Bool addObjectsFromSet_enumerator(const Set *set, ident obj, ident data) {
 
 	$((MutableSet *) data, addObject, obj); return false;
 }
@@ -161,7 +161,7 @@ static MutableSet *initWithCapacity(MutableSet *self, size_t capacity) {
 		self->set.capacity = capacity;
 		if (self->set.capacity) {
 
-			self->set.elements = calloc(self->set.capacity, sizeof(id));
+			self->set.elements = calloc(self->set.capacity, sizeof(ident));
 			assert(self->set.elements);
 		}
 	}
@@ -189,7 +189,7 @@ static void removeAllObjects(MutableSet *self) {
 /**
  * @see MutableSetInterface::removeObjectForKey(MutableSet *, const id)
  */
-static void removeObject(MutableSet *self, const id obj) {
+static void removeObject(MutableSet *self, const ident obj) {
 
 	const size_t bin = HashForObject(HASH_SEED, obj) % self->set.capacity;
 

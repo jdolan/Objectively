@@ -63,7 +63,7 @@ int HashForInteger(int hash, const long integer) {
 	return hash + 31 * (int) integer;
 }
 
-int HashForObject(int hash, const id obj) {
+int HashForObject(int hash, const ident obj) {
 
 	if (obj) {
 		return hash + 31 * $(cast(Object, obj), hash);

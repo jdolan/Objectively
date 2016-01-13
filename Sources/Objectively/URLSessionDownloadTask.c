@@ -35,7 +35,7 @@
 /**
  * @brief The `CURLOPT_WRITEFUNCTION` callback.
  */
-static size_t writeFunction(char *data, size_t size, size_t count, id self) {
+static size_t writeFunction(char *data, size_t size, size_t count, ident self) {
 
 	URLSessionDownloadTask *this = (URLSessionDownloadTask *) self;
 

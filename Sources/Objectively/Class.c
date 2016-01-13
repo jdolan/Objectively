@@ -111,11 +111,11 @@ void _initialize(Class *clazz) {
 	}
 }
 
-id _alloc(Class *clazz) {
+ident _alloc(Class *clazz) {
 
 	_initialize(clazz);
 
-	id obj = calloc(1, clazz->instanceSize);
+	ident obj = calloc(1, clazz->instanceSize);
 	assert(obj);
 
 	Object *object = (Object *) obj;
@@ -123,15 +123,15 @@ id _alloc(Class *clazz) {
 	object->clazz = clazz;
 	object->referenceCount = 1;
 
-	id interface = clazz->interface;
+	ident interface = clazz->interface;
 	do {
-		*(id *) &obj[clazz->interfaceOffset] = interface;
+		*(ident *) &obj[clazz->interfaceOffset] = interface;
 	} while ((clazz = clazz->superclass));
 
 	return obj;
 }
 
-id _cast(Class *clazz, const id obj) {
+ident _cast(Class *clazz, const ident obj) {
 
 	if (obj) {
 		const Class *c = ((Object *) obj)->clazz;
@@ -150,10 +150,10 @@ id _cast(Class *clazz, const id obj) {
 		assert(c);
 	}
 
-	return (id) obj;
+	return (ident) obj;
 }
 
-void release(id obj) {
+void release(ident obj) {
 
 	if (obj) {
 		Object *object = cast(Object, obj);
@@ -166,7 +166,7 @@ void release(id obj) {
 	}
 }
 
-id retain(id obj) {
+ident retain(ident obj) {
 
 	Object *object = cast(Object, obj);
 

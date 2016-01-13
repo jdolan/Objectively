@@ -39,9 +39,9 @@ static Regex *_regex;
 /**
  * @see JSONPathInterface::objectWithPath(const id, const char *)
  */
-static id objectWithPath(const id root, const char *path) {
+static ident objectWithPath(const ident root, const char *path) {
 
-	id obj = root;
+	ident obj = root;
 	const char *c = path;
 
 	while (obj) {

@@ -26,11 +26,11 @@
 
 #include <Objectively.h>
 
-_Bool enumerator(const Array *array, id obj, id data) {
+_Bool enumerator(const Array *array, ident obj, ident data) {
 	(*(int *) data)++; return false;
 }
 
-ORDER comparator(const id obj1, const id obj2) {
+ORDER comparator(const ident obj1, const ident obj2) {
 	return $((Number *) obj1, compareTo, (Number *) obj2);
 }
 

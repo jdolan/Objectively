@@ -73,7 +73,7 @@ static void appendCharacters(MutableString *self, const char *chars) {
 				self->capacity = newCapacity;
 			}
 
-			id ptr = self->string.chars + self->string.length;
+			ident ptr = self->string.chars + self->string.length;
 			memmove(ptr, chars, len);
 
 			self->string.chars[newSize - 1] = '\0';
@@ -120,7 +120,7 @@ static void deleteCharactersInRange(MutableString *self, const RANGE range) {
 	assert(range.location >= 0);
 	assert(range.length <= self->string.length);
 
-	id ptr = self->string.chars + range.location;
+	ident ptr = self->string.chars + range.location;
 	const size_t length = self->string.length - range.location - range.length;
 
 	memmove(ptr, ptr + range.length, length);

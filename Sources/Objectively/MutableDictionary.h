@@ -127,14 +127,14 @@ struct MutableDictionaryInterface {
 	 *
 	 * @relates MutableDictionary
 	 */
-	void (*removeObjectForKey)(MutableDictionary *self, const id key);
+	void (*removeObjectForKey)(MutableDictionary *self, const ident key);
 
 	/**
 	 * @brief Sets a pair in this MutableDictionary.
 	 *
 	 * @relates MutableDictionary
 	 */
-	void (*setObjectForKey)(MutableDictionary *self, const id obj, const id key);
+	void (*setObjectForKey)(MutableDictionary *self, const ident obj, const ident key);
 
 	/**
 	 * @brief Sets pairs in this MutableDictionary from the NULL-terminated list.

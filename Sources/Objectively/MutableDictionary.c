@@ -56,7 +56,7 @@ static Object *copy(const Object *self) {
 /**
  * @brief DictionaryEnumerator for addEntriesFromDictionary.
  */
-static _Bool addEntriesFromDictionary_enumerator(const Dictionary *dict, id obj, id key, id data) {
+static _Bool addEntriesFromDictionary_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
 
 	$((MutableDictionary *) data, setObjectForKey, obj, key); return false;
 }
@@ -104,7 +104,7 @@ static MutableDictionary *initWithCapacity(MutableDictionary *self, size_t capac
 		self->dictionary.capacity = capacity;
 		if (self->dictionary.capacity) {
 
-			self->dictionary.elements = calloc(self->dictionary.capacity, sizeof(id));
+			self->dictionary.elements = calloc(self->dictionary.capacity, sizeof(ident));
 			assert(self->dictionary.elements);
 		}
 	}
@@ -132,7 +132,7 @@ static void removeAllObjects(MutableDictionary *self) {
 /**
  * @see MutableDictionaryInterface::removeObjectForKey(MutableDictionary *, const id)
  */
-static void removeObjectForKey(MutableDictionary *self, const id key) {
+static void removeObjectForKey(MutableDictionary *self, const ident key) {
 
 	const size_t bin = HashForObject(HASH_SEED, key) % self->dictionary.capacity;
 
@@ -168,12 +168,12 @@ static void setObjectForKey_resize(Dictionary *dict) {
 		if (load >= MUTABLEDICTIONARY_MAX_LOAD) {
 
 			size_t capacity = dict->capacity;
-			id *elements = dict->elements;
+			ident *elements = dict->elements;
 
 			dict->capacity = dict->capacity * MUTABLEDICTIONARY_GROW_FACTOR;
 			dict->count = 0;
 
-			dict->elements = calloc(dict->capacity, sizeof(id));
+			dict->elements = calloc(dict->capacity, sizeof(ident));
 			assert(dict->elements);
 
 			for (size_t i = 0; i < capacity; i++) {
@@ -183,8 +183,8 @@ static void setObjectForKey_resize(Dictionary *dict) {
 
 					for (size_t j = 0; j < array->count; j += 2) {
 
-						id key = $(array, objectAtIndex, j);
-						id obj = $(array, objectAtIndex, j + 1);
+						ident key = $(array, objectAtIndex, j);
+						ident obj = $(array, objectAtIndex, j + 1);
 
 						$$(MutableDictionary, setObjectForKey, (MutableDictionary *) dict, obj, key);
 					}
@@ -203,7 +203,7 @@ static void setObjectForKey_resize(Dictionary *dict) {
 /**
  * @see MutableDictionaryInterface::setObjectForKey(MutableDictionary *, const id, const id)
  */
-static void setObjectForKey(MutableDictionary *self, const id obj, const id key) {
+static void setObjectForKey(MutableDictionary *self, const ident obj, const ident key) {
 
 	Dictionary *dict = (Dictionary *) self;
 
@@ -237,10 +237,10 @@ static void setObjectsForKeys(MutableDictionary *self, ...) {
 
 	while (true) {
 
-		id obj = va_arg(args, id);
+		ident obj = va_arg(args, ident);
 		if (obj) {
 
-			id key = va_arg(args, id);
+			ident key = va_arg(args, ident);
 			$(self, setObjectForKey, obj, key);
 		} else {
 			break;

@@ -80,7 +80,7 @@ struct URLSession {
 		/**
 		 * @brief The libcurl handle.
 		 */
-		id handle;
+		ident handle;
 
 		/**
 		 * @brief The Lock guarding access to `tasks`.

@@ -50,7 +50,7 @@ typedef struct ArrayInterface ArrayInterface;
  *
  * @return See the documentation for the enumeration methods.
  */
-typedef _Bool (*ArrayEnumerator)(const Array *array, id obj, id data);
+typedef _Bool (*ArrayEnumerator)(const Array *array, ident obj, ident data);
 
 /**
  * @brief Immutable arrays.
@@ -85,7 +85,7 @@ struct Array {
 	 *
 	 * @private
 	 */
-	id *elements;
+	ident *elements;
 };
 
 typedef struct MutableArray MutableArray;
@@ -120,14 +120,14 @@ struct ArrayInterface {
 	 *
 	 * @relates Array
 	 */
-	Array *(*arrayWithObjects)(id obj, ...);
+	Array *(*arrayWithObjects)(ident obj, ...);
 
 	/**
 	 * @return `true` if this Array contains the given Object, `false` otherwise.
 	 *
 	 * @relates Array
 	 */
-	_Bool (*containsObject)(const Array *self, const id obj);
+	_Bool (*containsObject)(const Array *self, const ident obj);
 
 	/**
 	 * @brief Enumerate the elements of this Array with the given function.
@@ -139,7 +139,7 @@ struct ArrayInterface {
 	 *
 	 * @relates Array
 	 */
-	void (*enumerateObjects)(const Array *self, ArrayEnumerator enumerator, id data);
+	void (*enumerateObjects)(const Array *self, ArrayEnumerator enumerator, ident data);
 
 	/**
 	 * @brief Creates a new Array with elements that pass the filter function.
@@ -151,14 +151,14 @@ struct ArrayInterface {
 	 *
 	 * @relates Array
 	 */
-	Array *(*filterObjects)(const Array *self, ArrayEnumerator enumerator, id data);
+	Array *(*filterObjects)(const Array *self, ArrayEnumerator enumerator, ident data);
 
 	/**
 	 * @return The index of the given Object, or `-1` if not found.
 	 *
 	 * @relates Array
 	 */
-	int (*indexOfObject)(const Array *self, const id obj);
+	int (*indexOfObject)(const Array *self, const ident obj);
 
 	/**
 	 * @brief Initializes this Array to contain the Objects in `array`.
@@ -194,7 +194,7 @@ struct ArrayInterface {
 	 *
 	 * @relates Array
 	 */
-	id (*objectAtIndex)(const Array *self, const int index);
+	ident (*objectAtIndex)(const Array *self, const int index);
 };
 
 /**

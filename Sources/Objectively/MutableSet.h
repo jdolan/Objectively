@@ -76,7 +76,7 @@ struct MutableSetInterface {
 	 *
 	 * @relates MutableSet
 	 */
-	void (*addObject)(MutableSet *self, const id obj);
+	void (*addObject)(MutableSet *self, const ident obj);
 
 	/**
 	 * @brief Adds the Objects contained in `array` to this Set.
@@ -130,7 +130,7 @@ struct MutableSetInterface {
 	 *
 	 * @relates MutableSet
 	 */
-	void (*removeObject)(MutableSet *self, const id obj);
+	void (*removeObject)(MutableSet *self, const ident obj);
 
 	/**
 	 * @brief Returns a new MutableSet.

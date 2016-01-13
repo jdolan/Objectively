@@ -87,7 +87,7 @@ struct JSONPathInterface {
 	 *
 	 * @relates JSONPath
 	 */
-	id (*objectWithPath)(const id root, const char *path);
+	ident (*objectWithPath)(const ident root, const char *path);
 };
 
 /**

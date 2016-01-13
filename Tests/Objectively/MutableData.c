@@ -40,7 +40,7 @@ START_TEST(mutableData)
 		ck_assert_int_eq(128, data->data.length);
 		ck_assert_int_eq(0, data->data.bytes[data->data.length - 1]);
 
-		id mem = malloc(8192 * sizeof(byte));
+		ident mem = malloc(8192 * sizeof(byte));
 		ck_assert(mem != NULL);
 
 		memset(mem, 1, 8192 * sizeof(byte));

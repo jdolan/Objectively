@@ -67,7 +67,7 @@ struct Lock {
 	 *
 	 * @private
 	 */
-	id lock;
+	ident lock;
 };
 
 /**

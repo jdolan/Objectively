@@ -46,7 +46,7 @@ typedef struct DictionaryInterface DictionaryInterface;
  *
  * @return See the documentation for the enumeration methods.
  */
-typedef _Bool (*DictionaryEnumerator)(const Dictionary *dictionary, id obj, id key, id data);
+typedef _Bool (*DictionaryEnumerator)(const Dictionary *dictionary, ident obj, ident key, ident data);
 
 /**
  * @brief Immutable key-value stores.
@@ -88,7 +88,7 @@ struct Dictionary {
 	 *
 	 * @private
 	 */
-	id *elements;
+	ident *elements;
 };
 
 typedef struct MutableDictionary MutableDictionary;
@@ -137,7 +137,7 @@ struct DictionaryInterface {
 	 *
 	 * @relates Dictionary
 	 */
-	Dictionary *(*dictionaryWithObjectsAndKeys)(id obj, ...);
+	Dictionary *(*dictionaryWithObjectsAndKeys)(ident obj, ...);
 
 	/**
 	 * @brief Enumerate the pairs of this Dictionary with the given function.
@@ -150,7 +150,7 @@ struct DictionaryInterface {
 	 * @relates Dictionary
 	 */
 	void (*enumerateObjectsAndKeys)(const Dictionary *self, DictionaryEnumerator enumerator,
-			id data);
+			ident data);
 
 	/**
 	 * @brief Creates a new Dictionary with pairs that pass the filter function.
@@ -163,7 +163,7 @@ struct DictionaryInterface {
 	 * @relates Dictionary
 	 */
 	Dictionary *(*filterObjectsAndKeys)(const Dictionary *self, DictionaryEnumerator enumerator,
-			id data);
+			ident data);
 
 	/**
 	 * @brief Initializes this Dictionary to contain elements of `dictionary`.
@@ -198,7 +198,7 @@ struct DictionaryInterface {
 	 *
 	 * @relates Dictionary
 	 */
-	id (*objectForKey)(const Dictionary *self, const id key);
+	ident (*objectForKey)(const Dictionary *self, const ident key);
 };
 
 /**

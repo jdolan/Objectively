@@ -83,7 +83,7 @@ static String *stringFromDate(const DateFormatter *self, const Date *date) {
 	const time_t seconds = date->time.tv_sec;
 	struct tm time;
 
-	id res = localtime_r(&seconds, &time);
+	ident res = localtime_r(&seconds, &time);
 	assert(res == &time);
 
 	char *str = calloc(1024, sizeof(char));

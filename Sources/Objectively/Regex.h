@@ -77,7 +77,7 @@ struct Regex {
 	/**
 	 * @brief The backing regular expression.
 	 */
-	id regex;
+	ident regex;
 };
 
 /**

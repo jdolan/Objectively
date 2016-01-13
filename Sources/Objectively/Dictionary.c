@@ -66,7 +66,7 @@ static void dealloc(Object *self) {
 /**
  * @brief A DictionaryEnumerator for description.
  */
-static _Bool description_enumerator(const Dictionary *dict, id obj, id key, id data) {
+static _Bool description_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
 
 	MutableString *desc = (MutableString *) data;
 
@@ -136,7 +136,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 			Array *keys = $(this, allKeys);
 
 			for (size_t i = 0; i < keys->count; i++) {
-				const id key = $(keys, objectAtIndex, i);
+				const ident key = $(keys, objectAtIndex, i);
 
 				const Object *thisObject = $(this, objectForKey, key);
 				const Object *thatObject = $(that, objectForKey, key);
@@ -160,7 +160,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 /**
  * @brief DictionaryEnumerator for allKeys.
  */
-static _Bool allKeys_enumerator(const Dictionary *dict, id obj, id key, id data) {
+static _Bool allKeys_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
 	$((MutableArray *) data, addObject, key); return false;
 }
 
@@ -179,7 +179,7 @@ static Array *allKeys(const Dictionary *self) {
 /**
  * @brief DictionaryEnumerator for allObjects.
  */
-static _Bool allObjects_enumerator(const Dictionary *dict, id obj, id key, id data) {
+static _Bool allObjects_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
 	$((MutableArray *) data, addObject, obj); return false;
 }
 
@@ -206,7 +206,7 @@ static Dictionary *dictionaryWithDictionary(const Dictionary *dictionary) {
 /**
  * @see DictionaryInterface::dictionaryWithObjectsAndKeys(id, ...)
  */
-static Dictionary *dictionaryWithObjectsAndKeys(id obj, ...) {
+static Dictionary *dictionaryWithObjectsAndKeys(ident obj, ...) {
 
 	Dictionary *dict = (Dictionary *) super(Object, alloc(Dictionary), init);
 	if (dict) {
@@ -215,11 +215,11 @@ static Dictionary *dictionaryWithObjectsAndKeys(id obj, ...) {
 		va_start(args, obj);
 
 		while (obj) {
-			id key = va_arg(args, id);
+			ident key = va_arg(args, ident);
 
 			$$(MutableDictionary, setObjectForKey, (MutableDictionary *) dict, obj, key);
 
-			obj = va_arg(args, id);
+			obj = va_arg(args, ident);
 		}
 
 		va_end(args);
@@ -232,7 +232,7 @@ static Dictionary *dictionaryWithObjectsAndKeys(id obj, ...) {
  * @see DictionaryInterface::enumerateObjectsAndKeys(const Dictionary *, DictionaryEnumerator, id)
  */
 static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator enumerator,
-		id data) {
+		ident data) {
 
 	assert(enumerator);
 
@@ -243,8 +243,8 @@ static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator
 
 			for (size_t j = 0; j < array->count; j += 2) {
 
-				id key = $(array, objectAtIndex, j);
-				id obj = $(array, objectAtIndex, j + 1);
+				ident key = $(array, objectAtIndex, j);
+				ident obj = $(array, objectAtIndex, j + 1);
 
 				if (enumerator(self, obj, key, data)) {
 					return;
@@ -258,7 +258,7 @@ static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator
  * @see DictionaryInterface::filterObjectsAndKeys(const Dictionary *, DictionaryEnumerator, id)
  */
 static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumerator enumerator,
-		id data) {
+		ident data) {
 
 	assert(enumerator);
 
@@ -271,8 +271,8 @@ static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumer
 
 			for (size_t j = 0; j < array->count; j += 2) {
 
-				id key = $(array, objectAtIndex, j);
-				id obj = $(array, objectAtIndex, j + 1);
+				ident key = $(array, objectAtIndex, j);
+				ident obj = $(array, objectAtIndex, j + 1);
 
 				if (enumerator(self, obj, key, data)) {
 					$(dictionary, setObjectForKey, obj, key);
@@ -295,7 +295,7 @@ static Dictionary *initWithDictionary(Dictionary *self, const Dictionary *dictio
 
 			self->capacity = dictionary->capacity;
 
-			self->elements = calloc(self->capacity, sizeof(id));
+			self->elements = calloc(self->capacity, sizeof(ident));
 			assert(self->elements);
 
 			for (size_t i = 0; i < dictionary->capacity; i++) {
@@ -326,10 +326,10 @@ static Dictionary *initWithObjectsAndKeys(Dictionary *self, ...) {
 
 		while (true) {
 
-			id obj = va_arg(args, id);
+			ident obj = va_arg(args, ident);
 			if (obj) {
 
-				id key = va_arg(args, id);
+				ident key = va_arg(args, ident);
 				$$(MutableDictionary, setObjectForKey, (MutableDictionary *) self, obj, key);
 			} else {
 				break;
@@ -358,7 +358,7 @@ static MutableDictionary *mutableCopy(const Dictionary *self) {
 /**
  * @see DictionaryInterface::objectForKey(const Dictionary *, const id)
  */
-static id objectForKey(const Dictionary *self, const id key) {
+static ident objectForKey(const Dictionary *self, const ident key) {
 
 	const size_t bin = HashForObject(HASH_SEED, key) % self->capacity;
 

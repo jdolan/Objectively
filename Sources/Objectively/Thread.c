@@ -104,7 +104,7 @@ static Thread *init(Thread *self) {
 /**
  * @see ThreadInterface::initWithFunction(Thread *, ThreadFunction, id)
  */
-static Thread *initWithFunction(Thread *self, ThreadFunction function, id data) {
+static Thread *initWithFunction(Thread *self, ThreadFunction function, ident data) {
 
 	self = (Thread *) super(Object, self, init);
 	if (self) {
@@ -121,7 +121,7 @@ static Thread *initWithFunction(Thread *self, ThreadFunction function, id data) 
 /**
  * @see ThreadInterface::join(Thread *, id *)
  */
-static void join(Thread *self, id *status) {
+static void join(Thread *self, ident *status) {
 
 	int err = pthread_join(*((pthread_t *) self->thread), status);
 	assert(err == 0);
@@ -139,13 +139,13 @@ static void _kill(Thread *self, int signal) {
 /**
  * @brief Wraps the user-specified ThreadFunction, providing cleanup.
  */
-static id run(id obj) {
+static ident run(ident obj) {
 
 	Thread *self = _currentThread = (Thread *) obj;
 
 	self->isExecuting = true;
 
-	id ret = self->function(self);
+	ident ret = self->function(self);
 
 	self->isFinished = true;
 

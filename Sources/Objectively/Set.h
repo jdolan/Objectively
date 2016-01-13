@@ -51,7 +51,7 @@ typedef struct SetInterface SetInterface;
  *
  * @return See the documentation for the enumeration methods.
  */
-typedef _Bool (*SetEnumerator)(const Set *set, id obj, id data);
+typedef _Bool (*SetEnumerator)(const Set *set, ident obj, ident data);
 
 /**
  * @brief Immutable sets.
@@ -93,7 +93,7 @@ struct Set {
 	 *
 	 * @private
 	 */
-	id *elements;
+	ident *elements;
 };
 
 /**
@@ -118,7 +118,7 @@ struct SetInterface {
 	 *
 	 * @relates Set
 	 */
-	_Bool (*containsObject)(const Set *self, const id obj);
+	_Bool (*containsObject)(const Set *self, const ident obj);
 
 	/**
 	 * @brief Enumerate the elements of this Set with the given function.
@@ -130,7 +130,7 @@ struct SetInterface {
 	 *
 	 * @relates Set
 	 */
-	void (*enumerateObjects)(const Set *self, SetEnumerator enumerator, id data);
+	void (*enumerateObjects)(const Set *self, SetEnumerator enumerator, ident data);
 
 	/**
 	 * @brief Creates a new Set with elements that pass the filter function.
@@ -142,7 +142,7 @@ struct SetInterface {
 	 *
 	 * @relates Set
 	 */
-	Set *(*filterObjects)(const Set *self, SetEnumerator enumerator, id data);
+	Set *(*filterObjects)(const Set *self, SetEnumerator enumerator, ident data);
 
 	/**
 	 * @brief Initializes this Set to contain the Objects in `array`.
@@ -195,7 +195,7 @@ struct SetInterface {
 	 *
 	 * @relates Set
 	 */
-	Set *(*setWithObjects)(id obj, ...);
+	Set *(*setWithObjects)(ident obj, ...);
 
 	/**
 	 * @brief Returns a new Set with the contents of `set`.

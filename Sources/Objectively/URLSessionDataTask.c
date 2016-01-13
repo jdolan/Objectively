@@ -52,7 +52,7 @@ static void dealloc(Object *self) {
 /**
  * @brief The `CURLOPT_WRITEFUNCTION` callback.
  */
-static size_t writeFunction(char *data, size_t size, size_t count, id self) {
+static size_t writeFunction(char *data, size_t size, size_t count, ident self) {
 
 	URLSessionDataTask *this = (URLSessionDataTask *) self;
 

@@ -35,7 +35,7 @@
 /**
  * @brief The `CURLOPT_READFUNCTION` callback.
  */
-static size_t readFunction(char *data, size_t size, size_t count, id self) {
+static size_t readFunction(char *data, size_t size, size_t count, ident self) {
 
 	URLSessionUploadTask *this = (URLSessionUploadTask *) self;
 

@@ -100,7 +100,7 @@ struct MutableArrayInterface {
 	 *
 	 * @relates MutableArray
 	 */
-	void (*addObject)(MutableArray *self, const id obj);
+	void (*addObject)(MutableArray *self, const ident obj);
 
 	/**
 	 * @brief Adds the Objects contained in `array` to this MutableArray.
@@ -141,7 +141,7 @@ struct MutableArrayInterface {
 	 *
 	 * @relates MutableArray
 	 */
-	void (*removeObject)(MutableArray *self, const id obj);
+	void (*removeObject)(MutableArray *self, const ident obj);
 
 	/**
 	 * @brief Removes the Object at the specified index.
@@ -162,7 +162,7 @@ struct MutableArrayInterface {
 	 *
 	 * @relates MutableArray
 	 */
-	void (*setObjectAtIndex)(MutableArray *self, const id obj, const int index);
+	void (*setObjectAtIndex)(MutableArray *self, const ident obj, const int index);
 
 	/**
 	 * @brief Sorts this MutableArray in place using `comparator`.

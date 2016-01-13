@@ -130,7 +130,7 @@ static URLSession *init(URLSession *self) {
 /**
  * @brief ThreadFunction for a URLSession.
  */
-static id run(Thread *thread) {
+static ident run(Thread *thread) {
 
 	URLSession *self = thread->data;
 

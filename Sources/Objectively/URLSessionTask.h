@@ -88,12 +88,12 @@ struct URLSessionTask {
 		/**
 		 * @brief The backing libcurl handle.
 		 */
-		id handle;
+		ident handle;
 
 		/**
 		 * @brief HTTP headers, in libcurl list structure.
 		 */
-		id httpHeaders;
+		ident httpHeaders;
 
 	} locals;
 

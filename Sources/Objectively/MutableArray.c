@@ -53,7 +53,7 @@ static Object *copy(const Object *self) {
 /**
  * @see MutableArrayInterface::addObject(MutableArray *, const id)
  */
-static void addObject(MutableArray *self, const id obj) {
+static void addObject(MutableArray *self, const ident obj) {
 
 	Array *array = (Array *) self;
 	if (array->count == self->capacity) {
@@ -61,9 +61,9 @@ static void addObject(MutableArray *self, const id obj) {
 		self->capacity += ARRAY_CHUNK_SIZE;
 
 		if (array->elements) {
-			array->elements = realloc(array->elements, self->capacity * sizeof(id));
+			array->elements = realloc(array->elements, self->capacity * sizeof(ident));
 		} else {
-			array->elements = malloc(self->capacity * sizeof(id));
+			array->elements = malloc(self->capacity * sizeof(ident));
 		}
 
 		assert(array->elements);
@@ -119,7 +119,7 @@ static MutableArray *initWithCapacity(MutableArray *self, size_t capacity) {
 		self->capacity = capacity;
 		if (self->capacity) {
 
-			self->array.elements = malloc(self->capacity * sizeof(id));
+			self->array.elements = malloc(self->capacity * sizeof(ident));
 			assert(self->array.elements);
 		}
 	}
@@ -140,7 +140,7 @@ static void removeAllObjects(MutableArray *self) {
 /**
  * @see MutableArrayInterface::removeObject(MutableArray *, const id)
  */
-static void removeObject(MutableArray *self, const id obj) {
+static void removeObject(MutableArray *self, const ident obj) {
 
 	int index = $((Array *) self, indexOfObject, obj);
 	if (index != -1) {
@@ -168,7 +168,7 @@ static void removeObjectAtIndex(MutableArray *self, const int index) {
 /**
  * @see MutableArrayInterface::setObjectAtIndex(MutableArray *, const id, const int)
  */
-static void setObjectAtIndex(MutableArray *self, const id obj, const int index) {
+static void setObjectAtIndex(MutableArray *self, const ident obj, const int index) {
 
 	assert(index > -1);
 	assert(index < self->array.count);
@@ -186,14 +186,14 @@ static void setObjectAtIndex(MutableArray *self, const id obj, const int index) 
  * @brief qsort_r comparator.
  */
 static int _sort(void *data, const void *a, const void *b) {
-	return ((Comparator) data)(*((const id *) a), *((const id *) b));
+	return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
 }
 
 /**
  * @see MutableArrayInterface::sort(MutableArray *, Comparator)
  */
 static void sort(MutableArray *self, Comparator comparator) {
-	qsort_r(self->array.elements, self->array.count, sizeof(id), comparator, _sort);
+	qsort_r(self->array.elements, self->array.count, sizeof(ident), comparator, _sort);
 }
 
 #elif defined(__WINDOWS__)
@@ -204,14 +204,14 @@ static void sort(MutableArray *self, Comparator comparator) {
  * @brief qsort_r comparator.
  */
 static int _sort(const void *a, const void *b, void *data) {
-	return ((Comparator) data)(*((const id *) a), *((const id *) b));
+	return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
 }
 
 /**
  * @see MutableArrayInterface::sort(MutableArray *, Comparator)
  */
 static void sort(MutableArray *self, Comparator comparator) {
-	qsort_r(self->array.elements, self->array.count, sizeof(id), _sort, comparator);
+	qsort_r(self->array.elements, self->array.count, sizeof(ident), _sort, comparator);
 }
 
 #endif

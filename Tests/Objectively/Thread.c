@@ -30,7 +30,7 @@
 
 Condition *condition;
 
-static id increment(Thread *self) {
+static ident increment(Thread *self) {
 
 	_Bool stop = false;
 
@@ -44,7 +44,7 @@ static id increment(Thread *self) {
 		});
 	}
 
-	return (id) true;
+	return (ident) true;
 }
 
 START_TEST(thread)
@@ -62,7 +62,7 @@ START_TEST(thread)
 		WithLock(condition, $(condition, wait));
 		ck_assert_int_eq(0xbeaf, criticalSection);
 
-		id ret;
+		ident ret;
 		$(thread, join, &ret);
 		ck_assert_int_eq(true, (_Bool ) ret);
 
@@ -71,7 +71,7 @@ START_TEST(thread)
 
 	}END_TEST
 
-static id signalBeforeDate(Thread *self) {
+static ident signalBeforeDate(Thread *self) {
 
 	usleep(((Date *) self->data)->time.tv_usec / 2);
 

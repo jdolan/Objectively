@@ -98,7 +98,7 @@ struct Class {
 	/**
 	 * @brief The interface handle (do *not* provide).
 	 */
-	id interface;
+	ident interface;
 
 	/**
 	 * @brief The interface offset (required).
@@ -129,18 +129,18 @@ extern void _initialize(Class *clazz);
 /**
  * @brief Instantiate a type through the given Class.
  */
-extern id _alloc(Class *clazz);
+extern ident _alloc(Class *clazz);
 
 /**
  * @brief Perform a type-checking cast.
  */
-extern id _cast(Class *clazz, const id obj);
+extern ident _cast(Class *clazz, const ident obj);
 
 /**
  * @brief Atomically decrement the given Object's reference count. If the
  * resulting reference count is `0`, the Object is deallocated.
  */
-extern void release(id obj);
+extern void release(ident obj);
 
 /**
  * @brief Atomically increment the given Object's reference count.
@@ -151,7 +151,7 @@ extern void release(id obj);
  * and preventing it from being released. Be sure to balance calls to `retain`
  * with calls to `release`.
  */
-extern id retain(id obj);
+extern ident retain(ident obj);
 
 /**
  * @brief The page size, in bytes, of the target host.
@@ -168,7 +168,7 @@ extern size_t _pageSize;
  * @brief Safely cast to a type.
  */
 #define cast(type, obj) \
-	((type *) _cast(&_##type, (const id) obj))
+	((type *) _cast(&_##type, (const ident) obj))
 
 /**
  * @brief Resolve the Class of an Object instance.

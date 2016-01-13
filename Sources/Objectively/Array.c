@@ -148,7 +148,7 @@ static Array *arrayWithArray(const Array *array) {
 /**
  * @see ArrayInterface::arrayWithObjects(id, ...)
  */
-static Array *arrayWithObjects(id obj, ...) {
+static Array *arrayWithObjects(ident obj, ...) {
 
 	Array *array = (Array *) super(Object, alloc(Array), init);
 	if (array) {
@@ -156,28 +156,28 @@ static Array *arrayWithObjects(id obj, ...) {
 		va_list args;
 		va_start(args, obj);
 
-		id object = obj;
+		ident object = obj;
 
 		while (object) {
 			array->count++;
-			object = va_arg(args, id);
+			object = va_arg(args, ident);
 		}
 
 		va_end(args);
 
 		if (array->count) {
 
-			array->elements = calloc(array->count, sizeof(id));
+			array->elements = calloc(array->count, sizeof(ident));
 			assert(array->elements);
 
 			va_start(args, obj);
 
 			object = obj;
-			id *elt = array->elements;
+			ident *elt = array->elements;
 
 			while (object) {
 				*elt++ = retain(object);
-				object = va_arg(args, id);
+				object = va_arg(args, ident);
 			}
 
 			va_end(args);
@@ -190,7 +190,7 @@ static Array *arrayWithObjects(id obj, ...) {
 /**
  * @see ArrayInterface::containsObject(const Array *, const id)
  */
-static _Bool containsObject(const Array *self, const id obj) {
+static _Bool containsObject(const Array *self, const ident obj) {
 
 	return $(self, indexOfObject, obj) != -1;
 }
@@ -198,7 +198,7 @@ static _Bool containsObject(const Array *self, const id obj) {
 /**
  * @see ArrayInterface::enumerateObjects(const Array *, ArrayEnumerator, id)
  */
-static void enumerateObjects(const Array *self, ArrayEnumerator enumerator, id data) {
+static void enumerateObjects(const Array *self, ArrayEnumerator enumerator, ident data) {
 
 	assert(enumerator);
 
@@ -212,7 +212,7 @@ static void enumerateObjects(const Array *self, ArrayEnumerator enumerator, id d
 /**
  * @see ArrayInterface::filterObjects(const Array *, ArrayEnumerator, id)
  */
-static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, id data) {
+static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, ident data) {
 
 	assert(enumerator);
 
@@ -230,7 +230,7 @@ static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, id da
 /**
  * @see ArrayInterface::indexOfObject(const Array *, const id)
  */
-static int indexOfObject(const Array *self, const id obj) {
+static int indexOfObject(const Array *self, const ident obj) {
 
 	Object *object = cast(Object, obj);
 
@@ -256,7 +256,7 @@ static Array *initWithArray(Array *self, const Array *array) {
 		self->count = array->count;
 		if (self->count) {
 
-			self->elements = calloc(self->count, sizeof(id));
+			self->elements = calloc(self->count, sizeof(ident));
 			assert(self->elements);
 
 			for (size_t i = 0; i < self->count; i++) {
@@ -279,7 +279,7 @@ static Array *initWithObjects(Array *self, ...) {
 		va_list args;
 		va_start(args, self);
 
-		while (va_arg(args, id)) {
+		while (va_arg(args, ident)) {
 			self->count++;
 		}
 
@@ -287,13 +287,13 @@ static Array *initWithObjects(Array *self, ...) {
 
 		if (self->count) {
 
-			self->elements = calloc(self->count, sizeof(id));
+			self->elements = calloc(self->count, sizeof(ident));
 			assert(self->elements);
 
 			va_start(args, self);
 
 			for (size_t i = 0; i < self->count; i++) {
-				self->elements[i] = retain(va_arg(args, id));
+				self->elements[i] = retain(va_arg(args, ident));
 			}
 
 			va_end(args);
@@ -319,7 +319,7 @@ static MutableArray *mutableCopy(const Array *self) {
 /**
  * @see ArrayInterface::objectAtIndex(const Array *, const int)
  */
-static id objectAtIndex(const Array *self, const int index) {
+static ident objectAtIndex(const Array *self, const int index) {
 
 	assert(index > -1);
 	assert(index < self->count);

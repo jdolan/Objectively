@@ -85,7 +85,7 @@ static void cancel(Operation *self) {
  */
 static Array *dependencies(const Operation *self) {
 
-	id dependencies = $((Object *) self->locals.dependencies, copy);
+	ident dependencies = $((Object *) self->locals.dependencies, copy);
 
 	return (Array *) dependencies;
 }
@@ -111,7 +111,7 @@ static Operation *init(Operation *self) {
 /**
  * @see OperationInterface::initWithFunction(Operation *, OperationFunction, id)
  */
-static Operation *initWithFunction(Operation *self, OperationFunction function, id data) {
+static Operation *initWithFunction(Operation *self, OperationFunction function, ident data) {
 
 	self = $(self, init);
 	if (self) {

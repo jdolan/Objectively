@@ -25,7 +25,7 @@
 
 #include <Objectively.h>
 
-_Bool enumerator(const Set *set, id obj, id data) {
+_Bool enumerator(const Set *set, ident obj, ident data) {
 	(*(int *) data)++; return false;
 }
 
@@ -78,7 +78,7 @@ START_TEST(mutableSet)
 
 		for (int i = 0; i < 1024; i++) {
 
-			id obj = $(alloc(Object), init);
+			ident obj = $(alloc(Object), init);
 			ck_assert(obj != NULL);
 
 			$(set, addObject, obj);

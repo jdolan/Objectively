@@ -240,7 +240,7 @@ struct StringInterface {
 	 *
 	 * @relates String
 	 */
-	String *(*initWithMemory)(String *self, const id mem, size_t length);
+	String *(*initWithMemory)(String *self, const ident mem, size_t length);
 
 	/**
 	 * @brief Initializes this String with the specified arguments list.
@@ -372,7 +372,7 @@ struct StringInterface {
 	 *
 	 * @relates String
 	 */
-	String *(*stringWithMemory)(const id mem, size_t length);
+	String *(*stringWithMemory)(const ident mem, size_t length);
 
 	/**
 	 * @brief Creates a new String from a subset of this one.

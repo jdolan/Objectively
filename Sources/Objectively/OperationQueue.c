@@ -100,7 +100,7 @@ static OperationQueue *currentQueue(void) {
 /**
  * @brief ThreadFunction for the OperationQueue Thread.
  */
-static id run(Thread *thread) {
+static ident run(Thread *thread) {
 
 	OperationQueue *self = _currentQueue = thread->data;
 
@@ -181,7 +181,7 @@ static int operationCount(const OperationQueue *self) {
  */
 static Array *operations(const OperationQueue *self) {
 
-	id operations;
+	ident operations;
 
 	WithLock(self->locals.condition, {
 		operations = $((Object * ) self->locals.operations, copy);

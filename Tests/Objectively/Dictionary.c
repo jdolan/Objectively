@@ -25,12 +25,12 @@
 
 #include <Objectively.h>
 
-static _Bool enumerator(const Dictionary *dictionary, id obj, id key, id data) {
+static _Bool enumerator(const Dictionary *dictionary, ident obj, ident key, ident data) {
 
 	(* (int *) data)++; return false;
 }
 
-static _Bool filter(const Dictionary *dictionary, id obj, id key, id data) {
+static _Bool filter(const Dictionary *dictionary, ident obj, ident key, ident data) {
 
 	return strcmp("two", ((String *) key)->chars) == 0;
 }

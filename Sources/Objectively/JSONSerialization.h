@@ -91,7 +91,7 @@ struct JSONSerializationInterface {
 	 *
 	 * @relates JSONSerialization
 	 */
-	Data *(*dataFromObject)(const id obj, int options);
+	Data *(*dataFromObject)(const ident obj, int options);
 
 	/**
 	 * @brief Parses an Object from the specified Data.
@@ -103,7 +103,7 @@ struct JSONSerializationInterface {
 	 *
 	 * @relates JSONSerialization
 	 */
-	id (*objectFromData)(const Data *data, int options);
+	ident (*objectFromData)(const Data *data, int options);
 };
 
 /**

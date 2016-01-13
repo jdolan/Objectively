@@ -114,7 +114,7 @@ struct DataInterface {
 	 *
 	 * @relates Data
 	 */
-	Data *(*dataWithMemory)(const id mem, size_t length);
+	Data *(*dataWithMemory)(const ident mem, size_t length);
 
 	/**
 	 * @brief Initializes this Data by copying `length` of `bytes`.
@@ -149,7 +149,7 @@ struct DataInterface {
 	 *
 	 * @relates Data
 	 */
-	Data *(*initWithMemory)(Data *self, const id mem, size_t length);
+	Data *(*initWithMemory)(Data *self, const ident mem, size_t length);
 
 	/**
 	 * @return A MutableData with the contents of this Data.

@@ -39,9 +39,9 @@
  */
 
 /**
- * @brief The identity type.
+ * @brief The identity type, similar to Objective-C `id`.
  */
-typedef void *id;
+typedef void *ident;
 
 /**
  * @brief The byte type.
@@ -78,7 +78,7 @@ typedef enum {
  *
  * @return The ORDER of `obj1` relative to `obj2`.
  */
-typedef ORDER (*Comparator)(const id obj1, const id obj2);
+typedef ORDER (*Comparator)(const ident obj1, const ident obj2);
 
 /**
  * @return The length of an array.

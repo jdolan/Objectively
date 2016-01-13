@@ -47,7 +47,7 @@ typedef struct {
 	size_t depth;
 } JSONWriter;
 
-static void writeElement(JSONWriter *writer, const id obj);
+static void writeElement(JSONWriter *writer, const ident obj);
 
 /**
  * Writes `null` to `writer`.
@@ -122,10 +122,10 @@ static void writeObject(JSONWriter *writer, const Dictionary *object) {
 	Array *keys = $(object, allKeys);
 	for (size_t i = 0; i < keys->count; i++) {
 
-		const id key = $(keys, objectAtIndex, i);
+		const ident key = $(keys, objectAtIndex, i);
 		writeLabel(writer, (String *) key);
 
-		const id obj = $(object, objectForKey, key);
+		const ident obj = $(object, objectForKey, key);
 		writeElement(writer, obj);
 
 		if (i < keys->count - 1) {
@@ -164,7 +164,7 @@ static void writeArray(JSONWriter *writer, const Array *array) {
  *
  * @param obj The JSON element to write.
  */
-static void writeElement(JSONWriter *writer, const id obj) {
+static void writeElement(JSONWriter *writer, const ident obj) {
 
 	const Object *object = cast(Object, obj);
 	if (object) {
@@ -187,7 +187,7 @@ static void writeElement(JSONWriter *writer, const id obj) {
 /**
  * @see JSONSerializationInterface::dataFromObject(const id, int options)
  */
-static Data *dataFromObject(const id obj, int options) {
+static Data *dataFromObject(const ident obj, int options) {
 
 	JSONWriter writer = {
 		.data = $(alloc(MutableData), init),
@@ -208,7 +208,7 @@ typedef struct {
 	byte *b;
 } JSONReader;
 
-static id readElement(JSONReader *reader);
+static ident readElement(JSONReader *reader);
 
 /**
  * @return The next byte in `reader`, or `-1` if `reader` is exhausted.
@@ -373,7 +373,7 @@ static Dictionary *readObject(JSONReader *reader) {
 		const int b = readByteUntil(reader, ":");
 		assert(b == ':');
 
-		id obj = readElement(reader);
+		ident obj = readElement(reader);
 		assert(obj);
 
 		$(object, setObjectForKey, obj, key);
@@ -416,7 +416,7 @@ static Array *readArray(JSONReader *reader) {
  *
  * @return The element, or `NULL` if no element is available..
  */
-static id readElement(JSONReader *reader) {
+static ident readElement(JSONReader *reader) {
 
 	const int b = readByteUntil(reader, "{[\"tfn0123456789.-]}");
 	if (b == '{') {
@@ -441,7 +441,7 @@ static id readElement(JSONReader *reader) {
 /**
  * @see JSONSerializationInterface::objectFromData(const Data *, int)
  */
-static id objectFromData(const Data *data, int options) {
+static ident objectFromData(const Data *data, int options) {
 
 	JSONReader reader = {
 		.data = data,

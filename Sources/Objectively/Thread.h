@@ -47,7 +47,7 @@ typedef struct ThreadInterface ThreadInterface;
  *
  * @param thread The executing Thread.
  */
-typedef id (*ThreadFunction)(Thread *thread);
+typedef ident (*ThreadFunction)(Thread *thread);
 
 /**
  * @brief POSIX Threads.
@@ -77,7 +77,7 @@ struct Thread {
 	/**
 	 * @brief The user data.
 	 */
-	id data;
+	ident data;
 
 	/**
 	 * @brief The Thread function.
@@ -109,7 +109,7 @@ struct Thread {
 	 *
 	 * @private
 	 */
-	id thread;
+	ident thread;
 };
 
 /**
@@ -164,7 +164,7 @@ struct ThreadInterface {
 	 *
 	 * @relates Thread
 	 */
-	Thread *(*initWithFunction)(Thread *self, ThreadFunction function, id data);
+	Thread *(*initWithFunction)(Thread *self, ThreadFunction function, ident data);
 
 	/**
 	 * @brief Wait for the specified Thread to terminate.
@@ -174,7 +174,7 @@ struct ThreadInterface {
 	 *
 	 * @relates Thread
 	 */
-	void (*join)(Thread *self, id *status);
+	void (*join)(Thread *self, ident *status);
 
 	/**
 	 * @brief Sends the given signal to this Thread.

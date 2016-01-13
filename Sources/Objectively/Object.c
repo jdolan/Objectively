@@ -37,7 +37,7 @@
  */
 static Object *copy(const Object *self) {
 
-	id obj = calloc(1, self->clazz->instanceSize);
+	ident obj = calloc(1, self->clazz->instanceSize);
 	assert(obj);
 
 	Object *object = memcpy(obj, self, self->clazz->instanceSize);

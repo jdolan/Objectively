@@ -97,7 +97,7 @@ struct Operation {
 	/**
 	 * @brief The user data.
 	 */
-	id data;
+	ident data;
 
 	/**
 	 * @brief The Operation function.
@@ -174,7 +174,7 @@ struct OperationInterface {
 	 *
 	 * @relates Operation
 	 */
-	Operation *(*initWithFunction)(Operation *self, OperationFunction function, id data);
+	Operation *(*initWithFunction)(Operation *self, OperationFunction function, ident data);
 
 	/**
 	 * @return `true` when all criteria for this Operation to `start` are met.

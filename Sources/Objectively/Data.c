@@ -120,7 +120,7 @@ static Data *dataWithContentsOfFile(const char *path) {
  */
 static Data *initWithBytes(Data *self, const byte *bytes, size_t length) {
 
-	id mem = malloc(length);
+	ident mem = malloc(length);
 	assert(mem);
 
 	memcpy(mem, bytes, length);
@@ -131,7 +131,7 @@ static Data *initWithBytes(Data *self, const byte *bytes, size_t length) {
 /**
  * @see DataInterface::dataWithMemory(const id, size_t)
  */
-static Data *dataWithMemory(const id mem, size_t length) {
+static Data *dataWithMemory(const ident mem, size_t length) {
 
 	return $(alloc(Data), initWithMemory, mem, length);
 }
@@ -145,7 +145,7 @@ static Data *initWithContentsOfFile(Data *self, const char *path) {
 
 	FILE *file = fopen(path, "r");
 	if (file) {
-		id mem = NULL;
+		ident mem = NULL;
 
 		int err = fseek(file, 0, SEEK_END);
 		assert(err == 0);
@@ -175,7 +175,7 @@ static Data *initWithContentsOfFile(Data *self, const char *path) {
 /**
  * @see DataInterface::initWithMemory(Data *, const id, size_t)
  */
-static Data *initWithMemory(Data *self, const id mem, size_t length) {
+static Data *initWithMemory(Data *self, const ident mem, size_t length) {
 
 	self = (Data *) super(Object, self, init);
 	if (self) {
