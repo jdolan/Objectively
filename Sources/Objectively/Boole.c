@@ -23,11 +23,11 @@
 
 #include <assert.h>
 
-#include <Objectively/Boolean.h>
+#include <Objectively/Boole.h>
 #include <Objectively/Once.h>
 #include <Objectively/String.h>
 
-#define _Class _Boolean
+#define _Class _Boole
 
 #pragma mark - ObjectInterface
 
@@ -44,39 +44,39 @@ static Object *copy(const Object *self) {
  */
 static String *description(const Object *self) {
 
-	const Boolean *this = (Boolean *) self;
+	const Boole *this = (Boole *) self;
 
 	return $(alloc(String), initWithCharacters, this->value ? "true" : "false");
 }
 
-#pragma mark - BooleanInterface
+#pragma mark - BooleInterface
 
-static Boolean *_False;
+static Boole *_False;
 
 /**
- * @see BooleanInterface::False(void)
+ * @see BooleInterface::False(void)
  */
-static Boolean *False(void) {
+static Boole *False(void) {
 	static Once once;
 
 	DispatchOnce(once, {
-		_False = (Boolean *) $((Object *) alloc(Boolean), init);
+		_False = (Boole *) $((Object *) alloc(Boole), init);
 		_False->value = false;
 	});
 
 	return _False;
 }
 
-static Boolean *_True;
+static Boole *_True;
 
 /**
- * @see BooleanInterface::True(void)
+ * @see BooleInterface::True(void)
  */
-static Boolean *True(void) {
+static Boole *True(void) {
 	static Once once;
 
 	DispatchOnce(once, {
-		_True = (Boolean *) $((Object *) alloc(Boolean), init);
+		_True = (Boole *) $((Object *) alloc(Boole), init);
 		_True->value = true;
 	});
 
@@ -95,7 +95,7 @@ static void initialize(Class *clazz) {
 	object->copy = copy;
 	object->description = description;
 
-	BooleanInterface *boolean = (BooleanInterface *) clazz->interface;
+	BooleInterface *boolean = (BooleInterface *) clazz->interface;
 
 	boolean->False = False;
 	boolean->True = True;
@@ -110,12 +110,12 @@ static void destroy(Class *clazz) {
 	release(_True);
 }
 
-Class _Boolean = {
-	.name = "Boolean",
+Class _Boole = {
+	.name = "Boole",
 	.superclass = &_Object,
-	.instanceSize = sizeof(Boolean),
-	.interfaceOffset = offsetof(Boolean, interface),
-	.interfaceSize = sizeof(BooleanInterface),
+	.instanceSize = sizeof(Boole),
+	.interfaceOffset = offsetof(Boole, interface),
+	.interfaceSize = sizeof(BooleInterface),
 	.initialize = initialize,
 	.destroy = destroy,
 };

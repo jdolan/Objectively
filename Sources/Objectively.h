@@ -31,7 +31,7 @@
  */
 
 #include <Objectively/Array.h>
-#include <Objectively/Boolean.h>
+#include <Objectively/Boole.h>
 #include <Objectively/Class.h>
 #include <Objectively/Condition.h>
 #include <Objectively/Data.h>

@@ -4,7 +4,7 @@ AM_TESTS_ENVIRONMENT = \
 
 TESTS = \
 	Array \
-	Boolean \
+	Boole \
 	Date \
 	Dictionary \
 	Data \

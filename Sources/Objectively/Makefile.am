@@ -4,7 +4,7 @@ pkgincludedir = $(includedir)/Objectively
 
 pkginclude_HEADERS = \
 	Array.h \
-	Boolean.h \
+	Boole.h \
 	Class.h \
 	Condition.h \
 	Data.h \
@@ -49,7 +49,7 @@ lib_LTLIBRARIES = \
 
 libObjectively_la_SOURCES = \
 	Array.c \
-	Boolean.c \
+	Boole.c \
 	Class.c \
 	Condition.c \
 	Data.c \

@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <Objectively/Boolean.h>
+#include <Objectively/Boole.h>
 #include <Objectively/JSONSerialization.h>
 #include <Objectively/MutableData.h>
 #include <Objectively/MutableDictionary.h>
@@ -62,9 +62,9 @@ static void writeNull(JSONWriter *writer, const Null *null) {
 /**
  * Writes `boolean` to `writer`.
  *
- * @param boolean The Boolean to write.
+ * @param boolean The Boole to write.
  */
-static void writeBoolean(JSONWriter *writer, const Boolean *boolean) {
+static void writeBoole(JSONWriter *writer, const Boole *boolean) {
 
 	if (boolean->value) {
 		$(writer->data, appendBytes, (byte *) "true", 4);
@@ -176,8 +176,8 @@ static void writeElement(JSONWriter *writer, const id obj) {
 			writeString(writer, (String *) object);
 		} else if ($(object, isKindOfClass, &_Number)) {
 			writeNumber(writer, (Number *) object);
-		} else if ($(object, isKindOfClass, &_Boolean)) {
-			writeBoolean(writer, (Boolean *) object);
+		} else if ($(object, isKindOfClass, &_Boole)) {
+			writeBoole(writer, (Boole *) object);
 		} else if ($(object, isKindOfClass, &_Null)) {
 			writeNull(writer, (Null *) object);
 		}
@@ -297,22 +297,22 @@ static Number *readNumber(JSONReader *reader) {
 }
 
 /**
- * Reads a Boolean from `reader`.
+ * Reads a Boole from `reader`.
  *
- * @return The Boolean.
+ * @return The Boole.
  */
-static _Bool *readBoolean(JSONReader *reader) {
+static _Bool *readBoole(JSONReader *reader) {
 
-	Boolean *boolean = NULL;
+	Boole *boolean = NULL;
 
 	switch (*reader->b) {
 		case 't':
 			consumeBytes(reader, "true");
-			boolean = $$(Boolean, True);
+			boolean = $$(Boole, True);
 			break;
 		case 'f':
 			consumeBytes(reader, "false");
-			boolean = $$(Boolean, False);
+			boolean = $$(Boole, False);
 			break;
 		default:
 			assert(false);
@@ -426,7 +426,7 @@ static id readElement(JSONReader *reader) {
 	} else if (b == '\"') {
 		return readString(reader);
 	} else if (b == 't' || b == 'f') {
-		return readBoolean(reader);
+		return readBoole(reader);
 	} else if (b == 'n') {
 		return readNull(reader);
 	} else if (b == '.' || b == '-' || isdigit(b)) {

@@ -25,22 +25,22 @@
 
 #include <Objectively.h>
 
-START_TEST(boolean)
+START_TEST(boole)
 	{
-		Boolean *True = $$(Boolean, True);
+		Boole *True = $$(Boole, True);
 		ck_assert(True->value == true);
 
-		Boolean *False = $$(Boolean, False);
+		Boole *False = $$(Boole, False);
 		ck_assert(False->value == false);
 
 	}END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("boolean");
-	tcase_add_test(tcase, boolean);
+	TCase *tcase = tcase_create("boole");
+	tcase_add_test(tcase, boole);
 
-	Suite *suite = suite_create("boolean");
+	Suite *suite = suite_create("boole");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);

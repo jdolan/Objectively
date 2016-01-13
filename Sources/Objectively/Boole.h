@@ -21,8 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Boolean_h_
-#define _Objectively_Boolean_h_
+#ifndef _Objectively_Boole_h_
+#define _Objectively_Boole_h_
 
 #include <Objectively/Object.h>
 
@@ -32,15 +32,15 @@
  * @brief A wrapper for placing boolean primitives into collections, etc.
  */
 
-typedef struct Boolean Boolean;
-typedef struct BooleanInterface BooleanInterface;
+typedef struct Boole Boole;
+typedef struct BooleInterface BooleInterface;
 
 /**
  * @brief A wrapper for placing boolean primitives into collections, etc.
  *
  * @extends Object
  */
-struct Boolean {
+struct Boole {
 
 	/**
 	 * @brief The parent.
@@ -54,7 +54,7 @@ struct Boolean {
 	 *
 	 * @private
 	 */
-	BooleanInterface *interface;
+	BooleInterface *interface;
 
 	/**
 	 * @brief The backing _Bool.
@@ -63,9 +63,9 @@ struct Boolean {
 };
 
 /**
- * @brief The Boolean interface.
+ * @brief The Boole interface.
  */
-struct BooleanInterface {
+struct BooleInterface {
 
 	/**
 	 * @brief The parent interface.
@@ -73,23 +73,23 @@ struct BooleanInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @return The `false` Boolean.
+	 * @return The `false` Boole.
 	 *
-	 * @relates Boolean
+	 * @relates Boole
 	 */
-	Boolean *(*False)(void);
+	Boole *(*False)(void);
 
 	/**
-	 * @return The `true` Boolean.
+	 * @return The `true` Boole.
 	 *
-	 * @relates Boolean
+	 * @relates Boole
 	 */
-	Boolean *(*True)(void);
+	Boole *(*True)(void);
 };
 
 /**
- * @brief The Boolean Class.
+ * @brief The Boole Class.
  */
-extern Class _Boolean;
+extern Class _Boole;
 
 #endif
