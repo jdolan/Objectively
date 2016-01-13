@@ -89,11 +89,14 @@ libObjectively_la_SOURCES = \
 
 libObjectively_la_CFLAGS = \
 	-I .. -I ../.. \
+	@HOST_CFLAGS@ \
 	@CURL_CFLAGS@
 
 libObjectively_la_LDFLAGS = \
+	@HOST_LDFLAGS@ \
 	-shared
 
 libObjectively_la_LIBADD = \
-	-liconv -lpthread \
+	-lpthread \
+	@HOST_LIBS@ \
 	@CURL_LIBS@

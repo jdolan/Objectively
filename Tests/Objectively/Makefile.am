@@ -29,10 +29,12 @@ TESTS = \
 
 CFLAGS += \
 	-I$(top_builddir)/Sources \
+	@HOST_CFLAGS@ \
 	@CHECK_CFLAGS@
 
 LDADD = \
 	$(top_builddir)/Sources/Objectively/libObjectively.la \
+	@HOST_LIBS@ \
 	@CHECK_LIBS@
 
 check_PROGRAMS = \

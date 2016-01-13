@@ -3,10 +3,14 @@ check_PROGRAMS = \
 	Hello
 
 CFLAGS += \
-	-I$(includedir)
+	-I$(includedir) \
+	@HOST_CFLAGS@
 	
 LDADD = \
-	-L$(libdir) -lObjectively
+	-L$(libdir) -lObjectively \
+	@HOST_LIBS@
+
+if APPLE
 
 check_PROGRAMS += \
 	HelloObjC
@@ -16,3 +20,5 @@ HelloObjC_SOURCES = \
 
 HelloObjC_LDFLAGS = \
 	-framework Foundation
+
+endif
