@@ -202,14 +202,14 @@ static void sort(MutableArray *self, Comparator comparator) {
  * @brief qsort_r comparator.
  */
 static int _sort(void *data, const void *a, const void *b) {
-	return ((Comparator) data)(*((const id *) a), *((const id *) b));
+	return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
 }
 
 /**
  * @see MutableArrayInterface::sort(MutableArray *, Comparator)
  */
 static void sort(MutableArray *self, Comparator comparator) {
-	qsort_s(self->array.elements, self->array.count, sizeof(id), _sort, comparator);
+	qsort_s(self->array.elements, self->array.count, sizeof(ident), _sort, comparator);
 }
 
 #else
