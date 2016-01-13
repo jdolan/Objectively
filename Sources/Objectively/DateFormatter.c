@@ -83,8 +83,13 @@ static String *stringFromDate(const DateFormatter *self, const Date *date) {
 	const time_t seconds = date->time.tv_sec;
 	struct tm time;
 
+#if defined(__MINGW32__)
+	int err = localtime_s(&time, &seconds);
+	assert(err == 0);
+#else
 	ident res = localtime_r(&seconds, &time);
 	assert(res == &time);
+#endif
 
 	char *str = calloc(1024, sizeof(char));
 	assert(str);
