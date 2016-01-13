@@ -1,18 +1,25 @@
 
-check_PROGRAMS = \
-	Hello
+noinst_PROGRAMS = \
+	Hello \
+	HelloCpp
 
 CFLAGS += \
-	-I$(includedir) \
+	-I$(top_builddir)/Sources \
 	@HOST_CFLAGS@
 	
 LDADD = \
-	-L$(libdir) -lObjectively \
+	$(top_builddir)/Sources/Objectively/libObjectively.la \
 	@HOST_LIBS@
+
+HelloCpp_SOURCES = \
+	HelloCpp.cpp
+
+HelloCpp_LDADD = \
+	$(LDADD)
 
 if APPLE
 
-check_PROGRAMS += \
+noinst_PROGRAMS += \
 	HelloObjC
 
 HelloObjC_SOURCES = \
