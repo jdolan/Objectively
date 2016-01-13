@@ -6,6 +6,10 @@ noinst_PROGRAMS = \
 CFLAGS += \
 	-I$(top_builddir)/Sources \
 	@HOST_CFLAGS@
+
+CXXFLAGS += \
+	-I$(top_builddir)/Sources \
+	@HOST_CFLAGS@
 	
 LDADD = \
 	$(top_builddir)/Sources/Objectively/libObjectively.la \

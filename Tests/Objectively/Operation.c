@@ -25,12 +25,12 @@
 
 #include <Objectively.h>
 
-static void producer_func(Operation *dependency) {
-	*((Object **) dependency->data) = $(alloc(Object), init);
+static void producer_func(Operation *operation) {
+	*((Object **) operation->data) = $(alloc(Object), init);
 }
 
 static void consumer_func(Operation *operation) {
-	ck_assert(cast(Object, *((Object **) operation->data)));
+	ck_assert(cast(Object, *((Object **) operation->data)) != NULL);
 }
 
 START_TEST(producerConsumer)
@@ -60,7 +60,6 @@ START_TEST(producerConsumer)
 
 
 static void suspendResume_func(Operation *operation) {
-
 	(*(int *) operation->data)++;
 }
 
