@@ -56,9 +56,9 @@ static Object *copy(const Object *self) {
 /**
  * @brief DictionaryEnumerator for addEntriesFromDictionary.
  */
-static BOOL addEntriesFromDictionary_enumerator(const Dictionary *dict, id obj, id key, id data) {
+static _Bool addEntriesFromDictionary_enumerator(const Dictionary *dict, id obj, id key, id data) {
 
-	$((MutableDictionary *) data, setObjectForKey, obj, key); return NO;
+	$((MutableDictionary *) data, setObjectForKey, obj, key); return false;
 }
 
 /**
@@ -235,7 +235,7 @@ static void setObjectsForKeys(MutableDictionary *self, ...) {
 	va_list args;
 	va_start(args, self);
 
-	while (YES) {
+	while (true) {
 
 		id obj = va_arg(args, id);
 		if (obj) {

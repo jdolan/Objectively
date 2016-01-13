@@ -106,10 +106,10 @@ struct RegexInterface {
 	 * @brief Matches this regular expression against the given characters.
 	 *
 	 * @param chars The characters to match.
-	 * @param options A bitwise-or of `REG_NOTBOL`, `REG_NOTEOL`.
+	 * @param options A bitwise-or of `REG_falseTBOL`, `REG_falseTEOL`.
 	 * @param matches An optional pointer to return matched sub-expressions.
 	 *
-	 * @return `YES` if this Regex matched `chars`, `NO` otherwise.
+	 * @return `true` if this Regex matched `chars`, `false` otherwise.
 	 *
 	 * @remark If provided, `matches` will be dynamically allocated and contain
 	 * `numberOfSubExpressions + 1` RANGEs. `matches[0]` will identify the
@@ -121,16 +121,16 @@ struct RegexInterface {
 	 *
 	 * @relates Regex
 	 */
-	BOOL (*matchesCharacters)(const Regex *self, const char *chars, int options, RANGE **matches);
+	_Bool (*matchesCharacters)(const Regex *self, const char *chars, int options, RANGE **matches);
 
 	/**
 	 * @brief Matches this regular expression against the given String.
 	 *
 	 * @param string The String to match.
-	 * @param options A bitwise-or of `REG_NOTBOL`, `REG_NOTEOL`.
+	 * @param options A bitwise-or of `REG_falseTBOL`, `REG_falseTEOL`.
 	 * @param matches An optional pointer to return matched sub-expressions.
 	 *
-	 * @return `YES` if this expression matches `string`, `NO` otherwise.
+	 * @return `true` if this expression matches `string`, `false` otherwise.
 	 *
 	 * @remark If provided, `matches` will be dynamically allocated and contain
 	 * `numberOfSubExpressions + 1` RANGEs. `matches[0]` will identify the
@@ -140,7 +140,7 @@ struct RegexInterface {
 	 *
 	 * @relates Regex
 	 */
-	BOOL (*matchesString)(const Regex *self, const String *string, int options, RANGE **matches);
+	_Bool (*matchesString)(const Regex *self, const String *string, int options, RANGE **matches);
 };
 
 /**

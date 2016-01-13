@@ -30,6 +30,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 /**
  * @file
@@ -38,7 +39,7 @@
  */
 
 /**
- * @brief The id type from Objective-C.
+ * @brief The identity type.
  */
 typedef void *id;
 
@@ -46,13 +47,6 @@ typedef void *id;
  * @brief The byte type.
  */
 typedef unsigned char byte;
-
-/**
- * @brief The boolean type from Objective-C.
- */
-typedef enum {
-	NO, YES
-} BOOL;
 
 /**
  * @brief A location and length into contiguous collections.

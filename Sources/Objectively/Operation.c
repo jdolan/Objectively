@@ -71,10 +71,10 @@ static void addDependency(Operation *self, Operation *dependency) {
  */
 static void cancel(Operation *self) {
 
-	if (self->isCancelled == NO) {
-		if (self->isFinished == NO) {
-			if (self->isExecuting == NO) {
-				self->isCancelled = YES;
+	if (self->isCancelled == false) {
+		if (self->isFinished == false) {
+			if (self->isExecuting == false) {
+				self->isCancelled = true;
 			}
 		}
 	}
@@ -125,26 +125,26 @@ static Operation *initWithFunction(Operation *self, OperationFunction function, 
 /**
  * @see OperationInterface::isReady(const Operation *)
  */
-static BOOL isReady(const Operation *self) {
+static _Bool isReady(const Operation *self) {
 
 	if (self->isExecuting || self->isFinished) {
-		return NO;
+		return false;
 	}
 
 	if (self->isCancelled) {
-		return YES;
+		return true;
 	}
 
 	const Array *dependencies = (Array *) self->locals.dependencies;
 	for (size_t i = 0; i < dependencies->count; i++) {
 
 		Operation *dependency = $(dependencies, objectAtIndex, i);
-		if (dependency->isFinished == NO) {
-			return NO;
+		if (dependency->isFinished == false) {
+			return false;
 		}
 	}
 
-	return YES;
+	return true;
 }
 
 /**
@@ -166,16 +166,16 @@ static void start(Operation *self) {
 		return;
 	}
 
-	if (self->isCancelled == NO) {
+	if (self->isCancelled == false) {
 
-		self->isExecuting = YES;
+		self->isExecuting = true;
 
 		self->function(self);
 
-		self->isExecuting = NO;
+		self->isExecuting = false;
 	}
 
-	self->isFinished = YES;
+	self->isFinished = true;
 
 	WithLock(self->locals.condition, {
 		$(self->locals.condition, broadcast);
@@ -193,7 +193,7 @@ static void start(Operation *self) {
 static void waitUntilFinished(const Operation *self) {
 
 	WithLock(self->locals.condition, {
-		while (self->isFinished == NO) {
+		while (self->isFinished == false) {
 			$(self->locals.condition, wait);
 		}
 	});

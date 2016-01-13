@@ -84,9 +84,9 @@ struct OperationQueue {
 	} locals;
 
 	/**
-	 * @brief When `YES`, the queue will not `start` any new Operations.
+	 * @brief When `true`, the queue will not `start` any new Operations.
 	 */
-	BOOL isSuspended;
+	_Bool isSuspended;
 };
 
 /**

@@ -63,9 +63,9 @@ static void dealloc(Object *self) {
 static void addOperation(OperationQueue *self, Operation *operation) {
 
 	assert(operation);
-	assert(operation->isCancelled == NO);
-	assert(operation->isExecuting == NO);
-	assert(operation->isFinished == NO);
+	assert(operation->isCancelled == false);
+	assert(operation->isExecuting == false);
+	assert(operation->isFinished == false);
 
 	WithLock(self->locals.condition, {
 		$(self->locals.operations, addObject, operation);
@@ -104,9 +104,9 @@ static id run(Thread *thread) {
 
 	OperationQueue *self = _currentQueue = thread->data;
 
-	while (thread->isCancelled == NO) {
+	while (thread->isCancelled == false) {
 
-		if (self->isSuspended == NO) {
+		if (self->isSuspended == false) {
 			Array *operations = NULL;
 
 			retry:
@@ -196,7 +196,7 @@ static Array *operations(const OperationQueue *self) {
 static void removeOperation(OperationQueue *self, Operation *operation) {
 
 	assert(operation);
-	assert(operation->isExecuting == NO);
+	assert(operation->isExecuting == false);
 
 	WithLock(self->locals.condition, {
 		$(self->locals.operations, removeObject, operation);

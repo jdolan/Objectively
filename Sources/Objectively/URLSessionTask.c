@@ -122,7 +122,7 @@ static void resume(URLSessionTask *self) {
 /**
  * @brief A helper to populate the headers list for CURL.
  */
-static BOOL httpHeaders_enumerator(const Dictionary *dictionary, id obj, id key, id data) {
+static _Bool httpHeaders_enumerator(const Dictionary *dictionary, id obj, id key, id data) {
 
 	String *header = $(alloc(String), initWithFormat, "%s: %s",
 			((String * ) key)->chars,
@@ -132,7 +132,7 @@ static BOOL httpHeaders_enumerator(const Dictionary *dictionary, id obj, id key,
 	*headers = curl_slist_append(*headers, header->chars);
 
 	release(header);
-	return NO;
+	return false;
 }
 
 /**
@@ -161,7 +161,7 @@ static void setup(URLSessionTask *self) {
 	assert(self->locals.handle);
 
 	curl_easy_setopt(self->locals.handle, CURLOPT_ERRORBUFFER, self->error);
-	curl_easy_setopt(self->locals.handle, CURLOPT_FOLLOWLOCATION, YES);
+	curl_easy_setopt(self->locals.handle, CURLOPT_FOLLOWLOCATION, true);
 
 	curl_easy_setopt(self->locals.handle, CURLOPT_XFERINFOFUNCTION, progress);
 	curl_easy_setopt(self->locals.handle, CURLOPT_XFERINFODATA, self);
@@ -191,16 +191,16 @@ static void setup(URLSessionTask *self) {
 
 	switch (self->request->httpMethod) {
 		case HTTP_POST:
-			curl_easy_setopt(self->locals.handle, CURLOPT_POST, YES);
+			curl_easy_setopt(self->locals.handle, CURLOPT_POST, true);
 			break;
 		case HTTP_PUT:
-			curl_easy_setopt(self->locals.handle, CURLOPT_PUT, YES);
+			curl_easy_setopt(self->locals.handle, CURLOPT_PUT, true);
 			break;
 		case HTTP_DELETE:
 			curl_easy_setopt(self->locals.handle, CURLOPT_CUSTOMREQUEST, "DELETE");
 			break;
 		case HTTP_HEAD:
-			curl_easy_setopt(self->locals.handle, CURLOPT_NOBODY, YES);
+			curl_easy_setopt(self->locals.handle, CURLOPT_NOBODY, true);
 			break;
 		default:
 			break;

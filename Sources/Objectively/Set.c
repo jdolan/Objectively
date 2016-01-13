@@ -94,10 +94,10 @@ static int hash(const Object *self) {
 /**
  * @see ObjectInterface::isEqual(const Object *, const Object *)
  */
-static BOOL isEqual(const Object *self, const Object *other) {
+static _Bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
-		return YES;
+		return true;
 	}
 
 	if (other && (self->clazz == other->clazz)) {
@@ -112,18 +112,18 @@ static BOOL isEqual(const Object *self, const Object *other) {
 			for (size_t i = 0; i < objects->count; i++) {
 				const id obj = $(objects, objectAtIndex, i);
 
-				if ($(that, containsObject, obj) == NO) {
+				if ($(that, containsObject, obj) == false) {
 					release(objects);
-					return NO;
+					return false;
 				}
 			}
 
 			release(objects);
-			return YES;
+			return true;
 		}
 	}
 
-	return NO;
+	return false;
 }
 
 #pragma mark - SetInterface
@@ -131,9 +131,9 @@ static BOOL isEqual(const Object *self, const Object *other) {
 /**
  * @brief SetEnumerator for allObjects.
  */
-static BOOL allObjects_enumerator(const Set *set, id obj, id data) {
+static _Bool allObjects_enumerator(const Set *set, id obj, id data) {
 
-	$((MutableArray *) data, addObject, obj); return NO;
+	$((MutableArray *) data, addObject, obj); return false;
 }
 
 /**
@@ -151,7 +151,7 @@ static Array *allObjects(const Set *self) {
 /**
  * @see SetInterface::containsObject(const Set *, const id)
  */
-static BOOL containsObject(const Set *self, const id obj) {
+static _Bool containsObject(const Set *self, const id obj) {
 
 	const size_t bin = HashForObject(HASH_SEED, obj) % self->capacity;
 
@@ -160,7 +160,7 @@ static BOOL containsObject(const Set *self, const id obj) {
 		return $(array, containsObject, obj);
 	}
 
-	return NO;
+	return false;
 }
 
 /**
@@ -216,9 +216,9 @@ static Set *filterObjects(const Set *self, SetEnumerator enumerator, id data) {
 /**
  * @brief ArrayEnumerator for initWithArray.
  */
-static BOOL initWithArray_enumerator(const Array *array, id obj, id data) {
+static _Bool initWithArray_enumerator(const Array *array, id obj, id data) {
 
-	$$(MutableSet, addObject, (MutableSet *) data, obj); return NO;
+	$$(MutableSet, addObject, (MutableSet *) data, obj); return false;
 }
 
 /**
@@ -239,9 +239,9 @@ static Set *initWithArray(Set *self, const Array *array) {
 /**
  * @brief SetEnumerator for initWithSet.
  */
-static BOOL initWithSet_enumerator(const Set *set, id obj, id data) {
+static _Bool initWithSet_enumerator(const Set *set, id obj, id data) {
 
-	$$(MutableSet, addObject, (MutableSet *) data, obj); return NO;
+	$$(MutableSet, addObject, (MutableSet *) data, obj); return false;
 }
 
 /**
@@ -270,7 +270,7 @@ static Set *initWithObjects(Set *self, ...) {
 		va_list args;
 		va_start(args, self);
 
-		while (YES) {
+		while (true) {
 
 			id obj = va_arg(args, id);
 			if (obj) {

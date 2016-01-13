@@ -48,10 +48,10 @@ static int hash(const Object *self) {
 /**
  * @see ObjectInterface::isEqual(const Object *, const Object *)
  */
-static BOOL isEqual(const Object *self, const Object *other) {
+static _Bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
-		return YES;
+		return true;
 	}
 
 	if (other && $(other, isKindOfClass, &_Date)) {
@@ -62,7 +62,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		return $(this, compareTo, that) == SAME;
 	}
 
-	return NO;
+	return false;
 }
 
 #pragma mark - DateInterface

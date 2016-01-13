@@ -163,11 +163,11 @@ struct DataInterface {
 	 *
 	 * @param path The path of the file to write.
 	 *
-	 * @return `YES` on success, `NO` on error.
+	 * @return `true` on success, `false` on error.
 	 *
 	 * @relates Data
 	 */
-	BOOL (*writeToFile)(const Data *self, const char *path);
+	_Bool (*writeToFile)(const Data *self, const char *path);
 };
 
 /**

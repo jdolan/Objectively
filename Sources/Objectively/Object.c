@@ -83,7 +83,7 @@ static Object *init(Object *self) {
 /**
  * @see ObjectInterface::isEqual(const Object *, const Object *)
  */
-static BOOL isEqual(const Object *self, const Object *other) {
+static _Bool isEqual(const Object *self, const Object *other) {
 
 	return self == other;
 }
@@ -91,17 +91,17 @@ static BOOL isEqual(const Object *self, const Object *other) {
 /**
  * @see ObjectInterface::isKindOfClass(const Object *, const Class *)
  */
-static BOOL isKindOfClass(const Object *self, const Class *clazz) {
+static _Bool isKindOfClass(const Object *self, const Class *clazz) {
 
 	const Class *c = self->clazz;
 	while (c) {
 		if (c == clazz) {
-			return YES;
+			return true;
 		}
 		c = c->superclass;
 	}
 
-	return NO;
+	return false;
 }
 
 #pragma mark - Class lifecycle

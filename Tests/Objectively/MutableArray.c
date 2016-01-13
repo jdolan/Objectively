@@ -26,8 +26,8 @@
 
 #include <Objectively.h>
 
-BOOL enumerator(const Array *array, id obj, id data) {
-	(*(int *) data)++; return NO;
+_Bool enumerator(const Array *array, id obj, id data) {
+	(*(int *) data)++; return false;
 }
 
 ORDER comparator(const id obj1, const id obj2) {

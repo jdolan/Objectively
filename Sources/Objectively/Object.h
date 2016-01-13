@@ -116,20 +116,20 @@ struct ObjectInterface {
 	/**
 	 * @brief Tests equality of the other Object.
 	 *
-	 * @return YES if other is deemed equal, NO otherwise.
+	 * @return true if other is deemed equal, false otherwise.
 	 *
 	 * @relates Object
 	 */
-	BOOL (*isEqual)(const Object *self, const Object *other);
+	_Bool (*isEqual)(const Object *self, const Object *other);
 
 	/**
 	 * @brief Tests for class hierarchy membership.
 	 *
-	 * @return YES if this instance belongs to class' hierarchy, NO otherwise.
+	 * @return true if this instance belongs to class' hierarchy, false otherwise.
 	 *
 	 * @relates Object
 	 */
-	BOOL (*isKindOfClass)(const Object *self, const Class *clazz);
+	_Bool (*isKindOfClass)(const Object *self, const Class *clazz);
 };
 
 /**

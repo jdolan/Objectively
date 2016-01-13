@@ -154,22 +154,22 @@ struct StringInterface {
 	 *
 	 * @param prefix The Prefix to check.
 	 *
-	 * @return YES if this String starts with prefix, NO otherwise.
+	 * @return true if this String starts with prefix, false otherwise.
 	 *
 	 * @relates String
 	 */
-	BOOL (*hasPrefix)(const String *self, const String *prefix);
+	_Bool (*hasPrefix)(const String *self, const String *prefix);
 
 	/**
 	 * @brief Checks this String for the given suffix.
 	 *
 	 * @param suffix The suffix to check.
 	 *
-	 * @return YES if this String ends with suffix, NO otherwise.
+	 * @return true if this String ends with suffix, false otherwise.
 	 *
 	 * @relates String
 	 */
-	BOOL (*hasSuffix)(const String *self, const String *suffix);
+	_Bool (*hasSuffix)(const String *self, const String *suffix);
 
 	/**
 	 * @brief Initializes this String by decoding `length` of `bytes`.
@@ -407,11 +407,11 @@ struct StringInterface {
 	 * @param path The path of the file to write.
 	 * @param encoding The character encoding.
 	 *
-	 * @return `YES` on success, `NO` on error.
+	 * @return `true` on success, `false` on error.
 	 *
 	 * @relates String
 	 */
-	BOOL (*writeToFile)(const String *self, const char *path, StringEncoding encoding);
+	_Bool (*writeToFile)(const String *self, const char *path, StringEncoding encoding);
 };
 
 /**

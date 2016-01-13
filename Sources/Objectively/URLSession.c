@@ -137,7 +137,7 @@ static id run(Thread *thread) {
 	self->locals.handle = curl_multi_init();
 	assert(self->locals.handle);
 
-	while (YES) {
+	while (true) {
 		int ret;
 
 		Array *tasks = $(self, tasks);
@@ -184,7 +184,7 @@ static id run(Thread *thread) {
 				task->state = URLSESSIONTASK_CANCELED;
 
 				if (task->completion) {
-					task->completion(task, NO);
+					task->completion(task, false);
 				}
 
 				$(task, teardown);

@@ -25,12 +25,12 @@
 
 #include <Objectively.h>
 
-BOOL enumerator(const Array *array, id obj, id data) {
+_Bool enumerator(const Array *array, id obj, id data) {
 
-	(*(int *) data)++; return NO;
+	(*(int *) data)++; return false;
 }
 
-BOOL filter(const Array *array, id obj, id data) {
+_Bool filter(const Array *array, id obj, id data) {
 
 	return obj == data;
 }

@@ -69,7 +69,7 @@ START_TEST(suspendResume)
 		OperationQueue *queue = $(alloc(OperationQueue), init);
 		ck_assert(queue != NULL);
 
-		queue->isSuspended = YES;
+		queue->isSuspended = true;
 		int counter = 0;
 
 		Operation *operation;
@@ -83,7 +83,7 @@ START_TEST(suspendResume)
 
 		ck_assert_int_eq(5, $(queue, operationCount));
 
-		queue->isSuspended = NO;
+		queue->isSuspended = false;
 
 		$(queue, waitUntilAllOperationsAreFinished);
 

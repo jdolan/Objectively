@@ -46,41 +46,41 @@ static String *description(const Object *self) {
 
 	const Boolean *this = (Boolean *) self;
 
-	return $(alloc(String), initWithCharacters, this->bool ? "YES" : "NO");
+	return $(alloc(String), initWithCharacters, this->value ? "true" : "false");
 }
 
 #pragma mark - BooleanInterface
 
-static Boolean *_no;
+static Boolean *_False;
 
 /**
- * @see BooleanInterface::no(void)
+ * @see BooleanInterface::False(void)
  */
-static Boolean *no(void) {
+static Boolean *False(void) {
 	static Once once;
 
 	DispatchOnce(once, {
-		_no = (Boolean *) $((Object *) alloc(Boolean), init);
-		_no->bool = NO;
+		_False = (Boolean *) $((Object *) alloc(Boolean), init);
+		_False->value = false;
 	});
 
-	return _no;
+	return _False;
 }
 
-static Boolean *_yes;
+static Boolean *_True;
 
 /**
- * @see BooleanInterface::yes(void)
+ * @see BooleanInterface::True(void)
  */
-static Boolean *yes(void) {
+static Boolean *True(void) {
 	static Once once;
 
 	DispatchOnce(once, {
-		_yes = (Boolean *) $((Object *) alloc(Boolean), init);
-		_yes->bool = YES;
+		_True = (Boolean *) $((Object *) alloc(Boolean), init);
+		_True->value = true;
 	});
 
-	return _yes;
+	return _True;
 }
 
 #pragma mark - Class lifecycle
@@ -97,8 +97,8 @@ static void initialize(Class *clazz) {
 
 	BooleanInterface *boolean = (BooleanInterface *) clazz->interface;
 
-	boolean->no = no;
-	boolean->yes = yes;
+	boolean->False = False;
+	boolean->True = True;
 }
 
 /**
@@ -106,8 +106,8 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	release(_no);
-	release(_yes);
+	release(_False);
+	release(_True);
 }
 
 Class _Boolean = {

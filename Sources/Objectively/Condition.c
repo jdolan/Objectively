@@ -98,7 +98,7 @@ static void _wait(Condition *self) {
 /**
  * @see ConditionInterface::waitUntilDate(Condition *, const Date *)
  */
-static BOOL waitUntilDate(Condition *self, const Date *date) {
+static _Bool waitUntilDate(Condition *self, const Date *date) {
 
 	Lock *lock = (Lock *) self;
 

@@ -84,10 +84,10 @@ static int hash(const Object *self) {
 /**
  * @see ObjectInterface::isEqual(const Object *, const Object *)
  */
-static BOOL isEqual(const Object *self, const Object *other) {
+static _Bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
-		return YES;
+		return true;
 	}
 
 	if (other && $(other, isKindOfClass, &_Regex)) {
@@ -100,7 +100,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		}
 	}
 
-	return NO;
+	return false;
 }
 
 #pragma mark - RegexInterface
@@ -129,7 +129,7 @@ static Regex *initWithPattern(Regex *self, const char *pattern, const int option
 /**
  * @see RegexInterface::matchesCharacters(const Regex *, const char *, int, RANGE **)
  */
-static BOOL matchesCharacters(const Regex *self, const char *chars, int options, RANGE **ranges) {
+static _Bool matchesCharacters(const Regex *self, const char *chars, int options, RANGE **ranges) {
 
 	if (ranges) {
 		const size_t numberOfMatches = self->numberOfSubExpressions + 1;
@@ -164,7 +164,7 @@ static BOOL matchesCharacters(const Regex *self, const char *chars, int options,
 /**
  * @see RegexInterface::matchesString(const Regex *, const String *, int, RANGE **)
  */
-static BOOL matchesString(const Regex *self, const String *string, int options, RANGE **ranges) {
+static _Bool matchesString(const Regex *self, const String *string, int options, RANGE **ranges) {
 
 	assert(string);
 

@@ -27,11 +27,11 @@
 
 START_TEST(boolean)
 	{
-		Boolean *yes = $$(Boolean, yes);
-		ck_assert(yes->bool);
+		Boolean *True = $$(Boolean, True);
+		ck_assert(True->value == true);
 
-		Boolean *no = $$(Boolean, no);
-		ck_assert(no->bool == NO);
+		Boolean *False = $$(Boolean, False);
+		ck_assert(False->value == false);
 
 	}END_TEST
 

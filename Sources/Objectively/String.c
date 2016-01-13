@@ -84,10 +84,10 @@ static int hash(const Object *self) {
 /**
  * @see ObjectInterface::isEqual(const Object *, const Object *)
  */
-static BOOL isEqual(const Object *self, const Object *other) {
+static _Bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
-		return YES;
+		return true;
 	}
 
 	if (other && $(other, isKindOfClass, &_String)) {
@@ -102,7 +102,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		}
 	}
 
-	return NO;
+	return false;
 }
 
 #pragma mark - StringInterface
@@ -236,10 +236,10 @@ static Data *getData(const String *self, StringEncoding encoding) {
 /**
  * @see StringInterface::hasPrefix(const String *, const String *)
  */
-static BOOL hasPrefix(const String *self, const String *prefix) {
+static _Bool hasPrefix(const String *self, const String *prefix) {
 
 	if (prefix->length > self->length) {
-		return NO;
+		return false;
 	}
 
 	RANGE range = { 0, prefix->length };
@@ -249,10 +249,10 @@ static BOOL hasPrefix(const String *self, const String *prefix) {
 /**
  * @see StringInterface::hasSuffix(const String *, const String *)
  */
-static BOOL hasSuffix(const String *self, const String *suffix) {
+static _Bool hasSuffix(const String *self, const String *suffix) {
 
 	if (suffix->length > self->length) {
-		return NO;
+		return false;
 	}
 
 	RANGE range = { self->length - suffix->length, suffix->length };
@@ -564,12 +564,12 @@ static String *uppercaseStringWithLocale(const String *self, const Locale *local
 /**
  * @see StringInterface::writeToFile(const String *, const char *, StringEncoding)
  */
-static BOOL writeToFile(const String *self, const char *path, StringEncoding encoding) {
+static _Bool writeToFile(const String *self, const char *path, StringEncoding encoding) {
 
 	Data *data = $(self, getData, encoding);
 	assert(data);
 
-	const BOOL success = $(data, writeToFile, path);
+	const _Bool success = $(data, writeToFile, path);
 
 	release(data);
 	return success;

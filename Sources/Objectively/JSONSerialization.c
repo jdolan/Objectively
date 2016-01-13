@@ -60,13 +60,13 @@ static void writeNull(JSONWriter *writer, const Null *null) {
 }
 
 /**
- * Writes `bool` to `writer`.
+ * Writes `boolean` to `writer`.
  *
- * @param bool The Boolean to write.
+ * @param boolean The Boolean to write.
  */
-static void writeBoolean(JSONWriter *writer, const Boolean *bool) {
+static void writeBoolean(JSONWriter *writer, const Boolean *boolean) {
 
-	if (bool->bool) {
+	if (boolean->value) {
 		$(writer->data, appendBytes, (byte *) "true", 4);
 	} else {
 		$(writer->data, appendBytes, (byte *) "false", 5);
@@ -239,7 +239,7 @@ static int readByteUntil(JSONReader *reader, const char *stop) {
 
 	int b;
 
-	while (YES) {
+	while (true) {
 		b = readByte(reader);
 		if (b == -1 || strchr(stop, b)) {
 			break;
@@ -301,24 +301,24 @@ static Number *readNumber(JSONReader *reader) {
  *
  * @return The Boolean.
  */
-static Boolean *readBoolean(JSONReader *reader) {
+static _Bool *readBoolean(JSONReader *reader) {
 
-	Boolean *bool = NULL;
+	Boolean *boolean = NULL;
 
 	switch (*reader->b) {
 		case 't':
 			consumeBytes(reader, "true");
-			bool = $$(Boolean, yes);
+			boolean = $$(Boolean, True);
 			break;
 		case 'f':
 			consumeBytes(reader, "false");
-			bool = $$(Boolean, no);
+			boolean = $$(Boolean, False);
 			break;
 		default:
-			assert(NO);
+			assert(false);
 	}
 
-	return retain(bool);
+	return retain(boolean);
 }
 
 /**
@@ -361,7 +361,7 @@ static Dictionary *readObject(JSONReader *reader) {
 
 	MutableDictionary *object = $(alloc(MutableDictionary), init);
 
-	while (YES) {
+	while (true) {
 
 		String *key = readLabel(reader);
 		if (key == NULL) {
@@ -394,7 +394,7 @@ static Array *readArray(JSONReader *reader) {
 
 	MutableArray *array = $(alloc(MutableArray), init);
 
-	while (YES) {
+	while (true) {
 
 		Object *obj = readElement(reader);
 		if (obj == NULL) {

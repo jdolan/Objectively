@@ -33,7 +33,7 @@ START_TEST(number)
 		const float f = $(number1, floatValue);
 		ck_assert(f > 1.0009 && f < 1.0011);
 		ck_assert(1 == $(number1, intValue));
-		ck_assert(YES == $(number1, boolValue));
+		ck_assert(true == $(number1, boolValue));
 
 		Number *number2 = $(alloc(Number), initWithValue, 1.001);
 		ck_assert(number2 != NULL);

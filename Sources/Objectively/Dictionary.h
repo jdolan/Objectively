@@ -46,7 +46,7 @@ typedef struct DictionaryInterface DictionaryInterface;
  *
  * @return See the documentation for the enumeration methods.
  */
-typedef BOOL (*DictionaryEnumerator)(const Dictionary *dictionary, id obj, id key, id data);
+typedef _Bool (*DictionaryEnumerator)(const Dictionary *dictionary, id obj, id key, id data);
 
 /**
  * @brief Immutable key-value stores.
@@ -145,7 +145,7 @@ struct DictionaryInterface {
 	 * @param enumerator The enumerator function.
 	 * @param data User data.
 	 *
-	 * @remark The enumerator should return `YES` to break the iteration.
+	 * @remark The enumerator should return `true` to break the iteration.
 	 *
 	 * @relates Dictionary
 	 */

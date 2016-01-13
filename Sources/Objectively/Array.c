@@ -104,10 +104,10 @@ static int hash(const Object *self) {
 /**
  * @see ObjectInterface::isEqual(const Object *, const Object *)
  */
-static BOOL isEqual(const Object *self, const Object *other) {
+static _Bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
-		return YES;
+		return true;
 	}
 
 	if (other && $(other, isKindOfClass, &_Array)) {
@@ -122,16 +122,16 @@ static BOOL isEqual(const Object *self, const Object *other) {
 				const Object *thisObject = this->elements[i];
 				const Object *thatObject = that->elements[i];
 
-				if ($(thisObject, isEqual, thatObject) == NO) {
-					return NO;
+				if ($(thisObject, isEqual, thatObject) == false) {
+					return false;
 				}
 			}
 
-			return YES;
+			return true;
 		}
 	}
 
-	return NO;
+	return false;
 }
 
 #pragma mark - ArrayInterface
@@ -190,7 +190,7 @@ static Array *arrayWithObjects(id obj, ...) {
 /**
  * @see ArrayInterface::containsObject(const Array *, const id)
  */
-static BOOL containsObject(const Array *self, const id obj) {
+static _Bool containsObject(const Array *self, const id obj) {
 
 	return $(self, indexOfObject, obj) != -1;
 }

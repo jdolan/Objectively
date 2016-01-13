@@ -77,7 +77,7 @@ struct NumberInterface {
 	 *
 	 * @relates Number
 	 */
-	BOOL (*boolValue)(const Number *self);
+	_Bool (*boolValue)(const Number *self);
 
 	/**
 	 * @return This Number's char value.

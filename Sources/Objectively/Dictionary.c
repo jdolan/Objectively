@@ -66,7 +66,7 @@ static void dealloc(Object *self) {
 /**
  * @brief A DictionaryEnumerator for description.
  */
-static BOOL description_enumerator(const Dictionary *dict, id obj, id key, id data) {
+static _Bool description_enumerator(const Dictionary *dict, id obj, id key, id data) {
 
 	MutableString *desc = (MutableString *) data;
 
@@ -78,7 +78,7 @@ static BOOL description_enumerator(const Dictionary *dict, id obj, id key, id da
 	release(objDesc);
 	release(keyDesc);
 
-	return NO;
+	return false;
 }
 
 /**
@@ -120,10 +120,10 @@ static int hash(const Object *self) {
 /**
  * @see ObjectInterface::isEqual(const Object *, const Object *)
  */
-static BOOL isEqual(const Object *self, const Object *other) {
+static _Bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
-		return YES;
+		return true;
 	}
 
 	if (other && $(other, isKindOfClass, &_Dictionary)) {
@@ -141,18 +141,18 @@ static BOOL isEqual(const Object *self, const Object *other) {
 				const Object *thisObject = $(this, objectForKey, key);
 				const Object *thatObject = $(that, objectForKey, key);
 
-				if ($(thisObject, isEqual, thatObject) == NO) {
+				if ($(thisObject, isEqual, thatObject) == false) {
 					release(keys);
-					return NO;
+					return false;
 				}
 			}
 
 			release(keys);
-			return YES;
+			return true;
 		}
 	}
 
-	return NO;
+	return false;
 }
 
 #pragma mark - DictionaryInterface
@@ -160,8 +160,8 @@ static BOOL isEqual(const Object *self, const Object *other) {
 /**
  * @brief DictionaryEnumerator for allKeys.
  */
-static BOOL allKeys_enumerator(const Dictionary *dict, id obj, id key, id data) {
-	$((MutableArray *) data, addObject, key); return NO;
+static _Bool allKeys_enumerator(const Dictionary *dict, id obj, id key, id data) {
+	$((MutableArray *) data, addObject, key); return false;
 }
 
 /**
@@ -179,8 +179,8 @@ static Array *allKeys(const Dictionary *self) {
 /**
  * @brief DictionaryEnumerator for allObjects.
  */
-static BOOL allObjects_enumerator(const Dictionary *dict, id obj, id key, id data) {
-	$((MutableArray *) data, addObject, obj); return NO;
+static _Bool allObjects_enumerator(const Dictionary *dict, id obj, id key, id data) {
+	$((MutableArray *) data, addObject, obj); return false;
 }
 
 /**
@@ -324,7 +324,7 @@ static Dictionary *initWithObjectsAndKeys(Dictionary *self, ...) {
 		va_list args;
 		va_start(args, self);
 
-		while (YES) {
+		while (true) {
 
 			id obj = va_arg(args, id);
 			if (obj) {

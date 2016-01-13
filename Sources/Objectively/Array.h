@@ -50,7 +50,7 @@ typedef struct ArrayInterface ArrayInterface;
  *
  * @return See the documentation for the enumeration methods.
  */
-typedef BOOL (*ArrayEnumerator)(const Array *array, id obj, id data);
+typedef _Bool (*ArrayEnumerator)(const Array *array, id obj, id data);
 
 /**
  * @brief Immutable arrays.
@@ -123,11 +123,11 @@ struct ArrayInterface {
 	Array *(*arrayWithObjects)(id obj, ...);
 
 	/**
-	 * @return `YES` if this Array contains the given Object, `NO` otherwise.
+	 * @return `true` if this Array contains the given Object, `false` otherwise.
 	 *
 	 * @relates Array
 	 */
-	BOOL (*containsObject)(const Array *self, const id obj);
+	_Bool (*containsObject)(const Array *self, const id obj);
 
 	/**
 	 * @brief Enumerate the elements of this Array with the given function.
@@ -135,7 +135,7 @@ struct ArrayInterface {
 	 * @param enumerator The enumerator function.
 	 * @param data User data.
 	 *
-	 * @remark The enumerator should return `YES` to break the iteration.
+	 * @remark The enumerator should return `true` to break the iteration.
 	 *
 	 * @relates Array
 	 */

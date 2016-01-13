@@ -32,19 +32,19 @@ Condition *condition;
 
 static id increment(Thread *self) {
 
-	BOOL stop = NO;
+	_Bool stop = false;
 
 	while (!stop) {
 
 		WithLock(condition, {
 			if (++(*(int *) self->data) == 0xbeaf) {
 				$(condition, signal);
-				stop = YES;
+				stop = true;
 			}
 		});
 	}
 
-	return (id) YES;
+	return (id) true;
 }
 
 START_TEST(thread)
@@ -64,7 +64,7 @@ START_TEST(thread)
 
 		id ret;
 		$(thread, join, &ret);
-		ck_assert_int_eq(YES, (BOOL ) ret);
+		ck_assert_int_eq(true, (_Bool ) ret);
 
 		release(thread);
 		release(condition);
@@ -90,7 +90,7 @@ START_TEST(cond)
 		ck_assert(date != NULL);
 
 		WithLock(condition, {
-			ck_assert($(condition, waitUntilDate, date) == NO);
+			ck_assert($(condition, waitUntilDate, date) == false);
 		});
 
 		release(date);

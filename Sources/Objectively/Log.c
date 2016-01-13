@@ -183,7 +183,7 @@ static void _log(const Log *self, LogLevel level, const char *fmt, va_list args)
 	while (*c) {
 
 		if (*c == '%') {
-			BOOL token = YES;
+			_Bool token = true;
 
 			if (*(c + 1) == 'n') {
 				fputs(self->name, self->file);
@@ -192,7 +192,7 @@ static void _log(const Log *self, LogLevel level, const char *fmt, va_list args)
 			} else if (*(c + 1) == 'm') {
 				vfprintf(self->file, fmt, args);
 			} else {
-				token = NO;
+				token = false;
 			}
 
 			if (token) {

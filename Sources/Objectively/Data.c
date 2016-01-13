@@ -78,10 +78,10 @@ static int hash(const Object *self) {
 /**
  * @see ObjectInterface::isEqual(const Object *, const Object *)
  */
-static BOOL isEqual(const Object *self, const Object *other) {
+static _Bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
-		return YES;
+		return true;
 	}
 
 	if (other && $(other, isKindOfClass, &_Data)) {
@@ -94,7 +94,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		}
 	}
 
-	return NO;
+	return false;
 }
 
 #pragma mark - DataInterface
@@ -197,7 +197,7 @@ static MutableData *mutableCopy(const Data *self) {
 /**
  * @see DataInterface::writeToFile(const Data *, const char *)
  */
-static BOOL writeToFile(const Data *self, const char *path) {
+static _Bool writeToFile(const Data *self, const char *path) {
 
 	assert(path);
 
@@ -213,11 +213,11 @@ static BOOL writeToFile(const Data *self, const char *path) {
 		fclose(file);
 
 		if (count == 1) {
-			return YES;
+			return true;
 		}
 	}
 
-	return NO;
+	return false;
 }
 
 #pragma mark - Class lifecycle

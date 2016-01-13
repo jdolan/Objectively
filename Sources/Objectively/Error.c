@@ -92,10 +92,10 @@ static int hash(const Object *self) {
 /**
  * @see ObjectInterface::isEqual(const Object *, const Object *)
  */
-static BOOL isEqual(const Object *self, const Object *other) {
+static _Bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
-		return YES;
+		return true;
 	}
 
 	if (other && (self->clazz == other->clazz)) {
@@ -116,7 +116,7 @@ static BOOL isEqual(const Object *self, const Object *other) {
 		}
 	}
 
-	return NO;
+	return false;
 }
 
 #pragma mark - ErrorInterface

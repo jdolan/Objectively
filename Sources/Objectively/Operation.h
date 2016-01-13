@@ -89,10 +89,10 @@ struct Operation {
 	} locals;
 
 	/**
-	 * @brief If `YES`, this Operation will be expected to coordinate its own
+	 * @brief If `true`, this Operation will be expected to coordinate its own
 	 * concurrency and internal state management by overriding `start`.
 	 */
-	BOOL asynchronous;
+	_Bool asynchronous;
 
 	/**
 	 * @brief The user data.
@@ -105,19 +105,19 @@ struct Operation {
 	OperationFunction function;
 
 	/**
-	 * @brief `YES` when this Operation has been cancelled, `NO` otherwise.
+	 * @brief `true` when this Operation has been cancelled, `false` otherwise.
 	 */
-	BOOL isCancelled;
+	_Bool isCancelled;
 
 	/**
-	 * @brief `YES` when this Operation is executing, `NO` otherwise.
+	 * @brief `true` when this Operation is executing, `false` otherwise.
 	 */
-	BOOL isExecuting;
+	_Bool isExecuting;
 
 	/**
-	 * @brief `YES` when this Operation is finished, `NO` otherwise.
+	 * @brief `true` when this Operation is finished, `false` otherwise.
 	 */
-	BOOL isFinished;
+	_Bool isFinished;
 };
 
 /**
@@ -177,11 +177,11 @@ struct OperationInterface {
 	Operation *(*initWithFunction)(Operation *self, OperationFunction function, id data);
 
 	/**
-	 * @return `YES` when all criteria for this Operation to `start` are met.
+	 * @return `true` when all criteria for this Operation to `start` are met.
 	 *
 	 * @relates Operation
 	 */
-	BOOL (*isReady)(const Operation *self);
+	_Bool (*isReady)(const Operation *self);
 
 	/**
 	 * @brief Removes the dependency on `dependency`.

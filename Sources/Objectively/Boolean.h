@@ -57,9 +57,9 @@ struct Boolean {
 	BooleanInterface *interface;
 
 	/**
-	 * @brief The backing BOOL.
+	 * @brief The backing _Bool.
 	 */
-	BOOL bool;
+	_Bool value;
 };
 
 /**
@@ -73,18 +73,18 @@ struct BooleanInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @return The `NO` Boolean.
+	 * @return The `false` Boolean.
 	 *
 	 * @relates Boolean
 	 */
-	Boolean *(*no)(void);
+	Boolean *(*False)(void);
 
 	/**
-	 * @return The `YES` Boolean.
+	 * @return The `true` Boolean.
 	 *
 	 * @relates Boolean
 	 */
-	Boolean *(*yes)(void);
+	Boolean *(*True)(void);
 };
 
 /**

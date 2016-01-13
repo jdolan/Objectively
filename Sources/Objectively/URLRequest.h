@@ -41,7 +41,7 @@ typedef struct URLRequestInterface URLRequestInterface;
  * The HTTP method verbs.
  */
 typedef enum {
-	HTTP_NONE,
+	HTTP_falseNE,
 	HTTP_GET,
 	HTTP_POST,
 	HTTP_PUT,

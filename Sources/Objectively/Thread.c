@@ -48,7 +48,7 @@ static void dealloc(Object *self) {
 
 	Thread *this = (Thread *) self;
 
-	assert(this->isExecuting == NO);
+	assert(this->isExecuting == false);
 
 	free(this->thread);
 
@@ -62,12 +62,12 @@ static void dealloc(Object *self) {
  */
 static void cancel(Thread *self) {
 
-	assert(self->isCancelled == NO);
+	assert(self->isCancelled == false);
 
 	// int err = pthread_cancel(*((pthread_t *) self->thread));
 	// assert(err == 0);
 
-	self->isCancelled = YES;
+	self->isCancelled = true;
 }
 
 __thread Thread *_currentThread;
@@ -85,12 +85,12 @@ static Thread *currentThread(void) {
  */
 static void detach(Thread *self) {
 
-	assert(self->isDetached == NO);
+	assert(self->isDetached == false);
 
 	int err = pthread_detach(*((pthread_t *) self->thread));
 	assert(err == 0);
 
-	self->isDetached = YES;
+	self->isDetached = true;
 }
 
 /**
@@ -143,13 +143,13 @@ static id run(id obj) {
 
 	Thread *self = _currentThread = (Thread *) obj;
 
-	self->isExecuting = YES;
+	self->isExecuting = true;
 
 	id ret = self->function(self);
 
-	self->isFinished = YES;
+	self->isFinished = true;
 
-	self->isExecuting = NO;
+	self->isExecuting = false;
 
 	return ret;
 }
@@ -161,10 +161,10 @@ static void start(Thread *self) {
 
 	assert(self->function);
 
-	assert(self->isCancelled == NO);
-	assert(self->isDetached == NO);
-	assert(self->isExecuting == NO);
-	assert(self->isFinished == NO);
+	assert(self->isCancelled == false);
+	assert(self->isDetached == false);
+	assert(self->isExecuting == false);
+	assert(self->isFinished == false);
 
 	int err = pthread_create(self->thread, NULL, run, self);
 	assert(err == 0);

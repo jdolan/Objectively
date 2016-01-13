@@ -40,9 +40,9 @@ typedef struct URLSessionTaskInterface URLSessionTaskInterface;
  * @brief A function pointer for URLSessionTask completion.
  *
  * @param task The URLSessionTask.
- * @param success `YES` if the task was successful, `NO` otherwise.
+ * @param success `true` if the task was successful, `false` otherwise.
  */
-typedef void (*URLSessionTaskCompletion)(URLSessionTask *task, BOOL success);
+typedef void (*URLSessionTaskCompletion)(URLSessionTask *task, _Bool success);
 
 /**
  * @brief The various states a URLSessionTask may be in.

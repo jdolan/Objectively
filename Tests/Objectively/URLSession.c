@@ -30,7 +30,7 @@ static Condition *condition;
 /**
  * @brief The completion handler.
  */
-void completion(URLSessionTask *task, BOOL success) {
+void completion(URLSessionTask *task, _Bool success) {
 
 	ck_assert(success);
 

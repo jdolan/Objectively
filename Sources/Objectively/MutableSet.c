@@ -106,7 +106,7 @@ static void addObject(MutableSet *self, const id obj) {
 		array = set->elements[bin] = $(alloc(MutableArray), init);
 	}
 
-	if ($((Array *) array, containsObject, obj) == NO) {
+	if ($((Array *) array, containsObject, obj) == false) {
 		$(array, addObject, obj);
 		set->count++;
 	}
@@ -127,9 +127,9 @@ static void addObjectsFromArray(MutableSet *self, const Array *array) {
 /**
  * @brief SetEnumerator for addObjectsFromSet.
  */
-static BOOL addObjectsFromSet_enumerator(const Set *set, id obj, id data) {
+static _Bool addObjectsFromSet_enumerator(const Set *set, id obj, id data) {
 
-	$((MutableSet *) data, addObject, obj); return NO;
+	$((MutableSet *) data, addObject, obj); return false;
 }
 
 /**

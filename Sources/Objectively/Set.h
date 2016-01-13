@@ -51,7 +51,7 @@ typedef struct SetInterface SetInterface;
  *
  * @return See the documentation for the enumeration methods.
  */
-typedef BOOL (*SetEnumerator)(const Set *set, id obj, id data);
+typedef _Bool (*SetEnumerator)(const Set *set, id obj, id data);
 
 /**
  * @brief Immutable sets.
@@ -114,11 +114,11 @@ struct SetInterface {
 	Array *(*allObjects)(const Set *self);
 
 	/**
-	 * @return `YES` if this Set contains the given Object, `NO` otherwise.
+	 * @return `true` if this Set contains the given Object, `false` otherwise.
 	 *
 	 * @relates Set
 	 */
-	BOOL (*containsObject)(const Set *self, const id obj);
+	_Bool (*containsObject)(const Set *self, const id obj);
 
 	/**
 	 * @brief Enumerate the elements of this Set with the given function.
@@ -126,7 +126,7 @@ struct SetInterface {
 	 * @param enumerator The enumerator function.
 	 * @param data User data.
 	 *
-	 * @remark The enumerator should return `YES` to break the iteration.
+	 * @remark The enumerator should return `true` to break the iteration.
 	 *
 	 * @relates Set
 	 */

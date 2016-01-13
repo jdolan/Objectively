@@ -47,7 +47,7 @@ static id objectWithPath(const id root, const char *path) {
 	while (obj) {
 
 		RANGE *matches;
-		if ($(_regex, matchesCharacters, c, 0, &matches) == NO) {
+		if ($(_regex, matchesCharacters, c, 0, &matches) == false) {
 			break;
 		}
 

@@ -99,11 +99,11 @@ struct LockInterface {
 	/**
 	 * @brief Attempt to acquire this lock immediately.
 	 *
-	 * @return `YES` if the Lock was acquired, `NO` otherwise.
+	 * @return `true` if the Lock was acquired, `false` otherwise.
 	 *
 	 * @relates Lock
 	 */
-	BOOL (*tryLock)(Lock *self);
+	_Bool (*tryLock)(Lock *self);
 
 	/**
 	 * @brief Release this Lock.

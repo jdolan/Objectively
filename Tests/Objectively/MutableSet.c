@@ -25,8 +25,8 @@
 
 #include <Objectively.h>
 
-BOOL enumerator(const Set *set, id obj, id data) {
-	(*(int *) data)++; return NO;
+_Bool enumerator(const Set *set, id obj, id data) {
+	(*(int *) data)++; return false;
 }
 
 START_TEST(mutableSet)

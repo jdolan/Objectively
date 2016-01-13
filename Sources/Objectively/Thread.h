@@ -85,24 +85,24 @@ struct Thread {
 	ThreadFunction function;
 
 	/**
-	 * @brief `YES` when this Thread has been cancelled, `NO` otherwise.
+	 * @brief `true` when this Thread has been cancelled, `false` otherwise.
 	 */
-	BOOL isCancelled;
+	_Bool isCancelled;
 
 	/**
-	 * @brief `YES` when this Thread has been detached, `NO` otherwise.
+	 * @brief `true` when this Thread has been detached, `false` otherwise.
 	 */
-	BOOL isDetached;
+	_Bool isDetached;
 
 	/**
-	 * @brief `YES` when this Thread is executing, `NO` otherwise.
+	 * @brief `true` when this Thread is executing, `false` otherwise.
 	 */
-	BOOL isExecuting;
+	_Bool isExecuting;
 
 	/**
-	 * @brief `YES` when this Thread is finished, `NO` otherwise.
+	 * @brief `true` when this Thread is finished, `false` otherwise.
 	 */
-	BOOL isFinished;
+	_Bool isFinished;
 
 	/**
 	 * @brief The backing thread.

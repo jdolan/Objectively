@@ -121,13 +121,13 @@ struct ConditionInterface {
 	 *
 	 * @param date The Date until which to wait.
 	 *
-	 * @return `YES` if this Condition was signaled before `date`, `NO` otherwise.
+	 * @return `true` if this Condition was signaled before `date`, `false` otherwise.
 	 *
 	 * @remark This method should only be called when the Condition is locked.
 	 *
 	 * @relates Condition
 	 */
-	BOOL (*waitUntilDate)(Condition *self, const Date *date);
+	_Bool (*waitUntilDate)(Condition *self, const Date *date);
 };
 
 /**
