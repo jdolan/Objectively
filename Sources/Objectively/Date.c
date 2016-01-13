@@ -83,7 +83,15 @@ static Date *dateWithTimeSinceNow(const Time *interval) {
 	Date *date = $(alloc(Date), init);
 	if (date) {
 		if (interval) {
-			timeradd(&date->time, interval, &date->time);
+			date->time.tv_sec += interval->tv_sec;
+			date->time.tv_usec += interval->tv_usec;
+			if (date->time.tv_usec >= MSEC_PER_SEC) {
+				date->time.tv_sec++;
+				date->time.tv_usec -= MSEC_PER_SEC;			
+			} else if (date->time.tv_usec < 0) {
+				date->time.tv_sec--;
+				date->time.tv_usec += MSEC_PER_SEC;
+			}
 		}
 	}
 
