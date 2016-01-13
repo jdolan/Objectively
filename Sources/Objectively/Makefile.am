@@ -15,6 +15,7 @@ pkginclude_HEADERS = \
 	Hash.h \
 	JSONPath.h \
 	JSONSerialization.h \
+	Locale.h \
 	Lock.h \
 	Log.h \
 	MutableArray.h \
@@ -59,6 +60,7 @@ libObjectively_la_SOURCES = \
 	Hash.c \
 	JSONPath.c \
 	JSONSerialization.c \
+	Locale.c \
 	Lock.c \
 	Log.c \
 	MutableArray.c \
@@ -93,5 +95,5 @@ libObjectively_la_LDFLAGS = \
 	-shared
 
 libObjectively_la_LIBADD = \
-	-lpthread \
+	-liconv -lpthread \
 	@CURL_LIBS@

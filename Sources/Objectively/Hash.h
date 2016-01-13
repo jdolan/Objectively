@@ -60,6 +60,16 @@ extern int HashForBytes(int hash, const byte *bytes, const RANGE range);
 extern int HashForCharacters(int hash, const char *chars, const RANGE range);
 
 /**
+ * @brief Accumulates the hash value of the null-terminated `string` into `hash`.
+ *
+ * @param hash The hash accumulator.
+ * @param chars The null-terminated C string.
+ *
+ * @return The accumulated hash value.
+ */
+extern int HashForCString(int hash, const char *chars);
+
+/**
  * @brief Accumulates the hash value of `decimal` into `hash`.
  *
  * @param hash The hash accumulator.

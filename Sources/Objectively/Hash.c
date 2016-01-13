@@ -21,6 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+#include <string.h>
+
 #include <Objectively/Hash.h>
 
 int HashForBytes(int hash, const byte *bytes, const RANGE range) {
@@ -43,6 +45,12 @@ int HashForBytes(int hash, const byte *bytes, const RANGE range) {
 int HashForCharacters(int hash, const char *chars, const RANGE range) {
 
 	return HashForBytes(hash, (const byte *) chars, range);
+}
+
+int HashForCString(int hash, const char *string) {
+
+	const RANGE range = { 0, strlen(string) };
+	return HashForCharacters(hash, string, range);
 }
 
 int HashForDecimal(int hash, const double decimal) {

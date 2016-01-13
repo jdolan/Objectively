@@ -26,10 +26,10 @@
 
 #include <ctype.h>
 #include <wctype.h>
-#include <xlocale.h>
 
 #include <Objectively/Array.h>
 #include <Objectively/Data.h>
+#include <Objectively/Locale.h>
 
 /**
  * @file
@@ -41,11 +41,6 @@
  * @brief The Unicode type.
  */
 typedef wchar_t Unicode;
-
-/**
- * @brief The Locale type.
- */
-typedef locale_t Locale;
 
 /**
  * @brief Character encodings for Strings.
@@ -275,7 +270,7 @@ struct StringInterface {
 	 *
 	 * @relates String
 	 */
-	String *(*lowercaseStringWithLocale)(const String *self, const Locale locale);
+	String *(*lowercaseStringWithLocale)(const String *self, const Locale *locale);
 
 	/**
 	 * @return A MutableString with the contents of this String.
@@ -404,7 +399,7 @@ struct StringInterface {
 	 *
 	 * @relates String
 	 */
-	String *(*uppercaseStringWithLocale)(const String *self, const Locale locale);
+	String *(*uppercaseStringWithLocale)(const String *self, const Locale *locale);
 
 	/**
 	 * @brief Writes this String to `path`.

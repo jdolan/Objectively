@@ -17,6 +17,8 @@ AM_INIT_AUTOMAKE([foreign])
 AM_SILENT_RULES([yes])
 
 AC_CHECK_HEADERS([iconv.h])
+AC_CHECK_HEADERS([locale.h])
+AC_CHECK_HEADERS([xlocale.h])
 AC_CHECK_HEADERS([pthread.h])
 
 PKG_CHECK_MODULES([CHECK], [check >= 0.9.4])

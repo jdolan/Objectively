@@ -9,6 +9,7 @@ TESTS = \
 	Dictionary \
 	Data \
 	JSON \
+	Locale \
 	Log \
 	MutableArray \
 	MutableData \

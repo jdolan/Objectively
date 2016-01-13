@@ -1,5 +1,5 @@
 /*
- * Objectively: Ultra-lightweight object oriented framework for GNU C.
+ * Objectively: Ultra-lightweight locale oriented framework for GNU C.
  * Copyright (C) 2014 Jay Dolan <jay@jaydolan.com>
  *
  * This software is provided 'as-is', without any express or implied
@@ -25,22 +25,29 @@
 
 #include <Objectively.h>
 
-START_TEST(boolean)
+START_TEST(locale)
 	{
-		Boolean *yes = $$(Boolean, yes);
-		ck_assert(yes->bool);
+		Locale *system = $$(Locale, systemLocale);
 
-		Boolean *no = $$(Boolean, no);
-		ck_assert(no->bool == NO);
+		ck_assert(system != NULL);
+		ck_assert_ptr_eq(&_Locale, classof(system));
+
+		Locale *en_US = $(alloc(Locale), initWithIdentifier, "en_US");
+
+		ck_assert(en_US != NULL);
+		ck_assert_ptr_eq(&_Locale, classof(en_US));
+
+		release(system);
+		release(en_US);
 
 	}END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("boolean");
-	tcase_add_test(tcase, boolean);
+	TCase *tcase = tcase_create("locale");
+	tcase_add_test(tcase, locale);
 
-	Suite *suite = suite_create("boolean");
+	Suite *suite = suite_create("locale");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);

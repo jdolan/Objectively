@@ -25,7 +25,6 @@
 
 #include <assert.h>
 #include <iconv.h>
-#include <locale.h>
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -79,9 +78,7 @@ static int hash(const Object *self) {
 
 	String *this = (String *) self;
 
-	const RANGE range = { 0, this->length };
-
-	return HashForCharacters(HASH_SEED, this->chars, range);
+	return HashForCString(HASH_SEED, this->chars);
 }
 
 /**
@@ -391,29 +388,27 @@ static String *initWithVaList(String *self, const char *fmt, va_list args) {
  * @see StringInterface::lowercaseString(const String *)
  */
 static String *lowercaseString(const String *self) {
-
-	return $(self, lowercaseStringWithLocale, LC_GLOBAL_LOCALE);
+	return $(self, lowercaseStringWithLocale, NULL);
 }
 
 /**
- * @see StringInterface::lowercaseStringWithLocale(const String *, const Locale)
+ * @see StringInterface::lowercaseStringWithLocale(const String *, const *Locale)
  */
-static String *lowercaseStringWithLocale(const String *self, const Locale locale) {
+static String *lowercaseStringWithLocale(const String *self, const Locale *locale) {
 
 	Data *data = $(self, getData, STRING_ENCODING_WCHAR);
 	assert(data);
-
-	Locale loc = duplocale(locale);
-	assert(loc);
 
 	const size_t codepoints = data->length / sizeof(Unicode);
 	Unicode *unicode = (Unicode *) data->bytes;
 
 	for (size_t i = 0; i < codepoints; i++, unicode++) {
-		*unicode = towlower_l(*unicode, loc);
+		if (locale) {
+			*unicode = towlower_l(*unicode, locale->locale);
+		} else {
+			*unicode = towlower(*unicode);
+		}
 	}
-
-	freelocale(loc);
 
 	String *lowercase = $$(String, stringWithData, data, STRING_ENCODING_WCHAR);
 
@@ -538,29 +533,27 @@ static String *substring(const String *self, const RANGE range) {
  * @see StringInterface::uppercaseString(const String *)
  */
 static String *uppercaseString(const String *self) {
-
-	return $(self, uppercaseStringWithLocale, LC_GLOBAL_LOCALE);
+	return $(self, uppercaseStringWithLocale, NULL);
 }
 
 /**
- * @see StringInterface::uppercaseStringWithLocale(const String *, const Locale)
+ * @see StringInterface::uppercaseStringWithLocale(const String *, const *Locale)
  */
-static String *uppercaseStringWithLocale(const String *self, const Locale locale) {
+static String *uppercaseStringWithLocale(const String *self, const Locale *locale) {
 
 	Data *data = $(self, getData, STRING_ENCODING_WCHAR);
 	assert(data);
-
-	Locale loc = duplocale(locale);
-	assert(loc);
 
 	const size_t codepoints = data->length / sizeof(Unicode);
 	Unicode *unicode = (Unicode *) data->bytes;
 
 	for (size_t i = 0; i < codepoints; i++, unicode++) {
-		*unicode = towupper_l(*unicode, loc);
+		if (locale) {
+			*unicode = towupper_l(*unicode, locale->locale);
+		} else {
+			*unicode = towupper(*unicode);
+		}
 	}
-
-	freelocale(loc);
 
 	String *uppercase = $$(String, stringWithData, data, STRING_ENCODING_WCHAR);
 
