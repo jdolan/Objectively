@@ -37,6 +37,9 @@
  */
 static Date *dateFromCharacters(const DateFormatter *self, const char *chars) {
 
+#if defined(__MINGW32__)
+	fprintf(stderr, "WARNING:%s: not implemented (mingw32)\n", __func__);
+#else
 	if (chars) {
 		struct tm time;
 
@@ -46,6 +49,7 @@ static Date *dateFromCharacters(const DateFormatter *self, const char *chars) {
 			return $(alloc(Date), initWithTime, &t);
 		}
 	}
+#endif
 
 	return NULL;
 }

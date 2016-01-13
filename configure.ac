@@ -34,7 +34,7 @@ case "$host" in
 	*-*-mingw*)
 		HOST_NAME="MINGW"
 		HOST_LDFLAGS="-no-undefined"
-		HOST_LIBS="-liconv -lmsvcr110 -lole32 -lregex"
+		HOST_LIBS="-liconv -lmsvcr110 -lregex"
 		AC_MSG_RESULT(mingw)
 		;;
 	*)

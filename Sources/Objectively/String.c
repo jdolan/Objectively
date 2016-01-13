@@ -36,6 +36,11 @@
 #include <Objectively/MutableString.h>
 #include <Objectively/String.h>
 
+#if defined(__MINGW32__)
+#define towlower_l _towlower_l
+#define towupper_l _towupper_l
+#endif
+
 #define _Class _String
 
 #pragma mark - ObjectInterface
