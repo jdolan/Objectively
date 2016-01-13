@@ -196,7 +196,21 @@ static void sort(MutableArray *self, Comparator comparator) {
 	qsort_r(self->array.elements, self->array.count, sizeof(ident), comparator, _sort);
 }
 
-#elif defined(__WINDOWS__)
+#elif defined(__MINGW32__)
+
+/**
+ * @brief qsort_r comparator.
+ */
+static int _sort(void *data, const void *a, const void *b) {
+	return ((Comparator) data)(*((const id *) a), *((const id *) b));
+}
+
+/**
+ * @see MutableArrayInterface::sort(MutableArray *, Comparator)
+ */
+static void sort(MutableArray *self, Comparator comparator) {
+	qsort_s(self->array.elements, self->array.count, sizeof(id), _sort, comparator);
+}
 
 #else
 
