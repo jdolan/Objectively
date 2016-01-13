@@ -129,7 +129,7 @@ ident _alloc(Class *clazz) {
 
 	ident interface = clazz->interface;
 	do {
-		*(ident *) &obj[clazz->interfaceOffset] = interface;
+		*(ident *) (obj + clazz->interfaceOffset) = interface;
 	} while ((clazz = clazz->superclass));
 
 	return obj;
