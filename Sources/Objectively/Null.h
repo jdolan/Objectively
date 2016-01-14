@@ -43,6 +43,8 @@ typedef struct NullInterface NullInterface;
  * Use this Object when you must place `NULL` into collections.
  *
  * @extends Object
+ *
+ * @ingroup JSON
  */
 struct Null {
 

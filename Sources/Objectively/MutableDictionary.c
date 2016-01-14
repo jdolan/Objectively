@@ -38,7 +38,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
+ * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -62,7 +62,7 @@ static _Bool addEntriesFromDictionary_enumerator(const Dictionary *dict, ident o
 }
 
 /**
- * @see MutableDictionaryInterface::addEntriesFromDictionary(MutableDictionary *, const Dictionary *)
+ * @see MutableDictionary::addEntriesFromDictionary(MutableDictionary *, const Dictionary *)
  */
 static void addEntriesFromDictionary(MutableDictionary *self, const Dictionary *dictionary) {
 
@@ -70,7 +70,7 @@ static void addEntriesFromDictionary(MutableDictionary *self, const Dictionary *
 }
 
 /**
- * @see MutableDictionaryInterface::dictionary(void)
+ * @see MutableDictionary::dictionary(void)
  */
 static MutableDictionary *dictionary(void) {
 
@@ -78,7 +78,7 @@ static MutableDictionary *dictionary(void) {
 }
 
 /**
- * @see MutableDictionaryInterface::dictionaryWithCapacity(size_t)
+ * @see MutableDictionary::dictionaryWithCapacity(size_t)
  */
 static MutableDictionary *dictionaryWithCapacity(size_t capacity) {
 
@@ -86,7 +86,7 @@ static MutableDictionary *dictionaryWithCapacity(size_t capacity) {
 }
 
 /**
- * @see MutableDictionaryInterface::init(MutableDictionary *)
+ * @see MutableDictionary::init(MutableDictionary *)
  */
 static MutableDictionary *init(MutableDictionary *self) {
 
@@ -94,7 +94,7 @@ static MutableDictionary *init(MutableDictionary *self) {
 }
 
 /**
- * @see MutableDictionaryInterface::initWithCapacity(MutableDictionary *, size_t)
+ * @see MutableDictionary::initWithCapacity(MutableDictionary *, size_t)
  */
 static MutableDictionary *initWithCapacity(MutableDictionary *self, size_t capacity) {
 
@@ -113,7 +113,7 @@ static MutableDictionary *initWithCapacity(MutableDictionary *self, size_t capac
 }
 
 /**
- * @see MutableDictionaryInterface::removeAllObjects(MutableDictionary *)
+ * @see MutableDictionary::removeAllObjects(MutableDictionary *)
  */
 static void removeAllObjects(MutableDictionary *self) {
 
@@ -130,7 +130,7 @@ static void removeAllObjects(MutableDictionary *self) {
 }
 
 /**
- * @see MutableDictionaryInterface::removeObjectForKey(MutableDictionary *, const id)
+ * @see MutableDictionary::removeObjectForKey(MutableDictionary *, const id)
  */
 static void removeObjectForKey(MutableDictionary *self, const ident key) {
 
@@ -201,7 +201,7 @@ static void setObjectForKey_resize(Dictionary *dict) {
 }
 
 /**
- * @see MutableDictionaryInterface::setObjectForKey(MutableDictionary *, const id, const id)
+ * @see MutableDictionary::setObjectForKey(MutableDictionary *, const id, const id)
  */
 static void setObjectForKey(MutableDictionary *self, const ident obj, const ident key) {
 
@@ -228,7 +228,7 @@ static void setObjectForKey(MutableDictionary *self, const ident obj, const iden
 }
 
 /**
- * @see MutableDictionaryInterface::setObjectsForKeys(MutableDictionary *, ...)
+ * @see MutableDictionary::setObjectsForKeys(MutableDictionary *, ...)
  */
 static void setObjectsForKeys(MutableDictionary *self, ...) {
 

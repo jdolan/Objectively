@@ -43,7 +43,7 @@ typedef struct OperationQueueInterface OperationQueueInterface;
  *
  * @extends Object
  *
- * @ingroup Threads
+ * @ingroup Concurrency
  */
 struct OperationQueue {
 

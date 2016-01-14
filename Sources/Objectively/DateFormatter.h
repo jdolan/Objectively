@@ -47,6 +47,7 @@ typedef struct DateFormatterInterface DateFormatterInterface;
  * @extends Object
  *
  * @ingroup Date
+ * @ingroup Localization
  */
 struct DateFormatter {
 

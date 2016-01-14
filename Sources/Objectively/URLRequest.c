@@ -31,7 +31,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
+ * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -51,7 +51,7 @@ static Object *copy(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -66,7 +66,7 @@ static void dealloc(Object *self) {
 #pragma mark - URLRequestInterface
 
 /**
- * @see URLRequestInterface::initWithURL(URLRequest *, URL *url)
+ * @see URLRequest::initWithURL(URLRequest *, URL *url)
  */
 static URLRequest *initWithURL(URLRequest *self, URL *url) {
 
@@ -81,7 +81,7 @@ static URLRequest *initWithURL(URLRequest *self, URL *url) {
 }
 
 /**
- * @see URLRequestInterface::setHTTPHeader(URLRequest *, const char *name, const char *value)
+ * @see URLRequest::setHTTPHeader(URLRequest *, const char *name, const char *value)
  */
 void setValueForHTTPHeaderField(URLRequest *self, const char *value, const char *field) {
 

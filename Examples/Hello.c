@@ -76,14 +76,14 @@ extern Class _Hello;
 #pragma mark - HelloInterface
 
 /**
- * @see HelloInterface::helloWithGreeting(const char *)
+ * @see Hello::helloWithGreeting(const char *)
  */
 static Hello *helloWithGreeting(const char *greeting) {
 	return $(alloc(Hello), initWithGreeting, greeting);
 }
 
 /**
- * @see HelloInterface::initWithGreeting(Hello *, const char *)
+ * @see Hello::initWithGreeting(Hello *, const char *)
  */
 static Hello *initWithGreeting(Hello *self, const char *greeting) {
 
@@ -95,7 +95,7 @@ static Hello *initWithGreeting(Hello *self, const char *greeting) {
 }
 
 /**
- * @see HelloInterface::sayHello(const Hello *)
+ * @see Hello::sayHello(const Hello *)
  */
 static void sayHello(const Hello *self) {
 	printf("%s\n", self->greeting);

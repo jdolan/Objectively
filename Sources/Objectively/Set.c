@@ -36,7 +36,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
+ * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -48,7 +48,7 @@ static Object *copy(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -64,7 +64,7 @@ static void dealloc(Object *self) {
 }
 
 /**
- * @see ObjectInterface::description(const Object *)
+ * @see Object::description(const Object *)
  */
 static String *description(const Object *self) {
 
@@ -74,7 +74,7 @@ static String *description(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::hash(const Object *)
+ * @see Object::hash(const Object *)
  */
 static int hash(const Object *self) {
 
@@ -92,7 +92,7 @@ static int hash(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::isEqual(const Object *, const Object *)
+ * @see Object::isEqual(const Object *, const Object *)
  */
 static _Bool isEqual(const Object *self, const Object *other) {
 
@@ -137,7 +137,7 @@ static _Bool allObjects_enumerator(const Set *set, ident obj, ident data) {
 }
 
 /**
- * @see SetInterface::allObjects(const Set *)
+ * @see Set::allObjects(const Set *)
  */
 static Array *allObjects(const Set *self) {
 
@@ -149,7 +149,7 @@ static Array *allObjects(const Set *self) {
 }
 
 /**
- * @see SetInterface::containsObject(const Set *, const id)
+ * @see Set::containsObject(const Set *, const id)
  */
 static _Bool containsObject(const Set *self, const ident obj) {
 
@@ -164,7 +164,7 @@ static _Bool containsObject(const Set *self, const ident obj) {
 }
 
 /**
- * @see SetInterface::enumerateObjects(const Set *, SetEnumerator, id)
+ * @see Set::enumerateObjects(const Set *, SetEnumerator, id)
  */
 static void enumerateObjects(const Set *self, SetEnumerator enumerator, ident data) {
 
@@ -187,7 +187,7 @@ static void enumerateObjects(const Set *self, SetEnumerator enumerator, ident da
 }
 
 /**
- * @see SetInterface::filterObjects(const Set *, SetEnumerator, id)
+ * @see Set::filterObjects(const Set *, SetEnumerator, id)
  */
 static Set *filterObjects(const Set *self, SetEnumerator enumerator, ident data) {
 
@@ -222,7 +222,7 @@ static _Bool initWithArray_enumerator(const Array *array, ident obj, ident data)
 }
 
 /**
- * @see SetInterface::initWithArray(Set *, const Array *)
+ * @see Set::initWithArray(Set *, const Array *)
  */
 static Set *initWithArray(Set *self, const Array *array) {
 
@@ -245,7 +245,7 @@ static _Bool initWithSet_enumerator(const Set *set, ident obj, ident data) {
 }
 
 /**
- * @see SetInterface::initWithSet(Set *, const Set *)
+ * @see Set::initWithSet(Set *, const Set *)
  */
 static Set *initWithSet(Set *self, const Set *set) {
 
@@ -260,7 +260,7 @@ static Set *initWithSet(Set *self, const Set *set) {
 }
 
 /**
- * @see SetInterface::initWithObjects(Set *, ...)
+ * @see Set::initWithObjects(Set *, ...)
  */
 static Set *initWithObjects(Set *self, ...) {
 
@@ -287,7 +287,7 @@ static Set *initWithObjects(Set *self, ...) {
 }
 
 /**
- * @see SetInterface::setWithArray(const Array *)
+ * @see Set::setWithArray(const Array *)
  */
 static Set *setWithArray(const Array *array) {
 
@@ -295,7 +295,7 @@ static Set *setWithArray(const Array *array) {
 }
 
 /**
- * @see SetInterface::setWithObjects(id, ...)
+ * @see Set::setWithObjects(id, ...)
  */
 static Set *setWithObjects(ident obj, ...) {
 
@@ -317,7 +317,7 @@ static Set *setWithObjects(ident obj, ...) {
 }
 
 /**
- * @see SetInterface::setWithSet(const Set *)
+ * @see Set::setWithSet(const Set *)
  */
 static Set *setWithSet(const Set *set) {
 

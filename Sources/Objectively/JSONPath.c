@@ -37,7 +37,7 @@
 static Regex *_regex;
 
 /**
- * @see JSONPathInterface::objectWithPath(const id, const char *)
+ * @see JSONPath::objectWithPath(const id, const char *)
  */
 static ident objectWithPath(const ident root, const char *path) {
 

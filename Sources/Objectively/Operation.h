@@ -53,7 +53,7 @@ typedef void (*OperationFunction)(Operation *operation);
  *
  * @extends Object
  *
- * @ingroup Threads
+ * @ingroup Concurrency
  */
 struct Operation {
 

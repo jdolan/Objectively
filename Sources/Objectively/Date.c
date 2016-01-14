@@ -31,7 +31,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::hash(const Object *)
+ * @see Object::hash(const Object *)
  */
 static int hash(const Object *self) {
 
@@ -46,7 +46,7 @@ static int hash(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::isEqual(const Object *, const Object *)
+ * @see Object::isEqual(const Object *, const Object *)
  */
 static _Bool isEqual(const Object *self, const Object *other) {
 
@@ -68,7 +68,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - DateInterface
 
 /**
- * @see DateInterface::date(void)
+ * @see Date::date(void)
  */
 static Date *date(void) {
 
@@ -76,7 +76,7 @@ static Date *date(void) {
 }
 
 /**
- * @see DateInterface::dateWithTimeSinceNow(const Time *)
+ * @see Date::dateWithTimeSinceNow(const Time *)
  */
 static Date *dateWithTimeSinceNow(const Time *interval) {
 
@@ -99,7 +99,7 @@ static Date *dateWithTimeSinceNow(const Time *interval) {
 }
 
 /**
- * @see DateInterface::compareTo(const Date *, const Date *)
+ * @see Date::compareTo(const Date *, const Date *)
  */
 static ORDER compareTo(const Date *self, const Date *other) {
 
@@ -122,14 +122,14 @@ static ORDER compareTo(const Date *self, const Date *other) {
 }
 
 /**
- * @see DateInterface::init(Date *)
+ * @see Date::init(Date *)
  */
 static Date *init(Date *self) {
 	return $(self, initWithTime, NULL);
 }
 
 /**
- * @see DateInterface::initWithTime(Date *, Time *)
+ * @see Date::initWithTime(Date *, Time *)
  */
 static Date *initWithTime(Date *self, const Time *time) {
 

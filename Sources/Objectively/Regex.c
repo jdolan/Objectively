@@ -33,7 +33,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
+ * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -43,7 +43,7 @@ static Object *copy(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::description(const Object *)
+ * @see Object::description(const Object *)
  */
 static String *description(const Object *self) {
 
@@ -53,7 +53,7 @@ static String *description(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -66,7 +66,7 @@ static void dealloc(Object *self) {
 }
 
 /**
- * @see ObjectInterface::hash(const Object *)
+ * @see Object::hash(const Object *)
  */
 static int hash(const Object *self) {
 
@@ -82,7 +82,7 @@ static int hash(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::isEqual(const Object *, const Object *)
+ * @see Object::isEqual(const Object *, const Object *)
  */
 static _Bool isEqual(const Object *self, const Object *other) {
 
@@ -106,7 +106,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - RegexInterface
 
 /**
- * @see RegexInterface::initWithPattern(Regex *, const char *, const int)
+ * @see Regex::initWithPattern(Regex *, const char *, const int)
  */
 static Regex *initWithPattern(Regex *self, const char *pattern, const int options) {
 
@@ -127,7 +127,7 @@ static Regex *initWithPattern(Regex *self, const char *pattern, const int option
 }
 
 /**
- * @see RegexInterface::matchesCharacters(const Regex *, const char *, int, RANGE **)
+ * @see Regex::matchesCharacters(const Regex *, const char *, int, RANGE **)
  */
 static _Bool matchesCharacters(const Regex *self, const char *chars, int options, RANGE **ranges) {
 
@@ -162,7 +162,7 @@ static _Bool matchesCharacters(const Regex *self, const char *chars, int options
 }
 
 /**
- * @see RegexInterface::matchesString(const Regex *, const String *, int, RANGE **)
+ * @see Regex::matchesString(const Regex *, const String *, int, RANGE **)
  */
 static _Bool matchesString(const Regex *self, const String *string, int options, RANGE **ranges) {
 

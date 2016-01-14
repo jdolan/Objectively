@@ -34,7 +34,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -70,7 +70,7 @@ static size_t writeFunction(char *data, size_t size, size_t count, ident self) {
 }
 
 /**
- * @see URLSessionTaskInterface::setup(URLSessionTask *)
+ * @see URLSessionTask::setup(URLSessionTask *)
  */
 static void setup(URLSessionTask *self) {
 

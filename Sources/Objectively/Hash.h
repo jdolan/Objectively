@@ -30,6 +30,8 @@
  * @file
  *
  * @brief Utilities for calculating hash values.
+ *
+ * @ingroup Core
  */
 
 /**

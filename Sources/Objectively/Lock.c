@@ -34,14 +34,14 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
+ * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 	return NULL;
 }
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -56,7 +56,7 @@ static void dealloc(Object *self) {
 #pragma mark - LockInterface
 
 /**
- * @see LockInterface::init(Lock *)
+ * @see Lock::init(Lock *)
  */
 static Lock *init(Lock *self) {
 
@@ -74,7 +74,7 @@ static Lock *init(Lock *self) {
 }
 
 /**
- * @see LockInterface::lock(Lock *)
+ * @see Lock::lock(Lock *)
  */
 static void lock(Lock *self) {
 
@@ -83,7 +83,7 @@ static void lock(Lock *self) {
 }
 
 /**
- * @see LockInterface::tryLock(Lock *)
+ * @see Lock::tryLock(Lock *)
  */
 static _Bool tryLock(Lock *self) {
 
@@ -94,7 +94,7 @@ static _Bool tryLock(Lock *self) {
 }
 
 /**
- * @see LockInterface::unlock(Lock *)
+ * @see Lock::unlock(Lock *)
  */
 static void unlock(Lock *self) {
 

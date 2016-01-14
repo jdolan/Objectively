@@ -24,13 +24,12 @@
 #ifndef _Objectively_Locale_h_
 #define _Objectively_Locale_h_
 
+#include <locale.h>
+
 #if defined(__MINGW32__)
-#include <locale.h>
-typedef _locale_t LOCALE;
+typedef _locale_t locale_t;
 #else
-#include <locale.h>
 #include <xlocale.h>
-typedef locale_t LOCALE;
 #endif
 
 #include <Objectively/Object.h>
@@ -39,13 +38,25 @@ typedef locale_t LOCALE;
  * @file
  * 
  * @brief Locale.
+ *
+ * @extends Object
  */
 
+
+/**
+ * @defgroup Localization Localization
+ *
+ * @brief Locale and localization facilities.
+ */
 typedef struct Locale Locale;
 typedef struct LocaleInterface LocaleInterface;
 
 /**
  * @brief Locale.
+ *
+ * @extends Object
+ *
+ * @ingroup Localization
  */
 struct Locale {
 
@@ -72,8 +83,10 @@ struct Locale {
 
 	/**
 	 * @brief The internal C representation.
+	 *
+	 * @private
 	 */
-	LOCALE locale;
+	ident locale;
 };
 
 /**
@@ -106,7 +119,7 @@ struct LocaleInterface {
 	 *
 	 * @relates Locale
 	 */
-	Locale *(*initWithLocale)(Locale *self, LOCALE locale);
+	Locale *(*initWithLocale)(Locale *self, locale_t locale);
 
 	/**
 	 * @return The system Locale.

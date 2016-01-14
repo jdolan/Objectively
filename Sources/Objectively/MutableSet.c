@@ -38,7 +38,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
+ * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -91,7 +91,7 @@ static void addObject_resize(Set *set) {
 }
 
 /**
- * @see MutableSetInterface::addObject(MutableSet *, const id)
+ * @see MutableSet::addObject(MutableSet *, const id)
  */
 static void addObject(MutableSet *self, const ident obj) {
 
@@ -113,7 +113,7 @@ static void addObject(MutableSet *self, const ident obj) {
 }
 
 /**
- * @see MutableSetInterface::addObjectsFromArray(MutableSet *, const Array *)
+ * @see MutableSet::addObjectsFromArray(MutableSet *, const Array *)
  */
 static void addObjectsFromArray(MutableSet *self, const Array *array) {
 
@@ -133,7 +133,7 @@ static _Bool addObjectsFromSet_enumerator(const Set *set, ident obj, ident data)
 }
 
 /**
- * @see MutableSetInterface::addEntriesFromSet(MutableSet *, const Set *)
+ * @see MutableSet::addEntriesFromSet(MutableSet *, const Set *)
  */
 static void addObjectsFromSet(MutableSet *self, const Set *set) {
 
@@ -143,7 +143,7 @@ static void addObjectsFromSet(MutableSet *self, const Set *set) {
 }
 
 /**
- * @see MutableSetInterface::init(MutableSet *)
+ * @see MutableSet::init(MutableSet *)
  */
 static MutableSet *init(MutableSet *self) {
 
@@ -151,7 +151,7 @@ static MutableSet *init(MutableSet *self) {
 }
 
 /**
- * @see MutableSetInterface::initWithCapacity(MutableSet *, size_t)
+ * @see MutableSet::initWithCapacity(MutableSet *, size_t)
  */
 static MutableSet *initWithCapacity(MutableSet *self, size_t capacity) {
 
@@ -170,7 +170,7 @@ static MutableSet *initWithCapacity(MutableSet *self, size_t capacity) {
 }
 
 /**
- * @see MutableSetInterface::removeAllObjects(MutableSet *)
+ * @see MutableSet::removeAllObjects(MutableSet *)
  */
 static void removeAllObjects(MutableSet *self) {
 
@@ -187,7 +187,7 @@ static void removeAllObjects(MutableSet *self) {
 }
 
 /**
- * @see MutableSetInterface::removeObjectForKey(MutableSet *, const id)
+ * @see MutableSet::removeObjectForKey(MutableSet *, const id)
  */
 static void removeObject(MutableSet *self, const ident obj) {
 
@@ -212,7 +212,7 @@ static void removeObject(MutableSet *self, const ident obj) {
 }
 
 /**
- * @see MutableSetInterface::set(void)
+ * @see MutableSet::set(void)
  */
 static MutableSet *set(void) {
 
@@ -220,7 +220,7 @@ static MutableSet *set(void) {
 }
 
 /**
- * @see MutableSetInterface::initWithCapacity(size_t)
+ * @see MutableSet::initWithCapacity(size_t)
  */
 static MutableSet *setWithCapacity(size_t capacity) {
 

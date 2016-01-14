@@ -32,7 +32,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::description(const Object *)
+ * @see Object::description(const Object *)
  */
 static String *description(const Object *self) {
 
@@ -42,7 +42,7 @@ static String *description(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::hash(const Object *)
+ * @see Object::hash(const Object *)
  */
 static int hash(const Object *self) {
 
@@ -52,7 +52,7 @@ static int hash(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::isEqual(const Object *, const Object *)
+ * @see Object::isEqual(const Object *, const Object *)
  */
 static _Bool isEqual(const Object *self, const Object *other) {
 
@@ -74,21 +74,21 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - NumberInterface
 
 /**
- * @see NumberInterface::boolValue(const Number *)
+ * @see Number::boolValue(const Number *)
  */
 static _Bool boolValue(const Number *self) {
 	return self->value ? true : false;
 }
 
 /**
- * @see NumberInterface::charValue(const Number *)
+ * @see Number::charValue(const Number *)
  */
 static char charValue(const Number *self) {
 	return (char) self->value;
 }
 
 /**
- * @see NumberInterface::compareTo(const Number *, const Number *)
+ * @see Number::compareTo(const Number *, const Number *)
  */
 static ORDER compareTo(const Number *self, const Number *other) {
 
@@ -104,28 +104,28 @@ static ORDER compareTo(const Number *self, const Number *other) {
 }
 
 /**
- * @see NumberInterface::doubleValue(const Number *)
+ * @see Number::doubleValue(const Number *)
  */
 static double doubleValue(const Number *self) {
 	return self->value;
 }
 
 /**
- * @see NumberInterface::floatValue(const Number *)
+ * @see Number::floatValue(const Number *)
  */
 static float floatValue(const Number *self) {
 	return (float) self->value;
 }
 
 /**
- * @see NumberInterface::boolValue(const Number *)
+ * @see Number::boolValue(const Number *)
  */
 static long longValue(const Number *self) {
 	return (long) self->value;
 }
 
 /**
- * @see NumberInterface::initWithValue(Number *, const double)
+ * @see Number::initWithValue(Number *, const double)
  */
 static Number *initWithValue(Number *self, const double value) {
 
@@ -138,21 +138,21 @@ static Number *initWithValue(Number *self, const double value) {
 }
 
 /**
- * @see NumberInterface::intValue(const Number *)
+ * @see Number::intValue(const Number *)
  */
 static int intValue(const Number *self) {
 	return (int) self->value;
 }
 
 /**
- * @see NumberInterface::numberWithValue(double)
+ * @see Number::numberWithValue(double)
  */
 static Number *numberWithValue(double value) {
 	return $(alloc(Number), initWithValue, value);
 }
 
 /**
- * @see NumberInterface::shortValue(const Number *)
+ * @see Number::shortValue(const Number *)
  */
 static short shortValue(const Number *self) {
 	return (short) self->value;

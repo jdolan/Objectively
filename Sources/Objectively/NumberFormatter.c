@@ -33,7 +33,7 @@
 #pragma mark - NumberFormatterInterface
 
 /**
- * @see NumberFormatterInterface::numberFromString(const NumberFormatter *, const String *)
+ * @see NumberFormatter::numberFromString(const NumberFormatter *, const String *)
  */
 static Number *numberFromString(const NumberFormatter *self, const String *string) {
 
@@ -50,7 +50,7 @@ static Number *numberFromString(const NumberFormatter *self, const String *strin
 }
 
 /**
- * @see NumberFormatterInterface::initWithFormat(NumberFormatter *, const char *fmt)
+ * @see NumberFormatter::initWithFormat(NumberFormatter *, const char *fmt)
  */
 static NumberFormatter *initWithFormat(NumberFormatter *self, const char *fmt) {
 
@@ -63,7 +63,7 @@ static NumberFormatter *initWithFormat(NumberFormatter *self, const char *fmt) {
 }
 
 /**
- * @see NumberFormatterInterface::stringFromNumber(const NumberFormatter *, const Number *)
+ * @see NumberFormatter::stringFromNumber(const NumberFormatter *, const Number *)
  */
 static String *stringFromNumber(const NumberFormatter *self, const Number *number) {
 

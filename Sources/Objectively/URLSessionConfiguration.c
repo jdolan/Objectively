@@ -15,7 +15,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -31,7 +31,7 @@ static void dealloc(Object *self) {
 #pragma mark - URLSessionConfigurationInterface
 
 /**
- * @see URLSessionConfigurationInterface::init(URLSessionConfiguration *)
+ * @see URLSessionConfiguration::init(URLSessionConfiguration *)
  */
 static URLSessionConfiguration *init(URLSessionConfiguration *self) {
 

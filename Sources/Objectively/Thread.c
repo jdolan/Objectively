@@ -35,14 +35,14 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
+ * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 	return NULL;
 }
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -58,7 +58,7 @@ static void dealloc(Object *self) {
 #pragma mark - ThreadInterface
 
 /**
- * @see ThreadInterface::cancel(Thread *)
+ * @see Thread::cancel(Thread *)
  */
 static void cancel(Thread *self) {
 
@@ -73,7 +73,7 @@ static void cancel(Thread *self) {
 __thread Thread *_currentThread;
 
 /**
- * @see ThreadInterface::currentThread(void)
+ * @see Thread::currentThread(void)
  */
 static Thread *currentThread(void) {
 
@@ -81,7 +81,7 @@ static Thread *currentThread(void) {
 }
 
 /**
- * @see ThreadInterface::detach(Thread *)
+ * @see Thread::detach(Thread *)
  */
 static void detach(Thread *self) {
 
@@ -94,7 +94,7 @@ static void detach(Thread *self) {
 }
 
 /**
- * @see ThreadInterface::init(Thread *)
+ * @see Thread::init(Thread *)
  */
 static Thread *init(Thread *self) {
 
@@ -102,7 +102,7 @@ static Thread *init(Thread *self) {
 }
 
 /**
- * @see ThreadInterface::initWithFunction(Thread *, ThreadFunction, id)
+ * @see Thread::initWithFunction(Thread *, ThreadFunction, id)
  */
 static Thread *initWithFunction(Thread *self, ThreadFunction function, ident data) {
 
@@ -119,7 +119,7 @@ static Thread *initWithFunction(Thread *self, ThreadFunction function, ident dat
 }
 
 /**
- * @see ThreadInterface::join(Thread *, id *)
+ * @see Thread::join(Thread *, id *)
  */
 static void join(Thread *self, ident *status) {
 
@@ -155,7 +155,7 @@ static ident run(ident obj) {
 }
 
 /**
- * @see ThreadInterface::start(Thread *)
+ * @see Thread::start(Thread *)
  */
 static void start(Thread *self) {
 

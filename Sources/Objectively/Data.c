@@ -36,7 +36,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
+ * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -46,7 +46,7 @@ static Object *copy(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -60,7 +60,7 @@ static void dealloc(Object *self) {
 }
 
 /**
- * @see ObjectInterface::hash(const Object *)
+ * @see Object::hash(const Object *)
  */
 static int hash(const Object *self) {
 
@@ -76,7 +76,7 @@ static int hash(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::isEqual(const Object *, const Object *)
+ * @see Object::isEqual(const Object *, const Object *)
  */
 static _Bool isEqual(const Object *self, const Object *other) {
 
@@ -100,7 +100,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - DataInterface
 
 /**
- * @see DataInterface::dataWithBytes(const byte *, size_t)
+ * @see Data::dataWithBytes(const byte *, size_t)
  */
 static Data *dataWithBytes(const byte *bytes, size_t length) {
 
@@ -108,7 +108,7 @@ static Data *dataWithBytes(const byte *bytes, size_t length) {
 }
 
 /**
- * @see DataInterface::dataWithContentsOfFile(const char *)
+ * @see Data::dataWithContentsOfFile(const char *)
  */
 static Data *dataWithContentsOfFile(const char *path) {
 
@@ -116,7 +116,7 @@ static Data *dataWithContentsOfFile(const char *path) {
 }
 
 /**
- * @see DataInterface::initWithBytes(Data *, const byte *, size_t)
+ * @see Data::initWithBytes(Data *, const byte *, size_t)
  */
 static Data *initWithBytes(Data *self, const byte *bytes, size_t length) {
 
@@ -129,7 +129,7 @@ static Data *initWithBytes(Data *self, const byte *bytes, size_t length) {
 }
 
 /**
- * @see DataInterface::dataWithMemory(const id, size_t)
+ * @see Data::dataWithMemory(const id, size_t)
  */
 static Data *dataWithMemory(const ident mem, size_t length) {
 
@@ -137,7 +137,7 @@ static Data *dataWithMemory(const ident mem, size_t length) {
 }
 
 /**
- * @see DataInterface::initWithContentsOfFile(Data *, const char *)
+ * @see Data::initWithContentsOfFile(Data *, const char *)
  */
 static Data *initWithContentsOfFile(Data *self, const char *path) {
 
@@ -173,7 +173,7 @@ static Data *initWithContentsOfFile(Data *self, const char *path) {
 }
 
 /**
- * @see DataInterface::initWithMemory(Data *, const id, size_t)
+ * @see Data::initWithMemory(Data *, const id, size_t)
  */
 static Data *initWithMemory(Data *self, const ident mem, size_t length) {
 
@@ -187,7 +187,7 @@ static Data *initWithMemory(Data *self, const ident mem, size_t length) {
 }
 
 /**
- * @see DataInterface::mutableCopy(const Data *)
+ * @see Data::mutableCopy(const Data *)
  */
 static MutableData *mutableCopy(const Data *self) {
 
@@ -195,7 +195,7 @@ static MutableData *mutableCopy(const Data *self) {
 }
 
 /**
- * @see DataInterface::writeToFile(const Data *, const char *)
+ * @see Data::writeToFile(const Data *, const char *)
  */
 static _Bool writeToFile(const Data *self, const char *path) {
 

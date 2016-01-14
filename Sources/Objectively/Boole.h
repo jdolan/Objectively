@@ -39,6 +39,8 @@ typedef struct BooleInterface BooleInterface;
  * @brief A wrapper for placing boolean primitives into collections, etc.
  *
  * @extends Object
+ *
+ * @ingroup JSON
  */
 struct Boole {
 

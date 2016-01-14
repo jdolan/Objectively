@@ -38,6 +38,8 @@ typedef struct MutableStringInterface MutableStringInterface;
  * @brief Mutable UTF-8 strings.
  *
  * @extends String
+ *
+ * @ingroup ByteStreams
  */
 struct MutableString {
 

@@ -47,6 +47,8 @@ typedef struct Class Class;
 
 /**
  * @brief The Class type.
+ *
+ * @ingroup Core
  */
 struct Class {
 

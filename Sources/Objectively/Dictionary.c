@@ -36,7 +36,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
+ * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -48,7 +48,7 @@ static Object *copy(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -82,7 +82,7 @@ static _Bool description_enumerator(const Dictionary *dict, ident obj, ident key
 }
 
 /**
- * @see ObjectInterface::description(const Object *)
+ * @see Object::description(const Object *)
  */
 static String *description(const Object *self) {
 
@@ -100,7 +100,7 @@ static String *description(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::hash(const Object *)
+ * @see Object::hash(const Object *)
  */
 static int hash(const Object *self) {
 
@@ -118,7 +118,7 @@ static int hash(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::isEqual(const Object *, const Object *)
+ * @see Object::isEqual(const Object *, const Object *)
  */
 static _Bool isEqual(const Object *self, const Object *other) {
 
@@ -165,7 +165,7 @@ static _Bool allKeys_enumerator(const Dictionary *dict, ident obj, ident key, id
 }
 
 /**
- * @see DictionaryInterface::allKeys(const Dictionary *)
+ * @see Dictionary::allKeys(const Dictionary *)
  */
 static Array *allKeys(const Dictionary *self) {
 
@@ -184,7 +184,7 @@ static _Bool allObjects_enumerator(const Dictionary *dict, ident obj, ident key,
 }
 
 /**
- * @see DictionaryInterface::allObjects(const Dictionary *)
+ * @see Dictionary::allObjects(const Dictionary *)
  */
 static Array *allObjects(const Dictionary *self) {
 
@@ -196,7 +196,7 @@ static Array *allObjects(const Dictionary *self) {
 }
 
 /**
- * @see DictionaryInterface::dictionaryWithDictionary(const Dictionary *)
+ * @see Dictionary::dictionaryWithDictionary(const Dictionary *)
  */
 static Dictionary *dictionaryWithDictionary(const Dictionary *dictionary) {
 
@@ -204,7 +204,7 @@ static Dictionary *dictionaryWithDictionary(const Dictionary *dictionary) {
 }
 
 /**
- * @see DictionaryInterface::dictionaryWithObjectsAndKeys(id, ...)
+ * @see Dictionary::dictionaryWithObjectsAndKeys(id, ...)
  */
 static Dictionary *dictionaryWithObjectsAndKeys(ident obj, ...) {
 
@@ -229,7 +229,7 @@ static Dictionary *dictionaryWithObjectsAndKeys(ident obj, ...) {
 }
 
 /**
- * @see DictionaryInterface::enumerateObjectsAndKeys(const Dictionary *, DictionaryEnumerator, id)
+ * @see Dictionary::enumerateObjectsAndKeys(const Dictionary *, DictionaryEnumerator, id)
  */
 static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator enumerator,
 		ident data) {
@@ -255,7 +255,7 @@ static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator
 }
 
 /**
- * @see DictionaryInterface::filterObjectsAndKeys(const Dictionary *, DictionaryEnumerator, id)
+ * @see Dictionary::filterObjectsAndKeys(const Dictionary *, DictionaryEnumerator, id)
  */
 static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumerator enumerator,
 		ident data) {
@@ -285,7 +285,7 @@ static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumer
 }
 
 /**
- * @see DictionaryInterface::initWithDictionary(Dictionary *, const Dictionary *)
+ * @see Dictionary::initWithDictionary(Dictionary *, const Dictionary *)
  */
 static Dictionary *initWithDictionary(Dictionary *self, const Dictionary *dictionary) {
 
@@ -314,7 +314,7 @@ static Dictionary *initWithDictionary(Dictionary *self, const Dictionary *dictio
 }
 
 /**
- * @see DictionaryInterface::initWithObjectsAndKeys(Dictionary *, ...)
+ * @see Dictionary::initWithObjectsAndKeys(Dictionary *, ...)
  */
 static Dictionary *initWithObjectsAndKeys(Dictionary *self, ...) {
 
@@ -343,7 +343,7 @@ static Dictionary *initWithObjectsAndKeys(Dictionary *self, ...) {
 }
 
 /**
- * @see DictionaryInterface::mutableCopy(const Dictionary *)
+ * @see Dictionary::mutableCopy(const Dictionary *)
  */
 static MutableDictionary *mutableCopy(const Dictionary *self) {
 
@@ -356,7 +356,7 @@ static MutableDictionary *mutableCopy(const Dictionary *self) {
 }
 
 /**
- * @see DictionaryInterface::objectForKey(const Dictionary *, const id)
+ * @see Dictionary::objectForKey(const Dictionary *, const id)
  */
 static ident objectForKey(const Dictionary *self, const ident key) {
 

@@ -52,6 +52,7 @@ static void writeElement(JSONWriter *writer, const ident obj);
 /**
  * Writes `null` to `writer`.
  *
+ * @param writer The JSONWriter.
  * @param null The Null to write.
  */
 static void writeNull(JSONWriter *writer, const Null *null) {
@@ -62,6 +63,7 @@ static void writeNull(JSONWriter *writer, const Null *null) {
 /**
  * Writes `boolean` to `writer`.
  *
+ * @param writer The JSONWriter.
  * @param boolean The Boole to write.
  */
 static void writeBoole(JSONWriter *writer, const Boole *boolean) {
@@ -76,6 +78,7 @@ static void writeBoole(JSONWriter *writer, const Boole *boolean) {
 /**
  * Writes `string` to `writer`.
  *
+ * @param writer The JSONWriter.
  * @param string The String to write.
  */
 static void writeString(JSONWriter *writer, const String *string) {
@@ -88,6 +91,7 @@ static void writeString(JSONWriter *writer, const String *string) {
 /**
  * Writes `number` to `writer`.
  *
+ * @param writer The JSONWriter.
  * @param number The Number to write.
  */
 static void writeNumber(JSONWriter *writer, const Number *number) {
@@ -102,6 +106,7 @@ static void writeNumber(JSONWriter *writer, const Number *number) {
 /**
  * Writes the label (field name) `label` to `writer`.
  *
+ * @param writer The JSONWriter.
  * @param label The label to write.
  */
 static void writeLabel(JSONWriter *writer, const String *label) {
@@ -113,6 +118,7 @@ static void writeLabel(JSONWriter *writer, const String *label) {
 /**
  * Writes `object` to `writer`.
  *
+ * @param writer The JSONWriter.
  * @param object The object (Dictionary) to write.
  */
 static void writeObject(JSONWriter *writer, const Dictionary *object) {
@@ -141,6 +147,7 @@ static void writeObject(JSONWriter *writer, const Dictionary *object) {
 /**
  * Writes `array` to `writer`.
  *
+ * @param writer The JSONWriter.
  * @param array The Array to write.
  */
 static void writeArray(JSONWriter *writer, const Array *array) {
@@ -162,6 +169,7 @@ static void writeArray(JSONWriter *writer, const Array *array) {
 /**
  * Writes the specified JSON element to `writer`.
  *
+ * @param writer The JSONWriter.
  * @param obj The JSON element to write.
  */
 static void writeElement(JSONWriter *writer, const ident obj) {
@@ -185,7 +193,7 @@ static void writeElement(JSONWriter *writer, const ident obj) {
 }
 
 /**
- * @see JSONSerializationInterface::dataFromObject(const id, int options)
+ * @see JSONSerialization::dataFromObject(const id, int options)
  */
 static Data *dataFromObject(const ident obj, int options) {
 
@@ -211,6 +219,8 @@ typedef struct {
 static ident readElement(JSONReader *reader);
 
 /**
+ * @param reader The JSONReader.
+ *
  * @return The next byte in `reader`, or `-1` if `reader` is exhausted.
  */
 static int readByte(JSONReader *reader) {
@@ -231,6 +241,7 @@ static int readByte(JSONReader *reader) {
 /**
  * @brief Consume bytes from `reader` until a byte from `stop` is found.
  *
+ * @param reader The JSONReader.
  * @param stop A sequence of stop characters.
  *
  * @return The `stop` byte found, or `-1` if `reader` is exhausted.
@@ -252,6 +263,7 @@ static int readByteUntil(JSONReader *reader, const char *stop) {
 /**
  * @brief Consumes and verifies `bytes` from `reader.
  *
+ * @param reader The JSONReader.
  * @param bytes The bytes to consume from `reader`.
  */
 static void consumeBytes(JSONReader *reader, const char *bytes) {
@@ -264,6 +276,8 @@ static void consumeBytes(JSONReader *reader, const char *bytes) {
 
 /**
  * @brief Reads a String from `reader`.
+ *
+ * @param reader The JSONReader.
  *
  * @return The String.
  */
@@ -281,6 +295,8 @@ static String *readString(JSONReader *reader) {
 /**
  * @brief Reads a Number from `reader`.
  *
+ * @param reader The JSONReader.
+ *
  * @return The Number.
  */
 static Number *readNumber(JSONReader *reader) {
@@ -297,7 +313,9 @@ static Number *readNumber(JSONReader *reader) {
 }
 
 /**
- * Reads a Boole from `reader`.
+ * @brief Reads a Boole from `reader`.
+ *
+ * @param reader The JSONReader.
  *
  * @return The Boole.
  */
@@ -324,6 +342,8 @@ static _Bool *readBoole(JSONReader *reader) {
 /**
  * @brief Reads Null from `Reader`.
  *
+ * @param reader The JSONReader.
+ *
  * @return Null.
  */
 static Null *readNull(JSONReader *reader) {
@@ -337,6 +357,8 @@ static Null *readNull(JSONReader *reader) {
 
 /**
  * @brief Reads a label from `reader`.
+ *
+ * @param reader The JSONReader.
  *
  * @return The label, or `NULL` on error.
  */
@@ -354,6 +376,8 @@ static String *readLabel(JSONReader *reader) {
 
 /**
  * @brief Reads an object from `reader`. An object is a valid JSON structure.
+ *
+ * @param reader The JSONReader.
  *
  * @return The object.
  */
@@ -388,6 +412,8 @@ static Dictionary *readObject(JSONReader *reader) {
 /**
  * @brief Reads an array from `reader.
  *
+ * @param reader The JSONReader.
+ *
  * @return The array.
  */
 static Array *readArray(JSONReader *reader) {
@@ -414,6 +440,8 @@ static Array *readArray(JSONReader *reader) {
 /**
  * @brief Reads an element from `reader`. An element is any valid JSON type.
  *
+ * @param reader The JSONReader.
+ *
  * @return The element, or `NULL` if no element is available..
  */
 static ident readElement(JSONReader *reader) {
@@ -439,7 +467,7 @@ static ident readElement(JSONReader *reader) {
 }
 
 /**
- * @see JSONSerializationInterface::objectFromData(const Data *, int)
+ * @see JSONSerialization::objectFromData(const Data *, int)
  */
 static ident objectFromData(const Data *data, int options) {
 

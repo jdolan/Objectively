@@ -34,7 +34,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
+ * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -42,7 +42,7 @@ static Object *copy(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -61,7 +61,7 @@ static void dealloc(Object *self) {
 #pragma mark - URLSessionTaskInterface
 
 /**
- * @see URLSessionTaskInterface::cancel(URLSessionTask *)
+ * @see URLSessionTask::cancel(URLSessionTask *)
  */
 static void cancel(URLSessionTask *self) {
 
@@ -79,7 +79,7 @@ static void cancel(URLSessionTask *self) {
 
 
 /**
- * @see URLSessionTaskInterface::initWithRequestInSession(URLSessionTask *, URLRequest *, URLSession *, URLSessionTaskCompletion)
+ * @see URLSessionTask::initWithRequestInSession(URLSessionTask *, URLRequest *, URLSession *, URLSessionTaskCompletion)
  */
 static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URLRequest *request,
 		struct URLSession *session, URLSessionTaskCompletion completion) {
@@ -105,7 +105,7 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
 }
 
 /**
- * @see URLSessionTaskInterface::resume(URLSessionTask *)
+ * @see URLSessionTask::resume(URLSessionTask *)
  */
 static void resume(URLSessionTask *self) {
 
@@ -153,7 +153,7 @@ static int progress(ident self, curl_off_t bytesExpectedToReceive, curl_off_t by
 }
 
 /**
- * @see URLSessionTaskInterface::setup(URLSessionTask *)
+ * @see URLSessionTask::setup(URLSessionTask *)
  */
 static void setup(URLSessionTask *self) {
 
@@ -210,7 +210,7 @@ static void setup(URLSessionTask *self) {
 }
 
 /**
- * @see URLSessionTaskInterface::suspend(URLSessionTask *)
+ * @see URLSessionTask::suspend(URLSessionTask *)
  */
 static void suspend(URLSessionTask *self) {
 

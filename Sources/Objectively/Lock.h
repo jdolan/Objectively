@@ -44,7 +44,7 @@ typedef struct LockInterface LockInterface;
  *
  * @extends Object
  *
- * @ingroup Threads
+ * @ingroup Concurrency
  */
 struct Lock {
 

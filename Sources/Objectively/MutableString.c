@@ -37,7 +37,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
+ * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -49,7 +49,7 @@ static Object *copy(const Object *self) {
 #pragma mark - MutableStringInterface
 
 /**
- * @see MutableStringInterface::appendCharacters(MutableString *, const char *)
+ * @see MutableString::appendCharacters(MutableString *, const char *)
  */
 static void appendCharacters(MutableString *self, const char *chars) {
 
@@ -83,7 +83,7 @@ static void appendCharacters(MutableString *self, const char *chars) {
 }
 
 /**
- * @see MutableStringInterface::appendFormat(MutableString *, const char *, ...)
+ * @see MutableString::appendFormat(MutableString *, const char *, ...)
  */
 static void appendFormat(MutableString *self, const char *fmt, ...) {
 
@@ -103,7 +103,7 @@ static void appendFormat(MutableString *self, const char *fmt, ...) {
 }
 
 /**
- * @see MutableStringInterface::appendString(MutableString *, const String *)
+ * @see MutableString::appendString(MutableString *, const String *)
  */
 static void appendString(MutableString *self, const String *string) {
 
@@ -113,7 +113,7 @@ static void appendString(MutableString *self, const String *string) {
 }
 
 /**
- * @see MutableStringInterface::deleteCharactersInRange(MutableString *, const RANGE)
+ * @see MutableString::deleteCharactersInRange(MutableString *, const RANGE)
  */
 static void deleteCharactersInRange(MutableString *self, const RANGE range) {
 
@@ -127,7 +127,7 @@ static void deleteCharactersInRange(MutableString *self, const RANGE range) {
 }
 
 /**
- * @see MutableStringInterface::init(MutableString *)
+ * @see MutableString::init(MutableString *)
  */
 static MutableString *init(MutableString *self) {
 
@@ -135,7 +135,7 @@ static MutableString *init(MutableString *self) {
 }
 
 /**
- * @see MutableStringInterface::initWithString(MutableString *, const String *)
+ * @see MutableString::initWithString(MutableString *, const String *)
  */
 static MutableString *initWithString(MutableString *self, const String *string) {
 
@@ -148,7 +148,7 @@ static MutableString *initWithString(MutableString *self, const String *string) 
 }
 
 /**
- * @see MutableStringInterface::replaceCharactersInRange(MutableString *, const RANGE, const String *)
+ * @see MutableString::replaceCharactersInRange(MutableString *, const RANGE, const String *)
  */
 static void replaceCharactersInRange(MutableString *self, const RANGE range, const String *string) {
 
@@ -167,7 +167,7 @@ static void replaceCharactersInRange(MutableString *self, const RANGE range, con
 }
 
 /**
- * @see MutableStringInterface::string(void)
+ * @see MutableString::string(void)
  */
 static MutableString *string(void) {
 
@@ -175,7 +175,7 @@ static MutableString *string(void) {
 }
 
 /**
- * @see MutableStringInterface::stringWithCapacity(size_t)
+ * @see MutableString::stringWithCapacity(size_t)
  */
 static MutableString *stringWithCapacity(size_t capacity) {
 

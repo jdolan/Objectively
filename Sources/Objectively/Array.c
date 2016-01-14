@@ -35,7 +35,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
+ * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -45,7 +45,7 @@ static Object *copy(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -61,7 +61,7 @@ static void dealloc(Object *self) {
 }
 
 /**
- * @see ObjectInterface::description(const Object *)
+ * @see Object::description(const Object *)
  */
 static String *description(const Object *self) {
 
@@ -86,7 +86,7 @@ static String *description(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::hash(const Object *)
+ * @see Object::hash(const Object *)
  */
 static int hash(const Object *self) {
 
@@ -102,7 +102,7 @@ static int hash(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::isEqual(const Object *, const Object *)
+ * @see Object::isEqual(const Object *, const Object *)
  */
 static _Bool isEqual(const Object *self, const Object *other) {
 
@@ -138,7 +138,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 
 
 /**
- * @see ArrayInterface::arrayWithArray(const Array *)
+ * @see Array::arrayWithArray(const Array *)
  */
 static Array *arrayWithArray(const Array *array) {
 
@@ -146,7 +146,7 @@ static Array *arrayWithArray(const Array *array) {
 }
 
 /**
- * @see ArrayInterface::arrayWithObjects(id, ...)
+ * @see Array::arrayWithObjects(id, ...)
  */
 static Array *arrayWithObjects(ident obj, ...) {
 
@@ -188,7 +188,7 @@ static Array *arrayWithObjects(ident obj, ...) {
 }
 
 /**
- * @see ArrayInterface::containsObject(const Array *, const id)
+ * @see Array::containsObject(const Array *, const id)
  */
 static _Bool containsObject(const Array *self, const ident obj) {
 
@@ -196,7 +196,7 @@ static _Bool containsObject(const Array *self, const ident obj) {
 }
 
 /**
- * @see ArrayInterface::enumerateObjects(const Array *, ArrayEnumerator, id)
+ * @see Array::enumerateObjects(const Array *, ArrayEnumerator, id)
  */
 static void enumerateObjects(const Array *self, ArrayEnumerator enumerator, ident data) {
 
@@ -210,7 +210,7 @@ static void enumerateObjects(const Array *self, ArrayEnumerator enumerator, iden
 }
 
 /**
- * @see ArrayInterface::filterObjects(const Array *, ArrayEnumerator, id)
+ * @see Array::filterObjects(const Array *, ArrayEnumerator, id)
  */
 static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, ident data) {
 
@@ -228,7 +228,7 @@ static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, ident
 }
 
 /**
- * @see ArrayInterface::indexOfObject(const Array *, const id)
+ * @see Array::indexOfObject(const Array *, const id)
  */
 static int indexOfObject(const Array *self, const ident obj) {
 
@@ -246,7 +246,7 @@ static int indexOfObject(const Array *self, const ident obj) {
 }
 
 /**
- * @see ArrayInterface::initWithArray(Array *, const Array *)
+ * @see Array::initWithArray(Array *, const Array *)
  */
 static Array *initWithArray(Array *self, const Array *array) {
 
@@ -269,7 +269,7 @@ static Array *initWithArray(Array *self, const Array *array) {
 }
 
 /**
- * @see ArrayInterface::initWithObjects(Array *, ...)
+ * @see Array::initWithObjects(Array *, ...)
  */
 static Array *initWithObjects(Array *self, ...) {
 
@@ -304,7 +304,7 @@ static Array *initWithObjects(Array *self, ...) {
 }
 
 /**
- * @see ArrayInterface::mutableCopy(const Array *)
+ * @see Array::mutableCopy(const Array *)
  */
 static MutableArray *mutableCopy(const Array *self) {
 
@@ -317,7 +317,7 @@ static MutableArray *mutableCopy(const Array *self) {
 }
 
 /**
- * @see ArrayInterface::objectAtIndex(const Array *, const int)
+ * @see Array::objectAtIndex(const Array *, const int)
  */
 static ident objectAtIndex(const Array *self, const int index) {
 

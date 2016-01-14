@@ -38,6 +38,8 @@ typedef struct MutableDataInterface MutableDataInterface;
  * @brief Mutable data buffers.
  *
  * @extends Data
+ *
+ * @ingroup ByteStreams
  */
 struct MutableData {
 

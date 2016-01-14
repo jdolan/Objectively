@@ -55,6 +55,8 @@ typedef struct NumberFormatterInterface NumberFormatterInterface;
  * @brief Number formatting and parsing.
  *
  * @extends Object
+ *
+ * @ingroup Localization
  */
 struct NumberFormatter {
 

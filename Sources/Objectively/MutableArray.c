@@ -35,7 +35,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
+ * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -51,7 +51,7 @@ static Object *copy(const Object *self) {
 #pragma mark - MutableArrayInterface
 
 /**
- * @see MutableArrayInterface::addObject(MutableArray *, const id)
+ * @see MutableArray::addObject(MutableArray *, const id)
  */
 static void addObject(MutableArray *self, const ident obj) {
 
@@ -73,7 +73,7 @@ static void addObject(MutableArray *self, const ident obj) {
 }
 
 /**
- * @see MutableArrayInterface::addObjectsFromArrayy
+ * @see MutableArray::addObjectsFromArrayy
  */
 static void addObjectsFromArray(MutableArray *self, const Array *array) {
 
@@ -85,7 +85,7 @@ static void addObjectsFromArray(MutableArray *self, const Array *array) {
 }
 
 /**
- * @see MutableArrayInterface::array(void)
+ * @see MutableArray::array(void)
  */
 static MutableArray *array(void) {
 
@@ -93,7 +93,7 @@ static MutableArray *array(void) {
 }
 
 /**
- * @see MutableArrayInterface::arrayWithCapacity(size_t)
+ * @see MutableArray::arrayWithCapacity(size_t)
  */
 static MutableArray *arrayWithCapacity(size_t capacity) {
 
@@ -101,7 +101,7 @@ static MutableArray *arrayWithCapacity(size_t capacity) {
 }
 
 /**
- * @see MutableArrayInterface::init(MutableArray *)
+ * @see MutableArray::init(MutableArray *)
  */
 static MutableArray *init(MutableArray *self) {
 
@@ -109,7 +109,7 @@ static MutableArray *init(MutableArray *self) {
 }
 
 /**
- * @see MutableArrayInterface::initWithCapacity(MutableArray *, size_t)
+ * @see MutableArray::initWithCapacity(MutableArray *, size_t)
  */
 static MutableArray *initWithCapacity(MutableArray *self, size_t capacity) {
 
@@ -128,7 +128,7 @@ static MutableArray *initWithCapacity(MutableArray *self, size_t capacity) {
 }
 
 /**
- * @see MutableArrayInterface::removeAllObjects(MutableArray *)
+ * @see MutableArray::removeAllObjects(MutableArray *)
  */
 static void removeAllObjects(MutableArray *self) {
 
@@ -138,7 +138,7 @@ static void removeAllObjects(MutableArray *self) {
 }
 
 /**
- * @see MutableArrayInterface::removeObject(MutableArray *, const id)
+ * @see MutableArray::removeObject(MutableArray *, const id)
  */
 static void removeObject(MutableArray *self, const ident obj) {
 
@@ -149,7 +149,7 @@ static void removeObject(MutableArray *self, const ident obj) {
 }
 
 /**
- * @see MutableArrayInterface::removeObjectAtIndex(MutableArray *, const int)
+ * @see MutableArray::removeObjectAtIndex(MutableArray *, const int)
  */
 static void removeObjectAtIndex(MutableArray *self, const int index) {
 
@@ -166,7 +166,7 @@ static void removeObjectAtIndex(MutableArray *self, const int index) {
 }
 
 /**
- * @see MutableArrayInterface::setObjectAtIndex(MutableArray *, const id, const int)
+ * @see MutableArray::setObjectAtIndex(MutableArray *, const id, const int)
  */
 static void setObjectAtIndex(MutableArray *self, const ident obj, const int index) {
 
@@ -190,7 +190,7 @@ static int _sort(void *data, const void *a, const void *b) {
 }
 
 /**
- * @see MutableArrayInterface::sort(MutableArray *, Comparator)
+ * @see MutableArray::sort(MutableArray *, Comparator)
  */
 static void sort(MutableArray *self, Comparator comparator) {
 	qsort_r(self->array.elements, self->array.count, sizeof(ident), comparator, _sort);
@@ -206,7 +206,7 @@ static int _sort(void *data, const void *a, const void *b) {
 }
 
 /**
- * @see MutableArrayInterface::sort(MutableArray *, Comparator)
+ * @see MutableArray::sort(MutableArray *, Comparator)
  */
 static void sort(MutableArray *self, Comparator comparator) {
 	qsort_s(self->array.elements, self->array.count, sizeof(ident), _sort, comparator);
@@ -222,7 +222,7 @@ static int _sort(const void *a, const void *b, void *data) {
 }
 
 /**
- * @see MutableArrayInterface::sort(MutableArray *, Comparator)
+ * @see MutableArray::sort(MutableArray *, Comparator)
  */
 static void sort(MutableArray *self, Comparator comparator) {
 	qsort_r(self->array.elements, self->array.count, sizeof(ident), _sort, comparator);

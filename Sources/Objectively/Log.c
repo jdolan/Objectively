@@ -37,7 +37,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -58,7 +58,7 @@ static void dealloc(Object *self) {
 static Log *_sharedInstance;
 
 /**
- * @see LogInterface::sharedInstance(void)
+ * @see Log::sharedInstance(void)
  */
 static Log *sharedInstance(void) {
 	static Once once;
@@ -71,7 +71,7 @@ static Log *sharedInstance(void) {
 }
 
 /**
- * @see LogInterface::debug(const Log *, const char *, ...)
+ * @see Log::debug(const Log *, const char *, ...)
  */
 static void debug(const Log *self, const char *fmt, ...) {
 
@@ -84,7 +84,7 @@ static void debug(const Log *self, const char *fmt, ...) {
 }
 
 /**
- * @see LogInterface::error(const Log *, const char *, ...)
+ * @see Log::error(const Log *, const char *, ...)
  */
 static void error(const Log *self, const char *fmt, ...) {
 
@@ -97,7 +97,7 @@ static void error(const Log *self, const char *fmt, ...) {
 }
 
 /**
- * @see LogInterface::fatal(const Log *, const char *, ...)
+ * @see Log::fatal(const Log *, const char *, ...)
  */
 static void fatal(const Log *self, const char *fmt, ...) {
 
@@ -110,7 +110,7 @@ static void fatal(const Log *self, const char *fmt, ...) {
 }
 
 /**
- * @see LogInterface::flush
+ * @see Log::flush
  */
 static void flush(const Log *self) {
 
@@ -119,7 +119,7 @@ static void flush(const Log *self) {
 }
 
 /**
- * @see LogInterface::info(const Log *, const char *, ...)
+ * @see Log::info(const Log *, const char *, ...)
  */
 static void info(const Log *self, const char *fmt, ...) {
 
@@ -132,7 +132,7 @@ static void info(const Log *self, const char *fmt, ...) {
 }
 
 /**
- * @see LogInterface::init(Log *)
+ * @see Log::init(Log *)
  */
 static Log *init(Log *self) {
 
@@ -140,7 +140,7 @@ static Log *init(Log *self) {
 }
 
 /**
- * @see LogInterface::initWithName(Log *, const char *)
+ * @see Log::initWithName(Log *, const char *)
  */
 static Log *initWithName(Log *self, const char *name) {
 
@@ -158,6 +158,7 @@ static Log *initWithName(Log *self, const char *name) {
 /**
  * @brief Writes a formatted message to this Log's stream.
  *
+ * @param self The Log instance.
  * @param level The message level.
  * @param fmt The user's format string.
  * @param args The format string arguments.
@@ -211,7 +212,7 @@ static void _log(const Log *self, LogLevel level, const char *fmt, va_list args)
 }
 
 /**
- * @see LogInterface::trace(const Log *, const char *, ...)
+ * @see Log::trace(const Log *, const char *, ...)
  */
 static void trace(const Log *self, const char *fmt, ...) {
 
@@ -224,7 +225,7 @@ static void trace(const Log *self, const char *fmt, ...) {
 }
 
 /**
- * @see LogInterface::warn(const Log *, const char *, ...)
+ * @see Log::warn(const Log *, const char *, ...)
  */
 static void warn(const Log *self, const char *fmt, ...) {
 

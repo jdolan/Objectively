@@ -66,6 +66,8 @@ typedef struct StringInterface StringInterface;
  * multiple `char`s. Be mindful of this when executing RANGE operations.
  *
  * @extends Object
+ *
+ * @ingroup ByteStreams
  */
 struct String {
 

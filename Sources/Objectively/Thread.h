@@ -35,7 +35,7 @@
  */
 
 /**
- * @defgroup Threads POSIX Threads
+ * @defgroup Concurrency Concurrency
  *
  * @brief Parallel computing and synchronization via POSIX Threads.
  */

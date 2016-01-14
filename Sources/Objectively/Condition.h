@@ -44,7 +44,7 @@ typedef struct ConditionInterface ConditionInterface;
  *
  * @extends Lock
  *
- * @ingroup Threads
+ * @ingroup Concurrency
  */
 struct Condition {
 

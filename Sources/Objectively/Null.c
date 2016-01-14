@@ -31,7 +31,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
+ * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -43,7 +43,7 @@ static Object *copy(const Object *self) {
 static Null *_null;
 
 /**
- * @see NullInterface::null(void)
+ * @see Null::null(void)
  */
 static Null *null(void) {
 	static Once once;

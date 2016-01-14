@@ -36,7 +36,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -51,7 +51,7 @@ static void dealloc(Object *self) {
 #pragma mark - ConditionInterface
 
 /**
- * @see ConditionInterface::broadcast(Condition *)
+ * @see Condition::broadcast(Condition *)
  */
 static void broadcast(Condition *self) {
 
@@ -60,7 +60,7 @@ static void broadcast(Condition *self) {
 }
 
 /**
- * @see ConditionInterface::init(Condition *)
+ * @see Condition::init(Condition *)
  */
 static Condition *init(Condition *self) {
 
@@ -78,7 +78,7 @@ static Condition *init(Condition *self) {
 }
 
 /**
- * @see ConditionInterface::signal(Condition *)
+ * @see Condition::signal(Condition *)
  */
 static void _signal(Condition *self) {
 
@@ -87,7 +87,7 @@ static void _signal(Condition *self) {
 }
 
 /**
- * @see ConditionInterface::wait(Condition *)
+ * @see Condition::wait(Condition *)
  */
 static void _wait(Condition *self) {
 
@@ -96,7 +96,7 @@ static void _wait(Condition *self) {
 }
 
 /**
- * @see ConditionInterface::waitUntilDate(Condition *, const Date *)
+ * @see Condition::waitUntilDate(Condition *, const Date *)
  */
 static _Bool waitUntilDate(Condition *self, const Date *date) {
 

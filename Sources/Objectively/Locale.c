@@ -34,7 +34,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(Object *)
+ * @see Object::copy(Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -45,7 +45,7 @@ static Object *copy(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -63,7 +63,7 @@ static void dealloc(Object *self) {
 #pragma mark - LocaleInterface
 
 /**
- * @see LocaleInterface::initWithIdentifier(Locale *, const char *)
+ * @see Locale::initWithIdentifier(Locale *, const char *)
  */
 static Locale *initWithIdentifier(Locale *self, const char *identifier) {
 
@@ -84,9 +84,9 @@ static Locale *initWithIdentifier(Locale *self, const char *identifier) {
 }
 
 /**
- * @see LocaleInterface::initWithLocale(Locale *, LOCALE)
+ * @see Locale::initWithLocale(Locale *, locale_t)
  */
-static Locale *initWithLocale(Locale *self, LOCALE locale) {
+static Locale *initWithLocale(Locale *self, locale_t locale) {
 
 	self = (Locale *) super(Object, self, init);
 	if (self) {
@@ -100,7 +100,7 @@ static Locale *initWithLocale(Locale *self, LOCALE locale) {
 }
 
 /**
- * @see LocaleInterface::systemLocale(void)
+ * @see Locale::systemLocale(void)
  */
 static Locale *systemLocale(void) {
 #if defined(__MINGW32__)

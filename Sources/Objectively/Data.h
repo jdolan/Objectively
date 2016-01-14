@@ -34,6 +34,11 @@
  * @brief Immutable data buffers.
  */
 
+/**
+ * @defgroup ByteStreams Byte Streams
+ *
+ * @brief Mutable and immutable byte streams.
+ */
 typedef struct Data Data;
 typedef struct DataInterface DataInterface;
 
@@ -41,6 +46,8 @@ typedef struct DataInterface DataInterface;
  * @brief Immutable data buffers.
  *
  * @extends Object
+ *
+ * @ingroup ByteStreams
  */
 struct Data {
 

@@ -31,7 +31,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
+ * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -39,7 +39,7 @@ static Object *copy(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -58,7 +58,7 @@ static void dealloc(Object *self) {
 #pragma mark - OperationQueueInterface
 
 /**
- * @see OperationQueueInterface::addOperation(OperationQueue *, Operation *)
+ * @see OperationQueue::addOperation(OperationQueue *, Operation *)
  */
 static void addOperation(OperationQueue *self, Operation *operation) {
 
@@ -74,7 +74,7 @@ static void addOperation(OperationQueue *self, Operation *operation) {
 }
 
 /**
- * @see OperationQueueInterface::cancelAllOperations(OperationQueue *)
+ * @see OperationQueue::cancelAllOperations(OperationQueue *)
  */
 static void cancelAllOperations(OperationQueue *self) {
 
@@ -90,7 +90,7 @@ static void cancelAllOperations(OperationQueue *self) {
 __thread OperationQueue *_currentQueue;
 
 /**
- * @see OperationQueueInterface::currentQueue(void)
+ * @see OperationQueue::currentQueue(void)
  */
 static OperationQueue *currentQueue(void) {
 
@@ -140,7 +140,7 @@ static ident run(Thread *thread) {
 }
 
 /**
- * @see OperationQueueInterface::init(OperationQueue *)
+ * @see OperationQueue::init(OperationQueue *)
  */
 static OperationQueue *init(OperationQueue *self) {
 
@@ -163,7 +163,7 @@ static OperationQueue *init(OperationQueue *self) {
 }
 
 /**
- * @see OperationQueueInterface::operationCount(const OperationQueue *)
+ * @see OperationQueue::operationCount(const OperationQueue *)
  */
 static int operationCount(const OperationQueue *self) {
 
@@ -177,7 +177,7 @@ static int operationCount(const OperationQueue *self) {
 }
 
 /**
- * @see OperationQueueInterface::operations(OperationQueue *)
+ * @see OperationQueue::operations(OperationQueue *)
  */
 static Array *operations(const OperationQueue *self) {
 
@@ -191,7 +191,7 @@ static Array *operations(const OperationQueue *self) {
 }
 
 /**
- * @see OperationQueueInterface::removeOperation(OperationQueue *, Operation *)
+ * @see OperationQueue::removeOperation(OperationQueue *, Operation *)
  */
 static void removeOperation(OperationQueue *self, Operation *operation) {
 
@@ -205,7 +205,7 @@ static void removeOperation(OperationQueue *self, Operation *operation) {
 }
 
 /**
- * @see OperationQueueInterface::waitUntilAllOperationsAreFinished(OperationQueue *)
+ * @see OperationQueue::waitUntilAllOperationsAreFinished(OperationQueue *)
  */
 static void waitUntilAllOperationsAreFinished(OperationQueue *self) {
 

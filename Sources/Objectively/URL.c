@@ -35,7 +35,7 @@ static Regex *_regex;
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
+ * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -45,7 +45,7 @@ static Object *copy(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -62,7 +62,7 @@ static void dealloc(Object *self) {
 }
 
 /**
- * @see ObjectInterface::description(const Object *)
+ * @see Object::description(const Object *)
  */
 static String *description(const Object *self) {
 
@@ -72,7 +72,7 @@ static String *description(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::hash(const Object *self)
+ * @see Object::hash(const Object *self)
  */
 static int hash(const Object *self) {
 
@@ -82,7 +82,7 @@ static int hash(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::isEqual(const Object *, const Object *)
+ * @see Object::isEqual(const Object *, const Object *)
  */
 static _Bool isEqual(const Object *self, const Object *other) {
 
@@ -104,7 +104,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - URLInterface
 
 /**
- * @see URLInterface::baseURL(const URL *)
+ * @see URL::baseURL(const URL *)
  */
 static URL *baseURL(const URL *self) {
 
@@ -129,7 +129,7 @@ static URL *baseURL(const URL *self) {
 }
 
 /**
- * @see URLInterface::initWithCharacters(URL *, const char *)
+ * @see URL::initWithCharacters(URL *, const char *)
  */
 static URL *initWithCharacters(URL *self, const char *chars) {
 
@@ -192,7 +192,7 @@ static URL *initWithCharacters(URL *self, const char *chars) {
 }
 
 /**
- * @see URLInterface::initWithString(URL *, const String *)
+ * @see URL::initWithString(URL *, const String *)
  */
 static URL *initWithString(URL *self, const String *string) {
 
@@ -202,7 +202,7 @@ static URL *initWithString(URL *self, const String *string) {
 }
 
 /**
- * @see URLInterface::pathComponents(const URL *)
+ * @see URL::pathComponents(const URL *)
  */
 static Array *pathComponents(const URL *self) {
 

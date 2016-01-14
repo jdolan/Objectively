@@ -37,6 +37,8 @@
 
 /**
  * @defgroup Date Date & Time
+ *
+ * @brief Date and time manipulation.
  */
 
 /**

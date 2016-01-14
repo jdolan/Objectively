@@ -33,7 +33,7 @@
 #pragma mark - DateFormatterInterface
 
 /**
- * @see DateFormatterInterface::dateFromCharacters(const DateFormatter *, const char *)
+ * @see DateFormatter::dateFromCharacters(const DateFormatter *, const char *)
  */
 static Date *dateFromCharacters(const DateFormatter *self, const char *chars) {
 
@@ -55,7 +55,7 @@ static Date *dateFromCharacters(const DateFormatter *self, const char *chars) {
 }
 
 /**
- * @see DateFormatterInterface::dateFromString(const DateFormatter *, const String *)
+ * @see DateFormatter::dateFromString(const DateFormatter *, const String *)
  */
 static Date *dateFromString(const DateFormatter *self, const String *string) {
 
@@ -67,7 +67,7 @@ static Date *dateFromString(const DateFormatter *self, const String *string) {
 }
 
 /**
- * @see DateFormatterInterface::initWithFormat(DateFormatter *, const char *fmt)
+ * @see DateFormatter::initWithFormat(DateFormatter *, const char *fmt)
  */
 static DateFormatter *initWithFormat(DateFormatter *self, const char *fmt) {
 
@@ -80,7 +80,7 @@ static DateFormatter *initWithFormat(DateFormatter *self, const char *fmt) {
 }
 
 /**
- * @see DateFormatterInterface::stringFromDate(const DateFormatter *, const Date *)
+ * @see DateFormatter::stringFromDate(const DateFormatter *, const Date *)
  */
 static String *stringFromDate(const DateFormatter *self, const Date *date) {
 

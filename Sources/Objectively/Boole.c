@@ -32,7 +32,7 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see ObjectInterface::copy(const Object *)
+ * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
 
@@ -40,7 +40,7 @@ static Object *copy(const Object *self) {
 }
 
 /**
- * @see ObjectInterface::description(const Object *)
+ * @see Object::description(const Object *)
  */
 static String *description(const Object *self) {
 
@@ -54,7 +54,7 @@ static String *description(const Object *self) {
 static Boole *_False;
 
 /**
- * @see BooleInterface::False(void)
+ * @see Boole::False(void)
  */
 static Boole *False(void) {
 	static Once once;
@@ -70,7 +70,7 @@ static Boole *False(void) {
 static Boole *_True;
 
 /**
- * @see BooleInterface::True(void)
+ * @see Boole::True(void)
  */
 static Boole *True(void) {
 	static Once once;
