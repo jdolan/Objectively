@@ -12,7 +12,8 @@ Key Features
  * Class and instance methods with strongly typed interfaces
  * Automatic class loading and lifecycle management
  * Automatic memory management with reference counting
- * Object primitives for Boolean, Date, Null, Number, String
+ * Unicode and multibyte character set String support
+ * Object primitives for Boole, Date, Null, Number, String
  * Mutable and immutable collections variants such as Array and MutableDictionary
  * JSON parsing, marshaling and introspection with JSONSerialization and JSONPath
  * Low-level concurrency constructs such as Lock, Condition, and Thread
