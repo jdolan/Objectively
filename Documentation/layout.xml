@@ -129,7 +129,7 @@
       <defines title=""/>
       <typedefs title=""/>
       <enums title=""/>
-      <functions title=""/>
+      <functions visible="yes" title=""/>
       <variables title=""/>
     </memberdef>
     <authorsection/>
@@ -144,7 +144,7 @@
       <dirs visible="yes" title=""/>
       <files visible="yes" title=""/>
       <namespaces visible="yes" title=""/>
-      <classes visible="yes" title=""/>
+      <classes visible="yes" title="Classes"/>
       <defines title=""/>
       <typedefs title=""/>
       <enums title=""/>
@@ -160,7 +160,7 @@
       <friends title=""/>
       <membergroups visible="yes"/>
     </memberdecl>
-    <detaileddescription title=""/>
+    <detaileddescription title="" visible="no"/>
     <memberdef>
       <pagedocs/>
       <inlineclasses title=""/>
