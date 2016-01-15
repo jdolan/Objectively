@@ -36,10 +36,10 @@
       <interfaces title=""/>
       <publicslots title=""/>
       <signals title=""/>
-      <publicmethods title=""/>
-      <publicstaticmethods title=""/>
-      <publicattributes title="Properties"/>
       <publicstaticattributes title=""/>
+      <publicattributes title="Properties"/>
+      <publicmethods title="Methods"/>
+      <publicstaticmethods title=""/>
       <protectedtypes title=""/>
       <protectedslots title=""/>
       <protectedmethods title=""/>
@@ -51,7 +51,7 @@
       <packagestaticmethods title=""/>
       <packageattributes title=""/>
       <packagestaticattributes title=""/>
-      <properties title="wut"/>
+      <properties title=""/>
       <events title=""/>
       <privatetypes title=""/>
       <privateslots title=""/>
@@ -60,22 +60,22 @@
       <privateattributes title="Private Properties"/>
       <privatestaticattributes title=""/>
       <friends title="" visible="no" />
-      <related title="Methods" subtitle=" "/>
+      <related title="" subtitle=" "/>
       <membergroups visible="yes"/>
     </memberdecl>
-    <!-- <memberdef>
+    <memberdef>
       <inlineclasses title=""/>
       <typedefs title=""/>
       <enums title=""/>
       <services title=""/>
       <interfaces title=""/>
       <constructors title=""/>
-      <functions title=""/>
-      <related title=""/>
+      <functions title="Details" visible="yes"/>
+      <related title="Related" visible="yes"/>
       <variables title=""/>
       <properties title=""/>
       <events title=""/>
-    </memberdef> -->
+    </memberdef>
     <allmemberslink visible="yes"/>
     <usedfiles visible="$SHOW_USED_FILES"/>
     <authorsection visible="yes"/>
