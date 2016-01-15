@@ -154,7 +154,7 @@ static MutableString *initWithCapacity(MutableString *self, size_t capacity) {
 	self = (MutableString *) super(String, self, initWithMemory, NULL, 0);
 	if (self) {
 		if (capacity) {
-			self->string.chars = malloc(capacity);
+			self->string.chars = calloc(capacity, sizeof(char));
 			assert(self->string.chars);
 			
 			self->capacity = capacity;

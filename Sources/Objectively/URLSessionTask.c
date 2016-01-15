@@ -94,7 +94,7 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
 	self = (URLSessionTask *) super(Object, self, init);
 	if (self) {
 
-		self->error = calloc(CURL_ERROR_SIZE, 1);
+		self->error = calloc(1, CURL_ERROR_SIZE);
 		assert(self->error);
 
 		self->request = retain(request);

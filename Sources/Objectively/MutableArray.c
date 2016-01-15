@@ -65,7 +65,7 @@ static void addObject(MutableArray *self, const ident obj) {
 		if (array->elements) {
 			array->elements = realloc(array->elements, self->capacity * sizeof(ident));
 		} else {
-			array->elements = malloc(self->capacity * sizeof(ident));
+			array->elements = calloc(self->capacity, sizeof(ident));
 		}
 
 		assert(array->elements);
@@ -131,7 +131,7 @@ static MutableArray *initWithCapacity(MutableArray *self, size_t capacity) {
 		self->capacity = capacity;
 		if (self->capacity) {
 
-			self->array.elements = malloc(self->capacity * sizeof(ident));
+			self->array.elements = calloc(self->capacity, sizeof(ident));
 			assert(self->array.elements);
 		}
 	}
