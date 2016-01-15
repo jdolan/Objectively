@@ -65,7 +65,7 @@ static void debug(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(self, log, DEBUG, fmt, args);
+	$(self, log, LogLevelDebug, fmt, args);
 
 	va_end(args);
 }
@@ -80,7 +80,7 @@ static void error(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(self, log, ERROR, fmt, args);
+	$(self, log, LogLevelError, fmt, args);
 
 	va_end(args);
 }
@@ -95,7 +95,7 @@ static void fatal(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(self, log, FATAL, fmt, args);
+	$(self, log, LogLevelFatal, fmt, args);
 
 	va_end(args);
 }
@@ -121,7 +121,7 @@ static void info(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(self, log, INFO, fmt, args);
+	$(self, log, LogLevelInfo, fmt, args);
 
 	va_end(args);
 }
@@ -146,7 +146,7 @@ static Log *initWithName(Log *self, const char *name) {
 	self = (Log *) super(Object, self, init);
 	if (self) {
 		self->name = strdup(name ?: "default");
-		self->level = INFO;
+		self->level = LogLevelInfo;
 		self->format = LOG_FORMAT_DEFAULT;
 		self->file = stdout;
 	}
@@ -234,7 +234,7 @@ static void trace(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(self, log, TRACE, fmt, args);
+	$(self, log, LogLevelTrace, fmt, args);
 
 	va_end(args);
 }
@@ -249,7 +249,7 @@ static void warn(const Log *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	$(self, log, WARN, fmt, args);
+	$(self, log, LogLevelWarn, fmt, args);
 
 	va_end(args);
 }

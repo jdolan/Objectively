@@ -71,7 +71,6 @@
 		CE76D9AA1C4821CE0096DD31 /* URLSession.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9631C481E390096DD31 /* URLSession.c */; };
 		CE76D9AB1C4821F40096DD31 /* HelloCpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9161C481E390096DD31 /* HelloCpp.cpp */; };
 		CE76D9AC1C4821F40096DD31 /* HelloObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9191C481E390096DD31 /* HelloObjC.m */; };
-		CE76DA001C4826660096DD31 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8FF1C481E390096DD31 /* config.h */; };
 		CE76DA021C4857350096DD31 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76DA011C4857350096DD31 /* libcurl.a */; };
 		CE76DA041C48578C0096DD31 /* libiconv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76DA031C48578C0096DD31 /* libiconv.a */; };
 		CE76DA051C4860120096DD31 /* Array.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D85F1C481C4E0096DD31 /* Array.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -505,7 +504,6 @@
 				CE76DA2B1C4860130096DD31 /* URLSessionTask.h in Headers */,
 				CE76DA2C1C4860130096DD31 /* URLSessionUploadTask.h in Headers */,
 				CE76DA2D1C4860130096DD31 /* Objectively.h in Headers */,
-				CE76DA001C4826660096DD31 /* config.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,20 +656,26 @@
 		CE76D7F71C481B530096DD31 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Sources";
+				OTHER_CFLAGS = (
+					"-I$(SRCROOT)/Sources",
+					"-I/opt/local/include",
+				);
 			};
 			name = Debug;
 		};
 		CE76D7F81C481B530096DD31 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Sources";
+				OTHER_CFLAGS = (
+					"-I$(SRCROOT)/Sources",
+					"-I/opt/local/include",
+				);
 			};
 			name = Release;
 		};

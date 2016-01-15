@@ -12,4 +12,4 @@ html-clean:
 	rm -rf Documentation/html
 
 html-release:
-	rsync -rz Documentation/html/ jaydolan.com:/var/www/projects/objectively
+	rsync -rz --delete Documentation/html/ jaydolan.com:/var/www/projects/objectively
