@@ -63,7 +63,9 @@ static void dealloc(Object *self) {
 #pragma mark - LocaleInterface
 
 /**
- * @see Locale::initWithIdentifier(Locale *, const char *)
+ * @fn Locale *Locale::initWithIdentifier(Locale *self, const char *identifier)
+ *
+ * @memberof Locale
  */
 static Locale *initWithIdentifier(Locale *self, const char *identifier) {
 
@@ -84,7 +86,9 @@ static Locale *initWithIdentifier(Locale *self, const char *identifier) {
 }
 
 /**
- * @see Locale::initWithLocale(Locale *, locale_t)
+ * @fn Locale *Locale::initWithLocale(Locale *self, locale_t locale)
+ *
+ * @memberof Locale
  */
 static Locale *initWithLocale(Locale *self, locale_t locale) {
 
@@ -100,7 +104,9 @@ static Locale *initWithLocale(Locale *self, locale_t locale) {
 }
 
 /**
- * @see Locale::systemLocale(void)
+ * @fn Locale *Locale::systemLocale(void)
+ *
+ * @memberof Locale
  */
 static Locale *systemLocale(void) {
 #if defined(__MINGW32__)

@@ -56,7 +56,7 @@ typedef ident (*ThreadFunction)(Thread *thread);
  *
  * @extends Object
  *
- * @ingroup Threads
+ * @ingroup Concurrency
  */
 struct Thread {
 
@@ -123,72 +123,88 @@ struct ThreadInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @fn void Thread::cancel(Thread *self)
+	 *
 	 * @brief Cancel this Thread from another Thread.
 	 *
-	 * @relates Thread
+	 * @memberof Thread
 	 */
 	void (*cancel)(Thread *self);
 
 	/**
+	 * @fn Thread *Thread::currentThread(void)
+	 *
 	 * @brief Returns the currently executing Thread.
 	 *
 	 * @return The currently executing Thread.
 	 *
-	 * @relates Thread
+	 * @memberof Thread
 	 */
 	Thread *(*currentThread)(void);
 
 	/**
+	 * @fn void Thread::detach(Thread *self)
+	 *
 	 * @brief Daemonize this Thread.
 	 *
-	 * @relates Thread
+	 * @memberof Thread
 	 */
 	void (*detach)(Thread *self);
 
 	/**
-	 * Initializes this Thread.
+	 * @fn Thread *Thread::init(Thread *self)
+	 *
+	 * @brief Initializes this Thread.
 	 *
 	 * @return The initialized Thread, or `NULL` on error.
 	 *
-	 * @relates Thread
+	 * @memberof Thread
 	 */
 	Thread *(*init)(Thread *self);
 
 	/**
-	 * Initializes this Thread with the specified ThreadFunction and data.
+	 * @fn Thread *Thread::initWithFunction(Thread *self, ThreadFunction function, ident data)
+	 *
+	 * @brief Initializes this Thread with the specified ThreadFunction and data.
 	 *
 	 * @param function The ThreadFunction to run.
 	 * @param data The user data.
 	 *
 	 * @return The initialized Thread, or `NULL` on error.
 	 *
-	 * @relates Thread
+	 * @memberof Thread
 	 */
 	Thread *(*initWithFunction)(Thread *self, ThreadFunction function, ident data);
 
 	/**
+	 * @fn void Thread::join(Thread *self, ident *status)
+	 *
 	 * @brief Wait for the specified Thread to terminate.
 	 *
 	 * @param status If not NULL, the return value of this Thread's
 	 * ThreadFunction is returned here.
 	 *
-	 * @relates Thread
+	 * @memberof Thread
 	 */
 	void (*join)(Thread *self, ident *status);
 
 	/**
+	 * @fn void Thread::kill(Thread *self, int signal)
+	 *
 	 * @brief Sends the given signal to this Thread.
 	 *
 	 * @param signal The signal to send.
 	 *
-	 * @relates Thread
+	 * @memberof Thread
 	 */
 	void (*kill)(Thread *self, int signal);
 
 	/**
+	 * @fn void Thread::start(Thread *self)
+	 *
 	 * @brief Start this Thread.
 	 *
-	 * @relates Thread
+	 * @memberof Thread
 	 */
 	void (*start)(Thread *self);
 };

@@ -78,99 +78,123 @@ struct MutableStringInterface {
 	StringInterface stringInterface;
 
 	/**
+	 * @fn void MutableString::appendCharacters(MutableString *self, const char *chars)
+	 *
 	 * @brief Appends the specified UTF-8 encoded C string.
 	 *
 	 * @param chars A UTF-encoded C string.
 	 *
-	 * @relates MutableString
+	 * @memberof MutableString
 	 */
 	void (*appendCharacters)(MutableString *self, const char *chars);
 
 	/**
+	 * @fn void MutableString::appendFormat(MutableString *self, const char *fmt, ...)
+	 *
 	 * @brief Appends the specified formatted string.
 	 *
 	 * @param fmt The format sequence.
 	 *
-	 * @relates MutableString
+	 * @memberof MutableString
 	 */
 	void (*appendFormat)(MutableString *self, const char *fmt, ...);
 
 	/**
+	 * @fn void MutableString::appendString(MutableString *self, const String *string)
+	 *
 	 * @brief Appends the specified String to this MutableString.
 	 *
 	 * @param other The String to append.
 	 *
-	 * @relates MutableString
+	 * @memberof MutableString
 	 */
-	void (*appendString)(MutableString *self, const String *other);
+	void (*appendString)(MutableString *self, const String *string);
 
 	/**
+	 * @fn void MutableString::deleteCharactersInRange(MutableString *self, const Range range)
+	 *
 	 * @brief Deletes the characters within `range` from this MutableString.
 	 *
-	 * @param range The RANGE of characters to delete.
+	 * @param range The Range of characters to delete.
 	 *
-	 * @relates MutableString
+	 * @memberof MutableString
 	 */
-	void (*deleteCharactersInRange)(MutableString *self, const RANGE range);
+	void (*deleteCharactersInRange)(MutableString *self, const Range range);
 
 	/**
+	 * @fn MutableString *MutableString::init(MutableString *self)
+	 *
 	 * @brief Initializes this MutableString.
 	 *
 	 * @return The initialized MutableString, or `NULL` on error.
 	 *
-	 * @relates MutableString
+	 * @memberof MutableString
 	 */
 	MutableString *(*init)(MutableString *self);
 
 	/**
+	 * @fn MutableString *MutableString::initWithCapacity(MutableString *self, size_t capacity)
+	 *
 	 * @brief Initializes this MutableString with the given `capacity`.
 	 *
 	 * @param capacity The capacity, in bytes.
 	 *
 	 * @return The initialized MutableString, or `NULL` on error.
 	 *
-	 * @relates MutableString
+	 * @memberof MutableString
 	 */
 	MutableString *(*initWithCapacity)(MutableString *self, size_t capacity);
 
 	/**
+	 * @fn MutableString *MutableString::initWithString(MutableString *self, const String *string)
+	 *
 	 * @brief Initializes this MutableString with the contents of `string`.
 	 *
 	 * @param string A String.
 	 *
 	 * @return The initialized MutableString, or `NULL` on error.
 	 *
-	 * @relates MutableString
+	 * @memberof MutableString
 	 */
 	MutableString *(*initWithString)(MutableString *self, const String *string);
 
 	/**
+	 * @fn void MutableString::replaceCharactersInRange(MutableString *self, const Range range, const String *string)
+	 *
 	 * @brief Replaces the characters in `range` with the contents of `string`.
 	 *
-	 * @param range The RANGE of characters to replace.
+	 * @param range The Range of characters to replace.
 	 * @param string The String to substitute.
 	 *
-	 * @relates MutableString
+	 * @memberof MutableString
 	 */
-	void (*replaceCharactersInRange)(MutableString *self, const RANGE range, const String *string);
+	void (*replaceCharactersInRange)(MutableString *self, const Range range, const String *string);
 
 	/**
+	 * @static
+	 *
+	 * @fn MutableString *MutableString::string(void)
+	 *
 	 * @brief Returns a new MutableString.
 	 *
 	 * @return The new MutableString, or `NULL` on error.
 	 *
-	 * @relates MutableString
+	 * @memberof MutableString
 	 */
 	MutableString *(*string)(void);
 
 	/**
+	 * @static
+	 *
+	 * @fn MutableString *MutableString::stringWithCapacity(size_t capacity)
+	 *
 	 * @brief Returns a new MutableString with the given `capacity`.
 	 *
 	 * @param capacity The desired capacity, in bytes.
 	 *
 	 * @return The new MutableString, or `NULL` on error.
 	 *
-	 * @relates MutableString
+	 * @memberof MutableString
 	 */
 	MutableString *(*stringWithCapacity)(size_t capacity);
 };

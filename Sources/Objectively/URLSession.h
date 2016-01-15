@@ -116,13 +116,8 @@ struct URLSessionInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @return The shared URLSession instance.
+	 * @fn URLSessionDataTask *URLSession::dataTaskWithRequest(URLSession *self, URLRequest *request, URLSessionTaskCompletion completion)
 	 *
-	 * @relates URLSession
-	 */
-	URLSession *(*sharedInstance)(void);
-
-	/**
 	 * @brief Creates a URLSessionDataTask for the given URLRequest.
 	 *
 	 * @param request The URLRequest to perform.
@@ -130,12 +125,14 @@ struct URLSessionInterface {
 	 *
 	 * @return The URLSessionDataTask, or `NULL` on error.
 	 *
-	 * @relates URLSession
+	 * @memberof URLSession
 	 */
 	URLSessionDataTask *(*dataTaskWithRequest)(URLSession *self, URLRequest *request,
 			URLSessionTaskCompletion completion);
 
 	/**
+	 * @fn URLSessionDataTask *URLSession::dataTaskWithURL(URLSession *self, URL *url, URLSessionTaskCompletion completion)
+	 *
 	 * @brief Creates a URLSessionDataTask for the given URL.
 	 *
 	 * @param url The URL to `GET`.
@@ -143,12 +140,14 @@ struct URLSessionInterface {
 	 *
 	 * @return The URLSessionDataTask, or `NULL` on error.
 	 *
-	 * @relates URLSession
+	 * @memberof URLSession
 	 */
 	URLSessionDataTask *(*dataTaskWithURL)(URLSession *self, URL *url,
 			URLSessionTaskCompletion completion);
 
 	/**
+	 * @fn URLSessionDownloadTask *URLSession::downloadTaskWithRequest(URLSession *self, URLRequest *request, URLSessionTaskCompletion completion)
+	 *
 	 * @brief Creates a URLSessionDownloadTask for the given URLRequest.
 	 *
 	 * @param request The URLRequest to perform.
@@ -156,12 +155,14 @@ struct URLSessionInterface {
 	 *
 	 * @return The URLSessionDownloadTask, or `NULL` on error.
 	 *
-	 * @relates URLSession
+	 * @memberof URLSession
 	 */
 	URLSessionDownloadTask *(*downloadTaskWithRequest)(URLSession *self, URLRequest *request,
 			URLSessionTaskCompletion completion);
 
 	/**
+	 * @fn URLSessionDownloadTask *URLSession::downloadTaskWithURL(URLSession *self, URL *url, URLSessionTaskCompletion completion)
+	 *
 	 * @brief Creates a URLSessionDownloadTask for the given URL.
 	 *
 	 * @param url The URL to `GET`.
@@ -169,46 +170,67 @@ struct URLSessionInterface {
 	 *
 	 * @return The URLSessionDownloadTask, or `NULL` on error.
 	 *
-	 * @relates URLSession
+	 * @memberof URLSession
 	 */
 	URLSessionDownloadTask *(*downloadTaskWithURL)(URLSession *self, URL *url,
 			URLSessionTaskCompletion completion);
 
 	/**
+	 * @fn URLSession *URLSession::init(URLSession *self)
+	 *
 	 * @brief Initializes this URLSession with a default configuration.
 	 *
 	 * @return The initialized URLSession, or `NULL` on error.
 	 *
-	 * @relates URLSession
+	 * @memberof URLSession
 	 */
 	URLSession *(*init)(URLSession *self);
 
 	/**
+	 * @fn URLSession *URLSession::initWithConfiguration(URLSession *self, URLSessionConfiguration *configuration)
+	 *
 	 * @brief Initializes this URLSession with the given configuration.
 	 *
 	 * @param configuration The URLSessionConfiguration.
 	 *
 	 * @return The initialized URLSession, or `NULL` on error.
 	 *
-	 * @relates URLSession
+	 * @memberof URLSession
 	 */
 	URLSession *(*initWithConfiguration)(URLSession *self, URLSessionConfiguration *configuration);
 
 	/**
-	 * Invalidates this URLSession and cancels all pending tasks.
+	 * @fn void URLSession::invalidateAndCancel(URLSession *self)
 	 *
-	 * @relates URLSession
+	 * @brief Invalidates this URLSession and cancels all pending tasks.
+	 *
+	 * @memberof URLSession
 	 */
 	void (*invalidateAndCancel)(URLSession *self);
+	
+	/**
+	 * @static
+	 *
+	 * @fn URLSession *URLSession::sharedInstance(void)
+	 *
+	 * @return The shared URLSession instance.
+	 *
+	 * @memberof URLSession
+	 */
+	URLSession *(*sharedInstance)(void);
 
 	/**
+	 * @fn Array *URLSession::tasks(const URLSession *self)
+	 *
 	 * @return An instantaneous copy of this URLSession's URLSessionTasks.
 	 *
-	 * @relates URLSession
+	 * @memberof URLSession
 	 */
 	Array *(*tasks)(const URLSession *self);
 
 	/**
+	 * @fn URLSessionUploadTask *URLSession::uploadTaskWithRequest(URLSession *self, URLRequest *request, URLSessionTaskCompletion completion)
+	 *
 	 * @brief Creates a URLSessionUploadTask for the given URLRequest.
 	 *
 	 * @param request The URLRequest to perform.
@@ -216,7 +238,7 @@ struct URLSessionInterface {
 	 *
 	 * @return The URLSessionUploadTask, or `NULL` on error.
 	 *
-	 * @relates URLSession
+	 * @memberof URLSession
 	 */
 	URLSessionUploadTask *(*uploadTaskWithRequest)(URLSession *self, URLRequest *request,
 			URLSessionTaskCompletion completion);

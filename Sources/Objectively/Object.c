@@ -33,7 +33,9 @@
 #pragma mark - ObjectInterface
 
 /**
- * @see Object::copy(const Object *)
+ * @fn Object *Object::copy(const Object *self)
+ *
+ * @memberof Object
  */
 static Object *copy(const Object *self) {
 
@@ -47,7 +49,9 @@ static Object *copy(const Object *self) {
 }
 
 /**
- * @see Object::dealloc(Object *)
+ * @fn void Object::dealloc(Object *self)
+ *
+ * @memberof Object
  */
 static void dealloc(Object *self) {
 
@@ -55,7 +59,9 @@ static void dealloc(Object *self) {
 }
 
 /**
- * @see Object::description(const Object *)
+ * @fn String *Object::description(const Object *self)
+ *
+ * @memberof Object
  */
 static String *description(const Object *self) {
 
@@ -63,7 +69,9 @@ static String *description(const Object *self) {
 }
 
 /**
- * @see Object::hash(const Object *)
+ * @fn int Object::hash(const Object *self)
+ *
+ * @memberof Object
  */
 static int hash(const Object *self) {
 
@@ -73,7 +81,9 @@ static int hash(const Object *self) {
 }
 
 /**
- * @see Object::init(Object *)
+ * @fn Object *Object::init(Object *self)
+ *
+ * @memberof Object
  */
 static Object *init(Object *self) {
 
@@ -81,7 +91,9 @@ static Object *init(Object *self) {
 }
 
 /**
- * @see Object::isEqual(const Object *, const Object *)
+ * @fn _Bool Object::isEqual(const Object *self, const Object *other)
+ *
+ * @memberof Object
  */
 static _Bool isEqual(const Object *self, const Object *other) {
 
@@ -89,7 +101,9 @@ static _Bool isEqual(const Object *self, const Object *other) {
 }
 
 /**
- * @see Object::isKindOfClass(const Object *, const Class *)
+ * @fn _Bool Object::isKindOfClass(const Object *self, const Class *clazz)
+ *
+ * @memberof Object
  */
 static _Bool isKindOfClass(const Object *self, const Class *clazz) {
 

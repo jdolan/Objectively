@@ -65,7 +65,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 		const Number *this = (Number *) self;
 		const Number *that = (Number *) other;
 
-		return $(this, compareTo, that) == SAME;
+		return $(this, compareTo, that) == OrderSame;
 	}
 
 	return false;
@@ -74,58 +74,72 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - NumberInterface
 
 /**
- * @see Number::boolValue(const Number *)
+ * @fn _Bool Number::boolValue(const Number *self)
+ *
+ * @memberof Number
  */
 static _Bool boolValue(const Number *self) {
 	return self->value ? true : false;
 }
 
 /**
- * @see Number::charValue(const Number *)
+ * @fn char Number::charValue(const Number *self)
+ *
+ * @memberof Number
  */
 static char charValue(const Number *self) {
 	return (char) self->value;
 }
 
 /**
- * @see Number::compareTo(const Number *, const Number *)
+ * @fn Order Number::compareTo(const Number *self, const Number *other)
+ *
+ * @memberof Number
  */
-static ORDER compareTo(const Number *self, const Number *other) {
+static Order compareTo(const Number *self, const Number *other) {
 
 	if (other) {
 		if (self->value == other->value) {
-			return SAME;
+			return OrderSame;
 		}
 
-		return self->value < other->value ? ASCENDING : DESCENDING;
+		return self->value < other->value ? OrderAscending : OrderDescending;
 	}
 
-	return ASCENDING;
+	return OrderAscending;
 }
 
 /**
- * @see Number::doubleValue(const Number *)
+ * @fn double Number::doubleValue(const Number *self)
+ *
+ * @memberof Number
  */
 static double doubleValue(const Number *self) {
 	return self->value;
 }
 
 /**
- * @see Number::floatValue(const Number *)
+ * @fn float Number::floatValue(const Number *self)
+ *
+ * @memberof Number
  */
 static float floatValue(const Number *self) {
 	return (float) self->value;
 }
 
 /**
- * @see Number::boolValue(const Number *)
+ * @fn long Number::longValue(const Number *self)
+ *
+ * @memberof Number
  */
 static long longValue(const Number *self) {
 	return (long) self->value;
 }
 
 /**
- * @see Number::initWithValue(Number *, const double)
+ * @fn Number *Number::initWithValue(Number *self, double value)
+ *
+ * @memberof Number
  */
 static Number *initWithValue(Number *self, const double value) {
 
@@ -138,21 +152,27 @@ static Number *initWithValue(Number *self, const double value) {
 }
 
 /**
- * @see Number::intValue(const Number *)
+ * @fn int Number::intValue(const Number *self)
+ *
+ * @memberof Number
  */
 static int intValue(const Number *self) {
 	return (int) self->value;
 }
 
 /**
- * @see Number::numberWithValue(double)
+ * @fn Number *Number::numberWithValue(double value)
+ *
+ * @memberof Number
  */
 static Number *numberWithValue(double value) {
 	return $(alloc(Number), initWithValue, value);
 }
 
 /**
- * @see Number::shortValue(const Number *)
+ * @fn short Number::shortValue(const Number *self)
+ *
+ * @memberof Number
  */
 static short shortValue(const Number *self) {
 	return (short) self->value;

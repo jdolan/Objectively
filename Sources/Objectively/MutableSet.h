@@ -70,85 +70,107 @@ struct MutableSetInterface {
 	SetInterface setInterface;
 
 	/**
+	 * @fn void MutableSet::addObject(MutableSet *self, const ident obj)
+	 *
 	 * @brief Adds the specified Object to this Set.
 	 *
 	 * @param obj An Object.
 	 *
-	 * @relates MutableSet
+	 * @memberof MutableSet
 	 */
 	void (*addObject)(MutableSet *self, const ident obj);
 
 	/**
+	 * @fn void MutableSet::addObjectsFromArray(MutableSet *self, const Array *array)
+	 *
 	 * @brief Adds the Objects contained in `array` to this Set.
 	 *
 	 * @param array An Array.
 	 *
-	 * @relates MutableSet
+	 * @memberof MutableSet
 	 */
 	void (*addObjectsFromArray)(MutableSet *self, const Array *array);
 
 	/**
+	 * @fn void MutableSet::addObjectsFromSet(MutableSet *self, const Set *set)
+	 *
 	 * @brief Adds the Objects contained in `set` to this Set.
 	 *
 	 * @param set An Set.
 	 *
-	 * @relates MutableSet
+	 * @memberof MutableSet
 	 */
 	void (*addObjectsFromSet)(MutableSet *self, const Set *set);
 
 	/**
+	 * @fn MutableSet *MutableSet::init(MutableSet *self)
+	 *
 	 * @brief Initializes this MutableSet.
 	 *
 	 * @return The initialized MutableSet, or `NULL` on error.
 	 *
-	 * @relates MutableSet
+	 * @memberof MutableSet
 	 */
 	MutableSet *(*init)(MutableSet *self);
 
 	/**
+	 * @fn MutableSet *MutableSet::initWithCapacity(MutableSet *self, size_t capacity)
+	 *
 	 * @brief Initializes this Set with the specified capacity.
 	 *
 	 * @param capacity The desired initial capacity.
 	 *
 	 * @return The initialized Set, or `NULL` on error.
 	 *
-	 * @relates MutableSet
+	 * @memberof MutableSet
 	 */
 	MutableSet *(*initWithCapacity)(MutableSet *self, size_t capacity);
 
 	/**
+	 * @fn void MutableSet::removeAllObjects(MutableSet *self)
+	 *
 	 * @brief Removes all Objects from this Set.
 	 *
-	 * @relates MutableSet
+	 * @memberof MutableSet
 	 */
 	void (*removeAllObjects)(MutableSet *self);
 
 	/**
+	 * @fn void MutableSet::removeObject(MutableSet *self, const ident obj)
+	 *
 	 * @brief Removes the specified Object from this Set.
 	 *
 	 * @param obj An Object to remove.
 	 *
-	 * @relates MutableSet
+	 * @memberof MutableSet
 	 */
 	void (*removeObject)(MutableSet *self, const ident obj);
 
 	/**
+	 * @static
+	 *
+	 * @fn MutableSet *MutableSet::set(void)
+	 *
 	 * @brief Returns a new MutableSet.
 	 *
 	 * @return The new MutableSet, or `NULL` on error.
 	 *
-	 * @relates MutableSet
+	 * @memberof MutableSet
 	 */
 	MutableSet *(*set)(void);
 
 	/**
+	 * @static
+	 *
+	 * @fn MutableSet *MutableSet::setWithCapacity(size_t capacity)
+	 *
 	 * @brief Returns a new MutableSet with the given `capacity`.
 	 *
 	 * @param capacity The desired initial capacity.
 	 *
 	 * @return The new MutableSet, or `NULL` on error.
 	 *
-	 * @relates MutableSet
+	 * @memberof MutableSet
 	 */
 	MutableSet *(*setWithCapacity)(size_t capacity);
 };

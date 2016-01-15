@@ -91,6 +91,8 @@ struct RegexInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @fn Regex *Regex::initWithPattern(Regex *self, const char *pattern, int options)
+	 *
 	 * @brief Initializes this regular expression.
 	 *
 	 * @param pattern The POSIX regular expression pattern.
@@ -98,11 +100,13 @@ struct RegexInterface {
 	 *
 	 * @return The initialized regular expression, or `NULL` on error.
 	 *
-	 * @relates Regex
+	 * @memberof Regex
 	 */
-	Regex *(*initWithPattern)(Regex *self, const char *pattern, const int cflags);
+	Regex *(*initWithPattern)(Regex *self, const char *pattern, int options);
 
 	/**
+	 * @fn _Bool Regex::matchesCharacters(const Regex *self, const char *chars, int options, Range **matches)
+	 *
 	 * @brief Matches this regular expression against the given characters.
 	 *
 	 * @param chars The characters to match.
@@ -112,18 +116,20 @@ struct RegexInterface {
 	 * @return `true` if this Regex matched `chars`, `false` otherwise.
 	 *
 	 * @remark If provided, `matches` will be dynamically allocated and contain
-	 * `numberOfSubExpressions + 1` RANGEs. `matches[0]` will identify the
-	 * RANGE of `chars` that matched the entire pattern. `matches[1..n]` will
-	 * identify the RANGE of each corresponding sub-expression. The caller must
+	 * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the
+	 * Range of `chars` that matched the entire pattern. `matches[1..n]` will
+	 * identify the Range of each corresponding sub-expression. The caller must
 	 * free `matches` when done with it.
 	 *
 	 * @see regexec(3)
 	 *
-	 * @relates Regex
+	 * @memberof Regex
 	 */
-	_Bool (*matchesCharacters)(const Regex *self, const char *chars, int options, RANGE **matches);
+	_Bool (*matchesCharacters)(const Regex *self, const char *chars, int options, Range **matches);
 
 	/**
+	 * @fn _Bool Regex::matchesString(const Regex *self, const String *string, int options, Range **matches)
+	 *
 	 * @brief Matches this regular expression against the given String.
 	 *
 	 * @param string The String to match.
@@ -133,14 +139,14 @@ struct RegexInterface {
 	 * @return `true` if this expression matches `string`, `false` otherwise.
 	 *
 	 * @remark If provided, `matches` will be dynamically allocated and contain
-	 * `numberOfSubExpressions + 1` RANGEs. `matches[0]` will identify the
-	 * RANGE of `chars` that matched the entire pattern. `matches[1..n]` will
-	 * identify the RANGE of each corresponding sub-expression. The caller must
+	 * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the
+	 * Range of `chars` that matched the entire pattern. `matches[1..n]` will
+	 * identify the Range of each corresponding sub-expression. The caller must
 	 * free `matches` when done with it.
 	 *
-	 * @relates Regex
+	 * @memberof Regex
 	 */
-	_Bool (*matchesString)(const Regex *self, const String *string, int options, RANGE **matches);
+	_Bool (*matchesString)(const Regex *self, const String *string, int options, Range **matches);
 };
 
 /**

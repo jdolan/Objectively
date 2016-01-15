@@ -80,61 +80,89 @@ typedef struct String String;
 struct ObjectInterface {
 
 	/**
+	 * @fn Object *Object::copy(const Object *self)
+	 *
 	 * @brief Creates a shallow copy of this Object.
 	 *
-	 * @param self The instance.
+	 * @param self The object.
 	 *
 	 * @return The copy.
 	 *
-	 * @relates Object
+	 * @memberof Object
 	 */
 	Object *(*copy)(const Object *self);
 
 	/**
+	 * @fn void Object::dealloc(Object *self)
+	 *
 	 * @brief Frees all resources held by this Object.
 	 *
-	 * @relates Object
+	 * @param self The object.
+	 *
+	 * @memberof Object
 	 */
 	void (*dealloc)(Object *self);
 
 	/**
+	 * @fn String *Object::description(const Object *self)
+	 *
+	 * @param self The object.
+	 *
 	 * @return A brief description of this Object.
 	 *
-	 * @relates Object
+	 * @memberof Object
 	 */
 	String *(*description)(const Object *self);
 
 	/**
+	 * @fn int Object::hash(const Object *self)
+	 *
+	 * @param self The object.
+	 *
 	 * @return An integer hash for use in hash tables, etc.
 	 *
-	 * @relates Object
+	 * @memberof Object
 	 */
 	int (*hash)(const Object *self);
 
 	/**
+	 * @fn Object *Object::init(Object *self)
+	 *
 	 * @brief Initializes this Object.
+	 *
+	 * @param self The uninitialized object.
 	 *
 	 * @return The initialized Object, or the unmodified pointer on error.
 	 *
-	 * @relates Object
+	 * @memberof Object
 	 */
 	Object *(*init)(Object *self);
 
 	/**
+	 * @fn _Bool Object::isEqual(const Object *self, const Object *other)
+	 *
 	 * @brief Tests equality of the other Object.
+	 *
+	 * @param self The object.
+	 * @param other The object to test for equality.
 	 *
 	 * @return true if other is deemed equal, false otherwise.
 	 *
-	 * @relates Object
+	 * @memberof Object
 	 */
 	_Bool (*isEqual)(const Object *self, const Object *other);
 
 	/**
+	 * @fn _Bool Object::isKindOfClass(const Object *self, const Class *clazz)
+	 *
 	 * @brief Tests for class hierarchy membership.
+	 *
+	 * @param self The object.
+	 * @param clazz The Class to test for membership.
 	 *
 	 * @return true if this instance belongs to class' hierarchy, false otherwise.
 	 *
-	 * @relates Object
+	 * @memberof Object
 	 */
 	_Bool (*isKindOfClass)(const Object *self, const Class *clazz);
 };

@@ -10,14 +10,14 @@
       <tab type="namespacemembers" visible="yes" title="" intro=""/>
     </tab>
     <tab type="classes" visible="yes" title="Classes">
-      <tab type="classlist" visible="no" title="" intro=""/>
+      <tab type="classlist" visible="no" title="All Classes" intro=""/>
       <tab type="classindex" visible="$ALPHABETICAL_INDEX" title="Class Index"/> 
-      <tab type="hierarchy" visible="yes" title="" intro=""/>
+      <tab type="hierarchy" visible="no" title="Class Hierarchy" intro=""/>
       <tab type="classmembers" visible="no" title="" intro=""/>
     </tab>
     <tab type="files" visible="yes" title="">
       <tab type="filelist" visible="yes" title="" intro=""/>
-      <tab type="globals" visible="yes" title="" intro=""/>
+      <tab type="globals" visible="no" title="" intro=""/>
     </tab>
     <tab type="examples" visible="yes" title="" intro=""/>  
   </navindex>
@@ -36,10 +36,10 @@
       <interfaces title=""/>
       <publicslots title=""/>
       <signals title=""/>
-      <publicstaticattributes title=""/>
+      <publicstaticattributes title="Static Properties"/>
+	  <publicstaticmethods title="Static Methods"/>
       <publicattributes title="Properties"/>
       <publicmethods title="Methods"/>
-      <publicstaticmethods title=""/>
       <protectedtypes title=""/>
       <protectedslots title=""/>
       <protectedmethods title=""/>
@@ -57,7 +57,7 @@
       <privateslots title=""/>
       <privatemethods title=""/>
       <privatestaticmethods title=""/>
-      <privateattributes title="Private Properties"/>
+      <privateattributes title=""/>
       <privatestaticattributes title=""/>
       <friends title="" visible="no" />
       <related title="" subtitle=" "/>
@@ -69,11 +69,11 @@
       <enums title=""/>
       <services title=""/>
       <interfaces title=""/>
+	  <properties title=""/>
       <constructors title=""/>
-      <functions title="Details" visible="yes"/>
+	  <variables title="Property Details"/>
+      <functions title="Method Details" visible="yes"/>
       <related title="Related" visible="yes"/>
-      <variables title=""/>
-      <properties title=""/>
       <events title=""/>
     </memberdef>
     <allmemberslink visible="yes"/>

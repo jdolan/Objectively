@@ -56,7 +56,9 @@ static void dealloc(Object *self) {
 #pragma mark - LockInterface
 
 /**
- * @see Lock::init(Lock *)
+ * @fn Lock *Lock::init(Lock *self)
+ *
+ * @memberof Lock
  */
 static Lock *init(Lock *self) {
 
@@ -74,7 +76,9 @@ static Lock *init(Lock *self) {
 }
 
 /**
- * @see Lock::lock(Lock *)
+ * @fn void Lock::lock(Lock *self)
+ *
+ * @memberof Lock
  */
 static void lock(Lock *self) {
 
@@ -83,7 +87,9 @@ static void lock(Lock *self) {
 }
 
 /**
- * @see Lock::tryLock(Lock *)
+ * @fn _Bool Lock::tryLock(Lock *self)
+ *
+ * @memberof Lock
  */
 static _Bool tryLock(Lock *self) {
 
@@ -94,7 +100,9 @@ static _Bool tryLock(Lock *self) {
 }
 
 /**
- * @see Lock::unlock(Lock *)
+ * @fn void Lock::unlock(Lock *self)
+ *
+ * @memberof Lock
  */
 static void unlock(Lock *self) {
 

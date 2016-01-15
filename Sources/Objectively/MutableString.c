@@ -49,7 +49,9 @@ static Object *copy(const Object *self) {
 #pragma mark - MutableStringInterface
 
 /**
- * @see MutableString::appendCharacters(MutableString *, const char *)
+ * @fn void MutableString::appendCharacters(MutableString *self, const char *chars)
+ *
+ * @memberof MutableString
  */
 static void appendCharacters(MutableString *self, const char *chars) {
 
@@ -83,7 +85,9 @@ static void appendCharacters(MutableString *self, const char *chars) {
 }
 
 /**
- * @see MutableString::appendFormat(MutableString *, const char *, ...)
+ * @fn void MutableString::appendFormat(MutableString *self, const char *fmt, ...)
+ *
+ * @memberof MutableString
  */
 static void appendFormat(MutableString *self, const char *fmt, ...) {
 
@@ -103,7 +107,9 @@ static void appendFormat(MutableString *self, const char *fmt, ...) {
 }
 
 /**
- * @see MutableString::appendString(MutableString *, const String *)
+ * @fn void MutableString::appendString(MutableString *self, const String *string)
+ *
+ * @memberof MutableString
  */
 static void appendString(MutableString *self, const String *string) {
 
@@ -113,9 +119,11 @@ static void appendString(MutableString *self, const String *string) {
 }
 
 /**
- * @see MutableString::deleteCharactersInRange(MutableString *, const RANGE)
+ * @fn void MutableString::deleteCharactersInRange(MutableString *self, const Range range)
+ *
+ * @memberof MutableString
  */
-static void deleteCharactersInRange(MutableString *self, const RANGE range) {
+static void deleteCharactersInRange(MutableString *self, const Range range) {
 
 	assert(range.location >= 0);
 	assert(range.length <= self->string.length);
@@ -127,15 +135,39 @@ static void deleteCharactersInRange(MutableString *self, const RANGE range) {
 }
 
 /**
- * @see MutableString::init(MutableString *)
+ * @fn MutableString *MutableString::init(MutableString *self)
+ *
+ * @memberof MutableString
  */
 static MutableString *init(MutableString *self) {
-
-	return (MutableString *) super(String, self, initWithMemory, NULL, 0);
+	
+	return $(self, initWithCapacity, 0);
 }
 
 /**
- * @see MutableString::initWithString(MutableString *, const String *)
+ * @fn MutableString *MutableString::initWithCapacity(MutableString *self, size_t capacity)
+ *
+ * @memberof MutableString
+ */
+static MutableString *initWithCapacity(MutableString *self, size_t capacity) {
+	
+	self = (MutableString *) super(String, self, initWithMemory, NULL, 0);
+	if (self) {
+		if (capacity) {
+			self->string.chars = malloc(capacity);
+			assert(self->string.chars);
+			
+			self->capacity = capacity;
+		}
+	}
+	
+	return self;
+}
+
+/**
+ * @fn MutableString *MutableString::initWithString(MutableString *self, const String *string)
+ *
+ * @memberof MutableString
  */
 static MutableString *initWithString(MutableString *self, const String *string) {
 
@@ -148,9 +180,11 @@ static MutableString *initWithString(MutableString *self, const String *string) 
 }
 
 /**
- * @see MutableString::replaceCharactersInRange(MutableString *, const RANGE, const String *)
+ * @fn void MutableString::replaceCharactersInRange(MutableString *self, const Range range, const String *string)
+ *
+ * @memberof MutableString
  */
-static void replaceCharactersInRange(MutableString *self, const RANGE range, const String *string) {
+static void replaceCharactersInRange(MutableString *self, const Range range, const String *string) {
 
 	assert(range.location >= 0);
 	assert(range.length <= self->string.length);
@@ -167,7 +201,9 @@ static void replaceCharactersInRange(MutableString *self, const RANGE range, con
 }
 
 /**
- * @see MutableString::string(void)
+ * @fn MutableString *MutableString::string(void)
+ *
+ * @memberof MutableString
  */
 static MutableString *string(void) {
 
@@ -175,7 +211,9 @@ static MutableString *string(void) {
 }
 
 /**
- * @see MutableString::stringWithCapacity(size_t)
+ * @fn MutableString *MutableString::stringWithCapacity(size_t capacity)
+ *
+ * @memberof MutableString
  */
 static MutableString *stringWithCapacity(size_t capacity) {
 
@@ -200,6 +238,7 @@ static void initialize(Class *clazz) {
 	mutableString->appendString = appendString;
 	mutableString->deleteCharactersInRange = deleteCharactersInRange;
 	mutableString->init = init;
+	mutableString->initWithCapacity = initWithCapacity;
 	mutableString->initWithString = initWithString;
 	mutableString->replaceCharactersInRange = replaceCharactersInRange;
 	mutableString->string = string;

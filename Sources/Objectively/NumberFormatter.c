@@ -33,24 +33,9 @@
 #pragma mark - NumberFormatterInterface
 
 /**
- * @see NumberFormatter::numberFromString(const NumberFormatter *, const String *)
- */
-static Number *numberFromString(const NumberFormatter *self, const String *string) {
-
-	if (string) {
-		double value;
-
-		const int res = sscanf(string->chars, self->fmt, &value);
-		if (res == 1) {
-			return $(alloc(Number), initWithValue, value);
-		}
-	}
-
-	return NULL;
-}
-
-/**
- * @see NumberFormatter::initWithFormat(NumberFormatter *, const char *fmt)
+ * @fn NumberFormatter *NumberFormatter::initWithFormat(NumberFormatter *self, const char *fmt)
+ *
+ * @memberof NumberFormatter
  */
 static NumberFormatter *initWithFormat(NumberFormatter *self, const char *fmt) {
 
@@ -63,7 +48,28 @@ static NumberFormatter *initWithFormat(NumberFormatter *self, const char *fmt) {
 }
 
 /**
- * @see NumberFormatter::stringFromNumber(const NumberFormatter *, const Number *)
+ * @fn Number *NumberFormatter::numberFromString(const NumberFormatter *self, const String *string)
+ *
+ * @memberof NumberFormatter
+ */
+static Number *numberFromString(const NumberFormatter *self, const String *string) {
+	
+	if (string) {
+		double value;
+		
+		const int res = sscanf(string->chars, self->fmt, &value);
+		if (res == 1) {
+			return $(alloc(Number), initWithValue, value);
+		}
+	}
+	
+	return NULL;
+}
+
+/**
+ * @fn String *NumberFormatter::stringFromNumber(const NumberFormatter *self, const Number *number)
+ *
+ * @memberof NumberFormatter
  */
 static String *stringFromNumber(const NumberFormatter *self, const Number *number) {
 

@@ -137,7 +137,9 @@ static _Bool allObjects_enumerator(const Set *set, ident obj, ident data) {
 }
 
 /**
- * @see Set::allObjects(const Set *)
+ * @fn Array *Set::allObjects(const Set *self)
+ *
+ * @memberof Set
  */
 static Array *allObjects(const Set *self) {
 
@@ -149,7 +151,9 @@ static Array *allObjects(const Set *self) {
 }
 
 /**
- * @see Set::containsObject(const Set *, const id)
+ * @fn _Bool Set::containsObject(const Set *self, const ident obj)
+ *
+ * @memberof Set
  */
 static _Bool containsObject(const Set *self, const ident obj) {
 
@@ -164,7 +168,9 @@ static _Bool containsObject(const Set *self, const ident obj) {
 }
 
 /**
- * @see Set::enumerateObjects(const Set *, SetEnumerator, id)
+ * @fn void Set::enumerateObjects(const Set *self, SetEnumerator enumerator, ident data)
+ *
+ * @memberof Set
  */
 static void enumerateObjects(const Set *self, SetEnumerator enumerator, ident data) {
 
@@ -187,7 +193,9 @@ static void enumerateObjects(const Set *self, SetEnumerator enumerator, ident da
 }
 
 /**
- * @see Set::filterObjects(const Set *, SetEnumerator, id)
+ * @fn void Set::filterObjects(const Set *self, SetEnumerator enumerator, ident data)
+ *
+ * @memberof Set
  */
 static Set *filterObjects(const Set *self, SetEnumerator enumerator, ident data) {
 
@@ -222,7 +230,9 @@ static _Bool initWithArray_enumerator(const Array *array, ident obj, ident data)
 }
 
 /**
- * @see Set::initWithArray(Set *, const Array *)
+ * @fn Set *Set::initWithArray(Set *self, const Array *array)
+ *
+ * @memberof Set
  */
 static Set *initWithArray(Set *self, const Array *array) {
 
@@ -237,30 +247,9 @@ static Set *initWithArray(Set *self, const Array *array) {
 }
 
 /**
- * @brief SetEnumerator for initWithSet.
- */
-static _Bool initWithSet_enumerator(const Set *set, ident obj, ident data) {
-
-	$$(MutableSet, addObject, (MutableSet *) data, obj); return false;
-}
-
-/**
- * @see Set::initWithSet(Set *, const Set *)
- */
-static Set *initWithSet(Set *self, const Set *set) {
-
-	self = (Set *) super(Object, self, init);
-	if (self) {
-		if (set) {
-			$(set, enumerateObjects, initWithSet_enumerator, self);
-		}
-	}
-
-	return self;
-}
-
-/**
- * @see Set::initWithObjects(Set *, ...)
+ * @fn Set *Set::initWithObjects(Set *self, ...)
+ *
+ * @memberof Set
  */
 static Set *initWithObjects(Set *self, ...) {
 
@@ -287,7 +276,34 @@ static Set *initWithObjects(Set *self, ...) {
 }
 
 /**
- * @see Set::setWithArray(const Array *)
+ * @brief SetEnumerator for initWithSet.
+ */
+static _Bool initWithSet_enumerator(const Set *set, ident obj, ident data) {
+	
+	$$(MutableSet, addObject, (MutableSet *) data, obj); return false;
+}
+
+/**
+ * @fn Set *Set::initWithSet(Set *self, const Set *set)
+ *
+ * @memberof Set
+ */
+static Set *initWithSet(Set *self, const Set *set) {
+	
+	self = (Set *) super(Object, self, init);
+	if (self) {
+		if (set) {
+			$(set, enumerateObjects, initWithSet_enumerator, self);
+		}
+	}
+	
+	return self;
+}
+
+/**
+ * @fn Set *Set::setWithArray(const Array *array)
+ *
+ * @memberof Set
  */
 static Set *setWithArray(const Array *array) {
 
@@ -295,7 +311,9 @@ static Set *setWithArray(const Array *array) {
 }
 
 /**
- * @see Set::setWithObjects(id, ...)
+ * @fn Set *Set::setWithObjects(ident obj, ...)
+ *
+ * @memberof Set
  */
 static Set *setWithObjects(ident obj, ...) {
 
@@ -317,7 +335,9 @@ static Set *setWithObjects(ident obj, ...) {
 }
 
 /**
- * @see Set::setWithSet(const Set *)
+ * @fn Set *Set::setWithSet(const Set *set)
+ *
+ * @memberof Set
  */
 static Set *setWithSet(const Set *set) {
 

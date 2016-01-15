@@ -75,84 +75,106 @@ struct NumberInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @return This Number's BOOL value.
+	 * @fn _Bool Number::boolValue(const Number *self)
 	 *
-	 * @relates Number
+	 * @return This Number's _Bool value.
+	 *
+	 * @memberof Number
 	 */
 	_Bool (*boolValue)(const Number *self);
 
 	/**
+	 * @fn char Number::charValue(const Number *self)
+	 *
 	 * @return This Number's char value.
 	 *
-	 * @relates Number
+	 * @memberof Number
 	 */
 	char (*charValue)(const Number *self);
 
 	/**
+	 * @fn Order Number::compareTo(const Number *self, const Number *other)
+	 *
 	 * @brief Compares this Number to another.
 	 *
 	 * @param other The Number to compare to.
 	 *
 	 * @return The ordering of this Number compared to `other`.
 	 *
-	 * @relates Number
+	 * @memberof Number
 	 */
-	ORDER (*compareTo)(const Number *self, const Number *other);
+	Order (*compareTo)(const Number *self, const Number *other);
 
 	/**
+	 * @fn double Number::doubleValue(const Number *self)
+	 *
 	 * @return This Number's double value.
 	 *
-	 * @relates Number
+	 * @memberof Number
 	 */
 	double (*doubleValue)(const Number *self);
 
 	/**
+	 * @fn float Number::floatValue(const Number *self)
+	 *
 	 * @return This Number's floating point value.
 	 *
-	 * @relates Number
+	 * @memberof Number
 	 */
 	float (*floatValue)(const Number *self);
 
 	/**
+	 * @fn long Number::longValue(const Number *self)
+	 *
 	 * @return This Number's long value.
 	 *
-	 * @relates Number
+	 * @memberof Number
 	 */
 	long (*longValue)(const Number *self);
 
 	/**
+	 * @fn Number *Number::initWithValue(Number *self, double value)
+	 *
 	 * @brief Initializes this Number with the specified value.
 	 *
 	 * @param value The value.
 	 *
 	 * @return The initialized Number, or `NULL` on error.
 	 *
-	 * @relates Number
+	 * @memberof Number
 	 */
 	Number *(*initWithValue)(Number *self, double value);
 
 	/**
+	 * @fn int Number::intValue(const Number *self)
+	 *
 	 * @return This Number's integer value.
 	 *
-	 * @relates Number
+	 * @memberof Number
 	 */
 	int (*intValue)(const Number *self);
 
 	/**
+	 * @static
+	 *
+	 * @fn Number *Number::numberWithValue(double value)
+	 *
 	 * @brief Returns a new Number with the given value.
 	 *
 	 * @param value The value.
 	 *
 	 * @return The new Number, or `NULL` on error.
 	 *
-	 * @relates Number
+	 * @memberof Number
 	 */
 	Number *(*numberWithValue)(double value);
 
 	/**
+	 * @fn short Number::shortValue(const Number *self)
+	 *
 	 * @return This Number's short value.
 	 *
-	 * @relates Number
+	 * @memberof Number
 	 */
 	short (*shortValue)(const Number *self);
 };

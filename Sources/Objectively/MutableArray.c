@@ -51,7 +51,9 @@ static Object *copy(const Object *self) {
 #pragma mark - MutableArrayInterface
 
 /**
- * @see MutableArray::addObject(MutableArray *, const id)
+ * @fn void MutableArray::addObject(MutableArray *self, const ident obj)
+ *
+ * @memberof MutableArray
  */
 static void addObject(MutableArray *self, const ident obj) {
 
@@ -73,7 +75,9 @@ static void addObject(MutableArray *self, const ident obj) {
 }
 
 /**
- * @see MutableArray::addObjectsFromArrayy
+ * @fn void MutableArray::addObjectsFromArray(MutableArray *self, const Array *array)
+ *
+ * @memberof MutableArray
  */
 static void addObjectsFromArray(MutableArray *self, const Array *array) {
 
@@ -85,23 +89,29 @@ static void addObjectsFromArray(MutableArray *self, const Array *array) {
 }
 
 /**
- * @see MutableArray::array(void)
+ * @fn MutableArray *MutableArray::array(void)
+ *
+ * @memberof MutableArray
  */
 static MutableArray *array(void) {
-
+	
 	return $(alloc(MutableArray), init);
 }
 
 /**
- * @see MutableArray::arrayWithCapacity(size_t)
+ * @fn MutableArray *MutableArray::arrayWithCapacity(size_t capacity)
+ *
+ * @memberof MutableArray
  */
 static MutableArray *arrayWithCapacity(size_t capacity) {
-
+	
 	return $(alloc(MutableArray), initWithCapacity, capacity);
 }
 
 /**
- * @see MutableArray::init(MutableArray *)
+ * @fn MutableArray *MutableArray::init(MutableArray *self)
+ *
+ * @memberof MutableArray
  */
 static MutableArray *init(MutableArray *self) {
 
@@ -109,7 +119,9 @@ static MutableArray *init(MutableArray *self) {
 }
 
 /**
- * @see MutableArray::initWithCapacity(MutableArray *, size_t)
+ * @fn MutableArray *MutableArray::initWithCapacity(MutableArray *self, size_t capacity)
+ *
+ * @memberof MutableArray
  */
 static MutableArray *initWithCapacity(MutableArray *self, size_t capacity) {
 
@@ -128,7 +140,9 @@ static MutableArray *initWithCapacity(MutableArray *self, size_t capacity) {
 }
 
 /**
- * @see MutableArray::removeAllObjects(MutableArray *)
+ * @fn void MutableArray::removeAllObjects(MutableArray *self)
+ *
+ * @memberof MutableArray
  */
 static void removeAllObjects(MutableArray *self) {
 
@@ -138,7 +152,9 @@ static void removeAllObjects(MutableArray *self) {
 }
 
 /**
- * @see MutableArray::removeObject(MutableArray *, const id)
+ * @fn void MutableArray::removeObject(MutableArray *self, const ident obj)
+ *
+ * @memberof MutableArray
  */
 static void removeObject(MutableArray *self, const ident obj) {
 
@@ -149,7 +165,9 @@ static void removeObject(MutableArray *self, const ident obj) {
 }
 
 /**
- * @see MutableArray::removeObjectAtIndex(MutableArray *, const int)
+ * @fn void MutableArray::removeObjectAtIndex(MutableArray *self, const int index)
+ *
+ * @memberof MutableArray
  */
 static void removeObjectAtIndex(MutableArray *self, const int index) {
 
@@ -166,9 +184,11 @@ static void removeObjectAtIndex(MutableArray *self, const int index) {
 }
 
 /**
- * @see MutableArray::setObjectAtIndex(MutableArray *, const id, const int)
+ * @fn void MutableArray::setObjectAtIndex(MutableArray *self, const ident obj, int index)
+ *
+ * @memberof MutableArray
  */
-static void setObjectAtIndex(MutableArray *self, const ident obj, const int index) {
+static void setObjectAtIndex(MutableArray *self, const ident obj, int index) {
 
 	assert(index > -1);
 	assert(index < self->array.count);
@@ -190,7 +210,9 @@ static int _sort(void *data, const void *a, const void *b) {
 }
 
 /**
- * @see MutableArray::sort(MutableArray *, Comparator)
+ * @fn void MutableArray::sort(MutableArray *self, Comparator comparator)
+ * 
+ * @memberof MutableArray
  */
 static void sort(MutableArray *self, Comparator comparator) {
 	qsort_r(self->array.elements, self->array.count, sizeof(ident), comparator, _sort);
@@ -206,7 +228,9 @@ static int _sort(void *data, const void *a, const void *b) {
 }
 
 /**
- * @see MutableArray::sort(MutableArray *, Comparator)
+ * @fn void MutableArray::sort(MutableArray *self, Comparator comparator)
+ *
+ * @memberof MutableArray
  */
 static void sort(MutableArray *self, Comparator comparator) {
 	qsort_s(self->array.elements, self->array.count, sizeof(ident), _sort, comparator);
@@ -222,7 +246,9 @@ static int _sort(const void *a, const void *b, void *data) {
 }
 
 /**
- * @see MutableArray::sort(MutableArray *, Comparator)
+ * @fn void MutableArray::sort(MutableArray *self, Comparator comparator)
+ *
+ * @memberof MutableArray
  */
 static void sort(MutableArray *self, Comparator comparator) {
 	qsort_r(self->array.elements, self->array.count, sizeof(ident), _sort, comparator);

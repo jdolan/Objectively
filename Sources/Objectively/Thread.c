@@ -58,7 +58,9 @@ static void dealloc(Object *self) {
 #pragma mark - ThreadInterface
 
 /**
- * @see Thread::cancel(Thread *)
+ * @fn void Thread::cancel(Thread *self)
+ *
+ * @memberof Thread
  */
 static void cancel(Thread *self) {
 
@@ -73,7 +75,9 @@ static void cancel(Thread *self) {
 __thread Thread *_currentThread;
 
 /**
- * @see Thread::currentThread(void)
+ * @fn Thread *Thread::currentThread(void)
+ *
+ * @memberof Thread
  */
 static Thread *currentThread(void) {
 
@@ -81,7 +85,9 @@ static Thread *currentThread(void) {
 }
 
 /**
- * @see Thread::detach(Thread *)
+ * @fn void Thread::detach(Thread *self)
+ *
+ * @memberof Thread
  */
 static void detach(Thread *self) {
 
@@ -94,7 +100,9 @@ static void detach(Thread *self) {
 }
 
 /**
- * @see Thread::init(Thread *)
+ * @fn Thread *Thread::init(Thread *self)
+ *
+ * @memberof Thread
  */
 static Thread *init(Thread *self) {
 
@@ -102,7 +110,9 @@ static Thread *init(Thread *self) {
 }
 
 /**
- * @see Thread::initWithFunction(Thread *, ThreadFunction, id)
+ * @fn Thread *Thread::initWithFunction(Thread *self, ThreadFunction function, ident data)
+ *
+ * @memberof Thread
  */
 static Thread *initWithFunction(Thread *self, ThreadFunction function, ident data) {
 
@@ -119,7 +129,9 @@ static Thread *initWithFunction(Thread *self, ThreadFunction function, ident dat
 }
 
 /**
- * @see Thread::join(Thread *, id *)
+ * @fn void Thread::join(Thread *self, ident *status)
+ *
+ * @memberof Thread
  */
 static void join(Thread *self, ident *status) {
 
@@ -128,7 +140,9 @@ static void join(Thread *self, ident *status) {
 }
 
 /**
- * @see Thread::kill(Thread *, int)
+ * @fn void Thread::kill(Thread *self, int signal)
+ *
+ * @memberof Thread
  */
 static void _kill(Thread *self, int signal) {
 
@@ -155,7 +169,9 @@ static ident run(ident obj) {
 }
 
 /**
- * @see Thread::start(Thread *)
+ * @fn void Thread::start(Thread *self)
+ *
+ * @memberof Thread
  */
 static void start(Thread *self) {
 

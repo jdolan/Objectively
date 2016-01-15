@@ -44,22 +44,22 @@
  *
  * @param hash The hash accumulator.
  * @param bytes The bytes to hash.
- * @param range The RANGE to hash.
+ * @param range The Range to hash.
  *
  * @return The accumulated hash value.
  */
-extern int HashForBytes(int hash, const byte *bytes, const RANGE range);
+extern int HashForBytes(int hash, const byte *bytes, const Range range);
 
 /**
  * @brief Accumulates the hash value of `chars` into `hash`.
  *
  * @param hash The hash accumulator.
  * @param chars The characters to hash.
- * @param range The RANGE to hash.
+ * @param range The Range to hash.
  *
  * @return The accumulated hash value.
  */
-extern int HashForCharacters(int hash, const char *chars, const RANGE range);
+extern int HashForCharacters(int hash, const char *chars, const Range range);
 
 /**
  * @brief Accumulates the hash value of the null-terminated `string` into `hash`.

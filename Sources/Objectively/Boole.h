@@ -75,16 +75,24 @@ struct BooleInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @static
+	 *
+	 * @fn Bool *Bool::False(void)
+	 *
 	 * @return The `false` Boole.
 	 *
-	 * @relates Boole
+	 * @memberof Boole
 	 */
 	Boole *(*False)(void);
 
 	/**
+	 * @static
+	 *
+	 * @fn Bool *Bool::True(void)
+	 *
 	 * @return The `true` Boole.
 	 *
-	 * @relates Boole
+	 * @memberof Boole
 	 */
 	Boole *(*True)(void);
 };

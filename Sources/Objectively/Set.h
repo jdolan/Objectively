@@ -107,20 +107,26 @@ struct SetInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @fn Array *Set::allObjects(const Set *self)
+	 *
 	 * @return An Array containing all Objects in this Set.
 	 *
-	 * @relates Set
+	 * @memberof Set
 	 */
 	Array *(*allObjects)(const Set *self);
 
 	/**
+	 * @fn _Bool Set::containsObject(const Set *self, const ident obj)
+	 *
 	 * @return `true` if this Set contains the given Object, `false` otherwise.
 	 *
-	 * @relates Set
+	 * @memberof Set
 	 */
 	_Bool (*containsObject)(const Set *self, const ident obj);
 
 	/**
+	 * @fn void Set::enumerateObjects(const Set *self, SetEnumerator enumerator, ident data)
+	 *
 	 * @brief Enumerate the elements of this Set with the given function.
 	 *
 	 * @param enumerator The enumerator function.
@@ -128,11 +134,13 @@ struct SetInterface {
 	 *
 	 * @remark The enumerator should return `true` to break the iteration.
 	 *
-	 * @relates Set
+	 * @memberof Set
 	 */
 	void (*enumerateObjects)(const Set *self, SetEnumerator enumerator, ident data);
 
 	/**
+	 * @fn void Set::filterObjects(const Set *self, SetEnumerator enumerator, ident data)
+	 *
 	 * @brief Creates a new Set with elements that pass the filter function.
 	 *
 	 * @param enumerator The enumerator function.
@@ -140,71 +148,89 @@ struct SetInterface {
 	 *
 	 * @return The new, filtered Set.
 	 *
-	 * @relates Set
+	 * @memberof Set
 	 */
 	Set *(*filterObjects)(const Set *self, SetEnumerator enumerator, ident data);
 
 	/**
+	 * @fn Set *Set::initWithArray(Set *self, const Array *array)
+	 *
 	 * @brief Initializes this Set to contain the Objects in `array`.
 	 *
 	 * @param array An Array.
 	 *
 	 * @return The initialized Set, or `NULL` on error.
 	 *
-	 * @relates Set
+	 * @memberof Set
 	 */
 	Set *(*initWithArray)(Set *self, const Array *array);
 
 	/**
+	 * @fn Set *Set::initWithObjects(Set *self, ...)
+	 *
 	 * @brief Initializes this Set with the specified objects.
 	 *
 	 * @return The initialized Set, or `NULL` on error.
 	 *
-	 * @relates Set
+	 * @memberof Set
 	 */
 	Set *(*initWithObjects)(Set *self, ...);
 
 	/**
+	 * @fn Set *Set::initWithSet(Set *self, const Set *set)
+	 *
 	 * @brief Initializes this Set to contain the Objects in `set`.
 	 *
 	 * @param set A Set.
 	 *
 	 * @return The initialized Set, or `NULL` on error.
 	 *
-	 * @relates Set
+	 * @memberof Set
 	 */
 	Set *(*initWithSet)(Set *self, const Set *set);
 
 	/**
+	 * @static
+	 *
+	 * @fn Set *Set::setWithArray(const Array *array)
+	 *
 	 * @brief Returns a new Set with the contents of `array`.
 	 *
 	 * @param array An Array.
 	 *
 	 * @return The new Set, or `NULL` on error.
 	 *
-	 * @relates Set
+	 * @memberof Set
 	 */
 	Set *(*setWithArray)(const Array *array);
 
 	/**
+	 * @static
+	 *
+	 * @fn Set *Set::setWithObjects(ident obj, ...)
+	 *
 	 * @brief Returns a new Set containing the specified Objects.
 	 *
 	 * @param obj A `NULL`-terminated list of Objects.
 	 *
 	 * @return The new Set, or `NULL` on error.
 	 *
-	 * @relates Set
+	 * @memberof Set
 	 */
 	Set *(*setWithObjects)(ident obj, ...);
 
 	/**
+	 * @static
+	 *
+	 * @fn Set *Set::setWithSet(const Set *set)
+	 *
 	 * @brief Returns a new Set with the contents of `set`.
 	 *
 	 * @param set A set.
 	 *
 	 * @return The new Set, or `NULL` on error.
 	 *
-	 * @relates Set
+	 * @memberof Set
 	 */
 	Set *(*setWithSet)(const Set *set);
 };

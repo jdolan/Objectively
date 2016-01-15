@@ -154,13 +154,17 @@ struct URLSessionTaskInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @fn void URLSessionTask::cancel(URLSessionTask *self)
+	 *
 	 * @brief Cancels this task.
 	 *
-	 * @relates URLSessionTask
+	 * @memberof URLSessionTask
 	 */
 	void (*cancel)(URLSessionTask *self);
 
 	/**
+	 * @fn URLSessionTask *URLSessionTask::initWithRequestInSession(URLSessionTask *self, struct URLRequest *request, struct URLSession *session, URLSessionTaskCompletion completion)
+	 *
 	 * @brief Initializes this task with the given URLRequest.
 	 *
 	 * @param request The request.
@@ -169,40 +173,48 @@ struct URLSessionTaskInterface {
 	 *
 	 * @return The initialized task, or `NULL` on error.
 	 *
-	 * @relates URLSessionTask
+	 * @memberof URLSessionTask
 	 */
 	URLSessionTask *(*initWithRequestInSession)(URLSessionTask *self, struct URLRequest *request,
 			struct URLSession *session, URLSessionTaskCompletion completion);
 
 	/**
+	 * @fn void URLSessionTask::resume(URLSessionTask *self)
+	 *
 	 * @brief Starts or resumes this task.
 	 *
-	 * @relates URLSessionTask
+	 * @memberof URLSessionTask
 	 */
 	void (*resume)(URLSessionTask *self);
 
 	/**
+	 * @fn void URLSessionTask::setup(URLSessionTask *self)
+	 *
 	 * @brief Sets up this task.
 	 *
 	 * @protected
 	 *
-	 * @relates URLSessionTask
+	 * @memberof URLSessionTask
 	 */
 	void (*setup)(URLSessionTask *self);
 
 	/**
+	 * @fn void URLSessionTask::suspend(URLSessionTask *self)
+	 *
 	 * @brief Suspends this task.
 	 *
-	 * @relates URLSessionTask
+	 * @memberof URLSessionTask
 	 */
 	void (*suspend)(URLSessionTask *self);
 
 	/**
+	 * @fn void URLSessionTask::teardown(URLSessionTask *self)
+	 *
 	 * @brief Tears down this task.
 	 *
 	 * @protected
 	 *
-	 * @relates URLSessionTask
+	 * @memberof URLSessionTask
 	 */
 	void (*teardown)(URLSessionTask *self);
 };

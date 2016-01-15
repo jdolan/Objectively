@@ -74,9 +74,13 @@ struct NullInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @static
+	 *
+	 * @fn Null *Null::null(void)
+	 *
 	 * @return The Null singleton.
 	 *
-	 * @relates Null
+	 * @memberof Null
 	 */
 	Null *(*null)(void);
 };

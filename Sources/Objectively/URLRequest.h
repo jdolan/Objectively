@@ -41,7 +41,7 @@ typedef struct URLRequestInterface URLRequestInterface;
  * The HTTP method verbs.
  */
 typedef enum {
-	HTTP_falseNE,
+	HTTP_NONE,
 	HTTP_GET,
 	HTTP_POST,
 	HTTP_PUT,
@@ -104,23 +104,27 @@ struct URLRequestInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @fn URLRequest *URLRequest::initWithURL(URLRequest *self, URL *url)
+	 *
 	 * @brief Initializes this URLRequest with the specified URL.
 	 *
 	 * @param url The URL.
 	 *
 	 * @return The initialized URLRequest, or `NULL` on error.
 	 *
-	 * @relates URLRequest
+	 * @memberof URLRequest
 	 */
 	URLRequest *(*initWithURL)(URLRequest *self, URL *url);
 
 	/**
+	 * @fn void setValueForHTTPHeaderField(URLREquest *self, const char *value, const char *field)
+	 *
 	 * @brief Sets a value for the specified HTTP header.
 	 *
 	 * @param value The HTTP header value.
 	 * @param field The HTTP header field.
 	 *
-	 * @relates URLRequest
+	 * @memberof URLRequest
 	 */
 	void (*setValueForHTTPHeaderField)(URLRequest *self, const char *value, const char *field);
 };

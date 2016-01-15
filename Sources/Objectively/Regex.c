@@ -75,7 +75,7 @@ static int hash(const Object *self) {
 	int hash = HASH_SEED;
 	hash = HashForInteger(hash, this->options);
 
-	const RANGE range = { 0, strlen(this->pattern) };
+	const Range range = { 0, strlen(this->pattern) };
 	hash = HashForBytes(hash, (byte *) this->pattern, range);
 
 	return hash;
@@ -106,9 +106,11 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - RegexInterface
 
 /**
- * @see Regex::initWithPattern(Regex *, const char *, const int)
+ * @fn Regex *Regex::initWithPattern(Regex *self, const char *pattern, int options)
+ *
+ * @memberof Regex
  */
-static Regex *initWithPattern(Regex *self, const char *pattern, const int options) {
+static Regex *initWithPattern(Regex *self, const char *pattern, int options) {
 
 	self = (Regex *) super(Object, self, init);
 	if (self) {
@@ -127,9 +129,11 @@ static Regex *initWithPattern(Regex *self, const char *pattern, const int option
 }
 
 /**
- * @see Regex::matchesCharacters(const Regex *, const char *, int, RANGE **)
+ * @fn _Bool Regex::matchesCharacters(const Regex *self, const char *chars, int options, Range **matches)
+ *
+ * @memberof Regex
  */
-static _Bool matchesCharacters(const Regex *self, const char *chars, int options, RANGE **ranges) {
+static _Bool matchesCharacters(const Regex *self, const char *chars, int options, Range **ranges) {
 
 	if (ranges) {
 		const size_t numberOfMatches = self->numberOfSubExpressions + 1;
@@ -138,10 +142,10 @@ static _Bool matchesCharacters(const Regex *self, const char *chars, int options
 		const int err = regexec(self->regex, chars, numberOfMatches, matches, options);
 		assert(err == 0 || err == REG_NOMATCH);
 
-		*ranges = calloc(numberOfMatches, sizeof(RANGE));
+		*ranges = calloc(numberOfMatches, sizeof(Range));
 		assert(*ranges);
 
-		RANGE *range = *ranges;
+		Range *range = *ranges;
 		const regmatch_t *match = matches;
 		for (size_t i = 0; i < numberOfMatches; i++, range++, match++) {
 			range->location = match->rm_so;
@@ -162,9 +166,11 @@ static _Bool matchesCharacters(const Regex *self, const char *chars, int options
 }
 
 /**
- * @see Regex::matchesString(const Regex *, const String *, int, RANGE **)
+ * @fn _Bool Regex::matchesString(const Regex *self, const String *string, int options, Range **matches)
+ *
+ * @memberof Regex
  */
-static _Bool matchesString(const Regex *self, const String *string, int options, RANGE **ranges) {
+static _Bool matchesString(const Regex *self, const String *string, int options, Range **ranges) {
 
 	assert(string);
 

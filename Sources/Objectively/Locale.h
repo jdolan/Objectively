@@ -42,7 +42,6 @@ typedef _locale_t locale_t;
  * @extends Object
  */
 
-
 /**
  * @defgroup Localization Localization
  *
@@ -52,7 +51,7 @@ typedef struct Locale Locale;
 typedef struct LocaleInterface LocaleInterface;
 
 /**
- * @brief Locale.
+ * @brief Locale abstraction for language and data formatting.
  *
  * @extends Object
  *
@@ -100,31 +99,39 @@ struct LocaleInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @fn Locale *Locale::initWithIdentifier(Locale *self, const char *identifier)
+	 *
 	 * @brief Initializes this Locale with the given identifier.
 	 *
 	 * @param identifier The locale identifier, e.g. `en-US`.
 	 *
 	 * @return The initialized Locale, or `NULL` on error.
 	 *
-	 * @relates Locale
+	 * @memberof Locale
 	 */
 	Locale *(*initWithIdentifier)(Locale *self, const char *identifier);
 
 	/**
+	 * @fn Locale *Locale::initWithLocale(Locale *self, locale_t locale)
+	 *
 	 * @brief Initializes this Locale with the given locale.
 	 *
 	 * @param locale The locale.
 	 *
 	 * @return The initialized Locale, or `NULL` on error.
 	 *
-	 * @relates Locale
+	 * @memberof Locale
 	 */
 	Locale *(*initWithLocale)(Locale *self, locale_t locale);
 
 	/**
+	 * @static
+	 *
+	 * @fn Locale *Locale::systemLocale(void)
+	 *
 	 * @return The system Locale.
 	 *
-	 * @relates Locale
+	 * @memberof Locale
 	 */
 	Locale *(*systemLocale)(void);
 };

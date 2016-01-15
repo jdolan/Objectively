@@ -43,7 +43,7 @@ struct HelloInterface {
 	 *
 	 * @return A new Hello with the given `greeting`.
 	 *
-	 * @relates Hello
+	 * @memberof Hello
 	 */
 	Hello *(*helloWithGreeting)(const char *greeting);
 
@@ -52,14 +52,14 @@ struct HelloInterface {
 	 *
 	 * @return The initialized Hello, or `NULL` on error.
 	 *
-	 * @relates Hello
+	 * @memberof Hello
 	 */
 	Hello *(*initWithGreeting)(Hello *self, const char *greeting);
 
 	/**
 	 * @brief Prints this Hello's greeting to the console.
 	 *
-	 * @relates Hello
+	 * @memberof Hello
 	 */
 	void (*sayHello)(const Hello *self);
 };
@@ -76,14 +76,14 @@ extern Class _Hello;
 #pragma mark - HelloInterface
 
 /**
- * @see Hello::helloWithGreeting(const char *)
+ * @fn Hello::helloWithGreeting(const char *)
  */
 static Hello *helloWithGreeting(const char *greeting) {
 	return $(alloc(Hello), initWithGreeting, greeting);
 }
 
 /**
- * @see Hello::initWithGreeting(Hello *, const char *)
+ * @fn Hello::initWithGreeting(Hello *, const char *)
  */
 static Hello *initWithGreeting(Hello *self, const char *greeting) {
 
@@ -95,7 +95,7 @@ static Hello *initWithGreeting(Hello *self, const char *greeting) {
 }
 
 /**
- * @see Hello::sayHello(const Hello *)
+ * @fn Hello::sayHello(const Hello *)
  */
 static void sayHello(const Hello *self) {
 	printf("%s\n", self->greeting);

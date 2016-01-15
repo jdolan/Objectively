@@ -71,27 +71,35 @@ struct HelloInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @static
+	 *
+	 * @fn Hello *Hello::helloWithGreeting(const char *greeting)
+	 *
 	 * @brief A factory method for instantiating Hello.
 	 *
 	 * @return A new Hello with the given `greeting`.
 	 *
-	 * @relates Hello
+	 * @memberof Hello
 	 */
 	Hello *(*helloWithGreeting)(const char *greeting);
 
 	/**
+	 * @fn Hello *Hello::initWithGreeting(Hello *self, const char *greeting)
+	 *
 	 * @brief Initializes this Hello with the given `greeting`.
 	 *
 	 * @return The initialized Hello, or `NULL` on error.
 	 *
-	 * @relates Hello
+	 * @memberof Hello
 	 */
 	Hello *(*initWithGreeting)(Hello *self, const char *greeting);
 
 	/**
+	 * @fn void Hello::sayHello(const Hello *self)
+	 *
 	 * @brief Prints this Hello's greeting to the console.
 	 * 
-	 * @relates Hello
+	 * @memberof Hello
 	 */
 	void (*sayHello)(const Hello *self);
 };
@@ -118,14 +126,18 @@ To implement a type, implement its instance and Class methods and Class initiali
 #define _Class _Hello
 
 /**
- * @see HelloInterface::helloWithGreeting(const char *)
+ * @fn Hello *HelloInterface::helloWithGreeting(const char *greeting)
+ *
+ * @memberof Hello
  */
 static Hello *helloWithGreeting(const char *greeting) {
 	return $(alloc(Hello), initWithGreeting, greeting);
 }
 
 /**
- * @see HelloInterface::initWithGreeting(Hello *, const char *)
+ * @fn Hello *HelloInterface::initWithGreeting(Hello *self, const char *greeting)
+ *
+ * @memberof Hello
  */
 static Hello *initWithGreeting(Hello *self, const char *greeting) {
 
@@ -137,7 +149,9 @@ static Hello *initWithGreeting(Hello *self, const char *greeting) {
 }
 
 /**
- * @see HelloInterface::sayHello(const Hello *)
+ * @fn void HelloInterface::sayHello(const Hello *self)
+ *
+ * @memberof Hello
  */
 static void sayHello(const Hello *self) {
 	printf("%s\n", self->greeting);
@@ -229,7 +243,9 @@ A shared instance or _singleton pattern_ can be achieved through Class methods a
 static URLSession *_sharedInstance;
 
 /**
- * @see URLSessionInterface::sharedInstance(void)
+ * @fn URLSession *URLSessionInterface::sharedInstance(void)
+ *
+ * @memberof URLSession
  */
 static *URLSession sharedInstance(void) {
     static Once once;

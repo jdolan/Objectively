@@ -81,34 +81,42 @@ struct LockInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @fn Lock *Lock::init(Lock *self)
+	 *
 	 * @brief Initializes this Lock.
 	 *
 	 * @return The initialized Lock, or `NULL` on error.
 	 *
-	 * @relates Lock
+	 * @memberof Lock
 	 */
 	Lock *(*init)(Lock *self);
 
 	/**
+	 * @fn void Lock::lock(Lock *self)
+	 *
 	 * @brief Acquire this lock, waiting indefinitely.
 	 *
-	 * @relates Lock
+	 * @memberof Lock
 	 */
 	void (*lock)(Lock *self);
 
 	/**
+	 * @fn _Bool Lock::tryLock(Lock *self)
+	 *
 	 * @brief Attempt to acquire this lock immediately.
 	 *
 	 * @return `true` if the Lock was acquired, `false` otherwise.
 	 *
-	 * @relates Lock
+	 * @memberof Lock
 	 */
 	_Bool (*tryLock)(Lock *self);
 
 	/**
+	 * @fn void Lock::unlock(Lock *self)
+	 *
 	 * @brief Release this Lock.
 	 *
-	 * @relates Lock
+	 * @memberof Lock
 	 */
 	void (*unlock)(Lock *self);
 };

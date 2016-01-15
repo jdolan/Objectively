@@ -84,6 +84,8 @@ struct ErrorInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @fn Error *Error::initWithDomain(Error *self, String *domain, int code, String *message)
+	 *
 	 * @brief Initializes an Error with the given details.
 	 *
 	 * @param domain The Error domain (required).
@@ -92,7 +94,7 @@ struct ErrorInterface {
 	 *
 	 * @return The initialized Error, or `NULL` on error.
 	 *
-	 * @relates Error
+	 * @memberof Error
 	 */
 	Error *(*initWithDomain)(Error *self, String *domain, int code, String *message);
 };

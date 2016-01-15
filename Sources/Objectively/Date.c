@@ -59,7 +59,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 		const Date *this = (Date *) self;
 		const Date *that = (Date *) other;
 
-		return $(this, compareTo, that) == SAME;
+		return $(this, compareTo, that) == OrderSame;
 	}
 
 	return false;
@@ -68,40 +68,11 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - DateInterface
 
 /**
- * @see Date::date(void)
+ * @fn Order Date::compareTo(const Date *self, const Date *other)
+ *
+ * @memberof Date
  */
-static Date *date(void) {
-
-	return $$(Date, dateWithTimeSinceNow, NULL);
-}
-
-/**
- * @see Date::dateWithTimeSinceNow(const Time *)
- */
-static Date *dateWithTimeSinceNow(const Time *interval) {
-
-	Date *date = $(alloc(Date), init);
-	if (date) {
-		if (interval) {
-			date->time.tv_sec += interval->tv_sec;
-			date->time.tv_usec += interval->tv_usec;
-			if (date->time.tv_usec >= MSEC_PER_SEC) {
-				date->time.tv_sec++;
-				date->time.tv_usec -= MSEC_PER_SEC;			
-			} else if (date->time.tv_usec < 0) {
-				date->time.tv_sec--;
-				date->time.tv_usec += MSEC_PER_SEC;
-			}
-		}
-	}
-
-	return date;
-}
-
-/**
- * @see Date::compareTo(const Date *, const Date *)
- */
-static ORDER compareTo(const Date *self, const Date *other) {
+static Order compareTo(const Date *self, const Date *other) {
 
 	if (other) {
 		const long seconds = self->time.tv_sec - other->time.tv_sec;
@@ -109,27 +80,66 @@ static ORDER compareTo(const Date *self, const Date *other) {
 
 			const long microseconds = self->time.tv_usec - other->time.tv_usec;
 			if (microseconds == 0) {
-				return SAME;
+				return OrderSame;
 			}
 
-			return microseconds < 0 ? ASCENDING : DESCENDING;
+			return microseconds < 0 ? OrderAscending : OrderDescending;
 		}
 
-		return seconds < 0 ? ASCENDING : DESCENDING;
+		return seconds < 0 ? OrderAscending : OrderDescending;
 	}
 
-	return ASCENDING;
+	return OrderAscending;
 }
 
 /**
- * @see Date::init(Date *)
+ * @fn Date *Date::date(void)
+ *
+ * @memberof Date
+ */
+static Date *date(void) {
+	
+	return $$(Date, dateWithTimeSinceNow, NULL);
+}
+
+/**
+ * @fn Date *Date::dateWithTimeSinceNow(const Time interval)
+ *
+ * @memberof Date
+ */
+static Date *dateWithTimeSinceNow(const Time *interval) {
+	
+	Date *date = $(alloc(Date), init);
+	if (date) {
+		if (interval) {
+			date->time.tv_sec += interval->tv_sec;
+			date->time.tv_usec += interval->tv_usec;
+			if (date->time.tv_usec >= MSEC_PER_SEC) {
+				date->time.tv_sec++;
+				date->time.tv_usec -= MSEC_PER_SEC;
+			} else if (date->time.tv_usec < 0) {
+				date->time.tv_sec--;
+				date->time.tv_usec += MSEC_PER_SEC;
+			}
+		}
+	}
+	
+	return date;
+}
+
+/**
+ * @fn Date *Date::init(Date *self)
+ *
+ * @memberof Date
  */
 static Date *init(Date *self) {
 	return $(self, initWithTime, NULL);
 }
 
 /**
- * @see Date::initWithTime(Date *, Time *)
+ * @fn Date *Date::initWithTime(Date *self, const Time *time)
+ *
+ * @memberof Date
  */
 static Date *initWithTime(Date *self, const Time *time) {
 
@@ -159,9 +169,9 @@ static void initialize(Class *clazz) {
 
 	DateInterface *interface = (DateInterface *) clazz->interface;
 
+	interface->compareTo = compareTo;
 	interface->date = date;
 	interface->dateWithTimeSinceNow = dateWithTimeSinceNow;
-	interface->compareTo = compareTo;
 	interface->init = init;
 	interface->initWithTime = initWithTime;
 }

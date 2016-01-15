@@ -51,7 +51,9 @@ static void dealloc(Object *self) {
 #pragma mark - ConditionInterface
 
 /**
- * @see Condition::broadcast(Condition *)
+ * @fn void Condition::broadcast(Condition *self)
+ *
+ * @memberof Condition
  */
 static void broadcast(Condition *self) {
 
@@ -60,7 +62,9 @@ static void broadcast(Condition *self) {
 }
 
 /**
- * @see Condition::init(Condition *)
+ * @fn Condition *Condition::init(Condition *self)
+ *
+ * @memberof Condition
  */
 static Condition *init(Condition *self) {
 
@@ -78,7 +82,9 @@ static Condition *init(Condition *self) {
 }
 
 /**
- * @see Condition::signal(Condition *)
+ * @fn void Condition::signal(Condition *self)
+ *
+ * @memberof Condition
  */
 static void _signal(Condition *self) {
 
@@ -87,7 +93,9 @@ static void _signal(Condition *self) {
 }
 
 /**
- * @see Condition::wait(Condition *)
+ * @fn void Condition::wait(Condition *self)
+ *
+ * @memberof Condition
  */
 static void _wait(Condition *self) {
 
@@ -96,7 +104,9 @@ static void _wait(Condition *self) {
 }
 
 /**
- * @see Condition::waitUntilDate(Condition *, const Date *)
+ * @fn _Bool Condition::waitUntilDate(Condition *self, const Date *date)
+ *
+ * @memberof Condition
  */
 static _Bool waitUntilDate(Condition *self, const Date *date) {
 

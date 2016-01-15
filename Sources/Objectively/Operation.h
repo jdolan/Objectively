@@ -131,40 +131,50 @@ struct OperationInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @fn void Operation::addDependency(Operation *self, Operation *dependency)
+	 *
 	 * @brief Makes this Operation dependent on the completion of `dependency`.
 	 *
 	 * @param dependency The Operation to await.
 	 *
-	 * @relates Operation
+	 * @memberof Operation
 	 */
 	void (*addDependency)(Operation *self, Operation *dependency);
 
 	/**
+	 * @fn void Operation::cancel(Operation *self)
+	 *
 	 * @brief Cancels this Operation, allowing it to complete immediately.
 	 *
-	 * @relates Operation
+	 * @memberof Operation
 	 */
 	void (*cancel)(Operation *self);
 
 	/**
+	 * @fn Array *Operation::dependencies(const Operation *self)
+	 *
 	 * @return An instantaneous copy of this Operations' dependencies.
 	 *
-	 * @relates Operation
+	 * @memberof Operation
 	 */
 	Array *(*dependencies)(const Operation *self);
 
 	/**
+	 * @fn Operation *Operation::init(Operation *self)
+	 *
 	 * @brief Initializes this Operation.
 	 *
 	 * @return The initialized Operation, or `NULL` on error.
 	 *
 	 * @remark Asynchronous subclasses should invoke this initializer.
 	 *
-	 * @relates Operation
+	 * @memberof Operation
 	 */
 	Operation *(*init)(Operation *self);
 
 	/**
+	 * @fn Operation *Operation::initWithFunction(Operation *self, OperationFunction function, ident data)
+	 *
 	 * @brief Initializes a *synchronous* Operation with the given `function`.
 	 *
 	 * @param function The OperationFunction to perform
@@ -172,27 +182,33 @@ struct OperationInterface {
 	 *
 	 * @return The initialized Operation, or `NULL` on error.
 	 *
-	 * @relates Operation
+	 * @memberof Operation
 	 */
 	Operation *(*initWithFunction)(Operation *self, OperationFunction function, ident data);
 
 	/**
+	 * @fn _Bool Operation::isReady(const Operation *self)
+	 *
 	 * @return `true` when all criteria for this Operation to `start` are met.
 	 *
-	 * @relates Operation
+	 * @memberof Operation
 	 */
 	_Bool (*isReady)(const Operation *self);
 
 	/**
+	 * @fn void Operation::removeDependency(Operation *self, Operation *dependency)
+	 *
 	 * @brief Removes the dependency on `dependency`.
 	 *
 	 * @param dependency The dependency.
 	 *
-	 * @relates Operation
+	 * @memberof Operation
 	 */
 	void (*removeDependency)(Operation *self, Operation *dependency);
 
 	/**
+	 * @fn void Operation::start(Operation *self)
+	 *
 	 * @brief Starts this Operation.
 	 *
 	 * @remark The default implementation of this method checks the state of
@@ -202,16 +218,18 @@ struct OperationInterface {
 	 *
 	 * @remark Asynchronous Operations should override this method and
 	 * coordinate their own state transitions and queue removal. This method
-	 * must not be invoked by `super`.
+	 * should _not_ be invoked by `super`.
 	 *
-	 * @relates Operation
+	 * @memberof Operation
 	 */
 	void (*start)(Operation *self);
 
 	/**
+	 * @fn void Operation::waitUntilFinished(const Operation *self)
+	 *
 	 * @brief Blocks the current thread until this Operation `isFinished`.
 	 *
-	 * @relates Operation
+	 * @memberof Operation
 	 */
 	void (*waitUntilFinished)(const Operation *self);
 };

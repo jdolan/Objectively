@@ -193,7 +193,9 @@ static void writeElement(JSONWriter *writer, const ident obj) {
 }
 
 /**
- * @see JSONSerialization::dataFromObject(const id, int options)
+ * @fn Data *JSONSerialization::dataFromObject(const ident obj, int options)
+ *
+ * @memberof JSONSerialization
  */
 static Data *dataFromObject(const ident obj, int options) {
 
@@ -467,7 +469,9 @@ static ident readElement(JSONReader *reader) {
 }
 
 /**
- * @see JSONSerialization::objectFromData(const Data *, int)
+ * @fn ident JSONSerialization::objectFromData(const Data *data, int options)
+ *
+ * @memberof JSONSerialization
  */
 static ident objectFromData(const Data *data, int options) {
 

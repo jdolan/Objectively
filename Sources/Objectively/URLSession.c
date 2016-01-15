@@ -52,7 +52,9 @@ static void dealloc(Object *self) {
 #pragma mark - URLSessionInterface
 
 /**
- * @see URLSession::dataTaskWithRequest(URLSession *, URLRequest *, URLSessionTaskCompletion)
+ * @fn URLSessionDataTask *URLSession::dataTaskWithRequest(URLSession *self, URLRequest *request, URLSessionTaskCompletion completion)
+ *
+ * @memberof URLSession
  */
 static URLSessionDataTask *dataTaskWithRequest(URLSession *self, URLRequest *request,
 		URLSessionTaskCompletion completion) {
@@ -68,7 +70,9 @@ static URLSessionDataTask *dataTaskWithRequest(URLSession *self, URLRequest *req
 }
 
 /**
- * @see URLSession::dataTaskWithURL(URLSession *, URL *, URLSessionTaskCompletion)
+ * @fn URLSessionDataTask *URLSession::dataTaskWithURL(URLSession *self, URL *url, URLSessionTaskCompletion completion)
+ *
+ * @memberof URLSession
  */
 static URLSessionDataTask *dataTaskWithURL(URLSession *self, URL *url,
 		URLSessionTaskCompletion completion) {
@@ -83,7 +87,9 @@ static URLSessionDataTask *dataTaskWithURL(URLSession *self, URL *url,
 }
 
 /**
- * @see URLSession::downloadTaskWithRequest(URLSession *, URLRequest *, URLSessionTaskCompletion)
+ * @fn URLSessionDownloadTask *URLSession::downloadTaskWithRequest(URLSession *self, URLRequest *request, URLSessionTaskCompletion completion)
+ *
+ * @memberof URLSession
  */
 static URLSessionDownloadTask *downloadTaskWithRequest(URLSession *self, URLRequest *request,
 		URLSessionTaskCompletion completion) {
@@ -99,7 +105,9 @@ static URLSessionDownloadTask *downloadTaskWithRequest(URLSession *self, URLRequ
 }
 
 /**
- * @see URLSession::downloadTaskWithURL(URLSession *, URL *, URLSessionTaskCompletion)
+ * @fn URLSessionDownloadTask *URLSession::downloadTaskWithURL(URLSession *self, URL *url, URLSessionTaskCompletion completion)
+ *
+ * @memberof URLSession
  */
 static URLSessionDownloadTask *downloadTaskWithURL(URLSession *self, URL *url,
 		URLSessionTaskCompletion completion) {
@@ -114,7 +122,9 @@ static URLSessionDownloadTask *downloadTaskWithURL(URLSession *self, URL *url,
 }
 
 /**
- * @see URLSession::init(URLSession *)
+ * @fn URLSession *URLSession::init(URLSession *self)
+ *
+ * @memberof URLSession
  */
 static URLSession *init(URLSession *self) {
 
@@ -244,7 +254,9 @@ static ident run(Thread *thread) {
 }
 
 /**
- * @see URLSession::initWithConfiguration(URLSession *, URLSessionConfiguration *)
+ * @fn URLSession *URLSession::initWithConfiguration(URLSession *self, URLSessionConfiguration *configuration)
+ *
+ * @memberof URLSession
  */
 static URLSession *initWithConfiguration(URLSession *self, URLSessionConfiguration *configuration) {
 
@@ -265,7 +277,9 @@ static URLSession *initWithConfiguration(URLSession *self, URLSessionConfigurati
 }
 
 /**
- * @see URLSession::invalidateAndCancel(URLSession *)
+ * @fn void URLSession::invalidateAndCancel(URLSession *self)
+ *
+ * @memberof URLSession
  */
 static void invalidateAndCancel(URLSession *self) {
 
@@ -285,7 +299,9 @@ static void invalidateAndCancel(URLSession *self) {
 static URLSession *_sharedInstance;
 
 /**
- * @see URLSession::sharedInstance(void)
+ * @fn URLSession *URLSession::sharedInstance(void)
+ *
+ * @memberof URLSession
  */
 static URLSession *sharedInstance(void) {
 	static Once once;
@@ -298,7 +314,9 @@ static URLSession *sharedInstance(void) {
 }
 
 /**
- * @see URLSession::tasks(const URLSession *)
+ * @fn Array *URLSession::tasks(const URLSession *self)
+ *
+ * @memberof URLSession
  */
 static Array *tasks(const URLSession *self) {
 
@@ -312,7 +330,9 @@ static Array *tasks(const URLSession *self) {
 }
 
 /**
- * @see URLSession::uploadTaskWithRequest(URLSession *, URLRequest *, URLSessionTaskCompletion)
+ * @fn URLSessionUploadTask *URLSession::uploadTaskWithRequest(URLSession *self, URLRequest *request, URLSessionTaskCompletion completion)
+ *
+ * @memberof URLSession
  */
 static URLSessionUploadTask *uploadTaskWithRequest(URLSession *self, URLRequest *request,
 		URLSessionTaskCompletion completion) {

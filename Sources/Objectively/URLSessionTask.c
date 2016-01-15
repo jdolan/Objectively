@@ -61,7 +61,9 @@ static void dealloc(Object *self) {
 #pragma mark - URLSessionTaskInterface
 
 /**
- * @see URLSessionTask::cancel(URLSessionTask *)
+ * @fn void URLSessionTask::cancel(URLSessionTask *self)
+ *
+ * @memberof URLSessionTask
  */
 static void cancel(URLSessionTask *self) {
 
@@ -79,7 +81,9 @@ static void cancel(URLSessionTask *self) {
 
 
 /**
- * @see URLSessionTask::initWithRequestInSession(URLSessionTask *, URLRequest *, URLSession *, URLSessionTaskCompletion)
+ * @fn URLSessionTask *URLSessionTask::initWithRequestInSession(URLSessionTask *self, struct URLRequest *request, struct URLSession *session, URLSessionTaskCompletion completion)
+ *
+ * @memberof URLSessionTask
  */
 static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URLRequest *request,
 		struct URLSession *session, URLSessionTaskCompletion completion) {
@@ -105,7 +109,9 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
 }
 
 /**
- * @see URLSessionTask::resume(URLSessionTask *)
+ * @fn void URLSessionTask::resume(URLSessionTask *self)
+ *
+ * @memberof URLSessionTask
  */
 static void resume(URLSessionTask *self) {
 
@@ -153,7 +159,9 @@ static int progress(ident self, curl_off_t bytesExpectedToReceive, curl_off_t by
 }
 
 /**
- * @see URLSessionTask::setup(URLSessionTask *)
+ * @fn void URLSessionTask::setup(URLSessionTask *self)
+ *
+ * @memberof URLSessionTask
  */
 static void setup(URLSessionTask *self) {
 
@@ -210,7 +218,9 @@ static void setup(URLSessionTask *self) {
 }
 
 /**
- * @see URLSessionTask::suspend(URLSessionTask *)
+ * @fn void URLSessionTask::suspend(URLSessionTask *self)
+ *
+ * @memberof URLSessionTask
  */
 static void suspend(URLSessionTask *self) {
 
@@ -225,7 +235,9 @@ static void suspend(URLSessionTask *self) {
 }
 
 /**
- * @see URLSessionTask::teardown(URLSessionTask *)
+ * @fn void URLSessionTask::teardown(URLSessionTask *self)
+ *
+ * @memberof URLSessionTask
  */
 static void teardown(URLSessionTask *self) {
 

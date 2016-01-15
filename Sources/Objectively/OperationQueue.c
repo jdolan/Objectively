@@ -58,7 +58,9 @@ static void dealloc(Object *self) {
 #pragma mark - OperationQueueInterface
 
 /**
- * @see OperationQueue::addOperation(OperationQueue *, Operation *)
+ * @fn void OperationQueue::addOperation(OperationQueue *self, Operation *operation)
+ *
+ * @memberof OperationQueue
  */
 static void addOperation(OperationQueue *self, Operation *operation) {
 
@@ -74,7 +76,9 @@ static void addOperation(OperationQueue *self, Operation *operation) {
 }
 
 /**
- * @see OperationQueue::cancelAllOperations(OperationQueue *)
+ * @fn void OperationQueue::cancelAllOperations(OperationQueue *self)
+ *
+ * @memberof OperationQueue
  */
 static void cancelAllOperations(OperationQueue *self) {
 
@@ -90,7 +94,9 @@ static void cancelAllOperations(OperationQueue *self) {
 __thread OperationQueue *_currentQueue;
 
 /**
- * @see OperationQueue::currentQueue(void)
+ * @fn OperationQueue* OperationQueue::currentQueue(void)
+ *
+ * @memberof OperationQueue
  */
 static OperationQueue *currentQueue(void) {
 
@@ -140,7 +146,9 @@ static ident run(Thread *thread) {
 }
 
 /**
- * @see OperationQueue::init(OperationQueue *)
+ * @fn OperationQueue *OperationQueue::init(OperationQueue *self)
+ *
+ * @memberof OperationQueue
  */
 static OperationQueue *init(OperationQueue *self) {
 
@@ -163,7 +171,9 @@ static OperationQueue *init(OperationQueue *self) {
 }
 
 /**
- * @see OperationQueue::operationCount(const OperationQueue *)
+ * @fn int OperationQueue::operationCount(const OperationQueue *self)
+ *
+ * @memberof OperationQueue
  */
 static int operationCount(const OperationQueue *self) {
 
@@ -177,7 +187,9 @@ static int operationCount(const OperationQueue *self) {
 }
 
 /**
- * @see OperationQueue::operations(OperationQueue *)
+ * @fn Array *OperationQueue::operations(const OperationQueue *self)
+ *
+ * @memberof OperationQueue
  */
 static Array *operations(const OperationQueue *self) {
 
@@ -191,7 +203,9 @@ static Array *operations(const OperationQueue *self) {
 }
 
 /**
- * @see OperationQueue::removeOperation(OperationQueue *, Operation *)
+ * @fn void OperationQueue::removeOperation(OperationQueue *self, Operation *operation)
+ *
+ * @memberof OperationQueue
  */
 static void removeOperation(OperationQueue *self, Operation *operation) {
 
@@ -205,7 +219,9 @@ static void removeOperation(OperationQueue *self, Operation *operation) {
 }
 
 /**
- * @see OperationQueue::waitUntilAllOperationsAreFinished(OperationQueue *)
+ * @fn void OperationQueue::waitUntilAllOperationsAreFinished(OperationQueue *self)
+ *
+ * @memberof OperationQueue
  */
 static void waitUntilAllOperationsAreFinished(OperationQueue *self) {
 

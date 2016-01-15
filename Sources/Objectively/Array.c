@@ -138,7 +138,9 @@ static _Bool isEqual(const Object *self, const Object *other) {
 
 
 /**
- * @see Array::arrayWithArray(const Array *)
+ * @fn Array *Array::arrayWithArray(const Array *array)
+ *
+ * @memberof Array
  */
 static Array *arrayWithArray(const Array *array) {
 
@@ -146,7 +148,9 @@ static Array *arrayWithArray(const Array *array) {
 }
 
 /**
- * @see Array::arrayWithObjects(id, ...)
+ * @fn Array *Array::arrayWithObjects(ident obj, ...)
+ *
+ * @memberof Array
  */
 static Array *arrayWithObjects(ident obj, ...) {
 
@@ -188,7 +192,9 @@ static Array *arrayWithObjects(ident obj, ...) {
 }
 
 /**
- * @see Array::containsObject(const Array *, const id)
+ * @fn _Bool Array::containsObject(const Array *self, const ident obj)
+ *
+ * @memberof Array
  */
 static _Bool containsObject(const Array *self, const ident obj) {
 
@@ -196,7 +202,9 @@ static _Bool containsObject(const Array *self, const ident obj) {
 }
 
 /**
- * @see Array::enumerateObjects(const Array *, ArrayEnumerator, id)
+ * @fn void Array::enumerateObjects(const Array *self, ArrayEnumerator enumerator, ident data)
+ *
+ * @memberof Array
  */
 static void enumerateObjects(const Array *self, ArrayEnumerator enumerator, ident data) {
 
@@ -210,7 +218,9 @@ static void enumerateObjects(const Array *self, ArrayEnumerator enumerator, iden
 }
 
 /**
- * @see Array::filterObjects(const Array *, ArrayEnumerator, id)
+ * @fn void Array::filterObjects(const Array *self, ArrayEnumerator enumerator, ident data)
+ *
+ * @memberof Array
  */
 static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, ident data) {
 
@@ -228,7 +238,9 @@ static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, ident
 }
 
 /**
- * @see Array::indexOfObject(const Array *, const id)
+ * @fn int Array::indexOfObject(const Array *self, const ident obj)
+ *
+ * @memberof Array
  */
 static int indexOfObject(const Array *self, const ident obj) {
 
@@ -246,7 +258,9 @@ static int indexOfObject(const Array *self, const ident obj) {
 }
 
 /**
- * @see Array::initWithArray(Array *, const Array *)
+ * @fn Array *Array::initWithArray(Array *self, const Array *array)
+ *
+ * @memberof Array
  */
 static Array *initWithArray(Array *self, const Array *array) {
 
@@ -269,7 +283,9 @@ static Array *initWithArray(Array *self, const Array *array) {
 }
 
 /**
- * @see Array::initWithObjects(Array *, ...)
+ * @fn Array *Array::initWithObjects(Array *self, ...)
+ *
+ * @memberof Array
  */
 static Array *initWithObjects(Array *self, ...) {
 
@@ -304,7 +320,9 @@ static Array *initWithObjects(Array *self, ...) {
 }
 
 /**
- * @see Array::mutableCopy(const Array *)
+ * @fn MutableArray *Array::mutableCopy(const Array *self)
+ *
+ * @memberof Array
  */
 static MutableArray *mutableCopy(const Array *self) {
 
@@ -317,9 +335,11 @@ static MutableArray *mutableCopy(const Array *self) {
 }
 
 /**
- * @see Array::objectAtIndex(const Array *, const int)
+ * @fn ident Array::objectAtIndex(const Array *self, int index)
+ *
+ * @memberof Array
  */
-static ident objectAtIndex(const Array *self, const int index) {
+static ident objectAtIndex(const Array *self, int index) {
 
 	assert(index > -1);
 	assert(index < self->count);

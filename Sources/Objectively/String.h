@@ -63,7 +63,7 @@ typedef struct StringInterface StringInterface;
  *
  * @remark Because Strings are encoded using UTF-8, they must not be treated as
  * ASCII C strings. That is, a single Unicode code point will often span
- * multiple `char`s. Be mindful of this when executing RANGE operations.
+ * multiple `char`s. Be mindful of this when executing Range operations.
  *
  * @extends Object
  *
@@ -109,6 +109,8 @@ struct StringInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @fn Order String::compareTo(const String *self, const String *other, const Range range)
+	 *
 	 * @brief Compares this String lexicographically to another.
 	 *
 	 * @param other The String to compare to.
@@ -116,64 +118,78 @@ struct StringInterface {
 	 *
 	 * @return The ordering of this String compared to `other`.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
-	ORDER (*compareTo)(const String *self, const String *other, const RANGE range);
+	Order (*compareTo)(const String *self, const String *other, const Range range);
 
 	/**
+	 * @fn Array *String::componentsSeparatedByCharacters(const String *self, const char *chars)
+	 *
 	 * @brief Returns the components of this String that were separated by `chars`.
 	 *
 	 * @param chars The separating characters.
 	 *
 	 * @return An Array of substrings that were separated by `chars`.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	Array *(*componentsSeparatedByCharacters)(const String *self, const char *chars);
 
 	/**
+	 * @fn Array *String::componentsSeparatedByString(const String *self, const String *string)
+	 *
 	 * @brief Returns the components of this String that were separated by `string`.
 	 *
 	 * @param string The separating string.
 	 *
 	 * @return An Array of substrings that were separated by `string`.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	Array *(*componentsSeparatedByString)(const String *self, const String *string);
 
 	/**
+	 * @fn Data *String::getData(const String *self, StringEncoding encoding)
+	 *
 	 * @brief Returns a Data with this String's contents in the given encoding.
 	 *
 	 * @param encoding The desired StringEncoding.
 	 *
 	 * @return A Data with this String's contents in the given encoding.
+	 *
+	 * @memberof String
 	 */
 	Data *(*getData)(const String *self, StringEncoding encoding);
 
 	/**
+	 * @fn _Bool String::hasPrefix(const String *self, const String *prefix)
+	 *
 	 * @brief Checks this String for the given prefix.
 	 *
 	 * @param prefix The Prefix to check.
 	 *
 	 * @return true if this String starts with prefix, false otherwise.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	_Bool (*hasPrefix)(const String *self, const String *prefix);
 
 	/**
+	 * @fn _Bool String::hasSuffix(const String *self, const String *suffix)
+	 *
 	 * @brief Checks this String for the given suffix.
 	 *
 	 * @param suffix The suffix to check.
 	 *
 	 * @return true if this String ends with suffix, false otherwise.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	_Bool (*hasSuffix)(const String *self, const String *suffix);
 
 	/**
+	 * @fn String *String::initWithBytes(String *self, const byte *bytes, size_t length, StringEncoding encoding)
+	 *
 	 * @brief Initializes this String by decoding `length` of `bytes`.
 	 *
 	 * @param bytes The bytes.
@@ -182,22 +198,26 @@ struct StringInterface {
 	 *
 	 * @return The initialized String, or `NULL` on error.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	String *(*initWithBytes)(String *self, const byte *bytes, size_t length, StringEncoding encoding);
 
 	/**
+	 * @fn String *String::initWithCharacters(String *self, const char *chars)
+	 *
 	 * @brief Initializes this String by copying `chars`.
 	 *
 	 * @param chars The null-terminated, UTF-8 encoded C string.
 	 *
 	 * @return The initialized String, or `NULL` on error.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	String *(*initWithCharacters)(String *self, const char *chars);
 
 	/**
+	 * @fn String *String::initWithContentsOfFile(String *self, const char *path, StringEncoding encoding)
+	 *
 	 * @brief Initializes this String with the contents of the FILE at `path`.
 	 *
 	 * @param path The path of the file to load.
@@ -205,11 +225,13 @@ struct StringInterface {
 	 *
 	 * @return The initialized String, or `NULL` on error.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	String *(*initWithContentsOfFile)(String *self, const char *path, StringEncoding encoding);
 
 	/**
+	 * @fn String *String::initWithData(String *self, const Data *data, StringEncoding encoding)
+	 *
 	 * @brief Initializes this String with the given Data.
 	 *
 	 * @param data The Data object.
@@ -217,22 +239,26 @@ struct StringInterface {
 	 *
 	 * @return The initialized String, or `NULL` on error.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	String *(*initWithData)(String *self, const Data *data, StringEncoding encoding);
 
 	/**
+	 * @fn String *String::initWithFormat(String *self, const char *fmt, ...)
+	 *
 	 * @brief Initializes this String with the specified format string.
 	 *
 	 * @param fmt The formatted string.
 	 *
 	 * @return The initialized String, or `NULL` on error.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	String *(*initWithFormat)(String *self, const char *fmt, ...);
 
 	/**
+	 * @fn String *String::initWithMemory(String *self, const ident mem, size_t length)
+	 *
 	 * @brief Initializes this String with the specified buffer.
 	 *
 	 * @param mem The dynamically allocated null-terminated, UTF-8 encoded buffer.
@@ -240,11 +266,13 @@ struct StringInterface {
 	 *
 	 * @return The initialized String, or `NULL` on error.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	String *(*initWithMemory)(String *self, const ident mem, size_t length);
 
 	/**
+	 * @fn String *String::initWithVaList(String *string, const char *fmt, va_list args)
+	 *
 	 * @brief Initializes this String with the specified arguments list.
 	 *
 	 * @param fmt The format string.
@@ -252,60 +280,74 @@ struct StringInterface {
 	 *
 	 * @return The initialized String, or `NULL` on error.
 	 *
-	 * @relates String
+	 * @memberof String
 	 *
-	 * @see vasprintf
+	 * @see vasprintf(3)
 	 */
 	String *(*initWithVaList)(String *string, const char *fmt, va_list args);
 
 	/**
+	 * @fn String *String::lowercaseString(const String *self)
+	 *
 	 * @return A lowercase representation of this String in the default Locale.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	String *(*lowercaseString)(const String *self);
 
 	/**
+	 * @fn String *String::lowercaseStringWithLocale(const String *self, const Locale *locale)
+	 *
 	 * @param locale The desired Locale.
 	 *
 	 * @return A lowercase representation of this String in the given Locale.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	String *(*lowercaseStringWithLocale)(const String *self, const Locale *locale);
 
 	/**
+	 * @fn MutableString *String::mutableCopy(const String *self)
+	 *
 	 * @return A MutableString with the contents of this String.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	MutableString *(*mutableCopy)(const String *self);
 
 	/**
-	 * Finds and returns the first occurrence of `chars` in this String.
+	 * @fn Range String::rangeOfCharacters(const String *self, const char *chars, const Range range)
+	 *
+	 * @brief Finds and returns the first occurrence of `chars` in this String.
 	 *
 	 * @param chars The characters to search for.
 	 * @param range The range in which to search.
 	 *
-	 * @return A RANGE specifying the first occurrence of `chars` in this String.
+	 * @return A Range specifying the first occurrence of `chars` in this String.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
-	RANGE (*rangeOfCharacters)(const String *self, const char *chars, const RANGE range);
+	Range (*rangeOfCharacters)(const String *self, const char *chars, const Range range);
 
 	/**
-	 * Finds and returns the first occurrence of `string` in this String.
+	 * @fn Range String::rangeOfString(const String *self, const String *string, const Range range)
+	 *
+	 * @brief Finds and returns the first occurrence of `string` in this String.
 	 *
 	 * @param string The String to search for.
 	 * @param range The range in which to search.
 	 *
-	 * @return A RANGE specifying the first occurrence of `string` in this String.
+	 * @return A Range specifying the first occurrence of `string` in this String.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
-	RANGE (*rangeOfString)(const String *self, const String *string, const RANGE range);
+	Range (*rangeOfString)(const String *self, const String *string, const Range range);
 
 	/**
+	 * @static
+	 *
+	 * @fn String *String::stringWithBytes(const byte *bytes, size_t length, StringEncoding encoding)
+	 *
 	 * @brief Returns a new String by decoding `length` of `bytes` to UTF-8.
 	 *
 	 * @param bytes The bytes.
@@ -314,22 +356,30 @@ struct StringInterface {
 	 *
 	 * @return The new String, or `NULL` on error.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	String *(*stringWithBytes)(const byte *bytes, size_t length, StringEncoding encoding);
 
 	/**
+	 * @static
+	 *
+	 * @fn String *String::stringWithCharacters(const char *chars)
+	 *
 	 * @brief Returns a new String by copying `chars`.
 	 *
 	 * @param chars The null-terminated UTF-8 encoded C string.
 	 *
 	 * @return The new String, or `NULL` on error.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	String *(*stringWithCharacters)(const char *chars);
 
 	/**
+	 * @static
+	 *
+	 * @fn String *String::stringWithContentsOfFile(const char *path, StringEncoding encoding)
+	 *
 	 * @brief Returns a new String with the contents of the FILE at `path`.
 	 *
 	 * @param path A path name.
@@ -337,11 +387,15 @@ struct StringInterface {
 	 *
 	 * @return The new String, or `NULL` on error.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	String *(*stringWithContentsOfFile)(const char *path, StringEncoding encoding);
 
 	/**
+	 * @static
+	 *
+	 * @fn String *String::stringWithData(const Data *data, StringEncoding encoding)
+	 *
 	 * @brief Returns a new String with the the given Data.
 	 *
 	 * @param data A Data.
@@ -349,22 +403,30 @@ struct StringInterface {
 	 *
 	 * @return The new String, or `NULL` on error.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	String *(*stringWithData)(const Data *data, StringEncoding encoding);
 
 	/**
+	 * @static
+	 *
+	 * @fn String *String::stringWithFormat(const char *fmt)
+	 *
 	 * @brief Returns a new String with the given format string.
 	 *
 	 * @param fmt The format string.
 	 *
 	 * @return The new String, or `NULL` on error.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	String *(*stringWithFormat)(const char *fmt, ...);
 
 	/**
+	 * @static
+	 *
+	 * @fn String *String::stringWithMemory(const ident mem, size_t length)
+	 *
 	 * @brief Returns a new String with the given buffer.
 	 *
 	 * @param mem A dynamically allocated, null-terminated UTF-8 encoded buffer.
@@ -372,38 +434,46 @@ struct StringInterface {
 	 *
 	 * @return The new String, or `NULL` on error.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	String *(*stringWithMemory)(const ident mem, size_t length);
 
 	/**
+	 * @fn String *String::substring(const String *string, const Range range)
+	 *
 	 * @brief Creates a new String from a subset of this one.
 	 *
 	 * @param range The character range.
 	 *
 	 * @return The new String.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
-	String *(*substring)(const String *self, RANGE range);
+	String *(*substring)(const String *self, const Range range);
 
 	/**
+	 * @fn String *String::uppercaseString(const String *self)
+	 *
 	 * @return An uppercase representation of this String in the default Locale.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	String *(*uppercaseString)(const String *self);
 
 	/**
+	 * @fn String *String::uppercaseStringWithLocale(const String *self, const Locale *locale)
+	 *
 	 * @param locale The desired Locale.
 	 *
 	 * @return A uppercase representation of this String in the given Locale.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	String *(*uppercaseStringWithLocale)(const String *self, const Locale *locale);
 
 	/**
+	 * @fn _Bool String::writeToFile(const String *self, const char *path, StringEncoding encoding)
+	 *
 	 * @brief Writes this String to `path`.
 	 *
 	 * @param path The path of the file to write.
@@ -411,7 +481,7 @@ struct StringInterface {
 	 *
 	 * @return `true` on success, `false` on error.
 	 *
-	 * @relates String
+	 * @memberof String
 	 */
 	_Bool (*writeToFile)(const String *self, const char *path, StringEncoding encoding);
 };

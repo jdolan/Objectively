@@ -45,11 +45,11 @@ START_TEST(string)
 		String *suffix = str("world!");
 		ck_assert($(string, hasSuffix, suffix));
 
-		RANGE range = { 6, 5 };
+		Range range = { 6, 5 };
 		String *substring = $(string, substring, range);
 		ck_assert_str_eq("world", substring->chars);
 
-		RANGE match = $(string, rangeOfString, substring, range);
+		Range match = $(string, rangeOfString, substring, range);
 		ck_assert_int_eq(range.location, match.location);
 		ck_assert_int_eq(range.length, match.length);
 

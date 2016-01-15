@@ -37,7 +37,9 @@
 static Regex *_regex;
 
 /**
- * @see JSONPath::objectWithPath(const id, const char *)
+ * @fn ident JSONPATH::objectWithPath(const ident root, const char *path)
+ *
+ * @memberof JSONPath
  */
 static ident objectWithPath(const ident root, const char *path) {
 
@@ -46,7 +48,7 @@ static ident objectWithPath(const ident root, const char *path) {
 
 	while (obj) {
 
-		RANGE *matches;
+		Range *matches;
 		if ($(_regex, matchesCharacters, c, 0, &matches) == false) {
 			break;
 		}
@@ -61,7 +63,7 @@ static ident objectWithPath(const ident root, const char *path) {
 
 			Dictionary *dictionary = cast(Dictionary, obj);
 
-			const RANGE range = { .location = 1, .length = segment->length - 1 };
+			const Range range = { .location = 1, .length = segment->length - 1 };
 			String *key = $(segment, substring, range);
 
 			obj = $(dictionary, objectForKey, key);

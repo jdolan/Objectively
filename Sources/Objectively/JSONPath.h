@@ -70,6 +70,10 @@ struct JSONPathInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @static
+	 *
+	 * @fn ident JSONPATH::objectWithPath(const ident root, const char *path)
+	 *
 	 * @brief Access a nested property from JSON Data.
 	 *
 	 * @param root The root element.
@@ -85,7 +89,7 @@ struct JSONPathInterface {
 	 * Use dot-notation (`.`) for accessing Dictionaries, and square braces (`[n]`)
 	 * for accessing Arrays.
 	 *
-	 * @relates JSONPath
+	 * @memberof JSONPath
 	 */
 	ident (*objectWithPath)(const ident root, const char *path);
 };

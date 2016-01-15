@@ -66,7 +66,9 @@ static void dealloc(Object *self) {
 #pragma mark - URLRequestInterface
 
 /**
- * @see URLRequest::initWithURL(URLRequest *, URL *url)
+ * @fn URLRequest *URLRequest::initWithURL(URLRequest *self, URL *url)
+ *
+ * @memberof URLRequest
  */
 static URLRequest *initWithURL(URLRequest *self, URL *url) {
 
@@ -81,7 +83,9 @@ static URLRequest *initWithURL(URLRequest *self, URL *url) {
 }
 
 /**
- * @see URLRequest::setHTTPHeader(URLRequest *, const char *name, const char *value)
+ * @fn void setValueForHTTPHeaderField(URLREquest *self, const char *value, const char *field)
+ *
+ * @memberof URLRequest
  */
 void setValueForHTTPHeaderField(URLRequest *self, const char *value, const char *field) {
 

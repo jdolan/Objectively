@@ -31,7 +31,9 @@ static void dealloc(Object *self) {
 #pragma mark - URLSessionConfigurationInterface
 
 /**
- * @see URLSessionConfiguration::init(URLSessionConfiguration *)
+ * @fn URLSessionConfiguration *URLSessionConfiguration::init(URLSessionConfiguration *self)
+ *
+ * @memberof URLSessionConfiguration
  */
 static URLSessionConfiguration *init(URLSessionConfiguration *self) {
 

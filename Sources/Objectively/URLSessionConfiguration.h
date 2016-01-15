@@ -97,11 +97,13 @@ struct URLSessionConfigurationInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @fn URLSessionConfiguration *URLSessionConfiguration::init(URLSessionConfiguration *self)
+	 *
 	 * @brief Initializes this URLSessionConfiguration.
 	 *
 	 * @return The initialized configuration, or `NULL` on error.
 	 *
-	 * @relates URLSessionConfiguration
+	 * @memberof URLSessionConfiguration
 	 */
 	URLSessionConfiguration *(*init)(URLSessionConfiguration *self);
 };

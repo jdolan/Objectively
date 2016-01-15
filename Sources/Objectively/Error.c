@@ -122,7 +122,9 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - ErrorInterface
 
 /**
- * @see Error::initWithDomain(Error *, String *, int, String *)
+ * @fn Error *Error::initWithDomain(Error *self, String *domain, int code, String *message)
+ *
+ * @memberof Error
  */
 static Error *initWithDomain(Error *self, String *domain, int code, String *message) {
 

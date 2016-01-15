@@ -114,88 +114,114 @@ struct LogInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @return The shared Log instance.
+	 * @fn void Log::debug(const Log *self, const char *fmt, ...)
 	 *
-	 * @relates Log
-	 */
-	Log *(*sharedInstance)(void);
-
-	/**
 	 * @brief Log a debug message.
 	 *
-	 * @relates Log
+	 * @memberof Log
 	 */
 	void (*debug)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
 	/**
+	 * @fn void Log::error(const Log *self, const char *fmt, ...)
+	 *
 	 * @brief Log an error message.
 	 *
-	 * @relates Log
+	 * @memberof Log
 	 */
 	void (*error)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
 	/**
+	 * @fn void Log::fatal(const Log *self, const char *fmt, ...)
+	 *
 	 * @brief Log a fatal message.
 	 *
-	 * @relates Log
+	 * @memberof Log
 	 */
 	void (*fatal)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
 	/**
+	 * @fn void Log::flush(const Log *self)
+	 *
 	 * @brief Flushes and pending output to this Log's file.
 	 *
-	 * @relates Log
+	 * @memberof Log
 	 */
 	void (*flush)(const Log *self);
 
 	/**
+	 * @fn void Log::info(const Log *self, const char *fmt, ...)
+	 *
 	 * @brief Log an info message.
 	 *
-	 * @relates Log
+	 * @memberof Log
 	 */
 	void (*info)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
 	/**
+	 * @fn Log *Log::init(Log *self)
+	 *
 	 * @brief Initializes this Log.
 	 *
 	 * @return The initialized Log, or `NULL` on error.
 	 *
-	 * @relates Log
+	 * @memberof Log
 	 */
 	Log *(*init)(Log *self);
 
 	/**
-	 * Initializes this Log with the specified name.
+	 * @fn Log *Log::initWithName(Log *self, const char *name)
+	 *
+	 * @brief Initializes this Log with the specified name.
 	 *
 	 * @param name The Log name.
 	 *
 	 * @return The initialized Log, or `NULL` on error.
 	 *
-	 * @relates Log
+	 * @memberof Log
 	 */
 	Log *(*initWithName)(Log *self, const char *name);
 
 	/**
+	 * @fn void Log::log(const Log *self, LogLevel level, const char *fmt, va_list args)
+	 *
 	 * @brief Write a message to the Log.
 	 *
-	 * @param level The severity of the message, which must be greater than or
-	 * equal to the configured level of this Log.
+	 * @param level The severity of the message, which must be greater than or equal to the
+	 * configured level of this Log.
+	 * @param fmt The format string.
+	 * @param args The format arguments.
 	 *
-	 * @relates Log
+	 * @memberof Log
 	 */
 	void (*log)(const Log *self, LogLevel level, const char *fmt, va_list args);
 
 	/**
+	 * @static
+	 *
+	 * @fn Log *Log::sharedInstance(void)
+	 *
+	 * @return The shared Log instance.
+	 *
+	 * @memberof Log
+	 */
+	Log *(*sharedInstance)(void);
+	
+	/**
+	 * @fn void Log::trace(const Log *self, const char *fmt, ...)
+	 *
 	 * @brief Log a trace message.
 	 *
-	 * @relates Log
+	 * @memberof Log
 	 */
 	void (*trace)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
 	/**
+	 * @fn void Log::warn(const Log *self, const char *fmt, ...)
+	 *
 	 * @brief Log a warn message.
 	 *
-	 * @relates Log
+	 * @memberof Log
 	 */
 	void (*warn)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 };

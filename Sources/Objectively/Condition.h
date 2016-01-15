@@ -81,42 +81,52 @@ struct ConditionInterface {
 	LockInterface lockInterface;
 
 	/**
+	 * @fn void Condition::broadcast(Condition *self)
+	 *
 	 * @brief Signals all Threads waiting on this Condition.
 	 *
 	 * @remark This method should only be called when the Condition is locked.
 	 *
-	 * @relates Condition
+	 * @memberof Condition
 	 */
 	void (*broadcast)(Condition *self);
 
 	/**
+	 * @fn Condition *Condition::init(Condition *self)
+	 *
 	 * @brief Initializes this Condition.
 	 *
 	 * @return The initialized Condition, or `NULL` on error.
 	 *
-	 * @relates Condition
+	 * @memberof Condition
 	 */
 	Condition *(*init)(Condition *self);
 
 	/**
+	 * @fn void Condition::signal(Condition *self)
+	 *
 	 * @brief Signals a single Thread waiting on this Condition.
 	 *
 	 * @remark This method should only be called when the Condition is locked.
 	 *
-	 * @relates Condition
+	 * @memberof Condition
 	 */
 	void (*signal)(Condition *self);
 
 	/**
+	 * @fn void Condition::wait(Condition *self)
+	 *
 	 * @brief Waits indefinitely for this Condition to be signaled.
 	 *
 	 * @remark This method should only be called when the Condition is locked.
 	 *
-	 * @relates Condition
+	 * @memberof Condition
 	 */
 	void (*wait)(Condition *self);
 
 	/**
+	 * @fn _Bool Condition::waitUntilDate(Condition *self, const Date *date)
+	 *
 	 * @brief Waits until the specified Date for this Condition to be signaled.
 	 *
 	 * @param date The Date until which to wait.
@@ -125,7 +135,7 @@ struct ConditionInterface {
 	 *
 	 * @remark This method should only be called when the Condition is locked.
 	 *
-	 * @relates Condition
+	 * @memberof Condition
 	 */
 	_Bool (*waitUntilDate)(Condition *self, const Date *date);
 };

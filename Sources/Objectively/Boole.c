@@ -54,7 +54,9 @@ static String *description(const Object *self) {
 static Boole *_False;
 
 /**
- * @see Boole::False(void)
+ * @fn Bool *Bool::False(void)
+ *
+ * @memberof Boole
  */
 static Boole *False(void) {
 	static Once once;
@@ -70,7 +72,9 @@ static Boole *False(void) {
 static Boole *_True;
 
 /**
- * @see Boole::True(void)
+ * @fn Bool *Bool::True(void)
+ *
+ * @memberof Boole
  */
 static Boole *True(void) {
 	static Once once;

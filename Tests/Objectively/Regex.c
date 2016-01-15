@@ -35,7 +35,7 @@ START_TEST(regex)
 
 		String *url = str("http://github.com");
 
-		RANGE *matches;
+		Range *matches;
 		ck_assert($(regex, matchesString, url, 0, &matches));
 
 		String *scheme = $(url, substring, matches[1]);

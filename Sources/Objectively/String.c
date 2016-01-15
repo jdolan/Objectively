@@ -102,8 +102,8 @@ static _Bool isEqual(const Object *self, const Object *other) {
 
 		if (this->length == that->length) {
 
-			const RANGE range = { 0, this->length };
-			return $(this, compareTo, that, range) == SAME;
+			const Range range = { 0, this->length };
+			return $(this, compareTo, that, range) == OrderSame;
 		}
 	}
 
@@ -112,6 +112,11 @@ static _Bool isEqual(const Object *self, const Object *other) {
 
 #pragma mark - StringInterface
 
+/**
+ * @brief Character transcoding context for `iconv`.
+ *
+ * @see iconv(3)
+ */
 typedef struct {
 	StringEncoding to;
 	StringEncoding from;
@@ -155,27 +160,31 @@ static size_t transcode(Transcode *trans) {
 }
 
 /**
- * @see String::compareTo(const String *, const String *, const RANGE)
+ * @fn Order String::compareTo(const String *self, const String *other, const Range range)
+ *
+ * @memberof String
  */
-static ORDER compareTo(const String *self, const String *other, const RANGE range) {
+static Order compareTo(const String *self, const String *other, const Range range) {
 
 	assert(range.location + range.length <= self->length);
 
 	if (other) {
 		const int i = strncmp(self->chars + range.location, other->chars, range.length);
 		if (i == 0) {
-			return SAME;
+			return OrderSame;
 		}
 		if (i > 0) {
-			return DESCENDING;
+			return OrderDescending;
 		}
 	}
 
-	return ASCENDING;
+	return OrderAscending;
 }
 
 /**
- * @see String::componentsSeparatedByCharacters(const String *, const char *)
+ * @fn Array *String::componentsSeparatedByCharacters(const String *self, const char *chars)
+ *
+ * @memberof String
  */
 static Array *componentsSeparatedByCharacters(const String *self, const char *chars) {
 
@@ -183,8 +192,8 @@ static Array *componentsSeparatedByCharacters(const String *self, const char *ch
 
 	MutableArray *components = $(alloc(MutableArray), init);
 
-	RANGE search = { 0, self->length };
-	RANGE result = $(self, rangeOfCharacters, chars, search);
+	Range search = { 0, self->length };
+	Range result = $(self, rangeOfCharacters, chars, search);
 
 	while (result.length) {
 		search.length = result.location - search.location;
@@ -207,7 +216,9 @@ static Array *componentsSeparatedByCharacters(const String *self, const char *ch
 }
 
 /**
- * @see String::componentsSeparatedByString(const String *, const String *)
+ * @fn Array *String::componentsSeparatedByString(const String *self, const String *string)
+ *
+ * @memberof String
  */
 static Array *componentsSeparatedByString(const String *self, const String *string) {
 
@@ -217,7 +228,9 @@ static Array *componentsSeparatedByString(const String *self, const String *stri
 }
 
 /**
- * @see String::getData(const String *, StringEncoding)
+ * @fn Data *String::getData(const String *self, StringEncoding encoding)
+ *
+ * @memberof String
  */
 static Data *getData(const String *self, StringEncoding encoding) {
 
@@ -239,7 +252,9 @@ static Data *getData(const String *self, StringEncoding encoding) {
 }
 
 /**
- * @see String::hasPrefix(const String *, const String *)
+ * @fn _Bool String::hasPrefix(const String *self, const String *prefix)
+ *
+ * @memberof String
  */
 static _Bool hasPrefix(const String *self, const String *prefix) {
 
@@ -247,12 +262,14 @@ static _Bool hasPrefix(const String *self, const String *prefix) {
 		return false;
 	}
 
-	RANGE range = { 0, prefix->length };
-	return $(self, compareTo, prefix, range) == SAME;
+	Range range = { 0, prefix->length };
+	return $(self, compareTo, prefix, range) == OrderSame;
 }
 
 /**
- * @see String::hasSuffix(const String *, const String *)
+ * @fn _Bool String::hasSuffix(const String *self, const String *suffix)
+ *
+ * @memberof String
  */
 static _Bool hasSuffix(const String *self, const String *suffix) {
 
@@ -260,12 +277,14 @@ static _Bool hasSuffix(const String *self, const String *suffix) {
 		return false;
 	}
 
-	RANGE range = { self->length - suffix->length, suffix->length };
-	return $(self, compareTo, suffix, range) == SAME;
+	Range range = { self->length - suffix->length, suffix->length };
+	return $(self, compareTo, suffix, range) == OrderSame;
 }
 
 /**
- * @see String::initWithBytes(String *, const byte *, size_t, StringEncoding)
+ * @fn String *String::initWithBytes(String *self, const byte *bytes, size_t length, StringEncoding encoding)
+ *
+ * @memberof String
  */
 static String *initWithBytes(String *self, const byte *bytes, size_t length, StringEncoding encoding) {
 
@@ -295,7 +314,9 @@ static String *initWithBytes(String *self, const byte *bytes, size_t length, Str
 }
 
 /**
- * @see String::initWithCharacters(String *, const char *)
+ * @fn String *String::initWithCharacters(String *self, const char *chars)
+ *
+ * @memberof String
  */
 static String *initWithCharacters(String *self, const char *chars) {
 
@@ -313,7 +334,9 @@ static String *initWithCharacters(String *self, const char *chars) {
 }
 
 /**
- * @see String::initWithContentsOfFile(String *, const char *, StringEncoding)
+ * @fn String *String::initWithContentsOfFile(String *self, const char *path, StringEncoding encoding)
+ *
+ * @memberof String
  */
 static String *initWithContentsOfFile(String *self, const char *path, StringEncoding encoding) {
 
@@ -329,7 +352,9 @@ static String *initWithContentsOfFile(String *self, const char *path, StringEnco
 }
 
 /**
- * @see String::initWithData(String *, const Data *, StringEncoding)
+ * @fn String *String::initWithData(String *self, const Data *data, StringEncoding encoding)
+ *
+ * @memberof String
  */
 static String *initWithData(String *self, const Data *data, StringEncoding encoding) {
 
@@ -339,7 +364,9 @@ static String *initWithData(String *self, const Data *data, StringEncoding encod
 }
 
 /**
- * @see String::initWithFormat(id, const char *, ...)
+ * @fn String *String::initWithFormat(String *self, const char *fmt, ...)
+ *
+ * @memberof String
  */
 static String *initWithFormat(String *self, const char *fmt, ...) {
 
@@ -354,7 +381,9 @@ static String *initWithFormat(String *self, const char *fmt, ...) {
 }
 
 /**
- * @see String::initWithMemory(String *, id, size_t)
+ * @fn String *String::initWithMemory(String *self, const ident mem, size_t length)
+ *
+ * @memberof String
  */
 static String *initWithMemory(String *self, const ident mem, size_t length) {
 
@@ -371,7 +400,9 @@ static String *initWithMemory(String *self, const ident mem, size_t length) {
 }
 
 /**
- * @see String::initWithVaList(String *, const char *, va_list)
+ * @fn String *String::initWithVaList(String *string, const char *fmt, va_list args)
+ *
+ * @memberof String
  */
 static String *initWithVaList(String *self, const char *fmt, va_list args) {
 
@@ -390,14 +421,18 @@ static String *initWithVaList(String *self, const char *fmt, va_list args) {
 }
 
 /**
- * @see String::lowercaseString(const String *)
+ * @fn String *String::lowercaseString(const String *self)
+ *
+ * @memberof String
  */
 static String *lowercaseString(const String *self) {
 	return $(self, lowercaseStringWithLocale, NULL);
 }
 
 /**
- * @see String::lowercaseStringWithLocale(const String *, const *Locale)
+ * @fn String *String::lowercaseStringWithLocale(const String *self, const Locale *locale)
+ *
+ * @memberof String
  */
 static String *lowercaseStringWithLocale(const String *self, const Locale *locale) {
 
@@ -422,7 +457,9 @@ static String *lowercaseStringWithLocale(const String *self, const Locale *local
 }
 
 /**
- * @see String::mutableCopy(const String *)
+ * @fn MutableString *String::mutableCopy(const String *self)
+ *
+ * @memberof String
  */
 static MutableString *mutableCopy(const String *self) {
 
@@ -430,16 +467,18 @@ static MutableString *mutableCopy(const String *self) {
 }
 
 /**
- * @see String::rangeOfCharacters(const String *, const char *, const RANGE)
+ * @fn Range String::rangeOfCharacters(const String *self, const char *chars, const Range range)
+ *
+ * @memberof String
  */
-static RANGE rangeOfCharacters(const String *self, const char *chars, const RANGE range) {
+static Range rangeOfCharacters(const String *self, const char *chars, const Range range) {
 
 	assert(chars);
 	assert(range.location > -1);
 	assert(range.length > -1);
 	assert(range.location + range.length <= self->length);
 
-	RANGE match = { -1, 0 };
+	Range match = { -1, 0 };
 	const size_t len = strlen(chars);
 
 	const char *str = self->chars + range.location;
@@ -455,9 +494,11 @@ static RANGE rangeOfCharacters(const String *self, const char *chars, const RANG
 }
 
 /**
- * @see String::rangeOfString(const String *, const String *, const RANGE)
+ * @fn Range String::rangeOfString(const String *self, const String *string, const Range range)
+ *
+ * @memberof String
  */
-static RANGE rangeOfString(const String *self, const String *string, const RANGE range) {
+static Range rangeOfString(const String *self, const String *string, const Range range) {
 
 	assert(string);
 
@@ -465,7 +506,9 @@ static RANGE rangeOfString(const String *self, const String *string, const RANGE
 }
 
 /**
- * @see String::stringWithBytes(const byte *, size_t, StringEncoding)
+ * @fn String *String::stringWithBytes(const byte *bytes, size_t length, StringEncoding encoding)
+ *
+ * @memberof String
  */
 static String *stringWithBytes(const byte *bytes, size_t length, StringEncoding encoding) {
 
@@ -473,7 +516,9 @@ static String *stringWithBytes(const byte *bytes, size_t length, StringEncoding 
 }
 
 /**
- * @see String::stringWithCharacters(const char *)
+ * @fn String *String::stringWithCharacters(const char *chars)
+ *
+ * @memberof String
  */
 static String *stringWithCharacters(const char *chars) {
 
@@ -481,7 +526,9 @@ static String *stringWithCharacters(const char *chars) {
 }
 
 /**
- * @see String::stringWithContentsOfFile(const char *, StringEncoding)
+ * @fn String *String::stringWithContentsOfFile(const char *path, StringEncoding encoding)
+ *
+ * @memberof String
  */
 static String *stringWithContentsOfFile(const char *path, StringEncoding encoding) {
 
@@ -489,7 +536,9 @@ static String *stringWithContentsOfFile(const char *path, StringEncoding encodin
 }
 
 /**
- * @see String::stringWithData(const Data *data, StringEncoding)
+ * @fn String *String::stringWithData(const Data *data, StringEncoding encoding)
+ *
+ * @memberof String
  */
 static String *stringWithData(const Data *data, StringEncoding encoding) {
 
@@ -497,7 +546,9 @@ static String *stringWithData(const Data *data, StringEncoding encoding) {
 }
 
 /**
- * @see String::stringWithFormat(const char *fmt, ...)
+ * @fn String *String::stringWithFormat(const char *fmt)
+ *
+ * @memberof String
  */
 static String *stringWithFormat(const char *fmt, ...) {
 
@@ -512,7 +563,9 @@ static String *stringWithFormat(const char *fmt, ...) {
 }
 
 /**
- * @see String::stringWithMemory(const id, size_t)
+ * @fn String *String::stringWithMemory(const ident mem, size_t length)
+ *
+ * @memberof String
  */
 static String *stringWithMemory(const ident mem, size_t length) {
 
@@ -520,9 +573,11 @@ static String *stringWithMemory(const ident mem, size_t length) {
 }
 
 /**
- * @see String::substring(const String *, RANGE)
+ * @fn String *String::substring(const String *string, const Range range)
+ *
+ * @memberof String
  */
-static String *substring(const String *self, const RANGE range) {
+static String *substring(const String *self, const Range range) {
 
 	assert(range.location + range.length <= self->length);
 
@@ -535,14 +590,18 @@ static String *substring(const String *self, const RANGE range) {
 }
 
 /**
- * @see String::uppercaseString(const String *)
+ * @fn String *String::uppercaseString(const String *self)
+ *
+ * @memberof String
  */
 static String *uppercaseString(const String *self) {
 	return $(self, uppercaseStringWithLocale, NULL);
 }
 
 /**
- * @see String::uppercaseStringWithLocale(const String *, const *Locale)
+ * @fn String *String::uppercaseStringWithLocale(const String *self, const Locale *locale)
+ *
+ * @memberof String
  */
 static String *uppercaseStringWithLocale(const String *self, const Locale *locale) {
 
@@ -567,7 +626,9 @@ static String *uppercaseStringWithLocale(const String *self, const Locale *local
 }
 
 /**
- * @see String::writeToFile(const String *, const char *, StringEncoding)
+ * @fn _Bool String::writeToFile(const String *self, const char *path, StringEncoding encoding)
+ *
+ * @memberof String
  */
 static _Bool writeToFile(const String *self, const char *path, StringEncoding encoding) {
 

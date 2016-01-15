@@ -244,6 +244,7 @@
 		CE76D9681C48218E0096DD31 /* libObjectively-Xcode.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libObjectively-Xcode.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE76DA011C4857350096DD31 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../../opt/local/lib/libcurl.a; sourceTree = "<group>"; };
 		CE76DA031C48578C0096DD31 /* libiconv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libiconv.a; path = ../../../../opt/local/lib/libiconv.a; sourceTree = "<group>"; };
+		CE76DA2E1C4932340096DD31 /* Doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,6 +263,7 @@
 		CE76D7F21C481B530096DD31 = {
 			isa = PBXGroup;
 			children = (
+				CE76DA2E1C4932340096DD31 /* Doxyfile */,
 				CE76DA031C48578C0096DD31 /* libiconv.a */,
 				CE76DA011C4857350096DD31 /* libcurl.a */,
 				CE76D9021C481E390096DD31 /* Documentation */,

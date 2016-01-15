@@ -43,7 +43,9 @@ static Object *copy(const Object *self) {
 static Null *_null;
 
 /**
- * @see Null::null(void)
+ * @fn Null *Null::null(void)
+ *
+ * @memberof Null
  */
 static Null *null(void) {
 	static Once once;

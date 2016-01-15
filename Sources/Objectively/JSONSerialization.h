@@ -30,7 +30,7 @@
 /**
  * @file
  *
- * @brief JSON serialization.
+ * @brief JSON serialization and introspection.
  */
 
 /**
@@ -48,7 +48,7 @@ typedef struct JSONSerialization JSONSerialization;
 typedef struct JSONSerializationInterface JSONSerializationInterface;
 
 /**
- * @brief JSON serialization.
+ * @brief JSON serialization and introspection.
  *
  * @extends Object
  *
@@ -82,6 +82,10 @@ struct JSONSerializationInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @static
+	 *
+	 * @fn Data *JSONSerialization::dataFromObject(const ident obj, int options)
+	 *
 	 * @brief Serializes the given Object to JSON Data.
 	 *
 	 * @param obj The Object to serialize.
@@ -89,11 +93,15 @@ struct JSONSerializationInterface {
 	 *
 	 * @return The resulting JSON Data.
 	 *
-	 * @relates JSONSerialization
+	 * @memberof JSONSerialization
 	 */
 	Data *(*dataFromObject)(const ident obj, int options);
 
 	/**
+	 * @static
+	 *
+	 * @fn ident JSONSerialization::objectFromData(const Data *data, int options)
+	 *
 	 * @brief Parses an Object from the specified Data.
 	 *
 	 * @param data The JSON Data.
@@ -101,7 +109,7 @@ struct JSONSerializationInterface {
 	 *
 	 * @return The Object, or `NULL` on error.
 	 *
-	 * @relates JSONSerialization
+	 * @memberof JSONSerialization
 	 */
 	ident (*objectFromData)(const Data *data, int options);
 };

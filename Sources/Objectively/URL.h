@@ -111,38 +111,46 @@ struct URLInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @fn URL *URL::baseURL(const URL *self)
+	 *
 	 * @return The base URL (scheme, host, and port) of this URL.
 	 *
-	 * @relates URL
+	 * @memberof URL
 	 */
 	URL *(*baseURL)(const URL *self);
 
 	/**
+	 * @fn URL *URL::initWithCharacters(URL *self, const char *chars)
+	 *
 	 * @brief Initializes this URL with the specified characters.
 	 *
 	 * @param chars The URL characters.
 	 *
 	 * @return The initialized URL, or `NULL` on error.
 	 *
-	 * @relates URL
+	 * @memberof URL
 	 */
 	URL *(*initWithCharacters)(URL *self, const char *chars);
 
 	/**
+	 * @fn URL *URL::initWithString(URL *self, const String *string)
+	 *
 	 * @brief Initializes this URL with the specified String.
 	 *
 	 * @param string The URL String.
 	 *
 	 * @return The initialized URL, or `NULL` on error.
 	 *
-	 * @relates URL
+	 * @memberof URL
 	 */
 	URL *(*initWithString)(URL *self, const String *string);
 
 	/**
+	 * @fn Array *URL::pathComponents(const URL *self)
+	 *
 	 * @return The `path` components of this URL.
 	 *
-	 * @relates URL
+	 * @memberof URL
 	 */
 	Array *(*pathComponents)(const URL *self);
 };

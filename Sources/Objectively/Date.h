@@ -99,63 +99,66 @@ struct DateInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @brief Returns a new Date with the current Time.
+	 * @fn Order Date::compareTo(const Date *self, const Date *other)
 	 *
-	 * @return The new Date, or `NULL` on error.
-	 *
-	 * @relates Date
-	 */
-	Date *(*date)(void);
-
-	/**
-	 * @brief Returns a new Date with the given Time since now.
-	 *
-	 * @return The new Date, or `NULL` on error.
-	 *
-	 * @relates Date
-	 */
-	Date *(*dateWithTimeSinceNow)(const Time *interval);
-
-	/**
 	 * @brief Compares this Date to another.
 	 *
 	 * @param other The Date to compare to.
 	 *
 	 * @return The ordering of this Date compared to other.
 	 *
-	 * @relates Date
+	 * @memberof Date
 	 */
-	ORDER (*compareTo)(const Date *self, const Date *other);
+	Order (*compareTo)(const Date *self, const Date *other);
+	
+	/**
+	 * @static
+	 *
+	 * @fn Date *Date::date(void)
+	 *
+	 * @brief Returns a new Date with the current Time.
+	 *
+	 * @return The new Date, or `NULL` on error.
+	 *
+	 * @memberof Date
+	 */
+	Date *(*date)(void);
+	
+	/**
+	 * @static
+	 *
+	 * @fn Date *Date::dateWithTimeSinceNow(const Time interval)
+	 *
+	 * @brief Returns a new Date with the given Time since now.
+	 *
+	 * @return The new Date, or `NULL` on error.
+	 *
+	 * @memberof Date
+	 */
+	Date *(*dateWithTimeSinceNow)(const Time *interval);
+
 
 	/**
+	 * @fn Date *Date::init(Date *self)
+	 *
 	 * Initializes a Date with the current time.
 	 *
 	 * @return The initialized Date, or `NULL` on error.
 	 *
-	 * @relates Date
+	 * @memberof Date
 	 */
 	Date *(*init)(Date *self);
 
 	/**
-	 * Initializes a Date by parsing the specified format string.
+	 * @fn Date *Date::initWithTime(Date *self, const Time *time)
 	 *
-	 * @param str The string representation of this Date.
-	 * @param fmt The format pattern.
-	 *
-	 * @return The initialized Date, or `NULL` on error.
-	 *
-	 * @relates Date
-	 */
-	Date *(*initWithString)(Date *self, const char *str, const char *fmt);
-
-	/**
 	 * Initializes a Date with the specified time.
 	 *
 	 * @param time The desired Time.
 	 *
 	 * @return The initialized Date, or `NULL` on error.
 	 *
-	 * @relates Date
+	 * @memberof Date
 	 */
 	Date *(*initWithTime)(Date *self, const Time *time);
 };

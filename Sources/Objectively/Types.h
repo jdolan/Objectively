@@ -62,23 +62,23 @@ typedef struct {
 	 * @brief The length.
 	 */
 	int length;
-} RANGE;
+} Range;
 
 /**
  * @brief Comparison constants.
  */
 typedef enum {
-	ASCENDING = -1,
-	SAME = 0,
-	DESCENDING = 1,
-} ORDER;
+	OrderAscending = -1,
+	OrderSame = 0,
+	OrderDescending = 1,
+} Order;
 
 /**
  * @brief The Comparator function type for ordering Objects.
  *
- * @return The ORDER of `obj1` relative to `obj2`.
+ * @return The Order of `obj1` relative to `obj2`.
  */
-typedef ORDER (*Comparator)(const ident obj1, const ident obj2);
+typedef Order (*Comparator)(const ident obj1, const ident obj2);
 
 /**
  * @return The length of an array.

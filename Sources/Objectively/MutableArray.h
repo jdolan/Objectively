@@ -76,83 +76,109 @@ struct MutableArrayInterface {
 	ArrayInterface arrayInterface;
 
 	/**
+	 * @fn void MutableArray::addObject(MutableArray *self, const ident obj)
+	 *
+	 * @brief Adds the specified Object to this MutableArray.
+	 *
+	 * @memberof MutableArray
+	 */
+	void (*addObject)(MutableArray *self, const ident obj);
+
+	/**
+	 * @fn void MutableArray::addObjectsFromArray(MutableArray *self, const Array *array)
+	 *
+	 * @brief Adds the Objects contained in `array` to this MutableArray.
+	 *
+	 * @param array An Array.
+	 *
+	 * @memberof MutableArray
+	 */
+	void (*addObjectsFromArray)(MutableArray *self, const Array *array);
+	
+	/**
+	 * @static
+	 *
+	 * @fn MutableArray *MutableArray::array(void)
+	 *
 	 * @brief Returns a new MutableArray.
 	 *
 	 * @return The new MutableArray, or `NULL` on error.
 	 *
-	 * @relates MutableArray
+	 * @memberof MutableArray
 	 */
 	MutableArray *(*array)(void);
-
+	
 	/**
+	 * @static
+	 *
+	 * @fn MutableArray *MutableArray::arrayWithCapacity(size_t capacity)
+	 *
 	 * @brief Returns a new MutableArray with the given `capacity`.
 	 *
 	 * @param capacity The desired initial capacity.
 	 *
 	 * @return The new MutableArray, or `NULL` on error.
 	 *
-	 * @relates MutableArray
+	 * @memberof MutableArray
 	 */
 	MutableArray *(*arrayWithCapacity)(size_t capacity);
 
 	/**
-	 * @brief Adds the specified Object to this MutableArray.
+	 * @fn MutableArray *MutableArray::init(MutableArray *self)
 	 *
-	 * @relates MutableArray
-	 */
-	void (*addObject)(MutableArray *self, const ident obj);
-
-	/**
-	 * @brief Adds the Objects contained in `array` to this MutableArray.
-	 *
-	 * @param array An Array.
-	 */
-	void (*addObjectsFromArray)(MutableArray *self, const Array *array);
-
-	/**
 	 * @brief Initializes this MutableArray.
 	 *
 	 * @return The initialized MutableArray, or `NULL` on error.
 	 *
-	 * @relates MutableArray
+	 * @memberof MutableArray
 	 */
 	MutableArray *(*init)(MutableArray *self);
 
 	/**
+	 * @fn MutableArray *MutableArray::initWithCapacity(MutableArray *self, size_t capacity)
+	 *
 	 * @brief Initializes this MutableArray with the specified capacity.
 	 *
 	 * @param capacity The desired initial capacity.
 	 *
 	 * @return The initialized Array, or `NULL` on error.
 	 *
-	 * @relates MutableArray
+	 * @memberof MutableArray
 	 */
 	MutableArray *(*initWithCapacity)(MutableArray *self, size_t capacity);
 
 	/**
+	 * @fn void MutableArray::removeAllObjects(MutableArray *self)
+	 *
 	 * @brief Removes all Objects from this MutableArray.
 	 *
-	 * @relates MutableArray
+	 * @memberof MutableArray
 	 */
 	void (*removeAllObjects)(MutableArray *self);
 
 	/**
+	 * @fn void MutableArray::removeObject(MutableArray *self, const ident obj)
+	 *
 	 * @brief Removes the specified Object from this MutableArray.
 	 *
-	 * @relates MutableArray
+	 * @memberof MutableArray
 	 */
 	void (*removeObject)(MutableArray *self, const ident obj);
 
 	/**
+	 * @fn void MutableArray::removeObjectAtIndex(MutableArray *self, const int index)
+	 *
 	 * @brief Removes the Object at the specified index.
 	 *
 	 * @param index The index of the Object to remove.
 	 *
-	 * @relates MutableArray
+	 * @memberof MutableArray
 	 */
 	void (*removeObjectAtIndex)(MutableArray *self, const int index);
 
 	/**
+	 * @fn void MutableArray::setObjectAtIndex(MutableArray *self, const ident obj, int index)
+	 *
 	 * @brief Replaces the Object at the specified index.
 	 *
 	 * @param obj The Object with which to replace.
@@ -160,16 +186,18 @@ struct MutableArrayInterface {
 	 *
 	 * @remark The index must not exceed the size of the MutableArray.
 	 *
-	 * @relates MutableArray
+	 * @memberof MutableArray
 	 */
-	void (*setObjectAtIndex)(MutableArray *self, const ident obj, const int index);
+	void (*setObjectAtIndex)(MutableArray *self, const ident obj, int index);
 
 	/**
+	 * @fn void MutableArray::sort(MutableArray *self, Comparator comparator)
+	 *
 	 * @brief Sorts this MutableArray in place using `comparator`.
 	 *
 	 * @param comparator A Comparator.
 	 *
-	 * @relates MutableArray
+	 * @memberof MutableArray
 	 */
 	void (*sort)(MutableArray *self, Comparator comparator);
 };

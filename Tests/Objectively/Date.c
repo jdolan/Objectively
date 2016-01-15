@@ -43,8 +43,8 @@ START_TEST(date)
 		ck_assert(date1 != NULL);
 		ck_assert(date2 != NULL);
 
-		ck_assert($(date1, compareTo, date1) == SAME);
-		ck_assert($(date1, compareTo, date2) == ASCENDING);
+		ck_assert($(date1, compareTo, date1) == OrderSame);
+		ck_assert($(date1, compareTo, date2) == OrderAscending);
 
 		$(dateFormatter, initWithFormat, "%B");
 

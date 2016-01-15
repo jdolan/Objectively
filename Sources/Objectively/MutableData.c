@@ -47,7 +47,9 @@ static Object *copy(const Object *self) {
 #pragma mark - MutableDataInterface
 
 /**
- * @see MutableData::appendBytes(MutableData *, const byte *, size_t)
+ * @fn void MutableData::appendBytes(MutableData *self, const byte *bytes, size_t length)
+ *
+ * @memberof MutableData
  */
 static void appendBytes(MutableData *self, const byte *bytes, size_t length) {
 
@@ -59,7 +61,9 @@ static void appendBytes(MutableData *self, const byte *bytes, size_t length) {
 }
 
 /**
- * @see MutableData::appendData(MutableData *, const Data *)
+ * @fn void MutableData::appendData(MutableData *self, const Data *data)
+ *
+ * @memberof MutableData
  */
 static void appendData(MutableData *self, const Data *data) {
 
@@ -67,23 +71,29 @@ static void appendData(MutableData *self, const Data *data) {
 }
 
 /**
- * @see MutableData::data(void)
+ * @fn MutableData *MutableData::data(void)
+ *
+ * @memberof MutableData
  */
 static MutableData *data(void) {
-
+	
 	return $(alloc(MutableData), init);
 }
 
 /**
- * @see MutableData::dataWithCapacity(size_t)
+ * @fn MutableData *MutableData::dataWithCapacity(size_t capacity)
+ *
+ * @memberof MutableData
  */
 static MutableData *dataWithCapacity(size_t capacity) {
-
+	
 	return $(alloc(MutableData), initWithCapacity, capacity);
 }
 
 /**
- * @see MutableData::init(MutableData *)
+ * @fn MutableData *MutableData::init(MutableData *self)
+ *
+ * @memberof MutableData
  */
 static MutableData *init(MutableData *self) {
 
@@ -91,7 +101,9 @@ static MutableData *init(MutableData *self) {
 }
 
 /**
- * @see MutableData::initWithCapacity(MutableData *, size_t)
+ * @fn MutableData *MutableData::initWithCapacity(MutableData *self, size_t capacity)
+ *
+ * @memberof MutableData
  */
 static MutableData *initWithCapacity(MutableData *self, size_t capacity) {
 
@@ -110,7 +122,9 @@ static MutableData *initWithCapacity(MutableData *self, size_t capacity) {
 }
 
 /**
- * @see MutableData::initWithData(MutableData *, const Data *)
+ * @fn MutableData *MutableData::initWithData(MutableData *self, const Data *data)
+ *
+ * @memberof MutableData
  */
 static MutableData *initWithData(MutableData *self, const Data *data) {
 
@@ -123,7 +137,9 @@ static MutableData *initWithData(MutableData *self, const Data *data) {
 }
 
 /**
- * @see MutableData::setLength(MutableData *, size_t)
+ * @fn void MutableData::setLength(MutableData *self, size_t length)
+ *
+ * @memberof MutableData
  */
 static void setLength(MutableData *self, size_t length) {
 

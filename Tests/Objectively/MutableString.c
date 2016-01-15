@@ -42,7 +42,7 @@ START_TEST(string)
 
 		String *goodbye = str("goodbye cruel");
 
-		RANGE range = { 0, 5 };
+		Range range = { 0, 5 };
 		$(string, replaceCharactersInRange, range, goodbye);
 		ck_assert_str_eq("goodbye cruel world!", string->string.chars);
 

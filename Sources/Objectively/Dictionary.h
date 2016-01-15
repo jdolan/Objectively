@@ -102,44 +102,58 @@ struct DictionaryInterface {
 	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
-
+	
 	/**
+	 * @fn Array *Dictionary::allKeys(const Dictionary *self)
+	 *
 	 * @return An Array containing all keys in this Dictionary.
 	 *
-	 * @relates Dictionary
+	 * @memberof Dictionary
 	 */
 	Array *(*allKeys)(const Dictionary *self);
 
 	/**
+	 * @fn Array *Dictionary::allObjects(const Dictionary *self)
+	 *
 	 * @return An Array containing all Objects in this Dictionary.
 	 *
-	 * @relates Dictionary
+	 * @memberof Dictionary
 	 */
 	Array *(*allObjects)(const Dictionary *self);
-
+	
 	/**
+	 * @static
+	 *
+	 * @fn Dictionary *Dictionary::dictionaryWithDictionary(const Dictionary *dictionary)
+	 *
 	 * @brief Returns a new Dictionary containing all pairs from `dictionary`.
 	 *
 	 * @param dictionary A Dictionary.
 	 *
 	 * @return The new Dictionary, or `NULL` on error.
 	 *
-	 * @relates Dictionary
+	 * @memberof Dictionary
 	 */
 	Dictionary *(*dictionaryWithDictionary)(const Dictionary *dictionary);
-
+	
 	/**
+	 * @static
+	 *
+	 * @fn Dictionary *Dictionary::dictionaryWithObjectsAndKeys(ident obj, ...)
+	 *
 	 * @brief Returns a new Dictionary containing pairs from the given arguments.
 	 *
 	 * @param obj The first in a `NULL`-terminated list of Objects and keys.
 	 *
 	 * @return The new Dictionary, or `NULL` on error.
 	 *
-	 * @relates Dictionary
+	 * @memberof Dictionary
 	 */
 	Dictionary *(*dictionaryWithObjectsAndKeys)(ident obj, ...);
 
 	/**
+	 * @fn void Dictionary::enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator enumerator, ident data)
+	 *
 	 * @brief Enumerate the pairs of this Dictionary with the given function.
 	 *
 	 * @param enumerator The enumerator function.
@@ -147,12 +161,13 @@ struct DictionaryInterface {
 	 *
 	 * @remark The enumerator should return `true` to break the iteration.
 	 *
-	 * @relates Dictionary
+	 * @memberof Dictionary
 	 */
-	void (*enumerateObjectsAndKeys)(const Dictionary *self, DictionaryEnumerator enumerator,
-			ident data);
+	void (*enumerateObjectsAndKeys)(const Dictionary *self, DictionaryEnumerator enumerator, ident data);
 
 	/**
+	 * @fn void Dictionary::filterObjectsAndKeys(const Dictionary *self, DictionaryEnumerator enumerator, ident data)
+	 *
 	 * @brief Creates a new Dictionary with pairs that pass the filter function.
 	 *
 	 * @param enumerator The enumerator function.
@@ -160,43 +175,50 @@ struct DictionaryInterface {
 	 *
 	 * @return The new, filtered Dictionary.
 	 *
-	 * @relates Dictionary
+	 * @memberof Dictionary
 	 */
-	Dictionary *(*filterObjectsAndKeys)(const Dictionary *self, DictionaryEnumerator enumerator,
-			ident data);
+	Dictionary *(*filterObjectsAndKeys)(const Dictionary *self, DictionaryEnumerator enumerator, ident data);
 
 	/**
+	 * @fn Dictionary *Dictionary::initWithDictionary(Dictionary *self, const Dictionary *dictionary)
+	 *
 	 * @brief Initializes this Dictionary to contain elements of `dictionary`.
 	 *
 	 * @param dictionary A Dictionary.
 	 *
 	 * @return The initialized Dictionary, or `NULL` on error.
 	 *
-	 * @relates Dictionary
+	 * @memberof Dictionary
 	 */
 	Dictionary *(*initWithDictionary)(Dictionary *self, const Dictionary *dictionary);
 
 	/**
+	 * @fn Dictionary *Dictionary::initWithObjectsAndKeys(Dictionary *self, ...)
+	 *
 	 * @brief Initializes this Dictionary with the `NULL`-terminated list of
 	 * Objects and keys.
 	 *
 	 * @return The initialized Dictionary, or `NULL` on error.
 	 *
-	 * @relates Dictionary
+	 * @memberof Dictionary
 	 */
 	Dictionary *(*initWithObjectsAndKeys)(Dictionary *self, ...);
 
 	/**
+	 * @fn MutableDictionary *Dictionary::mutableCopy(const Dictionary *self)
+	 *
 	 * @return A MutableDictionary with the contents of this Dictionary.
 	 *
-	 * @relates Dictionary
+	 * @memberof Dictionary
 	 */
 	MutableDictionary *(*mutableCopy)(const Dictionary *self);
 
 	/**
+	 * @fn ident Dictionary::objectForKey(const Dictionary *self, const ident key)
+	 *
 	 * @return The Object stored at the specified key in this Dictionary.
 	 *
-	 * @relates Dictionary
+	 * @memberof Dictionary
 	 */
 	ident (*objectForKey)(const Dictionary *self, const ident key);
 };

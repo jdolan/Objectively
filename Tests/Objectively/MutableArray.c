@@ -30,7 +30,7 @@ _Bool enumerator(const Array *array, ident obj, ident data) {
 	(*(int *) data)++; return false;
 }
 
-ORDER comparator(const ident obj1, const ident obj2) {
+Order comparator(const ident obj1, const ident obj2) {
 	return $((Number *) obj1, compareTo, (Number *) obj2);
 }
 

@@ -54,7 +54,9 @@ static void dealloc(Object *self) {
 #pragma mark - OperationInterface
 
 /**
- * @see Operation::addDependency(Operation *, Operation *)
+ * @fn void Operation::addDependency(Operation *self, Operation *dependency)
+ *
+ * @memberof Operation
  */
 static void addDependency(Operation *self, Operation *dependency) {
 
@@ -67,7 +69,9 @@ static void addDependency(Operation *self, Operation *dependency) {
 }
 
 /**
- * @see Operation::cancel(Operation *)
+ * @fn void Operation::cancel(Operation *self)
+ *
+ * @memberof Operation
  */
 static void cancel(Operation *self) {
 
@@ -81,7 +85,9 @@ static void cancel(Operation *self) {
 }
 
 /**
- * @see Operation::dependencies(const Operation *)
+ * @fn Array *Operation::dependencies(const Operation *self)
+ *
+ * @memberof Operation
  */
 static Array *dependencies(const Operation *self) {
 
@@ -91,7 +97,9 @@ static Array *dependencies(const Operation *self) {
 }
 
 /**
- * @see Operation::init(Operation *)
+ * @fn Operation *Operation::init(Operation *self)
+ *
+ * @memberof Operation
  */
 static Operation *init(Operation *self) {
 
@@ -109,7 +117,9 @@ static Operation *init(Operation *self) {
 }
 
 /**
- * @see Operation::initWithFunction(Operation *, OperationFunction, id)
+ * @fn Operation *Operation::initWithFunction(Operation *self, OperationFunction function, ident data)
+ *
+ * @memberof Operation
  */
 static Operation *initWithFunction(Operation *self, OperationFunction function, ident data) {
 
@@ -123,7 +133,9 @@ static Operation *initWithFunction(Operation *self, OperationFunction function, 
 }
 
 /**
- * @see Operation::isReady(const Operation *)
+ * @fn _Bool Operation::isReady(const Operation *self)
+ *
+ * @memberof Operation
  */
 static _Bool isReady(const Operation *self) {
 
@@ -148,7 +160,9 @@ static _Bool isReady(const Operation *self) {
 }
 
 /**
- * @see Operation::removeDependency(Operation *, Operation *)
+ * @fn void Operation::removeDependency(Operation *self, Operation *dependency)
+ *
+ * @memberof Operation
  */
 static void removeDepdenency(Operation *self, Operation *dependency) {
 
@@ -158,7 +172,9 @@ static void removeDepdenency(Operation *self, Operation *dependency) {
 }
 
 /**
- * @see Operation::start(Operation *)
+ * @fn void Operation::start(Operation *self)
+ *
+ * @memberof Operation
  */
 static void start(Operation *self) {
 
@@ -188,7 +204,9 @@ static void start(Operation *self) {
 }
 
 /**
- * @see Condition::waitUntilFinished(const Operation *)
+ * @fn void Operation::waitUntilFinished(const Operation *self)
+ *
+ * @memberof Operation
  */
 static void waitUntilFinished(const Operation *self) {
 

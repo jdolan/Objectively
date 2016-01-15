@@ -100,68 +100,86 @@ struct OperationQueueInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @fn void OperationQueue::addOperation(OperationQueue *self, Operation *operation)
+	 *
 	 * @brief Adds an Operation to this queue.
 	 *
 	 * @param operation The Operation to add.
 	 *
-	 * @relates OperationQueue
+	 * @memberof OperationQueue
 	 */
 	void (*addOperation)(OperationQueue *self, Operation *operation);
 
 	/**
+	 * @fn void OperationQueue::cancelAllOperations(OperationQueue *self)
+	 *
 	 * @brief Cancels all pending Operations residing within this Queue.
 	 *
-	 * @relates OperationQueue
+	 * @memberof OperationQueue
 	 */
 	void (*cancelAllOperations)(OperationQueue *self);
 
 	/**
+	 * @static
+	 *
+	 * @fn OperationQueue* OperationQueue::currentQueue(void)
+	 *
 	 * @return The current OperationQueue, or NULL if none can be determined.
 	 *
 	 * @remark This method should only be called from a synchronous Operation
 	 * that was dispatched via an OperationQueue. This method uses thread-local
 	 * storage.
 	 *
-	 * @relates OperationQueue
+	 * @memberof OperationQueue
 	 */
 	OperationQueue *(*currentQueue)(void);
 
 	/**
+	 * @fn OperationQueue *OperationQueue::init(OperationQueue *self)
+	 *
 	 * @brief Initializes this OperationQueue.
 	 *
 	 * @return The initialized OperationQueue, or `NULL` on error.
 	 *
-	 * @relates OperationQueue
+	 * @memberof OperationQueue
 	 */
 	OperationQueue *(*init)(OperationQueue *self);
 
 	/**
+	 * @fn int OperationQueue::operationCount(const OperationQueue *self)
+	 *
 	 * @return The instantaneous `count` of this OperationQueue's Operations.
 	 *
-	 * @relates OperationQueue
+	 * @memberof OperationQueue
 	 */
 	int (*operationCount)(const OperationQueue *self);
 
 	/**
+	 * @fn Array *OperationQueue::operations(const OperationQueue *self)
+	 *
 	 * @return An instantaneous copy of this OperationQueue's Operations.
 	 *
-	 * @relates OperationQueue
+	 * @memberof OperationQueue
 	 */
 	Array *(*operations)(const OperationQueue *self);
 
 	/**
+	 * @fn void OperationQueue::removeOperation(OperationQueue *self, Operation *operation)
+	 *
 	 * @brief Removes the Operation from this queue.
 	 *
 	 * @param operation The Operation to remove.
 	 *
-	 * @relates OperationQueue
+	 * @memberof OperationQueue
 	 */
 	void (*removeOperation)(OperationQueue *self, Operation *operation);
 
 	/**
+	 * @fn void OperationQueue::waitUntilAllOperationsAreFinished(OperationQueue *self)
+	 *
 	 * @brief Waits until all Operations submitted to this queue have finished.
 	 *
-	 * @relates OperationQueue
+	 * @memberof OperationQueue
 	 */
 	void (*waitUntilAllOperationsAreFinished)(OperationQueue *self);
 };

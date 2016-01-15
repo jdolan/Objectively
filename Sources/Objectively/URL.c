@@ -104,7 +104,9 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - URLInterface
 
 /**
- * @see URL::baseURL(const URL *)
+ * @fn URL *URL::baseURL(const URL *self)
+ *
+ * @memberof URL
  */
 static URL *baseURL(const URL *self) {
 
@@ -129,7 +131,9 @@ static URL *baseURL(const URL *self) {
 }
 
 /**
- * @see URL::initWithCharacters(URL *, const char *)
+ * @fn URL *URL::initWithCharacters(URL *self, const char *chars)
+ *
+ * @memberof URL
  */
 static URL *initWithCharacters(URL *self, const char *chars) {
 
@@ -138,17 +142,17 @@ static URL *initWithCharacters(URL *self, const char *chars) {
 	self = (URL *) super(Object, self, init);
 	if (self) {
 
-		RANGE *matches;
+		Range *matches;
 		if ($(_regex, matchesCharacters, chars, 0, &matches)) {
 
 			self->urlString = $(alloc(String), initWithCharacters, chars);
 
-			RANGE *scheme = &matches[1];
-			RANGE *host = &matches[2];
-			RANGE *port = &matches[3];
-			RANGE *path = &matches[4];
-			RANGE *query = &matches[5];
-			RANGE *fragment = &matches[6];
+			Range *scheme = &matches[1];
+			Range *host = &matches[2];
+			Range *port = &matches[3];
+			Range *path = &matches[4];
+			Range *query = &matches[5];
+			Range *fragment = &matches[6];
 
 			self->scheme = $(self->urlString, substring, *scheme);
 
@@ -192,7 +196,9 @@ static URL *initWithCharacters(URL *self, const char *chars) {
 }
 
 /**
- * @see URL::initWithString(URL *, const String *)
+ * @fn URL *URL::initWithString(URL *self, const String *string)
+ *
+ * @memberof URL
  */
 static URL *initWithString(URL *self, const String *string) {
 
@@ -202,7 +208,9 @@ static URL *initWithString(URL *self, const String *string) {
 }
 
 /**
- * @see URL::pathComponents(const URL *)
+ * @fn Array *URL::pathComponents(const URL *self)
+ *
+ * @memberof URL
  */
 static Array *pathComponents(const URL *self) {
 

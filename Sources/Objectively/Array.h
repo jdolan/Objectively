@@ -101,35 +101,47 @@ struct ArrayInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @static
+	 *
+	 * @fn Array *Array::arrayWithArray(const Array *array)
+	 *
 	 * @brief Returns a new Array containing the contents of `array`.
 	 *
 	 * @param array An Array.
 	 *
 	 * @return The new Array, or `NULL` on error.
 	 *
-	 * @relates Array
+	 * @memberof Array
 	 */
 	Array *(*arrayWithArray)(const Array *array);
 
 	/**
+	 * @static
+	 *
+	 * @fn Array *Array::arrayWithObjects(ident obj, ...)
+	 *
 	 * @brief Returns a new Array containing the given Objects.
 	 *
 	 * @param obj The first in a `NULL`-terminated sequence of Objects.
 	 *
 	 * @return The new Array, or `NULL` on error.
 	 *
-	 * @relates Array
+	 * @memberof Array
 	 */
 	Array *(*arrayWithObjects)(ident obj, ...);
 
 	/**
+	 * @fn _Bool Array::containsObject(const Array *self, const ident obj)
+	 *
 	 * @return `true` if this Array contains the given Object, `false` otherwise.
 	 *
-	 * @relates Array
+	 * @memberof Array
 	 */
 	_Bool (*containsObject)(const Array *self, const ident obj);
 
 	/**
+	 * @fn void Array::enumerateObjects(const Array *self, ArrayEnumerator enumerator, ident data)
+	 *
 	 * @brief Enumerate the elements of this Array with the given function.
 	 *
 	 * @param enumerator The enumerator function.
@@ -137,11 +149,13 @@ struct ArrayInterface {
 	 *
 	 * @remark The enumerator should return `true` to break the iteration.
 	 *
-	 * @relates Array
+	 * @memberof Array
 	 */
 	void (*enumerateObjects)(const Array *self, ArrayEnumerator enumerator, ident data);
 
 	/**
+	 * @fn void Array::filterObjects(const Array *self, ArrayEnumerator enumerator, ident data)
+	 *
 	 * @brief Creates a new Array with elements that pass the filter function.
 	 *
 	 * @param enumerator The enumerator function.
@@ -149,52 +163,65 @@ struct ArrayInterface {
 	 *
 	 * @return The new, filtered Array.
 	 *
-	 * @relates Array
+	 * @memberof Array
 	 */
 	Array *(*filterObjects)(const Array *self, ArrayEnumerator enumerator, ident data);
 
 	/**
+	 * @fn int Array::indexOfObject(const Array *self, const ident obj)
+	 *
+	 * @param obj An Object.
+	 *
 	 * @return The index of the given Object, or `-1` if not found.
 	 *
-	 * @relates Array
+	 * @memberof Array
 	 */
 	int (*indexOfObject)(const Array *self, const ident obj);
 
 	/**
+	 * @fn Array *Array::initWithArray(Array *self, const Array *array)
+	 *
 	 * @brief Initializes this Array to contain the Objects in `array`.
 	 *
+	 * @param self The Array.
 	 * @param array An Array.
 	 *
 	 * @return The initialized Array, or `NULL` on error.
 	 *
-	 * @relates Array
+	 * @memberof Array
 	 */
 	Array *(*initWithArray)(Array *self, const Array *array);
 
 	/**
+	 * @fn Array *Array::initWithObjects(Array *self, ...)
+	 *
 	 * @brief Initializes this Array with the specified objects.
 	 *
 	 * @return The initialized Array, or `NULL` on error.
 	 *
-	 * @relates Array
+	 * @memberof Array
 	 */
 	Array *(*initWithObjects)(Array *self, ...);
 
 	/**
+	 * @fn MutableArray *Array::mutableCopy(const Array *self)
+	 *
 	 * @return A MutableArray with the contents of this Array.
 	 *
-	 * @relates Array
+	 * @memberof Array
 	 */
 	MutableArray *(*mutableCopy)(const Array *self);
 
 	/**
+	 * @fn ident Array::objectAtIndex(const Array *self, int index)
+	 *
 	 * @param index The index of the desired Object.
 	 *
 	 * @return The Object at the specified index.
 	 *
-	 * @relates Array
+	 * @memberof Array
 	 */
-	ident (*objectAtIndex)(const Array *self, const int index);
+	ident (*objectAtIndex)(const Array *self, int index);
 };
 
 /**

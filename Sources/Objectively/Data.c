@@ -69,7 +69,7 @@ static int hash(const Object *self) {
 	int hash = HASH_SEED;
 	hash = HashForInteger(hash, this->length);
 
-	const RANGE range = { 0, this->length };
+	const Range range = { 0, this->length };
 	hash = HashForBytes(hash, this->bytes, range);
 
 	return hash;
@@ -100,7 +100,9 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - DataInterface
 
 /**
- * @see Data::dataWithBytes(const byte *, size_t)
+ * @fn Data *Data::dataWithBytes(const byte *bytes, size_t length)
+ *
+ * @memberof Data
  */
 static Data *dataWithBytes(const byte *bytes, size_t length) {
 
@@ -108,7 +110,9 @@ static Data *dataWithBytes(const byte *bytes, size_t length) {
 }
 
 /**
- * @see Data::dataWithContentsOfFile(const char *)
+ * @fn Data *Data::dataWithContentsOfFile(const char *path)
+ *
+ * @memberof Data
  */
 static Data *dataWithContentsOfFile(const char *path) {
 
@@ -116,7 +120,19 @@ static Data *dataWithContentsOfFile(const char *path) {
 }
 
 /**
- * @see Data::initWithBytes(Data *, const byte *, size_t)
+ * @fn Data *Data::dataWithMemory(const ident mem, size_t length)
+ *
+ * @memberof Data
+ */
+static Data *dataWithMemory(const ident mem, size_t length) {
+
+	return $(alloc(Data), initWithMemory, mem, length);
+}
+
+/**
+ * @fn Data *Data::initWithBytes(Data *self, const byte *bytes, size_t length)
+ *
+ * @memberof Data
  */
 static Data *initWithBytes(Data *self, const byte *bytes, size_t length) {
 
@@ -129,15 +145,9 @@ static Data *initWithBytes(Data *self, const byte *bytes, size_t length) {
 }
 
 /**
- * @see Data::dataWithMemory(const id, size_t)
- */
-static Data *dataWithMemory(const ident mem, size_t length) {
-
-	return $(alloc(Data), initWithMemory, mem, length);
-}
-
-/**
- * @see Data::initWithContentsOfFile(Data *, const char *)
+ * @fn Data *Data::initWithContentsOfFile(Data *self, const char *path)
+ *
+ * @memberof Data
  */
 static Data *initWithContentsOfFile(Data *self, const char *path) {
 
@@ -173,7 +183,9 @@ static Data *initWithContentsOfFile(Data *self, const char *path) {
 }
 
 /**
- * @see Data::initWithMemory(Data *, const id, size_t)
+ * @fn Data *Data::initWithMemory(Data *self, const ident mem, size_t length)
+ *
+ * @memberof Data
  */
 static Data *initWithMemory(Data *self, const ident mem, size_t length) {
 
@@ -187,7 +199,9 @@ static Data *initWithMemory(Data *self, const ident mem, size_t length) {
 }
 
 /**
- * @see Data::mutableCopy(const Data *)
+ * @fn MutableData *Data::mutableCopy(const Data *self)
+ *
+ * @memberof Data
  */
 static MutableData *mutableCopy(const Data *self) {
 
@@ -195,7 +209,9 @@ static MutableData *mutableCopy(const Data *self) {
 }
 
 /**
- * @see Data::writeToFile(const Data *, const char *)
+ * @fn _Bool Data::writeToFile(const Data *self, const char *path)
+ *
+ * @memberof Data
  */
 static _Bool writeToFile(const Data *self, const char *path) {
 

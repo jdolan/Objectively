@@ -55,23 +55,10 @@ static void dealloc(Object *self) {
 
 #pragma mark - LogInterface
 
-static Log *_sharedInstance;
-
 /**
- * @see Log::sharedInstance(void)
- */
-static Log *sharedInstance(void) {
-	static Once once;
-
-	DispatchOnce(once, {
-		_sharedInstance = $(alloc(Log), init);
-	});
-
-	return _sharedInstance;
-}
-
-/**
- * @see Log::debug(const Log *, const char *, ...)
+ * @fn void Log::debug(const Log *self, const char *fmt, ...)
+ *
+ * @memberof Log
  */
 static void debug(const Log *self, const char *fmt, ...) {
 
@@ -84,7 +71,9 @@ static void debug(const Log *self, const char *fmt, ...) {
 }
 
 /**
- * @see Log::error(const Log *, const char *, ...)
+ * @fn void Log::error(const Log *self, const char *fmt, ...)
+ *
+ * @memberof Log
  */
 static void error(const Log *self, const char *fmt, ...) {
 
@@ -97,7 +86,9 @@ static void error(const Log *self, const char *fmt, ...) {
 }
 
 /**
- * @see Log::fatal(const Log *, const char *, ...)
+ * @fn void Log::fatal(const Log *self, const char *fmt, ...)
+ *
+ * @memberof Log
  */
 static void fatal(const Log *self, const char *fmt, ...) {
 
@@ -110,7 +101,9 @@ static void fatal(const Log *self, const char *fmt, ...) {
 }
 
 /**
- * @see Log::flush
+ * @fn void Log::flush(const Log *self)
+ *
+ * @memberof Log
  */
 static void flush(const Log *self) {
 
@@ -119,7 +112,9 @@ static void flush(const Log *self) {
 }
 
 /**
- * @see Log::info(const Log *, const char *, ...)
+ * @fn void Log::info(const Log *self, const char *fmt, ...)
+ *
+ * @memberof Log
  */
 static void info(const Log *self, const char *fmt, ...) {
 
@@ -132,7 +127,9 @@ static void info(const Log *self, const char *fmt, ...) {
 }
 
 /**
- * @see Log::init(Log *)
+ * @fn Log *Log::init(Log *self)
+ *
+ * @memberof Log
  */
 static Log *init(Log *self) {
 
@@ -140,7 +137,9 @@ static Log *init(Log *self) {
 }
 
 /**
- * @see Log::initWithName(Log *, const char *)
+ * @fn Log *Log::initWithName(Log *self, const char *name)
+ *
+ * @memberof Log
  */
 static Log *initWithName(Log *self, const char *name) {
 
@@ -156,12 +155,9 @@ static Log *initWithName(Log *self, const char *name) {
 }
 
 /**
- * @brief Writes a formatted message to this Log's stream.
+ * @fn void Log::log(const Log *self, LogLevel level, const char *fmt, va_list args)
  *
- * @param self The Log instance.
- * @param level The message level.
- * @param fmt The user's format string.
- * @param args The format string arguments.
+ * @memberof Log
  */
 static void _log(const Log *self, LogLevel level, const char *fmt, va_list args) {
 
@@ -211,8 +207,27 @@ static void _log(const Log *self, LogLevel level, const char *fmt, va_list args)
 	fflush(self->file);
 }
 
+static Log *_sharedInstance;
+
 /**
- * @see Log::trace(const Log *, const char *, ...)
+ * @fn Log *Log::sharedInstance(void)
+ *
+ * @memberof Log
+ */
+static Log *sharedInstance(void) {
+	static Once once;
+	
+	DispatchOnce(once, {
+		_sharedInstance = $(alloc(Log), init);
+	});
+	
+	return _sharedInstance;
+}
+
+/**
+ * @fn void Log::trace(const Log *self, const char *fmt, ...)
+ *
+ * @memberof Log
  */
 static void trace(const Log *self, const char *fmt, ...) {
 
@@ -225,7 +240,9 @@ static void trace(const Log *self, const char *fmt, ...) {
 }
 
 /**
- * @see Log::warn(const Log *, const char *, ...)
+ * @fn void Log::warn(const Log *self, const char *fmt, ...)
+ *
+ * @memberof Log
  */
 static void warn(const Log *self, const char *fmt, ...) {
 
@@ -250,7 +267,6 @@ static void initialize(Class *clazz) {
 
 	LogInterface *log = (LogInterface *) clazz->interface;
 
-	log->sharedInstance = sharedInstance;
 	log->debug = debug;
 	log->error = error;
 	log->fatal = fatal;
@@ -260,6 +276,7 @@ static void initialize(Class *clazz) {
 	log->initWithName = initWithName;
 	log->log = _log;
 	log->trace = trace;
+	log->sharedInstance = sharedInstance;
 	log->warn = warn;
 }
 
