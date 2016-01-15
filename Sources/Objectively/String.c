@@ -43,7 +43,7 @@
 
 #define _Class _String
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -110,7 +110,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 	return false;
 }
 
-#pragma mark - StringInterface
+#pragma mark - String
 
 /**
  * @brief Character transcoding context for `iconv`.

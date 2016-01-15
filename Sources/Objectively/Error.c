@@ -29,7 +29,7 @@
 
 #define _Class _Error
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -119,7 +119,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 	return false;
 }
 
-#pragma mark - ErrorInterface
+#pragma mark - Error
 
 /**
  * @fn Error *Error::initWithDomain(Error *self, String *domain, int code, String *message)

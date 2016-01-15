@@ -34,7 +34,7 @@
 
 #define _Class _Log
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::dealloc(Object *)
@@ -53,7 +53,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - LogInterface
+#pragma mark - Log
 
 /**
  * @fn void Log::debug(const Log *self, const char *fmt, ...)

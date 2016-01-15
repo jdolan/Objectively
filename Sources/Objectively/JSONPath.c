@@ -32,7 +32,7 @@
 
 #define _Class _JSONPath
 
-#pragma mark - JSONPathInterface
+#pragma mark - JSONPath
 
 static Regex *_regex;
 

@@ -33,7 +33,7 @@
 
 #define DATA_BLOCK_SIZE 4096
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -97,7 +97,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 	return false;
 }
 
-#pragma mark - DataInterface
+#pragma mark - Data
 
 /**
  * @fn Data *Data::dataWithBytes(const byte *bytes, size_t length)

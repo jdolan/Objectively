@@ -30,7 +30,7 @@
 
 #define _Class _Object
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @fn Object *Object::copy(const Object *self)

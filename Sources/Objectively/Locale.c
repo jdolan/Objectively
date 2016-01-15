@@ -31,7 +31,7 @@
 
 #define _Class _Locale
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(Object *)
@@ -60,7 +60,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - LocaleInterface
+#pragma mark - Locale
 
 /**
  * @fn Locale *Locale::initWithIdentifier(Locale *self, const char *identifier)

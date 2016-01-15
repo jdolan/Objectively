@@ -30,7 +30,7 @@
 
 #define _Class _DateFormatter
 
-#pragma mark - DateFormatterInterface
+#pragma mark - DateFormatter
 
 /**
  * @fn Date *DateFormatter::dateFromCharacters(const DateFormatter *self, const char *chars)

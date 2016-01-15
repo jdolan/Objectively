@@ -36,7 +36,7 @@
 
 #define _Class _JSONSerialization
 
-#pragma mark - JSONSerializationInterface
+#pragma mark - JSONSerialization
 
 /**
  * @brief A writer for generating JSON Data.

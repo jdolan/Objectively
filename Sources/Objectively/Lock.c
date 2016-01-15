@@ -31,7 +31,7 @@
 
 #define _Class _Lock
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -53,7 +53,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - LockInterface
+#pragma mark - Lock
 
 /**
  * @fn Lock *Lock::init(Lock *self)

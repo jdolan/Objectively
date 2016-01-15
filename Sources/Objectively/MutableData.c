@@ -29,7 +29,7 @@
 
 #define _Class _MutableData
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -44,7 +44,7 @@ static Object *copy(const Object *self) {
 	return (Object *) that;
 }
 
-#pragma mark - MutableDataInterface
+#pragma mark - MutableData
 
 /**
  * @fn void MutableData::appendBytes(MutableData *self, const byte *bytes, size_t length)

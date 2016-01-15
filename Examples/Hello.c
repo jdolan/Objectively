@@ -73,7 +73,7 @@ extern Class _Hello;
 
 #define _Class _Hello
 
-#pragma mark - HelloInterface
+#pragma mark - Hello
 
 /**
  * @fn Hello::helloWithGreeting(const char *)

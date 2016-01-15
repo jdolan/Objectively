@@ -30,7 +30,7 @@
 
 #define _Class _URLSession
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::dealloc(Object *)
@@ -49,7 +49,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - URLSessionInterface
+#pragma mark - URLSession
 
 /**
  * @fn URLSessionDataTask *URLSession::dataTaskWithRequest(URLSession *self, URLRequest *request, URLSessionTaskCompletion completion)

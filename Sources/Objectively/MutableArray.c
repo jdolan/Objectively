@@ -32,7 +32,7 @@
 
 #define ARRAY_CHUNK_SIZE 64
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -48,7 +48,7 @@ static Object *copy(const Object *self) {
 	return (Object *) copy;
 }
 
-#pragma mark - MutableArrayInterface
+#pragma mark - MutableArray
 
 /**
  * @fn void MutableArray::addObject(MutableArray *self, const ident obj)

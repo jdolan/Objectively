@@ -33,7 +33,7 @@
 
 #define _Class _Set
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -126,7 +126,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 	return false;
 }
 
-#pragma mark - SetInterface
+#pragma mark - Set
 
 /**
  * @brief SetEnumerator for allObjects.

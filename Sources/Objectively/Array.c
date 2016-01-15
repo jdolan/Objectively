@@ -32,7 +32,7 @@
 
 #define _Class _Array
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -134,7 +134,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 	return false;
 }
 
-#pragma mark - ArrayInterface
+#pragma mark - Array
 
 
 /**

@@ -34,7 +34,7 @@
 
 #define _Class _MutableString
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -46,7 +46,7 @@ static Object *copy(const Object *self) {
 	return (Object *) $(alloc(MutableString), initWithString, this);
 }
 
-#pragma mark - MutableStringInterface
+#pragma mark - MutableString
 
 /**
  * @fn void MutableString::appendCharacters(MutableString *self, const char *chars)

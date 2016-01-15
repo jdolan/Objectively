@@ -30,7 +30,7 @@
 
 #define _Class _URLSessionUploadTask
 
-#pragma mark - URLSessionTaskInterface
+#pragma mark - URLSessionTask
 
 /**
  * @brief The `CURLOPT_READFUNCTION` callback.

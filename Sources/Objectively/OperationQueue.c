@@ -28,7 +28,7 @@
 
 #define _Class _OperationQueue
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -55,7 +55,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - OperationQueueInterface
+#pragma mark - OperationQueue
 
 /**
  * @fn void OperationQueue::addOperation(OperationQueue *self, Operation *operation)

@@ -29,7 +29,7 @@
 
 #define _Class _Number
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::description(const Object *)
@@ -71,7 +71,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 	return false;
 }
 
-#pragma mark - NumberInterface
+#pragma mark - Number
 
 /**
  * @fn _Bool Number::boolValue(const Number *self)

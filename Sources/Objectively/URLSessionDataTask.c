@@ -31,7 +31,7 @@
 
 #define _Class _URLSessionDataTask
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::dealloc(Object *)
@@ -45,7 +45,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - URLSessionTaskInterface
+#pragma mark - URLSessionTask
 
 #define CURL_WRITEFUNC_ABORT 0
 

@@ -29,7 +29,7 @@
 
 #define _Class _Boole
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -49,7 +49,7 @@ static String *description(const Object *self) {
 	return $(alloc(String), initWithCharacters, this->value ? "true" : "false");
 }
 
-#pragma mark - BooleInterface
+#pragma mark - Boole
 
 static Boole *_False;
 

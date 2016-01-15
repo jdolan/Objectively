@@ -28,7 +28,7 @@
 
 #define _Class _Operation
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -51,7 +51,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - OperationInterface
+#pragma mark - Operation
 
 /**
  * @fn void Operation::addDependency(Operation *self, Operation *dependency)

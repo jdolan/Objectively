@@ -35,7 +35,7 @@
 #define MUTABLEDICTIONARY_GROW_FACTOR 2.0
 #define MUTABLEDICTIONARY_MAX_LOAD 0.75
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -51,7 +51,7 @@ static Object *copy(const Object *self) {
 	return (Object *) copy;
 }
 
-#pragma mark - MutableDictionaryInterface
+#pragma mark - MutableDictionary
 
 /**
  * @brief DictionaryEnumerator for addEntriesFromDictionary.

@@ -33,7 +33,7 @@
 
 #define _Class _Dictionary
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -155,7 +155,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 	return false;
 }
 
-#pragma mark - DictionaryInterface
+#pragma mark - Dictionary
 
 /**
  * @brief DictionaryEnumerator for allKeys.

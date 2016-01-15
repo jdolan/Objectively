@@ -33,7 +33,7 @@
 
 #define _Class _Condition
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::dealloc(Object *)
@@ -48,7 +48,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - ConditionInterface
+#pragma mark - Condition
 
 /**
  * @fn void Condition::broadcast(Condition *self)

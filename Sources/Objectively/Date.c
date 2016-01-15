@@ -28,7 +28,7 @@
 
 #define _Class _Date
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::hash(const Object *)
@@ -65,7 +65,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 	return false;
 }
 
-#pragma mark - DateInterface
+#pragma mark - Date
 
 /**
  * @fn Order Date::compareTo(const Date *self, const Date *other)

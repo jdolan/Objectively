@@ -30,7 +30,7 @@
 
 #define _Class _Regex
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -103,7 +103,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 	return false;
 }
 
-#pragma mark - RegexInterface
+#pragma mark - Regex
 
 /**
  * @fn Regex *Regex::initWithPattern(Regex *self, const char *pattern, int options)

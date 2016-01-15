@@ -32,7 +32,7 @@
 
 #define _Class _Thread
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -55,7 +55,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - ThreadInterface
+#pragma mark - Thread
 
 /**
  * @fn void Thread::cancel(Thread *self)

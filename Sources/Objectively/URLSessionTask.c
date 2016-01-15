@@ -31,7 +31,7 @@
 
 #define _Class _URLSessionTask
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -58,7 +58,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - URLSessionTaskInterface
+#pragma mark - URLSessionTask
 
 /**
  * @fn void URLSessionTask::cancel(URLSessionTask *self)

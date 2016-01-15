@@ -30,7 +30,7 @@
 
 #define _Class _NumberFormatter
 
-#pragma mark - NumberFormatterInterface
+#pragma mark - NumberFormatter
 
 /**
  * @fn NumberFormatter *NumberFormatter::initWithFormat(NumberFormatter *self, const char *fmt)

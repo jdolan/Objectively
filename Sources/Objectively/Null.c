@@ -28,7 +28,7 @@
 
 #define _Class _Null
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -38,7 +38,7 @@ static Object *copy(const Object *self) {
 	return (Object *) self;
 }
 
-#pragma mark - NullInterface
+#pragma mark - Null
 
 static Null *_null;
 

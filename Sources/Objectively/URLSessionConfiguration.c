@@ -12,7 +12,7 @@
 
 #define _Class _URLSessionConfiguration
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::dealloc(Object *)
@@ -28,7 +28,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - URLSessionConfigurationInterface
+#pragma mark - URLSessionConfiguration
 
 /**
  * @fn URLSessionConfiguration *URLSessionConfiguration::init(URLSessionConfiguration *self)

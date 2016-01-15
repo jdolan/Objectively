@@ -28,7 +28,7 @@
 
 #define _Class _URLSessionDownloadTask
 
-#pragma mark - URLSessionTaskInterface
+#pragma mark - URLSessionTask
 
 #define CURL_WRITEFUNC_ABORT 0
 

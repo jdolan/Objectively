@@ -28,7 +28,7 @@
 
 #define _Class _URLRequest
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -63,7 +63,7 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - URLRequestInterface
+#pragma mark - URLRequest
 
 /**
  * @fn URLRequest *URLRequest::initWithURL(URLRequest *self, URL *url)

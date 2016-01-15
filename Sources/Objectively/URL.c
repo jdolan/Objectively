@@ -32,7 +32,7 @@
 
 static Regex *_regex;
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
  * @see Object::copy(const Object *)
@@ -101,7 +101,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 	return false;
 }
 
-#pragma mark - URLInterface
+#pragma mark - URL
 
 /**
  * @fn URL *URL::baseURL(const URL *self)
