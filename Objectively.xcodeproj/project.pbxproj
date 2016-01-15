@@ -205,7 +205,6 @@
 		CE76D9011C481E390096DD31 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		CE76D9031C481E390096DD31 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		CE76D9041C481E390096DD31 /* cantina-tech-talk-october-2014.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "cantina-tech-talk-october-2014.md"; sourceTree = "<group>"; };
-		CE76D9051C481E390096DD31 /* custom.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = custom.css; sourceTree = "<group>"; };
 		CE76D9061C481E390096DD31 /* index.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = index.md; sourceTree = "<group>"; };
 		CE76D9071C481E390096DD31 /* layout.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = layout.xml; sourceTree = "<group>"; };
 		CE76D90D1C481E390096DD31 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -380,7 +379,6 @@
 			children = (
 				CE76D9031C481E390096DD31 /* .gitignore */,
 				CE76D9041C481E390096DD31 /* cantina-tech-talk-october-2014.md */,
-				CE76D9051C481E390096DD31 /* custom.css */,
 				CE76D9061C481E390096DD31 /* index.md */,
 				CE76D9071C481E390096DD31 /* layout.xml */,
 			);
