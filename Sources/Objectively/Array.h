@@ -133,6 +133,9 @@ struct ArrayInterface {
 	/**
 	 * @fn _Bool Array::containsObject(const Array *self, const ident obj)
 	 *
+	 * @param self The Array.
+	 * @param obj An Object.
+	 *
 	 * @return `true` if this Array contains the given Object, `false` otherwise.
 	 *
 	 * @memberof Array
@@ -144,6 +147,7 @@ struct ArrayInterface {
 	 *
 	 * @brief Enumerate the elements of this Array with the given function.
 	 *
+	 * @param self The Array.
 	 * @param enumerator The enumerator function.
 	 * @param data User data.
 	 *
@@ -158,6 +162,7 @@ struct ArrayInterface {
 	 *
 	 * @brief Creates a new Array with elements that pass the filter function.
 	 *
+	 * @param self The Array.
 	 * @param enumerator The enumerator function.
 	 * @param data User data.
 	 *
@@ -170,6 +175,7 @@ struct ArrayInterface {
 	/**
 	 * @fn int Array::indexOfObject(const Array *self, const ident obj)
 	 *
+	 * @param self The Array.
 	 * @param obj An Object.
 	 *
 	 * @return The index of the given Object, or `-1` if not found.
@@ -197,6 +203,8 @@ struct ArrayInterface {
 	 *
 	 * @brief Initializes this Array with the specified objects.
 	 *
+	 * @param self The uninitialized Array.
+	 *
 	 * @return The initialized Array, or `NULL` on error.
 	 *
 	 * @memberof Array
@@ -205,6 +213,8 @@ struct ArrayInterface {
 
 	/**
 	 * @fn MutableArray *Array::mutableCopy(const Array *self)
+	 *
+	 * @param self The Array.
 	 *
 	 * @return A MutableArray with the contents of this Array.
 	 *
@@ -215,6 +225,7 @@ struct ArrayInterface {
 	/**
 	 * @fn ident Array::objectAtIndex(const Array *self, int index)
 	 *
+	 * @param self The Array.
 	 * @param index The index of the desired Object.
 	 *
 	 * @return The Object at the specified index.

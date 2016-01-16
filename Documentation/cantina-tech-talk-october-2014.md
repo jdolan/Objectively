@@ -11,7 +11,7 @@ Why create Objectively?
 > that in itself would be a huge reason to use C. -- Linus Torvalds
 
  * C++ is unruly and not always welcome in some open source projects.  
- * C99 is widely supported and offers massive improvements to C89.
+ * C99 / GNUC is widely supported and offers massive improvements to C89.
  * Opportunity to grow my understanding of C and possibly other languages.
 
 First attempt
@@ -46,7 +46,7 @@ Second attempt (current implementation)
         void (*baz)(const Foo *self);
     };
 
-    extern Class __Foo;
+    extern Class _Foo;
     
  * Sparse use of macros, use code templates for convenience
  * Instance and interface types are separate
@@ -73,7 +73,7 @@ What's next?
 
 Quake
 ===
-![Penumbral Wake - Quake2World](https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xpf1/t31.0-8/861008_617224188323107_1551552667_o.jpg)
+![Penumbral Wake - Quetoo](https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xpf1/t31.0-8/861008_617224188323107_1551552667_o.jpg)
 
 In a nut shell
 ---

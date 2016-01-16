@@ -69,7 +69,6 @@
 		CE76D9A81C4821CE0096DD31 /* Thread.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9611C481E390096DD31 /* Thread.c */; };
 		CE76D9A91C4821CE0096DD31 /* URL.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9621C481E390096DD31 /* URL.c */; };
 		CE76D9AA1C4821CE0096DD31 /* URLSession.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9631C481E390096DD31 /* URLSession.c */; };
-		CE76D9AB1C4821F40096DD31 /* HelloCpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9161C481E390096DD31 /* HelloCpp.cpp */; };
 		CE76D9AC1C4821F40096DD31 /* HelloObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9191C481E390096DD31 /* HelloObjC.m */; };
 		CE76DA021C4857350096DD31 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76DA011C4857350096DD31 /* libcurl.a */; };
 		CE76DA041C48578C0096DD31 /* libiconv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76DA031C48578C0096DD31 /* libiconv.a */; };
@@ -208,7 +207,6 @@
 		CE76D9071C481E390096DD31 /* layout.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = layout.xml; sourceTree = "<group>"; };
 		CE76D90D1C481E390096DD31 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		CE76D9131C481E390096DD31 /* Hello.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Hello.c; sourceTree = "<group>"; };
-		CE76D9161C481E390096DD31 /* HelloCpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloCpp.cpp; sourceTree = "<group>"; };
 		CE76D9191C481E390096DD31 /* HelloObjC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelloObjC.m; sourceTree = "<group>"; };
 		CE76D91C1C481E390096DD31 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		CE76D91E1C481E390096DD31 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
@@ -391,7 +389,6 @@
 			children = (
 				CE76D90D1C481E390096DD31 /* .gitignore */,
 				CE76D9131C481E390096DD31 /* Hello.c */,
-				CE76D9161C481E390096DD31 /* HelloCpp.cpp */,
 				CE76D9191C481E390096DD31 /* HelloObjC.m */,
 				CE76D91C1C481E390096DD31 /* Makefile.am */,
 			);
@@ -583,7 +580,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE76D9AB1C4821F40096DD31 /* HelloCpp.cpp in Sources */,
 				CE76D9AC1C4821F40096DD31 /* HelloObjC.m in Sources */,
 				CE76D96D1C4821CE0096DD31 /* Hello.c in Sources */,
 				CE76D96E1C4821CE0096DD31 /* Array.c in Sources */,
@@ -656,26 +652,16 @@
 		CE76D7F71C481B530096DD31 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libstdc++";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				OTHER_CFLAGS = (
-					"-I$(SRCROOT)/Sources",
-					"-I/opt/local/include",
-				);
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/Sources";
 			};
 			name = Debug;
 		};
 		CE76D7F81C481B530096DD31 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libstdc++";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				OTHER_CFLAGS = (
-					"-I$(SRCROOT)/Sources",
-					"-I/opt/local/include",
-				);
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/Sources";
 			};
 			name = Release;
 		};
@@ -799,7 +785,6 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -835,7 +820,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
