@@ -495,6 +495,8 @@ extern Class _String;
  * @param encoding A StringEncoding.
  *
  * @return The canonical name for the given encoding.
+ * 
+ * @relates String
  */
 const char *NameForStringEncoding(StringEncoding encoding);
 
@@ -502,6 +504,8 @@ const char *NameForStringEncoding(StringEncoding encoding);
  * @param name The case-insensitive name of the encoding.
  *
  * @return The StringEncoding for the given `name`.
+ *
+ * @relates String
  */
 StringEncoding StringEncodingForName(const char *name);
 
@@ -511,6 +515,8 @@ StringEncoding StringEncodingForName(const char *name);
  * @param fmt The format string.
  *
  * @return A new String, or `NULL` on error.
+ *
+ * @relates String
  */
 String *str(const char *fmt, ...);
 

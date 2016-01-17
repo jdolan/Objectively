@@ -93,7 +93,7 @@ struct MutableStringInterface {
 	 *
 	 * @brief Appends the specified formatted string.
 	 *
-	 * @param fmt The format sequence.
+	 * @param fmt The format string.
 	 *
 	 * @memberof MutableString
 	 */
@@ -109,6 +109,18 @@ struct MutableStringInterface {
 	 * @memberof MutableString
 	 */
 	void (*appendString)(MutableString *self, const String *string);
+	
+	/**
+	 * @fn void MutableString::appendVaList(MutableString *self, const char *fmt, va_list args)
+	 *
+	 * @brief Appends the specified format string.
+	 *
+	 * @param fmt The format string.
+	 * @param args The format arguments.
+	 *
+	 * @memberof MutableString
+	 */
+	void (*appendVaList)(MutableString *self, const char *fmt, va_list args);
 
 	/**
 	 * @fn void MutableString::deleteCharactersInRange(MutableString *self, const Range range)
@@ -203,5 +215,16 @@ struct MutableStringInterface {
  * @brief The MutableString Class.
  */
 extern Class _MutableString;
+
+/**
+ * @brief A convenience function for instantiating MutableStrings.
+ *
+ * @param fmt The format string.
+ *
+ * @return A new MutableString, or `NULL` on error.
+ *
+ * @relates String
+ */
+MutableString *mstr(const char *fmt, ...);
 
 #endif

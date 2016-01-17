@@ -91,14 +91,7 @@ static void appendFormat(MutableString *self, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	char *chars;
-
-	const int len = vasprintf(&chars, fmt, args);
-	if (len > 0) {
-		$(self, appendCharacters, chars);
-	}
-
-	free(chars);
+	$(self, appendVaList, fmt, args);
 
 	va_end(args);
 }
@@ -113,6 +106,22 @@ static void appendString(MutableString *self, const String *string) {
 	if (string) {
 		$(self, appendCharacters, string->chars);
 	}
+}
+
+/**
+ * @fn void MutableString::appendVaList(MutableString *self, const char *fmt, va_list args)
+ *
+ * @memberof MutableString
+ */
+static void appendVaList(MutableString *self, const char *fmt, va_list args) {
+	char *chars;
+	
+	const int len = vasprintf(&chars, fmt, args);
+	if (len > 0) {
+		$(self, appendCharacters, chars);
+	}
+	
+	free(chars);
 }
 
 /**
@@ -233,6 +242,7 @@ static void initialize(Class *clazz) {
 	mutableString->appendCharacters = appendCharacters;
 	mutableString->appendFormat = appendFormat;
 	mutableString->appendString = appendString;
+	mutableString->appendVaList = appendVaList;
 	mutableString->deleteCharactersInRange = deleteCharactersInRange;
 	mutableString->init = init;
 	mutableString->initWithCapacity = initWithCapacity;
@@ -252,3 +262,16 @@ Class _MutableString = {
 };
 
 #undef _Class
+
+MutableString *mstr(const char *fmt, ...) {
+	
+	MutableString *string = $$(MutableString, string);
+	
+	va_list args;
+	va_start(args, fmt);
+	
+	$(string, appendVaList, fmt, args);
+	
+	va_end(args);
+	return string;
+}
