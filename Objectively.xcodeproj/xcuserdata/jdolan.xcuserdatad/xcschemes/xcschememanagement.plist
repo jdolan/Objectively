@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Objectively-Xcode copy 2.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>Objectively-Xcode copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>Objectively-Xcode.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -23,6 +33,16 @@
 			<true/>
 		</dict>
 		<key>CE76D9671C48218E0096DD31</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CE76DA2F1C4B17980096DD31</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CE76DAA11C4B184E0096DD31</key>
 		<dict>
 			<key>primary</key>
 			<true/>
