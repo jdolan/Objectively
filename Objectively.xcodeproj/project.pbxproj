@@ -111,13 +111,9 @@
 		CE76DA6D1C4B17980096DD31 /* Thread.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9611C481E390096DD31 /* Thread.c */; };
 		CE76DA6E1C4B17980096DD31 /* URL.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9621C481E390096DD31 /* URL.c */; };
 		CE76DA6F1C4B17980096DD31 /* URLSession.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9631C481E390096DD31 /* URLSession.c */; };
-		CE76DA711C4B17980096DD31 /* libiconv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76DA031C48578C0096DD31 /* libiconv.a */; };
-		CE76DA721C4B17980096DD31 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76DA011C4857350096DD31 /* libcurl.a */; };
-		CE76DACA1C4B184E0096DD31 /* libiconv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76DA031C48578C0096DD31 /* libiconv.a */; };
-		CE76DACB1C4B184E0096DD31 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76DA011C4857350096DD31 /* libcurl.a */; };
-		CE76DAFA1C4B186F0096DD31 /* Hello.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9131C481E390096DD31 /* Hello.c */; };
 		CE76DAFB1C4B186F0096DD31 /* HelloObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9191C481E390096DD31 /* HelloObjC.m */; };
-		CED1578F1C4B1A2C00FBA2DE /* HelloCpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CED1578E1C4B1A2100FBA2DE /* HelloCpp.cpp */; };
+		CED157901C4B1CBE00FBA2DE /* libObjectively-Xcode.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively-Xcode.dylib */; };
+		CED157911C4B1CC900FBA2DE /* libObjectively-Xcode.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively-Xcode.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -283,8 +279,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE76DA711C4B17980096DD31 /* libiconv.a in Frameworks */,
-				CE76DA721C4B17980096DD31 /* libcurl.a in Frameworks */,
+				CED157911C4B1CC900FBA2DE /* libObjectively-Xcode.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,8 +287,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE76DACA1C4B184E0096DD31 /* libiconv.a in Frameworks */,
-				CE76DACB1C4B184E0096DD31 /* libcurl.a in Frameworks */,
+				CED157901C4B1CBE00FBA2DE /* libObjectively-Xcode.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -753,9 +747,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE76DAFA1C4B186F0096DD31 /* Hello.c in Sources */,
 				CE76DAFB1C4B186F0096DD31 /* HelloObjC.m in Sources */,
-				CED1578F1C4B1A2C00FBA2DE /* HelloCpp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
