@@ -2,14 +2,14 @@
 
 #include &lt;assert.h&gt;
 
-#include "${file_base}.h"
+#include &lt;${project_name}/${file_base}.h&gt;
 
 #define _Class _${file_base}
 
-#pragma mark - ObjectInterface
+#pragma mark - Object
 
 /**
- * @see ObjectInterface::dealloc(Object *)
+ * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
 
@@ -18,10 +18,12 @@ static void dealloc(Object *self) {
 	super(Object, self, dealloc);
 }
 
-#pragma mark - ${file_base}Interface
+#pragma mark - ${file_base}
 
 /**
- * @see ${file_base}Interface::init(${file_base} *)
+ * @fn ${file_base} *${file_base}::init(${file_base} *self)
+ *
+ * @memberof ${file_base}
  */
 static ${file_base} *init(${file_base} *self) {
 
@@ -109,11 +111,13 @@ struct ${file_base}Interface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @fn ${file_base} *${file_base}::init(${file_base} *self)
+	 *
 	 * @brief Initializes this ${file_base}.
 	 *
 	 * @return The initialized ${file_base}, or `NULL` on error.
 	 *
-	 * @relates ${file_base}
+	 * @memberof ${file_base}
 	 */
 	${file_base} *(*init)(${file_base} *self);
 

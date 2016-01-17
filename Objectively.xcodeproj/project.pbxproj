@@ -45,8 +45,6 @@
 		CE76D9911C4821CE0096DD31 /* URLSessionDownloadTask.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8F61C481C4E0096DD31 /* URLSessionDownloadTask.c */; };
 		CE76D9921C4821CE0096DD31 /* URLSessionTask.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8F81C481C4E0096DD31 /* URLSessionTask.c */; };
 		CE76D9931C4821CE0096DD31 /* URLSessionUploadTask.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8FA1C481C4E0096DD31 /* URLSessionUploadTask.c */; };
-		CE76DA021C4857350096DD31 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76DA011C4857350096DD31 /* libcurl.a */; };
-		CE76DA041C48578C0096DD31 /* libiconv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76DA031C48578C0096DD31 /* libiconv.a */; };
 		CE76DA051C4860120096DD31 /* Array.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D85F1C481C4E0096DD31 /* Array.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA061C4860120096DD31 /* Boole.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8611C481C4E0096DD31 /* Boole.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA071C4860120096DD31 /* Class.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8631C481C4E0096DD31 /* Class.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -114,6 +112,8 @@
 		CE76DAFB1C4B186F0096DD31 /* HelloObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9191C481E390096DD31 /* HelloObjC.m */; };
 		CED157901C4B1CBE00FBA2DE /* libObjectively-Xcode.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively-Xcode.dylib */; };
 		CED157911C4B1CC900FBA2DE /* libObjectively-Xcode.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively-Xcode.dylib */; };
+		CED157ED1C4BF60200FBA2DE /* libcurl.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CED157EB1C4BF60200FBA2DE /* libcurl.4.dylib */; };
+		CED157EE1C4BF60200FBA2DE /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CED157EC1C4BF60200FBA2DE /* libiconv.2.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -257,12 +257,12 @@
 		CE76D9621C481E390096DD31 /* URL.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = URL.c; sourceTree = "<group>"; };
 		CE76D9631C481E390096DD31 /* URLSession.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = URLSession.c; sourceTree = "<group>"; };
 		CE76D9681C48218E0096DD31 /* libObjectively-Xcode.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libObjectively-Xcode.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE76DA011C4857350096DD31 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../../opt/local/lib/libcurl.a; sourceTree = "<group>"; };
-		CE76DA031C48578C0096DD31 /* libiconv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libiconv.a; path = ../../../../opt/local/lib/libiconv.a; sourceTree = "<group>"; };
 		CE76DA2E1C4932340096DD31 /* Doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
 		CE76DAA01C4B17980096DD31 /* libObjectively-Tests.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libObjectively-Tests.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE76DAF91C4B184E0096DD31 /* libObjectively-Examples.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libObjectively-Examples.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED1578E1C4B1A2100FBA2DE /* HelloCpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloCpp.cpp; sourceTree = "<group>"; };
+		CED157EB1C4BF60200FBA2DE /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = /opt/local/lib/libcurl.4.dylib; sourceTree = "<absolute>"; };
+		CED157EC1C4BF60200FBA2DE /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = /opt/local/lib/libiconv.2.dylib; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -270,8 +270,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE76DA041C48578C0096DD31 /* libiconv.a in Frameworks */,
-				CE76DA021C4857350096DD31 /* libcurl.a in Frameworks */,
+				CED157ED1C4BF60200FBA2DE /* libcurl.4.dylib in Frameworks */,
+				CED157EE1C4BF60200FBA2DE /* libiconv.2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,19 +297,18 @@
 		CE76D7F21C481B530096DD31 = {
 			isa = PBXGroup;
 			children = (
-				CE76DA2E1C4932340096DD31 /* Doxyfile */,
-				CE76DA031C48578C0096DD31 /* libiconv.a */,
-				CE76DA011C4857350096DD31 /* libcurl.a */,
 				CE76D9021C481E390096DD31 /* Documentation */,
 				CE76D9081C481E390096DD31 /* Examples */,
+				CED157EF1C4BF88A00FBA2DE /* Libraries */,
+				CE76D9691C48218E0096DD31 /* Products */,
 				CE76D7FD1C481C4E0096DD31 /* Sources */,
 				CE76D9201C481E390096DD31 /* Tests */,
-				CE76D9011C481E390096DD31 /* COPYING */,
 				CE76D8FF1C481E390096DD31 /* config.h */,
 				CE76D9001C481E390096DD31 /* configure.ac */,
+				CE76D9011C481E390096DD31 /* COPYING */,
+				CE76DA2E1C4932340096DD31 /* Doxyfile */,
 				CE76D91E1C481E390096DD31 /* Makefile.am */,
 				CE76D91F1C481E390096DD31 /* README.md */,
-				CE76D9691C48218E0096DD31 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -491,6 +490,15 @@
 				CE76DAF91C4B184E0096DD31 /* libObjectively-Examples.dylib */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CED157EF1C4BF88A00FBA2DE /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				CED157EB1C4BF60200FBA2DE /* libcurl.4.dylib */,
+				CED157EC1C4BF60200FBA2DE /* libiconv.2.dylib */,
+			);
+			name = Libraries;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -772,6 +780,7 @@
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -782,7 +791,6 @@
 				LIBRARY_SEARCH_PATHS = /opt/local/lib;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-I$(SRCROOT)/Sources";
-				SDKROOT = macosx;
 				USE_HEADERMAP = NO;
 			};
 			name = Debug;
@@ -792,6 +800,7 @@
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -802,7 +811,6 @@
 				LIBRARY_SEARCH_PATHS = /opt/local/lib;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-I$(SRCROOT)/Sources";
-				SDKROOT = macosx;
 				USE_HEADERMAP = NO;
 			};
 			name = Release;
@@ -895,6 +903,10 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -912,6 +924,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
