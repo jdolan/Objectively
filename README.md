@@ -2,7 +2,7 @@ Objectively
 ===
 Ultra-lightweight object oriented framework for [GNU C](http://www.gnu.org/software/gnu-c-manual/).
 
-Foundation-inspired [core library](http://jaydolan.com/projects/objectively).
+Foundation-inspired [core library](http://jaydolan.com/projects/Objectively).
 
 Zlib [license](./COPYING).
 

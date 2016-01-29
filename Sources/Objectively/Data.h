@@ -89,6 +89,11 @@ struct DataInterface {
 	ObjectInterface objectInterface;
 
 	/**
+     * @{
+	 * @name Static methods
+	 */
+	
+	/**
 	 * @static
 	 *
 	 * @fn Data *Data::dataWithBytes(const byte *bytes, size_t length)
@@ -135,6 +140,8 @@ struct DataInterface {
 	 */
 	Data *(*dataWithMemory)(const ident mem, size_t length);
 
+	/** @} */
+	
 	/**
 	 * @fn Data *Data::initWithBytes(Data *self, const byte *bytes, size_t length)
 	 *
