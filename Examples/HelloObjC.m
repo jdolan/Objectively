@@ -13,6 +13,8 @@ int main(int argc, char **argv)
     String *string = str("Hello World!");
     
     NSLog(@"%@", [NSString stringWithUTF8String:string->chars]);
+	
+	release(string);
     
     return 0;
 }
