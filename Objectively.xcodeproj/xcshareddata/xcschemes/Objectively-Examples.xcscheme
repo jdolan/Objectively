@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CE76D9671C48218E0096DD31"
-               BuildableName = "libObjectively.dylib"
-               BlueprintName = "Objectively"
+               BlueprintIdentifier = "CE76DAA11C4B184E0096DD31"
+               BuildableName = "libObjectively-Examples.dylib"
+               BlueprintName = "Objectively-Examples"
                ReferencedContainer = "container:Objectively.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CE76D9671C48218E0096DD31"
-            BuildableName = "libObjectively.dylib"
-            BlueprintName = "Objectively"
+            BlueprintIdentifier = "CE76DAA11C4B184E0096DD31"
+            BuildableName = "libObjectively-Examples.dylib"
+            BlueprintName = "Objectively-Examples"
             ReferencedContainer = "container:Objectively.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CE76D9671C48218E0096DD31"
-            BuildableName = "libObjectively.dylib"
-            BlueprintName = "Objectively"
+            BlueprintIdentifier = "CE76DAA11C4B184E0096DD31"
+            BuildableName = "libObjectively-Examples.dylib"
+            BlueprintName = "Objectively-Examples"
             ReferencedContainer = "container:Objectively.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

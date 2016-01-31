@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Kind</key>
+	<string>Xcode.IDEFoundation.TextSubstitutionFileTemplateKind</string>
+	<key>Description</key>
+	<string>An Objectively C type with header.</string>
+	<key>Summary</key>
+	<string>An Objectively C type with header.</string>
+	<key>SortOrder</key>
+	<string>3</string>
+	<key>AllowedTypes</key>
+	<array>
+		<string>public.c-source</string>
+	</array>
+	<key>DefaultCompletionName</key>
+	<string>Objectively</string>
+	<key>Options</key>
+	<array>
+		<dict>
+			<key>Identifier</key>
+			<string>productName</string>
+			<key>Required</key>
+			<true/>
+			<key>Name</key>
+			<string>Name:</string>
+			<key>Description</key>
+			<string>The name of the file to create</string>
+			<key>Type</key>
+			<string>text</string>
+			<key>NotPersisted</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Identifier</key>
+			<string>superclass</string>
+			<key>Name</key>
+			<string>Superclass:</string>
+			<key>Description</key>
+			<string>The superclass.</string>
+			<key>Type</key>
+			<string>text</string>
+			<key>Default</key>
+			<string>Object</string>
+			<key>NotPersisted</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Identifier</key>
+			<string>superclassMember</string>
+			<key>Name</key>
+			<string>Superclass Member:</string>
+			<key>Description</key>
+			<string>The superclass member name.</string>
+			<key>Type</key>
+			<string>text</string>
+			<key>Default</key>
+			<string>object</string>
+			<key>NotPersisted</key>
+			<true/>
+		</dict>
+	</array>
+</dict>
+</plist>
