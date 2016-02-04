@@ -135,7 +135,7 @@ static void deleteCharactersInRange(MutableString *self, const Range range) {
 	assert(range.length <= self->string.length);
 
 	ident ptr = self->string.chars + range.location;
-	const size_t length = self->string.length - range.location - range.length;
+	const size_t length = self->string.length - range.location - range.length + 1;
 
 	memmove(ptr, ptr + range.length, length);
 }
@@ -186,24 +186,56 @@ static MutableString *initWithString(MutableString *self, const String *string) 
 }
 
 /**
- * @fn void MutableString::replaceCharactersInRange(MutableString *self, const Range range, const String *string)
+ * @fn void MutableString::insertCharactersAtIndex(MutableString *self, const char *chars, int index)
  *
  * @memberof MutableString
  */
-static void replaceCharactersInRange(MutableString *self, const Range range, const String *string) {
+static void insertCharactersAtIndex(MutableString *self, const char *chars, int index) {
+	
+	const Range range = { .location = index };
+	
+	$(self, replaceCharactersInRange, range, chars);
+}
+
+/**
+ * @fn void MutableString::insertStringAtIndex(MutableString *self, const String *string, int index)
+ *
+ * @memberof MutableString
+ */
+static void insertStringAtIndex(MutableString *self, const String *string, int index) {
+	
+	$(self, insertCharactersAtIndex, string->chars, index);
+}
+
+/**
+ * @fn void MutableString::replaceCharactersInRange(MutableString *self, const Range range, const char *chars)
+ *
+ * @memberof MutableString
+ */
+static void replaceCharactersInRange(MutableString *self, const Range range, const char *chars) {
 
 	assert(range.location >= 0);
-	assert(range.length <= self->string.length);
+	assert(range.location + range.length < self->string.length);
 
-	String *remainder = str(self->string.chars + range.location + range.length);
+	char *remainder = strdup(self->string.chars + range.location + range.length);
 
 	self->string.length = range.location;
-	self->string.chars[self->string.length] = '\0';
+	self->string.chars[range.location + 1] = '\0';
 
-	$(self, appendString, string);
-	$(self, appendString, remainder);
+	$(self, appendCharacters, chars);
+	$(self, appendCharacters, remainder);
+	
+	free(remainder);
+}
 
-	release(remainder);
+/**
+ * @fn void MutableString::replaceStringInRange(MutableString *self, const Range range, const String *string)
+ *
+ * @memberof MutableString
+ */
+static void replaceStringInRange(MutableString *self, const Range range, const String *string) {
+	
+	$(self, replaceCharactersInRange, range, string->chars);
 }
 
 /**
@@ -247,7 +279,10 @@ static void initialize(Class *clazz) {
 	mutableString->init = init;
 	mutableString->initWithCapacity = initWithCapacity;
 	mutableString->initWithString = initWithString;
+	mutableString->insertCharactersAtIndex = insertCharactersAtIndex;
+	mutableString->insertStringAtIndex = insertStringAtIndex;
 	mutableString->replaceCharactersInRange = replaceCharactersInRange;
+	mutableString->replaceStringInRange = replaceStringInRange;
 	mutableString->string = string;
 	mutableString->stringWithCapacity = stringWithCapacity;
 }

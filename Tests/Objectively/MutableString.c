@@ -43,7 +43,7 @@ START_TEST(string)
 		String *goodbye = str("goodbye cruel");
 
 		Range range = { 0, 5 };
-		$(string, replaceCharactersInRange, range, goodbye);
+		$(string, replaceStringInRange, range, goodbye);
 		ck_assert_str_eq("goodbye cruel world!", string->string.chars);
 
 		String *copy = (String *) $((Object * ) string, copy);

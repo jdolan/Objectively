@@ -171,7 +171,43 @@ struct MutableStringInterface {
 	MutableString *(*initWithString)(MutableString *self, const String *string);
 
 	/**
-	 * @fn void MutableString::replaceCharactersInRange(MutableString *self, const Range range, const String *string)
+	 * @fn void MutableString::insertCharactersAtIndex(MutableString *self, const char *chars, int index)
+	 *
+	 * @brief Inserts the specified String at the given index.
+	 *
+	 * @param chars The null-terminated UTF-8 encoded C string to insert.
+	 * @param index The index.
+	 *
+	 * @memberof MutableString
+	 */
+	void (*insertCharactersAtIndex)(MutableString *self, const char *chars, int index);
+	
+	/**
+	 * @fn void MutableString::insertStringAtIndex(MutableString *self, const String *string, int index)
+	 *
+	 * @brief Inserts the specified String at the given index.
+	 *
+	 * @param string The String to insert.
+	 * @param index The index.
+	 *
+	 * @memberof MutableString
+	 */
+	void (*insertStringAtIndex)(MutableString *self, const String *string, int index);
+	
+	/**
+	 * @fn void MutableString::replaceCharactersInRange(MutableString *self, const Range range, const char *chars)
+	 *
+	 * @brief Replaces the characters in `range` with the give characters.
+	 *
+	 * @param range The Range of characters to replace.
+	 * @param chars The null-terminated UTF-8 encoded C string to substitute.
+	 *
+	 * @memberof MutableString
+	 */
+	void (*replaceCharactersInRange)(MutableString *self, const Range range, const char *chars);
+	
+	/**
+	 * @fn void MutableString::replaceStringInRange(MutableString *self, const Range range, const String *string)
 	 *
 	 * @brief Replaces the characters in `range` with the contents of `string`.
 	 *
@@ -180,7 +216,7 @@ struct MutableStringInterface {
 	 *
 	 * @memberof MutableString
 	 */
-	void (*replaceCharactersInRange)(MutableString *self, const Range range, const String *string);
+	void (*replaceStringInRange)(MutableString *self, const Range range, const String *string);
 
 	/**
 	 * @static
