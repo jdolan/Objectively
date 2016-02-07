@@ -21,7 +21,7 @@ static void dealloc(Object *self) {
 	
 	//..
 	
-	super(___VARIABLE_superclass:identifier___, self, dealloc);
+	super(Object, self, dealloc);
 }
 
 #pragma mark - ___FILEBASENAMEASIDENTIFIER___
