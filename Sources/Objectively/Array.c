@@ -238,6 +238,39 @@ static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, ident
 }
 
 /**
+ * @fn ident Array::findObject(const Array *self, Predicate predicate, ident data)
+ *
+ * @param predicate The predicate function.
+ * @param data User data.
+ *
+ * @return The first element of this Array to pass the predicate function.
+ *
+ * @memberof Array
+ */
+static ident findObject(const Array *self, Predicate predicate, ident data) {
+	
+	assert(predicate);
+	
+	for (size_t i = 0; i < self->count; i++) {
+		if (predicate(self->elements[i], data)) {
+			return self->elements[i];
+		}
+	}
+	
+	return NULL;
+}
+
+/**
+ * @fn ident Array::firstObject(const Array *self)
+ *
+ * @memberof Array
+ */
+static ident firstObject(const Array *self) {
+	
+	return self->count ? $(self, objectAtIndex, 0) : NULL;
+}
+
+/**
  * @fn int Array::indexOfObject(const Array *self, const ident obj)
  *
  * @memberof Array
@@ -320,6 +353,16 @@ static Array *initWithObjects(Array *self, ...) {
 }
 
 /**
+ * @fn ident Array::lastObject(const Array *self)
+ *
+ * @memberof Array
+ */
+static ident lastObject(const Array *self) {
+	
+	return self->count ? $(self, objectAtIndex, self->count - 1) : NULL;
+}
+
+/**
  * @fn MutableArray *Array::mutableCopy(const Array *self)
  *
  * @memberof Array
@@ -369,9 +412,12 @@ static void initialize(Class *clazz) {
 	array->containsObject = containsObject;
 	array->enumerateObjects = enumerateObjects;
 	array->filterObjects = filterObjects;
+	array->findObject = findObject;
+	array->firstObject = firstObject;
 	array->indexOfObject = indexOfObject;
 	array->initWithArray = initWithArray;
 	array->initWithObjects = initWithObjects;
+	array->lastObject = lastObject;
 	array->mutableCopy = mutableCopy;
 	array->objectAtIndex = objectAtIndex;
 }

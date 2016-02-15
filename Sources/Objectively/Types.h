@@ -81,6 +81,13 @@ typedef enum {
 typedef Order (*Comparator)(const ident obj1, const ident obj2);
 
 /**
+ * @brief The Predicate function type for filtering Objects.
+ *
+ * @return True if `obj` satisfies the predicate, false otherwise.
+ */
+typedef _Bool (*Predicate)(ident obj, ident data);
+
+/**
  * @return The length of an array.
  */
 #define lengthof(array) \

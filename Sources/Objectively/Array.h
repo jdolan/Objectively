@@ -171,7 +171,28 @@ struct ArrayInterface {
 	 * @memberof Array
 	 */
 	Array *(*filterObjects)(const Array *self, ArrayEnumerator enumerator, ident data);
-
+	
+	/**
+	 * @fn ident Array::findObject(const Array *self, Predicate predicate, ident data)
+	 *
+	 * @param predicate The predicate function.
+	 * @param data User data.
+	 *
+	 * @return The first element of this Array to pass the predicate function.
+	 *
+	 * @memberof Array
+	 */
+	ident (*findObject)(const Array *self, Predicate predicate, ident data);
+	
+	/**
+	 * @fn ident Array::firstObject(const Array *self)
+	 *
+	 * @return The first Object in this Array, or `NULL` if empty.
+	 *
+	 * @memberof Array
+	 */
+	ident (*firstObject)(const Array *self);
+	
 	/**
 	 * @fn int Array::indexOfObject(const Array *self, const ident obj)
 	 *
@@ -211,6 +232,15 @@ struct ArrayInterface {
 	 */
 	Array *(*initWithObjects)(Array *self, ...);
 
+	/**
+	 * @fn ident Array::lastObject(const Array *self)
+	 *
+	 * @return The last Object in this Array, or `NULL` if empty.
+	 *
+	 * @memberof Array
+	 */
+	ident (*lastObject)(const Array *self);
+	
 	/**
 	 * @fn MutableArray *Array::mutableCopy(const Array *self)
 	 *
