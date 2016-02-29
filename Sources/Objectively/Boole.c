@@ -61,7 +61,7 @@ static Boole *_False;
 static Boole *False(void) {
 	static Once once;
 
-	DispatchOnce(once, {
+	do_once(&once, {
 		_False = (Boole *) $((Object *) alloc(Boole), init);
 		_False->value = false;
 	});
@@ -79,7 +79,7 @@ static Boole *_True;
 static Boole *True(void) {
 	static Once once;
 
-	DispatchOnce(once, {
+	do_once(&once, {
 		_True = (Boole *) $((Object *) alloc(Boole), init);
 		_True->value = true;
 	});

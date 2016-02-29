@@ -99,7 +99,7 @@ static void initialize(Class *clazz) {
 
 	static Once once;
 
-	DispatchOnce(once, {
+	do_once(&once, {
 		_regex = $(alloc(Regex), initWithPattern, "(.[^.\[]+|\[[0-9]+\\])", 0);
 	});
 }

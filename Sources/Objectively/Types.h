@@ -89,4 +89,14 @@ typedef _Bool (*Predicate)(ident obj, ident data);
 #define lengthof(array) \
 	(sizeof(array) / sizeof((array)[0]))
 
+/**
+ * @return The maximum of the two values.
+ */
+#define MAX(a, b) ({ typeof (a) _a = (a); typeof (b) _b = (b); _a > _b ? _a : _b; })
+
+/**
+ * @return The minimum of the two values.
+ */
+#define MIN(a, b) ({ typeof (a) _a = (a); typeof (b) _b = (b); _a < _b ? _a : _b; })
+
 #endif

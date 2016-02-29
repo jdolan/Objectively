@@ -217,7 +217,7 @@ static Log *_sharedInstance;
 static Log *sharedInstance(void) {
 	static Once once;
 	
-	DispatchOnce(once, {
+	do_once(&once, {
 		_sharedInstance = $(alloc(Log), init);
 	});
 	

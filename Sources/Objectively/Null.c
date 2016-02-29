@@ -50,7 +50,7 @@ static Null *_null;
 static Null *null(void) {
 	static Once once;
 
-	DispatchOnce(once, {
+	do_once(&once, {
 		_null = (Null *) $((Object *) alloc(Null), init);
 	});
 

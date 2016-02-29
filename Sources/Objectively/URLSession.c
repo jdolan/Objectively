@@ -306,7 +306,7 @@ static URLSession *_sharedInstance;
 static URLSession *sharedInstance(void) {
 	static Once once;
 
-	DispatchOnce(once, {
+	do_once(&once, {
 		_sharedInstance = $(alloc(URLSession), init);
 	});
 

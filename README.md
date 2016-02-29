@@ -46,7 +46,7 @@ struct Hello {
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The type interface.
 	 */
 	HelloInterface *interface;
 
