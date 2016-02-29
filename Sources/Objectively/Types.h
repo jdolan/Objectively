@@ -84,6 +84,14 @@ typedef Order (*Comparator)(const ident obj1, const ident obj2);
 typedef _Bool (*Predicate)(ident obj, ident data);
 
 /**
+ * @return The value, clamped to the bounds.
+ */
+#define clamp(val, min, max) ({ \
+	typeof(val) _val = (val); typeof(min) _min = (min); typeof(max) _max = (max); \
+	_val < _min ? _min : _val > _max ? _max : _val; \
+})
+
+/**
  * @return The length of an array.
  */
 #define lengthof(array) \
@@ -92,11 +100,11 @@ typedef _Bool (*Predicate)(ident obj, ident data);
 /**
  * @return The maximum of the two values.
  */
-#define MAX(a, b) ({ typeof (a) _a = (a); typeof (b) _b = (b); _a > _b ? _a : _b; })
+#define max(a, b) ({ typeof (a) _a = (a); typeof (b) _b = (b); _a > _b ? _a : _b; })
 
 /**
  * @return The minimum of the two values.
  */
-#define MIN(a, b) ({ typeof (a) _a = (a); typeof (b) _b = (b); _a < _b ? _a : _b; })
+#define min(a, b) ({ typeof (a) _a = (a); typeof (b) _b = (b); _a < _b ? _a : _b; })
 
 #endif
