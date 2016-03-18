@@ -118,7 +118,6 @@ To implement a type, implement its instance and Class methods and Class initiali
 
 /**
  * @fn Hello *HelloInterface::helloWithGreeting(const char *greeting)
- *
  * @memberof Hello
  */
 static Hello *helloWithGreeting(const char *greeting) {
