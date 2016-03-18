@@ -232,13 +232,12 @@ static URLSession *_sharedInstance;
 
 /**
  * @fn URLSession *URLSessionInterface::sharedInstance(void)
- *
  * @memberof URLSession
  */
 static *URLSession sharedInstance(void) {
     static Once once;
 
-	DispatchOnce(once, {
+	do_once(&once, {
 		_sharedInstance = $(alloc(URLSession), init);
 	});
 
@@ -257,8 +256,8 @@ static void destroy(Class *clazz) {
 URLSession *session = $$(URLSession, sharedInstance);
 ```
 
-See [Once.h](Sources/Objectively/Once.h) for details on `DispatchOnce`.
+See [Once.h](Sources/Objectively/Once.h) for details on `do_once`.
     
 API documentation
 ---
-The API documentation can be [browsed online](http://jaydolan.com/projects/objectively) or generated with [Doxygen](http://www.doxygen.org) by running `make html`.
+The API documentation can be [browsed online](http://jaydolan.com/projects/Objectively) or generated with [Doxygen](http://www.doxygen.org) by running `make html`.
