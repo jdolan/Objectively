@@ -6,8 +6,7 @@
 //___COPYRIGHT___
 //
 
-#ifndef ____PROJECTNAME_______FILEBASENAMEASIDENTIFIER____h_
-#define ____PROJECTNAME_______FILEBASENAMEASIDENTIFIER____h_
+#pragma once
 
 #include <___PROJECTNAME___/___VARIABLE_superclass:identifier___.h>
 
@@ -74,6 +73,4 @@ struct ___FILEBASENAMEASIDENTIFIER___Interface {
  * @brief The ___FILEBASENAMEASIDENTIFIER___ Class.
  */
 extern Class ____FILEBASENAMEASIDENTIFIER___;
-
-#endif /* ____PROJECTNAME_______FILEBASENAMEASIDENTIFIER____h_ */
 

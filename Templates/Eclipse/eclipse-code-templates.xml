@@ -64,8 +64,7 @@ Class _${file_base} = {
 #undef _Class
 </template><template autoinsert="false" context="org.eclipse.cdt.core.cHeader.contenttype_context" deleted="false" description="" enabled="true" name="Objectively Type Header">${filecomment}
 
-#ifndef _${project_name}_${file_base}_h_
-#define _${project_name}_${file_base}_h_
+#pragma once
 
 #include &lt;Objectively/Object.h&gt;
 
@@ -129,4 +128,4 @@ struct ${file_base}Interface {
  */
 extern Class _${file_base};
 
-#endif</template></templates>
+</template></templates>
