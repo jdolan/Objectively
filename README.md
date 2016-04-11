@@ -72,33 +72,24 @@ struct HelloInterface {
 
 	/**
 	 * @static
-	 *
 	 * @fn Hello *Hello::helloWithGreeting(const char *greeting)
-	 *
 	 * @brief A factory method for instantiating Hello.
-	 *
 	 * @return A new Hello with the given `greeting`.
-	 *
 	 * @memberof Hello
 	 */
 	Hello *(*helloWithGreeting)(const char *greeting);
 
 	/**
 	 * @fn Hello *Hello::initWithGreeting(Hello *self, const char *greeting)
-	 *
 	 * @brief Initializes this Hello with the given `greeting`.
-	 *
 	 * @return The initialized Hello, or `NULL` on error.
-	 *
 	 * @memberof Hello
 	 */
 	Hello *(*initWithGreeting)(Hello *self, const char *greeting);
 
 	/**
 	 * @fn void Hello::sayHello(const Hello *self)
-	 *
 	 * @brief Prints this Hello's greeting to the console.
-	 * 
 	 * @memberof Hello
 	 */
 	void (*sayHello)(const Hello *self);
@@ -127,7 +118,6 @@ To implement a type, implement its instance and Class methods and Class initiali
 
 /**
  * @fn Hello *HelloInterface::helloWithGreeting(const char *greeting)
- *
  * @memberof Hello
  */
 static Hello *helloWithGreeting(const char *greeting) {
@@ -136,7 +126,6 @@ static Hello *helloWithGreeting(const char *greeting) {
 
 /**
  * @fn Hello *HelloInterface::initWithGreeting(Hello *self, const char *greeting)
- *
  * @memberof Hello
  */
 static Hello *initWithGreeting(Hello *self, const char *greeting) {
@@ -150,7 +139,6 @@ static Hello *initWithGreeting(Hello *self, const char *greeting) {
 
 /**
  * @fn void HelloInterface::sayHello(const Hello *self)
- *
  * @memberof Hello
  */
 static void sayHello(const Hello *self) {
@@ -244,13 +232,12 @@ static URLSession *_sharedInstance;
 
 /**
  * @fn URLSession *URLSessionInterface::sharedInstance(void)
- *
  * @memberof URLSession
  */
 static *URLSession sharedInstance(void) {
     static Once once;
 
-	DispatchOnce(once, {
+	do_once(&once, {
 		_sharedInstance = $(alloc(URLSession), init);
 	});
 
@@ -269,8 +256,8 @@ static void destroy(Class *clazz) {
 URLSession *session = $$(URLSession, sharedInstance);
 ```
 
-See [Once.h](Sources/Objectively/Once.h) for details on `DispatchOnce`.
+See [Once.h](Sources/Objectively/Once.h) for details on `do_once`.
     
 API documentation
 ---
-The API documentation can be [browsed online](http://jaydolan.com/projects/objectively) or generated with [Doxygen](http://www.doxygen.org) by running `make html`.
+The API documentation can be [browsed online](http://jaydolan.com/projects/Objectively) or generated with [Doxygen](http://www.doxygen.org) by running `make html`.
