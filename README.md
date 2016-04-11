@@ -171,6 +171,24 @@ Class _Hello = {
 #undef _Class
 ```
 
+Code Templates
+---
+Objectively provides code templates for Xcode and Eclipse CDT that greatly cut down on the boilerplate required to declare and implement a type.
+
+### Xcode 7.x
+Install the Xcode 7.x code templates by copying or symlinking them to the appropriate location.
+![Objectively code templates in Xcode 7](Documentation/xcode-template-dialog.png)
+
+```
+mkdir -p ~/Library/Developer/Xcode/Templates/File\ Templates/Source
+ln Templates/Xcode/Objectively\ C\ Type.xctemplate \
+   ~/Library/Developer/Xcode/Templates/File\ Templates/Source
+```
+
+### Eclipse CDT
+Install the Eclipse CDT templates through the Eclipse CDT preferences:
+![Objectively code templates in Xcode 7](Documentation/xcode-template-dialog.png)
+
 Using a type
 ---
 ```c
