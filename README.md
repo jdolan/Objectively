@@ -258,10 +258,6 @@ URLSession *session = $$(URLSession, sharedInstance);
 
 See [Once.h](Sources/Objectively/Once.h) for details on `do_once`.
     
-API documentation
----
-The API documentation can be [browsed online](http://jaydolan.com/projects/Objectively) or generated with [Doxygen](http://www.doxygen.org) by running `make html`.
-
 Code Templates
 ---
 Objectively provides code templates for Xcode and Eclipse CDT that greatly cut down on the boilerplate required to declare and implement a type. These are _highly recommended_, as they will save you time and reduce errors in type declaration.
@@ -278,3 +274,7 @@ ln Templates/Xcode/Objectively\ C\ Type.xctemplate \
 #### Eclipse CDT
 Install the Eclipse CDT templates through the Eclipse CDT preferences:
 ![Objectively code templates in Xcode 7](Documentation/eclipse-template-dialog.png)
+
+API documentation
+---
+The API documentation can be [browsed online](http://jaydolan.com/projects/Objectively) or generated with [Doxygen](http://www.doxygen.org) by running `make html`.
