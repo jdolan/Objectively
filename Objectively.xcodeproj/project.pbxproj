@@ -267,7 +267,7 @@
 		CEA3B0821CBBD3420082EE04 /* TemplateIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TemplateIcon.png; sourceTree = "<group>"; };
 		CEA3B0831CBBD3420082EE04 /* TemplateIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TemplateIcon@2x.png"; sourceTree = "<group>"; };
 		CEA3B0841CBBD3420082EE04 /* TemplateInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcheck.0.dylib; path = ../../../../opt/local/lib/libcheck.0.dylib; sourceTree = "<group>"; };
+		CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcheck.0.dylib; path = /opt/local/lib/libcheck.0.dylib; sourceTree = "<absolute>"; };
 		CED1578E1C4B1A2100FBA2DE /* HelloCpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloCpp.cpp; sourceTree = "<group>"; };
 		CED157EB1C4BF60200FBA2DE /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = /opt/local/lib/libcurl.4.dylib; sourceTree = "<absolute>"; };
 		CED157EC1C4BF60200FBA2DE /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = /opt/local/lib/libiconv.2.dylib; sourceTree = "<absolute>"; };
@@ -306,7 +306,6 @@
 		CE76D7F21C481B530096DD31 = {
 			isa = PBXGroup;
 			children = (
-				CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */,
 				CE76D9021C481E390096DD31 /* Documentation */,
 				CE76D9081C481E390096DD31 /* Examples */,
 				CED157EF1C4BF88A00FBA2DE /* Libraries */,
@@ -543,6 +542,7 @@
 		CED157EF1C4BF88A00FBA2DE /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */,
 				CED157EB1C4BF60200FBA2DE /* libcurl.4.dylib */,
 				CED157EC1C4BF60200FBA2DE /* libiconv.2.dylib */,
 			);
