@@ -177,17 +177,16 @@ Objectively provides code templates for Xcode and Eclipse CDT that greatly cut d
 
 ### Xcode 7.x
 Install the Xcode 7.x code templates by copying or symlinking them to the appropriate location.
-![Objectively code templates in Xcode 7](Documentation/xcode-template-dialog.png)
-
 ```
 mkdir -p ~/Library/Developer/Xcode/Templates/File\ Templates/Source
 ln Templates/Xcode/Objectively\ C\ Type.xctemplate \
    ~/Library/Developer/Xcode/Templates/File\ Templates/Source
 ```
+![Objectively code templates in Xcode 7](Documentation/xcode-template-dialog.png)
 
 ### Eclipse CDT
 Install the Eclipse CDT templates through the Eclipse CDT preferences:
-![Objectively code templates in Xcode 7](Documentation/xcode-template-dialog.png)
+![Objectively code templates in Xcode 7](Documentation/eclipse-template-dialog.png)
 
 Using a type
 ---
