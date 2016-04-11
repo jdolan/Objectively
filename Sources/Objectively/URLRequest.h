@@ -21,11 +21,11 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_URLRequest_h_
-#define _Objectively_URLRequest_h_
+#pragma once
 
 #include <Objectively/Data.h>
 #include <Objectively/Dictionary.h>
+#include <Objectively/Object.h>
 #include <Objectively/URL.h>
 
 /**
@@ -133,5 +133,3 @@ struct URLRequestInterface {
  * @brief The URLRequest Class.
  */
 extern Class _URLRequest;
-
-#endif

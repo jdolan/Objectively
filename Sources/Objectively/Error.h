@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Error_h_
-#define _Objectively_Error_h_
+#pragma once
 
 #include <Objectively/Object.h>
 #include <Objectively/String.h>
@@ -103,5 +102,3 @@ struct ErrorInterface {
  * @brief The Error Class.
  */
 extern Class _Error;
-
-#endif

@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_URLSession_h_
-#define _Objectively_URLSession_h_
+#pragma once
 
 /**
  * @file
@@ -248,5 +247,3 @@ struct URLSessionInterface {
  * @brief The URLSession Class.
  */
 extern Class _URLSession;
-
-#endif

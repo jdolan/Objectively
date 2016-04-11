@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Set_h_
-#define _Objectively_Set_h_
+#pragma once
 
 #include <Objectively/Array.h>
 #include <Objectively/Object.h>
@@ -239,5 +238,3 @@ struct SetInterface {
  * @brief The Set Class.
  */
 extern Class _Set;
-
-#endif

@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_JSONPath_h_
-#define _Objectively_JSONPath_h_
+#pragma once
 
 #include <Objectively/Object.h>
 
@@ -98,5 +97,3 @@ struct JSONPathInterface {
  * @brief The JSONPath Class.
  */
 extern Class _JSONPath;
-
-#endif

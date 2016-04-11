@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Null_h_
-#define _Objectively_Null_h_
+#pragma once
 
 #include <Objectively/Object.h>
 
@@ -89,5 +88,3 @@ struct NullInterface {
  * @brief The Null Class.
  */
 extern Class _Null;
-
-#endif

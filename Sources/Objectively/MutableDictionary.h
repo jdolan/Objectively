@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_MutableDictionary_h_
-#define _Objectively_MutableDictionary_h_
+#pragma once
 
 #include <Objectively/Dictionary.h>
 
@@ -172,5 +171,3 @@ struct MutableDictionaryInterface {
  * @brief The MutableDictionary Class.
  */
 extern Class _MutableDictionary;
-
-#endif

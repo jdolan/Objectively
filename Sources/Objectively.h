@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_h_
-#define _Objectively_h_
+#pragma once
 
 /**
  * @file
@@ -69,5 +68,3 @@
 #include <Objectively/URLSessionDownloadTask.h>
 #include <Objectively/URLSessionTask.h>
 #include <Objectively/URLSessionUploadTask.h>
-
-#endif

@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Number_h_
-#define _Objectively_Number_h_
+#pragma once
 
 #include <Objectively/Object.h>
 
@@ -183,5 +182,3 @@ struct NumberInterface {
  * @brief The Number Class.
  */
 extern Class _Number;
-
-#endif

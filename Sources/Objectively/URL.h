@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_URL_h_
-#define _Objectively_URL_h_
+#pragma once
 
 #include <Objectively/Array.h>
 #include <Objectively/Object.h>
@@ -159,5 +158,3 @@ struct URLInterface {
  * @brief The URL Class.
  */
 extern Class _URL;
-
-#endif

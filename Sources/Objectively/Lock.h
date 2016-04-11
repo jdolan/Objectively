@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Lock_h_
-#define _Objectively_Lock_h_
+#pragma once
 
 #include <Objectively/Object.h>
 
@@ -137,5 +136,3 @@ extern Class _Lock;
 		statements; \
 	$((Lock *) _lock, unlock); \
 }
-
-#endif

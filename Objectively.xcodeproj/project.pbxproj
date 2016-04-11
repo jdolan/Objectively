@@ -110,8 +110,7 @@
 		CE76DA6E1C4B17980096DD31 /* URL.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9621C481E390096DD31 /* URL.c */; };
 		CE76DA6F1C4B17980096DD31 /* URLSession.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9631C481E390096DD31 /* URLSession.c */; };
 		CE76DAFB1C4B186F0096DD31 /* HelloObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9191C481E390096DD31 /* HelloObjC.m */; };
-		CEA3B0851CBBD3420082EE04 /* ___FILEBASENAME___.c in Sources */ = {isa = PBXBuildFile; fileRef = CEA3B0801CBBD3420082EE04 /* ___FILEBASENAME___.c */; };
-		CEA3B0861CBBD3420082EE04 /* ___FILEBASENAME___.h in Headers */ = {isa = PBXBuildFile; fileRef = CEA3B0811CBBD3420082EE04 /* ___FILEBASENAME___.h */; };
+		CEA3B0881CBBE95E0082EE04 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */; };
 		CED157901C4B1CBE00FBA2DE /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
 		CED157911C4B1CC900FBA2DE /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
 		CED157ED1C4BF60200FBA2DE /* libcurl.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CED157EB1C4BF60200FBA2DE /* libcurl.4.dylib */; };
@@ -268,6 +267,7 @@
 		CEA3B0821CBBD3420082EE04 /* TemplateIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TemplateIcon.png; sourceTree = "<group>"; };
 		CEA3B0831CBBD3420082EE04 /* TemplateIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TemplateIcon@2x.png"; sourceTree = "<group>"; };
 		CEA3B0841CBBD3420082EE04 /* TemplateInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
+		CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcheck.0.dylib; path = ../../../../opt/local/lib/libcheck.0.dylib; sourceTree = "<group>"; };
 		CED1578E1C4B1A2100FBA2DE /* HelloCpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloCpp.cpp; sourceTree = "<group>"; };
 		CED157EB1C4BF60200FBA2DE /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = /opt/local/lib/libcurl.4.dylib; sourceTree = "<absolute>"; };
 		CED157EC1C4BF60200FBA2DE /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = /opt/local/lib/libiconv.2.dylib; sourceTree = "<absolute>"; };
@@ -287,6 +287,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEA3B0881CBBE95E0082EE04 /* libcheck.0.dylib in Frameworks */,
 				CED157911C4B1CC900FBA2DE /* libObjectively.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -305,6 +306,7 @@
 		CE76D7F21C481B530096DD31 = {
 			isa = PBXGroup;
 			children = (
+				CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */,
 				CE76D9021C481E390096DD31 /* Documentation */,
 				CE76D9081C481E390096DD31 /* Examples */,
 				CED157EF1C4BF88A00FBA2DE /* Libraries */,
@@ -558,7 +560,6 @@
 				CE76DA061C4860120096DD31 /* Boole.h in Headers */,
 				CE76DA071C4860120096DD31 /* Class.h in Headers */,
 				CE76DA081C4860120096DD31 /* Condition.h in Headers */,
-				CEA3B0861CBBD3420082EE04 /* ___FILEBASENAME___.h in Headers */,
 				CE76DA091C4860120096DD31 /* Data.h in Headers */,
 				CE76DA0A1C4860120096DD31 /* Date.h in Headers */,
 				CE76DA0B1C4860120096DD31 /* DateFormatter.h in Headers */,
@@ -754,7 +755,6 @@
 				CE76D9891C4821CE0096DD31 /* Set.c in Sources */,
 				CE76D98A1C4821CE0096DD31 /* String.c in Sources */,
 				CE76D98B1C4821CE0096DD31 /* Thread.c in Sources */,
-				CEA3B0851CBBD3420082EE04 /* ___FILEBASENAME___.c in Sources */,
 				CE76D98C1C4821CE0096DD31 /* URL.c in Sources */,
 				CE76D98D1C4821CE0096DD31 /* URLRequest.c in Sources */,
 				CE76D98E1C4821CE0096DD31 /* URLSession.c in Sources */,
@@ -915,6 +915,10 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -932,6 +936,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Array_h_
-#define _Objectively_Array_h_
+#pragma once
 
 #include <Objectively/Object.h>
 
@@ -269,5 +268,3 @@ struct ArrayInterface {
  * @brief The Array Class.
  */
 extern Class _Array;
-
-#endif

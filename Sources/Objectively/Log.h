@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Log_h_
-#define _Objectively_Log_h_
+#pragma once
 
 #include <stdio.h>
 
@@ -235,5 +234,3 @@ struct LogInterface {
  * @brief The Log Class.
  */
 extern Class _Log;
-
-#endif

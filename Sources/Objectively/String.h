@@ -21,11 +21,11 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_String_h_
-#define _Objectively_String_h_
+#pragma once
 
 #include <ctype.h>
 #include <wctype.h>
+#include <stdarg.h>
 
 #include <Objectively/Array.h>
 #include <Objectively/Data.h>
@@ -519,5 +519,3 @@ StringEncoding StringEncodingForName(const char *name);
  * @relates String
  */
 String *str(const char *fmt, ...);
-
-#endif

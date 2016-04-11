@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Thread_h_
-#define _Objectively_Thread_h_
+#pragma once
 
 #include <Objectively/Object.h>
 
@@ -213,5 +212,3 @@ struct ThreadInterface {
  * @brief The Thread Class.
  */
 extern Class _Thread;
-
-#endif

@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_URLSessionUploadTask_h_
-#define _Objectively_URLSessionUploadTask_h_
+#pragma once
 
 #include <stdio.h>
 
@@ -81,5 +80,3 @@ struct URLSessionUploadTaskInterface {
  * @brief The URLSessionUploadTask Class.
  */
 extern Class _URLSessionUploadTask;
-
-#endif

@@ -21,12 +21,11 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Operation_h_
-#define _Objectively_Operation_h_
+#pragma once
 
 #include <Objectively/Condition.h>
-#include <Objectively/MutableArray.h>
 #include <Objectively/Object.h>
+#include <Objectively/MutableArray.h>
 
 /**
  * @file
@@ -238,5 +237,3 @@ struct OperationInterface {
  * @brief The Operation Class.
  */
 extern Class _Operation;
-
-#endif

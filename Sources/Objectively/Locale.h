@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Locale_h_
-#define _Objectively_Locale_h_
+#pragma once
 
 #include <locale.h>
 
@@ -140,5 +139,3 @@ struct LocaleInterface {
  * @brief The Locale Class.
  */
 extern Class _Locale;
-
-#endif

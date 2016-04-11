@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_URLSessionDataTask_h_
-#define _Objectively_URLSessionDataTask_h_
+#pragma once
 
 #include <Objectively/Data.h>
 #include <Objectively/URLSessionTask.h>
@@ -84,5 +83,3 @@ struct URLSessionDataTaskInterface {
  * @brief The URLSessionDataTask Class.
  */
 extern Class _URLSessionDataTask;
-
-#endif

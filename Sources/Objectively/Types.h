@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Types_h_
-#define _Objectively_Types_h_
+#pragma once
 
 #include <stddef.h>
 #include <stdint.h>
@@ -106,5 +105,3 @@ typedef _Bool (*Predicate)(ident obj, ident data);
  * @return The minimum of the two values.
  */
 #define min(a, b) ({ typeof (a) _a = (a); typeof (b) _b = (b); _a < _b ? _a : _b; })
-
-#endif

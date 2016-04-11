@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Date_h_
-#define _Objectively_Date_h_
+#pragma once
 
 #include <sys/time.h>
 #include <time.h>
@@ -167,5 +166,3 @@ struct DateInterface {
  * @brief The Date Class.
  */
 extern Class _Date;
-
-#endif

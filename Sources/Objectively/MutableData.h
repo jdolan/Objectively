@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_MutableData_h_
-#define _Objectively_MutableData_h_
+#pragma once
 
 #include <Objectively/Data.h>
 
@@ -184,5 +183,3 @@ struct MutableDataInterface {
  * @brief The MutableData Class.
  */
 extern Class _MutableData;
-
-#endif

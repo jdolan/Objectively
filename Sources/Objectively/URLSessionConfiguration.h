@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_URLSessionConfiguration_h_
-#define _Objectively_URLSessionConfiguration_h_
+#pragma once
 
 #include <Objectively/Dictionary.h>
 #include <Objectively/Object.h>
@@ -112,5 +111,3 @@ struct URLSessionConfigurationInterface {
  * @brief The URLSessionConfiguration Class.
  */
 extern Class _URLSessionConfiguration;
-
-#endif

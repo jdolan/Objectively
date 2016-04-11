@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_JSONSerialization_h_
-#define _Objectively_JSONSerialization_h_
+#pragma once
 
 #include <Objectively/Data.h>
 #include <Objectively/Object.h>
@@ -118,5 +117,3 @@ struct JSONSerializationInterface {
  * @brief The JSONSerialization Class.
  */
 extern Class _JSONSerialization;
-
-#endif

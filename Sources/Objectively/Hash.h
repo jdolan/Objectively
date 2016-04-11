@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Hash_h_
-#define _Objectively_Hash_h_
+#pragma once
 
 #include <Objectively/Object.h>
 
@@ -100,5 +99,3 @@ extern int HashForInteger(int hash, const long integer);
  * @return The accumulated hash value.
  */
 extern int HashForObject(int hash, const ident obj);
-
-#endif

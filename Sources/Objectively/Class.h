@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Class_h_
-#define _Objectively_Class_h_
+#pragma once
 
 #include <Objectively/Types.h>
 
@@ -215,5 +214,3 @@ extern size_t _pageSize;
  */
 #define super(type, obj, method, ...) \
 	interfaceof(type, _Class.superclass)->method(cast(type, obj), ## __VA_ARGS__)
-
-#endif

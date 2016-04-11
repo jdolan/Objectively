@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_NumberFormatter_h_
-#define _Objectively_NumberFormatter_h_
+#pragma once
 
 #include <Objectively/Number.h>
 #include <Objectively/String.h>
@@ -136,5 +135,3 @@ struct NumberFormatterInterface {
  * @brief The NumberFormatter Class.
  */
 extern Class _NumberFormatter;
-
-#endif

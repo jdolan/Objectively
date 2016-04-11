@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_MutableString_h_
-#define _Objectively_MutableString_h_
+#pragma once
 
 #include <Objectively/String.h>
 
@@ -262,5 +261,3 @@ extern Class _MutableString;
  * @relates String
  */
 MutableString *mstr(const char *fmt, ...);
-
-#endif

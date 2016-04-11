@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_URLSessionTask_h_
-#define _Objectively_URLSessionTask_h_
+#pragma once
 
 #include <Objectively/Object.h>
 #include <Objectively/Thread.h>
@@ -223,5 +222,3 @@ struct URLSessionTaskInterface {
  * @brief The URLSessionTask Class.
  */
 extern Class _URLSessionTask;
-
-#endif

@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Dictionary_h_
-#define _Objectively_Dictionary_h_
+#pragma once
 
 #include <Objectively/Array.h>
 #include <Objectively/Object.h>
@@ -227,5 +226,3 @@ struct DictionaryInterface {
  * @brief The Dictionary Class.
  */
 extern Class _Dictionary;
-
-#endif

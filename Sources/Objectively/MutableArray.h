@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_MutableArray_h_
-#define _Objectively_MutableArray_h_
+#pragma once
 
 #include <Objectively/Array.h>
 
@@ -206,5 +205,3 @@ struct MutableArrayInterface {
  * @brief The MutableArray Class.
  */
 extern Class _MutableArray;
-
-#endif

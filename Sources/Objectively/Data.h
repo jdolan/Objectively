@@ -21,10 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Data_h_
-#define _Objectively_Data_h_
-
-#include <stdio.h>
+#pragma once
 
 #include <Objectively/Object.h>
 
@@ -210,5 +207,3 @@ struct DataInterface {
  * @brief The Data Class.
  */
 extern Class _Data;
-
-#endif

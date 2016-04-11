@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_OperationQueue_h_
-#define _Objectively_OperationQueue_h_
+#pragma once
 
 #include <Objectively/Condition.h>
 #include <Objectively/Object.h>
@@ -188,5 +187,3 @@ struct OperationQueueInterface {
  * @brief The OperationQueue Class.
  */
 extern Class _OperationQueue;
-
-#endif

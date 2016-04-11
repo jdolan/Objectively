@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_MutableSet_h_
-#define _Objectively_MutableSet_h_
+#pragma once
 
 #include <Objectively/Set.h>
 
@@ -179,5 +178,3 @@ struct MutableSetInterface {
  * @brief The MutableSet Class.
  */
 extern Class _MutableSet;
-
-#endif

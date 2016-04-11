@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_DateFormatter_h_
-#define _Objectively_DateFormatter_h_
+#pragma once
 
 #include <Objectively/Date.h>
 #include <Objectively/String.h>
@@ -142,5 +141,3 @@ struct DateFormatterInterface {
  * @brief The DateFormatter Class.
  */
 extern Class _DateFormatter;
-
-#endif

@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Object_h_
-#define _Objectively_Object_h_
+#pragma once
 
 #include <Objectively/Class.h>
 #include <Objectively/Types.h>
@@ -171,5 +170,3 @@ struct ObjectInterface {
  * @brief The Object Class.
  */
 extern Class _Object;
-
-#endif

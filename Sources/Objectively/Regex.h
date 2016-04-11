@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Regex_h_
-#define _Objectively_Regex_h_
+#pragma once
 
 #include <regex.h>
 
@@ -153,5 +152,3 @@ struct RegexInterface {
  * @brief The Regex Class.
  */
 extern Class _Regex;
-
-#endif
