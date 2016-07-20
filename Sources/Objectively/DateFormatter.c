@@ -22,6 +22,7 @@
  */
 
 #include <assert.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #include <Objectively/DateFormatter.h>
