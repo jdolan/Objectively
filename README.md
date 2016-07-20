@@ -1,5 +1,5 @@
 [![Build Status](http://ci.quetoo.org/buildStatus/icon?job=Objectively-Linux-x86_64)](http://ci.quetoo.org/job/Objectively-Linux-x86_64/)
-[![MIT License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+[![Zlib License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/Zlib)
 ![This software is ALPHA](https://img.shields.io/badge/development_stage-ALPHA-yellow.svg)
 
 Objectively
