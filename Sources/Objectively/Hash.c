@@ -25,7 +25,7 @@
 
 #include <Objectively/Hash.h>
 
-int HashForBytes(int hash, const byte *bytes, const Range range) {
+int HashForBytes(int hash, const uint8_t *bytes, const Range range) {
 
 	for (size_t i = range.location; i < range.length; i++) {
 
@@ -44,7 +44,7 @@ int HashForBytes(int hash, const byte *bytes, const Range range) {
 
 int HashForCharacters(int hash, const char *chars, const Range range) {
 
-	return HashForBytes(hash, (const byte *) chars, range);
+	return HashForBytes(hash, (const uint8_t *) chars, range);
 }
 
 int HashForCString(int hash, const char *string) {

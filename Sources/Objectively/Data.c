@@ -101,11 +101,11 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - Data
 
 /**
- * @fn Data *Data::dataWithBytes(const byte *bytes, size_t length)
+ * @fn Data *Data::dataWithBytes(const uint8_t *bytes, size_t length)
  *
  * @memberof Data
  */
-static Data *dataWithBytes(const byte *bytes, size_t length) {
+static Data *dataWithBytes(const uint8_t *bytes, size_t length) {
 
 	return $(alloc(Data), initWithBytes, bytes, length);
 }
@@ -131,11 +131,11 @@ static Data *dataWithMemory(const ident mem, size_t length) {
 }
 
 /**
- * @fn Data *Data::initWithBytes(Data *self, const byte *bytes, size_t length)
+ * @fn Data *Data::initWithBytes(Data *self, const uint8_t *bytes, size_t length)
  *
  * @memberof Data
  */
-static Data *initWithBytes(Data *self, const byte *bytes, size_t length) {
+static Data *initWithBytes(Data *self, const uint8_t *bytes, size_t length) {
 
 	ident mem = malloc(length);
 	assert(mem);

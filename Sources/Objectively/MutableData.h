@@ -75,7 +75,7 @@ struct MutableDataInterface {
 	DataInterface dataInterface;
 
 	/**
-	 * @fn void MutableData::appendBytes(MutableData *self, const byte *bytes, size_t length)
+	 * @fn void MutableData::appendBytes(MutableData *self, const uint8_t *bytes, size_t length)
 	 *
 	 * @brief Appends the given `bytes` to this Data.
 	 *
@@ -88,7 +88,7 @@ struct MutableDataInterface {
 	 *
 	 * @memberof MutableData
 	 */
-	void (*appendBytes)(MutableData *self, const byte *bytes, size_t length);
+	void (*appendBytes)(MutableData *self, const uint8_t *bytes, size_t length);
 
 	/**
 	 * @fn void MutableData::appendData(MutableData *self, const Data *data)

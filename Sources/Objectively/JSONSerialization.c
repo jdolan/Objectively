@@ -57,7 +57,7 @@ static void writeElement(JSONWriter *writer, const ident obj);
  */
 static void writeNull(JSONWriter *writer, const Null *null) {
 
-	$(writer->data, appendBytes, (byte *) "null", 4);
+	$(writer->data, appendBytes, (uint8_t *) "null", 4);
 }
 
 /**
@@ -69,9 +69,9 @@ static void writeNull(JSONWriter *writer, const Null *null) {
 static void writeBoole(JSONWriter *writer, const Boole *boolean) {
 
 	if (boolean->value) {
-		$(writer->data, appendBytes, (byte *) "true", 4);
+		$(writer->data, appendBytes, (uint8_t *) "true", 4);
 	} else {
-		$(writer->data, appendBytes, (byte *) "false", 5);
+		$(writer->data, appendBytes, (uint8_t *) "false", 5);
 	}
 }
 
@@ -83,9 +83,9 @@ static void writeBoole(JSONWriter *writer, const Boole *boolean) {
  */
 static void writeString(JSONWriter *writer, const String *string) {
 
-	$(writer->data, appendBytes, (byte *) "\"", 1);
-	$(writer->data, appendBytes, (byte *) string->chars, string->length);
-	$(writer->data, appendBytes, (byte *) "\"", 1);
+	$(writer->data, appendBytes, (uint8_t *) "\"", 1);
+	$(writer->data, appendBytes, (uint8_t *) string->chars, string->length);
+	$(writer->data, appendBytes, (uint8_t *) "\"", 1);
 }
 
 /**
@@ -98,7 +98,7 @@ static void writeNumber(JSONWriter *writer, const Number *number) {
 
 	String *string = $(alloc(String), initWithFormat, "%.5f", number->value);
 
-	$(writer->data, appendBytes, (byte *) string->chars, string->length);
+	$(writer->data, appendBytes, (uint8_t *) string->chars, string->length);
 
 	release(string);
 }
@@ -112,7 +112,7 @@ static void writeNumber(JSONWriter *writer, const Number *number) {
 static void writeLabel(JSONWriter *writer, const String *label) {
 
 	writeString(writer, label);
-	$(writer->data, appendBytes, (byte *) ": ", 2);
+	$(writer->data, appendBytes, (uint8_t *) ": ", 2);
 }
 
 /**
@@ -123,7 +123,7 @@ static void writeLabel(JSONWriter *writer, const String *label) {
  */
 static void writeObject(JSONWriter *writer, const Dictionary *object) {
 
-	$(writer->data, appendBytes, (byte * ) "{", 1);
+	$(writer->data, appendBytes, (uint8_t * ) "{", 1);
 
 	Array *keys = $(object, allKeys);
 	for (size_t i = 0; i < keys->count; i++) {
@@ -135,13 +135,13 @@ static void writeObject(JSONWriter *writer, const Dictionary *object) {
 		writeElement(writer, obj);
 
 		if (i < keys->count - 1) {
-			$(writer->data, appendBytes, (byte *) ", ", 2);
+			$(writer->data, appendBytes, (uint8_t *) ", ", 2);
 		}
 	}
 
 	release(keys);
 
-	$(writer->data, appendBytes, (byte * ) "}", 1);
+	$(writer->data, appendBytes, (uint8_t * ) "}", 1);
 }
 
 /**
@@ -152,18 +152,18 @@ static void writeObject(JSONWriter *writer, const Dictionary *object) {
  */
 static void writeArray(JSONWriter *writer, const Array *array) {
 
-	$(writer->data, appendBytes, (byte * ) "[", 1);
+	$(writer->data, appendBytes, (uint8_t * ) "[", 1);
 
 	for (size_t i = 0; i < array->count; i++) {
 
 		writeElement(writer, $(array, objectAtIndex, i));
 
 		if (i < array->count - 1) {
-			$(writer->data, appendBytes, (byte *) ", ", 2);
+			$(writer->data, appendBytes, (uint8_t *) ", ", 2);
 		}
 	}
 
-	$(writer->data, appendBytes, (byte * ) "]", 1);
+	$(writer->data, appendBytes, (uint8_t * ) "]", 1);
 }
 
 /**
@@ -215,7 +215,7 @@ static Data *dataFromObject(const ident obj, int options) {
 typedef struct {
 	const Data *data;
 	int options;
-	byte *b;
+	uint8_t *b;
 } JSONReader;
 
 static ident readElement(JSONReader *reader);
@@ -285,7 +285,7 @@ static void consumeBytes(JSONReader *reader, const char *bytes) {
  */
 static String *readString(JSONReader *reader) {
 
-	byte *bytes = reader->b;
+	uint8_t *bytes = reader->b;
 
 	const int b = readByteUntil(reader, "\"");
 	assert(b == '"');
@@ -303,9 +303,9 @@ static String *readString(JSONReader *reader) {
  */
 static Number *readNumber(JSONReader *reader) {
 
-	byte *bytes = reader->b;
+	uint8_t *bytes = reader->b;
 
-	byte *end;
+	uint8_t *end;
 	double d = strtod((char *) bytes, (char **) &end);
 
 	assert(end > bytes);

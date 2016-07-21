@@ -28,8 +28,8 @@
 
 START_TEST(data)
 	{
-		Data *data1 = $(alloc(Data), initWithBytes, (byte *) "abcdef", 6);
-		Data *data2 = $(alloc(Data), initWithBytes, (byte *) "ghijkl", 6);
+		Data *data1 = $(alloc(Data), initWithBytes, (uint8_t *) "abcdef", 6);
+		Data *data2 = $(alloc(Data), initWithBytes, (uint8_t *) "ghijkl", 6);
 
 		ck_assert(data1 != NULL);
 		ck_assert(data2 != NULL);

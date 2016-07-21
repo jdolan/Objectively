@@ -47,7 +47,7 @@
  *
  * @return The accumulated hash value.
  */
-extern int HashForBytes(int hash, const byte *bytes, const Range range);
+extern int HashForBytes(int hash, const uint8_t *bytes, const Range range);
 
 /**
  * @brief Accumulates the hash value of `chars` into `hash`.

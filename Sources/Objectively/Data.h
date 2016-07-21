@@ -65,7 +65,7 @@ struct Data {
 	/**
 	 * @brief The bytes.
 	 */
-	byte *bytes;
+	uint8_t *bytes;
 
 	/**
 	 * @brief The length of `bytes`.
@@ -93,7 +93,7 @@ struct DataInterface {
 	/**
 	 * @static
 	 *
-	 * @fn Data *Data::dataWithBytes(const byte *bytes, size_t length)
+	 * @fn Data *Data::dataWithBytes(const uint8_t *bytes, size_t length)
 	 *
 	 * @brief Returns a new Data by copying `length` of `bytes`.
 	 *
@@ -104,7 +104,7 @@ struct DataInterface {
 	 *
 	 * @memberof Data
 	 */
-	Data *(*dataWithBytes)(const byte *bytes, size_t length);
+	Data *(*dataWithBytes)(const uint8_t *bytes, size_t length);
 
 	/**
 	 * @static
@@ -140,7 +140,7 @@ struct DataInterface {
 	/** @} */
 	
 	/**
-	 * @fn Data *Data::initWithBytes(Data *self, const byte *bytes, size_t length)
+	 * @fn Data *Data::initWithBytes(Data *self, const uint8_t *bytes, size_t length)
 	 *
 	 * @brief Initializes this Data by copying `length` of `bytes`.
 	 *
@@ -151,7 +151,7 @@ struct DataInterface {
 	 *
 	 * @memberof Data
 	 */
-	Data *(*initWithBytes)(Data *self, const byte *bytes, size_t length);
+	Data *(*initWithBytes)(Data *self, const uint8_t *bytes, size_t length);
 
 	/**
 	 * @fn Data *Data::initWithContentsOfFile(Data *self, const char *path)

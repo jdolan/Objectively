@@ -53,7 +53,7 @@ static ident objectWithPath(const ident root, const char *path) {
 			break;
 		}
 
-		const byte *bytes = (byte *) c + matches[1].location;
+		const uint8_t *bytes = (uint8_t *) c + matches[1].location;
 		const size_t length = matches[1].length;
 
 		String *segment = $$(String, stringWithBytes, bytes, length, STRING_ENCODING_UTF8);

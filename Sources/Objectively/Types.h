@@ -39,11 +39,6 @@
 typedef void *ident;
 
 /**
- * @brief The byte type.
- */
-typedef unsigned char byte;
-
-/**
  * @brief A location and length into contiguous collections.
  */
 typedef struct {

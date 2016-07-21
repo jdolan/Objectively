@@ -31,7 +31,7 @@
 START_TEST(mutableData)
 	{
 		MutableData *data = $(alloc(MutableData), init);
-		$(data, appendBytes, (byte *) "123", 3);
+		$(data, appendBytes, (uint8_t *) "123", 3);
 
 		ck_assert_int_eq(3, data->data.length);
 		ck_assert(strncmp("123", (char *) data->data.bytes, 3) == 0);

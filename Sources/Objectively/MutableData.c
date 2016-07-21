@@ -47,11 +47,11 @@ static Object *copy(const Object *self) {
 #pragma mark - MutableData
 
 /**
- * @fn void MutableData::appendBytes(MutableData *self, const byte *bytes, size_t length)
+ * @fn void MutableData::appendBytes(MutableData *self, const uint8_t *bytes, size_t length)
  *
  * @memberof MutableData
  */
-static void appendBytes(MutableData *self, const byte *bytes, size_t length) {
+static void appendBytes(MutableData *self, const uint8_t *bytes, size_t length) {
 
 	const size_t oldLength = self->data.length;
 
@@ -113,7 +113,7 @@ static MutableData *initWithCapacity(MutableData *self, size_t capacity) {
 		self->capacity = capacity;
 		if (self->capacity) {
 
-			self->data.bytes = calloc(capacity, sizeof(byte));
+			self->data.bytes = calloc(capacity, sizeof(uint8_t));
 			assert(self->data.bytes);
 		}
 	}
@@ -147,7 +147,7 @@ static void setLength(MutableData *self, size_t length) {
 	if (newCapacity > self->capacity) {
 
 		if (self->data.bytes == NULL) {
-			self->data.bytes = calloc(newCapacity, sizeof(byte));
+			self->data.bytes = calloc(newCapacity, sizeof(uint8_t));
 			assert(self->data.bytes);
 		} else {
 			self->data.bytes = realloc(self->data.bytes, newCapacity);

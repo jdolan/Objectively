@@ -188,7 +188,7 @@ struct StringInterface {
 	_Bool (*hasSuffix)(const String *self, const String *suffix);
 
 	/**
-	 * @fn String *String::initWithBytes(String *self, const byte *bytes, size_t length, StringEncoding encoding)
+	 * @fn String *String::initWithBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding)
 	 *
 	 * @brief Initializes this String by decoding `length` of `bytes`.
 	 *
@@ -200,7 +200,7 @@ struct StringInterface {
 	 *
 	 * @memberof String
 	 */
-	String *(*initWithBytes)(String *self, const byte *bytes, size_t length, StringEncoding encoding);
+	String *(*initWithBytes)(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding);
 
 	/**
 	 * @fn String *String::initWithCharacters(String *self, const char *chars)
@@ -346,7 +346,7 @@ struct StringInterface {
 	/**
 	 * @static
 	 *
-	 * @fn String *String::stringWithBytes(const byte *bytes, size_t length, StringEncoding encoding)
+	 * @fn String *String::stringWithBytes(const uint8_t *bytes, size_t length, StringEncoding encoding)
 	 *
 	 * @brief Returns a new String by decoding `length` of `bytes` to UTF-8.
 	 *
@@ -358,7 +358,7 @@ struct StringInterface {
 	 *
 	 * @memberof String
 	 */
-	String *(*stringWithBytes)(const byte *bytes, size_t length, StringEncoding encoding);
+	String *(*stringWithBytes)(const uint8_t *bytes, size_t length, StringEncoding encoding);
 
 	/**
 	 * @static

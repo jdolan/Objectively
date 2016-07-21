@@ -76,7 +76,7 @@ static int hash(const Object *self) {
 	hash = HashForInteger(hash, this->options);
 
 	const Range range = { 0, strlen(this->pattern) };
-	hash = HashForBytes(hash, (byte *) this->pattern, range);
+	hash = HashForBytes(hash, (uint8_t *) this->pattern, range);
 
 	return hash;
 }

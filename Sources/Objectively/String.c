@@ -280,11 +280,11 @@ static _Bool hasSuffix(const String *self, const String *suffix) {
 }
 
 /**
- * @fn String *String::initWithBytes(String *self, const byte *bytes, size_t length, StringEncoding encoding)
+ * @fn String *String::initWithBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding)
  *
  * @memberof String
  */
-static String *initWithBytes(String *self, const byte *bytes, size_t length, StringEncoding encoding) {
+static String *initWithBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding) {
 
 	if (bytes) {
 
@@ -504,11 +504,11 @@ static Range rangeOfString(const String *self, const String *string, const Range
 }
 
 /**
- * @fn String *String::stringWithBytes(const byte *bytes, size_t length, StringEncoding encoding)
+ * @fn String *String::stringWithBytes(const uint8_t *bytes, size_t length, StringEncoding encoding)
  *
  * @memberof String
  */
-static String *stringWithBytes(const byte *bytes, size_t length, StringEncoding encoding) {
+static String *stringWithBytes(const uint8_t *bytes, size_t length, StringEncoding encoding) {
 
 	return $(alloc(String), initWithBytes, bytes, length, encoding);
 }

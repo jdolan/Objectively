@@ -56,7 +56,7 @@ static size_t writeFunction(char *data, size_t size, size_t count, ident self) {
 
 	URLSessionDataTask *this = (URLSessionDataTask *) self;
 
-	const byte *bytes = (byte *) data;
+	const uint8_t *bytes = (uint8_t *) data;
 	const size_t bytesReceived = size * count;
 
 	if (this->data == NULL) {
