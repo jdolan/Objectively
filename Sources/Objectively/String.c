@@ -237,7 +237,7 @@ static Data *getData(const String *self, StringEncoding encoding) {
 		.from = STRING_ENCODING_UTF8,
 		.in = self->chars,
 		.length = self->length,
-		.out = calloc(self->length, sizeof(Unicode)),
+		.out = calloc(self->length, sizeof(Unicode) / sizeof(char)),
 		.size = self->length * sizeof(Unicode)
 	};
 
