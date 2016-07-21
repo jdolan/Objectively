@@ -40,10 +40,10 @@ START_TEST(mutableData)
 		ck_assert_int_eq(128, data->data.length);
 		ck_assert_int_eq(0, data->data.bytes[data->data.length - 1]);
 
-		ident mem = malloc(8192 * sizeof(byte));
+		ident mem = malloc(8192 * sizeof(uint8_t));
 		ck_assert(mem != NULL);
 
-		memset(mem, 1, 8192 * sizeof(byte));
+		memset(mem, 1, 8192 * sizeof(uint8_t));
 
 		Data *append = $(alloc(Data), initWithMemory, mem, 8192);
 		ck_assert(append != NULL);
