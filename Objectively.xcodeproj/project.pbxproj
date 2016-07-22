@@ -366,6 +366,7 @@
 				CE76D8C61C481C4E0096DD31 /* Lock.h */,
 				CE76D8C71C481C4E0096DD31 /* Log.c */,
 				CE76D8C81C481C4E0096DD31 /* Log.h */,
+				CE76D8CA1C481C4E0096DD31 /* Makefile.am */,
 				CE76D8CC1C481C4E0096DD31 /* MutableArray.c */,
 				CE76D8CD1C481C4E0096DD31 /* MutableArray.h */,
 				CE76D8CE1C481C4E0096DD31 /* MutableData.c */,
@@ -414,7 +415,6 @@
 				CE76D8F91C481C4E0096DD31 /* URLSessionTask.h */,
 				CE76D8FA1C481C4E0096DD31 /* URLSessionUploadTask.c */,
 				CE76D8FB1C481C4E0096DD31 /* URLSessionUploadTask.h */,
-				CE76D8CA1C481C4E0096DD31 /* Makefile.am */,
 			);
 			path = Objectively;
 			sourceTree = "<group>";
@@ -836,6 +836,7 @@
 				LIBRARY_SEARCH_PATHS = /opt/local/lib;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-I$(SRCROOT)/Sources";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Sources";
 				USE_HEADERMAP = NO;
 			};
 			name = Debug;
@@ -855,6 +856,7 @@
 				LIBRARY_SEARCH_PATHS = /opt/local/lib;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-I$(SRCROOT)/Sources";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Sources";
 				USE_HEADERMAP = NO;
 			};
 			name = Release;
