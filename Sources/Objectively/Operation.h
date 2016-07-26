@@ -165,7 +165,7 @@ struct OperationInterface {
 	 *
 	 * @return The initialized Operation, or `NULL` on error.
 	 *
-	 * @remark Asynchronous subclasses should invoke this initializer.
+	 * @remarks Asynchronous subclasses should invoke this initializer.
 	 *
 	 * @memberof Operation
 	 */
@@ -210,12 +210,12 @@ struct OperationInterface {
 	 *
 	 * @brief Starts this Operation.
 	 *
-	 * @remark The default implementation of this method checks the state of
+	 * @remarks The default implementation of this method checks the state of
 	 * the Operation and, if all criteria are met, dispatches the configured
 	 * `function` synchronously. When this method returns, the Operation
 	 * `isFinished` and has removed itself from any queues it belonged to.
 	 *
-	 * @remark Asynchronous Operations should override this method and
+	 * @remarks Asynchronous Operations should override this method and
 	 * coordinate their own state transitions and queue removal. This method
 	 * should _not_ be invoked by `super`.
 	 *

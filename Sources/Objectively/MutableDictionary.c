@@ -172,7 +172,7 @@ static void removeObjectForKey(MutableDictionary *self, const ident key) {
 /**
  * @brief A helper for resizing Dictionaries as pairs are added to them.
  *
- * @remark Static method invocations are used for all operations.
+ * @remarks Static method invocations are used for all operations.
  */
 static void setObjectForKey_resize(Dictionary *dict) {
 

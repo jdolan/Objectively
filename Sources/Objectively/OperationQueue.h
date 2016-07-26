@@ -125,7 +125,7 @@ struct OperationQueueInterface {
 	 *
 	 * @return The current OperationQueue, or NULL if none can be determined.
 	 *
-	 * @remark This method should only be called from a synchronous Operation
+	 * @remarks This method should only be called from a synchronous Operation
 	 * that was dispatched via an OperationQueue. This method uses thread-local
 	 * storage.
 	 *

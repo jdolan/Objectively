@@ -56,7 +56,7 @@ static Object *copy(const Object *self) {
 /**
  * @brief A helper for resizing Sets as Objects are added to them.
  *
- * @remark Static method invocations are used for all operations.
+ * @remarks Static method invocations are used for all operations.
  */
 static void addObject_resize(Set *set) {
 

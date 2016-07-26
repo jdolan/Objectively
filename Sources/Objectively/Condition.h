@@ -84,7 +84,7 @@ struct ConditionInterface {
 	 *
 	 * @brief Signals all Threads waiting on this Condition.
 	 *
-	 * @remark This method should only be called when the Condition is locked.
+	 * @remarks This method should only be called when the Condition is locked.
 	 *
 	 * @memberof Condition
 	 */
@@ -106,7 +106,7 @@ struct ConditionInterface {
 	 *
 	 * @brief Signals a single Thread waiting on this Condition.
 	 *
-	 * @remark This method should only be called when the Condition is locked.
+	 * @remarks This method should only be called when the Condition is locked.
 	 *
 	 * @memberof Condition
 	 */
@@ -117,7 +117,7 @@ struct ConditionInterface {
 	 *
 	 * @brief Waits indefinitely for this Condition to be signaled.
 	 *
-	 * @remark This method should only be called when the Condition is locked.
+	 * @remarks This method should only be called when the Condition is locked.
 	 *
 	 * @memberof Condition
 	 */
@@ -132,7 +132,7 @@ struct ConditionInterface {
 	 *
 	 * @return `true` if this Condition was signaled before `date`, `false` otherwise.
 	 *
-	 * @remark This method should only be called when the Condition is locked.
+	 * @remarks This method should only be called when the Condition is locked.
 	 *
 	 * @memberof Condition
 	 */

@@ -85,7 +85,7 @@ struct Class {
 	 * If your Class defines an interface, you *must* implement this method
 	 * and initialize that interface here.
 	 *
-	 * @remark The `interface` property of the Class is copied from the
+	 * @remarks The `interface` property of the Class is copied from the
 	 * superclass before this method is called. Method overrides are achieved
 	 * by simply overwriting the function pointers here.
 	 */
@@ -148,7 +148,7 @@ extern void release(ident obj);
  *
  * @return The Object.
  *
- * @remark By calling this, the caller is expressing ownership of the Object,
+ * @remarks By calling this, the caller is expressing ownership of the Object,
  * and preventing it from being released. Be sure to balance calls to `retain`
  * with calls to `release`.
  */
@@ -195,7 +195,7 @@ extern size_t _pageSize;
 /**
  * @brief Invoke an instance method with arguments.
  *
- * @remark This is useful when nesting method invocations.
+ * @remarks This is useful when nesting method invocations.
  */
 #define _call(obj, method, ...) \
 	$(obj, method, __VA_ARGS__)

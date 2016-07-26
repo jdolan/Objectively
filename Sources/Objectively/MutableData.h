@@ -82,7 +82,7 @@ struct MutableDataInterface {
 	 * @param bytes The bytes to append.
 	 * @param length The length of bytes to append.
 	 *
-	 * @remark MutableData are grown in blocks as bytes are appended. This
+	 * @remarks MutableData are grown in blocks as bytes are appended. This
 	 * provides a significant performance gain when frequently appending small
 	 * chunks of bytes.
 	 *
@@ -171,7 +171,7 @@ struct MutableDataInterface {
 	 *
 	 * @param length The new desired length.
 	 *
-	 * @remark If the data is expanded, the newly allocated bytes are filled
+	 * @remarks If the data is expanded, the newly allocated bytes are filled
 	 * with zeros.
 	 *
 	 * @memberof MutableData

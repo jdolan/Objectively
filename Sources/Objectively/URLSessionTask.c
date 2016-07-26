@@ -145,7 +145,7 @@ static _Bool httpHeaders_enumerator(const Dictionary *dictionary, ident obj, ide
  * @brief The `CURLOPT_XFERINFOFUNCTION`, which updates internal state and
  * dispatches the task's progress function.
  *
- * @remark This is also the mechanism for resuming suspended tasks.
+ * @remarks This is also the mechanism for resuming suspended tasks.
  */
 static int progress(ident self, curl_off_t bytesExpectedToReceive, curl_off_t bytesReceived,
 		curl_off_t bytesExpectedToSend, curl_off_t bytesSent) {

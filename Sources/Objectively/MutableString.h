@@ -59,7 +59,7 @@ struct MutableString {
 	/**
 	 * @brief The capacity of the String, in bytes.
 	 *
-	 * @remark The capacity is always `>= self->string.length`.
+	 * @remarks The capacity is always `>= self->string.length`.
 	 *
 	 * @private
 	 */

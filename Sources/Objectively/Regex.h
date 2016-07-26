@@ -114,7 +114,7 @@ struct RegexInterface {
 	 *
 	 * @return `true` if this Regex matched `chars`, `false` otherwise.
 	 *
-	 * @remark If provided, `matches` will be dynamically allocated and contain
+	 * @remarks If provided, `matches` will be dynamically allocated and contain
 	 * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the
 	 * Range of `chars` that matched the entire pattern. `matches[1..n]` will
 	 * identify the Range of each corresponding sub-expression. The caller must
@@ -137,7 +137,7 @@ struct RegexInterface {
 	 *
 	 * @return `true` if this expression matches `string`, `false` otherwise.
 	 *
-	 * @remark If provided, `matches` will be dynamically allocated and contain
+	 * @remarks If provided, `matches` will be dynamically allocated and contain
 	 * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the
 	 * Range of `chars` that matched the entire pattern. `matches[1..n]` will
 	 * identify the Range of each corresponding sub-expression. The caller must

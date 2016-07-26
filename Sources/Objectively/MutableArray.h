@@ -183,7 +183,7 @@ struct MutableArrayInterface {
 	 * @param obj The Object with which to replace.
 	 * @param index The index of the Object to replace.
 	 *
-	 * @remark The index must not exceed the size of the MutableArray.
+	 * @remarks The index must not exceed the size of the MutableArray.
 	 *
 	 * @memberof MutableArray
 	 */

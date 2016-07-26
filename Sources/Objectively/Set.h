@@ -131,7 +131,7 @@ struct SetInterface {
 	 * @param enumerator The enumerator function.
 	 * @param data User data.
 	 *
-	 * @remark The enumerator should return `true` to break the iteration.
+	 * @remarks The enumerator should return `true` to break the iteration.
 	 *
 	 * @memberof Set
 	 */

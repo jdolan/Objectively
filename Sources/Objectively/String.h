@@ -61,7 +61,7 @@ typedef struct StringInterface StringInterface;
 /**
  * @brief Immutable UTF-8 strings.
  *
- * @remark Because Strings are encoded using UTF-8, they must not be treated as
+ * @remarks Because Strings are encoded using UTF-8, they must not be treated as
  * ASCII C strings. That is, a single Unicode code point will often span
  * multiple `char`s. Be mindful of this when executing Range operations.
  *

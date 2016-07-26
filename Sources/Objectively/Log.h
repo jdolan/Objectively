@@ -92,7 +92,7 @@ struct Log {
 	/**
 	 * @brief The file descriptor (defaults to `stdout`).
 	 *
-	 * @remark Non-`tty` files are closed when the Log is deallocated.
+	 * @remarks Non-`tty` files are closed when the Log is deallocated.
 	 */
 	FILE *file;
 
