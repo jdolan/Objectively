@@ -28,12 +28,12 @@ TESTS = \
 	URLSession
 
 CFLAGS += \
-	-I$(top_builddir)/Sources \
+	-I$(top_srcdir)/Sources \
 	@HOST_CFLAGS@ \
 	@CHECK_CFLAGS@
 
 LDADD = \
-	$(top_builddir)/Sources/Objectively/libObjectively.la \
+	$(top_srcdir)/Sources/Objectively/libObjectively.la \
 	@HOST_LIBS@ \
 	@CHECK_LIBS@
 
