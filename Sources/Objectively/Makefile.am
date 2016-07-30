@@ -1,4 +1,5 @@
 AUTOMAKE_OPTIONS = nostdinc
+AM_CPPFLAGS = -I$(top_srcdir)/Sources
 
 pkgincludedir = $(includedir)/Objectively
 

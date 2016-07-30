@@ -1,14 +1,13 @@
-
 noinst_PROGRAMS = \
 	Hello \
 	HelloCpp
 
 CFLAGS += \
-	-I$(top_builddir)/Sources \
+	-I$(top_srcdir)/Sources \
 	@HOST_CFLAGS@
 
 CXXFLAGS += \
-	-I$(top_builddir)/Sources \
+	-I$(top_srcdir)/Sources \
 	@HOST_CFLAGS@
 	
 LDADD = \
