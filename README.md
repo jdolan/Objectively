@@ -267,7 +267,7 @@ Code Templates
 Objectively provides code templates for Xcode and Eclipse CDT that greatly cut down on the boilerplate required to declare and implement a type. These are _highly recommended_, as they will save you time and reduce errors in type declaration.
 
 #### Xcode 7.x
-Install the Xcode 7.x code templates by copying or symlinking them to the appropriate location.
+Install the Xcode 7.x code templates by copying or symlinking them to the appropriate location. A `make` target is provided for convenience:
 
 ```shell
 make install-xcode-templates
