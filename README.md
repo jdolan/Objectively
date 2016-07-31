@@ -270,9 +270,7 @@ Objectively provides code templates for Xcode and Eclipse CDT that greatly cut d
 Install the Xcode 7.x code templates by copying or symlinking them to the appropriate location.
 
 ```shell
-mkdir -p "~/Library/Developer/Xcode/Templates/File Templates/Source"
-ln "Templates/Xcode/Objectively C Type.xctemplate" \
-   "~/Library/Developer/Xcode/Templates/File Templates/Source"
+make install-xcode-templates
 ```
 
 ![Objectively code templates in Xcode 7](Documentation/xcode-template-dialog.png)
