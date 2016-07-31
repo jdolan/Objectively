@@ -21,8 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef _Objectively_Once_h_
-#define _Objectively_Once_h_
+#pragma once
 
 #include <Objectively/Types.h>
 
@@ -48,5 +47,3 @@ typedef long long int Once;
 	} else { \
 		while (*once != 1) ; \
 	}
-
-#endif
