@@ -390,6 +390,21 @@ static ident objectAtIndex(const Array *self, int index) {
 	return self->elements[index];
 }
 
+/**
+ * @fn Array *Array::sortedArray(const Array *self, Comparator comparator)
+ *
+ * @memberof Array
+ */
+static Array *sortedArray(const Array *self, Comparator comparator) {
+
+	assert(comparator);
+
+	MutableArray *array = $(self, mutableCopy);
+	$(array, sort, comparator);
+
+	return (Array *) array;
+}
+
 #pragma mark - Class lifecycle
 
 /**
@@ -420,6 +435,7 @@ static void initialize(Class *clazz) {
 	array->lastObject = lastObject;
 	array->mutableCopy = mutableCopy;
 	array->objectAtIndex = objectAtIndex;
+	array->sortedArray = sortedArray;
 }
 
 Class _Array = {

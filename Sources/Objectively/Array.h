@@ -262,6 +262,17 @@ struct ArrayInterface {
 	 * @memberof Array
 	 */
 	ident (*objectAtIndex)(const Array *self, int index);
+
+	/**
+	 * @fn Array *Array::sortedArray(const Array *self, Comparator comparator)
+	 *
+	 * @param comparator The Comparator
+	 *
+	 * @return A copy of this Array, sorted by the given Comparator.
+	 *
+	 * @memberof Array
+	 */
+	Array *(*sortedArray)(const Array *self, Comparator comparator);
 };
 
 /**
