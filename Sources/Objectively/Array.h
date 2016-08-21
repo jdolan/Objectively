@@ -157,19 +157,19 @@ struct ArrayInterface {
 	void (*enumerateObjects)(const Array *self, ArrayEnumerator enumerator, ident data);
 
 	/**
-	 * @fn void Array::filterObjects(const Array *self, ArrayEnumerator enumerator, ident data)
+	 * @fn void Array::filteredArray(const Array *self, Predicate predicate, ident data)
 	 *
-	 * @brief Creates a new Array with elements that pass the filter function.
+	 * @brief Creates a new Array with elements that pass `predicate`.
 	 *
 	 * @param self The Array.
-	 * @param enumerator The enumerator function.
+	 * @param predicate The predicate function.
 	 * @param data User data.
 	 *
 	 * @return The new, filtered Array.
 	 *
 	 * @memberof Array
 	 */
-	Array *(*filterObjects)(const Array *self, ArrayEnumerator enumerator, ident data);
+	Array *(*filteredArray)(const Array *self, Predicate predicate, ident data);
 	
 	/**
 	 * @fn ident Array::findObject(const Array *self, Predicate predicate, ident data)

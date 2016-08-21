@@ -218,23 +218,19 @@ static void enumerateObjects(const Array *self, ArrayEnumerator enumerator, iden
 }
 
 /**
- * @fn void Array::filterObjects(const Array *self, ArrayEnumerator enumerator, ident data)
+ * @fn void Array::filteredArray(const Array *self, Predicate predicate, ident data)
  *
  * @memberof Array
  */
-static Array *filterObjects(const Array *self, ArrayEnumerator enumerator, ident data) {
+static Array *filteredArray(const Array *self, Predicate predicate, ident data) {
 
-	assert(enumerator);
+	assert(predicate);
 
-	MutableArray *array = $(alloc(MutableArray), init);
+	MutableArray *copy = $(self, mutableCopy);
 
-	for (size_t i = 0; i < self->count; i++) {
-		if (enumerator(self, self->elements[i], data)) {
-			$(array, addObject, self->elements[i]);
-		}
-	}
+	$(copy, filter, predicate, data);
 
-	return (Array *) array;
+	return (Array *) copy;
 }
 
 /**
@@ -400,6 +396,7 @@ static Array *sortedArray(const Array *self, Comparator comparator) {
 	assert(comparator);
 
 	MutableArray *array = $(self, mutableCopy);
+	
 	$(array, sort, comparator);
 
 	return (Array *) array;
@@ -426,7 +423,7 @@ static void initialize(Class *clazz) {
 	array->arrayWithObjects = arrayWithObjects;
 	array->containsObject = containsObject;
 	array->enumerateObjects = enumerateObjects;
-	array->filterObjects = filterObjects;
+	array->filteredArray = filteredArray;
 	array->findObject = findObject;
 	array->firstObject = firstObject;
 	array->indexOfObject = indexOfObject;

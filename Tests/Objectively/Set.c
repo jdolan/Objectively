@@ -30,7 +30,7 @@ _Bool enumerator(const Set *set, ident obj, ident data) {
 	(*(int *) data)++; return false;
 }
 
-_Bool filter(const Set *set, ident obj, ident data) {
+_Bool filter(ident obj, ident data) {
 
 	return obj == data;
 }
@@ -65,7 +65,7 @@ START_TEST(set)
 
 		ck_assert_int_eq(set->count, count);
 
-		Set *filtered = $(set, filterObjects, filter, two);
+		Set *filtered = $(set, filteredSet, filter, two);
 
 		ck_assert_int_eq(1, filtered->count);
 		ck_assert($(filtered, containsObject, two));

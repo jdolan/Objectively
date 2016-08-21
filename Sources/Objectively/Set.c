@@ -193,13 +193,13 @@ static void enumerateObjects(const Set *self, SetEnumerator enumerator, ident da
 }
 
 /**
- * @fn void Set::filterObjects(const Set *self, SetEnumerator enumerator, ident data)
+ * @fn void Set::filteredSet(const Set *self, Predicate predicate, ident data)
  *
  * @memberof Set
  */
-static Set *filterObjects(const Set *self, SetEnumerator enumerator, ident data) {
+static Set *filteredSet(const Set *self, Predicate predicate, ident data) {
 
-	assert(enumerator);
+	assert(predicate);
 
 	MutableSet *set = $(alloc(MutableSet), init);
 
@@ -211,7 +211,7 @@ static Set *filterObjects(const Set *self, SetEnumerator enumerator, ident data)
 			for (size_t j = 0; j < array->count; j++) {
 				ident obj = $(array, objectAtIndex, j);
 
-				if (enumerator(self, obj, data)) {
+				if (predicate(obj, data)) {
 					$(set, addObject, obj);
 				}
 			}
@@ -364,7 +364,7 @@ static void initialize(Class *clazz) {
 	set->allObjects = allObjects;
 	set->containsObject = containsObject;
 	set->enumerateObjects = enumerateObjects;
-	set->filterObjects = filterObjects;
+	set->filteredSet = filteredSet;
 	set->initWithArray = initWithArray;
 	set->initWithSet = initWithSet;
 	set->initWithObjects = initWithObjects;

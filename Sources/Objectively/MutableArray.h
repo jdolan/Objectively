@@ -123,6 +123,18 @@ struct MutableArrayInterface {
 	MutableArray *(*arrayWithCapacity)(size_t capacity);
 
 	/**
+	 * @fn void MutableArray::filter(MutableArray *self, Predicate predicate, ident data)
+	 *
+	 * @brief Filters this MutableArray in place using `predicate`.
+	 *
+	 * @param predicate A Predicate.
+	 * @param data User data.
+	 *
+	 * @memberof MutableArray
+	 */
+	void (*filter)(MutableArray *self, Predicate predicate, ident data);
+
+	/**
 	 * @fn MutableArray *MutableArray::init(MutableArray *self)
 	 *
 	 * @brief Initializes this MutableArray.

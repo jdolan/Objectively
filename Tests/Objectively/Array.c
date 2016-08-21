@@ -30,7 +30,7 @@ _Bool enumerator(const Array *array, ident obj, ident data) {
 	(*(int *) data)++; return false;
 }
 
-_Bool filter(const Array *array, ident obj, ident data) {
+_Bool predicate(ident obj, ident data) {
 
 	return obj == data;
 }
@@ -69,7 +69,7 @@ START_TEST(array)
 
 		ck_assert_int_eq(array->count, count);
 
-		Array *filtered = $(array, filterObjects, filter, two);
+		Array *filtered = $(array, filteredArray, predicate, two);
 
 		ck_assert_int_eq(1, filtered->count);
 		ck_assert($(filtered, containsObject, two));

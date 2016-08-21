@@ -138,18 +138,18 @@ struct SetInterface {
 	void (*enumerateObjects)(const Set *self, SetEnumerator enumerator, ident data);
 
 	/**
-	 * @fn void Set::filterObjects(const Set *self, SetEnumerator enumerator, ident data)
+	 * @fn void Set::filteredSet(const Set *self, Predicate predicate, ident data)
 	 *
-	 * @brief Creates a new Set with elements that pass the filter function.
+	 * @brief Creates a new Set with elements that pass `predicate`.
 	 *
-	 * @param enumerator The enumerator function.
+	 * @param predicate The predicate function.
 	 * @param data User data.
 	 *
 	 * @return The new, filtered Set.
 	 *
 	 * @memberof Set
 	 */
-	Set *(*filterObjects)(const Set *self, SetEnumerator enumerator, ident data);
+	Set *(*filteredSet)(const Set *self, Predicate predicate, ident data);
 
 	/**
 	 * @fn Set *Set::initWithArray(Set *self, const Array *array)

@@ -107,6 +107,22 @@ static MutableArray *arrayWithCapacity(size_t capacity) {
 }
 
 /**
+ * @fn void MutableArray::filter(MutableArray *self, Predicate predicate, ident data)
+ *
+ * @memberof MutableArray
+ */
+static void filter(MutableArray *self, Predicate predicate, ident data) {
+
+	assert(predicate);
+
+	for (size_t i = 0; i < self->array.count; i++) {
+		if (predicate(self->array.elements[i], data) == false) {
+			$(self, removeObjectAtIndex, i--);
+		}
+	}
+}
+
+/**
  * @fn MutableArray *MutableArray::init(MutableArray *self)
  *
  * @memberof MutableArray
@@ -219,7 +235,7 @@ static void sort(MutableArray *self, Comparator comparator) {
 #elif defined(__MINGW32__)
 
 /**
- * @brief qsort_r comparator.
+ * @brief qsort_s comparator.
  */
 static int _sort(void *data, const void *a, const void *b) {
 	return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
@@ -271,6 +287,7 @@ static void initialize(Class *clazz) {
 	mutableArray->addObjectsFromArray = addObjectsFromArray;
 	mutableArray->array = array;
 	mutableArray->arrayWithCapacity = arrayWithCapacity;
+	mutableArray->filter = filter;
 	mutableArray->init = init;
 	mutableArray->initWithCapacity = initWithCapacity;
 	mutableArray->removeAllObjects = removeAllObjects;
