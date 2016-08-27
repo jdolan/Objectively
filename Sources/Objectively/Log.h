@@ -81,7 +81,7 @@ struct Log {
 	 * @brief The format string, defaults to `LOG_FORMAT_DEFAULT`.
 	 *
 	 * This string is post-processed after date substitution is performed by
-	 * `strftime`. The following tokens are supported:
+	 * `strftime`. The following additional tokens are supported:
 	 *
 	 * * %%n - The Log name.
 	 * * %%l - The message level.
