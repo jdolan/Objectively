@@ -63,9 +63,9 @@ struct Value {
 	ident value;
 
 	/**
-	 * @brief If true, the backing value will be freed on `dealloc`.
+	 * @brief An optional destroy function that, if iset, is called on `dealloc`.
 	 */
-	_Bool freeOnDealloc;
+	void (*destroy)(ident value);
 };
 
 /**

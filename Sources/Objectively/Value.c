@@ -38,8 +38,8 @@ static void dealloc(Object *self) {
 	
 	Value *this = (Value *) self;
 
-	if (this->freeOnDealloc) {
-		free(this->value);
+	if (this->destroy) {
+		this->destroy(this->value);
 	}
 	
 	super(Object, self, dealloc);
