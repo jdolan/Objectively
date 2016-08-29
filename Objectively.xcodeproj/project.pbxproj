@@ -111,6 +111,8 @@
 		CE76DA6F1C4B17980096DD31 /* URLSession.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9631C481E390096DD31 /* URLSession.c */; };
 		CE76DAFB1C4B186F0096DD31 /* HelloObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9191C481E390096DD31 /* HelloObjC.m */; };
 		CEA3B0881CBBE95E0082EE04 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */; };
+		CEB078B71D73B74800ABA6B3 /* Value.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB078B51D73B74800ABA6B3 /* Value.c */; };
+		CEB078B81D73B74800ABA6B3 /* Value.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB078B61D73B74800ABA6B3 /* Value.h */; };
 		CED157901C4B1CBE00FBA2DE /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
 		CED157911C4B1CC900FBA2DE /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
 		CED157ED1C4BF60200FBA2DE /* libcurl.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CED157EB1C4BF60200FBA2DE /* libcurl.4.dylib */; };
@@ -268,6 +270,8 @@
 		CEA3B0831CBBD3420082EE04 /* TemplateIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TemplateIcon@2x.png"; sourceTree = "<group>"; };
 		CEA3B0841CBBD3420082EE04 /* TemplateInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
 		CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcheck.0.dylib; path = /opt/local/lib/libcheck.0.dylib; sourceTree = "<absolute>"; };
+		CEB078B51D73B74800ABA6B3 /* Value.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Value.c; sourceTree = "<group>"; };
+		CEB078B61D73B74800ABA6B3 /* Value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Value.h; sourceTree = "<group>"; };
 		CED1578E1C4B1A2100FBA2DE /* HelloCpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloCpp.cpp; sourceTree = "<group>"; };
 		CED157EB1C4BF60200FBA2DE /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = /opt/local/lib/libcurl.4.dylib; sourceTree = "<absolute>"; };
 		CED157EC1C4BF60200FBA2DE /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = /opt/local/lib/libiconv.2.dylib; sourceTree = "<absolute>"; };
@@ -415,6 +419,8 @@
 				CE76D8F91C481C4E0096DD31 /* URLSessionTask.h */,
 				CE76D8FA1C481C4E0096DD31 /* URLSessionUploadTask.c */,
 				CE76D8FB1C481C4E0096DD31 /* URLSessionUploadTask.h */,
+				CEB078B51D73B74800ABA6B3 /* Value.c */,
+				CEB078B61D73B74800ABA6B3 /* Value.h */,
 			);
 			path = Objectively;
 			sourceTree = "<group>";
@@ -586,6 +592,7 @@
 				CE76DA201C4860130096DD31 /* Regex.h in Headers */,
 				CE76DA211C4860130096DD31 /* Set.h in Headers */,
 				CE76DA221C4860130096DD31 /* String.h in Headers */,
+				CEB078B81D73B74800ABA6B3 /* Value.h in Headers */,
 				CE76DA231C4860130096DD31 /* Thread.h in Headers */,
 				CE76DA241C4860130096DD31 /* Types.h in Headers */,
 				CE76DA251C4860130096DD31 /* URL.h in Headers */,
@@ -731,6 +738,7 @@
 				CE76D9711C4821CE0096DD31 /* Condition.c in Sources */,
 				CE76D9721C4821CE0096DD31 /* Data.c in Sources */,
 				CE76D9731C4821CE0096DD31 /* Date.c in Sources */,
+				CEB078B71D73B74800ABA6B3 /* Value.c in Sources */,
 				CE76D9741C4821CE0096DD31 /* DateFormatter.c in Sources */,
 				CE76D9751C4821CE0096DD31 /* Dictionary.c in Sources */,
 				CE76D9761C4821CE0096DD31 /* Error.c in Sources */,

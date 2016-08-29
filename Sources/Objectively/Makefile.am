@@ -35,6 +35,7 @@ pkginclude_HEADERS = \
 	Set.h \
 	String.h \
 	Thread.h \
+	Types.h \
 	URL.h \
 	URLRequest.h \
 	URLSession.h \
@@ -42,8 +43,8 @@ pkginclude_HEADERS = \
 	URLSessionDataTask.h \
 	URLSessionDownloadTask.h \
 	URLSessionTask.h \
-	URLSessionUploadTask.h \
-	Types.h
+	URLSessionUploadTask.h
+	Value.h
 
 lib_LTLIBRARIES = \
 	libObjectively.la
@@ -86,7 +87,8 @@ libObjectively_la_SOURCES = \
 	URLSessionDataTask.c \
 	URLSessionDownloadTask.c \
 	URLSessionTask.c \
-	URLSessionUploadTask.c
+	URLSessionUploadTask.c \
+	Value.c
 
 libObjectively_la_CFLAGS = \
 	-I .. -I ../.. \
