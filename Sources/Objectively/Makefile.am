@@ -43,7 +43,7 @@ pkginclude_HEADERS = \
 	URLSessionDataTask.h \
 	URLSessionDownloadTask.h \
 	URLSessionTask.h \
-	URLSessionUploadTask.h
+	URLSessionUploadTask.h \
 	Value.h
 
 lib_LTLIBRARIES = \
