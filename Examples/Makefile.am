@@ -25,6 +25,10 @@ if APPLE
 noinst_PROGRAMS += \
 	HelloObjC
 
+OBJCFLAGS += \
+	-I$(top_srcdir)/Sources \
+	@HOST_CFLAGS@
+
 HelloObjC_SOURCES = \
 	HelloObjC.m
 
