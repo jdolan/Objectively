@@ -113,6 +113,9 @@
 		CEA3B0881CBBE95E0082EE04 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */; };
 		CEB078B71D73B74800ABA6B3 /* Value.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB078B51D73B74800ABA6B3 /* Value.c */; };
 		CEB078B81D73B74800ABA6B3 /* Value.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB078B61D73B74800ABA6B3 /* Value.h */; };
+		CEB078C31D7605C200ABA6B3 /* IndexPath.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB078C11D7605C200ABA6B3 /* IndexPath.c */; };
+		CEB078C41D7605C200ABA6B3 /* IndexPath.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB078C21D7605C200ABA6B3 /* IndexPath.h */; };
+		CEB078C61D76088900ABA6B3 /* IndexPath.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB078C51D76088900ABA6B3 /* IndexPath.c */; };
 		CED157901C4B1CBE00FBA2DE /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
 		CED157911C4B1CC900FBA2DE /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
 		CED157ED1C4BF60200FBA2DE /* libcurl.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CED157EB1C4BF60200FBA2DE /* libcurl.4.dylib */; };
@@ -272,6 +275,9 @@
 		CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcheck.0.dylib; path = /opt/local/lib/libcheck.0.dylib; sourceTree = "<absolute>"; };
 		CEB078B51D73B74800ABA6B3 /* Value.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Value.c; sourceTree = "<group>"; };
 		CEB078B61D73B74800ABA6B3 /* Value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Value.h; sourceTree = "<group>"; };
+		CEB078C11D7605C200ABA6B3 /* IndexPath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = IndexPath.c; sourceTree = "<group>"; };
+		CEB078C21D7605C200ABA6B3 /* IndexPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndexPath.h; sourceTree = "<group>"; };
+		CEB078C51D76088900ABA6B3 /* IndexPath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = IndexPath.c; sourceTree = "<group>"; };
 		CED1578E1C4B1A2100FBA2DE /* HelloCpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloCpp.cpp; sourceTree = "<group>"; };
 		CED157EB1C4BF60200FBA2DE /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = /opt/local/lib/libcurl.4.dylib; sourceTree = "<absolute>"; };
 		CED157EC1C4BF60200FBA2DE /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = /opt/local/lib/libiconv.2.dylib; sourceTree = "<absolute>"; };
@@ -360,6 +366,8 @@
 				CE76D86F1C481C4E0096DD31 /* Error.h */,
 				CE76D8701C481C4E0096DD31 /* Hash.c */,
 				CE76D8711C481C4E0096DD31 /* Hash.h */,
+				CEB078C11D7605C200ABA6B3 /* IndexPath.c */,
+				CEB078C21D7605C200ABA6B3 /* IndexPath.h */,
 				CE76D8721C481C4E0096DD31 /* JSONPath.c */,
 				CE76D8731C481C4E0096DD31 /* JSONPath.h */,
 				CE76D8741C481C4E0096DD31 /* JSONSerialization.c */,
@@ -467,6 +475,7 @@
 				CE76D9471C481E390096DD31 /* Data.c */,
 				CE76D9481C481E390096DD31 /* Date.c */,
 				CE76D9491C481E390096DD31 /* Dictionary.c */,
+				CEB078C51D76088900ABA6B3 /* IndexPath.c */,
 				CE76D94D1C481E390096DD31 /* JSON.c */,
 				CE76D9501C481E390096DD31 /* Locale.c */,
 				CE76D9511C481E390096DD31 /* Log.c */,
@@ -581,6 +590,7 @@
 				CE76DA151C4860120096DD31 /* MutableData.h in Headers */,
 				CE76DA161C4860120096DD31 /* MutableDictionary.h in Headers */,
 				CE76DA171C4860120096DD31 /* MutableSet.h in Headers */,
+				CEB078C41D7605C200ABA6B3 /* IndexPath.h in Headers */,
 				CE76DA181C4860120096DD31 /* MutableString.h in Headers */,
 				CE76DA191C4860120096DD31 /* Null.h in Headers */,
 				CE76DA1A1C4860120096DD31 /* Number.h in Headers */,
@@ -733,6 +743,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE76D96E1C4821CE0096DD31 /* Array.c in Sources */,
+				CEB078C31D7605C200ABA6B3 /* IndexPath.c in Sources */,
 				CE76D96F1C4821CE0096DD31 /* Boole.c in Sources */,
 				CE76D9701C4821CE0096DD31 /* Class.c in Sources */,
 				CE76D9711C4821CE0096DD31 /* Condition.c in Sources */,
@@ -795,6 +806,7 @@
 				CE76DA671C4B17980096DD31 /* Number.c in Sources */,
 				CE76DA681C4B17980096DD31 /* Object.c in Sources */,
 				CE76DA691C4B17980096DD31 /* Operation.c in Sources */,
+				CEB078C61D76088900ABA6B3 /* IndexPath.c in Sources */,
 				CE76DA6A1C4B17980096DD31 /* Regex.c in Sources */,
 				CE76DA6B1C4B17980096DD31 /* Set.c in Sources */,
 				CE76DA6C1C4B17980096DD31 /* String.c in Sources */,

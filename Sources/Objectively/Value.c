@@ -52,13 +52,19 @@ static int hash(const Object *self) {
 
 	const Value *this = (Value *) self;
 
-	return super(Object, self, hash) + (intptr_t) this->value;
+	uintptr_t addr = (uintptr_t) this->value;
+
+	return (int) ((13 * addr) ^ (addr >> 15));
 }
 
 /**
  * @see Object::isEqual(const Object *, const Object *)
  */
 static _Bool isEqual(const Object *self, const Object *other) {
+
+	if (super(Object, self, isEqual, other)) {
+		return true;
+	}
 
 	if (other && $(other, isKindOfClass, &_Value)) {
 

@@ -39,6 +39,7 @@
 #include <Objectively/Dictionary.h>
 #include <Objectively/Error.h>
 #include <Objectively/Hash.h>
+#include <Objectively/IndexPath.h>
 #include <Objectively/JSONPath.h>
 #include <Objectively/JSONSerialization.h>
 #include <Objectively/Lock.h>

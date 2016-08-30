@@ -8,6 +8,7 @@ TESTS = \
 	Date \
 	Dictionary \
 	Data \
+	IndexPath \
 	JSON \
 	Locale \
 	Log \
