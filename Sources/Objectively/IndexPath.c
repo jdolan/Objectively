@@ -27,10 +27,22 @@
 
 #include <Objectively/Hash.h>
 #include <Objectively/IndexPath.h>
+#include <Objectively/MutableString.h>
 
 #define _Class _IndexPath
 
 #pragma mark - Object
+
+/**
+ * @see Object::copy(const Object *)
+ */
+static Object *copy(const Object *self) {
+
+	IndexPath *this = (IndexPath *) self;
+	IndexPath *that = $(alloc(IndexPath), initWithIndexes, this->indexes, this->length);
+
+	return (Object *) that;
+}
 
 /**
  * @see Object::dealloc(Object *)
@@ -42,6 +54,25 @@ static void dealloc(Object *self) {
 	free(this->indexes);
 	
 	super(Object, self, dealloc);
+}
+
+/**
+ * @see Object::description(const Object *)
+ */
+static String *description(const Object *self) {
+
+	const IndexPath *this = (IndexPath *) self;
+	MutableString *desc = mstr("[");
+
+	for (size_t i = 0; i < this->length; i++) {
+		$(desc, appendFormat, "%d", this->indexes[i]);
+		if (i < this->length - 1) {
+			$(desc, appendCharacters, ", ");
+		}
+	}
+
+	$(desc, appendCharacters, "]");
+	return (String *) desc;
 }
 
 /**
@@ -141,8 +172,10 @@ static IndexPath *initWithIndexes(IndexPath *self, int *indexes, size_t length) 
  * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
-	
+
+	((ObjectInterface *) clazz->interface)->copy = copy;
 	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->description = description;
 	((ObjectInterface *) clazz->interface)->hash = hash;
 	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 

@@ -35,12 +35,19 @@ START_TEST(indexPath)
 		ck_assert_int_eq(2, $(indexPath, indexAtPosition, 1));
 		ck_assert_int_eq(3, $(indexPath, indexAtPosition, 2));
 
+		String *description = $((Object *) indexPath, description);
+		ck_assert_str_eq("[1, 2, 3]", description->chars);
+
 		Object *object = (Object *) indexPath;
 		Object *copy = $(object, copy);
 
 		ck_assert(copy != NULL);
 		ck_assert_int_eq($(object, hash), $(copy, hash));
 		ck_assert($(object, isEqual, copy));
+
+		release(description);
+		release(copy);
+		release(indexPath);
 
 	}END_TEST
 
