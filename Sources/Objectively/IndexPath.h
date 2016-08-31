@@ -38,8 +38,6 @@ typedef struct IndexPathInterface IndexPathInterface;
  * @brief Index paths represent the path to an element or node within a tree or graph structure.
  *
  * @extends Object
- *
- * @ingroup
  */
 struct IndexPath {
 	

@@ -140,7 +140,7 @@ struct StringInterface {
 	 *
 	 * @brief Returns the components of this String that were separated by `string`.
 	 *
-	 * @param string The separating string.
+	 * @param string The separating String.
 	 *
 	 * @return An Array of substrings that were separated by `string`.
 	 *

@@ -130,6 +130,32 @@ struct ArrayInterface {
 	Array *(*arrayWithObjects)(ident obj, ...);
 
 	/**
+	 * @fn String *Array::componentsJoinedByCharacters(const Array *self, const char *chars)
+	 *
+	 * @brief Returns the components of this Array joined by `chars`.
+	 *
+	 * @param chars The joining characters.
+	 *
+	 * @return A String comprised of the components of this Array, joined by `chars`.
+	 *
+	 * @memberof Array
+	 */
+	String *(*componentsJoinedByCharacters)(const Array *self, const char *chars);
+
+	/**
+	 * @fn String *Array::componentsJoinedByString(const Array *self, const String *string)
+	 *
+	 * @brief Returns the components of this Array joined by the specified String.
+	 *
+	 * @param stromg The joining String.
+	 *
+	 * @return A String comprised of the components of this Array, joined by `string`.
+	 *
+	 * @memberof Array
+	 */
+	String *(*componentsJoinedByString)(const Array *self, const String *string);
+
+	/**
 	 * @fn _Bool Array::containsObject(const Array *self, const ident obj)
 	 *
 	 * @param self The Array.

@@ -65,24 +65,13 @@ static void dealloc(Object *self) {
  */
 static String *description(const Object *self) {
 
-	const Array *this = (Array *) self;
+	String *components = $((Array *) self, componentsJoinedByCharacters, ", ");
 
-	MutableString *desc = $(alloc(MutableString), init);
-	$(desc, appendFormat, "[");
+	String *desc = $(alloc(String), initWithFormat, "[%s]", components);
 
-	for (size_t i = 0; i < this->count; i++) {
-		String *objDesc = $((Object *) this->elements[i], description);
+	release(components);
 
-		$(desc, appendString, objDesc);
-		release(objDesc);
-
-		if (i < this->count - 1) {
-			$(desc, appendFormat, ", ");
-		}
-	}
-
-	$(desc, appendFormat, "]");
-	return (String *) desc;
+	return desc;
 }
 
 /**
@@ -189,6 +178,41 @@ static Array *arrayWithObjects(ident obj, ...) {
 	}
 
 	return array;
+}
+
+/**
+ * @fn String *Array::componentsJoinedByCharacters(const Array *self, const char *chars)
+ *
+ * @memberof Array
+ */
+static String *componentsJoinedByCharacters(const Array *self, const char *chars) {
+
+	MutableString *string = $(alloc(MutableString), init);
+
+	for (size_t i = 0; i < self->count; i++) {
+
+		String *desc = $((Object *) self->elements[i], description);
+		$(string, appendString, desc);
+
+		release(desc);
+
+		if (i < self->count - 1) {
+			$(string, appendCharacters, chars);
+		}
+	}
+
+	return (String *) string;
+}
+
+/**
+ *
+ **
+ * @fn String *Array::componentsJoinedByString(const Array *self, const String *string)
+ *
+ * @memberof Array
+ */
+static String *componentsJoinedByString(const Array *self, const String *string) {
+	return $(self, componentsJoinedByCharacters, string->chars);
 }
 
 /**
@@ -421,6 +445,8 @@ static void initialize(Class *clazz) {
 
 	array->arrayWithArray = arrayWithArray;
 	array->arrayWithObjects = arrayWithObjects;
+	array->componentsJoinedByCharacters = componentsJoinedByCharacters;
+	array->componentsJoinedByString = componentsJoinedByString;
 	array->containsObject = containsObject;
 	array->enumerateObjects = enumerateObjects;
 	array->filteredArray = filteredArray;

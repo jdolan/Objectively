@@ -90,11 +90,11 @@ static String *description(const Object *self) {
 
 	MutableString *desc = $(alloc(MutableString), init);
 
-	$(desc, appendFormat, "{");
+	$(desc, appendCharacters, "{");
 
 	$(this, enumerateObjectsAndKeys, description_enumerator, desc);
 
-	$(desc, appendFormat, "}");
+	$(desc, appendCharacters, "}");
 
 	return (String *) desc;
 }
