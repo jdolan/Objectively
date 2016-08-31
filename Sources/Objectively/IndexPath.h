@@ -92,7 +92,7 @@ struct IndexPathInterface {
 	 *
 	 * @brief Initializes this IndexPath with the specified index.
 	 *
-	 * @param indexes The index.
+	 * @param index The index.
 	 *
 	 * @return The intialized IndexPath, or `NULL` on error.
 	 *

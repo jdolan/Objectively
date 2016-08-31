@@ -147,7 +147,7 @@ struct ArrayInterface {
 	 *
 	 * @brief Returns the components of this Array joined by the specified String.
 	 *
-	 * @param stromg The joining String.
+	 * @param string The joining String.
 	 *
 	 * @return A String comprised of the components of this Array, joined by `string`.
 	 *

@@ -38,8 +38,6 @@ typedef struct ValueInterface ValueInterface;
  * @brief Values provide Object encapsulation for C types.
  *
  * @extends Object
- *
- * @ingroup
  */
 struct Value {
 	
