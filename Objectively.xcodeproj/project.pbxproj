@@ -116,6 +116,9 @@
 		CEB078C31D7605C200ABA6B3 /* IndexPath.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB078C11D7605C200ABA6B3 /* IndexPath.c */; };
 		CEB078C41D7605C200ABA6B3 /* IndexPath.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB078C21D7605C200ABA6B3 /* IndexPath.h */; };
 		CEB078C61D76088900ABA6B3 /* IndexPath.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB078C51D76088900ABA6B3 /* IndexPath.c */; };
+		CEB20D551D771B6F000EF6F3 /* IndexSet.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB20D541D771B6F000EF6F3 /* IndexSet.h */; };
+		CEB20D571D771B7A000EF6F3 /* IndexSet.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB20D561D771B7A000EF6F3 /* IndexSet.c */; };
+		CEB20D591D77492A000EF6F3 /* IndexSet.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB20D581D77492A000EF6F3 /* IndexSet.c */; };
 		CED157901C4B1CBE00FBA2DE /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
 		CED157911C4B1CC900FBA2DE /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
 		CED157ED1C4BF60200FBA2DE /* libcurl.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CED157EB1C4BF60200FBA2DE /* libcurl.4.dylib */; };
@@ -278,6 +281,9 @@
 		CEB078C11D7605C200ABA6B3 /* IndexPath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = IndexPath.c; sourceTree = "<group>"; };
 		CEB078C21D7605C200ABA6B3 /* IndexPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndexPath.h; sourceTree = "<group>"; };
 		CEB078C51D76088900ABA6B3 /* IndexPath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = IndexPath.c; sourceTree = "<group>"; };
+		CEB20D541D771B6F000EF6F3 /* IndexSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndexSet.h; sourceTree = "<group>"; };
+		CEB20D561D771B7A000EF6F3 /* IndexSet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = IndexSet.c; sourceTree = "<group>"; };
+		CEB20D581D77492A000EF6F3 /* IndexSet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = IndexSet.c; sourceTree = "<group>"; };
 		CED1578E1C4B1A2100FBA2DE /* HelloCpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloCpp.cpp; sourceTree = "<group>"; };
 		CED157EB1C4BF60200FBA2DE /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = /opt/local/lib/libcurl.4.dylib; sourceTree = "<absolute>"; };
 		CED157EC1C4BF60200FBA2DE /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = /opt/local/lib/libiconv.2.dylib; sourceTree = "<absolute>"; };
@@ -368,6 +374,8 @@
 				CE76D8711C481C4E0096DD31 /* Hash.h */,
 				CEB078C11D7605C200ABA6B3 /* IndexPath.c */,
 				CEB078C21D7605C200ABA6B3 /* IndexPath.h */,
+				CEB20D561D771B7A000EF6F3 /* IndexSet.c */,
+				CEB20D541D771B6F000EF6F3 /* IndexSet.h */,
 				CE76D8721C481C4E0096DD31 /* JSONPath.c */,
 				CE76D8731C481C4E0096DD31 /* JSONPath.h */,
 				CE76D8741C481C4E0096DD31 /* JSONSerialization.c */,
@@ -476,9 +484,11 @@
 				CE76D9481C481E390096DD31 /* Date.c */,
 				CE76D9491C481E390096DD31 /* Dictionary.c */,
 				CEB078C51D76088900ABA6B3 /* IndexPath.c */,
+				CEB20D581D77492A000EF6F3 /* IndexSet.c */,
 				CE76D94D1C481E390096DD31 /* JSON.c */,
 				CE76D9501C481E390096DD31 /* Locale.c */,
 				CE76D9511C481E390096DD31 /* Log.c */,
+				CE76D9531C481E390096DD31 /* Makefile.am */,
 				CE76D9551C481E390096DD31 /* MutableArray.c */,
 				CE76D9561C481E390096DD31 /* MutableData.c */,
 				CE76D9571C481E390096DD31 /* MutableDictionary.c */,
@@ -494,7 +504,6 @@
 				CE76D9611C481E390096DD31 /* Thread.c */,
 				CE76D9621C481E390096DD31 /* URL.c */,
 				CE76D9631C481E390096DD31 /* URLSession.c */,
-				CE76D9531C481E390096DD31 /* Makefile.am */,
 			);
 			path = Objectively;
 			sourceTree = "<group>";
@@ -603,6 +612,7 @@
 				CE76DA211C4860130096DD31 /* Set.h in Headers */,
 				CE76DA221C4860130096DD31 /* String.h in Headers */,
 				CEB078B81D73B74800ABA6B3 /* Value.h in Headers */,
+				CEB20D551D771B6F000EF6F3 /* IndexSet.h in Headers */,
 				CE76DA231C4860130096DD31 /* Thread.h in Headers */,
 				CE76DA241C4860130096DD31 /* Types.h in Headers */,
 				CE76DA251C4860130096DD31 /* URL.h in Headers */,
@@ -755,6 +765,7 @@
 				CE76D9761C4821CE0096DD31 /* Error.c in Sources */,
 				CE76D9771C4821CE0096DD31 /* Hash.c in Sources */,
 				CE76D9781C4821CE0096DD31 /* JSONPath.c in Sources */,
+				CEB20D571D771B7A000EF6F3 /* IndexSet.c in Sources */,
 				CE76D9791C4821CE0096DD31 /* JSONSerialization.c in Sources */,
 				CE76D97A1C4821CE0096DD31 /* Locale.c in Sources */,
 				CE76D97B1C4821CE0096DD31 /* Lock.c in Sources */,
@@ -812,6 +823,7 @@
 				CE76DA6C1C4B17980096DD31 /* String.c in Sources */,
 				CE76DA6D1C4B17980096DD31 /* Thread.c in Sources */,
 				CE76DA6E1C4B17980096DD31 /* URL.c in Sources */,
+				CEB20D591D77492A000EF6F3 /* IndexSet.c in Sources */,
 				CE76DA6F1C4B17980096DD31 /* URLSession.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

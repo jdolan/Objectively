@@ -9,6 +9,7 @@ TESTS = \
 	Dictionary \
 	Data \
 	IndexPath \
+	IndexSet \
 	JSON \
 	Locale \
 	Log \
