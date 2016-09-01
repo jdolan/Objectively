@@ -29,6 +29,34 @@
 #include <Objectively/IndexSet.h>
 #include <Objectively/MutableString.h>
 
+/**
+ * @brief qsort comparator for indexes.
+ */
+static int compare(const void *a, const void *b) {
+	return (*(int *) a - *(int *) b);
+}
+
+/**
+ * @brief Sorts and compacts the given array to contain only unique values.
+ */
+static size_t compact(int *indexes, size_t count) {
+
+	assert(indexes);
+	assert(count);
+
+	qsort(indexes, count, sizeof(int), compare);
+
+	size_t size = 0;
+
+	for (size_t i = 1; i < count; i++) {
+		if (indexes[i] != indexes[size]) {
+			indexes[++size] = indexes[i];
+		}
+	}
+
+	return size + 1;
+}
+
 #define _Class _IndexSet
 
 #pragma mark - Object
@@ -138,34 +166,6 @@ static _Bool containsIndex(const IndexSet *self, int index) {
  */
 static IndexSet *initWithIndex(IndexSet *self, int index) {
 	return $(self, initWithIndexes, &index, 1);
-}
-
-/**
- * @brief qsort comparator for initWithIndexes.
- */
-static int compare(const void *a, const void *b) {
-	return (*(int *) a - *(int *) b);
-}
-
-/**
- * @brief Sorts and compacts the given array to contain only unique values.
- */
-static size_t compact(int *indexes, size_t count) {
-
-	assert(indexes);
-	assert(count);
-
-	qsort(indexes, count, sizeof(int), compare);
-
-	size_t size = 0;
-
-	for (size_t i = 1; i < count; i++) {
-		if (indexes[i] != indexes[size]) {
-			indexes[++size] = indexes[i];
-		}
-	}
-
-	return size + 1;
 }
 
 /**
