@@ -41,20 +41,21 @@ static int compare(const void *a, const void *b) {
  */
 static size_t compact(int *indexes, size_t count) {
 
-	assert(indexes);
-	assert(count);
-
-	qsort(indexes, count, sizeof(int), compare);
-
 	size_t size = 0;
 
-	for (size_t i = 1; i < count; i++) {
-		if (indexes[i] != indexes[size]) {
-			indexes[++size] = indexes[i];
+	if (count) {
+		qsort(indexes, count, sizeof(int), compare);
+
+		for (size_t i = 1; i < count; i++) {
+			if (indexes[i] != indexes[size]) {
+				indexes[++size] = indexes[i];
+			}
 		}
+
+		size++;
 	}
 
-	return size + 1;
+	return size;
 }
 
 #define _Class _IndexSet
