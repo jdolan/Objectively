@@ -27,10 +27,14 @@
 
 START_TEST(object)
 	{
+		ck_assert_ptr_eq(NULL, classFromString("Object"));
+
 		Object *object = $(alloc(Object), init);
 
 		ck_assert(object != NULL);
 		ck_assert_ptr_eq(&_Object, classof(object));
+
+		ck_assert_ptr_eq(&_Object, classFromString("Object"));
 
 		ck_assert($(object, isEqual, object));
 		ck_assert($(object, isKindOfClass, classof(object)));

@@ -138,6 +138,11 @@ extern ident _alloc(Class *clazz);
 extern ident _cast(Class *clazz, const ident obj);
 
 /**
+ * @return The Class with the given name, or `NULL` if no such Class has been initialized.
+ */
+extern const Class *classFromString(const char *name);
+
+/**
  * @brief Atomically decrement the given Object's reference count. If the
  * resulting reference count is `0`, the Object is deallocated.
  */
@@ -191,14 +196,6 @@ extern size_t _pageSize;
 		typeof(obj) _obj = obj; \
 		_obj->interface->method(_obj, ## __VA_ARGS__); \
 	})
-
-/**
- * @brief Invoke an instance method with arguments.
- *
- * @remarks This is useful when nesting method invocations.
- */
-#define _call(obj, method, ...) \
-	$(obj, method, __VA_ARGS__)
 
 /**
  * @brief Invoke a Class method.

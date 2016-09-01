@@ -115,6 +115,13 @@ static void addObject(MutableSet *self, const ident obj) {
 }
 
 /**
+ * @brief ArrayEnumerator for addObjectsFromArray.
+ */
+static _Bool addObjectsFromArray_enumerator(const Array *array, ident obj, ident data) {
+	$((MutableSet *) data, addObject, obj); return false;
+}
+
+/**
  * @fn void MutableSet::addObjectsFromArray(MutableSet *self, const Array *array)
  *
  * @memberof MutableSet
@@ -122,9 +129,7 @@ static void addObject(MutableSet *self, const ident obj) {
 static void addObjectsFromArray(MutableSet *self, const Array *array) {
 
 	if (array) {
-		for (size_t i = 0; i < array->count; i++) {
-			_call(self, addObject, $(array, objectAtIndex, i));
-		}
+		$(array, enumerateObjects, addObjectsFromArray_enumerator, self);
 	}
 }
 
@@ -132,7 +137,6 @@ static void addObjectsFromArray(MutableSet *self, const Array *array) {
  * @brief SetEnumerator for addObjectsFromSet.
  */
 static _Bool addObjectsFromSet_enumerator(const Set *set, ident obj, ident data) {
-
 	$((MutableSet *) data, addObject, obj); return false;
 }
 
