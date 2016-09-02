@@ -12,6 +12,7 @@ pkginclude_HEADERS = \
 	Date.h \
 	DateFormatter.h \
 	Dictionary.h \
+	Enum.h \
 	Error.h \
 	Hash.h \
 	IndexPath.h \
@@ -60,6 +61,7 @@ libObjectively_la_SOURCES = \
 	Date.c \
 	DateFormatter.c \
 	Dictionary.c \
+	Enum.c \
 	Error.c \
 	Hash.c \
 	IndexPath.c \

@@ -25,14 +25,62 @@
 #include <stdlib.h>
 
 #include <Objectively/Array.h>
+#include <Objectively/Boole.h>
 #include <Objectively/Dictionary.h>
 #include <Objectively/JSONPath.h>
+#include <Objectively/Number.h>
 #include <Objectively/Once.h>
 #include <Objectively/Regex.h>
+#include <Objectively/String.h>
 
 #define _Class _JSONPath
 
 #pragma mark - JSONPath
+
+/**
+ * @fn _Bool JSONPath::boolWithPath(const ident root, const char *path)
+ *
+ * @memberof JSONPath
+ */
+static _Bool boolWithPath(const ident root, const char *path) {
+
+	const Boole *boole = $$(JSONPath, objectWithPath, root, path);
+	if (boole) {
+		return boole->value;
+	}
+
+	return false;
+}
+
+/**
+ * @fn int JSONPath::enumWithPath(const ident root, const char *path, const EnumName *names)
+ *
+ * @memberof JSONPath
+ */
+static int enumWithPath(const ident root, const char *path, const EnumName *names) {
+
+	const String *string = $$(JSONPath, objectWithPath, root, path);
+	if (string) {
+		return valueof(names, string->chars);
+	}
+
+	return 0;
+}
+
+/**
+ * @fn int JSONPath::intWithPath(const ident root, const char *path)
+ *
+ * @memberof JSONPath
+ */
+static int intWithPath(const ident root, const char *path) {
+
+	const Number *number = $$(JSONPath, objectWithPath, root, path);
+	if (number) {
+		return (int) number->value;
+	}
+
+	return 0;
+}
 
 static Regex *_regex;
 
@@ -43,9 +91,13 @@ static Regex *_regex;
  */
 static ident objectWithPath(const ident root, const char *path) {
 
-	ident obj = root;
+	assert(root);
+	assert(path);
+
+	assert(*path == '$');
 	const char *c = path;
 
+	ident obj = root;
 	while (obj) {
 
 		Range *matches;
@@ -57,13 +109,11 @@ static ident objectWithPath(const ident root, const char *path) {
 		const size_t length = matches[1].length;
 
 		String *segment = $$(String, stringWithBytes, bytes, length, STRING_ENCODING_UTF8);
-		c += length;
-
 		if (*segment->chars == '.') {
 
-			Dictionary *dictionary = cast(Dictionary, obj);
-
+			const Dictionary *dictionary = cast(Dictionary, obj);
 			const Range range = { .location = 1, .length = segment->length - 1 };
+			
 			String *key = $(segment, substring, range);
 
 			obj = $(dictionary, objectForKey, key);
@@ -72,8 +122,7 @@ static ident objectWithPath(const ident root, const char *path) {
 
 		} else if (*segment->chars == '[') {
 
-			Array *array = cast(Array, obj);
-
+			const Array *array = cast(Array, obj);
 			const unsigned index = strtoul(segment->chars + 1, NULL, 10);
 			if (index < array->count) {
 				obj = $(array, objectAtIndex, index);
@@ -81,8 +130,9 @@ static ident objectWithPath(const ident root, const char *path) {
 				obj = NULL;
 			}
 		}
-
 		release(segment);
+
+		c += length;
 	}
 
 	return obj;
@@ -95,6 +145,9 @@ static ident objectWithPath(const ident root, const char *path) {
  */
 static void initialize(Class *clazz) {
 
+	((JSONPathInterface *) clazz->interface)->boolWithPath = boolWithPath;
+	((JSONPathInterface *) clazz->interface)->enumWithPath = enumWithPath;
+	((JSONPathInterface *) clazz->interface)->intWithPath = intWithPath;
 	((JSONPathInterface *) clazz->interface)->objectWithPath = objectWithPath;
 
 	static Once once;

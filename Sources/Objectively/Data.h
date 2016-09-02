@@ -111,7 +111,7 @@ struct DataInterface {
 	 *
 	 * @fn Data *Data::dataWithContentsOfFile(const char *path)
 	 *
-	 * @brief Returns a new Data with the contents of `path`.
+	 * @brief Returns a new Data with the contents of the file at `path`.
 	 *
 	 * @param path The path of the file to read into memory.
 	 *
@@ -156,7 +156,7 @@ struct DataInterface {
 	/**
 	 * @fn Data *Data::initWithContentsOfFile(Data *self, const char *path)
 	 *
-	 * @brief Initializes this Data with the contents of `path`.
+	 * @brief Initializes this Data with the contents of the file at `path`.
 	 *
 	 * @param path The path of the file to read into memory.
 	 *

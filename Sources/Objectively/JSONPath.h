@@ -23,6 +23,7 @@
 
 #pragma once
 
+#include <Objectively/Enum.h>
 #include <Objectively/Object.h>
 
 /**
@@ -67,6 +68,55 @@ struct JSONPathInterface {
 	 * @brief The parent interface.
 	 */
 	ObjectInterface objectInterface;
+
+	/**
+	 * @static
+	 *
+	 * @fn _Bool JSONPath::boolWithPath(const ident root, const char *path)
+	 *
+	 * @brief Parses a _Bool from the nested JSON property.
+	 *
+	 * @param root The root element.
+	 * @param path A JSONPath expression.
+	 *
+	 * @return The parsed _Bool, or false if unspecified.
+	 *
+	 * memberof JSONPath
+	 */
+	_Bool (*boolWithPath)(const ident root, const char *path);
+
+	/**
+	 * @static
+	 *
+	 * @fn int JSONPath::enumWithPath(const ident root, const char *path, const EnumName *names)
+	 *
+	 * @brief Resolves a named enum value from the String at `path`.
+	 *
+	 * @param root The root element.
+	 * @param path A JSONPath expression.
+	 * @param names A null-terminated array of EnumNames.
+	 *
+	 * @return The matched enum value, or `0` if unspecified.
+	 *
+	 * @memberof JSONPath
+	 */
+	int (*enumWithPath)(const ident root, const char *path, const EnumName *names);
+
+	/**
+	 * @static
+	 *
+	 * @fn int JSONPath::intWithPath(const ident root, const char *path)
+	 *
+	 * @brief Parses an int from the nested JSON property.
+	 *
+	 * @param root The root element.
+	 * @param path A JSONPath expression.
+	 *
+	 * @return The parsed int, or `0` if unspecified.
+	 *
+	 * memberof JSONPath
+	 */
+	int (*intWithPath)(const ident root, const char *path);
 
 	/**
 	 * @static

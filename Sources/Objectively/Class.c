@@ -157,10 +157,10 @@ ident _cast(Class *clazz, const ident obj) {
 	return (ident) obj;
 }
 
-const Class *classFromString(const char *name) {
+Class *classFromString(const char *name) {
 
 	if (name) {
-		const Class *c = _classes;
+		Class *c = _classes;
 		while (c) {
 			if (strcmp(name, c->name) == 0) {
 				return c;

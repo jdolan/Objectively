@@ -37,6 +37,7 @@
 #include <Objectively/Date.h>
 #include <Objectively/DateFormatter.h>
 #include <Objectively/Dictionary.h>
+#include <Objectively/Enum.h>
 #include <Objectively/Error.h>
 #include <Objectively/Hash.h>
 #include <Objectively/IndexPath.h>

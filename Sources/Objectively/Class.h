@@ -140,7 +140,7 @@ extern ident _cast(Class *clazz, const ident obj);
 /**
  * @return The Class with the given name, or `NULL` if no such Class has been initialized.
  */
-extern const Class *classFromString(const char *name);
+extern Class *classFromString(const char *name);
 
 /**
  * @brief Atomically decrement the given Object's reference count. If the

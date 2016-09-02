@@ -123,7 +123,7 @@ struct OperationQueueInterface {
 	 *
 	 * @fn OperationQueue* OperationQueue::currentQueue(void)
 	 *
-	 * @return The current OperationQueue, or NULL if none can be determined.
+	 * @return The current OperationQueue, or `NULL` if none can be determined.
 	 *
 	 * @remarks This method should only be called from a synchronous Operation
 	 * that was dispatched via an OperationQueue. This method uses thread-local
