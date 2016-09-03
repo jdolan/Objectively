@@ -210,4 +210,7 @@ extern size_t _pageSize;
  * @brief Invoke a Superclass instance method.
  */
 #define super(type, obj, method, ...) \
-	interfaceof(type, _Class.superclass)->method(cast(type, obj), ## __VA_ARGS__)
+	({ \
+		type *_obj = cast(type, obj); \
+		interfaceof(type, _Class.superclass)->method(_obj, ## __VA_ARGS__); \
+	})
