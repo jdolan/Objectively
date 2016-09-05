@@ -215,11 +215,24 @@ struct DictionaryInterface {
 	/**
 	 * @fn ident Dictionary::objectForKey(const Dictionary *self, const ident key)
 	 *
+	 * @param key The key.
+	 *
 	 * @return The Object stored at the specified key in this Dictionary.
 	 *
 	 * @memberof Dictionary
 	 */
 	ident (*objectForKey)(const Dictionary *self, const ident key);
+
+	/**
+	 * @fn ident Dictionary::objectForKeyPath(const Dictionary *self, const char *path)
+	 *
+	 * @param path The key path.
+	 *
+	 * @return The Object stored at the specified key path in this Dictionary.
+	 *
+	 * @memberof Dictionary
+	 */
+	ident (*objectForKeyPath)(const Dictionary *self, const char *path);
 };
 
 /**

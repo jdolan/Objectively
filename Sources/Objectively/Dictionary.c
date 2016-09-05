@@ -394,6 +394,24 @@ static ident objectForKey(const Dictionary *self, const ident key) {
 	return NULL;
 }
 
+/**
+ * @fn ident Dictionary::objectForKeyPath(const Dictionary *self, const char *path)
+ *
+ * @memberof Dictionary
+ */
+static ident objectForKeyPath(const Dictionary *self, const char *path) {
+
+	assert(path);
+	
+	String *key = str(path);
+
+	ident obj = $(self, objectForKey, key);
+
+	release(key);
+
+	return obj;
+}
+
 #pragma mark - Class lifecycle
 
 /**
@@ -421,6 +439,7 @@ static void initialize(Class *clazz) {
 	dictionary->initWithObjectsAndKeys = initWithObjectsAndKeys;
 	dictionary->mutableCopy = mutableCopy;
 	dictionary->objectForKey = objectForKey;
+	dictionary->objectForKeyPath = objectForKeyPath;
 }
 
 Class _Dictionary = {
