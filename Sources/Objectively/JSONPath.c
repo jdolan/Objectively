@@ -37,59 +37,14 @@
 
 #pragma mark - JSONPath
 
-/**
- * @fn _Bool JSONPath::boolWithPath(const ident root, const char *path)
- *
- * @memberof JSONPath
- */
-static _Bool boolWithPath(const ident root, const char *path) {
-
-	const Boole *boole = $$(JSONPath, objectWithPath, root, path);
-	if (boole) {
-		return boole->value;
-	}
-
-	return false;
-}
-
-/**
- * @fn int JSONPath::enumWithPath(const ident root, const char *path, const EnumName *names)
- *
- * @memberof JSONPath
- */
-static int enumWithPath(const ident root, const char *path, const EnumName *names) {
-
-	const String *string = $$(JSONPath, objectWithPath, root, path);
-	if (string) {
-		return valueof(names, string->chars);
-	}
-
-	return 0;
-}
-
-/**
- * @fn int JSONPath::intWithPath(const ident root, const char *path)
- *
- * @memberof JSONPath
- */
-static int intWithPath(const ident root, const char *path) {
-
-	const Number *number = $$(JSONPath, objectWithPath, root, path);
-	if (number) {
-		return (int) number->value;
-	}
-
-	return 0;
-}
-
 static Regex *_regex;
 
 /**
- * @fn ident JSONPATH::objectWithPath(const ident root, const char *path)
+ * @fn ident JSONPATH::objectForKeyPath(const ident root, const char *path)
  *
  * @memberof JSONPath
  */
-static ident objectWithPath(const ident root, const char *path) {
+static ident objectForKeyPath(const ident root, const char *path) {
 
 	assert(root);
 	assert(path);
@@ -145,16 +100,9 @@ static ident objectWithPath(const ident root, const char *path) {
  */
 static void initialize(Class *clazz) {
 
-	((JSONPathInterface *) clazz->interface)->boolWithPath = boolWithPath;
-	((JSONPathInterface *) clazz->interface)->enumWithPath = enumWithPath;
-	((JSONPathInterface *) clazz->interface)->intWithPath = intWithPath;
-	((JSONPathInterface *) clazz->interface)->objectWithPath = objectWithPath;
+	((JSONPathInterface *) clazz->interface)->objectForKeyPath = objectForKeyPath;
 
-	static Once once;
-
-	do_once(&once, {
-		_regex = $(alloc(Regex), initWithPattern, "(.[^.\[]+|\[[0-9]+\\])", 0);
-	});
+	_regex = $(alloc(Regex), initWithPattern, "(.[^.\[]+|\[[0-9]+\\])", 0);
 }
 
 /**

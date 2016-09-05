@@ -72,56 +72,7 @@ struct JSONPathInterface {
 	/**
 	 * @static
 	 *
-	 * @fn _Bool JSONPath::boolWithPath(const ident root, const char *path)
-	 *
-	 * @brief Parses a _Bool from the nested JSON property.
-	 *
-	 * @param root The root element.
-	 * @param path A JSONPath expression.
-	 *
-	 * @return The parsed _Bool, or false if unspecified.
-	 *
-	 * memberof JSONPath
-	 */
-	_Bool (*boolWithPath)(const ident root, const char *path);
-
-	/**
-	 * @static
-	 *
-	 * @fn int JSONPath::enumWithPath(const ident root, const char *path, const EnumName *names)
-	 *
-	 * @brief Resolves a named enum value from the String at `path`.
-	 *
-	 * @param root The root element.
-	 * @param path A JSONPath expression.
-	 * @param names A null-terminated array of EnumNames.
-	 *
-	 * @return The matched enum value, or `0` if unspecified.
-	 *
-	 * @memberof JSONPath
-	 */
-	int (*enumWithPath)(const ident root, const char *path, const EnumName *names);
-
-	/**
-	 * @static
-	 *
-	 * @fn int JSONPath::intWithPath(const ident root, const char *path)
-	 *
-	 * @brief Parses an int from the nested JSON property.
-	 *
-	 * @param root The root element.
-	 * @param path A JSONPath expression.
-	 *
-	 * @return The parsed int, or `0` if unspecified.
-	 *
-	 * memberof JSONPath
-	 */
-	int (*intWithPath)(const ident root, const char *path);
-
-	/**
-	 * @static
-	 *
-	 * @fn ident JSONPATH::objectWithPath(const ident root, const char *path)
+	 * @fn ident JSONPATH::objectForKeyPath(const ident root, const char *path)
 	 *
 	 * @brief Access a nested property from JSON Data.
 	 *
@@ -130,17 +81,16 @@ struct JSONPathInterface {
 	 *
 	 * @return The nested property, or `NULL` if not found.
 	 *
-	 * Accessing a nested _Bool from JSON Data:
+	 * Accessing a nested boolean from JSON Data:
 	 *
 	 *     id obj = $$(JSONSerialization, objectFromData, data, 0);
-	 *     _Bool *bool = $$(JSONPath, objectWithPath, obj, "$.foo.bar[1].baz");
+	 *     Boole *boole = $$(JSONPath, objectForKeyPath, obj, "$.foo.bar[1].baz");
 	 *
-	 * Use dot-notation (`.`) for accessing Dictionaries, and square braces (`[n]`)
-	 * for accessing Arrays.
+	 * Use dot-notation (`.`) for accessing Dictionaries, and square braces (`[0]`) for Arrays.
 	 *
 	 * @memberof JSONPath
 	 */
-	ident (*objectWithPath)(const ident root, const char *path);
+	ident (*objectForKeyPath)(const ident root, const char *path);
 };
 
 /**

@@ -44,13 +44,13 @@ START_TEST(json)
 		ck_assert_int_eq(dict0->count, dict1->count);
 		ck_assert($((Object *) dict0, isEqual, (Object *) dict1));
 
-		Object *notFound = $$(JSONPath, objectWithPath, dict0, "$.notFound");
+		Object *notFound = $$(JSONPath, objectForKeyPath, dict0, "$.notFound");
 		ck_assert_ptr_eq(NULL, notFound);
 
-		Object *root = $$(JSONPath, objectWithPath, dict0, "$");
+		Object *root = $$(JSONPath, objectForKeyPath, dict0, "$");
 		ck_assert_ptr_eq(dict0, root);
 
-		Number *dataStoreInitConns = $$(JSONPath, objectWithPath, dict0, "$.web-app.servlet[0].init-param.dataStoreInitConns");
+		Number *dataStoreInitConns = $$(JSONPath, objectForKeyPath, dict0, "$.web-app.servlet[0].init-param.dataStoreInitConns");
 		ck_assert(dataStoreInitConns != NULL);
 		ck_assert_int_eq(10, (int) dataStoreInitConns->value);
 
