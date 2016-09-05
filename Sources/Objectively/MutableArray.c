@@ -22,6 +22,7 @@
  */
 
 #include <assert.h>
+#include <stdarg.h>
 #include <stdlib.h>
 
 #include <Objectively/MutableArray.h>
@@ -70,6 +71,25 @@ static void addObject(MutableArray *self, const ident obj) {
 	}
 
 	array->elements[array->count++] = retain(obj);
+}
+
+/**
+ * @fn void MutableArray::addObjects(MutableArray *self, const ident obj, ...)
+ *
+ * @memberof MutableArray
+ */
+static void addObjects(MutableArray *self, const ident obj, ...) {
+
+	va_list args;
+	va_start(args, obj);
+
+	ident object = obj;
+	while (object) {
+		$(self, addObject, object);
+		object = va_arg(args, ident);
+	}
+
+	va_end(args);
 }
 
 /**
@@ -284,6 +304,7 @@ static void initialize(Class *clazz) {
 	MutableArrayInterface *mutableArray = (MutableArrayInterface *) clazz->interface;
 
 	mutableArray->addObject = addObject;
+	mutableArray->addObjects = addObjects;
 	mutableArray->addObjectsFromArray = addObjectsFromArray;
 	mutableArray->array = array;
 	mutableArray->arrayWithCapacity = arrayWithCapacity;

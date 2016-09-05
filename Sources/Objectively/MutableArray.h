@@ -84,6 +84,17 @@ struct MutableArrayInterface {
 	void (*addObject)(MutableArray *self, const ident obj);
 
 	/**
+	 * @fn void MutableArray::addObjects(MutableArray *self, const ident obj, ...)
+	 *
+	 * @brief Adds the specified objects to this Array.
+	 *
+	 * @param obj The `NULL`-terminated list of objects.
+	 *
+	 * @memberof MutableArray
+	 */
+	void (*addObjects)(MutableArray *self, const ident obj, ...);
+
+	/**
 	 * @fn void MutableArray::addObjectsFromArray(MutableArray *self, const Array *array)
 	 *
 	 * @brief Adds the Objects contained in `array` to this MutableArray.
