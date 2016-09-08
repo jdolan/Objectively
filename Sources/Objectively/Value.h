@@ -35,6 +35,11 @@ typedef struct Value Value;
 typedef struct ValueInterface ValueInterface;
 
 /**
+ * @brief Values may optionally reference a destructor to be called on `dealloc`.
+ */
+typedef void (*ValueDestructor)(ident value);
+
+/**
  * @brief Values provide Object encapsulation for C types.
  *
  * @extends Object
@@ -63,7 +68,7 @@ struct Value {
 	/**
 	 * @brief An optional destructor that, if iset, is called on `dealloc`.
 	 */
-	void (*destroy)(ident value);
+	ValueDestructor destroy;
 };
 
 /**

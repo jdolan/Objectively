@@ -36,23 +36,26 @@ typedef struct {
 } EnumName;
 
 /**
- * @brief Names an enum value for use with `valueof`.
+ * @brief Creates an EnumName for `en` for use with `valueof`.
  *
  * @see valueof(const EnumName *, const char *, int)
  */
-#define NameEnum(en) \
+#define MakeEnumName(en) \
 	{ \
 		.name = #en, \
 		.value = en, \
 	}
 
 /**
- * @brief Safely null-terminates an array of EnumName.
+ * @brief Creates a null-terminated array of EnumNames.
  */
-#define EnumNameLast \
+#define MakeEnumNames(...) \
 	{ \
-		.name = NULL, \
-		.value = -1 \
+		__VA_ARGS__, \
+		{ \
+			.name = NULL, \
+			.value = 0 \
+		} \
 	}
 
 /**
