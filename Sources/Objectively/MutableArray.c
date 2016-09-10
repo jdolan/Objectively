@@ -174,6 +174,25 @@ static MutableArray *initWithCapacity(MutableArray *self, size_t capacity) {
 }
 
 /**
+ * @fn void MutableArray::insertObjectAtIndex(MutableArray *self, ident obj, int index)
+ *
+ * @memberof MutableArray
+ */
+static void insertObjectAtIndex(MutableArray *self, ident obj, int index) {
+
+	assert(index > -1);
+	assert(index < self->array.count);
+
+	$(self, addObject, obj);
+
+	for (size_t i = self->array.count - 1; i > index; i--) {
+		self->array.elements[i] = self->array.elements[i - 1];
+	}
+
+	self->array.elements[index] = obj;
+}
+
+/**
  * @fn void MutableArray::removeAllObjects(MutableArray *self)
  *
  * @memberof MutableArray
@@ -311,6 +330,7 @@ static void initialize(Class *clazz) {
 	mutableArray->filter = filter;
 	mutableArray->init = init;
 	mutableArray->initWithCapacity = initWithCapacity;
+	mutableArray->insertObjectAtIndex = insertObjectAtIndex;
 	mutableArray->removeAllObjects = removeAllObjects;
 	mutableArray->removeObject = removeObject;
 	mutableArray->removeObjectAtIndex = removeObjectAtIndex;

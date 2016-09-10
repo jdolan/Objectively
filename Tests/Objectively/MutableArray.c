@@ -71,6 +71,12 @@ START_TEST(mutableArray)
 		ck_assert_int_eq(1, one->referenceCount);
 		ck_assert_int_eq(2, ((Array *) array)->count);
 
+		$(array, insertObjectAtIndex, one, 0);
+
+		ck_assert_int_eq(0, $((Array *) array, indexOfObject, one));
+		ck_assert_int_eq(1, $((Array *) array, indexOfObject, two));
+		ck_assert_int_eq(2, $((Array *) array, indexOfObject, three));
+
 		$(array, removeAllObjects);
 
 		ck_assert_int_eq(0, ((Array *) array)->count);

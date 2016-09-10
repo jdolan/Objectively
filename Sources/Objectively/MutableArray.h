@@ -170,6 +170,18 @@ struct MutableArrayInterface {
 	MutableArray *(*initWithCapacity)(MutableArray *self, size_t capacity);
 
 	/**
+	 * @fn void MutableArray::insertObjectAtIndex(MutableArray *self, ident obj, int index)
+	 *
+	 * @brief Inserts the Object at the specified index.
+	 *
+	 * @param obj The Object to insert.
+	 * @param index The index at which to insert.
+	 *
+	 * @memberof MutableArray
+	 */
+	void (*insertObjectAtIndex)(MutableArray *self, ident obj, int index);
+
+	/**
 	 * @fn void MutableArray::removeAllObjects(MutableArray *self)
 	 *
 	 * @brief Removes all Objects from this MutableArray.
