@@ -187,12 +187,13 @@ static IndexSet *initWithIndexes(IndexSet *self, int *indexes, size_t count) {
 	if (self) {
 
 		self->count = compact(indexes, count);
-		assert(self->count);
+		if (self->count) {
 
-		self->indexes = calloc(sizeof(int), self->count);
-		assert(self->indexes);
+			self->indexes = calloc(sizeof(int), self->count);
+			assert(self->indexes);
 
-		memcpy(self->indexes, indexes, sizeof(int) * self->count);
+			memcpy(self->indexes, indexes, sizeof(int) * self->count);
+		}
 	}
 	
 	return self;
