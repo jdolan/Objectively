@@ -162,8 +162,8 @@ static Data *initWithContentsOfFile(Data *self, const char *path) {
 		assert(err == 0);
 
 		const size_t length = ftell(file);
-
 		if (length) {
+			
 			mem = malloc(length);
 			assert(mem);
 
@@ -175,7 +175,6 @@ static Data *initWithContentsOfFile(Data *self, const char *path) {
 		}
 
 		fclose(file);
-
 		return $(self, initWithMemory, mem, length);
 	}
 
