@@ -38,6 +38,11 @@
  */
 
 /**
+ * @brief Undefine interface for MinGW-64 / Windows.
+ */
+#undef interface
+
+/**
  * @brief Initialized Classes reflect this value as their first word.
  */
 #define CLASS_MAGIC 0xabcdef
