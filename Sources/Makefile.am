@@ -7,4 +7,4 @@ include_HEADERS = \
 	Objectively.h
 
 pkgconfigdir = $(libdir)/pkgconfig
-nodist_pkgconfig_DATA = Objectively.pc
+pkgconfig_DATA = Objectively.pc
