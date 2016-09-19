@@ -199,14 +199,18 @@ static void writeElement(JSONWriter *writer, const ident obj) {
  */
 static Data *dataFromObject(const ident obj, int options) {
 
-	JSONWriter writer = {
-		.data = $(alloc(MutableData), init),
-		.options = options
-	};
+	if (obj) {
+		JSONWriter writer = {
+			.data = $(alloc(MutableData), init),
+			.options = options
+		};
 
-	writeObject(&writer, obj);
+		writeObject(&writer, obj);
 
-	return (Data *) writer.data;
+		return (Data *) writer.data;
+	}
+
+	return NULL;
 }
 
 /**
@@ -475,12 +479,16 @@ static ident readElement(JSONReader *reader) {
  */
 static ident objectFromData(const Data *data, int options) {
 
-	JSONReader reader = {
-		.data = data,
-		.options = options
-	};
+	if (data && data->length) {
+		JSONReader reader = {
+			.data = data,
+			.options = options
+		};
 
-	return readElement(&reader);
+		return readElement(&reader);
+	}
+
+	return NULL;
 }
 
 #pragma mark - Class lifecycle
