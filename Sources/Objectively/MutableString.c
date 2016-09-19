@@ -138,6 +138,8 @@ static void deleteCharactersInRange(MutableString *self, const Range range) {
 	const size_t length = self->string.length - range.location - range.length + 1;
 
 	memmove(ptr, ptr + range.length, length);
+
+	self->string.length -= range.length;
 }
 
 /**
