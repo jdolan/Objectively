@@ -117,13 +117,13 @@ Class *_initialize(Class *clazz) {
 	return clazz;
 }
 
-__thread ident _last_allocated;
+__thread ident _last_alloc;
 
 ident _alloc(Class *clazz) {
 
 	_initialize(clazz);
 
-	ident obj = _last_allocated = calloc(1, clazz->instanceSize);
+	ident obj = _last_alloc = calloc(1, clazz->instanceSize);
 	assert(obj);
 
 	Object *object = (Object *) obj;

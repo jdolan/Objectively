@@ -172,13 +172,13 @@ extern size_t _pageSize;
 /**
  * @brief The last Object allocated via `_alloc`. This facilitates `$alloc`.
  */
-extern __thread ident _last_allocated;
+extern __thread ident _last_alloc;
 
 /**
  * @brief Allocate and initialize and instance of `type`.
  */
 #define $alloc(type, initializer, ...) \
-	((type *) (_alloc(&_##type)))->interface->initializer((type *) _last_allocated, ## __VA_ARGS__)
+	((type *) (_alloc(&_##type)))->interface->initializer((type *) _last_alloc, ## __VA_ARGS__)
 
 /**
  * @brief Safely cast to a type.
