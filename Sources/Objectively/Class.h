@@ -169,13 +169,16 @@ extern ident retain(ident obj);
  */
 extern size_t _pageSize;
 
-extern __thread ident _obj;
+/**
+ * @brief The last Object allocated via `_alloc`. This facilitates `$alloc`.
+ */
+extern __thread ident _last_allocated;
 
 /**
  * @brief Allocate and initialize and instance of `type`.
  */
-#define $alloc(type, ...) \
-	$((type *) (_obj = _alloc(&_##type)), __VA_ARGS__)
+#define $alloc(type, initializer, ...) \
+	((type *) (_alloc(&_##type)))->interface->initializer((type *) _last_allocated, ## __VA_ARGS__)
 
 /**
  * @brief Safely cast to a type.
