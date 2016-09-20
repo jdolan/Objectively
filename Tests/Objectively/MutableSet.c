@@ -38,9 +38,9 @@ START_TEST(mutableSet)
 
 		ck_assert_int_eq(0, ((Set *) set)->count);
 
-		Object *one = $(alloc(Object), init);
-		Object *two = $(alloc(Object), init);
-		Object *three = $(alloc(Object), init);
+		Object *one = $alloc(Object, init);
+		Object *two = $alloc(Object, init);
+		Object *three = $alloc(Object, init);
 
 		$(set, addObject, one);
 		$(set, addObject, two);
@@ -78,7 +78,7 @@ START_TEST(mutableSet)
 
 		for (int i = 0; i < 1024; i++) {
 
-			ident obj = $(alloc(Object), init);
+			ident obj = $alloc(Object, init);
 			ck_assert(obj != NULL);
 
 			$(set, addObject, obj);

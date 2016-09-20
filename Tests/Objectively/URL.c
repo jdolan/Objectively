@@ -27,7 +27,7 @@
 
 START_TEST(url)
 	{
-		URL *url = $(alloc(URL), initWithCharacters, "http://example.com");
+		URL *url = $alloc(URL, initWithCharacters, "http://example.com");
 		ck_assert(url != NULL);
 
 		ck_assert_str_eq("http", url->scheme->chars);
@@ -35,7 +35,7 @@ START_TEST(url)
 
 		release(url);
 
-		url = $(alloc(URL), initWithCharacters, "http://example.com:80/path?query#fragment");
+		url = $alloc(URL, initWithCharacters, "http://example.com:80/path?query#fragment");
 		ck_assert(url != NULL);
 
 		ck_assert_str_eq("http", url->scheme->chars);
@@ -47,7 +47,7 @@ START_TEST(url)
 
 		release(url);
 
-		url = $(alloc(URL), initWithCharacters, "http://example.com:80/path#fragment");
+		url = $alloc(URL, initWithCharacters, "http://example.com:80/path#fragment");
 		ck_assert(url != NULL);
 
 		ck_assert_str_eq("http", url->scheme->chars);
@@ -59,7 +59,7 @@ START_TEST(url)
 
 		release(url);
 
-		url = $(alloc(URL), initWithCharacters, "http://example.com?query");
+		url = $alloc(URL, initWithCharacters, "http://example.com?query");
 		ck_assert(url != NULL);
 
 		ck_assert_str_eq("http", url->scheme->chars);
@@ -71,7 +71,7 @@ START_TEST(url)
 
 		release(url);
 
-		url = $(alloc(URL), initWithCharacters, "file:///path");
+		url = $alloc(URL, initWithCharacters, "file:///path");
 		ck_assert(url != NULL);
 
 		ck_assert_str_eq("file", url->scheme->chars);
@@ -83,7 +83,7 @@ START_TEST(url)
 
 		release(url);
 
-		url = $(alloc(URL), initWithCharacters, "malformed");
+		url = $alloc(URL, initWithCharacters, "malformed");
 		ck_assert(url == NULL);
 
 	}END_TEST

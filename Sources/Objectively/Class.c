@@ -74,7 +74,7 @@ static void setup(void) {
 	atexit(teardown);
 }
 
-void _initialize(Class *clazz) {
+Class *_initialize(Class *clazz) {
 
 	assert(clazz);
 
@@ -113,7 +113,11 @@ void _initialize(Class *clazz) {
 			;
 		}
 	}
+
+	return clazz;
 }
+
+__thread ident _obj;
 
 ident _alloc(Class *clazz) {
 

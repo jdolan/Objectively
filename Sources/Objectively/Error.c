@@ -37,7 +37,7 @@
 static Object *copy(const Object *self) {
 
 	Error *this = (Error *) self;
-	Error *that = $(alloc(Error), initWithDomain, this->domain, this->code, this->message);
+	Error *that = $alloc(Error, initWithDomain, this->domain, this->code, this->message);
 
 	return (Object *) that;
 }
@@ -62,7 +62,7 @@ static String *description(const Object *self) {
 
 	Error *this = (Error *) self;
 
-	MutableString *desc = $(alloc(MutableString), init);
+	MutableString *desc = $alloc(MutableString, init);
 
 	$(desc, appendFormat, "%ls: %d", this->domain->chars, this->code);
 

@@ -49,12 +49,12 @@ static ident increment(Thread *self) {
 
 START_TEST(thread)
 	{
-		condition = $(alloc(Condition), init);
+		condition = $alloc(Condition, init);
 		ck_assert(condition != NULL);
 
 		int criticalSection = 0;
 
-		Thread *thread = $(alloc(Thread), initWithFunction, increment, &criticalSection);
+		Thread *thread = $alloc(Thread, initWithFunction, increment, &criticalSection);
 		ck_assert(thread != NULL);
 
 		$(thread, start);
@@ -82,7 +82,7 @@ static ident signalBeforeDate(Thread *self) {
 
 START_TEST(cond)
 	{
-		condition = $(alloc(Condition), init);
+		condition = $alloc(Condition, init);
 		ck_assert(condition != NULL);
 
 		const Time time = { .tv_usec = MSEC_PER_SEC * 0.5 };
@@ -98,7 +98,7 @@ START_TEST(cond)
 		date = $$(Date, dateWithTimeSinceNow, &time);
 		ck_assert(date != NULL);
 
-		Thread *thread = $(alloc(Thread), initWithFunction, signalBeforeDate, date);
+		Thread *thread = $alloc(Thread, initWithFunction, signalBeforeDate, date);
 		ck_assert(thread != NULL);
 
 		$(thread, start);

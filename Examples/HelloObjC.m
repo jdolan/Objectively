@@ -6,7 +6,7 @@
 
 int main(int argc, char **argv)
 {
-    Object *object = $(alloc(Object), init);
+    Object *object = $alloc(Object, init);
 
     release(object);
     

@@ -109,7 +109,7 @@ static Date *date(void) {
  */
 static Date *dateWithTimeSinceNow(const Time *interval) {
 	
-	Date *date = $(alloc(Date), init);
+	Date *date = $alloc(Date, init);
 	if (date) {
 		if (interval) {
 			date->time.tv_sec += interval->tv_sec;

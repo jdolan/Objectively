@@ -28,7 +28,7 @@
 
 START_TEST(regex)
 	{
-		Regex *regex = $(alloc(Regex), initWithPattern, "([a-z]*)://(.*)", 0);
+		Regex *regex = $alloc(Regex, initWithPattern, "([a-z]*)://(.*)", 0);
 		ck_assert(regex != NULL);
 
 		ck_assert_int_eq(2, regex->numberOfSubExpressions);

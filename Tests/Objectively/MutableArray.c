@@ -43,9 +43,9 @@ START_TEST(mutableArray)
 
 		ck_assert_int_eq(0, ((Array *) array)->count);
 
-		Object *one = $(alloc(Object), init);
-		Object *two = $(alloc(Object), init);
-		Object *three = $(alloc(Object), init);
+		Object *one = $alloc(Object, init);
+		Object *two = $alloc(Object, init);
+		Object *three = $alloc(Object, init);
 
 		$(array, addObject, one);
 		$(array, addObject, two);

@@ -60,7 +60,7 @@ static size_t writeFunction(char *data, size_t size, size_t count, ident self) {
 	const size_t bytesReceived = size * count;
 
 	if (this->data == NULL) {
-		this->data = (Data *) $(alloc(MutableData), init);
+		this->data = (Data *) $alloc(MutableData, init);
 	}
 
 	$((MutableData *) this->data, appendBytes, bytes, bytesReceived);

@@ -42,13 +42,13 @@ START_TEST(urlSession)
 		URLSession *session = $$(URLSession, sharedInstance);
 		ck_assert(session != NULL);
 
-		URL *url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/objectively");
+		URL *url = $alloc(URL, initWithCharacters, "https://github.com/jdolan/objectively");
 		ck_assert(url != NULL);
 
 		URLSessionDataTask *dataTask = $(session, dataTaskWithURL, url, completion);
 		ck_assert(dataTask != NULL);
 
-		condition = $(alloc(Condition), init);
+		condition = $alloc(Condition, init);
 
 		$((URLSessionTask *) dataTask, resume);
 
@@ -57,7 +57,7 @@ START_TEST(urlSession)
 		release(dataTask);
 		release(url);
 
-		url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/objectively/raw/master/README.md");
+		url = $alloc(URL, initWithCharacters, "https://github.com/jdolan/objectively/raw/master/README.md");
 		ck_assert(url != NULL);
 
 		URLSessionDownloadTask *downloadTask = $(session, downloadTaskWithURL, url, completion);

@@ -38,7 +38,7 @@ static Object *copy(const Object *self) {
 
 	Data *this = (Data *) self;
 
-	MutableData *that = $(alloc(MutableData), init);
+	MutableData *that = $alloc(MutableData, init);
 	$(that, appendBytes, this->bytes, this->length);
 
 	return (Object *) that;
@@ -77,7 +77,7 @@ static void appendData(MutableData *self, const Data *data) {
  */
 static MutableData *data(void) {
 	
-	return $(alloc(MutableData), init);
+	return $alloc(MutableData, init);
 }
 
 /**
@@ -87,7 +87,7 @@ static MutableData *data(void) {
  */
 static MutableData *dataWithCapacity(size_t capacity) {
 	
-	return $(alloc(MutableData), initWithCapacity, capacity);
+	return $alloc(MutableData, initWithCapacity, capacity);
 }
 
 /**

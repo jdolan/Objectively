@@ -37,9 +37,9 @@ _Bool predicate(ident obj, ident data) {
 
 START_TEST(array)
 	{
-		Object *one = $(alloc(Object), init);
-		Object *two = $(alloc(Object), init);
-		Object *three = $(alloc(Object), init);
+		Object *one = $alloc(Object, init);
+		Object *two = $alloc(Object, init);
+		Object *three = $alloc(Object, init);
 
 		Array *array = $$(Array, arrayWithObjects, one, two, three, NULL);
 

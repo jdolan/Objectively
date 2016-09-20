@@ -130,7 +130,7 @@ struct Class {
 /**
  * @brief Initializes the given Class.
  */
-extern void _initialize(Class *clazz);
+extern Class *_initialize(Class *clazz);
 
 /**
  * @brief Instantiate a type through the given Class.
@@ -169,11 +169,13 @@ extern ident retain(ident obj);
  */
 extern size_t _pageSize;
 
+extern __thread ident _obj;
+
 /**
- * @brief Allocate a type.
+ * @brief Allocate and initialize and instance of `type`.
  */
-#define alloc(type) \
-	((type *) _alloc(&_##type))
+#define $alloc(type, ...) \
+	$((type *) (_obj = _alloc(&_##type)), __VA_ARGS__)
 
 /**
  * @brief Safely cast to a type.
@@ -197,25 +199,16 @@ extern size_t _pageSize;
  * @brief Invoke an instance method.
  */
 #define $(obj, method, ...) \
-	({ \
-		typeof(obj) _obj = obj; \
-		_obj->interface->method(_obj, ## __VA_ARGS__); \
-	})
+	(obj)->interface->method(obj, ## __VA_ARGS__)
 
 /**
  * @brief Invoke a Class method.
  */
 #define $$(type, method, ...) \
-	({ \
-		_initialize(&_##type); \
-		interfaceof(type, &_##type)->method(__VA_ARGS__); \
-	})
+	interfaceof(type, _initialize(&_##type))->method(__VA_ARGS__)
 
 /**
  * @brief Invoke a Superclass instance method.
  */
 #define super(type, obj, method, ...) \
-	({ \
-		type *_obj = cast(type, obj); \
-		interfaceof(type, _Class.superclass)->method(_obj, ## __VA_ARGS__); \
-	})
+	interfaceof(type, _Class.superclass)->method(cast(type, obj), ## __VA_ARGS__)

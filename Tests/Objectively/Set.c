@@ -37,9 +37,9 @@ _Bool filter(ident obj, ident data) {
 
 START_TEST(set)
 	{
-		Object *one = $(alloc(Object), init);
-		Object *two = $(alloc(Object), init);
-		Object *three = $(alloc(Object), init);
+		Object *one = $alloc(Object, init);
+		Object *two = $alloc(Object, init);
+		Object *three = $alloc(Object, init);
 
 		Set *set = $$(Set, setWithObjects, one, two, three, three, NULL);
 

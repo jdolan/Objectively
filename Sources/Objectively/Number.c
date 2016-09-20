@@ -38,7 +38,7 @@ static String *description(const Object *self) {
 
 	Number *this = (Number *) self;
 
-	return $(alloc(String), initWithFormat, "%.5f", this->value);
+	return $alloc(String, initWithFormat, "%.5f", this->value);
 }
 
 /**
@@ -166,7 +166,7 @@ static int intValue(const Number *self) {
  * @memberof Number
  */
 static Number *numberWithValue(double value) {
-	return $(alloc(Number), initWithValue, value);
+	return $alloc(Number, initWithValue, value);
 }
 
 /**

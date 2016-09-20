@@ -96,7 +96,7 @@ static void writeString(JSONWriter *writer, const String *string) {
  */
 static void writeNumber(JSONWriter *writer, const Number *number) {
 
-	String *string = $(alloc(String), initWithFormat, "%.5f", number->value);
+	String *string = $alloc(String, initWithFormat, "%.5f", number->value);
 
 	$(writer->data, appendBytes, (uint8_t *) string->chars, string->length);
 
@@ -201,7 +201,7 @@ static Data *dataFromObject(const ident obj, int options) {
 
 	if (obj) {
 		JSONWriter writer = {
-			.data = $(alloc(MutableData), init),
+			.data = $alloc(MutableData, init),
 			.options = options
 		};
 
@@ -389,7 +389,7 @@ static String *readLabel(JSONReader *reader) {
  */
 static Dictionary *readObject(JSONReader *reader) {
 
-	MutableDictionary *object = $(alloc(MutableDictionary), init);
+	MutableDictionary *object = $alloc(MutableDictionary, init);
 
 	while (true) {
 
@@ -424,7 +424,7 @@ static Dictionary *readObject(JSONReader *reader) {
  */
 static Array *readArray(JSONReader *reader) {
 
-	MutableArray *array = $(alloc(MutableArray), init);
+	MutableArray *array = $alloc(MutableArray, init);
 
 	while (true) {
 

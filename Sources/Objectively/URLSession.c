@@ -59,7 +59,7 @@ static void dealloc(Object *self) {
 static URLSessionDataTask *dataTaskWithRequest(URLSession *self, URLRequest *request,
 		URLSessionTaskCompletion completion) {
 
-	URLSessionTask *task = (URLSessionTask *) alloc(URLSessionDataTask);
+	URLSessionTask *task = (URLSessionTask *) _alloc(&_URLSessionDataTask);
 	task = $(task, initWithRequestInSession, request, self, completion);
 
 	WithLock(self->locals.lock, {
@@ -77,7 +77,7 @@ static URLSessionDataTask *dataTaskWithRequest(URLSession *self, URLRequest *req
 static URLSessionDataTask *dataTaskWithURL(URLSession *self, URL *url,
 		URLSessionTaskCompletion completion) {
 
-	URLRequest *request = $(alloc(URLRequest), initWithURL, url);
+	URLRequest *request = $alloc(URLRequest, initWithURL, url);
 
 	URLSessionDataTask *task = $(self, dataTaskWithRequest, request, completion);
 
@@ -94,7 +94,7 @@ static URLSessionDataTask *dataTaskWithURL(URLSession *self, URL *url,
 static URLSessionDownloadTask *downloadTaskWithRequest(URLSession *self, URLRequest *request,
 		URLSessionTaskCompletion completion) {
 
-	URLSessionTask *task = (URLSessionTask *) alloc(URLSessionDownloadTask);
+	URLSessionTask *task = (URLSessionTask *) _alloc(&_URLSessionDownloadTask);
 	task = $(task, initWithRequestInSession, request, self, completion);
 
 	WithLock(self->locals.lock, {
@@ -112,7 +112,7 @@ static URLSessionDownloadTask *downloadTaskWithRequest(URLSession *self, URLRequ
 static URLSessionDownloadTask *downloadTaskWithURL(URLSession *self, URL *url,
 		URLSessionTaskCompletion completion) {
 
-	URLRequest *request = $(alloc(URLRequest), initWithURL, url);
+	URLRequest *request = $alloc(URLRequest, initWithURL, url);
 
 	URLSessionDownloadTask *task = $(self, downloadTaskWithRequest, request, completion);
 
@@ -128,7 +128,7 @@ static URLSessionDownloadTask *downloadTaskWithURL(URLSession *self, URL *url,
  */
 static URLSession *init(URLSession *self) {
 
-	URLSessionConfiguration *configuration = $(alloc(URLSessionConfiguration), init);
+	URLSessionConfiguration *configuration = $alloc(URLSessionConfiguration, init);
 
 	self = $(self, initWithConfiguration, configuration);
 
@@ -266,9 +266,9 @@ static URLSession *initWithConfiguration(URLSession *self, URLSessionConfigurati
 	if (self) {
 		self->configuration = retain(configuration);
 
-		self->locals.lock = $(alloc(Lock), init);
-		self->locals.tasks = $(alloc(MutableArray), init);
-		self->locals.thread = $(alloc(Thread), initWithFunction, run, self);
+		self->locals.lock = $alloc(Lock, init);
+		self->locals.tasks = $alloc(MutableArray, init);
+		self->locals.thread = $alloc(Thread, initWithFunction, run, self);
 
 		$(self->locals.thread, start);
 	}
@@ -307,7 +307,7 @@ static URLSession *sharedInstance(void) {
 	static Once once;
 
 	do_once(&once, {
-		_sharedInstance = $(alloc(URLSession), init);
+		_sharedInstance = $alloc(URLSession, init);
 	});
 
 	return _sharedInstance;
@@ -337,7 +337,7 @@ static Array *tasks(const URLSession *self) {
 static URLSessionUploadTask *uploadTaskWithRequest(URLSession *self, URLRequest *request,
 		URLSessionTaskCompletion completion) {
 
-	URLSessionTask *task = (URLSessionTask *) alloc(URLSessionUploadTask);
+	URLSessionTask *task = (URLSessionTask *) _alloc(&_URLSessionUploadTask);
 	task = $(task, initWithRequestInSession, request, self, completion);
 
 	WithLock(self->locals.lock, {
