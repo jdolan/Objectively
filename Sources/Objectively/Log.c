@@ -218,7 +218,7 @@ static Log *sharedInstance(void) {
 	static Once once;
 	
 	do_once(&once, {
-		_sharedInstance = $alloc(Log, init);
+		_sharedInstance = alloc(Log, init);
 	});
 	
 	return _sharedInstance;

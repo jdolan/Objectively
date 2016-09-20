@@ -188,7 +188,7 @@ static Array *componentsSeparatedByCharacters(const String *self, const char *ch
 
 	assert(chars);
 
-	MutableArray *components = $alloc(MutableArray, init);
+	MutableArray *components = alloc(MutableArray, init);
 
 	Range search = { 0, self->length };
 	Range result = $(self, rangeOfCharacters, chars, search);
@@ -461,7 +461,7 @@ static String *lowercaseStringWithLocale(const String *self, const Locale *local
  */
 static MutableString *mutableCopy(const String *self) {
 
-	return $alloc(MutableString, initWithString, self);
+	return alloc(MutableString, initWithString, self);
 }
 
 /**
@@ -510,7 +510,7 @@ static Range rangeOfString(const String *self, const String *string, const Range
  */
 static String *stringWithBytes(const uint8_t *bytes, size_t length, StringEncoding encoding) {
 
-	return $alloc(String, initWithBytes, bytes, length, encoding);
+	return alloc(String, initWithBytes, bytes, length, encoding);
 }
 
 /**
@@ -520,7 +520,7 @@ static String *stringWithBytes(const uint8_t *bytes, size_t length, StringEncodi
  */
 static String *stringWithCharacters(const char *chars) {
 
-	return $alloc(String, initWithCharacters, chars);
+	return alloc(String, initWithCharacters, chars);
 }
 
 /**
@@ -530,7 +530,7 @@ static String *stringWithCharacters(const char *chars) {
  */
 static String *stringWithContentsOfFile(const char *path, StringEncoding encoding) {
 
-	return $alloc(String, initWithContentsOfFile, path, encoding);
+	return alloc(String, initWithContentsOfFile, path, encoding);
 }
 
 /**
@@ -540,7 +540,7 @@ static String *stringWithContentsOfFile(const char *path, StringEncoding encodin
  */
 static String *stringWithData(const Data *data, StringEncoding encoding) {
 
-	return $alloc(String, initWithData, data, encoding);
+	return alloc(String, initWithData, data, encoding);
 }
 
 /**
@@ -553,7 +553,7 @@ static String *stringWithFormat(const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	String *string = $alloc(String, initWithVaList, fmt, args);
+	String *string = alloc(String, initWithVaList, fmt, args);
 
 	va_end(args);
 
@@ -567,7 +567,7 @@ static String *stringWithFormat(const char *fmt, ...) {
  */
 static String *stringWithMemory(const ident mem, size_t length) {
 
-	return $alloc(String, initWithMemory, mem, length);
+	return alloc(String, initWithMemory, mem, length);
 }
 
 /**
@@ -584,7 +584,7 @@ static String *substring(const String *self, const Range range) {
 
 	strncpy(mem, self->chars + range.location, range.length);
 
-	return $alloc(String, initWithMemory, mem, range.length);
+	return alloc(String, initWithMemory, mem, range.length);
 }
 
 /**
@@ -749,7 +749,7 @@ String *str(const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
-	String *string = $alloc(String, initWithVaList, fmt, args);
+	String *string = alloc(String, initWithVaList, fmt, args);
 
 	va_end(args);
 

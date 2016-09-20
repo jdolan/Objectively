@@ -30,7 +30,7 @@
 
 START_TEST(mutableData)
 	{
-		MutableData *data = $alloc(MutableData, init);
+		MutableData *data = alloc(MutableData, init);
 		$(data, appendBytes, (uint8_t *) "123", 3);
 
 		ck_assert_int_eq(3, data->data.length);
@@ -45,7 +45,7 @@ START_TEST(mutableData)
 
 		memset(mem, 1, 8192 * sizeof(uint8_t));
 
-		Data *append = $alloc(Data, initWithMemory, mem, 8192);
+		Data *append = alloc(Data, initWithMemory, mem, 8192);
 		ck_assert(append != NULL);
 
 		$(data, appendData, append);

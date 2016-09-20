@@ -26,7 +26,7 @@
 #include <Objectively.h>
 
 static void producer_func(Operation *operation) {
-	*((Object **) operation->data) = $alloc(Object, init);
+	*((Object **) operation->data) = alloc(Object, init);
 }
 
 static void consumer_func(Operation *operation) {
@@ -35,13 +35,13 @@ static void consumer_func(Operation *operation) {
 
 START_TEST(producerConsumer)
 	{
-		OperationQueue *queue = $alloc(OperationQueue, init);
+		OperationQueue *queue = alloc(OperationQueue, init);
 		ck_assert(queue != NULL);
 
 		Object *object;
 
-		Operation *producer = $alloc(Operation, initWithFunction, producer_func, &object);
-		Operation *consumer = $alloc(Operation, initWithFunction, consumer_func, &object);
+		Operation *producer = alloc(Operation, initWithFunction, producer_func, &object);
+		Operation *consumer = alloc(Operation, initWithFunction, consumer_func, &object);
 
 		$(consumer, addDependency, producer);
 
@@ -65,7 +65,7 @@ static void suspendResume_func(Operation *operation) {
 
 START_TEST(suspendResume)
 	{
-		OperationQueue *queue = $alloc(OperationQueue, init);
+		OperationQueue *queue = alloc(OperationQueue, init);
 		ck_assert(queue != NULL);
 
 		queue->isSuspended = true;
@@ -73,7 +73,7 @@ START_TEST(suspendResume)
 
 		Operation *operation;
 		for (int i = 0; i < 5; i++) {
-			operation = $alloc(Operation, initWithFunction, suspendResume_func, &counter);
+			operation = alloc(Operation, initWithFunction, suspendResume_func, &counter);
 
 			$(queue, addOperation, operation);
 

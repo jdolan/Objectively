@@ -28,7 +28,7 @@
 START_TEST(indexPath)
 	{
 		int indexes[] = { 1, 2, 3 };
-		IndexPath *indexPath = $alloc(IndexPath, initWithIndexes, indexes, lengthof(indexes));
+		IndexPath *indexPath = alloc(IndexPath, initWithIndexes, indexes, lengthof(indexes));
 
 		ck_assert(indexPath != NULL);
 		ck_assert_int_eq(1, $(indexPath, indexAtPosition, 0));

@@ -39,7 +39,7 @@
 static Object *copy(const Object *self) {
 
 	Locale *this = (Locale *) self;
-	Locale *that = $alloc(Locale, initWithIdentifier, this->identifier);
+	Locale *that = alloc(Locale, initWithIdentifier, this->identifier);
 
 	return (Object *) that;
 }
@@ -110,9 +110,9 @@ static Locale *initWithLocale(Locale *self, locale_t locale) {
  */
 static Locale *systemLocale(void) {
 #if defined(__MINGW32__)
-	return $alloc(Locale, initWithLocale, _get_current_locale());
+	return alloc(Locale, initWithLocale, _get_current_locale());
 #else
-	return $alloc(Locale, initWithLocale, duplocale(LC_GLOBAL_LOCALE));
+	return alloc(Locale, initWithLocale, duplocale(LC_GLOBAL_LOCALE));
 #endif
 }
 

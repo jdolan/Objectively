@@ -39,7 +39,7 @@
 static Object *copy(const Object *self) {
 
 	IndexPath *this = (IndexPath *) self;
-	IndexPath *that = $alloc(IndexPath, initWithIndexes, this->indexes, this->length);
+	IndexPath *that = alloc(IndexPath, initWithIndexes, this->indexes, this->length);
 
 	return (Object *) that;
 }

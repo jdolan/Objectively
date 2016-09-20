@@ -40,7 +40,7 @@ static Object *copy(const Object *self) {
 
 	Array *this = (Array *)  self;
 
-	MutableArray *copy = $alloc(MutableArray, initWithCapacity, this->count);
+	MutableArray *copy = alloc(MutableArray, initWithCapacity, this->count);
 
 	$(copy, addObjectsFromArray, this);
 
@@ -113,7 +113,7 @@ static void addObjectsFromArray(MutableArray *self, const Array *array) {
  */
 static MutableArray *array(void) {
 	
-	return $alloc(MutableArray, init);
+	return alloc(MutableArray, init);
 }
 
 /**
@@ -123,7 +123,7 @@ static MutableArray *array(void) {
  */
 static MutableArray *arrayWithCapacity(size_t capacity) {
 	
-	return $alloc(MutableArray, initWithCapacity, capacity);
+	return alloc(MutableArray, initWithCapacity, capacity);
 }
 
 /**

@@ -65,7 +65,7 @@ static void dealloc(Object *self) {
  */
 static String *description(const Object *self) {
 
-	return $alloc(String, initWithFormat, "%s@%p", self->clazz->name, self);
+	return alloc(String, initWithFormat, "%s@%p", self->clazz->name, self);
 }
 
 /**
