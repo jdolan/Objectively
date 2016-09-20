@@ -37,13 +37,13 @@ static _Bool filter(const Dictionary *dictionary, ident obj, ident key, ident da
 
 START_TEST(dictionary)
 	{
-		Object *objectOne = alloc(Object);
-		Object *objectTwo = alloc(Object);
-		Object *objectThree = alloc(Object);
+		Object *objectOne = alloc(Object, init);
+		Object *objectTwo = alloc(Object, init);
+		Object *objectThree = alloc(Object, init);
 
-		String *keyOne = $(alloc(String), initWithFormat, "one");
-		String *keyTwo = $(alloc(String), initWithFormat, "two");
-		String *keyThree = $(alloc(String), initWithFormat, "three");
+		String *keyOne = alloc(String, initWithFormat, "one");
+		String *keyTwo = alloc(String, initWithFormat, "two");
+		String *keyThree = alloc(String, initWithFormat, "three");
 
 		Dictionary *dict = $$(Dictionary, dictionaryWithObjectsAndKeys,
 				objectOne, keyOne, objectTwo, keyTwo, objectThree, keyThree, NULL);

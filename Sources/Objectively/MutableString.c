@@ -40,7 +40,7 @@ static Object *copy(const Object *self) {
 
 	String *this = (String *) self;
 
-	return (Object *) $(alloc(MutableString), initWithString, this);
+	return (Object *) alloc(MutableString, initWithString, this);
 }
 
 #pragma mark - MutableString
@@ -137,7 +137,9 @@ static void deleteCharactersInRange(MutableString *self, const Range range) {
 	ident ptr = self->string.chars + range.location;
 	const size_t length = self->string.length - range.location - range.length + 1;
 
-	memmove(ptr, ptr + range.length, length);
+	memmove(ptr, IDENT_OFFSET(ptr, range.length), length);
+
+	self->string.length -= range.length;
 }
 
 /**
@@ -245,7 +247,7 @@ static void replaceStringInRange(MutableString *self, const Range range, const S
  */
 static MutableString *string(void) {
 
-	return $(alloc(MutableString), init);
+	return alloc(MutableString, init);
 }
 
 /**
@@ -255,7 +257,7 @@ static MutableString *string(void) {
  */
 static MutableString *stringWithCapacity(size_t capacity) {
 
-	return $(alloc(MutableString), initWithCapacity, capacity);
+	return alloc(MutableString, initWithCapacity, capacity);
 }
 
 #pragma mark - Class lifecycle

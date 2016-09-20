@@ -28,7 +28,7 @@
 
 START_TEST(_log)
 	{
-		Log *log = $(alloc(Log), initWithName, "test");
+		Log *log = alloc(Log, initWithName, "test");
 		ck_assert(log != NULL);
 
 		ck_assert_str_eq("test", log->name);

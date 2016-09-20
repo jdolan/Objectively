@@ -32,7 +32,7 @@ START_TEST(locale)
 		ck_assert(system != NULL);
 		ck_assert_ptr_eq(&_Locale, classof(system));
 
-		Locale *en_US = $(alloc(Locale), initWithIdentifier, "en_US");
+		Locale *en_US = alloc(Locale, initWithIdentifier, "en_US");
 
 		ck_assert(en_US != NULL);
 		ck_assert_ptr_eq(&_Locale, classof(en_US));

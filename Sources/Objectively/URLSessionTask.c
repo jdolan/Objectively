@@ -130,9 +130,7 @@ static void resume(URLSessionTask *self) {
  */
 static _Bool httpHeaders_enumerator(const Dictionary *dictionary, ident obj, ident key, ident data) {
 
-	String *header = $(alloc(String), initWithFormat, "%s: %s",
-			((String * ) key)->chars,
-			((String * ) obj)->chars);
+	String *header = alloc(String, initWithFormat, "%s: %s", ((String * ) key)->chars, ((String * ) obj)->chars);
 
 	struct curl_slist **headers = (struct curl_slist **) data;
 	*headers = curl_slist_append(*headers, header->chars);

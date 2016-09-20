@@ -79,7 +79,7 @@ extern Class _Hello;
  * @fn Hello::helloWithGreeting(const char *)
  */
 static Hello *helloWithGreeting(const char *greeting) {
-	return $(alloc(Hello), initWithGreeting, greeting);
+	return alloc(Hello, initWithGreeting, greeting);
 }
 
 /**

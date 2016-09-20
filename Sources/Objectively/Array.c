@@ -41,7 +41,7 @@ static Object *copy(const Object *self) {
 
 	const Array *this = (Array *) self;
 
-	return (Object *) $(alloc(Array), initWithArray, this);
+	return (Object *) alloc(Array, initWithArray, this);
 }
 
 /**
@@ -67,7 +67,7 @@ static String *description(const Object *self) {
 
 	String *components = $((Array *) self, componentsJoinedByCharacters, ", ");
 
-	String *desc = $(alloc(String), initWithFormat, "[%s]", components);
+	String *desc = alloc(String, initWithFormat, "[%s]", components);
 
 	release(components);
 
@@ -133,7 +133,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
  */
 static Array *arrayWithArray(const Array *array) {
 
-	return $(alloc(Array), initWithArray, array);
+	return alloc(Array, initWithArray, array);
 }
 
 /**
@@ -143,7 +143,7 @@ static Array *arrayWithArray(const Array *array) {
  */
 static Array *arrayWithObjects(ident obj, ...) {
 
-	Array *array = (Array *) super(Object, alloc(Array), init);
+	Array *array = (Array *) super(Object, _alloc(&_Array), init);
 	if (array) {
 
 		va_list args;
@@ -187,7 +187,7 @@ static Array *arrayWithObjects(ident obj, ...) {
  */
 static String *componentsJoinedByCharacters(const Array *self, const char *chars) {
 
-	MutableString *string = $(alloc(MutableString), init);
+	MutableString *string = alloc(MutableString, init);
 
 	for (size_t i = 0; i < self->count; i++) {
 
@@ -389,7 +389,7 @@ static ident lastObject(const Array *self) {
  */
 static MutableArray *mutableCopy(const Array *self) {
 
-	MutableArray *copy = $(alloc(MutableArray), initWithCapacity, self->count);
+	MutableArray *copy = alloc(MutableArray, initWithCapacity, self->count);
 	if (copy) {
 		$(copy, addObjectsFromArray, self);
 	}

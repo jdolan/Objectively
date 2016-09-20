@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Sources\Objectively.h" />
+    <ClInclude Include="..\Sources\Objectively\Array.h" />
+    <ClInclude Include="..\Sources\Objectively\Boole.h" />
+    <ClInclude Include="..\Sources\Objectively\Class.h" />
+    <ClInclude Include="..\Sources\Objectively\Condition.h" />
+    <ClInclude Include="..\Sources\Objectively\Data.h" />
+    <ClInclude Include="..\Sources\Objectively\Date.h" />
+    <ClInclude Include="..\Sources\Objectively\DateFormatter.h" />
+    <ClInclude Include="..\Sources\Objectively\Dictionary.h" />
+    <ClInclude Include="..\Sources\Objectively\Enum.h" />
+    <ClInclude Include="..\Sources\Objectively\Error.h" />
+    <ClInclude Include="..\Sources\Objectively\Hash.h" />
+    <ClInclude Include="..\Sources\Objectively\IndexPath.h" />
+    <ClInclude Include="..\Sources\Objectively\IndexSet.h" />
+    <ClInclude Include="..\Sources\Objectively\JSONPath.h" />
+    <ClInclude Include="..\Sources\Objectively\JSONSerialization.h" />
+    <ClInclude Include="..\Sources\Objectively\Locale.h" />
+    <ClInclude Include="..\Sources\Objectively\Lock.h" />
+    <ClInclude Include="..\Sources\Objectively\Log.h" />
+    <ClInclude Include="..\Sources\Objectively\MutableArray.h" />
+    <ClInclude Include="..\Sources\Objectively\MutableData.h" />
+    <ClInclude Include="..\Sources\Objectively\MutableDictionary.h" />
+    <ClInclude Include="..\Sources\Objectively\MutableSet.h" />
+    <ClInclude Include="..\Sources\Objectively\MutableString.h" />
+    <ClInclude Include="..\Sources\Objectively\Null.h" />
+    <ClInclude Include="..\Sources\Objectively\Number.h" />
+    <ClInclude Include="..\Sources\Objectively\NumberFormatter.h" />
+    <ClInclude Include="..\Sources\Objectively\Object.h" />
+    <ClInclude Include="..\Sources\Objectively\Once.h" />
+    <ClInclude Include="..\Sources\Objectively\Operation.h" />
+    <ClInclude Include="..\Sources\Objectively\OperationQueue.h" />
+    <ClInclude Include="..\Sources\Objectively\Regex.h" />
+    <ClInclude Include="..\Sources\Objectively\Set.h" />
+    <ClInclude Include="..\Sources\Objectively\String.h" />
+    <ClInclude Include="..\Sources\Objectively\Thread.h" />
+    <ClInclude Include="..\Sources\Objectively\Types.h" />
+    <ClInclude Include="..\Sources\Objectively\URL.h" />
+    <ClInclude Include="..\Sources\Objectively\URLRequest.h" />
+    <ClInclude Include="..\Sources\Objectively\URLSession.h" />
+    <ClInclude Include="..\Sources\Objectively\URLSessionConfiguration.h" />
+    <ClInclude Include="..\Sources\Objectively\URLSessionDataTask.h" />
+    <ClInclude Include="..\Sources\Objectively\URLSessionDownloadTask.h" />
+    <ClInclude Include="..\Sources\Objectively\URLSessionTask.h" />
+    <ClInclude Include="..\Sources\Objectively\URLSessionUploadTask.h" />
+    <ClInclude Include="..\Sources\Objectively\Value.h" />
+    <ClInclude Include="Sources\regex.h" />
+    <ClInclude Include="Sources\Windowly.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Sources\Objectively\Array.c" />
+    <ClCompile Include="..\Sources\Objectively\Boole.c" />
+    <ClCompile Include="..\Sources\Objectively\Class.c" />
+    <ClCompile Include="..\Sources\Objectively\Condition.c" />
+    <ClCompile Include="..\Sources\Objectively\Data.c" />
+    <ClCompile Include="..\Sources\Objectively\Date.c" />
+    <ClCompile Include="..\Sources\Objectively\DateFormatter.c" />
+    <ClCompile Include="..\Sources\Objectively\Dictionary.c" />
+    <ClCompile Include="..\Sources\Objectively\Enum.c" />
+    <ClCompile Include="..\Sources\Objectively\Error.c" />
+    <ClCompile Include="..\Sources\Objectively\Hash.c" />
+    <ClCompile Include="..\Sources\Objectively\IndexPath.c" />
+    <ClCompile Include="..\Sources\Objectively\IndexSet.c" />
+    <ClCompile Include="..\Sources\Objectively\JSONPath.c" />
+    <ClCompile Include="..\Sources\Objectively\JSONSerialization.c" />
+    <ClCompile Include="..\Sources\Objectively\Locale.c" />
+    <ClCompile Include="..\Sources\Objectively\Lock.c" />
+    <ClCompile Include="..\Sources\Objectively\Log.c" />
+    <ClCompile Include="..\Sources\Objectively\MutableArray.c" />
+    <ClCompile Include="..\Sources\Objectively\MutableData.c" />
+    <ClCompile Include="..\Sources\Objectively\MutableDictionary.c" />
+    <ClCompile Include="..\Sources\Objectively\MutableSet.c" />
+    <ClCompile Include="..\Sources\Objectively\MutableString.c" />
+    <ClCompile Include="..\Sources\Objectively\Null.c" />
+    <ClCompile Include="..\Sources\Objectively\Number.c" />
+    <ClCompile Include="..\Sources\Objectively\NumberFormatter.c" />
+    <ClCompile Include="..\Sources\Objectively\Object.c" />
+    <ClCompile Include="..\Sources\Objectively\Operation.c" />
+    <ClCompile Include="..\Sources\Objectively\OperationQueue.c" />
+    <ClCompile Include="..\Sources\Objectively\Regex.c" />
+    <ClCompile Include="..\Sources\Objectively\Set.c" />
+    <ClCompile Include="..\Sources\Objectively\String.c" />
+    <ClCompile Include="..\Sources\Objectively\Thread.c" />
+    <ClCompile Include="..\Sources\Objectively\URL.c" />
+    <ClCompile Include="..\Sources\Objectively\URLRequest.c" />
+    <ClCompile Include="..\Sources\Objectively\URLSession.c" />
+    <ClCompile Include="..\Sources\Objectively\URLSessionConfiguration.c" />
+    <ClCompile Include="..\Sources\Objectively\URLSessionDataTask.c" />
+    <ClCompile Include="..\Sources\Objectively\URLSessionDownloadTask.c" />
+    <ClCompile Include="..\Sources\Objectively\URLSessionTask.c" />
+    <ClCompile Include="..\Sources\Objectively\URLSessionUploadTask.c" />
+    <ClCompile Include="..\Sources\Objectively\Value.c" />
+    <ClCompile Include="Sources\WinRegex.cpp" />
+    <ClCompile Include="Sources\Windowly.c" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3E6B97C6-1F51-4D72-BDFE-1D492F5EDA6C}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Objectively</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>bin\Win$(PlatformArchitecture)$(Configuration)\</OutDir>
+    <IncludePath>..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>libs\bin\Win$(PlatformArchitecture)$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <IntDir>tmp\$(ProjectName)\Win$(PlatformArchitecture)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>bin\Win$(PlatformArchitecture)$(Configuration)\</OutDir>
+    <IncludePath>..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>libs\bin\Win$(PlatformArchitecture)$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <IntDir>tmp\$(ProjectName)\Win$(PlatformArchitecture)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>libs\bin\Win$(PlatformArchitecture)$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <OutDir>bin\Win$(PlatformArchitecture)$(Configuration)\</OutDir>
+    <IntDir>tmp\$(ProjectName)\Win$(PlatformArchitecture)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>bin\Win$(PlatformArchitecture)$(Configuration)\</OutDir>
+    <IntDir>tmp\$(ProjectName)\Win$(PlatformArchitecture)$(Configuration)\</IntDir>
+    <IncludePath>..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>libs\bin\Win$(PlatformArchitecture)$(Configuration)\;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>CURL_STATICLIB;WIN32;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CompileAs>Default</CompileAs>
+      <DisableSpecificWarnings>4068;4996;4115;4706;4204;4244;4245;4100;4267;4305;4267;4018;4702;4311</DisableSpecificWarnings>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>CURL_STATICLIB;WIN64;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4068;4996;4115;4706;4204;4244;4245;4100;4267;4305;4267;4018;4702;4311</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>CURL_STATICLIB;WIN32;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CompileAs>Default</CompileAs>
+      <DisableSpecificWarnings>4068;4996;4115;4706;4204;4244;4245;4100;4267;4305;4267;4018;4702;4311</DisableSpecificWarnings>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>CURL_STATICLIB;WIN64;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4068;4996;4115;4706;4204;4244;4245;4100;4267;4305;4267;4018;4702;4311</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

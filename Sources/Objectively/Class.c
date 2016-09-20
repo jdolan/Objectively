@@ -24,7 +24,10 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+
+#if !(defined(__MINGW32__) || defined(_MSC_VER))
 #include <unistd.h>
+#endif
 
 #include <Objectively/Class.h>
 #include <Objectively/Object.h>
@@ -65,7 +68,7 @@ static void setup(void) {
 
 	_classes = NULL;
 
-#if __MINGW32__
+#if defined(__MINGW32__) || defined(_MSC_VER)
 	_pageSize = 4096;
 #else
 	_pageSize = sysconf(_SC_PAGESIZE);
@@ -74,7 +77,7 @@ static void setup(void) {
 	atexit(teardown);
 }
 
-void _initialize(Class *clazz) {
+Class *_initialize(Class *clazz) {
 
 	assert(clazz);
 
@@ -113,13 +116,17 @@ void _initialize(Class *clazz) {
 			;
 		}
 	}
+
+	return clazz;
 }
+
+__thread ident _last_alloc;
 
 ident _alloc(Class *clazz) {
 
 	_initialize(clazz);
 
-	ident obj = calloc(1, clazz->instanceSize);
+	ident obj = _last_alloc = calloc(1, clazz->instanceSize);
 	assert(obj);
 
 	Object *object = (Object *) obj;
@@ -129,7 +136,7 @@ ident _alloc(Class *clazz) {
 
 	ident interface = clazz->interface;
 	do {
-		*(ident *) (obj + clazz->interfaceOffset) = interface;
+		*(ident *) IDENT_OFFSET(obj, clazz->interfaceOffset) = interface;
 	} while ((clazz = clazz->superclass));
 
 	return obj;

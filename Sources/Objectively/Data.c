@@ -43,7 +43,7 @@ static Object *copy(const Object *self) {
 
 	Data *this = (Data *) self;
 
-	return (Object *) $(alloc(Data), initWithBytes, this->bytes, this->length);
+	return (Object *) alloc(Data, initWithBytes, this->bytes, this->length);
 }
 
 /**
@@ -107,7 +107,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
  */
 static Data *dataWithBytes(const uint8_t *bytes, size_t length) {
 
-	return $(alloc(Data), initWithBytes, bytes, length);
+	return alloc(Data, initWithBytes, bytes, length);
 }
 
 /**
@@ -117,7 +117,7 @@ static Data *dataWithBytes(const uint8_t *bytes, size_t length) {
  */
 static Data *dataWithContentsOfFile(const char *path) {
 
-	return $(alloc(Data), initWithContentsOfFile, path);
+	return alloc(Data, initWithContentsOfFile, path);
 }
 
 /**
@@ -127,7 +127,7 @@ static Data *dataWithContentsOfFile(const char *path) {
  */
 static Data *dataWithMemory(const ident mem, size_t length) {
 
-	return $(alloc(Data), initWithMemory, mem, length);
+	return alloc(Data, initWithMemory, mem, length);
 }
 
 /**
@@ -154,7 +154,7 @@ static Data *initWithContentsOfFile(Data *self, const char *path) {
 
 	assert(path);
 
-	FILE *file = fopen(path, "r");
+	FILE *file = fopen(path, "rb");
 	if (file) {
 		ident mem = NULL;
 
@@ -167,7 +167,7 @@ static Data *initWithContentsOfFile(Data *self, const char *path) {
 			mem = malloc(length);
 			assert(mem);
 
-			int err = fseek(file, 0, SEEK_SET);
+			err = fseek(file, 0, SEEK_SET);
 			assert(err == 0);
 
 			const size_t read = fread(mem, length, 1, file);
@@ -205,7 +205,7 @@ static Data *initWithMemory(Data *self, const ident mem, size_t length) {
  */
 static MutableData *mutableCopy(const Data *self) {
 
-	return $(alloc(MutableData), initWithData, self);
+	return alloc(MutableData, initWithData, self);
 }
 
 /**

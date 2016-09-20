@@ -44,7 +44,7 @@ static Object *copy(const Object *self) {
 
 	Set *this = (Set *) self;
 
-	MutableSet *copy = $(alloc(MutableSet), initWithCapacity, this->capacity);
+	MutableSet *copy = alloc(MutableSet, initWithCapacity, this->capacity);
 
 	$(copy, addObjectsFromSet, this);
 
@@ -62,13 +62,13 @@ static void addObject_resize(Set *set) {
 
 	if (set->capacity) {
 
-		const float load = set->count / set->capacity;
+		const float load = set->count / (float)set->capacity;
 		if (load >= MUTABLESET_MAX_LOAD) {
 
 			size_t capacity = set->capacity;
 			ident *elements = set->elements;
 
-			set->capacity = set->capacity * MUTABLESET_GROW_FACTOR;
+			set->capacity = (size_t)(set->capacity * MUTABLESET_GROW_FACTOR);
 			set->count = 0;
 
 			set->elements = calloc(set->capacity, sizeof(ident));
@@ -105,7 +105,7 @@ static void addObject(MutableSet *self, const ident obj) {
 
 	MutableArray *array = set->elements[bin];
 	if (array == NULL) {
-		array = set->elements[bin] = $(alloc(MutableArray), init);
+		array = set->elements[bin] = alloc(MutableArray, init);
 	}
 
 	if ($((Array *) array, containsObject, obj) == false) {
@@ -236,7 +236,7 @@ static void removeObject(MutableSet *self, const ident obj) {
  */
 static MutableSet *set(void) {
 
-	return $(alloc(MutableSet), init);
+	return alloc(MutableSet, init);
 }
 
 /**
@@ -246,7 +246,7 @@ static MutableSet *set(void) {
  */
 static MutableSet *setWithCapacity(size_t capacity) {
 
-	return $(alloc(MutableSet), initWithCapacity, capacity);
+	return alloc(MutableSet, initWithCapacity, capacity);
 }
 
 #pragma mark - Class lifecycle

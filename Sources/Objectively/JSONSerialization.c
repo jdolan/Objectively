@@ -96,7 +96,7 @@ static void writeString(JSONWriter *writer, const String *string) {
  */
 static void writeNumber(JSONWriter *writer, const Number *number) {
 
-	String *string = $(alloc(String), initWithFormat, "%.5f", number->value);
+	String *string = alloc(String, initWithFormat, "%.5f", number->value);
 
 	$(writer->data, appendBytes, (uint8_t *) string->chars, string->length);
 
@@ -199,14 +199,18 @@ static void writeElement(JSONWriter *writer, const ident obj) {
  */
 static Data *dataFromObject(const ident obj, int options) {
 
-	JSONWriter writer = {
-		.data = $(alloc(MutableData), init),
-		.options = options
-	};
+	if (obj) {
+		JSONWriter writer = {
+			.data = alloc(MutableData, init),
+			.options = options
+		};
 
-	writeObject(&writer, obj);
+		writeObject(&writer, obj);
 
-	return (Data *) writer.data;
+		return (Data *) writer.data;
+	}
+
+	return NULL;
 }
 
 /**
@@ -385,7 +389,7 @@ static String *readLabel(JSONReader *reader) {
  */
 static Dictionary *readObject(JSONReader *reader) {
 
-	MutableDictionary *object = $(alloc(MutableDictionary), init);
+	MutableDictionary *object = alloc(MutableDictionary, init);
 
 	while (true) {
 
@@ -420,7 +424,7 @@ static Dictionary *readObject(JSONReader *reader) {
  */
 static Array *readArray(JSONReader *reader) {
 
-	MutableArray *array = $(alloc(MutableArray), init);
+	MutableArray *array = alloc(MutableArray, init);
 
 	while (true) {
 
@@ -475,12 +479,16 @@ static ident readElement(JSONReader *reader) {
  */
 static ident objectFromData(const Data *data, int options) {
 
-	JSONReader reader = {
-		.data = data,
-		.options = options
-	};
+	if (data && data->length) {
+		JSONReader reader = {
+			.data = data,
+			.options = options
+		};
 
-	return readElement(&reader);
+		return readElement(&reader);
+	}
+
+	return NULL;
 }
 
 #pragma mark - Class lifecycle
