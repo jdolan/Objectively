@@ -154,7 +154,7 @@ static Data *initWithContentsOfFile(Data *self, const char *path) {
 
 	assert(path);
 
-	FILE *file = fopen(path, "r");
+	FILE *file = fopen(path, "rb");
 	if (file) {
 		ident mem = NULL;
 
