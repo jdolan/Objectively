@@ -42,7 +42,7 @@ static Object *copy(const Object *self) {
 
 	const Dictionary *this = (Dictionary *) self;
 
-	Dictionary *that = $(alloc(Dictionary), initWithDictionary, this);
+	Dictionary *that = alloc(Dictionary, initWithDictionary, this);
 
 	return (Object *) that;
 }
@@ -88,7 +88,7 @@ static String *description(const Object *self) {
 
 	const Dictionary *this = (Dictionary *) self;
 
-	MutableString *desc = $(alloc(MutableString), init);
+	MutableString *desc = alloc(MutableString, init);
 
 	$(desc, appendCharacters, "{");
 
@@ -171,7 +171,7 @@ static _Bool allKeys_enumerator(const Dictionary *dict, ident obj, ident key, id
  */
 static Array *allKeys(const Dictionary *self) {
 
-	MutableArray *keys = $(alloc(MutableArray), initWithCapacity, self->count);
+	MutableArray *keys = alloc(MutableArray, initWithCapacity, self->count);
 
 	$(self, enumerateObjectsAndKeys, allKeys_enumerator, keys);
 
@@ -192,7 +192,7 @@ static _Bool allObjects_enumerator(const Dictionary *dict, ident obj, ident key,
  */
 static Array *allObjects(const Dictionary *self) {
 
-	MutableArray *objects = $(alloc(MutableArray), initWithCapacity, self->count);
+	MutableArray *objects = alloc(MutableArray, initWithCapacity, self->count);
 
 	$(self, enumerateObjectsAndKeys, allObjects_enumerator, objects);
 
@@ -206,7 +206,7 @@ static Array *allObjects(const Dictionary *self) {
  */
 static Dictionary *dictionaryWithDictionary(const Dictionary *dictionary) {
 	
-	return $(alloc(Dictionary), initWithDictionary, dictionary);
+	return alloc(Dictionary, initWithDictionary, dictionary);
 }
 
 /**
@@ -216,7 +216,7 @@ static Dictionary *dictionaryWithDictionary(const Dictionary *dictionary) {
  */
 static Dictionary *dictionaryWithObjectsAndKeys(ident obj, ...) {
 	
-	Dictionary *dict = (Dictionary *) super(Object, alloc(Dictionary), init);
+	Dictionary *dict = (Dictionary *) super(Object, _alloc(&_Dictionary), init);
 	if (dict) {
 		
 		va_list args;
@@ -274,7 +274,7 @@ static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumer
 
 	assert(enumerator);
 
-	MutableDictionary *dictionary = $(alloc(MutableDictionary), init);
+	MutableDictionary *dictionary = alloc(MutableDictionary, init);
 
 	for (size_t i = 0; i < self->capacity; i++) {
 
@@ -365,7 +365,7 @@ static Dictionary *initWithObjectsAndKeys(Dictionary *self, ...) {
  */
 static MutableDictionary *mutableCopy(const Dictionary *self) {
 
-	MutableDictionary *copy = $(alloc(MutableDictionary), initWithCapacity, self->count);
+	MutableDictionary *copy = alloc(MutableDictionary, initWithCapacity, self->count);
 	if (copy) {
 		$(copy, addEntriesFromDictionary, self);
 	}

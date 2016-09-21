@@ -51,7 +51,7 @@ static Null *null(void) {
 	static Once once;
 
 	do_once(&once, {
-		_null = (Null *) $((Object *) alloc(Null), init);
+		_null = (Null *) super(Object, _alloc(&_Null), init);
 	});
 
 	return _null;

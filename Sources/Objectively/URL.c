@@ -41,7 +41,7 @@ static Object *copy(const Object *self) {
 
 	URL *this = (URL *) self;
 
-	return (Object *) $(alloc(URL), initWithString, this->urlString);
+	return (Object *) alloc(URL, initWithString, this->urlString);
 }
 
 /**
@@ -110,7 +110,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
  */
 static URL *baseURL(const URL *self) {
 
-	MutableString *string = $(alloc(MutableString), init);
+	MutableString *string = alloc(MutableString, init);
 
 	$(string, appendString, self->scheme);
 	$(string, appendFormat, "://");
@@ -123,7 +123,7 @@ static URL *baseURL(const URL *self) {
 		$(string, appendFormat, ":%u", self->port);
 	}
 
-	URL *baseURL = $(alloc(URL), initWithString, (String *) string);
+	URL *baseURL = alloc(URL, initWithString, (String *) string);
 
 	release(string);
 
@@ -145,7 +145,7 @@ static URL *initWithCharacters(URL *self, const char *chars) {
 		Range *matches;
 		if ($(_regex, matchesCharacters, chars, 0, &matches)) {
 
-			self->urlString = $(alloc(String), initWithCharacters, chars);
+			self->urlString = alloc(String, initWithCharacters, chars);
 
 			Range *scheme = &matches[1];
 			Range *host = &matches[2];
@@ -239,7 +239,7 @@ static void initialize(Class *clazz) {
 	url->initWithString = initWithString;
 	url->pathComponents = pathComponents;
 
-	_regex = $(alloc(Regex), initWithPattern, "([a-z]+)://([^:/\?]+)?(:[0-9]+)?(/[^\?#]+)?([^#]+)?(#.*)?", 0);
+	_regex = alloc(Regex, initWithPattern, "([a-z]+)://([^:/\?]+)?(:[0-9]+)?(/[^\?#]+)?([^#]+)?(#.*)?", 0);
 }
 
 /**

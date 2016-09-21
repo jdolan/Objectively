@@ -27,7 +27,7 @@
 
 START_TEST(date)
 	{
-		DateFormatter *dateFormatter = $(alloc(DateFormatter), initWithFormat, NULL);
+		DateFormatter *dateFormatter = alloc(DateFormatter, initWithFormat, NULL);
 
 		ck_assert(dateFormatter != NULL);
 		ck_assert_ptr_eq(&_DateFormatter, classof(dateFormatter));

@@ -40,7 +40,7 @@ static Object *copy(const Object *self) {
 
 	String *this = (String *) self;
 
-	return (Object *) $(alloc(MutableString), initWithString, this);
+	return (Object *) alloc(MutableString, initWithString, this);
 }
 
 #pragma mark - MutableString
@@ -247,7 +247,7 @@ static void replaceStringInRange(MutableString *self, const Range range, const S
  */
 static MutableString *string(void) {
 
-	return $(alloc(MutableString), init);
+	return alloc(MutableString, init);
 }
 
 /**
@@ -257,7 +257,7 @@ static MutableString *string(void) {
  */
 static MutableString *stringWithCapacity(size_t capacity) {
 
-	return $(alloc(MutableString), initWithCapacity, capacity);
+	return alloc(MutableString, initWithCapacity, capacity);
 }
 
 #pragma mark - Class lifecycle

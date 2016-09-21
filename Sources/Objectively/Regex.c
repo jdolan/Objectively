@@ -39,7 +39,7 @@ static Object *copy(const Object *self) {
 
 	const Regex *this = (Regex *) self;
 
-	return (Object *) $(alloc(Regex), initWithPattern, this->pattern, this->options);
+	return (Object *) alloc(Regex, initWithPattern, this->pattern, this->options);
 }
 
 /**

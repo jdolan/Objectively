@@ -102,7 +102,7 @@ static void initialize(Class *clazz) {
 
 	((JSONPathInterface *) clazz->interface)->objectForKeyPath = objectForKeyPath;
 
-	_regex = $(alloc(Regex), initWithPattern, "(.[^.\[]+|\[[0-9]+\\])", 0);
+	_regex = alloc(Regex, initWithPattern, "(.[^.\[]+|\[[0-9]+\\])", 0);
 }
 
 /**

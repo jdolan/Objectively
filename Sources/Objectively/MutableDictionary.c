@@ -44,7 +44,7 @@ static Object *copy(const Object *self) {
 
 	Dictionary *this = (Dictionary *) self;
 
-	MutableDictionary *copy = $(alloc(MutableDictionary), initWithCapacity, this->capacity);
+	MutableDictionary *copy = alloc(MutableDictionary, initWithCapacity, this->capacity);
 
 	$(copy, addEntriesFromDictionary, this);
 
@@ -78,7 +78,7 @@ static void addEntriesFromDictionary(MutableDictionary *self, const Dictionary *
  */
 static MutableDictionary *dictionary(void) {
 
-	return $(alloc(MutableDictionary), init);
+	return alloc(MutableDictionary, init);
 }
 
 /**
@@ -88,7 +88,7 @@ static MutableDictionary *dictionary(void) {
  */
 static MutableDictionary *dictionaryWithCapacity(size_t capacity) {
 
-	return $(alloc(MutableDictionary), initWithCapacity, capacity);
+	return alloc(MutableDictionary, initWithCapacity, capacity);
 }
 
 /**
@@ -229,7 +229,7 @@ static void setObjectForKey(MutableDictionary *self, const ident obj, const iden
 
 	MutableArray *array = dict->elements[bin];
 	if (array == NULL) {
-		array = dict->elements[bin] = $(alloc(MutableArray), init);
+		array = dict->elements[bin] = alloc(MutableArray, init);
 	}
 
 	const int index = $((Array *) array, indexOfObject, key);

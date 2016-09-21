@@ -74,7 +74,7 @@ static void setup(void) {
 	atexit(teardown);
 }
 
-void _initialize(Class *clazz) {
+Class *_initialize(Class *clazz) {
 
 	assert(clazz);
 
@@ -113,13 +113,17 @@ void _initialize(Class *clazz) {
 			;
 		}
 	}
+
+	return clazz;
 }
+
+__thread ident _last_alloc;
 
 ident _alloc(Class *clazz) {
 
 	_initialize(clazz);
 
-	ident obj = calloc(1, clazz->instanceSize);
+	ident obj = _last_alloc = calloc(1, clazz->instanceSize);
 	assert(obj);
 
 	Object *object = (Object *) obj;

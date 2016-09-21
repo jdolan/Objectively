@@ -125,7 +125,7 @@ To implement a type, implement its instance and Class methods and Class initiali
  * @memberof Hello
  */
 static Hello *helloWithGreeting(const char *greeting) {
-	return $(alloc(Hello), initWithGreeting, greeting);
+	return alloc(Hello, initWithGreeting, greeting);
 }
 
 /**
@@ -242,7 +242,7 @@ static *URLSession sharedInstance(void) {
     static Once once;
 
 	do_once(&once, {
-		_sharedInstance = $(alloc(URLSession), init);
+		_sharedInstance = alloc(URLSession, init);
 	});
 
 	return _sharedInstance;

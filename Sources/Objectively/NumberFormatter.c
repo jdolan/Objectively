@@ -22,7 +22,6 @@
  */
 
 #include <assert.h>
-#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -59,7 +58,7 @@ static Number *numberFromString(const NumberFormatter *self, const String *strin
 		
 		const int res = sscanf(string->chars, self->fmt, &value);
 		if (res == 1) {
-			return $(alloc(Number), initWithValue, value);
+			return alloc(Number, initWithValue, value);
 		}
 	}
 	
@@ -73,7 +72,7 @@ static Number *numberFromString(const NumberFormatter *self, const String *strin
  */
 static String *stringFromNumber(const NumberFormatter *self, const Number *number) {
 
-	return $(alloc(String), initWithFormat, self->fmt, number->value);
+	return alloc(String, initWithFormat, self->fmt, number->value);
 }
 
 #pragma mark - Class lifecycle

@@ -35,9 +35,9 @@ START_TEST(mutableDictionary)
 		ck_assert_int_eq(0, ((Dictionary *) dict)->count);
 		ck_assert_int_eq(4, ((Dictionary *) dict)->capacity);
 
-		Object *objectOne = alloc(Object);
-		Object *objectTwo = alloc(Object);
-		Object *objectThree = alloc(Object);
+		Object *objectOne = alloc(Object, init);
+		Object *objectTwo = alloc(Object, init);
+		Object *objectThree = alloc(Object, init);
 
 		String *keyOne = str("one");
 		String *keyTwo = str("two");
@@ -83,8 +83,8 @@ START_TEST(mutableDictionary)
 
 		for (int i = 0; i < 1024; i++) {
 
-			Object *object = $(alloc(Object), init);
-			String *key = $(alloc(String), initWithFormat, "%d", i);
+			Object *object = alloc(Object, init);
+			String *key = alloc(String, initWithFormat, "%d", i);
 
 			$(dict, setObjectForKey, object, key);
 

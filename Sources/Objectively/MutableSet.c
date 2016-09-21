@@ -44,7 +44,7 @@ static Object *copy(const Object *self) {
 
 	Set *this = (Set *) self;
 
-	MutableSet *copy = $(alloc(MutableSet), initWithCapacity, this->capacity);
+	MutableSet *copy = alloc(MutableSet, initWithCapacity, this->capacity);
 
 	$(copy, addObjectsFromSet, this);
 
@@ -105,7 +105,7 @@ static void addObject(MutableSet *self, const ident obj) {
 
 	MutableArray *array = set->elements[bin];
 	if (array == NULL) {
-		array = set->elements[bin] = $(alloc(MutableArray), init);
+		array = set->elements[bin] = alloc(MutableArray, init);
 	}
 
 	if ($((Array *) array, containsObject, obj) == false) {
@@ -236,7 +236,7 @@ static void removeObject(MutableSet *self, const ident obj) {
  */
 static MutableSet *set(void) {
 
-	return $(alloc(MutableSet), init);
+	return alloc(MutableSet, init);
 }
 
 /**
@@ -246,7 +246,7 @@ static MutableSet *set(void) {
  */
 static MutableSet *setWithCapacity(size_t capacity) {
 
-	return $(alloc(MutableSet), initWithCapacity, capacity);
+	return alloc(MutableSet, initWithCapacity, capacity);
 }
 
 #pragma mark - Class lifecycle

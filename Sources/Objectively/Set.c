@@ -42,7 +42,7 @@ static Object *copy(const Object *self) {
 
 	const Set *this = (Set *) self;
 
-	Set *that = $(alloc(Set), initWithSet, this);
+	Set *that = alloc(Set, initWithSet, this);
 
 	return (Object *) that;
 }
@@ -143,7 +143,7 @@ static _Bool allObjects_enumerator(const Set *set, ident obj, ident data) {
  */
 static Array *allObjects(const Set *self) {
 
-	MutableArray *objects = $(alloc(MutableArray), initWithCapacity, self->count);
+	MutableArray *objects = alloc(MutableArray, initWithCapacity, self->count);
 
 	$(self, enumerateObjects, allObjects_enumerator, objects);
 
@@ -201,7 +201,7 @@ static Set *filteredSet(const Set *self, Predicate predicate, ident data) {
 
 	assert(predicate);
 
-	MutableSet *set = $(alloc(MutableSet), init);
+	MutableSet *set = alloc(MutableSet, init);
 
 	for (size_t i = 0; i < self->capacity; i++) {
 
@@ -307,7 +307,7 @@ static Set *initWithSet(Set *self, const Set *set) {
  */
 static Set *setWithArray(const Array *array) {
 
-	return $(alloc(Set), initWithArray, array);
+	return alloc(Set, initWithArray, array);
 }
 
 /**
@@ -317,7 +317,7 @@ static Set *setWithArray(const Array *array) {
  */
 static Set *setWithObjects(ident obj, ...) {
 
-	Set *set = (Set *) super(Object, alloc(Set), init);
+	Set *set = (Set *) super(Object, _alloc(&_Set), init);
 	if (set) {
 
 		va_list args;
@@ -341,7 +341,7 @@ static Set *setWithObjects(ident obj, ...) {
  */
 static Set *setWithSet(const Set *set) {
 
-	return $(alloc(Set), initWithSet, set);
+	return alloc(Set, initWithSet, set);
 }
 
 #pragma mark - Class lifecycle

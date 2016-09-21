@@ -80,10 +80,7 @@ typedef _Bool (*Predicate)(ident obj, ident data);
 /**
  * @return The value, clamped to the bounds.
  */
-#define clamp(val, min, max) ({ \
-	typeof(val) _val = (val); typeof(min) _min = (min); typeof(max) _max = (max); \
-	_val < _min ? _min : _val > _max ? _max : _val; \
-})
+#define clamp(val, min, max) (val < min ? min : val > max ? max : val)
 
 /**
  * @return The length of an array.
@@ -96,12 +93,12 @@ typedef _Bool (*Predicate)(ident obj, ident data);
  * @return The maximum of the two values.
  */
 #ifndef max
- #define max(a, b) ({ typeof (a) _a = (a); typeof (b) _b = (b); _a > _b ? _a : _b; })
+ #define max(a, b) (a > b ? a : b)
 #endif
 
 /**
  * @return The minimum of the two values.
  */
 #ifndef min
- #define min(a, b) ({ typeof (a) _a = (a); typeof (b) _b = (b); _a < _b ? _a : _b; })
+ #define min(a, b) (a < b ? a : b)
 #endif
