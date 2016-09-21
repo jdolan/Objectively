@@ -188,7 +188,7 @@ See [Hello.c](Examples/Hello.c) for the full source to this example.
 
 Initialization
 ---
-There is no explicit setup or teardown with Objectively. To instantiate a type, simply call `$alloc` from anywhere in your program. The first time a type is instantiated, an optional Class initializer, `initialize`, is called. Use `initialize` to setup your interface, override methods, or initialize a library your class wraps. When your application terminates, an optional Class destructor, `destroy`, is also called.
+There is no explicit setup or teardown with Objectively. To instantiate a type, simply call `alloc` from anywhere in your program. The first time a type is instantiated, an optional Class initializer, `initialize`, is called. Use `initialize` to setup your interface, override methods, or initialize a library your class wraps. When your application terminates, an optional Class destructor, `destroy`, is also called.
 
 Invoking an instance method
 ---
