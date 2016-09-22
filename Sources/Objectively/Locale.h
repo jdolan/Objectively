@@ -27,6 +27,8 @@
 
 #if defined(__MINGW32__)
 typedef _locale_t locale_t;
+#elif defined(__CYGWIN__)
+#include <sys/_locale.h>
 #else
 #include <xlocale.h>
 #endif
