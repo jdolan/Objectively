@@ -8,11 +8,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Objectively", "Objectively.
 		{BFB16B43-9943-4255-8B08-850C2D95D69A} = {BFB16B43-9943-4255-8B08-850C2D95D69A}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testshit", "temp\testshit\testshit.vcxproj", "{89127E08-F552-4D2D-B8C0-A46BE02ABB66}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3E6B97C6-1F51-4D72-BDFE-1D492F5EDA6C} = {3E6B97C6-1F51-4D72-BDFE-1D492F5EDA6C}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "iconv", "libs\iconv\vs\iconv.vcxproj", "{BFB16B43-9943-4255-8B08-850C2D95D69A}"
 EndProject
 Global
