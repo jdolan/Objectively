@@ -170,7 +170,7 @@ extern ident retain(ident obj);
 extern size_t _pageSize;
 
 /**
- * @brief The last Object allocated via `_alloc`.
+ * @brief Holds the last allocated object
  */
 extern __thread ident _last_alloc;
 
@@ -178,7 +178,10 @@ extern __thread ident _last_alloc;
  * @brief Allocate and initialize and instance of `type`.
  */
 #define alloc(type, initializer, ...) \
-	((type *) (_alloc(&_##type)))->interface->initializer((type *) _last_alloc, ## __VA_ARGS__)
+    ( \
+        _last_alloc = _alloc(&_##type), \
+        ((type *) _last_alloc)->interface->initializer((type *) _last_alloc, ## __VA_ARGS__) \
+    )
 
 /**
  * @brief Safely cast to a type.

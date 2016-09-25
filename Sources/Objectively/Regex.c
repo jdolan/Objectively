@@ -137,7 +137,7 @@ static _Bool matchesCharacters(const Regex *self, const char *chars, int options
 
 	if (ranges) {
 		const size_t numberOfMatches = self->numberOfSubExpressions + 1;
-		regmatch_t matches[numberOfMatches];
+		regmatch_t *matches = malloc(sizeof(regmatch_t) * numberOfMatches);
 
 		const int err = regexec(self->regex, chars, numberOfMatches, matches, options);
 		assert(err == 0 || err == REG_NOMATCH);
@@ -155,6 +155,8 @@ static _Bool matchesCharacters(const Regex *self, const char *chars, int options
 				range->length = 0;
 			}
 		}
+
+		free(matches);
 
 		return err == 0;
 	}

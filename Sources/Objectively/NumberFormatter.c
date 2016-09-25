@@ -40,7 +40,7 @@ static NumberFormatter *initWithFormat(NumberFormatter *self, const char *fmt) {
 
 	self = (NumberFormatter *) super(Object, self, init);
 	if (self) {
-		self->fmt = fmt ?: NUMBERFORMAT_DECIMAL;
+		self->fmt = fmt ? fmt : NUMBERFORMAT_DECIMAL;
 	}
 
 	return self;
