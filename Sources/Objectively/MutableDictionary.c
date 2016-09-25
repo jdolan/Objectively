@@ -178,13 +178,13 @@ static void setObjectForKey_resize(Dictionary *dict) {
 
 	if (dict->capacity) {
 
-		const float load = dict->count / dict->capacity;
+		const float load = dict->count / (float)dict->capacity;
 		if (load >= MUTABLEDICTIONARY_MAX_LOAD) {
 
 			size_t capacity = dict->capacity;
 			ident *elements = dict->elements;
 
-			dict->capacity = dict->capacity * MUTABLEDICTIONARY_GROW_FACTOR;
+			dict->capacity = (size_t)(dict->capacity * MUTABLEDICTIONARY_GROW_FACTOR);
 			dict->count = 0;
 
 			dict->elements = calloc(dict->capacity, sizeof(ident));

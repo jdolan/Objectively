@@ -167,7 +167,7 @@ static Data *initWithContentsOfFile(Data *self, const char *path) {
 			mem = malloc(length);
 			assert(mem);
 
-			int err = fseek(file, 0, SEEK_SET);
+			err = fseek(file, 0, SEEK_SET);
 			assert(err == 0);
 
 			const size_t read = fread(mem, length, 1, file);

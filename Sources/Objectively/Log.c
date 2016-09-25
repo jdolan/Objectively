@@ -27,7 +27,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+#if !defined(_MSC_VER)
 #include <unistd.h>
+#endif
 
 #include <Objectively/Log.h>
 #include <Objectively/Once.h>
@@ -145,7 +148,7 @@ static Log *initWithName(Log *self, const char *name) {
 
 	self = (Log *) super(Object, self, init);
 	if (self) {
-		self->name = strdup(name ?: "default");
+		self->name = strdup(name ? name : "default");
 		self->level = LogLevelInfo;
 		self->format = LOG_FORMAT_DEFAULT;
 		self->file = stdout;

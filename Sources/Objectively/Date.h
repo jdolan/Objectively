@@ -23,7 +23,10 @@
 
 #pragma once
 
+#if !defined(_MSC_VER)
 #include <sys/time.h>
+#endif
+
 #include <time.h>
 
 #include <Objectively/Object.h>

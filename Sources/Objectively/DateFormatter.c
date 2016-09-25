@@ -38,7 +38,7 @@
  */
 static Date *dateFromCharacters(const DateFormatter *self, const char *chars) {
 
-#if defined(__MINGW32__)
+#if defined(__MINGW32__) || defined(_MSC_VER)
 	fprintf(stderr, "WARNING:%s: not implemented (mingw32)\n", __func__);
 #else
 	if (chars) {
@@ -78,7 +78,7 @@ static DateFormatter *initWithFormat(DateFormatter *self, const char *fmt) {
 
 	self = (DateFormatter *) super(Object, self, init);
 	if (self) {
-		self->fmt = fmt ?: DATEFORMAT_ISO8601;
+		self->fmt = fmt ? fmt : DATEFORMAT_ISO8601;
 	}
 
 	return self;
@@ -94,7 +94,7 @@ static String *stringFromDate(const DateFormatter *self, const Date *date) {
 	const time_t seconds = date->time.tv_sec;
 	struct tm time;
 
-#if defined(__MINGW32__)
+#if defined(__MINGW32__) || defined(_MSC_VER)
 	int err = localtime_s(&time, &seconds);
 	assert(err == 0);
 #else

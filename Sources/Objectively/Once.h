@@ -36,7 +36,7 @@
 /**
  * @brief The Once type.
  */
-typedef long long int Once;
+typedef long Once;
 
 /**
  * @brief Executes the given `block` at most one time.
