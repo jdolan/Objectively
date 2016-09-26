@@ -66,7 +66,7 @@ struct Class {
 		/**
 		 * @brief Identifies this structure as an initialized Class.
 		 */
-		int magic;
+		volatile int magic;
 
 		/**
 		 * @brief Provides chaining of initialized Classes.
