@@ -45,6 +45,8 @@ static Object *copy(const Object *self) {
 	Object *object = memcpy(obj, self, self->clazz->instanceSize);
 	object->referenceCount = 1;
 
+	free(obj);
+	
 	return object;
 }
 
