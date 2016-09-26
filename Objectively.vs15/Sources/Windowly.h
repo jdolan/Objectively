@@ -39,12 +39,13 @@
 #include <stdarg.h>
 
 // MATH STUFF
-
 #include <float.h>
+
+#ifndef __DBL_EPSILON__
 #define __DBL_EPSILON__ DBL_EPSILON
+#endif
 
 // TIME STUFF
-
 struct timezone
 {
 	int32_t		tz_minuteswest; /* minutes W of Greenwich */
@@ -54,31 +55,32 @@ struct timezone
 extern int gettimeofday(struct timeval *tv, struct timezone *tz);
 
 // STRING STUFF
-
 extern int vasprintf(char ** __restrict ret, const char * __restrict format, va_list ap);
 extern char *asprintf(char ** __restrict ret, char * __restrict format, ...);
 
 #define towupper_l _towupper_l
 #define towlower_l _towlower_l
-#define strcasecmp stricmp
+#define strcasecmp _stricmp
 
 // INTERLOCK STUFF
-
 #define __sync_val_compare_and_swap InterlockedCompareExchange
 #define __sync_add_and_fetch InterlockedAdd
 #define __sync_lock_test_and_set InterlockedExchangePointer
 
-// PTHREAD STUFF
-
-#define __thread __declspec(thread)
-
 // POSIX STUFF
-
 #define strdup _strdup
 
 #include <io.h>
 #define isatty _isatty
 
-// OTHER CRAP
+#if !defined(__clang__)
+// THREAD STUFF
+#define __thread __declspec(thread)
 
+// OTHER CRAP
 #define __attribute__(...)
+#else
+#define fileno _fileno
+#define tzset _tzset
+#define alloca _alloca
+#endif

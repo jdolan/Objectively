@@ -142,7 +142,7 @@ static size_t transcode(Transcode *trans) {
 	iconv_t cd = iconv_open(NameForStringEncoding(trans->to), NameForStringEncoding(trans->from));
 	assert(cd != (iconv_t ) -1);
 
-	char *in = trans->in;
+	const char *in = trans->in;
 	char *out = trans->out;
 
 	size_t inBytesRemaining = trans->length;
@@ -722,7 +722,7 @@ const char *NameForStringEncoding(StringEncoding encoding) {
 }
 
 StringEncoding StringEncodingForName(const char *name) {
-
+	
 	if (strcasecmp("ASCII", name) == 0) {
 		return STRING_ENCODING_ASCII;
 	} else if (strcasecmp("ISO-8859-1", name) == 0) {

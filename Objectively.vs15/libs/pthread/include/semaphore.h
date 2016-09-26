@@ -65,7 +65,7 @@
 /* Include everything */
 #endif
 
-#if defined(__GNUC__) && ! defined (__declspec)
+#if !defined(_MSC_VER) && defined(__GNUC__) && ! defined (__declspec)
 # error Please upgrade your GNU compiler to one that supports __declspec.
 #endif
 

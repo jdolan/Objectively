@@ -26,7 +26,7 @@
 #error What are you doing
 #endif
 
-#pragma once
+#include <stdlib.h>
 
 extern "C"
 {
