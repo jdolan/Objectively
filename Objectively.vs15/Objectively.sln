@@ -4,13 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.25618.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Objectively", "Objectively.vcxproj", "{3E6B97C6-1F51-4D72-BDFE-1D492F5EDA6C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{BFB16B43-9943-4255-8B08-850C2D95D69A} = {BFB16B43-9943-4255-8B08-850C2D95D69A}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "iconv", "libs\iconv\vs\iconv.vcxproj", "{BFB16B43-9943-4255-8B08-850C2D95D69A}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcurl", "libs\curl\projects\Windows\VC15\lib\libcurl.vcxproj", "{DA6F56B4-06A4-441D-AD70-AC5A7D51FADB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,22 +21,6 @@ Global
 		{3E6B97C6-1F51-4D72-BDFE-1D492F5EDA6C}.Release|x64.Build.0 = Release|x64
 		{3E6B97C6-1F51-4D72-BDFE-1D492F5EDA6C}.Release|x86.ActiveCfg = Release|Win32
 		{3E6B97C6-1F51-4D72-BDFE-1D492F5EDA6C}.Release|x86.Build.0 = Release|Win32
-		{BFB16B43-9943-4255-8B08-850C2D95D69A}.Debug|x64.ActiveCfg = Debug|x64
-		{BFB16B43-9943-4255-8B08-850C2D95D69A}.Debug|x64.Build.0 = Debug|x64
-		{BFB16B43-9943-4255-8B08-850C2D95D69A}.Debug|x86.ActiveCfg = Debug|Win32
-		{BFB16B43-9943-4255-8B08-850C2D95D69A}.Debug|x86.Build.0 = Debug|Win32
-		{BFB16B43-9943-4255-8B08-850C2D95D69A}.Release|x64.ActiveCfg = Release|x64
-		{BFB16B43-9943-4255-8B08-850C2D95D69A}.Release|x64.Build.0 = Release|x64
-		{BFB16B43-9943-4255-8B08-850C2D95D69A}.Release|x86.ActiveCfg = Release|Win32
-		{BFB16B43-9943-4255-8B08-850C2D95D69A}.Release|x86.Build.0 = Release|Win32
-		{DA6F56B4-06A4-441D-AD70-AC5A7D51FADB}.Debug|x64.ActiveCfg = Debug|x64
-		{DA6F56B4-06A4-441D-AD70-AC5A7D51FADB}.Debug|x64.Build.0 = Debug|x64
-		{DA6F56B4-06A4-441D-AD70-AC5A7D51FADB}.Debug|x86.ActiveCfg = Debug|Win32
-		{DA6F56B4-06A4-441D-AD70-AC5A7D51FADB}.Debug|x86.Build.0 = Debug|Win32
-		{DA6F56B4-06A4-441D-AD70-AC5A7D51FADB}.Release|x64.ActiveCfg = Release|x64
-		{DA6F56B4-06A4-441D-AD70-AC5A7D51FADB}.Release|x64.Build.0 = Release|x64
-		{DA6F56B4-06A4-441D-AD70-AC5A7D51FADB}.Release|x86.ActiveCfg = Release|Win32
-		{DA6F56B4-06A4-441D-AD70-AC5A7D51FADB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
