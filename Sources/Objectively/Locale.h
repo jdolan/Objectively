@@ -25,7 +25,7 @@
 
 #include <locale.h>
 
-#if defined(__MINGW32__) || defined(_MSC_VER)
+#if defined(_WIN32)
 typedef _locale_t locale_t;
 #elif defined(__CYGWIN__)
 #include <sys/_locale.h>

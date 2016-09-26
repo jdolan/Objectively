@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#if !(defined(__MINGW32__) || defined(_MSC_VER))
+#if !defined(_MSC_VER)
 #include <unistd.h>
 #endif
 
@@ -68,7 +68,7 @@ static void setup(void) {
 
 	_classes = NULL;
 
-#if defined(__MINGW32__) || defined(_MSC_VER)
+#if !defined(_SC_PAGESIZE)
 	_pageSize = 4096;
 #else
 	_pageSize = sysconf(_SC_PAGESIZE);

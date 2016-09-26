@@ -51,7 +51,7 @@ static void dealloc(Object *self) {
 
 	Locale *this = (Locale *) self;
 
-#if defined(__MINGW32__) || defined(_MSC_VER)
+#if defined(_WIN32)
 	_free_locale(this->locale);
 #else
 	freelocale(this->locale);
@@ -74,7 +74,7 @@ static Locale *initWithIdentifier(Locale *self, const char *identifier) {
 		self->identifier = identifier;
 		assert(self->identifier);
 
-#if defined(__MINGW32__) || defined(_MSC_VER)
+#if defined(_WIN32)
 		self->locale = _create_locale(LC_ALL, self->identifier);
 #else
 		self->locale = newlocale(LC_ALL_MASK, self->identifier, NULL);
@@ -109,7 +109,7 @@ static Locale *initWithLocale(Locale *self, locale_t locale) {
  * @memberof Locale
  */
 static Locale *systemLocale(void) {
-#if defined(__MINGW32__) || defined(_MSC_VER)
+#if defined(_WIN32)
 	return alloc(Locale, initWithLocale, _get_current_locale());
 #else
 	return alloc(Locale, initWithLocale, duplocale(LC_GLOBAL_LOCALE));

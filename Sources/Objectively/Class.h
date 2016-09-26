@@ -170,7 +170,7 @@ extern ident retain(ident obj);
 extern size_t _pageSize;
 
 /**
- * @brief Holds the last allocated object
+ * @brief The last Object allocated via `_alloc`.
  */
 extern __thread ident _last_alloc;
 

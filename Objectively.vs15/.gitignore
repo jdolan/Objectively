@@ -1,2 +1,8 @@
+/ipch
+*.user
+*.suo
+*.db
+*.opendb
+/bin
 /tmp
-/.vs
+
