@@ -167,18 +167,15 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>bin\Win$(PlatformArchitecture)$(Configuration)\</OutDir>
     <IncludePath>..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>libs\bin\Win$(PlatformArchitecture)$(Configuration)\;$(LibraryPath)</LibraryPath>
     <IntDir>tmp\$(ProjectName)\Win$(PlatformArchitecture)$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>bin\Win$(PlatformArchitecture)$(Configuration)\</OutDir>
     <IncludePath>..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>libs\bin\Win$(PlatformArchitecture)$(Configuration)\;$(LibraryPath)</LibraryPath>
     <IntDir>tmp\$(ProjectName)\Win$(PlatformArchitecture)$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>libs\bin\Win$(PlatformArchitecture)$(Configuration)\;$(LibraryPath)</LibraryPath>
     <OutDir>bin\Win$(PlatformArchitecture)$(Configuration)\</OutDir>
     <IntDir>tmp\$(ProjectName)\Win$(PlatformArchitecture)$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -186,7 +183,6 @@
     <OutDir>bin\Win$(PlatformArchitecture)$(Configuration)\</OutDir>
     <IntDir>tmp\$(ProjectName)\Win$(PlatformArchitecture)$(Configuration)\</IntDir>
     <IncludePath>..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>libs\bin\Win$(PlatformArchitecture)$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
