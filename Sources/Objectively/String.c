@@ -722,7 +722,7 @@ const char *NameForStringEncoding(StringEncoding encoding) {
 }
 
 StringEncoding StringEncodingForName(const char *name) {
-	
+
 	if (strcasecmp("ASCII", name) == 0) {
 		return STRING_ENCODING_ASCII;
 	} else if (strcasecmp("ISO-8859-1", name) == 0) {

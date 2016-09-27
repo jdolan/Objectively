@@ -62,13 +62,13 @@ static void addObject_resize(Set *set) {
 
 	if (set->capacity) {
 
-		const float load = set->count / (float)set->capacity;
+		const float load = set->count / (float) set->capacity;
 		if (load >= MUTABLESET_MAX_LOAD) {
 
 			size_t capacity = set->capacity;
 			ident *elements = set->elements;
 
-			set->capacity = (size_t)(set->capacity * MUTABLESET_GROW_FACTOR);
+			set->capacity = set->capacity * MUTABLESET_GROW_FACTOR;
 			set->count = 0;
 
 			set->elements = calloc(set->capacity, sizeof(ident));
