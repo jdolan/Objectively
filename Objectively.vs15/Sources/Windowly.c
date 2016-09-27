@@ -39,8 +39,7 @@ int gettimeofday(struct timeval *tv, struct timezone *tz)
 
 		ZeroMemory(&ft, sizeof(ft));
 
-		GetSystemTimePreciseAsFileTime(&ft);
-		//GetSystemTimeAsFileTime(&ft);
+		GetSystemTimeAsFileTime(&ft);
 
 		tmpres = ft.dwHighDateTime;
 		tmpres <<= 32;
