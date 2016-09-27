@@ -8,6 +8,7 @@ pkginclude_HEADERS = \
 	Boole.h \
 	Class.h \
 	Condition.h \
+	Config.h \
 	Data.h \
 	Date.h \
 	DateFormatter.h \

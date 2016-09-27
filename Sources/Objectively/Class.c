@@ -21,7 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#include "../../config.h"
+#include <Objectively/Config.h>
 
 #include <assert.h>
 #include <stdlib.h>

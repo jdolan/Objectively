@@ -23,7 +23,7 @@
 
 #pragma once
 
-#include "../../config.h"
+#include <Objectively/Config.h>
 
 #if HAVE_SYS_TIME_H
 #include <sys/time.h>
