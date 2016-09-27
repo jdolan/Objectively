@@ -21,6 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+#include <Objectively/Config.h>
+
 #include <assert.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -28,7 +30,7 @@
 #include <string.h>
 #include <time.h>
 
-#if !defined(_MSC_VER)
+#if HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
@@ -148,7 +150,7 @@ static Log *initWithName(Log *self, const char *name) {
 
 	self = (Log *) super(Object, self, init);
 	if (self) {
-		self->name = strdup(name ? name : "default");
+		self->name = strdup(name ?: "default");
 		self->level = LogLevelInfo;
 		self->format = LOG_FORMAT_DEFAULT;
 		self->file = stdout;
@@ -221,7 +223,7 @@ static Log *sharedInstance(void) {
 	static Once once;
 	
 	do_once(&once, {
-		_sharedInstance = alloc(Log, init);
+		_sharedInstance = $(alloc(Log), init);
 	});
 	
 	return _sharedInstance;

@@ -21,11 +21,13 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+#include <Objectively/Config.h>
+
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
-#if !defined(_MSC_VER)
+#if HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
@@ -77,7 +79,7 @@ static void setup(void) {
 	atexit(teardown);
 }
 
-Class *_initialize(Class *clazz) {
+void _initialize(Class *clazz) {
 
 	assert(clazz);
 
@@ -116,17 +118,13 @@ Class *_initialize(Class *clazz) {
 			;
 		}
 	}
-
-	return clazz;
 }
-
-__thread ident _last_alloc;
 
 ident _alloc(Class *clazz) {
 
 	_initialize(clazz);
 
-	ident obj = _last_alloc = calloc(1, clazz->instanceSize);
+	ident obj = calloc(1, clazz->instanceSize);
 	assert(obj);
 
 	Object *object = (Object *) obj;
@@ -136,7 +134,7 @@ ident _alloc(Class *clazz) {
 
 	ident interface = clazz->interface;
 	do {
-		*(ident *) IDENT_OFFSET(obj, clazz->interfaceOffset) = interface;
+		*(ident *) (obj + clazz->interfaceOffset) = interface;
 	} while ((clazz = clazz->superclass));
 
 	return obj;

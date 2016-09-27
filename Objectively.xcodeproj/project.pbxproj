@@ -112,6 +112,7 @@
 		CE76DA6E1C4B17980096DD31 /* URL.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9621C481E390096DD31 /* URL.c */; };
 		CE76DA6F1C4B17980096DD31 /* URLSession.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9631C481E390096DD31 /* URLSession.c */; };
 		CE76DAFB1C4B186F0096DD31 /* HelloObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9191C481E390096DD31 /* HelloObjC.m */; };
+		CE9305BF1D9B1C5D00D62770 /* Config.h in Headers */ = {isa = PBXBuildFile; fileRef = CE9305BE1D9B1C5D00D62770 /* Config.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEA3B0881CBBE95E0082EE04 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */; };
 		CEB078B71D73B74800ABA6B3 /* Value.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB078B51D73B74800ABA6B3 /* Value.c */; };
 		CEB078B81D73B74800ABA6B3 /* Value.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB078B61D73B74800ABA6B3 /* Value.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -229,7 +230,6 @@
 		CE76D8FB1C481C4E0096DD31 /* URLSessionUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLSessionUploadTask.h; sourceTree = "<group>"; };
 		CE76D8FC1C481C4E0096DD31 /* Objectively.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Objectively.h; sourceTree = "<group>"; };
 		CE76D8FE1C481C4E0096DD31 /* Objectively.pc.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Objectively.pc.in; sourceTree = "<group>"; };
-		CE76D8FF1C481E390096DD31 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		CE76D9001C481E390096DD31 /* configure.ac */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = configure.ac; sourceTree = "<group>"; };
 		CE76D9011C481E390096DD31 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		CE76D9031C481E390096DD31 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -273,6 +273,7 @@
 		CE76DA2E1C4932340096DD31 /* Doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
 		CE76DAA01C4B17980096DD31 /* libObjectively-Tests.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libObjectively-Tests.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE76DAF91C4B184E0096DD31 /* libObjectively-Examples.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libObjectively-Examples.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE9305BE1D9B1C5D00D62770 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		CEA3B07D1CBBD3420082EE04 /* eclipse-code-templates.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "eclipse-code-templates.xml"; sourceTree = "<group>"; };
 		CEA3B0801CBBD3420082EE04 /* ___FILEBASENAME___.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "___FILEBASENAME___.c"; sourceTree = "<group>"; };
 		CEA3B0811CBBD3420082EE04 /* ___FILEBASENAME___.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___FILEBASENAME___.h"; sourceTree = "<group>"; };
@@ -333,7 +334,6 @@
 				CE76D7FD1C481C4E0096DD31 /* Sources */,
 				CEA3B07B1CBBD3420082EE04 /* Templates */,
 				CE76D9201C481E390096DD31 /* Tests */,
-				CE76D8FF1C481E390096DD31 /* config.h */,
 				CE76D9001C481E390096DD31 /* configure.ac */,
 				CE76D9011C481E390096DD31 /* COPYING */,
 				CE76DA2E1C4932340096DD31 /* Doxyfile */,
@@ -364,6 +364,7 @@
 				CE76D8631C481C4E0096DD31 /* Class.h */,
 				CE76D8641C481C4E0096DD31 /* Condition.c */,
 				CE76D8651C481C4E0096DD31 /* Condition.h */,
+				CE9305BE1D9B1C5D00D62770 /* Config.h */,
 				CE76D8661C481C4E0096DD31 /* Data.c */,
 				CE76D8671C481C4E0096DD31 /* Data.h */,
 				CE76D8681C481C4E0096DD31 /* Date.c */,
@@ -590,6 +591,7 @@
 				CE76DA061C4860120096DD31 /* Boole.h in Headers */,
 				CE76DA071C4860120096DD31 /* Class.h in Headers */,
 				CE76DA081C4860120096DD31 /* Condition.h in Headers */,
+				CE9305BF1D9B1C5D00D62770 /* Config.h in Headers */,
 				CE76DA091C4860120096DD31 /* Data.h in Headers */,
 				CE76DA0A1C4860120096DD31 /* Date.h in Headers */,
 				CE76DA0B1C4860120096DD31 /* DateFormatter.h in Headers */,
@@ -866,7 +868,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
@@ -886,7 +888,7 @@
 			buildSettings = {
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;

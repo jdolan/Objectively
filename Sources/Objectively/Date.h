@@ -23,7 +23,9 @@
 
 #pragma once
 
-#if !defined(_MSC_VER)
+#include <Objectively/Config.h>
+
+#if HAVE_SYS_TIME_H
 #include <sys/time.h>
 #endif
 

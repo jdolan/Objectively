@@ -44,7 +44,7 @@ static Object *copy(const Object *self) {
 
 	Dictionary *this = (Dictionary *) self;
 
-	MutableDictionary *copy = alloc(MutableDictionary, initWithCapacity, this->capacity);
+	MutableDictionary *copy = $(alloc(MutableDictionary), initWithCapacity, this->capacity);
 
 	$(copy, addEntriesFromDictionary, this);
 
@@ -78,7 +78,7 @@ static void addEntriesFromDictionary(MutableDictionary *self, const Dictionary *
  */
 static MutableDictionary *dictionary(void) {
 
-	return alloc(MutableDictionary, init);
+	return $(alloc(MutableDictionary), init);
 }
 
 /**
@@ -88,7 +88,7 @@ static MutableDictionary *dictionary(void) {
  */
 static MutableDictionary *dictionaryWithCapacity(size_t capacity) {
 
-	return alloc(MutableDictionary, initWithCapacity, capacity);
+	return $(alloc(MutableDictionary), initWithCapacity, capacity);
 }
 
 /**
@@ -178,13 +178,13 @@ static void setObjectForKey_resize(Dictionary *dict) {
 
 	if (dict->capacity) {
 
-		const float load = dict->count / (float)dict->capacity;
+		const float load = dict->count / (float) dict->capacity;
 		if (load >= MUTABLEDICTIONARY_MAX_LOAD) {
 
 			size_t capacity = dict->capacity;
 			ident *elements = dict->elements;
 
-			dict->capacity = (size_t)(dict->capacity * MUTABLEDICTIONARY_GROW_FACTOR);
+			dict->capacity = dict->capacity * MUTABLEDICTIONARY_GROW_FACTOR;
 			dict->count = 0;
 
 			dict->elements = calloc(dict->capacity, sizeof(ident));
@@ -229,7 +229,7 @@ static void setObjectForKey(MutableDictionary *self, const ident obj, const iden
 
 	MutableArray *array = dict->elements[bin];
 	if (array == NULL) {
-		array = dict->elements[bin] = alloc(MutableArray, init);
+		array = dict->elements[bin] = $(alloc(MutableArray), init);
 	}
 
 	const int index = $((Array *) array, indexOfObject, key);

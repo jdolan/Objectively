@@ -37,7 +37,7 @@ static Object *copy(const Object *self) {
 
 	URLRequest *this = (URLRequest *) self;
 
-	URLRequest *that = alloc(URLRequest, initWithURL, this->url);
+	URLRequest *that = $(alloc(URLRequest), initWithURL, this->url);
 
 	if (this->httpBody) {
 		that->httpBody = (Data *) $((Object *) this->httpBody, copy);
@@ -90,7 +90,7 @@ static URLRequest *initWithURL(URLRequest *self, URL *url) {
 void setValueForHTTPHeaderField(URLRequest *self, const char *value, const char *field) {
 
 	if (self->httpHeaders == NULL) {
-		self->httpHeaders = (Dictionary *) alloc(MutableDictionary, init);
+		self->httpHeaders = (Dictionary *) $(alloc(MutableDictionary), init);
 	}
 
 	String *object = str(value);

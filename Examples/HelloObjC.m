@@ -6,10 +6,10 @@
 
 int main(int argc, char **argv)
 {
-    Object *object = alloc(Object, init);
+	Object *object = $(alloc(Object), init);
 
     release(object);
-    
+
     String *string = str("Hello World!");
     
     NSLog(@"%@", [NSString stringWithUTF8String:string->chars]);

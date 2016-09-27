@@ -40,7 +40,7 @@ static NumberFormatter *initWithFormat(NumberFormatter *self, const char *fmt) {
 
 	self = (NumberFormatter *) super(Object, self, init);
 	if (self) {
-		self->fmt = fmt ? fmt : NUMBERFORMAT_DECIMAL;
+		self->fmt = fmt ?: NUMBERFORMAT_DECIMAL;
 	}
 
 	return self;
@@ -58,7 +58,7 @@ static Number *numberFromString(const NumberFormatter *self, const String *strin
 		
 		const int res = sscanf(string->chars, self->fmt, &value);
 		if (res == 1) {
-			return alloc(Number, initWithValue, value);
+			return $(alloc(Number), initWithValue, value);
 		}
 	}
 	
@@ -72,7 +72,7 @@ static Number *numberFromString(const NumberFormatter *self, const String *strin
  */
 static String *stringFromNumber(const NumberFormatter *self, const Number *number) {
 
-	return alloc(String, initWithFormat, self->fmt, number->value);
+	return $(alloc(String), initWithFormat, self->fmt, number->value);
 }
 
 #pragma mark - Class lifecycle
