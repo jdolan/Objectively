@@ -63,9 +63,9 @@ extern char *asprintf(char ** __restrict ret, char * __restrict format, ...);
 #define strcasecmp _stricmp
 
 // INTERLOCK STUFF
-#define __sync_val_compare_and_swap InterlockedCompareExchange
-#define __sync_add_and_fetch InterlockedAdd
-#define __sync_lock_test_and_set InterlockedExchangePointer
+#define __sync_val_compare_and_swap(c0, c1, c2) InterlockedCompareExchange((volatile long*)c0, c1, c2)
+#define __sync_add_and_fetch(c0, c1) InterlockedAdd((volatile long*)c0, c1)
+#define __sync_lock_test_and_set(c0, c1) InterlockedExchangePointer((PVOID volatile *)c0, (PVOID)c1)
 
 // POSIX STUFF
 #define strdup _strdup
