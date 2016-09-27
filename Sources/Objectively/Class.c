@@ -21,11 +21,13 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+#include "../../config.h"
+
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
-#if !defined(_MSC_VER)
+#if HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
