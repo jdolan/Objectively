@@ -28,7 +28,7 @@
 START_TEST(indexSet)
 	{
 		int indexes[] = { 1, 2, 3, 3, 2 };
-		IndexSet *indexSet = alloc(IndexSet, initWithIndexes, indexes, lengthof(indexes));
+		IndexSet *indexSet = $(alloc(IndexSet), initWithIndexes, indexes, lengthof(indexes));
 
 		ck_assert(indexSet != NULL);
 		ck_assert_int_eq(3, indexSet->count);

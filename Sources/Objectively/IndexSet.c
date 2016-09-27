@@ -68,7 +68,7 @@ static size_t compact(int *indexes, size_t count) {
 static Object *copy(const Object *self) {
 
 	IndexSet *this = (IndexSet *) self;
-	IndexSet *that = alloc(IndexSet, initWithIndexes, this->indexes, this->count);
+	IndexSet *that = $(alloc(IndexSet), initWithIndexes, this->indexes, this->count);
 
 	return (Object *) that;
 }

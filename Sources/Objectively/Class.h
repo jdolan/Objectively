@@ -130,7 +130,7 @@ struct Class {
 /**
  * @brief Initializes the given Class.
  */
-extern Class *_initialize(Class *clazz);
+extern void _initialize(Class *clazz);
 
 /**
  * @brief Instantiate a type through the given Class.
@@ -170,15 +170,10 @@ extern ident retain(ident obj);
 extern size_t _pageSize;
 
 /**
- * @brief The last Object allocated via `_alloc`.
- */
-extern __thread ident _last_alloc;
-
-/**
  * @brief Allocate and initialize and instance of `type`.
  */
-#define alloc(type, initializer, ...) \
-	((type *) (_alloc(&_##type)))->interface->initializer((type *) _last_alloc, ## __VA_ARGS__)
+#define alloc(type) \
+	((type *) _alloc(&_##type))
 
 /**
  * @brief Safely cast to a type.
@@ -202,13 +197,19 @@ extern __thread ident _last_alloc;
  * @brief Invoke an instance method.
  */
 #define $(obj, method, ...) \
-	(obj)->interface->method(obj, ## __VA_ARGS__)
+	({ \
+		typeof(obj) _obj = obj; \
+		_obj->interface->method(_obj, ## __VA_ARGS__); \
+	})
 
 /**
  * @brief Invoke a Class method.
  */
 #define $$(type, method, ...) \
-	interfaceof(type, _initialize(&_##type))->method(__VA_ARGS__)
+	({ \
+		_initialize(&_##type); \
+		interfaceof(type, &_##type)->method(__VA_ARGS__); \
+	})
 
 /**
  * @brief Invoke a Superclass instance method.

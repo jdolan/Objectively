@@ -106,10 +106,10 @@ static Operation *init(Operation *self) {
 	self = (Operation *) super(Object, self, init);
 	if (self) {
 
-		self->locals.condition = alloc(Condition, init);
+		self->locals.condition = $(alloc(Condition), init);
 		assert(self->locals.condition);
 
-		self->locals.dependencies = alloc(MutableArray, init);
+		self->locals.dependencies = $(alloc(MutableArray), init);
 		assert(self->locals.dependencies);
 	}
 

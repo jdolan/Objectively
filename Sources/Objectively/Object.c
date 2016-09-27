@@ -44,8 +44,6 @@ static Object *copy(const Object *self) {
 
 	Object *object = memcpy(obj, self, self->clazz->instanceSize);
 	object->referenceCount = 1;
-
-	free(obj);
 	
 	return object;
 }
@@ -67,7 +65,7 @@ static void dealloc(Object *self) {
  */
 static String *description(const Object *self) {
 
-	return alloc(String, initWithFormat, "%s@%p", self->clazz->name, self);
+	return $(alloc(String), initWithFormat, "%s@%p", self->clazz->name, self);
 }
 
 /**

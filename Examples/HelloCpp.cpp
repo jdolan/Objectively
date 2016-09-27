@@ -29,7 +29,7 @@ extern "C" {
 
 int main(int argc, const char **argv) {
 
-	Object *object = alloc(Object, init);
+	Object *object = $(alloc(Object), init);
 
 	release(object);
 
