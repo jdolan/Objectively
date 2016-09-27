@@ -137,7 +137,7 @@ static void deleteCharactersInRange(MutableString *self, const Range range) {
 	ident ptr = self->string.chars + range.location;
 	const size_t length = self->string.length - range.location - range.length + 1;
 
-	memmove(ptr, IDENT_OFFSET(ptr, range.length), length);
+	memmove(ptr, ptr + range.length, length);
 
 	self->string.length -= range.length;
 }

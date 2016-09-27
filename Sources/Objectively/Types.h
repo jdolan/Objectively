@@ -42,9 +42,6 @@
  */
 typedef void *ident;
 
-#define IDENT_OFFSET(obj, offset) \
-	(ident *)((uint8_t *)(obj) + offset)
-
 /**
  * @brief A location and length into contiguous collections.
  */
