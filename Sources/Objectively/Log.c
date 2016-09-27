@@ -148,7 +148,7 @@ static Log *initWithName(Log *self, const char *name) {
 
 	self = (Log *) super(Object, self, init);
 	if (self) {
-		self->name = strdup(name ? name : "default");
+		self->name = strdup(name ?: "default");
 		self->level = LogLevelInfo;
 		self->format = LOG_FORMAT_DEFAULT;
 		self->file = stdout;

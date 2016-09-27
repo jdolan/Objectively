@@ -78,7 +78,7 @@ static DateFormatter *initWithFormat(DateFormatter *self, const char *fmt) {
 
 	self = (DateFormatter *) super(Object, self, init);
 	if (self) {
-		self->fmt = fmt ? fmt : DATEFORMAT_ISO8601;
+		self->fmt = fmt ?: DATEFORMAT_ISO8601;
 	}
 
 	return self;
