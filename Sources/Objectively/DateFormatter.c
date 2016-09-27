@@ -47,7 +47,7 @@ static Date *dateFromCharacters(const DateFormatter *self, const char *chars) {
 		const char *res = strptime(chars, self->fmt, &time);
 		if (res) {
 			const Time t = { .tv_sec = mktime(&time) };
-			return alloc(Date, initWithTime, &t);
+			return $(alloc(Date), initWithTime, &t);
 		}
 	}
 #endif
@@ -109,7 +109,7 @@ static String *stringFromDate(const DateFormatter *self, const Date *date) {
 	str = realloc(str, length + 1 * sizeof(char));
 	assert(str);
 
-	return alloc(String, initWithMemory, str, length);
+	return $(alloc(String), initWithMemory, str, length);
 }
 
 #pragma mark - Class lifecycle

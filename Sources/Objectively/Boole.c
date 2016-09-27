@@ -46,7 +46,7 @@ static String *description(const Object *self) {
 
 	const Boole *this = (Boole *) self;
 
-	return alloc(String, initWithCharacters, this->value ? "true" : "false");
+	return $(alloc(String), initWithCharacters, this->value ? "true" : "false");
 }
 
 #pragma mark - Boole

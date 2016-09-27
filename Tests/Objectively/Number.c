@@ -27,7 +27,7 @@
 
 START_TEST(number)
 	{
-		Number *number1 = alloc(Number, initWithValue, 1.001);
+		Number *number1 = $(alloc(Number), initWithValue, 1.001);
 		ck_assert(number != NULL);
 
 		const float f = $(number1, floatValue);
@@ -35,7 +35,7 @@ START_TEST(number)
 		ck_assert(1 == $(number1, intValue));
 		ck_assert(true == $(number1, boolValue));
 
-		Number *number2 = alloc(Number, initWithValue, 1.001);
+		Number *number2 = $(alloc(Number), initWithValue, 1.001);
 		ck_assert(number2 != NULL);
 
 		ck_assert_int_eq($((Object *) number1, hash), $((Object *) number2, hash));
