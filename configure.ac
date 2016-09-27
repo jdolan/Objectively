@@ -57,6 +57,7 @@ AC_CHECK_HEADERS([iconv.h])
 AC_CHECK_HEADERS([locale.h])
 AC_CHECK_HEADERS([xlocale.h])
 AC_CHECK_HEADERS([pthread.h])
+AC_CHECK_HEADERS([sys/time.h])
 
 PKG_CHECK_MODULES([CHECK], [check >= 0.9.4])
 PKG_CHECK_MODULES([CURL], [libcurl >= 7.16.0])
