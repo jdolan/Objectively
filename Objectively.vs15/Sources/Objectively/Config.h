@@ -21,11 +21,6 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-// Visual Studio Windows-related shims and adjustments
-#if !defined(_MSC_VER)
-#error What are you doing
-#endif
-
 #pragma once
 
 // WinSock2 is included since it includes Windows.h
@@ -84,3 +79,10 @@ extern char *asprintf(char ** __restrict ret, char * __restrict format, ...);
 #define tzset _tzset
 #define alloca _alloca
 #endif
+
+#define iconv(c0, c1, c2, c3, c4) libiconv(c0, (const char **)c1, c2, c3, c4)
+
+#undef interface
+
+#undef HAVE_UNISTD_H
+#undef HAVE_SYS_TIME_H

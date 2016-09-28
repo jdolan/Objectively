@@ -23,7 +23,7 @@
 
 // Visual Studio Windows-related shims and adjustments
 
-#include "Windowly.h"
+#include <Objectively/Config.h>
 
 #pragma region gettimeofday
 
