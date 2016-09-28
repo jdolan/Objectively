@@ -110,7 +110,7 @@ static Locale *initWithLocale(Locale *self, locale_t locale) {
  */
 static Locale *systemLocale(void) {
 #if defined(_WIN32)
-	return $alloc(Locale, initWithLocale, _get_current_locale());
+	return $(alloc(Locale), initWithLocale, _get_current_locale());
 #else
 	return $(alloc(Locale), initWithLocale, duplocale(LC_GLOBAL_LOCALE));
 #endif

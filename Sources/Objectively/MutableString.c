@@ -27,6 +27,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <Objectively/Config.h>
+
 #include <Objectively/MutableString.h>
 
 #define _Class _MutableString

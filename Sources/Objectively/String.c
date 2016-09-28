@@ -29,6 +29,8 @@
 #include <string.h>
 #include <wchar.h>
 
+#include <Objectively/Config.h>
+
 #include <Objectively/Hash.h>
 #include <Objectively/MutableArray.h>
 #include <Objectively/MutableString.h>

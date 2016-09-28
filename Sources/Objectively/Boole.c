@@ -23,6 +23,8 @@
 
 #include <assert.h>
 
+#include <Objectively/Config.h>
+
 #include <Objectively/Boole.h>
 #include <Objectively/Once.h>
 #include <Objectively/String.h>
