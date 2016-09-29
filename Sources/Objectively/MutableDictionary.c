@@ -178,7 +178,7 @@ static void setObjectForKey_resize(Dictionary *dict) {
 
 	if (dict->capacity) {
 
-		const float load = dict->count / dict->capacity;
+		const float load = dict->count / (float) dict->capacity;
 		if (load >= MUTABLEDICTIONARY_MAX_LOAD) {
 
 			size_t capacity = dict->capacity;

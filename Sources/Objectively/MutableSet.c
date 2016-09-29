@@ -62,7 +62,7 @@ static void addObject_resize(Set *set) {
 
 	if (set->capacity) {
 
-		const float load = set->count / set->capacity;
+		const float load = set->count / (float) set->capacity;
 		if (load >= MUTABLESET_MAX_LOAD) {
 
 			size_t capacity = set->capacity;

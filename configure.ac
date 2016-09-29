@@ -2,7 +2,7 @@ AC_PREREQ(2.69)
 
 AC_INIT([Objectively], [0.3.0], [jay@jaydolan.com])
 
-AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_HEADERS([Sources/Objectively/Config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([Sources/Objectively.h])
 
@@ -17,6 +17,8 @@ AC_PROG_LIBTOOL
 
 AM_INIT_AUTOMAKE([foreign])
 AM_SILENT_RULES([yes])
+
+AH_TOP([#pragma once])
 
 HOST_NAME=""
 HOST_CFLAGS=""
@@ -57,6 +59,7 @@ AC_CHECK_HEADERS([iconv.h])
 AC_CHECK_HEADERS([locale.h])
 AC_CHECK_HEADERS([xlocale.h])
 AC_CHECK_HEADERS([pthread.h])
+AC_CHECK_HEADERS([sys/time.h])
 
 PKG_CHECK_MODULES([CHECK], [check >= 0.9.4])
 PKG_CHECK_MODULES([CURL], [libcurl >= 7.16.0])

@@ -21,10 +21,15 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+#include <Objectively/Config.h>
+
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+
+#if HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #include <Objectively/Class.h>
 #include <Objectively/Object.h>
@@ -65,7 +70,7 @@ static void setup(void) {
 
 	_classes = NULL;
 
-#if __MINGW32__
+#if !defined(_SC_PAGESIZE)
 	_pageSize = 4096;
 #else
 	_pageSize = sysconf(_SC_PAGESIZE);

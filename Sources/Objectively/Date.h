@@ -23,7 +23,12 @@
 
 #pragma once
 
+#include <Objectively/Config.h>
+
+#if HAVE_SYS_TIME_H
 #include <sys/time.h>
+#endif
+
 #include <time.h>
 
 #include <Objectively/Object.h>

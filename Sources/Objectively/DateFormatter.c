@@ -38,8 +38,8 @@
  */
 static Date *dateFromCharacters(const DateFormatter *self, const char *chars) {
 
-#if defined(__MINGW32__)
-	fprintf(stderr, "WARNING:%s: not implemented (mingw32)\n", __func__);
+#if defined(_WIN32)
+	fprintf(stderr, "WARNING:%s: not implemented (Windows)\n", __func__);
 #else
 	if (chars) {
 		struct tm time;
@@ -94,7 +94,7 @@ static String *stringFromDate(const DateFormatter *self, const Date *date) {
 	const time_t seconds = date->time.tv_sec;
 	struct tm time;
 
-#if defined(__MINGW32__)
+#if defined(_WIN32)
 	int err = localtime_s(&time, &seconds);
 	assert(err == 0);
 #else

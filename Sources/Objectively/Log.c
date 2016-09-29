@@ -27,7 +27,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+#if HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #include <Objectively/Log.h>
 #include <Objectively/Once.h>

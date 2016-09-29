@@ -271,7 +271,7 @@ static void sort(MutableArray *self, Comparator comparator) {
 	qsort_r(self->array.elements, self->array.count, sizeof(ident), comparator, _sort);
 }
 
-#elif defined(__MINGW32__)
+#elif defined(_WIN32)
 
 /**
  * @brief qsort_s comparator.
