@@ -2,6 +2,9 @@
 AM_TESTS_ENVIRONMENT = \
 	AM_TESTS=1; export AM_TESTS;
 
+DEFAULT_INCLUDES = \
+	$(top_srcdir)/Sources
+
 TESTS = \
 	Array \
 	Boole \

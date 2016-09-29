@@ -243,7 +243,6 @@
 		CE76D91E1C481E390096DD31 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		CE76D91F1C481E390096DD31 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CE76D9221C481E390096DD31 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		CE76D9421C481E390096DD31 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		CE76D9431C481E390096DD31 /* Array.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Array.c; sourceTree = "<group>"; };
 		CE76D9441C481E390096DD31 /* Boole.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Boole.c; sourceTree = "<group>"; };
 		CE76D9471C481E390096DD31 /* Data.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Data.c; sourceTree = "<group>"; };
@@ -484,7 +483,6 @@
 			isa = PBXGroup;
 			children = (
 				CE76D94A1C481E390096DD31 /* Fixtures */,
-				CE76D9421C481E390096DD31 /* .gitignore */,
 				CE76D9431C481E390096DD31 /* Array.c */,
 				CE76D9441C481E390096DD31 /* Boole.c */,
 				CE76D9471C481E390096DD31 /* Data.c */,
@@ -495,7 +493,6 @@
 				CE76D94D1C481E390096DD31 /* JSON.c */,
 				CE76D9501C481E390096DD31 /* Locale.c */,
 				CE76D9511C481E390096DD31 /* Log.c */,
-				CE76D9531C481E390096DD31 /* Makefile.am */,
 				CE76D9551C481E390096DD31 /* MutableArray.c */,
 				CE76D9561C481E390096DD31 /* MutableData.c */,
 				CE76D9571C481E390096DD31 /* MutableDictionary.c */,
@@ -511,6 +508,7 @@
 				CE76D9611C481E390096DD31 /* Thread.c */,
 				CE76D9621C481E390096DD31 /* URL.c */,
 				CE76D9631C481E390096DD31 /* URLSession.c */,
+				CE76D9531C481E390096DD31 /* Makefile.am */,
 			);
 			path = Objectively;
 			sourceTree = "<group>";
