@@ -25,8 +25,6 @@
 
 #include <curl/curl.h>
 
-#include <Objectively/Config.h>
-
 #include <Objectively/Once.h>
 #include <Objectively/URLSession.h>
 

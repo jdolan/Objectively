@@ -106,3 +106,7 @@ typedef _Bool (*Predicate)(ident obj, ident data);
 #ifndef min
  #define min(a, b) ({ typeof (a) _a = (a); typeof (b) _b = (b); _a < _b ? _a : _b; })
 #endif
+
+#if defined(_MSC_VER)
+ #include "Windowly.h"
+#endif

@@ -150,6 +150,9 @@
     <ClInclude Include="Sources\regex.h">
       <Filter>Sources</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Objectively\Config.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Sources\Objectively\MutableArray.c">

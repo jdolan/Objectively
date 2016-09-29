@@ -64,6 +64,7 @@
     <ClInclude Include="..\Sources\Objectively\URLSessionTask.h" />
     <ClInclude Include="..\Sources\Objectively\URLSessionUploadTask.h" />
     <ClInclude Include="..\Sources\Objectively\Value.h" />
+    <ClInclude Include="Sources\Objectively\Config.h" />
     <ClInclude Include="Sources\regex.h" />
     <ClInclude Include="Sources\Windowly.h" />
   </ItemGroup>
