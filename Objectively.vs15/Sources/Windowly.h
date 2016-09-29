@@ -21,11 +21,6 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-// Visual Studio Windows-related shims and adjustments
-#if !defined(_MSC_VER)
-#error What are you doing
-#endif
-
 #pragma once
 
 // WinSock2 is included since it includes Windows.h
@@ -63,9 +58,9 @@ extern char *asprintf(char ** __restrict ret, char * __restrict format, ...);
 #define strcasecmp _stricmp
 
 // INTERLOCK STUFF
-#define __sync_val_compare_and_swap InterlockedCompareExchange
-#define __sync_add_and_fetch InterlockedAdd
-#define __sync_lock_test_and_set InterlockedExchangePointer
+#define __sync_val_compare_and_swap(c0, c1, c2) InterlockedCompareExchange((volatile long*)c0, c1, c2)
+#define __sync_add_and_fetch(c0, c1) InterlockedAdd((volatile long*)c0, c1)
+#define __sync_lock_test_and_set(c0, c1) InterlockedExchangePointer((PVOID volatile *)c0, (PVOID)c1)
 
 // POSIX STUFF
 #define strdup _strdup
@@ -84,3 +79,7 @@ extern char *asprintf(char ** __restrict ret, char * __restrict format, ...);
 #define tzset _tzset
 #define alloca _alloca
 #endif
+
+#define iconv(c0, c1, c2, c3, c4) libiconv(c0, (const char **)c1, c2, c3, c4)
+
+#undef interface
