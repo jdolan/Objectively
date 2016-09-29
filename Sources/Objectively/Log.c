@@ -28,6 +28,8 @@
 #include <string.h>
 #include <time.h>
 
+#include <Objectively/Config.h>
+
 #if HAVE_UNISTD_H
 #include <unistd.h>
 #endif
