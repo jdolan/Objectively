@@ -59,7 +59,7 @@ static void dealloc(Object *self) {
 static URLSessionDataTask *dataTaskWithRequest(URLSession *self, URLRequest *request,
 		URLSessionTaskCompletion completion) {
 
-	URLSessionTask *task = (URLSessionTask *) _alloc(&_URLSessionDataTask);
+	URLSessionTask *task = (URLSessionTask *) alloc(URLSessionDataTask);
 	task = $(task, initWithRequestInSession, request, self, completion);
 
 	WithLock(self->locals.lock, {
@@ -94,7 +94,7 @@ static URLSessionDataTask *dataTaskWithURL(URLSession *self, URL *url,
 static URLSessionDownloadTask *downloadTaskWithRequest(URLSession *self, URLRequest *request,
 		URLSessionTaskCompletion completion) {
 
-	URLSessionTask *task = (URLSessionTask *) _alloc(&_URLSessionDownloadTask);
+	URLSessionTask *task = (URLSessionTask *) alloc(URLSessionDownloadTask);
 	task = $(task, initWithRequestInSession, request, self, completion);
 
 	WithLock(self->locals.lock, {
@@ -337,7 +337,7 @@ static Array *tasks(const URLSession *self) {
 static URLSessionUploadTask *uploadTaskWithRequest(URLSession *self, URLRequest *request,
 		URLSessionTaskCompletion completion) {
 
-	URLSessionTask *task = (URLSessionTask *) _alloc(&_URLSessionUploadTask);
+	URLSessionTask *task = (URLSessionTask *) alloc(URLSessionUploadTask);
 	task = $(task, initWithRequestInSession, request, self, completion);
 
 	WithLock(self->locals.lock, {

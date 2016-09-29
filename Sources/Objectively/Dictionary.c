@@ -216,7 +216,7 @@ static Dictionary *dictionaryWithDictionary(const Dictionary *dictionary) {
  */
 static Dictionary *dictionaryWithObjectsAndKeys(ident obj, ...) {
 	
-	Dictionary *dict = (Dictionary *) super(Object, _alloc(&_Dictionary), init);
+	Dictionary *dict = (Dictionary *) $((Object *) alloc(Dictionary), init);
 	if (dict) {
 		
 		va_list args;

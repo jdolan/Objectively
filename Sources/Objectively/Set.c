@@ -317,7 +317,7 @@ static Set *setWithArray(const Array *array) {
  */
 static Set *setWithObjects(ident obj, ...) {
 
-	Set *set = (Set *) super(Object, _alloc(&_Set), init);
+	Set *set = (Set *) $((Object *) alloc(Set), init);
 	if (set) {
 
 		va_list args;
