@@ -6,8 +6,6 @@ configuration: Release
 platform:
 - Win32
 - x64
-init:
-- ps: 
 install:
 - ps: >-
     Push-Location "Objectively.vs15\"
@@ -22,4 +20,14 @@ install:
 build:
   parallel: true
   verbosity: minimal
+after_build:
+- ps: >-
+    7z a __dep.zip %APPVEYOR_BUILD_FOLDER%\Sources\*.h
+
+    7z a __dep.zip %APPVEYOR_BUILD_FOLDER%\Objectively.vs15\Sources\*.h
+
+    7z a __dep.zip %APPVEYOR_BUILD_FOLDER%\Objectively.vs15\bin\*.lib
 test: off
+deploy: off
+artifacts:
+- path: __dep.zip
