@@ -22,11 +22,9 @@ build:
   verbosity: minimal
 after_build:
 - ps: >-
-    7z a __dep.zip -r Sources\*.h
+    7z a __dep.zip -r *.h
 
-    7z a __dep.zip -r Objectively.vs15\Sources\*.h
-
-    7z a __dep.zip -r Objectively.vs15\bin\*.lib
+    7z a __dep.zip -r *.lib
 test: off
 deploy: off
 artifacts:
