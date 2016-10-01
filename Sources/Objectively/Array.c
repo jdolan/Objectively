@@ -143,7 +143,7 @@ static Array *arrayWithArray(const Array *array) {
  */
 static Array *arrayWithObjects(ident obj, ...) {
 
-	Array *array = (Array *) super(Object, _alloc(&_Array), init);
+	Array *array = (Array *) $((Object *) alloc(Array), init);
 	if (array) {
 
 		va_list args;

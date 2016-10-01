@@ -62,7 +62,7 @@ static Boole *False(void) {
 	static Once once;
 
 	do_once(&once, {
-		_False = (Boole *) super(Object, _alloc(&_Boole), init);
+		_False = (Boole *) $((Object *) alloc(Boole), init);
 		_False->value = false;
 	});
 
@@ -80,7 +80,7 @@ static Boole *True(void) {
 	static Once once;
 
 	do_once(&once, {
-		_True = (Boole *) super(Object, _alloc(&_Boole), init);
+		_True = (Boole *) $((Object *) alloc(Boole), init);
 		_True->value = true;
 	});
 
