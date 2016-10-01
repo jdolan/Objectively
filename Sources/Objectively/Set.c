@@ -131,9 +131,8 @@ static _Bool isEqual(const Object *self, const Object *other) {
 /**
  * @brief SetEnumerator for allObjects.
  */
-static _Bool allObjects_enumerator(const Set *set, ident obj, ident data) {
-
-	$((MutableArray *) data, addObject, obj); return false;
+static void allObjects_enumerator(const Set *set, ident obj, ident data) {
+	$((MutableArray *) data, addObject, obj);
 }
 
 /**
@@ -182,11 +181,7 @@ static void enumerateObjects(const Set *self, SetEnumerator enumerator, ident da
 		if (array) {
 
 			for (size_t j = 0; j < array->count; j++) {
-				ident obj = $(array, objectAtIndex, j);
-
-				if (enumerator(self, obj, data)) {
-					return;
-				}
+				enumerator(self, $(array, objectAtIndex, j), data);
 			}
 		}
 	}
@@ -224,9 +219,8 @@ static Set *filteredSet(const Set *self, Predicate predicate, ident data) {
 /**
  * @brief ArrayEnumerator for initWithArray.
  */
-static _Bool initWithArray_enumerator(const Array *array, ident obj, ident data) {
-
-	$$(MutableSet, addObject, (MutableSet *) data, obj); return false;
+static void initWithArray_enumerator(const Array *array, ident obj, ident data) {
+	$$(MutableSet, addObject, (MutableSet *) data, obj);
 }
 
 /**
@@ -278,9 +272,8 @@ static Set *initWithObjects(Set *self, ...) {
 /**
  * @brief SetEnumerator for initWithSet.
  */
-static _Bool initWithSet_enumerator(const Set *set, ident obj, ident data) {
-	
-	$$(MutableSet, addObject, (MutableSet *) data, obj); return false;
+static void initWithSet_enumerator(const Set *set, ident obj, ident data) {
+	$$(MutableSet, addObject, (MutableSet *) data, obj);
 }
 
 /**

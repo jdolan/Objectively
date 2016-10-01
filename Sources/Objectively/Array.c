@@ -235,9 +235,7 @@ static void enumerateObjects(const Array *self, ArrayEnumerator enumerator, iden
 	assert(enumerator);
 
 	for (size_t i = 0; i < self->count; i++) {
-		if (enumerator(self, self->elements[i], data)) {
-			return;
-		}
+		enumerator(self, self->elements[i], data);
 	}
 }
 

@@ -47,10 +47,8 @@ typedef struct SetInterface SetInterface;
  * @param set The Set.
  * @param obj The Object for the current iteration.
  * @param data User data.
- *
- * @return See the documentation for the enumeration methods.
  */
-typedef _Bool (*SetEnumerator)(const Set *set, ident obj, ident data);
+typedef void (*SetEnumerator)(const Set *set, ident obj, ident data);
 
 /**
  * @brief Immutable sets.

@@ -46,10 +46,8 @@ typedef struct ArrayInterface ArrayInterface;
  * @param array The Array.
  * @param obj The Object for the current iteration.
  * @param data User data.
- *
- * @return See the documentation for the enumeration methods.
  */
-typedef _Bool (*ArrayEnumerator)(const Array *array, ident obj, ident data);
+typedef void (*ArrayEnumerator)(const Array *array, ident obj, ident data);
 
 /**
  * @brief Immutable arrays.

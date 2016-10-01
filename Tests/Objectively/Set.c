@@ -25,13 +25,11 @@
 
 #include <Objectively.h>
 
-_Bool enumerator(const Set *set, ident obj, ident data) {
-
-	(*(int *) data)++; return false;
+static void enumerator(const Set *set, ident obj, ident data) {
+	(*(int *) data)++;
 }
 
-_Bool filter(ident obj, ident data) {
-
+static _Bool filter(ident obj, ident data) {
 	return obj == data;
 }
 
