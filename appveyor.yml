@@ -1,0 +1,31 @@
+version: 1.0.{build}
+branches:
+  only:
+  - feature/vs-ci
+configuration: Release
+platform:
+- Win32
+- x64
+install:
+- ps: >-
+    Push-Location "Objectively.vs15\"
+
+    [Environment]::CurrentDirectory = $PWD
+
+    .\PREPARE_ALL.ps1
+
+    Pop-Location
+
+    [Environment]::CurrentDirectory = $PWD
+build:
+  parallel: true
+  verbosity: minimal
+after_build:
+- ps: >-
+    7z a __dep.zip -r *.h
+
+    7z a __dep.zip -r *.lib
+test: off
+deploy: off
+artifacts:
+- path: __dep.zip
