@@ -27,7 +27,6 @@
 
 /**
  * @file
- *
  * @brief The IndexPath type.
  */
 
@@ -36,21 +35,18 @@ typedef struct IndexPathInterface IndexPathInterface;
 
 /**
  * @brief Index paths represent the path to an element or node within a tree or graph structure.
- *
  * @extends Object
  */
 struct IndexPath {
 	
 	/**
 	 * @brief The parent.
-	 *
 	 * @private
 	 */
 	Object object;
 	
 	/**
 	 * @brief The typed interface.
-	 *
 	 * @private
 	 */
 	IndexPathInterface *interface;
@@ -78,38 +74,30 @@ struct IndexPathInterface {
 
 	/**
 	 * @fn int IndexPath::indexAtPosition(const IndexPath *self, int position)
-	 *
+	 * @param self The IndexPath.
 	 * @param position The index position.
-	 *
 	 * @return The index at the given position.
-	 *
 	 * @memberof IndexPath
 	 */
 	int (*indexAtPosition)(const IndexPath *self, int position);
 
 	/**
 	 * @fn IndexPath *IndexPath::initWithIndex(IndexPath *self, int index)
-	 *
 	 * @brief Initializes this IndexPath with the specified index.
-	 *
+	 * @param self The IndexPath.
 	 * @param index The index.
-	 *
 	 * @return The intialized IndexPath, or `NULL` on error.
-	 *
 	 * @memberof IndexPath
 	 */
 	IndexPath *(*initWithIndex)(IndexPath *self, int index);
 
 	/**
 	 * @fn IndexPath *IndexPath::initWithIndexes(IndexPath *self, int *indexes, size_t length)
-	 *
 	 * @brief Initializes this IndexPath with the specified indexes and length.
-	 *
+	 * @param self The IndexPath.
 	 * @param indexes The indexes.
 	 * @param length The length of `indexes`.
-	 *
 	 * @return The intialized IndexPath, or `NULL` on error.
-	 *
 	 * @memberof IndexPath
 	 */
 	IndexPath *(*initWithIndexes)(IndexPath *self, int *indexes, size_t length);

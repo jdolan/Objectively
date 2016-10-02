@@ -27,7 +27,6 @@
 
 /**
  * @file
- *
  * @brief Mutable key-value stores.
  */
 
@@ -35,23 +34,19 @@ typedef struct MutableDictionaryInterface MutableDictionaryInterface;
 
 /**
  * @brief Mutable key-value stores.
- *
  * @extends Dictionary
- *
  * @ingroup Collections
  */
 struct MutableDictionary {
 
 	/**
 	 * @brief The parent.
-	 *
 	 * @private
 	 */
 	Dictionary dictionary;
 
 	/**
 	 * @brief The typed interface.
-	 *
 	 * @private
 	 */
 	MutableDictionaryInterface *interface;
@@ -69,99 +64,82 @@ struct MutableDictionaryInterface {
 
 	/**
 	 * @fn void MutableDictionary::addEntriesFromDictionary(MutableDictionary *self, const Dictionary *dictionary)
-	 *
 	 * @brief Adds the key-value entries from `dictionary` to this MutableDictionary.
-	 *
+	 * @param self The MutableDictionary.
 	 * @param dictionary A Dictionary.
-	 *
 	 * @memberof MutableDictionary
 	 */
 	void (*addEntriesFromDictionary)(MutableDictionary *self, const Dictionary *dictionary);
 
 	/**
 	 * @static
-	 *
 	 * @fn MutableDictionary *MutableDictionary::dictionary(void)
-	 *
 	 * @brief Returns a new MutableDictionary.
-	 *
 	 * @return The new MutableDictionary, or `NULL` on error.
-	 *
 	 * @memberof MutableDictionary
 	 */
 	MutableDictionary *(*dictionary)(void);
 
 	/**
 	 * @static
-	 *
 	 * @fn MutableDictionary *MutableDictionary::dictionaryWithCapacity(size_t capacity)
-	 *
 	 * @brief Returns a new MutableDictionary with the given `capacity`.
-	 *
 	 * @param capacity The desired initial capacity.
-	 *
 	 * @return The new MutableDictionary, or `NULL` on error.
-	 *
 	 * @memberof MutableDictionary
 	 */
 	MutableDictionary *(*dictionaryWithCapacity)(size_t capacity);
 
 	/**
 	 * @fn MutableDictionary *MutableDictionary::init(MutableDictionary *self)
-	 *
 	 * @brief Initializes this MutableDictionary.
-	 *
+	 * @param self The MutableDictionary.
 	 * @return The initialized MutableDictionary, or `NULL` on error.
-	 *
 	 * @memberof MutableDictionary
 	 */
 	MutableDictionary *(*init)(MutableDictionary *self);
 
 	/**
 	 * @fn MutableDictionary *MutableDictionary::initWithCapacity(MutableDictionary *self, size_t capacity)
-	 *
 	 * @brief Initializes this MutableDictionary with the specified capacity.
-	 *
+	 * @param self The MutableDictionary.
 	 * @param capacity The initial capacity.
-	 *
 	 * @return The initialized MutableDictionary, or `NULL` on error.
-	 *
 	 * @memberof MutableDictionary
 	 */
 	MutableDictionary *(*initWithCapacity)(MutableDictionary *self, size_t capacity);
 
 	/**
 	 * @fn void MutableDictionary::removeAllObjects(MutableDictionary *self)
-	 *
 	 * @brief Removes all Objects from this MutableDictionary.
-	 *
+	 * @param self The MutableDictionary.
 	 * @memberof MutableDictionary
 	 */
 	void (*removeAllObjects)(MutableDictionary *self);
 
 	/**
 	 * @fn void MutableDictionary::removeObjectForKey(MutableDictionary *self, const ident key)
-	 *
 	 * @brief Removes the specified Object from this MutableDictionary.
-	 *
+	 * @param self The MutableDictionary.
+	 * @param key The key of the Object to remove.
 	 * @memberof MutableDictionary
 	 */
 	void (*removeObjectForKey)(MutableDictionary *self, const ident key);
 
 	/**
 	 * @fn void MutableDictionary ::setObjectForKey(MutableDictionary *self, const ident obj, const ident key)
-	 *
 	 * @brief Sets a pair in this MutableDictionary.
-	 *
+	 * @param self The MutableDictionary.
+	 * @param obj The Object to set.
+	 * @param key The key of the Object to set.
 	 * @memberof MutableDictionary
 	 */
 	void (*setObjectForKey)(MutableDictionary *self, const ident obj, const ident key);
 
 	/**
 	 * @fn void MutableDictionary ::setObjectsForKeys(MutableDictionary *self, ...)
-	 *
 	 * @brief Sets pairs in this MutableDictionary from the NULL-terminated list.
-	 *
+	 * @param self The MutableDictionary.
 	 * @memberof MutableDictionary
 	 */
 	void (*setObjectsForKeys)(MutableDictionary *self, ...);

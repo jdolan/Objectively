@@ -137,7 +137,6 @@ static void allObjects_enumerator(const Set *set, ident obj, ident data) {
 
 /**
  * @fn Array *Set::allObjects(const Set *self)
- *
  * @memberof Set
  */
 static Array *allObjects(const Set *self) {
@@ -151,7 +150,6 @@ static Array *allObjects(const Set *self) {
 
 /**
  * @fn _Bool Set::containsObject(const Set *self, const ident obj)
- *
  * @memberof Set
  */
 static _Bool containsObject(const Set *self, const ident obj) {
@@ -168,7 +166,6 @@ static _Bool containsObject(const Set *self, const ident obj) {
 
 /**
  * @fn void Set::enumerateObjects(const Set *self, SetEnumerator enumerator, ident data)
- *
  * @memberof Set
  */
 static void enumerateObjects(const Set *self, SetEnumerator enumerator, ident data) {
@@ -189,7 +186,6 @@ static void enumerateObjects(const Set *self, SetEnumerator enumerator, ident da
 
 /**
  * @fn void Set::filteredSet(const Set *self, Predicate predicate, ident data)
- *
  * @memberof Set
  */
 static Set *filteredSet(const Set *self, Predicate predicate, ident data) {
@@ -225,7 +221,6 @@ static void initWithArray_enumerator(const Array *array, ident obj, ident data) 
 
 /**
  * @fn Set *Set::initWithArray(Set *self, const Array *array)
- *
  * @memberof Set
  */
 static Set *initWithArray(Set *self, const Array *array) {
@@ -242,7 +237,6 @@ static Set *initWithArray(Set *self, const Array *array) {
 
 /**
  * @fn Set *Set::initWithObjects(Set *self, ...)
- *
  * @memberof Set
  */
 static Set *initWithObjects(Set *self, ...) {
@@ -278,7 +272,6 @@ static void initWithSet_enumerator(const Set *set, ident obj, ident data) {
 
 /**
  * @fn Set *Set::initWithSet(Set *self, const Set *set)
- *
  * @memberof Set
  */
 static Set *initWithSet(Set *self, const Set *set) {
@@ -295,7 +288,6 @@ static Set *initWithSet(Set *self, const Set *set) {
 
 /**
  * @fn Set *Set::setWithArray(const Array *array)
- *
  * @memberof Set
  */
 static Set *setWithArray(const Array *array) {
@@ -305,7 +297,6 @@ static Set *setWithArray(const Array *array) {
 
 /**
  * @fn Set *Set::setWithObjects(ident obj, ...)
- *
  * @memberof Set
  */
 static Set *setWithObjects(ident obj, ...) {
@@ -329,7 +320,6 @@ static Set *setWithObjects(ident obj, ...) {
 
 /**
  * @fn Set *Set::setWithSet(const Set *set)
- *
  * @memberof Set
  */
 static Set *setWithSet(const Set *set) {

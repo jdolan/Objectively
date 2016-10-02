@@ -52,7 +52,6 @@ static void dealloc(Object *self) {
 
 /**
  * @fn void Condition::broadcast(Condition *self)
- *
  * @memberof Condition
  */
 static void broadcast(Condition *self) {
@@ -63,7 +62,6 @@ static void broadcast(Condition *self) {
 
 /**
  * @fn Condition *Condition::init(Condition *self)
- *
  * @memberof Condition
  */
 static Condition *init(Condition *self) {
@@ -83,7 +81,6 @@ static Condition *init(Condition *self) {
 
 /**
  * @fn void Condition::signal(Condition *self)
- *
  * @memberof Condition
  */
 static void _signal(Condition *self) {
@@ -94,7 +91,6 @@ static void _signal(Condition *self) {
 
 /**
  * @fn void Condition::wait(Condition *self)
- *
  * @memberof Condition
  */
 static void _wait(Condition *self) {
@@ -105,7 +101,6 @@ static void _wait(Condition *self) {
 
 /**
  * @fn _Bool Condition::waitUntilDate(Condition *self, const Date *date)
- *
  * @memberof Condition
  */
 static _Bool waitUntilDate(Condition *self, const Date *date) {

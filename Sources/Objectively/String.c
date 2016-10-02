@@ -112,7 +112,6 @@ static _Bool isEqual(const Object *self, const Object *other) {
 
 /**
  * @brief Character transcoding context for `iconv`.
- *
  * @see iconv(3)
  */
 typedef struct {
@@ -126,9 +125,7 @@ typedef struct {
 
 /**
  * @brief Transcodes input from one character encoding to another via `iconv`.
- *
  * @param trans A Transcode struct.
- *
  * @return The number of bytes written to `trans->out`.
  */
 static size_t transcode(Transcode *trans) {
@@ -159,7 +156,6 @@ static size_t transcode(Transcode *trans) {
 
 /**
  * @fn Order String::compareTo(const String *self, const String *other, const Range range)
- *
  * @memberof String
  */
 static Order compareTo(const String *self, const String *other, const Range range) {
@@ -181,7 +177,6 @@ static Order compareTo(const String *self, const String *other, const Range rang
 
 /**
  * @fn Array *String::componentsSeparatedByCharacters(const String *self, const char *chars)
- *
  * @memberof String
  */
 static Array *componentsSeparatedByCharacters(const String *self, const char *chars) {
@@ -215,7 +210,6 @@ static Array *componentsSeparatedByCharacters(const String *self, const char *ch
 
 /**
  * @fn Array *String::componentsSeparatedByString(const String *self, const String *string)
- *
  * @memberof String
  */
 static Array *componentsSeparatedByString(const String *self, const String *string) {
@@ -227,7 +221,6 @@ static Array *componentsSeparatedByString(const String *self, const String *stri
 
 /**
  * @fn Data *String::getData(const String *self, StringEncoding encoding)
- *
  * @memberof String
  */
 static Data *getData(const String *self, StringEncoding encoding) {
@@ -251,7 +244,6 @@ static Data *getData(const String *self, StringEncoding encoding) {
 
 /**
  * @fn _Bool String::hasPrefix(const String *self, const String *prefix)
- *
  * @memberof String
  */
 static _Bool hasPrefix(const String *self, const String *prefix) {
@@ -266,7 +258,6 @@ static _Bool hasPrefix(const String *self, const String *prefix) {
 
 /**
  * @fn _Bool String::hasSuffix(const String *self, const String *suffix)
- *
  * @memberof String
  */
 static _Bool hasSuffix(const String *self, const String *suffix) {
@@ -281,7 +272,6 @@ static _Bool hasSuffix(const String *self, const String *suffix) {
 
 /**
  * @fn String *String::initWithBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding)
- *
  * @memberof String
  */
 static String *initWithBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding) {
@@ -313,7 +303,6 @@ static String *initWithBytes(String *self, const uint8_t *bytes, size_t length, 
 
 /**
  * @fn String *String::initWithCharacters(String *self, const char *chars)
- *
  * @memberof String
  */
 static String *initWithCharacters(String *self, const char *chars) {
@@ -333,7 +322,6 @@ static String *initWithCharacters(String *self, const char *chars) {
 
 /**
  * @fn String *String::initWithContentsOfFile(String *self, const char *path, StringEncoding encoding)
- *
  * @memberof String
  */
 static String *initWithContentsOfFile(String *self, const char *path, StringEncoding encoding) {
@@ -351,7 +339,6 @@ static String *initWithContentsOfFile(String *self, const char *path, StringEnco
 
 /**
  * @fn String *String::initWithData(String *self, const Data *data, StringEncoding encoding)
- *
  * @memberof String
  */
 static String *initWithData(String *self, const Data *data, StringEncoding encoding) {
@@ -363,7 +350,6 @@ static String *initWithData(String *self, const Data *data, StringEncoding encod
 
 /**
  * @fn String *String::initWithFormat(String *self, const char *fmt, ...)
- *
  * @memberof String
  */
 static String *initWithFormat(String *self, const char *fmt, ...) {
@@ -380,7 +366,6 @@ static String *initWithFormat(String *self, const char *fmt, ...) {
 
 /**
  * @fn String *String::initWithMemory(String *self, const ident mem, size_t length)
- *
  * @memberof String
  */
 static String *initWithMemory(String *self, const ident mem, size_t length) {
@@ -398,8 +383,7 @@ static String *initWithMemory(String *self, const ident mem, size_t length) {
 }
 
 /**
- * @fn String *String::initWithVaList(String *string, const char *fmt, va_list args)
- *
+ * @fn String *String::initWithVaList(String *self, const char *fmt, va_list args)
  * @memberof String
  */
 static String *initWithVaList(String *self, const char *fmt, va_list args) {
@@ -420,7 +404,6 @@ static String *initWithVaList(String *self, const char *fmt, va_list args) {
 
 /**
  * @fn String *String::lowercaseString(const String *self)
- *
  * @memberof String
  */
 static String *lowercaseString(const String *self) {
@@ -429,7 +412,6 @@ static String *lowercaseString(const String *self) {
 
 /**
  * @fn String *String::lowercaseStringWithLocale(const String *self, const Locale *locale)
- *
  * @memberof String
  */
 static String *lowercaseStringWithLocale(const String *self, const Locale *locale) {
@@ -456,7 +438,6 @@ static String *lowercaseStringWithLocale(const String *self, const Locale *local
 
 /**
  * @fn MutableString *String::mutableCopy(const String *self)
- *
  * @memberof String
  */
 static MutableString *mutableCopy(const String *self) {
@@ -466,7 +447,6 @@ static MutableString *mutableCopy(const String *self) {
 
 /**
  * @fn Range String::rangeOfCharacters(const String *self, const char *chars, const Range range)
- *
  * @memberof String
  */
 static Range rangeOfCharacters(const String *self, const char *chars, const Range range) {
@@ -493,7 +473,6 @@ static Range rangeOfCharacters(const String *self, const char *chars, const Rang
 
 /**
  * @fn Range String::rangeOfString(const String *self, const String *string, const Range range)
- *
  * @memberof String
  */
 static Range rangeOfString(const String *self, const String *string, const Range range) {
@@ -505,7 +484,6 @@ static Range rangeOfString(const String *self, const String *string, const Range
 
 /**
  * @fn String *String::stringWithBytes(const uint8_t *bytes, size_t length, StringEncoding encoding)
- *
  * @memberof String
  */
 static String *stringWithBytes(const uint8_t *bytes, size_t length, StringEncoding encoding) {
@@ -515,7 +493,6 @@ static String *stringWithBytes(const uint8_t *bytes, size_t length, StringEncodi
 
 /**
  * @fn String *String::stringWithCharacters(const char *chars)
- *
  * @memberof String
  */
 static String *stringWithCharacters(const char *chars) {
@@ -525,7 +502,6 @@ static String *stringWithCharacters(const char *chars) {
 
 /**
  * @fn String *String::stringWithContentsOfFile(const char *path, StringEncoding encoding)
- *
  * @memberof String
  */
 static String *stringWithContentsOfFile(const char *path, StringEncoding encoding) {
@@ -535,7 +511,6 @@ static String *stringWithContentsOfFile(const char *path, StringEncoding encodin
 
 /**
  * @fn String *String::stringWithData(const Data *data, StringEncoding encoding)
- *
  * @memberof String
  */
 static String *stringWithData(const Data *data, StringEncoding encoding) {
@@ -545,7 +520,6 @@ static String *stringWithData(const Data *data, StringEncoding encoding) {
 
 /**
  * @fn String *String::stringWithFormat(const char *fmt)
- *
  * @memberof String
  */
 static String *stringWithFormat(const char *fmt, ...) {
@@ -562,7 +536,6 @@ static String *stringWithFormat(const char *fmt, ...) {
 
 /**
  * @fn String *String::stringWithMemory(const ident mem, size_t length)
- *
  * @memberof String
  */
 static String *stringWithMemory(const ident mem, size_t length) {
@@ -572,7 +545,6 @@ static String *stringWithMemory(const ident mem, size_t length) {
 
 /**
  * @fn String *String::substring(const String *string, const Range range)
- *
  * @memberof String
  */
 static String *substring(const String *self, const Range range) {
@@ -589,7 +561,6 @@ static String *substring(const String *self, const Range range) {
 
 /**
  * @fn String *String::uppercaseString(const String *self)
- *
  * @memberof String
  */
 static String *uppercaseString(const String *self) {
@@ -598,7 +569,6 @@ static String *uppercaseString(const String *self) {
 
 /**
  * @fn String *String::uppercaseStringWithLocale(const String *self, const Locale *locale)
- *
  * @memberof String
  */
 static String *uppercaseStringWithLocale(const String *self, const Locale *locale) {
@@ -625,7 +595,6 @@ static String *uppercaseStringWithLocale(const String *self, const Locale *local
 
 /**
  * @fn _Bool String::writeToFile(const String *self, const char *path, StringEncoding encoding)
- *
  * @memberof String
  */
 static _Bool writeToFile(const String *self, const char *path, StringEncoding encoding) {

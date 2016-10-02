@@ -29,7 +29,6 @@
 
 /**
  * @file
- *
  * @brief Configuration bundle for URLSession.
  */
 
@@ -38,23 +37,19 @@ typedef struct URLSessionConfigurationInterface URLSessionConfigurationInterface
 
 /**
  * @brief Configuration bundle for URLSession.
- *
  * @extends Object
- *
  * @ingroup URLSession
  */
 struct URLSessionConfiguration {
 
 	/**
 	 * @brief The parent.
-	 *
 	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
 	 * @private
 	 */
 	URLSessionConfigurationInterface *interface;
@@ -72,6 +67,7 @@ struct URLSessionConfiguration {
 		 * @brief The password.
 		 */
 		String *password;
+
 	} credentials;
 
 	/**
@@ -97,11 +93,9 @@ struct URLSessionConfigurationInterface {
 
 	/**
 	 * @fn URLSessionConfiguration *URLSessionConfiguration::init(URLSessionConfiguration *self)
-	 *
 	 * @brief Initializes this URLSessionConfiguration.
-	 *
+	 * @param self The URLSessionConfiguration.
 	 * @return The initialized configuration, or `NULL` on error.
-	 *
 	 * @memberof URLSessionConfiguration
 	 */
 	URLSessionConfiguration *(*init)(URLSessionConfiguration *self);

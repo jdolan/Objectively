@@ -69,7 +69,6 @@ static _Bool isEqual(const Object *self, const Object *other) {
 
 /**
  * @fn Order Date::compareTo(const Date *self, const Date *other)
- *
  * @memberof Date
  */
 static Order compareTo(const Date *self, const Date *other) {
@@ -94,7 +93,6 @@ static Order compareTo(const Date *self, const Date *other) {
 
 /**
  * @fn Date *Date::date(void)
- *
  * @memberof Date
  */
 static Date *date(void) {
@@ -104,7 +102,6 @@ static Date *date(void) {
 
 /**
  * @fn Date *Date::dateWithTimeSinceNow(const Time interval)
- *
  * @memberof Date
  */
 static Date *dateWithTimeSinceNow(const Time *interval) {
@@ -129,7 +126,6 @@ static Date *dateWithTimeSinceNow(const Time *interval) {
 
 /**
  * @fn Date *Date::init(Date *self)
- *
  * @memberof Date
  */
 static Date *init(Date *self) {
@@ -138,7 +134,6 @@ static Date *init(Date *self) {
 
 /**
  * @fn Date *Date::initWithTime(Date *self, const Time *time)
- *
  * @memberof Date
  */
 static Date *initWithTime(Date *self, const Time *time) {

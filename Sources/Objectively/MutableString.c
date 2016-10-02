@@ -47,7 +47,6 @@ static Object *copy(const Object *self) {
 
 /**
  * @fn void MutableString::appendCharacters(MutableString *self, const char *chars)
- *
  * @memberof MutableString
  */
 static void appendCharacters(MutableString *self, const char *chars) {
@@ -83,7 +82,6 @@ static void appendCharacters(MutableString *self, const char *chars) {
 
 /**
  * @fn void MutableString::appendFormat(MutableString *self, const char *fmt, ...)
- *
  * @memberof MutableString
  */
 static void appendFormat(MutableString *self, const char *fmt, ...) {
@@ -98,7 +96,6 @@ static void appendFormat(MutableString *self, const char *fmt, ...) {
 
 /**
  * @fn void MutableString::appendString(MutableString *self, const String *string)
- *
  * @memberof MutableString
  */
 static void appendString(MutableString *self, const String *string) {
@@ -110,7 +107,6 @@ static void appendString(MutableString *self, const String *string) {
 
 /**
  * @fn void MutableString::appendVaList(MutableString *self, const char *fmt, va_list args)
- *
  * @memberof MutableString
  */
 static void appendVaList(MutableString *self, const char *fmt, va_list args) {
@@ -126,7 +122,6 @@ static void appendVaList(MutableString *self, const char *fmt, va_list args) {
 
 /**
  * @fn void MutableString::deleteCharactersInRange(MutableString *self, const Range range)
- *
  * @memberof MutableString
  */
 static void deleteCharactersInRange(MutableString *self, const Range range) {
@@ -144,7 +139,6 @@ static void deleteCharactersInRange(MutableString *self, const Range range) {
 
 /**
  * @fn MutableString *MutableString::init(MutableString *self)
- *
  * @memberof MutableString
  */
 static MutableString *init(MutableString *self) {
@@ -154,7 +148,6 @@ static MutableString *init(MutableString *self) {
 
 /**
  * @fn MutableString *MutableString::initWithCapacity(MutableString *self, size_t capacity)
- *
  * @memberof MutableString
  */
 static MutableString *initWithCapacity(MutableString *self, size_t capacity) {
@@ -174,7 +167,6 @@ static MutableString *initWithCapacity(MutableString *self, size_t capacity) {
 
 /**
  * @fn MutableString *MutableString::initWithString(MutableString *self, const String *string)
- *
  * @memberof MutableString
  */
 static MutableString *initWithString(MutableString *self, const String *string) {
@@ -189,7 +181,6 @@ static MutableString *initWithString(MutableString *self, const String *string) 
 
 /**
  * @fn void MutableString::insertCharactersAtIndex(MutableString *self, const char *chars, int index)
- *
  * @memberof MutableString
  */
 static void insertCharactersAtIndex(MutableString *self, const char *chars, int index) {
@@ -201,7 +192,6 @@ static void insertCharactersAtIndex(MutableString *self, const char *chars, int 
 
 /**
  * @fn void MutableString::insertStringAtIndex(MutableString *self, const String *string, int index)
- *
  * @memberof MutableString
  */
 static void insertStringAtIndex(MutableString *self, const String *string, int index) {
@@ -211,7 +201,6 @@ static void insertStringAtIndex(MutableString *self, const String *string, int i
 
 /**
  * @fn void MutableString::replaceCharactersInRange(MutableString *self, const Range range, const char *chars)
- *
  * @memberof MutableString
  */
 static void replaceCharactersInRange(MutableString *self, const Range range, const char *chars) {
@@ -232,7 +221,6 @@ static void replaceCharactersInRange(MutableString *self, const Range range, con
 
 /**
  * @fn void MutableString::replaceStringInRange(MutableString *self, const Range range, const String *string)
- *
  * @memberof MutableString
  */
 static void replaceStringInRange(MutableString *self, const Range range, const String *string) {
@@ -242,7 +230,6 @@ static void replaceStringInRange(MutableString *self, const Range range, const S
 
 /**
  * @fn MutableString *MutableString::string(void)
- *
  * @memberof MutableString
  */
 static MutableString *string(void) {
@@ -252,7 +239,6 @@ static MutableString *string(void) {
 
 /**
  * @fn MutableString *MutableString::stringWithCapacity(size_t capacity)
- *
  * @memberof MutableString
  */
 static MutableString *stringWithCapacity(size_t capacity) {

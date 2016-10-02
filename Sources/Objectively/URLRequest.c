@@ -67,7 +67,6 @@ static void dealloc(Object *self) {
 
 /**
  * @fn URLRequest *URLRequest::initWithURL(URLRequest *self, URL *url)
- *
  * @memberof URLRequest
  */
 static URLRequest *initWithURL(URLRequest *self, URL *url) {
@@ -84,7 +83,6 @@ static URLRequest *initWithURL(URLRequest *self, URL *url) {
 
 /**
  * @fn void setValueForHTTPHeaderField(URLREquest *self, const char *value, const char *field)
- *
  * @memberof URLRequest
  */
 void setValueForHTTPHeaderField(URLRequest *self, const char *value, const char *field) {

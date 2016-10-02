@@ -27,7 +27,6 @@
 
 /**
  * @file
- *
  * @brief The Value type.
  */
 
@@ -41,21 +40,18 @@ typedef void (*ValueDestructor)(ident value);
 
 /**
  * @brief Values provide Object encapsulation for C types.
- *
  * @extends Object
  */
 struct Value {
 	
 	/**
 	 * @brief The parent.
-	 *
 	 * @private
 	 */
 	Object object;
 	
 	/**
 	 * @brief The typed interface.
-	 *
 	 * @private
 	 */
 	ValueInterface *interface;
@@ -83,13 +79,10 @@ struct ValueInterface {
 	
 	/**
 	 * @fn Value *Value::initWithValue(Value *self, ident value)
-	 *
 	 * @brief Initializes this Value.
-	 *
+	 * @param self The Value.
 	 * @param value The backing value.
-	 *
 	 * @return The initialized Value, or `NULL` on error.
-	 *
 	 * @memberof Value
 	 */
 	Value *(*initWithValue)(Value *self, ident value);

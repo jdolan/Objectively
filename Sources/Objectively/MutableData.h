@@ -27,7 +27,6 @@
 
 /**
  * @file
- *
  * @brief Mutable data buffers.
  */
 
@@ -35,30 +34,25 @@ typedef struct MutableDataInterface MutableDataInterface;
 
 /**
  * @brief Mutable data buffers.
- *
  * @extends Data
- *
  * @ingroup ByteStreams
  */
 struct MutableData {
 
 	/**
 	 * @brief The parent.
-	 *
 	 * @private
 	 */
 	Data data;
 
 	/**
 	 * @brief The typed interface.
-	 *
 	 * @private
 	 */
 	MutableDataInterface *interface;
 
 	/**
 	 * @brief The capacity, which is always `>= self->data.length`.
-	 *
 	 * @private
 	 */
 	size_t capacity;
@@ -76,104 +70,81 @@ struct MutableDataInterface {
 
 	/**
 	 * @fn void MutableData::appendBytes(MutableData *self, const uint8_t *bytes, size_t length)
-	 *
 	 * @brief Appends the given `bytes` to this Data.
-	 *
+	 * @param self The MutableData.
 	 * @param bytes The bytes to append.
 	 * @param length The length of bytes to append.
-	 *
 	 * @remarks MutableData are grown in blocks as bytes are appended. This
 	 * provides a significant performance gain when frequently appending small
 	 * chunks of bytes.
-	 *
 	 * @memberof MutableData
 	 */
 	void (*appendBytes)(MutableData *self, const uint8_t *bytes, size_t length);
 
 	/**
 	 * @fn void MutableData::appendData(MutableData *self, const Data *data)
-	 *
 	 * @brief Appends the given `data` to this Data.
-	 *
+	 * @param self The MutableData.
 	 * @param data The Data to append.
-	 *
 	 * @memberof MutableData
 	 */
 	void (*appendData)(MutableData *self, const Data *data);
 	
 	/**
 	 * @static
-	 *
 	 * @fn MutableData *MutableData::data(void)
-	 *
 	 * @brief Returns a new MutableData.
-	 *
 	 * @return The new MutableData, or `NULL` on error.
-	 *
 	 * @memberof MutableData
 	 */
 	MutableData *(*data)(void);
 	
 	/**
+	 * @static
 	 * @fn MutableData *MutableData::dataWithCapacity(size_t capacity)
-	 *
 	 * @brief Returns a new MutableData with the given `capacity`.
-	 *
 	 * @param capacity The desired capacity in bytes.
-	 *
 	 * @return The new MutableData, or `NULL` on error.
-	 *
 	 * @memberof MutableData
 	 */
 	MutableData *(*dataWithCapacity)(size_t capacity);
 	
 	/**
 	 * @fn MutableData *MutableData::init(MutableData *self)
-	 *
 	 * @brief Initializes this Data with length `0`.
-	 *
+	 * @param self The MutableData.
 	 * @return The initialized Data, or `NULL` on error.
-	 *
 	 * @memberof MutableData
 	 */
 	MutableData *(*init)(MutableData *self);
 
 	/**
 	 * @fn MutableData *MutableData::initWithCapacity(MutableData *self, size_t capacity)
-	 *
 	 * @brief Initializes this Data with the given capacity.
-	 *
+	 * @param self The MutableData.
 	 * @param capacity The capacity in bytes.
-	 *
 	 * @return The initialized Data, or `NULL` on error.
-	 *
 	 * @memberof MutableData
 	 */
 	MutableData *(*initWithCapacity)(MutableData *self, size_t capacity);
 
 	/**
 	 * @fn MutableData *MutableData::initWithData(MutableData *self, const Data *data)
-	 *
 	 * @brief Initializes this Data with the contents of `data`.
-	 *
+	 * @param self The MutableData.
 	 * @param data A Data.
-	 *
 	 * @return The initialized Data, or `NULL` on error.
-	 *
 	 * @memberof MutableData
 	 */
 	MutableData *(*initWithData)(MutableData *self, const Data *data);
 
 	/**
 	 * @fn void MutableData::setLength(MutableData *self, size_t length)
-	 *
 	 * @brief Sets the length of this Data, truncating or expanding it.
-	 *
+	 * @param self The MutableData.
 	 * @param length The new desired length.
-	 *
 	 * @remarks If the data is expanded, the newly allocated bytes are filled
 	 * with zeros.
-	 *
 	 * @memberof MutableData
 	 */
 	void (*setLength)(MutableData *self, size_t length);

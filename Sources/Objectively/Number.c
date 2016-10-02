@@ -75,7 +75,6 @@ static _Bool isEqual(const Object *self, const Object *other) {
 
 /**
  * @fn _Bool Number::boolValue(const Number *self)
- *
  * @memberof Number
  */
 static _Bool boolValue(const Number *self) {
@@ -84,7 +83,6 @@ static _Bool boolValue(const Number *self) {
 
 /**
  * @fn char Number::charValue(const Number *self)
- *
  * @memberof Number
  */
 static char charValue(const Number *self) {
@@ -93,7 +91,6 @@ static char charValue(const Number *self) {
 
 /**
  * @fn Order Number::compareTo(const Number *self, const Number *other)
- *
  * @memberof Number
  */
 static Order compareTo(const Number *self, const Number *other) {
@@ -111,7 +108,6 @@ static Order compareTo(const Number *self, const Number *other) {
 
 /**
  * @fn double Number::doubleValue(const Number *self)
- *
  * @memberof Number
  */
 static double doubleValue(const Number *self) {
@@ -120,7 +116,6 @@ static double doubleValue(const Number *self) {
 
 /**
  * @fn float Number::floatValue(const Number *self)
- *
  * @memberof Number
  */
 static float floatValue(const Number *self) {
@@ -129,7 +124,6 @@ static float floatValue(const Number *self) {
 
 /**
  * @fn long Number::longValue(const Number *self)
- *
  * @memberof Number
  */
 static long longValue(const Number *self) {
@@ -138,7 +132,6 @@ static long longValue(const Number *self) {
 
 /**
  * @fn Number *Number::initWithValue(Number *self, double value)
- *
  * @memberof Number
  */
 static Number *initWithValue(Number *self, const double value) {
@@ -153,7 +146,6 @@ static Number *initWithValue(Number *self, const double value) {
 
 /**
  * @fn int Number::intValue(const Number *self)
- *
  * @memberof Number
  */
 static int intValue(const Number *self) {
@@ -162,7 +154,6 @@ static int intValue(const Number *self) {
 
 /**
  * @fn Number *Number::numberWithValue(double value)
- *
  * @memberof Number
  */
 static Number *numberWithValue(double value) {
@@ -171,7 +162,6 @@ static Number *numberWithValue(double value) {
 
 /**
  * @fn short Number::shortValue(const Number *self)
- *
  * @memberof Number
  */
 static short shortValue(const Number *self) {

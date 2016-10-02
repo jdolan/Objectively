@@ -29,7 +29,6 @@
 
 /**
  * @file
- *
  * @brief Objectively base types.
  */
 
@@ -70,14 +69,12 @@ typedef enum {
 
 /**
  * @brief The Comparator function type for ordering Objects.
- *
  * @return The Order of `obj1` relative to `obj2`.
  */
 typedef Order (*Comparator)(const ident obj1, const ident obj2);
 
 /**
  * @brief The Predicate function type for filtering Objects.
- *
  * @return True if `obj` satisfies the predicate, false otherwise.
  */
 typedef _Bool (*Predicate)(ident obj, ident data);

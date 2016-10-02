@@ -51,7 +51,6 @@ static Object *copy(const Object *self) {
 
 /**
  * @fn void MutableArray::addObject(MutableArray *self, const ident obj)
- *
  * @memberof MutableArray
  */
 static void addObject(MutableArray *self, const ident obj) {
@@ -75,7 +74,6 @@ static void addObject(MutableArray *self, const ident obj) {
 
 /**
  * @fn void MutableArray::addObjects(MutableArray *self, const ident obj, ...)
- *
  * @memberof MutableArray
  */
 static void addObjects(MutableArray *self, const ident obj, ...) {
@@ -94,7 +92,6 @@ static void addObjects(MutableArray *self, const ident obj, ...) {
 
 /**
  * @fn void MutableArray::addObjectsFromArray(MutableArray *self, const Array *array)
- *
  * @memberof MutableArray
  */
 static void addObjectsFromArray(MutableArray *self, const Array *array) {
@@ -108,7 +105,6 @@ static void addObjectsFromArray(MutableArray *self, const Array *array) {
 
 /**
  * @fn MutableArray *MutableArray::array(void)
- *
  * @memberof MutableArray
  */
 static MutableArray *array(void) {
@@ -118,7 +114,6 @@ static MutableArray *array(void) {
 
 /**
  * @fn MutableArray *MutableArray::arrayWithCapacity(size_t capacity)
- *
  * @memberof MutableArray
  */
 static MutableArray *arrayWithCapacity(size_t capacity) {
@@ -128,7 +123,6 @@ static MutableArray *arrayWithCapacity(size_t capacity) {
 
 /**
  * @fn void MutableArray::filter(MutableArray *self, Predicate predicate, ident data)
- *
  * @memberof MutableArray
  */
 static void filter(MutableArray *self, Predicate predicate, ident data) {
@@ -144,7 +138,6 @@ static void filter(MutableArray *self, Predicate predicate, ident data) {
 
 /**
  * @fn MutableArray *MutableArray::init(MutableArray *self)
- *
  * @memberof MutableArray
  */
 static MutableArray *init(MutableArray *self) {
@@ -154,7 +147,6 @@ static MutableArray *init(MutableArray *self) {
 
 /**
  * @fn MutableArray *MutableArray::initWithCapacity(MutableArray *self, size_t capacity)
- *
  * @memberof MutableArray
  */
 static MutableArray *initWithCapacity(MutableArray *self, size_t capacity) {
@@ -175,7 +167,6 @@ static MutableArray *initWithCapacity(MutableArray *self, size_t capacity) {
 
 /**
  * @fn void MutableArray::insertObjectAtIndex(MutableArray *self, ident obj, int index)
- *
  * @memberof MutableArray
  */
 static void insertObjectAtIndex(MutableArray *self, ident obj, int index) {
@@ -194,7 +185,6 @@ static void insertObjectAtIndex(MutableArray *self, ident obj, int index) {
 
 /**
  * @fn void MutableArray::removeAllObjects(MutableArray *self)
- *
  * @memberof MutableArray
  */
 static void removeAllObjects(MutableArray *self) {
@@ -206,7 +196,6 @@ static void removeAllObjects(MutableArray *self) {
 
 /**
  * @fn void MutableArray::removeObject(MutableArray *self, const ident obj)
- *
  * @memberof MutableArray
  */
 static void removeObject(MutableArray *self, const ident obj) {
@@ -219,7 +208,6 @@ static void removeObject(MutableArray *self, const ident obj) {
 
 /**
  * @fn void MutableArray::removeObjectAtIndex(MutableArray *self, const int index)
- *
  * @memberof MutableArray
  */
 static void removeObjectAtIndex(MutableArray *self, const int index) {
@@ -238,7 +226,6 @@ static void removeObjectAtIndex(MutableArray *self, const int index) {
 
 /**
  * @fn void MutableArray::setObjectAtIndex(MutableArray *self, const ident obj, int index)
- *
  * @memberof MutableArray
  */
 static void setObjectAtIndex(MutableArray *self, const ident obj, int index) {
@@ -282,7 +269,6 @@ static int _sort(void *data, const void *a, const void *b) {
 
 /**
  * @fn void MutableArray::sort(MutableArray *self, Comparator comparator)
- *
  * @memberof MutableArray
  */
 static void sort(MutableArray *self, Comparator comparator) {
@@ -300,7 +286,6 @@ static int _sort(const void *a, const void *b, void *data) {
 
 /**
  * @fn void MutableArray::sort(MutableArray *self, Comparator comparator)
- *
  * @memberof MutableArray
  */
 static void sort(MutableArray *self, Comparator comparator) {

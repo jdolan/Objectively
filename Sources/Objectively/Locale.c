@@ -64,7 +64,6 @@ static void dealloc(Object *self) {
 
 /**
  * @fn Locale *Locale::initWithIdentifier(Locale *self, const char *identifier)
- *
  * @memberof Locale
  */
 static Locale *initWithIdentifier(Locale *self, const char *identifier) {
@@ -87,7 +86,6 @@ static Locale *initWithIdentifier(Locale *self, const char *identifier) {
 
 /**
  * @fn Locale *Locale::initWithLocale(Locale *self, locale_t locale)
- *
  * @memberof Locale
  */
 static Locale *initWithLocale(Locale *self, locale_t locale) {
@@ -105,7 +103,6 @@ static Locale *initWithLocale(Locale *self, locale_t locale) {
 
 /**
  * @fn Locale *Locale::systemLocale(void)
- *
  * @memberof Locale
  */
 static Locale *systemLocale(void) {

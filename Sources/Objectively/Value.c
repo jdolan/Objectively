@@ -81,7 +81,6 @@ static _Bool isEqual(const Object *self, const Object *other) {
 
 /**
  * @fn Value *Value::initWithValue(Value *self, ident value)
- *
  * @memberof Value
  */
 static Value *initWithValue(Value *self, ident value) {

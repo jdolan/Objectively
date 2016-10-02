@@ -29,9 +29,7 @@
 
 /**
  * @file
- *
  * @brief Uniform Resource Locators (RFC 3986).
- *
  * @see http://www.ietf.org/rfc/rfc3986.txt
  */
 
@@ -40,25 +38,20 @@ typedef struct URLInterface URLInterface;
 
 /**
  * @brief Uniform Resource Locators (RFC 3986).
- *
  * @see http://www.ietf.org/rfc/rfc3986.txt
- *
  * @extends Object
- *
  * @ingroup URLSession
  */
 struct URL {
 
 	/**
 	 * @brief The parent.
-	 *
 	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
 	 * @private
 	 */
 	URLInterface *interface;
@@ -111,44 +104,36 @@ struct URLInterface {
 
 	/**
 	 * @fn URL *URL::baseURL(const URL *self)
-	 *
+	 * @param self The URL.
 	 * @return The base URL (scheme, host, and port) of this URL.
-	 *
 	 * @memberof URL
 	 */
 	URL *(*baseURL)(const URL *self);
 
 	/**
 	 * @fn URL *URL::initWithCharacters(URL *self, const char *chars)
-	 *
 	 * @brief Initializes this URL with the specified characters.
-	 *
+	 * @param self The URL.
 	 * @param chars The URL characters.
-	 *
 	 * @return The initialized URL, or `NULL` on error.
-	 *
 	 * @memberof URL
 	 */
 	URL *(*initWithCharacters)(URL *self, const char *chars);
 
 	/**
 	 * @fn URL *URL::initWithString(URL *self, const String *string)
-	 *
 	 * @brief Initializes this URL with the specified String.
-	 *
+	 * @param self The URL.
 	 * @param string The URL String.
-	 *
 	 * @return The initialized URL, or `NULL` on error.
-	 *
 	 * @memberof URL
 	 */
 	URL *(*initWithString)(URL *self, const String *string);
 
 	/**
 	 * @fn Array *URL::pathComponents(const URL *self)
-	 *
+	 * @param self The URL.
 	 * @return The `path` components of this URL.
-	 *
 	 * @memberof URL
 	 */
 	Array *(*pathComponents)(const URL *self);

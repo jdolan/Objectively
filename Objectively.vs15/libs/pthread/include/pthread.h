@@ -1,7 +1,5 @@
 /* This is an implementation of the threads API of POSIX 1003.1-2001.
- *
  * --------------------------------------------------------------------------
- *
  *      Pthreads-win32 - POSIX Threads Library for Win32
  *      Copyright(C) 1998 John E. Bossom
  *      Copyright(C) 1999,2005 Pthreads-win32 contributors
@@ -45,13 +43,10 @@
  * compilation units and also internally for the library.
  * The code here and within the library aims to work
  * for all reasonable combinations of environments.
- *
  * The three implementations are:
- *
  *   WIN32 SEH
  *   C
  *   C++
- *
  * Please note that exiting a push/pop block via
  * "return", "exit", "break", or "continue" will
  * lead to different behaviour amongst applications
@@ -118,27 +113,19 @@
 
 /*
  * -------------------------------------------------------------
- *
- *
  * Module: pthread.h
- *
  * Purpose:
  *      Provides an implementation of PThreads based upon the
  *      standard:
- *
  *              POSIX 1003.1-2001
  *  and
  *    The Single Unix Specification version 3
- *
  *    (these two are equivalent)
- *
  *      in order to enhance code portability between Windows,
  *  various commercial Unix implementations, and Linux.
- *
  *      See the ANNOUNCE file for a full list of conforming
  *      routines and defined constants, and a list of missing
  *      routines and constants not defined in this implementation.
- *
  * Authors:
  *      There have been many contributors to this library.
  *      The initial implementation was contributed by
@@ -152,18 +139,13 @@
  *      As much as possible, the contributors are acknowledged
  *      in the ChangeLog file in the source code distribution
  *      where their changes are noted in detail.
- *
  *      Contributors are listed in the CONTRIBUTORS file.
- *
  *      As usual, all bouquets go to the contributors, and all
  *      brickbats go to the project maintainer.
- *
  * Maintainer:
  *      The code base for this project is coordinated and
  *      eventually pre-tested, packaged, and made available by
- *
  *              Ross Johnson <rpj@callisto.canberra.edu.au>
- *
  * QA Testers:
  *      Ultimately, the library is tested in the real world by
  *      a host of competent and demanding scientists and
@@ -174,18 +156,14 @@
  *      that later changes to the code don't reintroduce the
  *      same error. The number of test cases is slowly growing
  *      and therefore so is the code reliability.
- *
  * Compliance:
  *      See the file ANNOUNCE for the list of implemented
  *      and not-implemented routines and defined options.
  *      Of course, these are all defined is this file as well.
- *
  * Web site:
  *      The source code and other information about this library
  *      are available from
- *
  *              http://sources.redhat.com/pthreads-win32/
- *
  * -------------------------------------------------------------
  */
 
@@ -254,7 +232,6 @@ enum {
 #endif
 
 /*
- *
  */
 
 #if PTW32_LEVEL >= PTW32_LEVEL_MAX
@@ -343,30 +320,23 @@ extern "C"
 
 /*
  * -------------------------------------------------------------
- *
  * POSIX 1003.1-2001 Options
  * =========================
- *
  * Options are normally set in <unistd.h>, which is not provided
  * with pthreads-win32.
- *
  * For conformance with the Single Unix Specification (version 3), all of the
  * options below are defined, and have a value of either -1 (not supported)
  * or 200112L (supported).
- *
  * These options can neither be left undefined nor have a value of 0, because
  * either indicates that sysconf(), which is not implemented, may be used at
  * runtime to check the status of the option.
- *
  * _POSIX_THREADS (== 200112L)
  *                      If == 200112L, you can use threads
- *
  * _POSIX_THREAD_ATTR_STACKSIZE (== 200112L)
  *                      If == 200112L, you can control the size of a thread's
  *                      stack
  *                              pthread_attr_getstacksize
  *                              pthread_attr_setstacksize
- *
  * _POSIX_THREAD_ATTR_STACKADDR (== -1)
  *                      If == 200112L, you can allocate and control a thread's
  *                      stack. If not supported, the following functions
@@ -374,20 +344,17 @@ extern "C"
  *                      supported:
  *                              pthread_attr_getstackaddr
  *                              pthread_attr_setstackaddr
- *
  * _POSIX_THREAD_PRIORITY_SCHEDULING (== -1)
  *                      If == 200112L, you can use realtime scheduling.
  *                      This option indicates that the behaviour of some
  *                      implemented functions conforms to the additional TPS
  *                      requirements in the standard. E.g. rwlocks favour
  *                      writers over readers when threads have equal priority.
- *
  * _POSIX_THREAD_PRIO_INHERIT (== -1)
  *                      If == 200112L, you can create priority inheritance
  *                      mutexes.
  *                              pthread_mutexattr_getprotocol +
  *                              pthread_mutexattr_setprotocol +
- *
  * _POSIX_THREAD_PRIO_PROTECT (== -1)
  *                      If == 200112L, you can create priority ceiling mutexes
  *                      Indicates the availability of:
@@ -397,7 +364,6 @@ extern "C"
  *                              pthread_mutexattr_getprotocol     +
  *                              pthread_mutexattr_setprioceiling
  *                              pthread_mutexattr_setprotocol     +
- *
  * _POSIX_THREAD_PROCESS_SHARED (== -1)
  *                      If set, you can create mutexes and condition
  *                      variables that can be shared with another
@@ -407,24 +373,18 @@ extern "C"
  *                              pthread_mutexattr_setpshared
  *                              pthread_condattr_getpshared
  *                              pthread_condattr_setpshared
- *
  * _POSIX_THREAD_SAFE_FUNCTIONS (== 200112L)
  *                      If == 200112L you can use the special *_r library
  *                      functions that provide thread-safe behaviour
- *
  * _POSIX_READER_WRITER_LOCKS (== 200112L)
  *                      If == 200112L, you can use read/write locks
- *
  * _POSIX_SPIN_LOCKS (== 200112L)
  *                      If == 200112L, you can use spin locks
- *
  * _POSIX_BARRIERS (== 200112L)
  *                      If == 200112L, you can use barriers
- *
  *      + These functions provide both 'inherit' and/or
  *        'protect' protocol, based upon these macro
  *        settings.
- *
  * -------------------------------------------------------------
  */
 
@@ -472,34 +432,26 @@ extern "C"
 /*
  * POSIX 1003.1-2001 Limits
  * ===========================
- *
  * These limits are normally set in <limits.h>, which is not provided with
  * pthreads-win32.
- *
  * PTHREAD_DESTRUCTOR_ITERATIONS
  *                      Maximum number of attempts to destroy
  *                      a thread's thread-specific data on
  *                      termination (must be at least 4)
- *
  * PTHREAD_KEYS_MAX
  *                      Maximum number of thread-specific data keys
  *                      available per process (must be at least 128)
- *
  * PTHREAD_STACK_MIN
  *                      Minimum supported stack size for a thread
- *
  * PTHREAD_THREADS_MAX
  *                      Maximum number of threads supported per
  *                      process (must be at least 64).
- *
  * SEM_NSEMS_MAX
  *                      The maximum number of semaphores a process can have.
  *                      (must be at least 256)
- *
  * SEM_VALUE_MAX
  *                      The maximum value a semaphore can have.
  *                      (must be at least 32767)
- *
  */
 #undef _POSIX_THREAD_DESTRUCTOR_ITERATIONS
 #define _POSIX_THREAD_DESTRUCTOR_ITERATIONS     4
@@ -561,7 +513,6 @@ extern "C"
  * The Open Watcom C/C++ compiler uses a non-standard calling convention
  * that passes function args in registers unless __cdecl is explicitly specified
  * in exposed function prototypes.
- *
  * We force all calls to cdecl even though this could slow Watcom code down
  * slightly. If you know that the Watcom compiler will be used to build both
  * the DLL and application, then you can probably define this as a null string.
@@ -801,7 +752,6 @@ struct ptw32_cleanup_t
         class PThreadCleanup {
           /*
            * PThreadCleanup
-           *
            * Purpose
            *      This class is a C++ helper class that is
            *      used to implement pthread_cleanup_push/
@@ -1222,14 +1172,11 @@ PTW32_DLLPORT DWORD PTW32_CDECL pthread_getw32threadid_np (pthread_t thread);
 
 /*
  * Protected Methods
- *
  * This function blocks until the given WIN32 handle
  * is signaled or pthread_cancel had been called.
  * This function allows the caller to hook into the
  * PThreads cancel mechanism. It is implemented using
- *
  *              WaitForMultipleObjects
- *
  * on 'waitHandle' and a manually reset WIN32 Event
  * used to implement pthread_cancel. The 'timeout'
  * argument to TimedWait is simply passed to

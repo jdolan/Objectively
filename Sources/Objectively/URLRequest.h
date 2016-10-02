@@ -30,7 +30,6 @@
 
 /**
  * @file
- *
  * @brief A protocol-agnostic abstraction for requesting resources via URLs.
  */
 
@@ -51,23 +50,19 @@ typedef enum {
 
 /**
  * @brief A protocol-agnostic abstraction for requesting resources via URLs.
- *
  * @extends Object
- *
  * @ingroup URLSession
  */
 struct URLRequest {
 
 	/**
 	 * @brief The parent.
-	 *
 	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
 	 * @private
 	 */
 	URLRequestInterface *interface;
@@ -105,25 +100,20 @@ struct URLRequestInterface {
 
 	/**
 	 * @fn URLRequest *URLRequest::initWithURL(URLRequest *self, URL *url)
-	 *
 	 * @brief Initializes this URLRequest with the specified URL.
-	 *
+	 * @param self The URLRequest.
 	 * @param url The URL.
-	 *
 	 * @return The initialized URLRequest, or `NULL` on error.
-	 *
 	 * @memberof URLRequest
 	 */
 	URLRequest *(*initWithURL)(URLRequest *self, URL *url);
 
 	/**
 	 * @fn void setValueForHTTPHeaderField(URLREquest *self, const char *value, const char *field)
-	 *
 	 * @brief Sets a value for the specified HTTP header.
-	 *
+	 * @param self The URLRequest.
 	 * @param value The HTTP header value.
 	 * @param field The HTTP header field.
-	 *
 	 * @memberof URLRequest
 	 */
 	void (*setValueForHTTPHeaderField)(URLRequest *self, const char *value, const char *field);

@@ -27,13 +27,11 @@
 
 /**
  * @file
- *
  * @brief Immutable arrays.
  */
 
 /**
  * @defgroup Collections Collections
- *
  * @brief Abstract data types for aggregating Objects.
  */
 
@@ -42,7 +40,6 @@ typedef struct ArrayInterface ArrayInterface;
 
 /**
  * @brief A function pointer for Array enumeration (iteration).
- *
  * @param array The Array.
  * @param obj The Object for the current iteration.
  * @param data User data.
@@ -51,23 +48,19 @@ typedef void (*ArrayEnumerator)(const Array *array, ident obj, ident data);
 
 /**
  * @brief Immutable arrays.
- *
  * @extends Object
- *
  * @ingroup Collections
  */
 struct Array {
 
 	/**
 	 * @brief The parent.
-	 *
 	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
 	 * @private
 	 */
 	ArrayInterface *interface;
@@ -79,7 +72,6 @@ struct Array {
 
 	/**
 	 * @brief The elements.
-	 *
 	 * @private
 	 */
 	ident *elements;
@@ -99,201 +91,151 @@ struct ArrayInterface {
 
 	/**
 	 * @static
-	 *
 	 * @fn Array *Array::arrayWithArray(const Array *array)
-	 *
 	 * @brief Returns a new Array containing the contents of `array`.
-	 *
 	 * @param array An Array.
-	 *
 	 * @return The new Array, or `NULL` on error.
-	 *
 	 * @memberof Array
 	 */
 	Array *(*arrayWithArray)(const Array *array);
 
 	/**
 	 * @static
-	 *
 	 * @fn Array *Array::arrayWithObjects(ident obj, ...)
-	 *
 	 * @brief Returns a new Array containing the given Objects.
-	 *
 	 * @param obj The first in a `NULL`-terminated sequence of Objects.
-	 *
 	 * @return The new Array, or `NULL` on error.
-	 *
 	 * @memberof Array
 	 */
 	Array *(*arrayWithObjects)(ident obj, ...);
 
 	/**
 	 * @fn String *Array::componentsJoinedByCharacters(const Array *self, const char *chars)
-	 *
 	 * @brief Returns the components of this Array joined by `chars`.
-	 *
+	 * @param self The Array.
 	 * @param chars The joining characters.
-	 *
 	 * @return A String comprised of the components of this Array, joined by `chars`.
-	 *
 	 * @memberof Array
 	 */
 	String *(*componentsJoinedByCharacters)(const Array *self, const char *chars);
 
 	/**
 	 * @fn String *Array::componentsJoinedByString(const Array *self, const String *string)
-	 *
 	 * @brief Returns the components of this Array joined by the specified String.
-	 *
+	 * @param self The Array.
 	 * @param string The joining String.
-	 *
 	 * @return A String comprised of the components of this Array, joined by `string`.
-	 *
 	 * @memberof Array
 	 */
 	String *(*componentsJoinedByString)(const Array *self, const String *string);
 
 	/**
 	 * @fn _Bool Array::containsObject(const Array *self, const ident obj)
-	 *
 	 * @param self The Array.
 	 * @param obj An Object.
-	 *
 	 * @return `true` if this Array contains the given Object, `false` otherwise.
-	 *
 	 * @memberof Array
 	 */
 	_Bool (*containsObject)(const Array *self, const ident obj);
 
 	/**
 	 * @fn void Array::enumerateObjects(const Array *self, ArrayEnumerator enumerator, ident data)
-	 *
 	 * @brief Enumerate the elements of this Array with the given function.
-	 *
 	 * @param self The Array.
 	 * @param enumerator The enumerator function.
 	 * @param data User data.
-	 *
 	 * @remarks The enumerator should return `true` to break the iteration.
-	 *
 	 * @memberof Array
 	 */
 	void (*enumerateObjects)(const Array *self, ArrayEnumerator enumerator, ident data);
 
 	/**
 	 * @fn void Array::filteredArray(const Array *self, Predicate predicate, ident data)
-	 *
 	 * @brief Creates a new Array with elements that pass `predicate`.
-	 *
 	 * @param self The Array.
 	 * @param predicate The predicate function.
 	 * @param data User data.
-	 *
 	 * @return The new, filtered Array.
-	 *
 	 * @memberof Array
 	 */
 	Array *(*filteredArray)(const Array *self, Predicate predicate, ident data);
 	
 	/**
 	 * @fn ident Array::findObject(const Array *self, Predicate predicate, ident data)
-	 *
+	 * @param self The Array.
 	 * @param predicate The predicate function.
 	 * @param data User data.
-	 *
 	 * @return The first element of this Array to pass the predicate function.
-	 *
 	 * @memberof Array
 	 */
 	ident (*findObject)(const Array *self, Predicate predicate, ident data);
 	
 	/**
 	 * @fn ident Array::firstObject(const Array *self)
-	 *
+	 * @param self The Array.
 	 * @return The first Object in this Array, or `NULL` if empty.
-	 *
 	 * @memberof Array
 	 */
 	ident (*firstObject)(const Array *self);
 	
 	/**
 	 * @fn int Array::indexOfObject(const Array *self, const ident obj)
-	 *
 	 * @param self The Array.
 	 * @param obj An Object.
-	 *
 	 * @return The index of the given Object, or `-1` if not found.
-	 *
 	 * @memberof Array
 	 */
 	int (*indexOfObject)(const Array *self, const ident obj);
 
 	/**
 	 * @fn Array *Array::initWithArray(Array *self, const Array *array)
-	 *
 	 * @brief Initializes this Array to contain the Objects in `array`.
-	 *
 	 * @param self The Array.
 	 * @param array An Array.
-	 *
 	 * @return The initialized Array, or `NULL` on error.
-	 *
 	 * @memberof Array
 	 */
 	Array *(*initWithArray)(Array *self, const Array *array);
 
 	/**
 	 * @fn Array *Array::initWithObjects(Array *self, ...)
-	 *
 	 * @brief Initializes this Array with the specified objects.
-	 *
-	 * @param self The uninitialized Array.
-	 *
+	 * @param self The Array.
 	 * @return The initialized Array, or `NULL` on error.
-	 *
 	 * @memberof Array
 	 */
 	Array *(*initWithObjects)(Array *self, ...);
 
 	/**
 	 * @fn ident Array::lastObject(const Array *self)
-	 *
+	 * @param self The Array.
 	 * @return The last Object in this Array, or `NULL` if empty.
-	 *
 	 * @memberof Array
 	 */
 	ident (*lastObject)(const Array *self);
 	
 	/**
 	 * @fn MutableArray *Array::mutableCopy(const Array *self)
-	 *
 	 * @param self The Array.
-	 *
 	 * @return A MutableArray with the contents of this Array.
-	 *
 	 * @memberof Array
 	 */
 	MutableArray *(*mutableCopy)(const Array *self);
 
 	/**
 	 * @fn ident Array::objectAtIndex(const Array *self, int index)
-	 *
 	 * @param self The Array.
 	 * @param index The index of the desired Object.
-	 *
 	 * @return The Object at the specified index.
-	 *
 	 * @memberof Array
 	 */
 	ident (*objectAtIndex)(const Array *self, int index);
 
 	/**
 	 * @fn Array *Array::sortedArray(const Array *self, Comparator comparator)
-	 *
+	 * @param self The Array.
 	 * @param comparator The Comparator
-	 *
 	 * @return A copy of this Array, sorted by the given Comparator.
-	 *
 	 * @memberof Array
 	 */
 	Array *(*sortedArray)(const Array *self, Comparator comparator);

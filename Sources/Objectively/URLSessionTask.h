@@ -28,7 +28,6 @@
 
 /**
  * @file
- *
  * @brief URL session tasks are handles to pending URL operations.
  */
 
@@ -37,7 +36,6 @@ typedef struct URLSessionTaskInterface URLSessionTaskInterface;
 
 /**
  * @brief A function pointer for URLSessionTask completion.
- *
  * @param task The URLSessionTask.
  * @param success `true` if the task was successful, `false` otherwise.
  */
@@ -58,23 +56,19 @@ typedef enum {
 
 /**
  * @brief URL session tasks are handles to pending URL operations.
- *
  * @extends Object
- *
  * @ingroup URLSession
  */
 struct URLSessionTask {
 
 	/**
 	 * @brief The parent.
-	 *
 	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
 	 * @private
 	 */
 	URLSessionTaskInterface *interface;
@@ -154,24 +148,20 @@ struct URLSessionTaskInterface {
 
 	/**
 	 * @fn void URLSessionTask::cancel(URLSessionTask *self)
-	 *
 	 * @brief Cancels this task.
-	 *
+	 * @param self The URLSessionTask.
 	 * @memberof URLSessionTask
 	 */
 	void (*cancel)(URLSessionTask *self);
 
 	/**
 	 * @fn URLSessionTask *URLSessionTask::initWithRequestInSession(URLSessionTask *self, struct URLRequest *request, struct URLSession *session, URLSessionTaskCompletion completion)
-	 *
 	 * @brief Initializes this task with the given URLRequest.
-	 *
+	 * @param self The URLSessionTask.
 	 * @param request The request.
 	 * @param session The session.
 	 * @param completion The completion handler.
-	 *
 	 * @return The initialized task, or `NULL` on error.
-	 *
 	 * @memberof URLSessionTask
 	 */
 	URLSessionTask *(*initWithRequestInSession)(URLSessionTask *self, struct URLRequest *request,
@@ -179,40 +169,34 @@ struct URLSessionTaskInterface {
 
 	/**
 	 * @fn void URLSessionTask::resume(URLSessionTask *self)
-	 *
 	 * @brief Starts or resumes this task.
-	 *
+	 * @param self The URLSessionTask.
 	 * @memberof URLSessionTask
 	 */
 	void (*resume)(URLSessionTask *self);
 
 	/**
-	 * @fn void URLSessionTask::setup(URLSessionTask *self)
-	 *
-	 * @brief Sets up this task.
-	 *
 	 * @protected
-	 *
+	 * @fn void URLSessionTask::setup(URLSessionTask *self)
+	 * @brief Sets up this task.
+	 * @param self The URLSessionTask.
 	 * @memberof URLSessionTask
 	 */
 	void (*setup)(URLSessionTask *self);
 
 	/**
 	 * @fn void URLSessionTask::suspend(URLSessionTask *self)
-	 *
 	 * @brief Suspends this task.
-	 *
+	 * @param self The URLSessionTask.
 	 * @memberof URLSessionTask
 	 */
 	void (*suspend)(URLSessionTask *self);
 
 	/**
-	 * @fn void URLSessionTask::teardown(URLSessionTask *self)
-	 *
-	 * @brief Tears down this task.
-	 *
 	 * @protected
-	 *
+	 * @fn void URLSessionTask::teardown(URLSessionTask *self)
+	 * @brief Tears down this task.
+	 * @param self The URLSessionTask.
 	 * @memberof URLSessionTask
 	 */
 	void (*teardown)(URLSessionTask *self);

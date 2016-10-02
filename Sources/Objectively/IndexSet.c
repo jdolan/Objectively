@@ -146,7 +146,6 @@ static _Bool isEqual(const Object *self, const Object *other) {
 
 /**
  * @fn _Bool IndexSet::containsIndex(const IndexSet *self, int index)
- *
  * @memberof IndexSet
  */
 static _Bool containsIndex(const IndexSet *self, int index) {
@@ -162,7 +161,6 @@ static _Bool containsIndex(const IndexSet *self, int index) {
 
 /**
  * @fn IndexSet *IndexSet::initWithIndex(IndexSet *self, int index)
- *
  * @memberof IndexSet
  */
 static IndexSet *initWithIndex(IndexSet *self, int index) {
@@ -171,14 +169,10 @@ static IndexSet *initWithIndex(IndexSet *self, int index) {
 
 /**
  * @fn IndexSet *IndexSet::initWithIndexes(IndexSet *self, int *indexes, size_t count)
- *
  * @brief Initializes this IndexSet with the specified indexes and count.
- *
  * @param indexes The indexes.
  * @param count The count of `indexes`.
- *
  * @return The intialized IndexSet, or `NULL` on error.
- *
  * @memberof IndexSet
  */
 static IndexSet *initWithIndexes(IndexSet *self, int *indexes, size_t count) {

@@ -27,9 +27,7 @@
 
 /**
  * @file
- *
  * @brief Helpers for at-most-once semantics.
- *
  * @ingroup Threads
  */
 

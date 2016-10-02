@@ -48,7 +48,6 @@ static Object *copy(const Object *self) {
 
 /**
  * @fn void MutableData::appendBytes(MutableData *self, const uint8_t *bytes, size_t length)
- *
  * @memberof MutableData
  */
 static void appendBytes(MutableData *self, const uint8_t *bytes, size_t length) {
@@ -62,7 +61,6 @@ static void appendBytes(MutableData *self, const uint8_t *bytes, size_t length) 
 
 /**
  * @fn void MutableData::appendData(MutableData *self, const Data *data)
- *
  * @memberof MutableData
  */
 static void appendData(MutableData *self, const Data *data) {
@@ -72,7 +70,6 @@ static void appendData(MutableData *self, const Data *data) {
 
 /**
  * @fn MutableData *MutableData::data(void)
- *
  * @memberof MutableData
  */
 static MutableData *data(void) {
@@ -82,7 +79,6 @@ static MutableData *data(void) {
 
 /**
  * @fn MutableData *MutableData::dataWithCapacity(size_t capacity)
- *
  * @memberof MutableData
  */
 static MutableData *dataWithCapacity(size_t capacity) {
@@ -92,7 +88,6 @@ static MutableData *dataWithCapacity(size_t capacity) {
 
 /**
  * @fn MutableData *MutableData::init(MutableData *self)
- *
  * @memberof MutableData
  */
 static MutableData *init(MutableData *self) {
@@ -102,7 +97,6 @@ static MutableData *init(MutableData *self) {
 
 /**
  * @fn MutableData *MutableData::initWithCapacity(MutableData *self, size_t capacity)
- *
  * @memberof MutableData
  */
 static MutableData *initWithCapacity(MutableData *self, size_t capacity) {
@@ -123,7 +117,6 @@ static MutableData *initWithCapacity(MutableData *self, size_t capacity) {
 
 /**
  * @fn MutableData *MutableData::initWithData(MutableData *self, const Data *data)
- *
  * @memberof MutableData
  */
 static MutableData *initWithData(MutableData *self, const Data *data) {
@@ -138,7 +131,6 @@ static MutableData *initWithData(MutableData *self, const Data *data) {
 
 /**
  * @fn void MutableData::setLength(MutableData *self, size_t length)
- *
  * @memberof MutableData
  */
 static void setLength(MutableData *self, size_t length) {

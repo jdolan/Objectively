@@ -63,7 +63,6 @@ static _Bool addEntriesFromDictionary_enumerator(const Dictionary *dict, ident o
 
 /**
  * @fn void MutableDictionary::addEntriesFromDictionary(MutableDictionary *self, const Dictionary *dictionary)
- *
  * @memberof MutableDictionary
  */
 static void addEntriesFromDictionary(MutableDictionary *self, const Dictionary *dictionary) {
@@ -73,7 +72,6 @@ static void addEntriesFromDictionary(MutableDictionary *self, const Dictionary *
 
 /**
  * @fn MutableDictionary *MutableDictionary::dictionary(void)
- *
  * @memberof MutableDictionary
  */
 static MutableDictionary *dictionary(void) {
@@ -83,7 +81,6 @@ static MutableDictionary *dictionary(void) {
 
 /**
  * @fn MutableDictionary *MutableDictionary::dictionaryWithCapacity(size_t capacity)
- *
  * @memberof MutableDictionary
  */
 static MutableDictionary *dictionaryWithCapacity(size_t capacity) {
@@ -93,7 +90,6 @@ static MutableDictionary *dictionaryWithCapacity(size_t capacity) {
 
 /**
  * @fn MutableDictionary *MutableDictionary::init(MutableDictionary *self)
- *
  * @memberof MutableDictionary
  */
 static MutableDictionary *init(MutableDictionary *self) {
@@ -103,7 +99,6 @@ static MutableDictionary *init(MutableDictionary *self) {
 
 /**
  * @fn MutableDictionary *MutableDictionary::initWithCapacity(MutableDictionary *self, size_t capacity)
- *
  * @memberof MutableDictionary
  */
 static MutableDictionary *initWithCapacity(MutableDictionary *self, size_t capacity) {
@@ -124,7 +119,6 @@ static MutableDictionary *initWithCapacity(MutableDictionary *self, size_t capac
 
 /**
  * @fn void MutableDictionary::removeAllObjects(MutableDictionary *self)
- *
  * @memberof MutableDictionary
  */
 static void removeAllObjects(MutableDictionary *self) {
@@ -143,7 +137,6 @@ static void removeAllObjects(MutableDictionary *self) {
 
 /**
  * @fn void MutableDictionary::removeObjectForKey(MutableDictionary *self, const ident key)
- *
  * @memberof MutableDictionary
  */
 static void removeObjectForKey(MutableDictionary *self, const ident key) {
@@ -171,7 +164,6 @@ static void removeObjectForKey(MutableDictionary *self, const ident key) {
 
 /**
  * @brief A helper for resizing Dictionaries as pairs are added to them.
- *
  * @remarks Static method invocations are used for all operations.
  */
 static void setObjectForKey_resize(Dictionary *dict) {
@@ -216,7 +208,6 @@ static void setObjectForKey_resize(Dictionary *dict) {
 
 /**
  * @fn void MutableDictionary ::setObjectForKey(MutableDictionary *self, const ident obj, const ident key)
- *
  * @memberof MutableDictionary
  */
 static void setObjectForKey(MutableDictionary *self, const ident obj, const ident key) {
@@ -245,7 +236,6 @@ static void setObjectForKey(MutableDictionary *self, const ident obj, const iden
 
 /**
  * @fn void MutableDictionary ::setObjectsForKeys(MutableDictionary *self, ...)
- *
  * @memberof MutableDictionary
  */
 static void setObjectsForKeys(MutableDictionary *self, ...) {

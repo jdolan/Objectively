@@ -28,7 +28,6 @@
 
 /**
  * @file
- *
  * @brief A minimal JSONPath implementation.
  */
 
@@ -37,23 +36,19 @@ typedef struct JSONPathInterface JSONPathInterface;
 
 /**
  * @brief A minimal JSONPath implementation.
- *
  * @extends Object
- *
  * @ingroup JSON
  */
 struct JSONPath {
 
 	/**
 	 * @brief The parent.
-	 *
 	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
 	 * @private
 	 */
 	JSONPathInterface *interface;
@@ -71,23 +66,15 @@ struct JSONPathInterface {
 
 	/**
 	 * @static
-	 *
 	 * @fn ident JSONPATH::objectForKeyPath(const ident root, const char *path)
-	 *
 	 * @brief Access a nested property from JSON Data.
-	 *
 	 * @param root The root element.
 	 * @param path The JSONPath expression.
-	 *
 	 * @return The nested property, or `NULL` if not found.
-	 *
 	 * Accessing a nested boolean from JSON Data:
-	 *
 	 *     id obj = $$(JSONSerialization, objectFromData, data, 0);
 	 *     Boole *boole = $$(JSONPath, objectForKeyPath, obj, "$.foo.bar[1].baz");
-	 *
 	 * Use dot-notation (`.`) for accessing Dictionaries, and square braces (`[0]`) for Arrays.
-	 *
 	 * @memberof JSONPath
 	 */
 	ident (*objectForKeyPath)(const ident root, const char *path);

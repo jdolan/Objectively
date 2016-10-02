@@ -128,7 +128,6 @@ static _Bool isEqual(const Object *self, const Object *other) {
 
 /**
  * @fn Array *Array::arrayWithArray(const Array *array)
- *
  * @memberof Array
  */
 static Array *arrayWithArray(const Array *array) {
@@ -138,7 +137,6 @@ static Array *arrayWithArray(const Array *array) {
 
 /**
  * @fn Array *Array::arrayWithObjects(ident obj, ...)
- *
  * @memberof Array
  */
 static Array *arrayWithObjects(ident obj, ...) {
@@ -182,7 +180,6 @@ static Array *arrayWithObjects(ident obj, ...) {
 
 /**
  * @fn String *Array::componentsJoinedByCharacters(const Array *self, const char *chars)
- *
  * @memberof Array
  */
 static String *componentsJoinedByCharacters(const Array *self, const char *chars) {
@@ -205,10 +202,8 @@ static String *componentsJoinedByCharacters(const Array *self, const char *chars
 }
 
 /**
- *
  **
  * @fn String *Array::componentsJoinedByString(const Array *self, const String *string)
- *
  * @memberof Array
  */
 static String *componentsJoinedByString(const Array *self, const String *string) {
@@ -217,7 +212,6 @@ static String *componentsJoinedByString(const Array *self, const String *string)
 
 /**
  * @fn _Bool Array::containsObject(const Array *self, const ident obj)
- *
  * @memberof Array
  */
 static _Bool containsObject(const Array *self, const ident obj) {
@@ -227,7 +221,6 @@ static _Bool containsObject(const Array *self, const ident obj) {
 
 /**
  * @fn void Array::enumerateObjects(const Array *self, ArrayEnumerator enumerator, ident data)
- *
  * @memberof Array
  */
 static void enumerateObjects(const Array *self, ArrayEnumerator enumerator, ident data) {
@@ -241,7 +234,6 @@ static void enumerateObjects(const Array *self, ArrayEnumerator enumerator, iden
 
 /**
  * @fn void Array::filteredArray(const Array *self, Predicate predicate, ident data)
- *
  * @memberof Array
  */
 static Array *filteredArray(const Array *self, Predicate predicate, ident data) {
@@ -257,12 +249,9 @@ static Array *filteredArray(const Array *self, Predicate predicate, ident data) 
 
 /**
  * @fn ident Array::findObject(const Array *self, Predicate predicate, ident data)
- *
  * @param predicate The predicate function.
  * @param data User data.
- *
  * @return The first element of this Array to pass the predicate function.
- *
  * @memberof Array
  */
 static ident findObject(const Array *self, Predicate predicate, ident data) {
@@ -280,7 +269,6 @@ static ident findObject(const Array *self, Predicate predicate, ident data) {
 
 /**
  * @fn ident Array::firstObject(const Array *self)
- *
  * @memberof Array
  */
 static ident firstObject(const Array *self) {
@@ -290,7 +278,6 @@ static ident firstObject(const Array *self) {
 
 /**
  * @fn int Array::indexOfObject(const Array *self, const ident obj)
- *
  * @memberof Array
  */
 static int indexOfObject(const Array *self, const ident obj) {
@@ -310,7 +297,6 @@ static int indexOfObject(const Array *self, const ident obj) {
 
 /**
  * @fn Array *Array::initWithArray(Array *self, const Array *array)
- *
  * @memberof Array
  */
 static Array *initWithArray(Array *self, const Array *array) {
@@ -335,7 +321,6 @@ static Array *initWithArray(Array *self, const Array *array) {
 
 /**
  * @fn Array *Array::initWithObjects(Array *self, ...)
- *
  * @memberof Array
  */
 static Array *initWithObjects(Array *self, ...) {
@@ -372,7 +357,6 @@ static Array *initWithObjects(Array *self, ...) {
 
 /**
  * @fn ident Array::lastObject(const Array *self)
- *
  * @memberof Array
  */
 static ident lastObject(const Array *self) {
@@ -382,7 +366,6 @@ static ident lastObject(const Array *self) {
 
 /**
  * @fn MutableArray *Array::mutableCopy(const Array *self)
- *
  * @memberof Array
  */
 static MutableArray *mutableCopy(const Array *self) {
@@ -397,7 +380,6 @@ static MutableArray *mutableCopy(const Array *self) {
 
 /**
  * @fn ident Array::objectAtIndex(const Array *self, int index)
- *
  * @memberof Array
  */
 static ident objectAtIndex(const Array *self, int index) {
@@ -410,7 +392,6 @@ static ident objectAtIndex(const Array *self, int index) {
 
 /**
  * @fn Array *Array::sortedArray(const Array *self, Comparator comparator)
- *
  * @memberof Array
  */
 static Array *sortedArray(const Array *self, Comparator comparator) {

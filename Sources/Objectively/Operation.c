@@ -55,7 +55,6 @@ static void dealloc(Object *self) {
 
 /**
  * @fn void Operation::addDependency(Operation *self, Operation *dependency)
- *
  * @memberof Operation
  */
 static void addDependency(Operation *self, Operation *dependency) {
@@ -70,7 +69,6 @@ static void addDependency(Operation *self, Operation *dependency) {
 
 /**
  * @fn void Operation::cancel(Operation *self)
- *
  * @memberof Operation
  */
 static void cancel(Operation *self) {
@@ -86,7 +84,6 @@ static void cancel(Operation *self) {
 
 /**
  * @fn Array *Operation::dependencies(const Operation *self)
- *
  * @memberof Operation
  */
 static Array *dependencies(const Operation *self) {
@@ -98,7 +95,6 @@ static Array *dependencies(const Operation *self) {
 
 /**
  * @fn Operation *Operation::init(Operation *self)
- *
  * @memberof Operation
  */
 static Operation *init(Operation *self) {
@@ -118,7 +114,6 @@ static Operation *init(Operation *self) {
 
 /**
  * @fn Operation *Operation::initWithFunction(Operation *self, OperationFunction function, ident data)
- *
  * @memberof Operation
  */
 static Operation *initWithFunction(Operation *self, OperationFunction function, ident data) {
@@ -134,7 +129,6 @@ static Operation *initWithFunction(Operation *self, OperationFunction function, 
 
 /**
  * @fn _Bool Operation::isReady(const Operation *self)
- *
  * @memberof Operation
  */
 static _Bool isReady(const Operation *self) {
@@ -161,7 +155,6 @@ static _Bool isReady(const Operation *self) {
 
 /**
  * @fn void Operation::removeDependency(Operation *self, Operation *dependency)
- *
  * @memberof Operation
  */
 static void removeDepdenency(Operation *self, Operation *dependency) {
@@ -173,7 +166,6 @@ static void removeDepdenency(Operation *self, Operation *dependency) {
 
 /**
  * @fn void Operation::start(Operation *self)
- *
  * @memberof Operation
  */
 static void start(Operation *self) {
@@ -205,7 +197,6 @@ static void start(Operation *self) {
 
 /**
  * @fn void Operation::waitUntilFinished(const Operation *self)
- *
  * @memberof Operation
  */
 static void waitUntilFinished(const Operation *self) {

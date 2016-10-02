@@ -29,7 +29,6 @@
 
 /**
  * @file
- *
  * @brief Use download tasks to save remote resources to file.
  */
 
@@ -38,7 +37,6 @@ typedef struct URLSessionDownloadTaskInterface URLSessionDownloadTaskInterface;
 
 /**
  * @brief Use download tasks to save remote resources to file.
- *
  * @extends URLSessionTask
  * @ingroup URLSession
  */
@@ -46,14 +44,12 @@ struct URLSessionDownloadTask {
 
 	/**
 	 * @brief The parent.
-	 *
 	 * @private
 	 */
 	URLSessionTask urlSessionTask;
 
 	/**
 	 * @brief The typed interface.
-	 *
 	 * @private
 	 */
 	URLSessionDownloadTaskInterface *interface;

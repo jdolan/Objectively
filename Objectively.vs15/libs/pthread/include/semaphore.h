@@ -1,14 +1,10 @@
 /*
  * Module: semaphore.h
- *
  * Purpose:
  *	Semaphores aren't actually part of the PThreads standard.
  *	They are defined by the POSIX Standard:
- *
  *		POSIX 1003.1b-1993	(POSIX.1b)
- *
  * --------------------------------------------------------------------------
- *
  *      Pthreads-win32 - POSIX Threads Library for Win32
  *      Copyright(C) 1998 John E. Bossom
  *      Copyright(C) 1999,2005 Pthreads-win32 contributors
@@ -104,7 +100,6 @@
 #endif
 
 /*
- *
  */
 
 #if PTW32_SEMAPHORE_LEVEL >= PTW32_SEMAPHORE_LEVEL_MAX

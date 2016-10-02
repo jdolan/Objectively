@@ -33,7 +33,6 @@
 
 /**
  * @fn NumberFormatter *NumberFormatter::initWithFormat(NumberFormatter *self, const char *fmt)
- *
  * @memberof NumberFormatter
  */
 static NumberFormatter *initWithFormat(NumberFormatter *self, const char *fmt) {
@@ -48,7 +47,6 @@ static NumberFormatter *initWithFormat(NumberFormatter *self, const char *fmt) {
 
 /**
  * @fn Number *NumberFormatter::numberFromString(const NumberFormatter *self, const String *string)
- *
  * @memberof NumberFormatter
  */
 static Number *numberFromString(const NumberFormatter *self, const String *string) {
@@ -67,7 +65,6 @@ static Number *numberFromString(const NumberFormatter *self, const String *strin
 
 /**
  * @fn String *NumberFormatter::stringFromNumber(const NumberFormatter *self, const Number *number)
- *
  * @memberof NumberFormatter
  */
 static String *stringFromNumber(const NumberFormatter *self, const Number *number) {

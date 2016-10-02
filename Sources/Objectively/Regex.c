@@ -107,7 +107,6 @@ static _Bool isEqual(const Object *self, const Object *other) {
 
 /**
  * @fn Regex *Regex::initWithPattern(Regex *self, const char *pattern, int options)
- *
  * @memberof Regex
  */
 static Regex *initWithPattern(Regex *self, const char *pattern, int options) {
@@ -130,7 +129,6 @@ static Regex *initWithPattern(Regex *self, const char *pattern, int options) {
 
 /**
  * @fn _Bool Regex::matchesCharacters(const Regex *self, const char *chars, int options, Range **matches)
- *
  * @memberof Regex
  */
 static _Bool matchesCharacters(const Regex *self, const char *chars, int options, Range **ranges) {
@@ -167,7 +165,6 @@ static _Bool matchesCharacters(const Regex *self, const char *chars, int options
 
 /**
  * @fn _Bool Regex::matchesString(const Regex *self, const String *string, int options, Range **matches)
- *
  * @memberof Regex
  */
 static _Bool matchesString(const Regex *self, const String *string, int options, Range **ranges) {

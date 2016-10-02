@@ -28,7 +28,6 @@ static void dealloc(Object *self) {
 
 /**
  * @fn ___FILEBASENAMEASIDENTIFIER___ *___FILEBASENAMEASIDENTIFIER___::init(___FILEBASENAMEASIDENTIFIER___ *self)
- *
  * @memberof ___FILEBASENAMEASIDENTIFIER___
  */
 static ___FILEBASENAMEASIDENTIFIER___ *init(___FILEBASENAMEASIDENTIFIER___ *self) {

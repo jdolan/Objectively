@@ -44,7 +44,6 @@ static Null *_null;
 
 /**
  * @fn Null *Null::null(void)
- *
  * @memberof Null
  */
 static Null *null(void) {

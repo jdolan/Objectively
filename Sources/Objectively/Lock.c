@@ -57,7 +57,6 @@ static void dealloc(Object *self) {
 
 /**
  * @fn Lock *Lock::init(Lock *self)
- *
  * @memberof Lock
  */
 static Lock *init(Lock *self) {
@@ -77,7 +76,6 @@ static Lock *init(Lock *self) {
 
 /**
  * @fn void Lock::lock(Lock *self)
- *
  * @memberof Lock
  */
 static void lock(Lock *self) {
@@ -88,7 +86,6 @@ static void lock(Lock *self) {
 
 /**
  * @fn _Bool Lock::tryLock(Lock *self)
- *
  * @memberof Lock
  */
 static _Bool tryLock(Lock *self) {
@@ -101,7 +98,6 @@ static _Bool tryLock(Lock *self) {
 
 /**
  * @fn void Lock::unlock(Lock *self)
- *
  * @memberof Lock
  */
 static void unlock(Lock *self) {

@@ -40,25 +40,20 @@ struct HelloInterface {
 
 	/**
 	 * @brief A factory method for instantiating Hello.
-	 *
 	 * @return A new Hello with the given `greeting`.
-	 *
 	 * @memberof Hello
 	 */
 	Hello *(*helloWithGreeting)(const char *greeting);
 
 	/**
 	 * @brief Initializes this Hello with the given `greeting`.
-	 *
 	 * @return The initialized Hello, or `NULL` on error.
-	 *
 	 * @memberof Hello
 	 */
 	Hello *(*initWithGreeting)(Hello *self, const char *greeting);
 
 	/**
 	 * @brief Prints this Hello's greeting to the console.
-	 *
 	 * @memberof Hello
 	 */
 	void (*sayHello)(const Hello *self);
