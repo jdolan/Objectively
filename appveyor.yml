@@ -26,3 +26,5 @@ test: off
 deploy: off
 artifacts:
 - path: __dep.zip
+on_success:
+- ps: "$token = $env:API_TOKEN\n$headers = @{ \"Authorization\" = \"Bearer $token\"} \n$body = @{accountName = $env:API_NAME; projectSlug = \"objectivelymvc\"} \n$bodyAsJson = $body | ConvertTo-json \nInvoke-Restmethod -uri 'https://ci.appveyor.com/api/builds'; -Headers $headers -Method Post -Body $bodyAsjson -ContentType \"application/json\""
