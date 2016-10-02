@@ -89,8 +89,8 @@ void _initialize(Class *clazz) {
 		objClass *def = clazz->def = calloc(1, sizeof(objClass));
 		assert(def);
 
-		clazz->def->interface = calloc(1, clazz->interfaceSize);
-		assert(clazz->def->interface);
+		def->interface = calloc(1, clazz->interfaceSize);
+		assert(def->interface);
 
 		if (clazz == &_Object) {
 			setup();
