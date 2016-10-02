@@ -1,10 +1,14 @@
 /*
  * Module: sched.h
+ *
  * Purpose:
  *      Provides an implementation of POSIX realtime extensions
  *      as defined in 
+ *
  *              POSIX 1003.1b-1993      (POSIX.1b)
+ *
  * --------------------------------------------------------------------------
+ *
  *      Pthreads-win32 - POSIX Threads Library for Win32
  *      Copyright(C) 1998 John E. Bossom
  *      Copyright(C) 1999,2005 Pthreads-win32 contributors
@@ -101,6 +105,7 @@
 #endif
 
 /*
+ *
  */
 
 #if PTW32_SCHED_LEVEL >= PTW32_SCHED_LEVEL_MAX
