@@ -257,12 +257,12 @@ static void teardown(URLSessionTask *self) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
 
-	URLSessionTaskInterface *task = (URLSessionTaskInterface *) clazz->interface;
+	URLSessionTaskInterface *task = (URLSessionTaskInterface *) clazz->def->interface;
 
 	task->cancel = cancel;
 	task->initWithRequestInSession = initWithRequestInSession;

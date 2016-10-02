@@ -117,12 +117,12 @@ static void unlock(Lock *self) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
 
-	LockInterface *interface = (LockInterface *) clazz->interface;
+	LockInterface *interface = (LockInterface *) clazz->def->interface;
 
 	interface->init = init;
 	interface->lock = lock;

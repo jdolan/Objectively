@@ -193,12 +193,12 @@ static void start(Thread *self) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
 
-	ThreadInterface *thread = (ThreadInterface *) clazz->interface;
+	ThreadInterface *thread = (ThreadInterface *) clazz->def->interface;
 
 	thread->cancel = cancel;
 	thread->currentThread = currentThread;

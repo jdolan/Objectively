@@ -316,11 +316,11 @@ static void sort(MutableArray *self, Comparator comparator) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->copy = copy;
 
-	MutableArrayInterface *mutableArray = (MutableArrayInterface *) clazz->interface;
+	MutableArrayInterface *mutableArray = (MutableArrayInterface *) clazz->def->interface;
 
 	mutableArray->addObject = addObject;
 	mutableArray->addObjects = addObjects;

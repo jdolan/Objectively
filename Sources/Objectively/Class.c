@@ -36,20 +36,20 @@
 
 size_t _pageSize;
 
-static Class *_classes;
+static objClass *_classes;
 
 /**
  * @brief Called `atexit` to teardown Objectively.
  */
 static void teardown(void) {
-	Class *c;
+	objClass *c;
 
 	c = _classes;
 	while (c) {
-		if (c->destroy) {
-			c->destroy(c);
+		if (c->descriptor->destroy) {
+			c->descriptor->destroy(c->descriptor);
 		}
-		c = c->locals.next;
+		c = c->next;
 	}
 
 	c = _classes;
@@ -58,8 +58,7 @@ static void teardown(void) {
 			free(c->interface);
 			c->interface = NULL;
 		}
-		c->locals.magic = 0;
-		c = c->locals.next;
+		c = c->next;
 	}
 }
 
@@ -83,21 +82,28 @@ void _initialize(Class *clazz) {
 
 	assert(clazz);
 
-	if (__sync_val_compare_and_swap(&clazz->locals.magic, 0, -1) == 0) {
+	if (__sync_val_compare_and_swap(&clazz->magic, 0, -1) == 0) {
 
 		assert(clazz->name);
 		assert(clazz->instanceSize);
 		assert(clazz->interfaceSize);
 		assert(clazz->interfaceOffset);
 
-		clazz->interface = calloc(1, clazz->interfaceSize);
-		assert(clazz->interface);
+		objClass *def = clazz->def = calloc(1, sizeof(objClass));
+		assert(def);
 
-		Class *super = clazz->superclass;
+		def->descriptor = calloc(1, sizeof(Class));
+		assert(clazz->def->descriptor);
+
+		memcpy(clazz->def->descriptor, clazz, sizeof(Class));
+
+		clazz->def->interface = calloc(1, clazz->interfaceSize);
+		assert(clazz->def->interface);
 
 		if (clazz == &_Object) {
 			setup();
 		} else {
+			Class *super = clazz->superclass;
 			assert(super);
 
 			assert(super->instanceSize <= clazz->instanceSize);
@@ -105,16 +111,16 @@ void _initialize(Class *clazz) {
 
 			_initialize(super);
 
-			memcpy(clazz->interface, super->interface, super->interfaceSize);
+			memcpy(def->interface, super->def->interface, super->interfaceSize);
 		}
 
 		clazz->initialize(clazz);
 
-		clazz->locals.next = __sync_lock_test_and_set(&_classes, clazz);
-		clazz->locals.magic = CLASS_MAGIC;
+		def->next = __sync_lock_test_and_set(&_classes, def);
+		clazz->magic = CLASS_MAGIC;
 
 	} else {
-		while (clazz->locals.magic != CLASS_MAGIC) {
+		while (clazz->magic != CLASS_MAGIC) {
 			;
 		}
 	}
@@ -132,7 +138,8 @@ ident _alloc(Class *clazz) {
 	object->clazz = clazz;
 	object->referenceCount = 1;
 
-	ident interface = clazz->interface;
+
+	ident interface = clazz->def->interface;
 	do {
 		*(ident *) (obj + clazz->interfaceOffset) = interface;
 	} while ((clazz = clazz->superclass));
@@ -145,8 +152,6 @@ ident _cast(Class *clazz, const ident obj) {
 	if (obj) {
 		const Class *c = ((Object *) obj)->clazz;
 		while (c) {
-
-			assert(c->locals.magic == CLASS_MAGIC);
 
 			// as a special case, we optimize for _Object
 
@@ -165,12 +170,12 @@ ident _cast(Class *clazz, const ident obj) {
 Class *classForName(const char *name) {
 
 	if (name) {
-		Class *c = _classes;
+		objClass *c = _classes;
 		while (c) {
-			if (strcmp(name, c->name) == 0) {
-				return c;
+			if (strcmp(name, c->descriptor->name) == 0) {
+				return c->descriptor;
 			}
-			c = c->locals.next;
+			c = c->next;
 		}
 	}
 

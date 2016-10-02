@@ -224,12 +224,12 @@ static void waitUntilFinished(const Operation *self) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
 
-	OperationInterface *operation = (OperationInterface *) clazz->interface;
+	OperationInterface *operation = (OperationInterface *) clazz->def->interface;
 
 	operation->addDependency = addDependency;
 	operation->cancel = cancel;

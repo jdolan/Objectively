@@ -241,12 +241,12 @@ static void waitUntilAllOperationsAreFinished(OperationQueue *self) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
 
-	OperationQueueInterface *queue = (OperationQueueInterface *) clazz->interface;
+	OperationQueueInterface *queue = (OperationQueueInterface *) clazz->def->interface;
 
 	queue->addOperation = addOperation;
 	queue->cancelAllOperations = cancelAllOperations;

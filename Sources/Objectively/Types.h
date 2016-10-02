@@ -34,6 +34,11 @@
  */
 
 /**
+ * @brief Undefine interface for MinGW-w64 / Windows.
+ */
+#undef interface
+
+/**
  * @brief The identity type, similar to Objective-C `id`.
  */
 typedef void *ident;

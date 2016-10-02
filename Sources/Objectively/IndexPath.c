@@ -173,15 +173,15 @@ static IndexPath *initWithIndexes(IndexPath *self, int *indexes, size_t length) 
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->interface)->description = description;
-	((ObjectInterface *) clazz->interface)->hash = hash;
-	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->def->interface)->description = description;
+	((ObjectInterface *) clazz->def->interface)->hash = hash;
+	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
 
-	((IndexPathInterface *) clazz->interface)->indexAtPosition = indexAtPosition;
-	((IndexPathInterface *) clazz->interface)->initWithIndex = initWithIndex;
-	((IndexPathInterface *) clazz->interface)->initWithIndexes = initWithIndexes;
+	((IndexPathInterface *) clazz->def->interface)->indexAtPosition = indexAtPosition;
+	((IndexPathInterface *) clazz->def->interface)->initWithIndex = initWithIndex;
+	((IndexPathInterface *) clazz->def->interface)->initWithIndexes = initWithIndexes;
 }
 
 Class _IndexPath = {

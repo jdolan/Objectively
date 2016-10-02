@@ -100,7 +100,7 @@ static ident objectForKeyPath(const ident root, const char *path) {
  */
 static void initialize(Class *clazz) {
 
-	((JSONPathInterface *) clazz->interface)->objectForKeyPath = objectForKeyPath;
+	((JSONPathInterface *) clazz->def->interface)->objectForKeyPath = objectForKeyPath;
 
 	_regex = $(alloc(Regex), initWithPattern, "(.[^.\\[]+|\\[[0-9]+\\])", 0);
 }

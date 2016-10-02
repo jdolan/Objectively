@@ -77,7 +77,7 @@ static void setup(URLSessionTask *self) {
  */
 static void initialize(Class *clazz) {
 
-	((URLSessionTaskInterface *) clazz->interface)->setup = setup;
+	((URLSessionTaskInterface *) clazz->def->interface)->setup = setup;
 }
 
 Class _URLSessionUploadTask = {

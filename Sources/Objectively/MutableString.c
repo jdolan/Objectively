@@ -267,11 +267,11 @@ static MutableString *stringWithCapacity(size_t capacity) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->copy = copy;
 
-	MutableStringInterface *mutableString = (MutableStringInterface *) clazz->interface;
+	MutableStringInterface *mutableString = (MutableStringInterface *) clazz->def->interface;
 
 	mutableString->appendCharacters = appendCharacters;
 	mutableString->appendFormat = appendFormat;

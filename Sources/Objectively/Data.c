@@ -243,14 +243,14 @@ static _Bool writeToFile(const Data *self, const char *path) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
 	object->hash = hash;
 	object->isEqual = isEqual;
 
-	DataInterface *data = (DataInterface *) clazz->interface;
+	DataInterface *data = (DataInterface *) clazz->def->interface;
 
 	data->dataWithBytes = dataWithBytes;
 	data->dataWithContentsOfFile = dataWithContentsOfFile;

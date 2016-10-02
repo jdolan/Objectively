@@ -431,7 +431,7 @@ static Array *sortedArray(const Array *self, Comparator comparator) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
@@ -439,7 +439,7 @@ static void initialize(Class *clazz) {
 	object->hash = hash;
 	object->isEqual = isEqual;
 
-	ArrayInterface *array = (ArrayInterface *) clazz->interface;
+	ArrayInterface *array = (ArrayInterface *) clazz->def->interface;
 
 	array->arrayWithArray = arrayWithArray;
 	array->arrayWithObjects = arrayWithObjects;

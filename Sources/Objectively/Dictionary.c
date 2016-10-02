@@ -419,7 +419,7 @@ static ident objectForKeyPath(const Dictionary *self, const char *path) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
@@ -427,7 +427,7 @@ static void initialize(Class *clazz) {
 	object->hash = hash;
 	object->isEqual = isEqual;
 
-	DictionaryInterface *dictionary = (DictionaryInterface *) clazz->interface;
+	DictionaryInterface *dictionary = (DictionaryInterface *) clazz->def->interface;
 
 	dictionary->allKeys = allKeys;
 	dictionary->allObjects = allObjects;

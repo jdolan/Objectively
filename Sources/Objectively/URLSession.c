@@ -354,9 +354,9 @@ static URLSessionUploadTask *uploadTaskWithRequest(URLSession *self, URLRequest 
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
 
-	URLSessionInterface *session = (URLSessionInterface *) clazz->interface;
+	URLSessionInterface *session = (URLSessionInterface *) clazz->def->interface;
 
 	session->dataTaskWithRequest = dataTaskWithRequest;
 	session->dataTaskWithURL = dataTaskWithURL;

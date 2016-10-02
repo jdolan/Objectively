@@ -48,7 +48,22 @@
 #define CLASS_MAGIC 0xabcdef
 
 typedef struct Class Class;
+typedef struct objClass objClass;
 
+
+struct objClass {
+
+	Class *descriptor;
+
+	ident interface;
+
+	objClass *superDescriptor;
+
+	/**
+	 * @brief Provides chaining of initialized Classes.
+	 */
+	objClass *next;
+};
 /**
  * @brief The Class type.
  *
@@ -57,23 +72,14 @@ typedef struct Class Class;
 struct Class {
 
 	/**
-	 * @private
-	 *
-	 * @brief For internal use only.
+	 * @brief Identifies this structure as an initialized Class.
 	 */
-	struct {
+	volatile int magic;
 
-		/**
-		 * @brief Identifies this structure as an initialized Class.
-		 */
-		volatile int magic;
-
-		/**
-		 * @brief Provides chaining of initialized Classes.
-		 */
-		Class *next;
-
-	} locals;
+	/**
+	 *
+	 */
+	objClass *def;
 
 	/**
 	 * @brief The Class destructor (optional).
@@ -104,7 +110,7 @@ struct Class {
 	/**
 	 * @brief The interface handle (do *not* provide).
 	 */
-	ident interface;
+//	ident interface;
 
 	/**
 	 * @brief The interface offset (required).
@@ -191,7 +197,7 @@ extern size_t _pageSize;
  * @brief Resolve the typed interface of a Class.
  */
 #define interfaceof(type, clazz) \
-	((type##Interface *) (clazz)->interface)
+	((type##Interface *) (clazz)->def->interface)
 
 /**
  * @brief Invoke an instance method.

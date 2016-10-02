@@ -156,7 +156,7 @@ static void sayHello(const Hello *self) {
  */
 static void initialize(Class *clazz) {
 
-	HelloInterface *hello = (HelloInterface *) clazz->interface;
+	HelloInterface *hello = (HelloInterface *) clazz->def->interface;
 
 	hello->helloWithGreeting = helloWithGreeting;
 	hello->initWithGreeting = initWithGreeting;
@@ -211,8 +211,8 @@ Overriding a method
 To override a method, overwrite the function pointer from within your Class' `initialize` method.
 
 ```c
-    ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
-    ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+    ((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+    ((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
 ```
 
 Calling super

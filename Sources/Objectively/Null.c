@@ -64,9 +64,9 @@ static Null *null(void) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
 
-	((NullInterface *) clazz->interface)->null = null;
+	((NullInterface *) clazz->def->interface)->null = null;
 }
 
 /**

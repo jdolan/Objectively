@@ -108,7 +108,7 @@ static void sayHello(const Hello *self) {
  */
 static void initialize(Class *clazz) {
 
-	HelloInterface *hello = (HelloInterface *) clazz->interface;
+	HelloInterface *hello = (HelloInterface *) clazz->def->interface;
 
 	hello->helloWithGreeting = helloWithGreeting;
 	hello->initWithGreeting = initWithGreeting;
