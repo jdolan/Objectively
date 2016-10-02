@@ -27,7 +27,6 @@
 
 /**
  * @file
- *
  * @brief A wrapper for placing boolean primitives into collections, etc.
  */
 
@@ -36,24 +35,19 @@ typedef struct BooleInterface BooleInterface;
 
 /**
  * @brief A wrapper for placing boolean primitives into collections, etc.
- *
  * @extends Object
- *
  * @ingroup JSON
  */
 struct Boole {
 
 	/**
 	 * @brief The parent.
-	 *
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
-	 * @private
+	 * @protected
 	 */
 	BooleInterface *interface;
 
@@ -75,22 +69,16 @@ struct BooleInterface {
 
 	/**
 	 * @static
-	 *
 	 * @fn Bool *Bool::False(void)
-	 *
 	 * @return The `false` Boole.
-	 *
 	 * @memberof Boole
 	 */
 	Boole *(*False)(void);
 
 	/**
 	 * @static
-	 *
 	 * @fn Bool *Bool::True(void)
-	 *
 	 * @return The `true` Boole.
-	 *
 	 * @memberof Boole
 	 */
 	Boole *(*True)(void);

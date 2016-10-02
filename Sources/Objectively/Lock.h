@@ -27,10 +27,7 @@
 
 /**
  * @file
- *
  * @brief POSIX Threads locks.
- *
- * Mediate access to a critical section by enforcing mutual exclusion.
  */
 
 typedef struct Lock Lock;
@@ -38,32 +35,25 @@ typedef struct LockInterface LockInterface;
 
 /**
  * @brief POSIX Threads locks.
- *
- * Mediate access to a critical section by enforcing mutual exclusion.
- *
+ * @details Mediate access to a critical section by enforcing mutual exclusion.
  * @extends Object
- *
  * @ingroup Concurrency
  */
 struct Lock {
 
 	/**
 	 * @brief The parent.
-	 *
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
-	 * @private
+	 * @protected
 	 */
 	LockInterface *interface;
 
 	/**
 	 * @brief The backing lock.
-	 *
 	 * @private
 	 */
 	ident lock;
@@ -81,40 +71,34 @@ struct LockInterface {
 
 	/**
 	 * @fn Lock *Lock::init(Lock *self)
-	 *
 	 * @brief Initializes this Lock.
-	 *
+	 * @param self The Lock.
 	 * @return The initialized Lock, or `NULL` on error.
-	 *
 	 * @memberof Lock
 	 */
 	Lock *(*init)(Lock *self);
 
 	/**
 	 * @fn void Lock::lock(Lock *self)
-	 *
 	 * @brief Acquire this lock, waiting indefinitely.
-	 *
+	 * @param self The Lock.
 	 * @memberof Lock
 	 */
 	void (*lock)(Lock *self);
 
 	/**
 	 * @fn _Bool Lock::tryLock(Lock *self)
-	 *
 	 * @brief Attempt to acquire this lock immediately.
-	 *
+	 * @param self The Lock.
 	 * @return `true` if the Lock was acquired, `false` otherwise.
-	 *
 	 * @memberof Lock
 	 */
 	_Bool (*tryLock)(Lock *self);
 
 	/**
 	 * @fn void Lock::unlock(Lock *self)
-	 *
 	 * @brief Release this Lock.
-	 *
+	 * @param self The Lock.
 	 * @memberof Lock
 	 */
 	void (*unlock)(Lock *self);
@@ -127,7 +111,6 @@ extern Class _Lock;
 
 /**
  * @brief Wraps `statements` with calls to `lock` and `unlock`.
- *
  * @param _lock The Lock instance.
  * @param statements The statements to perform while the Lock is held.
  */

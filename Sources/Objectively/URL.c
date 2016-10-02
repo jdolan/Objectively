@@ -105,7 +105,6 @@ static _Bool isEqual(const Object *self, const Object *other) {
 
 /**
  * @fn URL *URL::baseURL(const URL *self)
- *
  * @memberof URL
  */
 static URL *baseURL(const URL *self) {
@@ -132,7 +131,6 @@ static URL *baseURL(const URL *self) {
 
 /**
  * @fn URL *URL::initWithCharacters(URL *self, const char *chars)
- *
  * @memberof URL
  */
 static URL *initWithCharacters(URL *self, const char *chars) {
@@ -197,7 +195,6 @@ static URL *initWithCharacters(URL *self, const char *chars) {
 
 /**
  * @fn URL *URL::initWithString(URL *self, const String *string)
- *
  * @memberof URL
  */
 static URL *initWithString(URL *self, const String *string) {
@@ -209,7 +206,6 @@ static URL *initWithString(URL *self, const String *string) {
 
 /**
  * @fn Array *URL::pathComponents(const URL *self)
- *
  * @memberof URL
  */
 static Array *pathComponents(const URL *self) {

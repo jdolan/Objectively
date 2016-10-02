@@ -62,7 +62,6 @@ static void dealloc(Object *self) {
 
 /**
  * @fn void Log::debug(const Log *self, const char *fmt, ...)
- *
  * @memberof Log
  */
 static void debug(const Log *self, const char *fmt, ...) {
@@ -77,7 +76,6 @@ static void debug(const Log *self, const char *fmt, ...) {
 
 /**
  * @fn void Log::error(const Log *self, const char *fmt, ...)
- *
  * @memberof Log
  */
 static void error(const Log *self, const char *fmt, ...) {
@@ -92,7 +90,6 @@ static void error(const Log *self, const char *fmt, ...) {
 
 /**
  * @fn void Log::fatal(const Log *self, const char *fmt, ...)
- *
  * @memberof Log
  */
 static void fatal(const Log *self, const char *fmt, ...) {
@@ -107,7 +104,6 @@ static void fatal(const Log *self, const char *fmt, ...) {
 
 /**
  * @fn void Log::flush(const Log *self)
- *
  * @memberof Log
  */
 static void flush(const Log *self) {
@@ -118,7 +114,6 @@ static void flush(const Log *self) {
 
 /**
  * @fn void Log::info(const Log *self, const char *fmt, ...)
- *
  * @memberof Log
  */
 static void info(const Log *self, const char *fmt, ...) {
@@ -133,7 +128,6 @@ static void info(const Log *self, const char *fmt, ...) {
 
 /**
  * @fn Log *Log::init(Log *self)
- *
  * @memberof Log
  */
 static Log *init(Log *self) {
@@ -143,7 +137,6 @@ static Log *init(Log *self) {
 
 /**
  * @fn Log *Log::initWithName(Log *self, const char *name)
- *
  * @memberof Log
  */
 static Log *initWithName(Log *self, const char *name) {
@@ -161,7 +154,6 @@ static Log *initWithName(Log *self, const char *name) {
 
 /**
  * @fn void Log::log(const Log *self, LogLevel level, const char *fmt, va_list args)
- *
  * @memberof Log
  */
 static void _log(const Log *self, LogLevel level, const char *fmt, va_list args) {
@@ -216,7 +208,6 @@ static Log *_sharedInstance;
 
 /**
  * @fn Log *Log::sharedInstance(void)
- *
  * @memberof Log
  */
 static Log *sharedInstance(void) {
@@ -231,7 +222,6 @@ static Log *sharedInstance(void) {
 
 /**
  * @fn void Log::trace(const Log *self, const char *fmt, ...)
- *
  * @memberof Log
  */
 static void trace(const Log *self, const char *fmt, ...) {
@@ -246,7 +236,6 @@ static void trace(const Log *self, const char *fmt, ...) {
 
 /**
  * @fn void Log::warn(const Log *self, const char *fmt, ...)
- *
  * @memberof Log
  */
 static void warn(const Log *self, const char *fmt, ...) {

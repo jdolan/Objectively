@@ -1,6 +1,5 @@
 /*
  * URLSessionConfiguration.c
- *
  *  Created on: Nov 30, 2014
  *      Author: jdolan
  */
@@ -32,7 +31,6 @@ static void dealloc(Object *self) {
 
 /**
  * @fn URLSessionConfiguration *URLSessionConfiguration::init(URLSessionConfiguration *self)
- *
  * @memberof URLSessionConfiguration
  */
 static URLSessionConfiguration *init(URLSessionConfiguration *self) {

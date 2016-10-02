@@ -27,14 +27,7 @@
 
 /**
  * @file
- *
  * @brief The Class structure.
- *
- * Classes are the bridge between Objects and their interfaces. They provide
- * an entry point to the framework via the library function <code>_alloc</code>.
- *
- * Each Class describes a type and initializes an interface. Each instance of
- * that type will reference the Class and, in turn, its interface.
  */
 
 /**
@@ -48,12 +41,14 @@
 #define CLASS_MAGIC 0xabcdef
 
 typedef struct objClass objClass;
-
 typedef struct Class Class;
 
 /**
  * @brief The Class type.
- *
+ * @remarks Classes are the bridge between Objects and their interfaces. They provide an entry point
+ * to the framework via the library function <code>_alloc</code>.
+ * @remarks Each Class describes a type and initializes an interface. Each instance of that type 
+ * will reference the Class and, in turn, its interface.
  * @ingroup Core
  */
 struct Class {
@@ -70,22 +65,24 @@ struct Class {
 
 	/**
 	 * @brief The Class destructor (optional).
-	 *
 	 * This method is run for initialized Classes when your application exits.
 	 */
 	void (*destroy)(Class *clazz);
 
 	/**
-	 * @brief The Class initializer (optional).
-	 *
-	 * This method is run when your class is first initialized.
-	 *
-	 * If your Class defines an interface, you *must* implement this method
-	 * and initialize that interface here.
-	 *
-	 * @remarks The `interface` property of the Class is copied from the
-	 * superclass before this method is called. Method overrides are achieved
-	 * by simply overwriting the function pointers here.
+	 * @brief The Class initializer (required).
+	 * @remarks Objectively invokes your Class initializer the first time your Class is required;
+	 * either via `_alloc`, or via static method invocation. The Class initializer is responsible 
+	 * for populating the Class' `interface` with valid method implementations:
+	 * ```
+	 * static void initialize(Class *clazz) {
+	 *     ((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	 *     ((FooInterface *) clazz->def->interface)->bar = bar;
+	 * }
+	 * ```
+	 * @remarks Each Class' `interface` is copied from its superclass before this initializer is
+	 * called. Therefore, only overridden methods, and methods unique to the Class itself, must be 
+	 * set via `initialize`.
 	 */
 	void (*initialize)(Class *clazz);
 
@@ -164,9 +161,7 @@ extern void release(ident obj);
 
 /**
  * @brief Atomically increment the given Object's reference count.
- *
  * @return The Object.
- *
  * @remarks By calling this, the caller is expressing ownership of the Object,
  * and preventing it from being released. Be sure to balance calls to `retain`
  * with calls to `release`.

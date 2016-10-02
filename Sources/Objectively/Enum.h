@@ -28,6 +28,11 @@
 #include <Objectively/Types.h>
 
 /**
+ * @file
+ * @brief Named enumerations.
+ */
+
+/**
  * @brief The EnumName type.
  */
 typedef struct {
@@ -37,7 +42,6 @@ typedef struct {
 
 /**
  * @brief Creates an EnumName for `en` for use with `valueof`.
- *
  * @see valueof(const EnumName *, const char *, int)
  */
 #define MakeEnumName(en) \
@@ -60,10 +64,8 @@ typedef struct {
 
 /**
  * @brief Parse `string`, returning the corresponding enum value.
- *
  * @param names A null-terminated array of EnumNames.
  * @param string A null-terminated C string.
- *
  * @return The `value` of the EnumName matching `string`, or `-1`.
  */
 extern int valueof(const EnumName *names, const char *string);

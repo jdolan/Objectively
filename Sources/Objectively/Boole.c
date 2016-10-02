@@ -55,7 +55,6 @@ static Boole *_False;
 
 /**
  * @fn Bool *Bool::False(void)
- *
  * @memberof Boole
  */
 static Boole *False(void) {
@@ -73,7 +72,6 @@ static Boole *_True;
 
 /**
  * @fn Bool *Bool::True(void)
- *
  * @memberof Boole
  */
 static Boole *True(void) {

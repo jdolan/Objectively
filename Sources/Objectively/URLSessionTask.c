@@ -62,7 +62,6 @@ static void dealloc(Object *self) {
 
 /**
  * @fn void URLSessionTask::cancel(URLSessionTask *self)
- *
  * @memberof URLSessionTask
  */
 static void cancel(URLSessionTask *self) {
@@ -82,7 +81,6 @@ static void cancel(URLSessionTask *self) {
 
 /**
  * @fn URLSessionTask *URLSessionTask::initWithRequestInSession(URLSessionTask *self, struct URLRequest *request, struct URLSession *session, URLSessionTaskCompletion completion)
- *
  * @memberof URLSessionTask
  */
 static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URLRequest *request,
@@ -110,7 +108,6 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
 
 /**
  * @fn void URLSessionTask::resume(URLSessionTask *self)
- *
  * @memberof URLSessionTask
  */
 static void resume(URLSessionTask *self) {
@@ -142,7 +139,6 @@ static _Bool httpHeaders_enumerator(const Dictionary *dictionary, ident obj, ide
 /**
  * @brief The `CURLOPT_XFERINFOFUNCTION`, which updates internal state and
  * dispatches the task's progress function.
- *
  * @remarks This is also the mechanism for resuming suspended tasks.
  */
 static int progress(ident self, curl_off_t bytesExpectedToReceive, curl_off_t bytesReceived,
@@ -158,7 +154,6 @@ static int progress(ident self, curl_off_t bytesExpectedToReceive, curl_off_t by
 
 /**
  * @fn void URLSessionTask::setup(URLSessionTask *self)
- *
  * @memberof URLSessionTask
  */
 static void setup(URLSessionTask *self) {
@@ -217,7 +212,6 @@ static void setup(URLSessionTask *self) {
 
 /**
  * @fn void URLSessionTask::suspend(URLSessionTask *self)
- *
  * @memberof URLSessionTask
  */
 static void suspend(URLSessionTask *self) {
@@ -234,7 +228,6 @@ static void suspend(URLSessionTask *self) {
 
 /**
  * @fn void URLSessionTask::teardown(URLSessionTask *self)
- *
  * @memberof URLSessionTask
  */
 static void teardown(URLSessionTask *self) {

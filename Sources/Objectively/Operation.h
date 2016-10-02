@@ -29,10 +29,7 @@
 
 /**
  * @file
- *
  * @brief An abstraction for discrete units of work, or tasks.
- *
- * Operations are typically executed via an OperationQueue.
  */
 
 typedef struct Operation Operation;
@@ -40,33 +37,26 @@ typedef struct OperationInterface OperationInterface;
 
 /**
  * @brief The function type for Operation execution.
- *
  * @param operation The executing Operation.
  */
 typedef void (*OperationFunction)(Operation *operation);
 
 /**
  * @brief An abstraction for discrete units of work, or tasks.
- *
- * Operations are typically executed via an OperationQueue.
- *
+ * @details Operations are typically executed via an OperationQueue.
  * @extends Object
- *
  * @ingroup Concurrency
  */
 struct Operation {
 
 	/**
 	 * @brief The parent.
-	 *
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
-	 * @private
+	 * @protected
 	 */
 	OperationInterface *interface;
 
@@ -131,103 +121,84 @@ struct OperationInterface {
 
 	/**
 	 * @fn void Operation::addDependency(Operation *self, Operation *dependency)
-	 *
 	 * @brief Makes this Operation dependent on the completion of `dependency`.
-	 *
+	 * @param self The Operation.
 	 * @param dependency The Operation to await.
-	 *
 	 * @memberof Operation
 	 */
 	void (*addDependency)(Operation *self, Operation *dependency);
 
 	/**
 	 * @fn void Operation::cancel(Operation *self)
-	 *
 	 * @brief Cancels this Operation, allowing it to complete immediately.
-	 *
+	 * @param self The Operation.
 	 * @memberof Operation
 	 */
 	void (*cancel)(Operation *self);
 
 	/**
 	 * @fn Array *Operation::dependencies(const Operation *self)
-	 *
+	 * @param self The Operation.
 	 * @return An instantaneous copy of this Operations' dependencies.
-	 *
 	 * @memberof Operation
 	 */
 	Array *(*dependencies)(const Operation *self);
 
 	/**
 	 * @fn Operation *Operation::init(Operation *self)
-	 *
 	 * @brief Initializes this Operation.
-	 *
+	 * @param self The Operation.
 	 * @return The initialized Operation, or `NULL` on error.
-	 *
 	 * @remarks Asynchronous subclasses should invoke this initializer.
-	 *
 	 * @memberof Operation
 	 */
 	Operation *(*init)(Operation *self);
 
 	/**
 	 * @fn Operation *Operation::initWithFunction(Operation *self, OperationFunction function, ident data)
-	 *
 	 * @brief Initializes a *synchronous* Operation with the given `function`.
-	 *
+	 * @param self The Operation.
 	 * @param function The OperationFunction to perform
 	 * @param data The user data.
-	 *
 	 * @return The initialized Operation, or `NULL` on error.
-	 *
 	 * @memberof Operation
 	 */
 	Operation *(*initWithFunction)(Operation *self, OperationFunction function, ident data);
 
 	/**
 	 * @fn _Bool Operation::isReady(const Operation *self)
-	 *
+	 * @param self The Operation.
 	 * @return `true` when all criteria for this Operation to `start` are met.
-	 *
 	 * @memberof Operation
 	 */
 	_Bool (*isReady)(const Operation *self);
 
 	/**
 	 * @fn void Operation::removeDependency(Operation *self, Operation *dependency)
-	 *
 	 * @brief Removes the dependency on `dependency`.
-	 *
+	 * @param self The Operation.
 	 * @param dependency The dependency.
-	 *
 	 * @memberof Operation
 	 */
 	void (*removeDependency)(Operation *self, Operation *dependency);
 
 	/**
 	 * @fn void Operation::start(Operation *self)
-	 *
 	 * @brief Starts this Operation.
-	 *
-	 * @remarks The default implementation of this method checks the state of
-	 * the Operation and, if all criteria are met, dispatches the configured
-	 * `function` synchronously. When this method returns, the Operation
-	 * `isFinished` and has removed itself from any queues it belonged to.
-	 *
-	 * @remarks Asynchronous Operations should override this method and
-	 * coordinate their own state transitions and queue removal. This method
-	 * should _not_ be invoked by `super`.
-	 *
+	 * @param self The Operation.
+	 * @remarks The default implementation of this method checks the state of the Operation and, if 
+	 * all criteria are met, dispatches the configured `function` synchronously. When this method 
+	 * returns, the Operation `isFinished` and has removed itself from any queues it belonged to.
+	 * @remarks Asynchronous Operations should override this method and coordinate their own state
+	 * transitions and queue removal. This method should _not_ be invoked by `super`.
 	 * @memberof Operation
 	 */
 	void (*start)(Operation *self);
 
 	/**
 	 * @fn void Operation::waitUntilFinished(const Operation *self)
-	 *
 	 * @brief Blocks the current thread until this Operation `isFinished`.
-	 *
+	 * @param self The Operation.
 	 * @memberof Operation
 	 */
 	void (*waitUntilFinished)(const Operation *self);

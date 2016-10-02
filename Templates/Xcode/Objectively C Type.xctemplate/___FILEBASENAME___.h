@@ -12,7 +12,6 @@
 
 /**
  * @file
- *
  * @brief ..
  */
 
@@ -23,22 +22,17 @@ typedef struct ___FILEBASENAMEASIDENTIFIER___Interface ___FILEBASENAMEASIDENTIFI
  * @brief The ___FILEBASENAMEASIDENTIFIER___ type.
  *
  * @extends ___VARIABLE_superclass:identifier___
- *
- * @ingroup
  */
 struct ___FILEBASENAMEASIDENTIFIER___ {
 	
 	/**
 	 * @brief The parent.
-	 *
-	 * @private
 	 */
 	___VARIABLE_superclass:identifier___ ___VARIABLE_superclassMember:identifier___;
 	
 	/**
 	 * @brief The typed interface.
-	 *
-	 * @private
+	 * @protected
 	 */
 	___FILEBASENAMEASIDENTIFIER___Interface *interface;
 	
@@ -57,11 +51,9 @@ struct ___FILEBASENAMEASIDENTIFIER___Interface {
 	
 	/**
 	 * @fn ___FILEBASENAMEASIDENTIFIER___ *___FILEBASENAMEASIDENTIFIER___::init(___FILEBASENAMEASIDENTIFIER___ *self)
-	 *
 	 * @brief Initializes this ___FILEBASENAMEASIDENTIFIER___.
-	 *
+	 * @param The ___FILEBASENAMEASIDENTIFIER___.
 	 * @return The initialized ___FILEBASENAMEASIDENTIFIER___, or `NULL` on error.
-	 *
 	 * @memberof ___FILEBASENAMEASIDENTIFIER___
 	 */
 	___FILEBASENAMEASIDENTIFIER___ *(*init)(___FILEBASENAMEASIDENTIFIER___ *self);

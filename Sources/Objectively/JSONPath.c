@@ -41,7 +41,6 @@ static Regex *_regex;
 
 /**
  * @fn ident JSONPATH::objectForKeyPath(const ident root, const char *path)
- *
  * @memberof JSONPath
  */
 static ident objectForKeyPath(const ident root, const char *path) {

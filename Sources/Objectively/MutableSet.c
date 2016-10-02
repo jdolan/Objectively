@@ -55,7 +55,6 @@ static Object *copy(const Object *self) {
 
 /**
  * @brief A helper for resizing Sets as Objects are added to them.
- *
  * @remarks Static method invocations are used for all operations.
  */
 static void addObject_resize(Set *set) {
@@ -92,7 +91,6 @@ static void addObject_resize(Set *set) {
 
 /**
  * @fn void MutableSet::addObject(MutableSet *self, const ident obj)
- *
  * @memberof MutableSet
  */
 static void addObject(MutableSet *self, const ident obj) {
@@ -123,7 +121,6 @@ static void addObjectsFromArray_enumerator(const Array *array, ident obj, ident 
 
 /**
  * @fn void MutableSet::addObjectsFromArray(MutableSet *self, const Array *array)
- *
  * @memberof MutableSet
  */
 static void addObjectsFromArray(MutableSet *self, const Array *array) {
@@ -142,7 +139,6 @@ static void addObjectsFromSet_enumerator(const Set *set, ident obj, ident data) 
 
 /**
  * @fn void MutableSet::addObjectsFromSet(MutableSet *self, const Set *set)
- *
  * @memberof MutableSet
  */
 static void addObjectsFromSet(MutableSet *self, const Set *set) {
@@ -154,7 +150,6 @@ static void addObjectsFromSet(MutableSet *self, const Set *set) {
 
 /**
  * @fn MutableSet *MutableSet::init(MutableSet *self)
- *
  * @memberof MutableSet
  */
 static MutableSet *init(MutableSet *self) {
@@ -164,7 +159,6 @@ static MutableSet *init(MutableSet *self) {
 
 /**
  * @fn MutableSet *MutableSet::initWithCapacity(MutableSet *self, size_t capacity)
- *
  * @memberof MutableSet
  */
 static MutableSet *initWithCapacity(MutableSet *self, size_t capacity) {
@@ -185,7 +179,6 @@ static MutableSet *initWithCapacity(MutableSet *self, size_t capacity) {
 
 /**
  * @fn void MutableSet::removeAllObjects(MutableSet *self)
- *
  * @memberof MutableSet
  */
 static void removeAllObjects(MutableSet *self) {
@@ -204,7 +197,6 @@ static void removeAllObjects(MutableSet *self) {
 
 /**
  * @fn void MutableSet::removeObject(MutableSet *self, const ident obj)
- *
  * @memberof MutableSet
  */
 static void removeObject(MutableSet *self, const ident obj) {
@@ -231,7 +223,6 @@ static void removeObject(MutableSet *self, const ident obj) {
 
 /**
  * @fn MutableSet *MutableSet::set(void)
- *
  * @memberof MutableSet
  */
 static MutableSet *set(void) {
@@ -241,7 +232,6 @@ static MutableSet *set(void) {
 
 /**
  * @fn MutableSet *MutableSet::setWithCapacity(size_t capacity)
- *
  * @memberof MutableSet
  */
 static MutableSet *setWithCapacity(size_t capacity) {

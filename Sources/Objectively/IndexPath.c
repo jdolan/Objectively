@@ -117,7 +117,6 @@ static _Bool isEqual(const Object *self, const Object *other) {
 
 /**
  * @fn int IndexPath::indexAtPosition(const IndexPath *self, int position)
- *
  * @memberof IndexPath
  */
 static int indexAtPosition(const IndexPath *self, int position) {
@@ -130,7 +129,6 @@ static int indexAtPosition(const IndexPath *self, int position) {
 
 /**
  * @fn IndexPath *IndexPath::initWithIndex(IndexPath *self, int index)
- *
  * @memberof IndexPath
  */
 static IndexPath *initWithIndex(IndexPath *self, int index) {
@@ -139,14 +137,10 @@ static IndexPath *initWithIndex(IndexPath *self, int index) {
 
 /**
  * @fn IndexPath *IndexPath::initWithIndexes(IndexPath *self, int *indexes, size_t length)
- *
  * @brief Initializes this IndexPath with the specified indexes and length.
- *
  * @param indexes The indexes.
  * @param length The length of `indexes`.
- *
  * @return The intialized IndexPath, or `NULL` on error.
- *
  * @memberof IndexPath
  */
 static IndexPath *initWithIndexes(IndexPath *self, int *indexes, size_t length) {

@@ -59,7 +59,6 @@ static void dealloc(Object *self) {
 
 /**
  * @fn void Thread::cancel(Thread *self)
- *
  * @memberof Thread
  */
 static void cancel(Thread *self) {
@@ -76,7 +75,6 @@ __thread Thread *_currentThread;
 
 /**
  * @fn Thread *Thread::currentThread(void)
- *
  * @memberof Thread
  */
 static Thread *currentThread(void) {
@@ -86,7 +84,6 @@ static Thread *currentThread(void) {
 
 /**
  * @fn void Thread::detach(Thread *self)
- *
  * @memberof Thread
  */
 static void detach(Thread *self) {
@@ -101,7 +98,6 @@ static void detach(Thread *self) {
 
 /**
  * @fn Thread *Thread::init(Thread *self)
- *
  * @memberof Thread
  */
 static Thread *init(Thread *self) {
@@ -111,7 +107,6 @@ static Thread *init(Thread *self) {
 
 /**
  * @fn Thread *Thread::initWithFunction(Thread *self, ThreadFunction function, ident data)
- *
  * @memberof Thread
  */
 static Thread *initWithFunction(Thread *self, ThreadFunction function, ident data) {
@@ -130,7 +125,6 @@ static Thread *initWithFunction(Thread *self, ThreadFunction function, ident dat
 
 /**
  * @fn void Thread::join(Thread *self, ident *status)
- *
  * @memberof Thread
  */
 static void join(Thread *self, ident *status) {
@@ -141,7 +135,6 @@ static void join(Thread *self, ident *status) {
 
 /**
  * @fn void Thread::kill(Thread *self, int signal)
- *
  * @memberof Thread
  */
 static void _kill(Thread *self, int signal) {
@@ -170,7 +163,6 @@ static ident run(ident obj) {
 
 /**
  * @fn void Thread::start(Thread *self)
- *
  * @memberof Thread
  */
 static void start(Thread *self) {

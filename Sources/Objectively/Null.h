@@ -27,10 +27,7 @@
 
 /**
  * @file
- *
  * @brief The Null sentinel.
- *
- * Use this Object when you must place `NULL` into collections.
  */
 
 typedef struct Null Null;
@@ -38,26 +35,20 @@ typedef struct NullInterface NullInterface;
 
 /**
  * @brief The Null sentinel.
- *
- * Use this Object when you must place `NULL` into collections.
- *
+ * @details Use this Object when you must place `NULL` into collections.
  * @extends Object
- *
  * @ingroup JSON
  */
 struct Null {
 
 	/**
 	 * @brief The parent.
-	 *
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
-	 * @private
+	 * @protected
 	 */
 	NullInterface *interface;
 };
@@ -74,11 +65,8 @@ struct NullInterface {
 
 	/**
 	 * @static
-	 *
 	 * @fn Null *Null::null(void)
-	 *
 	 * @return The Null singleton.
-	 *
 	 * @memberof Null
 	 */
 	Null *(*null)(void);

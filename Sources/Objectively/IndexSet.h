@@ -27,8 +27,7 @@
 
 /**
  * @file
- *
- * @brief The IndexSet type.
+ * @brief Index Sets represent the Set to an element or node within a tree or graph structure.
  */
 
 typedef struct IndexSet IndexSet;
@@ -36,22 +35,18 @@ typedef struct IndexSetInterface IndexSetInterface;
 
 /**
  * @brief Index Sets represent the Set to an element or node within a tree or graph structure.
- *
  * @extends Object
  */
 struct IndexSet {
 	
 	/**
 	 * @brief The parent.
-	 *
-	 * @private
 	 */
 	Object object;
 	
 	/**
 	 * @brief The typed interface.
-	 *
-	 * @private
+	 * @protected
 	 */
 	IndexSetInterface *interface;
 
@@ -78,38 +73,30 @@ struct IndexSetInterface {
 
 	/**
 	 * @fn _Bool IndexSet::containsIndex(const IndexSet *self, int index)
-	 *
+	 * @param self The IndexSet.
 	 * @param index The index.
-	 *
 	 * @return True if this IndexSet contains `index`, false otherwise.
-	 *
 	 * @memberof IndexSet
 	 */
 	_Bool (*containsIndex)(const IndexSet *self, int index);
 
 	/**
 	 * @fn IndexSet *IndexSet::initWithIndex(IndexSet *self, int index)
-	 *
 	 * @brief Initializes this IndexSet with the specified index.
-	 *
+	 * @param self The IndexSet.
 	 * @param index The index.
-	 *
 	 * @return The intialized IndexSet, or `NULL` on error.
-	 *
 	 * @memberof IndexSet
 	 */
 	IndexSet *(*initWithIndex)(IndexSet *self, int index);
 
 	/**
 	 * @fn IndexSet *IndexSet::initWithIndexes(IndexSet *self, int *indexes, size_t count)
-	 *
 	 * @brief Initializes this IndexSet with the specified indexes and count.
-	 *
+	 * @param self The IndexSet.
 	 * @param indexes The indexes.
 	 * @param count The count of `indexes`.
-	 *
 	 * @return The intialized IndexSet, or `NULL` on error.
-	 *
 	 * @memberof IndexSet
 	 */
 	IndexSet *(*initWithIndexes)(IndexSet *self, int *indexes, size_t count);

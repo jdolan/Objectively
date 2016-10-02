@@ -37,53 +37,43 @@ typedef _locale_t locale_t;
 
 /**
  * @file
- * 
- * @brief Locale.
- *
- * @extends Object
+ * @brief Locale abstraction for language and data formatting.
  */
 
 /**
  * @defgroup Localization Localization
- *
  * @brief Locale and localization facilities.
  */
+
 typedef struct Locale Locale;
 typedef struct LocaleInterface LocaleInterface;
 
 /**
  * @brief Locale abstraction for language and data formatting.
- *
  * @extends Object
- *
  * @ingroup Localization
  */
 struct Locale {
 
 	/**
 	 * @brief The parent.
-	 *
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
-	 * @private
+	 * @protected
 	 */
 	LocaleInterface *interface;
 
 	/**
 	 * @brief The locale identifier, e.g. `en_US`.
-	 *
 	 * @see xlocale.h, locale.h
 	 */
 	const char *identifier;
 
 	/**
 	 * @brief The internal C representation.
-	 *
 	 * @private
 	 */
 	ident locale;
@@ -101,37 +91,28 @@ struct LocaleInterface {
 
 	/**
 	 * @fn Locale *Locale::initWithIdentifier(Locale *self, const char *identifier)
-	 *
 	 * @brief Initializes this Locale with the given identifier.
-	 *
+	 * @param self The Locale.
 	 * @param identifier The locale identifier, e.g. `en-US`.
-	 *
 	 * @return The initialized Locale, or `NULL` on error.
-	 *
 	 * @memberof Locale
 	 */
 	Locale *(*initWithIdentifier)(Locale *self, const char *identifier);
 
 	/**
 	 * @fn Locale *Locale::initWithLocale(Locale *self, locale_t locale)
-	 *
 	 * @brief Initializes this Locale with the given locale.
-	 *
-	 * @param locale The locale.
-	 *
+	 * @param self The Locale.
+	 * @param locale The backing locale.
 	 * @return The initialized Locale, or `NULL` on error.
-	 *
 	 * @memberof Locale
 	 */
 	Locale *(*initWithLocale)(Locale *self, locale_t locale);
 
 	/**
 	 * @static
-	 *
 	 * @fn Locale *Locale::systemLocale(void)
-	 *
 	 * @return The system Locale.
-	 *
 	 * @memberof Locale
 	 */
 	Locale *(*systemLocale)(void);

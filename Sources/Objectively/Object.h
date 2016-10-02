@@ -28,25 +28,19 @@
 
 /**
  * @file
- *
- * @brief Object is the _root Class_ of the Objectively Class hierarchy.
- *
- * Every Class descends from Object, and every instance can be cast to Object.
+ * @brief Object is the _root Class_ of The Objectively Class hierarchy.
  */
 
 /**
  * @defgroup Core Core
- *
  * @brief Objectively core.
  */
 typedef struct Object Object;
 typedef struct ObjectInterface ObjectInterface;
 
 /**
- * @brief Object is the _root Class_ of the Objectively Class hierarchy.
- *
- * Every Class descends from Object, and every instance can be cast to Object.
- *
+ * @brief Object is the _root Class_ of The Objectively Class hierarchy.
+ * @details Every Class descends from Object, and every instance can be cast to Object.
  * @ingroup Core
  */
 struct Object {
@@ -58,14 +52,12 @@ struct Object {
 
 	/**
 	 * @brief The typed interface.
-	 *
-	 * @private
+	 * @protected
 	 */
 	ObjectInterface *interface;
 
 	/**
 	 * @brief The reference count of this Object.
-	 *
 	 * @private
 	 */
 	unsigned referenceCount;
@@ -80,87 +72,62 @@ struct ObjectInterface {
 
 	/**
 	 * @fn Object *Object::copy(const Object *self)
-	 *
 	 * @brief Creates a shallow copy of this Object.
-	 *
-	 * @param self The object.
-	 *
+	 * @param self The Object.
 	 * @return The copy.
-	 *
 	 * @memberof Object
 	 */
 	Object *(*copy)(const Object *self);
 
 	/**
 	 * @fn void Object::dealloc(Object *self)
-	 *
 	 * @brief Frees all resources held by this Object.
-	 *
-	 * @param self The object.
-	 *
+	 * @param self The Object.
 	 * @memberof Object
 	 */
 	void (*dealloc)(Object *self);
 
 	/**
 	 * @fn String *Object::description(const Object *self)
-	 *
-	 * @param self The object.
-	 *
+	 * @param self The Object.
 	 * @return A brief description of this Object.
-	 *
 	 * @memberof Object
 	 */
 	String *(*description)(const Object *self);
 
 	/**
 	 * @fn int Object::hash(const Object *self)
-	 *
-	 * @param self The object.
-	 *
+	 * @param self The Object.
 	 * @return An integer hash for use in hash tables, etc.
-	 *
 	 * @memberof Object
 	 */
 	int (*hash)(const Object *self);
 
 	/**
 	 * @fn Object *Object::init(Object *self)
-	 *
 	 * @brief Initializes this Object.
-	 *
-	 * @param self The uninitialized object.
-	 *
+	 * @param self The Object.
 	 * @return The initialized Object, or the unmodified pointer on error.
-	 *
 	 * @memberof Object
 	 */
 	Object *(*init)(Object *self);
 
 	/**
 	 * @fn _Bool Object::isEqual(const Object *self, const Object *other)
-	 *
 	 * @brief Tests equality of the other Object.
-	 *
-	 * @param self The object.
-	 * @param other The object to test for equality.
-	 *
+	 * @param self The Object.
+	 * @param other The Object to test for equality.
 	 * @return true if other is deemed equal, false otherwise.
-	 *
 	 * @memberof Object
 	 */
 	_Bool (*isEqual)(const Object *self, const Object *other);
 
 	/**
 	 * @fn _Bool Object::isKindOfClass(const Object *self, const Class *clazz)
-	 *
-	 * @brief Tests for class hierarchy membership.
-	 *
-	 * @param self The object.
+	 * @brief Tests for Class hierarchy membership.
+	 * @param self The Object.
 	 * @param clazz The Class to test for membership.
-	 *
-	 * @return true if this instance belongs to class' hierarchy, false otherwise.
-	 *
+	 * @return true if this instance belongs to Class' hierarchy, false otherwise.
 	 * @memberof Object
 	 */
 	_Bool (*isKindOfClass)(const Object *self, const Class *clazz);

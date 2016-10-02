@@ -27,7 +27,6 @@
 
 /**
  * @file
- *
  * @brief A wrapper for placing numeric primitives into collections, etc.
  */
 
@@ -36,24 +35,19 @@ typedef struct NumberInterface NumberInterface;
 
 /**
  * @brief A wrapper for placing numeric primitives into collections, etc.
- *
  * @extends Object
- *
  * @ingroup JSON
  */
 struct Number {
 
 	/**
 	 * @brief The parent.
-	 *
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
-	 * @private
+	 * @protected
 	 */
 	NumberInterface *interface;
 
@@ -75,104 +69,86 @@ struct NumberInterface {
 
 	/**
 	 * @fn _Bool Number::boolValue(const Number *self)
-	 *
+	 * @param self The Number.
 	 * @return This Number's _Bool value.
-	 *
 	 * @memberof Number
 	 */
 	_Bool (*boolValue)(const Number *self);
 
 	/**
 	 * @fn char Number::charValue(const Number *self)
-	 *
+	 * @param self The Number.
 	 * @return This Number's char value.
-	 *
 	 * @memberof Number
 	 */
 	char (*charValue)(const Number *self);
 
 	/**
 	 * @fn Order Number::compareTo(const Number *self, const Number *other)
-	 *
 	 * @brief Compares this Number to another.
-	 *
+	 * @param self The Number.
 	 * @param other The Number to compare to.
-	 *
 	 * @return The ordering of this Number compared to `other`.
-	 *
 	 * @memberof Number
 	 */
 	Order (*compareTo)(const Number *self, const Number *other);
 
 	/**
 	 * @fn double Number::doubleValue(const Number *self)
-	 *
+	 * @param self The Number.
 	 * @return This Number's double value.
-	 *
 	 * @memberof Number
 	 */
 	double (*doubleValue)(const Number *self);
 
 	/**
 	 * @fn float Number::floatValue(const Number *self)
-	 *
+	 * @param self The Number.
 	 * @return This Number's floating point value.
-	 *
 	 * @memberof Number
 	 */
 	float (*floatValue)(const Number *self);
 
 	/**
 	 * @fn long Number::longValue(const Number *self)
-	 *
+	 * @param self The Number.
 	 * @return This Number's long value.
-	 *
 	 * @memberof Number
 	 */
 	long (*longValue)(const Number *self);
 
 	/**
 	 * @fn Number *Number::initWithValue(Number *self, double value)
-	 *
 	 * @brief Initializes this Number with the specified value.
-	 *
+	 * @param self The Number.
 	 * @param value The value.
-	 *
 	 * @return The initialized Number, or `NULL` on error.
-	 *
 	 * @memberof Number
 	 */
 	Number *(*initWithValue)(Number *self, double value);
 
 	/**
 	 * @fn int Number::intValue(const Number *self)
-	 *
+	 * @param self The Number.
 	 * @return This Number's integer value.
-	 *
 	 * @memberof Number
 	 */
 	int (*intValue)(const Number *self);
 
 	/**
 	 * @static
-	 *
 	 * @fn Number *Number::numberWithValue(double value)
-	 *
 	 * @brief Returns a new Number with the given value.
-	 *
 	 * @param value The value.
-	 *
 	 * @return The new Number, or `NULL` on error.
-	 *
 	 * @memberof Number
 	 */
 	Number *(*numberWithValue)(double value);
 
 	/**
 	 * @fn short Number::shortValue(const Number *self)
-	 *
+	 * @param self The Number.
 	 * @return This Number's short value.
-	 *
 	 * @memberof Number
 	 */
 	short (*shortValue)(const Number *self);

@@ -35,13 +35,11 @@
 
 /**
  * @file
- *
  * @brief Microsecond-precision immutable dates.
  */
 
 /**
  * @defgroup Date Date & Time
- *
  * @brief Date and time manipulation.
  */
 
@@ -65,24 +63,19 @@ typedef struct DateInterface DateInterface;
 
 /**
  * @brief Microsecond-precision immutable dates.
- *
  * @extends Object
- *
  * @ingroup Date
  */
 struct Date {
 
 	/**
 	 * @brief The parent.
-	 *
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
-	 * @private
+	 * @protected
 	 */
 	DateInterface *interface;
 
@@ -104,64 +97,47 @@ struct DateInterface {
 
 	/**
 	 * @fn Order Date::compareTo(const Date *self, const Date *other)
-	 *
 	 * @brief Compares this Date to another.
-	 *
+	 * @param self The Date.
 	 * @param other The Date to compare to.
-	 *
 	 * @return The ordering of this Date compared to other.
-	 *
 	 * @memberof Date
 	 */
 	Order (*compareTo)(const Date *self, const Date *other);
 	
 	/**
 	 * @static
-	 *
 	 * @fn Date *Date::date(void)
-	 *
 	 * @brief Returns a new Date with the current Time.
-	 *
 	 * @return The new Date, or `NULL` on error.
-	 *
 	 * @memberof Date
 	 */
 	Date *(*date)(void);
 	
 	/**
 	 * @static
-	 *
 	 * @fn Date *Date::dateWithTimeSinceNow(const Time interval)
-	 *
 	 * @brief Returns a new Date with the given Time since now.
-	 *
 	 * @return The new Date, or `NULL` on error.
-	 *
 	 * @memberof Date
 	 */
 	Date *(*dateWithTimeSinceNow)(const Time *interval);
 
-
 	/**
 	 * @fn Date *Date::init(Date *self)
-	 *
 	 * Initializes a Date with the current time.
-	 *
+	 * @param self The Date.
 	 * @return The initialized Date, or `NULL` on error.
-	 *
 	 * @memberof Date
 	 */
 	Date *(*init)(Date *self);
 
 	/**
 	 * @fn Date *Date::initWithTime(Date *self, const Time *time)
-	 *
 	 * Initializes a Date with the specified time.
-	 *
+	 * @param self The Date.
 	 * @param time The desired Time.
-	 *
 	 * @return The initialized Date, or `NULL` on error.
-	 *
 	 * @memberof Date
 	 */
 	Date *(*initWithTime)(Date *self, const Time *time);

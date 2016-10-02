@@ -102,7 +102,6 @@ static _Bool isEqual(const Object *self, const Object *other) {
 
 /**
  * @fn Data *Data::dataWithBytes(const uint8_t *bytes, size_t length)
- *
  * @memberof Data
  */
 static Data *dataWithBytes(const uint8_t *bytes, size_t length) {
@@ -112,7 +111,6 @@ static Data *dataWithBytes(const uint8_t *bytes, size_t length) {
 
 /**
  * @fn Data *Data::dataWithContentsOfFile(const char *path)
- *
  * @memberof Data
  */
 static Data *dataWithContentsOfFile(const char *path) {
@@ -122,7 +120,6 @@ static Data *dataWithContentsOfFile(const char *path) {
 
 /**
  * @fn Data *Data::dataWithMemory(const ident mem, size_t length)
- *
  * @memberof Data
  */
 static Data *dataWithMemory(const ident mem, size_t length) {
@@ -132,7 +129,6 @@ static Data *dataWithMemory(const ident mem, size_t length) {
 
 /**
  * @fn Data *Data::initWithBytes(Data *self, const uint8_t *bytes, size_t length)
- *
  * @memberof Data
  */
 static Data *initWithBytes(Data *self, const uint8_t *bytes, size_t length) {
@@ -147,7 +143,6 @@ static Data *initWithBytes(Data *self, const uint8_t *bytes, size_t length) {
 
 /**
  * @fn Data *Data::initWithContentsOfFile(Data *self, const char *path)
- *
  * @memberof Data
  */
 static Data *initWithContentsOfFile(Data *self, const char *path) {
@@ -184,7 +179,6 @@ static Data *initWithContentsOfFile(Data *self, const char *path) {
 
 /**
  * @fn Data *Data::initWithMemory(Data *self, const ident mem, size_t length)
- *
  * @memberof Data
  */
 static Data *initWithMemory(Data *self, const ident mem, size_t length) {
@@ -200,7 +194,6 @@ static Data *initWithMemory(Data *self, const ident mem, size_t length) {
 
 /**
  * @fn MutableData *Data::mutableCopy(const Data *self)
- *
  * @memberof Data
  */
 static MutableData *mutableCopy(const Data *self) {
@@ -210,7 +203,6 @@ static MutableData *mutableCopy(const Data *self) {
 
 /**
  * @fn _Bool Data::writeToFile(const Data *self, const char *path)
- *
  * @memberof Data
  */
 static _Bool writeToFile(const Data *self, const char *path) {

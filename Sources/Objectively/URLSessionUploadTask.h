@@ -30,7 +30,6 @@
 
 /**
  * @file
- *
  * @brief Use upload tasks to send files directly from disk.
  */
 typedef struct URLSessionUploadTask URLSessionUploadTask;
@@ -38,24 +37,19 @@ typedef struct URLSessionUploadTaskInterface URLSessionUploadTaskInterface;
 
 /**
  * @brief Use upload tasks to send files directly from disk.
- *
  * @extends URLSessionTask
- *
  * @ingroup URLSession
  */
 struct URLSessionUploadTask {
 
 	/**
 	 * @brief The parent.
-	 *
-	 * @private
 	 */
 	URLSessionTask urlSessionTask;
 
 	/**
 	 * @brief The typed interface.
-	 *
-	 * @private
+	 * @protected
 	 */
 	URLSessionUploadTaskInterface *interface;
 

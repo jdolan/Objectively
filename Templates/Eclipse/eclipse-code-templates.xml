@@ -22,7 +22,6 @@ static void dealloc(Object *self) {
 
 /**
  * @fn ${file_base} *${file_base}::init(${file_base} *self)
- *
  * @memberof ${file_base}
  */
 static ${file_base} *init(${file_base} *self) {
@@ -70,7 +69,6 @@ Class _${file_base} = {
 
 /**
  * @file
- * 
  * @brief ..
  */
 
@@ -84,15 +82,12 @@ struct ${file_base} {
 
 	/**
 	 * @brief The parent.
-	 *
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
-	 * @private
+	 * @protected
 	 */
 	${file_base}Interface *interface;
 
@@ -111,11 +106,9 @@ struct ${file_base}Interface {
 
 	/**
 	 * @fn ${file_base} *${file_base}::init(${file_base} *self)
-	 *
 	 * @brief Initializes this ${file_base}.
-	 *
+	 * @param self The ${file_base}.
 	 * @return The initialized ${file_base}, or `NULL` on error.
-	 *
 	 * @memberof ${file_base}
 	 */
 	${file_base} *(*init)(${file_base} *self);

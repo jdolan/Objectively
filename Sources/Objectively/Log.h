@@ -29,15 +29,13 @@
 
 /**
  * @file
- *
  * @brief A Log4J-inspired log appender.
  */
 
 /**
  * @brief Every Log has a threshold for generating messages.
- *
- * Messages beneath the set threshold level are not output. The default level
- * for newly initialized Logs is `LogLevelInfo`.
+ * @details Messages beneath the set threshold level are not output. The default level for newly
+ * initialized Logs is `LogLevelInfo`.
  */
 typedef enum {
 	LogLevelTrace,
@@ -58,31 +56,25 @@ typedef struct LogInterface LogInterface;
 
 /**
  * @brief A Log4J-inspired log appender.
- *
  * @extends Object
  */
 struct Log {
 
 	/**
 	 * @brief The parent.
-	 *
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
-	 * @private
+	 * @protected
 	 */
 	LogInterface *interface;
 
 	/**
 	 * @brief The format string, defaults to `LOG_FORMAT_DEFAULT`.
-	 *
 	 * This string is post-processed after date substitution is performed by
 	 * `strftime`. The following additional tokens are supported:
-	 *
 	 * * %%n - The Log name.
 	 * * %%l - The message level.
 	 * * %%m - The message.
@@ -91,7 +83,6 @@ struct Log {
 
 	/**
 	 * @brief The file descriptor (defaults to `stdout`).
-	 *
 	 * @remarks Non-`tty` files are closed when the Log is deallocated.
 	 */
 	FILE *file;
@@ -119,112 +110,97 @@ struct LogInterface {
 
 	/**
 	 * @fn void Log::debug(const Log *self, const char *fmt, ...)
-	 *
 	 * @brief Log a debug message.
-	 *
+	 * @param self The Log.
+	 * @param fmt The format string.
 	 * @memberof Log
 	 */
 	void (*debug)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
 	/**
 	 * @fn void Log::error(const Log *self, const char *fmt, ...)
-	 *
 	 * @brief Log an error message.
-	 *
+	 * @param self The Log.
+	 * @param fmt The format string.
 	 * @memberof Log
 	 */
 	void (*error)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
 	/**
 	 * @fn void Log::fatal(const Log *self, const char *fmt, ...)
-	 *
 	 * @brief Log a fatal message.
-	 *
+	 * @param self The Log.
+	 * @param fmt The format string.
 	 * @memberof Log
 	 */
 	void (*fatal)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
 	/**
 	 * @fn void Log::flush(const Log *self)
-	 *
 	 * @brief Flushes and pending output to this Log's file.
-	 *
+	 * @param self The Log.
 	 * @memberof Log
 	 */
 	void (*flush)(const Log *self);
 
 	/**
 	 * @fn void Log::info(const Log *self, const char *fmt, ...)
-	 *
 	 * @brief Log an info message.
-	 *
+	 * @param self The Log.
+	 * @param fmt The format string.
 	 * @memberof Log
 	 */
 	void (*info)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
 	/**
 	 * @fn Log *Log::init(Log *self)
-	 *
 	 * @brief Initializes this Log.
-	 *
+	 * @param self The Log.
 	 * @return The initialized Log, or `NULL` on error.
-	 *
 	 * @memberof Log
 	 */
 	Log *(*init)(Log *self);
 
 	/**
 	 * @fn Log *Log::initWithName(Log *self, const char *name)
-	 *
 	 * @brief Initializes this Log with the specified name.
-	 *
+	 * @param self The Log.
 	 * @param name The Log name.
-	 *
 	 * @return The initialized Log, or `NULL` on error.
-	 *
 	 * @memberof Log
 	 */
 	Log *(*initWithName)(Log *self, const char *name);
 
 	/**
 	 * @fn void Log::log(const Log *self, LogLevel level, const char *fmt, va_list args)
-	 *
 	 * @brief Write a message to the Log.
-	 *
+	 * @param self The Log.
 	 * @param level The severity of the message, which must be greater than or equal to the
 	 * configured level of this Log.
 	 * @param fmt The format string.
 	 * @param args The format arguments.
-	 *
 	 * @memberof Log
 	 */
 	void (*log)(const Log *self, LogLevel level, const char *fmt, va_list args);
 
 	/**
 	 * @static
-	 *
 	 * @fn Log *Log::sharedInstance(void)
-	 *
 	 * @return The shared Log instance.
-	 *
 	 * @memberof Log
 	 */
 	Log *(*sharedInstance)(void);
 	
 	/**
 	 * @fn void Log::trace(const Log *self, const char *fmt, ...)
-	 *
 	 * @brief Log a trace message.
-	 *
 	 * @memberof Log
 	 */
 	void (*trace)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
 	/**
 	 * @fn void Log::warn(const Log *self, const char *fmt, ...)
-	 *
 	 * @brief Log a warn message.
-	 *
 	 * @memberof Log
 	 */
 	void (*warn)(const Log *self, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));

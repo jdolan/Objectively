@@ -30,7 +30,6 @@
 
 /**
  * @file
- *
  * @brief Extended POSIX regular expressions.
  */
 
@@ -39,22 +38,18 @@ typedef struct RegexInterface RegexInterface;
 
 /**
  * @brief Extended POSIX regular expressions.
- *
  * @extends Object
  */
 struct Regex {
 
 	/**
 	 * @brief The parent.
-	 *
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
-	 * @private
+	 * @protected
 	 */
 	RegexInterface *interface;
 
@@ -91,58 +86,44 @@ struct RegexInterface {
 
 	/**
 	 * @fn Regex *Regex::initWithPattern(Regex *self, const char *pattern, int options)
-	 *
 	 * @brief Initializes this regular expression.
-	 *
+	 * @param self The Regex.
 	 * @param pattern The POSIX regular expression pattern.
 	 * @param options A bitwise-or of `REG_ICASE`, `REG_NEWLINE`.
-	 *
 	 * @return The initialized regular expression, or `NULL` on error.
-	 *
 	 * @memberof Regex
 	 */
 	Regex *(*initWithPattern)(Regex *self, const char *pattern, int options);
 
 	/**
 	 * @fn _Bool Regex::matchesCharacters(const Regex *self, const char *chars, int options, Range **matches)
-	 *
 	 * @brief Matches this regular expression against the given characters.
-	 *
+	 * @param self The Regex.
 	 * @param chars The characters to match.
 	 * @param options A bitwise-or of `REG_falseTBOL`, `REG_falseTEOL`.
 	 * @param matches An optional pointer to return matched sub-expressions.
-	 *
 	 * @return `true` if this Regex matched `chars`, `false` otherwise.
-	 *
 	 * @remarks If provided, `matches` will be dynamically allocated and contain
-	 * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the
-	 * Range of `chars` that matched the entire pattern. `matches[1..n]` will
-	 * identify the Range of each corresponding sub-expression. The caller must
-	 * free `matches` when done with it.
-	 *
+	 * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the Range of `chars` that 
+	 * matched the entire pattern. `matches[1..n]` will identify the Range of each corresponding 
+	 * sub-expression. The caller must free `matches` when done with it.
 	 * @see regexec(3)
-	 *
 	 * @memberof Regex
 	 */
 	_Bool (*matchesCharacters)(const Regex *self, const char *chars, int options, Range **matches);
 
 	/**
 	 * @fn _Bool Regex::matchesString(const Regex *self, const String *string, int options, Range **matches)
-	 *
 	 * @brief Matches this regular expression against the given String.
-	 *
+	 * @param self The Regex.
 	 * @param string The String to match.
 	 * @param options A bitwise-or of `REG_falseTBOL`, `REG_falseTEOL`.
 	 * @param matches An optional pointer to return matched sub-expressions.
-	 *
 	 * @return `true` if this expression matches `string`, `false` otherwise.
-	 *
 	 * @remarks If provided, `matches` will be dynamically allocated and contain
-	 * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the
-	 * Range of `chars` that matched the entire pattern. `matches[1..n]` will
-	 * identify the Range of each corresponding sub-expression. The caller must
-	 * free `matches` when done with it.
-	 *
+	 * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the Range of `chars` that 
+	 * matched the entire pattern. `matches[1..n]` will identify the Range of each corresponding 
+	 * sub-expression. The caller must free `matches` when done with it.
 	 * @memberof Regex
 	 */
 	_Bool (*matchesString)(const Regex *self, const String *string, int options, Range **matches);

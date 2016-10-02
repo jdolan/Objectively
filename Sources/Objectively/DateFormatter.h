@@ -28,7 +28,6 @@
 
 /**
  * @file
- *
  * @brief Date formatting and parsing.
  */
 
@@ -42,9 +41,7 @@ typedef struct DateFormatterInterface DateFormatterInterface;
 
 /**
  * @brief Date formatting and parsing.
- *
  * @extends Object
- *
  * @ingroup Date
  * @ingroup Localization
  */
@@ -52,15 +49,12 @@ struct DateFormatter {
 
 	/**
 	 * @brief The parent.
-	 *
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
-	 * @private
+	 * @protected
 	 */
 	DateFormatterInterface *interface;
 
@@ -82,56 +76,40 @@ struct DateFormatterInterface {
 
 	/**
      * @fn Date *DateFormatter::dateFromCharacters(const DateFormatter *self, const char *chars)
-	 *
 	 * @brief Parses a Date from the specified UTF-8 encoded C string.
-	 *
 	 * @param self The DateFormatter.
 	 * @param chars The UTF-8 encoded C string to parse.
-	 *
 	 * @return A Date instance, or `NULL` on error.
-	 *
 	 * @memberof DateFormatter
 	 */
 	Date *(*dateFromCharacters)(const DateFormatter *self, const char *chars);
 
 	/**
 	 * @fn Date *DateFormatter::dateFromString(const DateFormatter *self, const String *string)
-	 *
 	 * @brief Parses a Date from the specified String.
-	 *
 	 * @param self The DateFormatter.
 	 * @param string The String to parse.
-	 *
 	 * @return A Date instance, or `NULL` on error.
-	 *
 	 * @memberof DateFormatter
 	 */
 	Date *(*dateFromString)(const DateFormatter *self, const String *string);
 
 	/**
      * @fn DateFormatter *DateForamtter::initWithFormat(DateFormatter *self, const char *fmt)
-     *
 	 * @brief Initializes a DateFormatter with the specified format string.
-	 *
 	 * @param self The DateFormatter.
 	 * @param fmt The format string.
-	 *
 	 * @return The initialized DateFormatter, or `NULL` on error.
-	 *
 	 * @memberof DateFormatter
 	 */
 	DateFormatter *(*initWithFormat)(DateFormatter *self, const char *fmt);
 
 	/**
 	 * @fn String *DateFormatter::stringFromDate(const DateFormatter *self, const Date *date)
-	 *
 	 * @brief Yields a String representation of the specified Date instance.
-	 *
 	 * @param self The DateFormatter.
 	 * @param date The Date to format.
-	 *
 	 * @return The String representation of the Date, or `NULL` on error.
-	 *
 	 * @memberof DateFormatter
 	 */
 	String *(*stringFromDate)(const DateFormatter *self, const Date *date);

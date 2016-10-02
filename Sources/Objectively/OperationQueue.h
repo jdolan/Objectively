@@ -30,7 +30,6 @@
 
 /**
  * @file
- *
  * @brief OperationQueues provide a thread of execution for Operations.
  */
 
@@ -39,24 +38,19 @@ typedef struct OperationQueueInterface OperationQueueInterface;
 
 /**
  * @brief OperationQueues provide a thread of execution for Operations.
- *
  * @extends Object
- *
  * @ingroup Concurrency
  */
 struct OperationQueue {
 
 	/**
 	 * @brief The parent.
-	 *
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 *
-	 * @private
+	 * @protected
 	 */
 	OperationQueueInterface *interface;
 
@@ -100,84 +94,69 @@ struct OperationQueueInterface {
 
 	/**
 	 * @fn void OperationQueue::addOperation(OperationQueue *self, Operation *operation)
-	 *
 	 * @brief Adds an Operation to this queue.
-	 *
+	 * @param self The OperationQueue.
 	 * @param operation The Operation to add.
-	 *
 	 * @memberof OperationQueue
 	 */
 	void (*addOperation)(OperationQueue *self, Operation *operation);
 
 	/**
 	 * @fn void OperationQueue::cancelAllOperations(OperationQueue *self)
-	 *
 	 * @brief Cancels all pending Operations residing within this Queue.
-	 *
+	 * @param self The OperationQueue.
 	 * @memberof OperationQueue
 	 */
 	void (*cancelAllOperations)(OperationQueue *self);
 
 	/**
 	 * @static
-	 *
 	 * @fn OperationQueue* OperationQueue::currentQueue(void)
-	 *
 	 * @return The current OperationQueue, or `NULL` if none can be determined.
-	 *
-	 * @remarks This method should only be called from a synchronous Operation
-	 * that was dispatched via an OperationQueue. This method uses thread-local
-	 * storage.
-	 *
+	 * @remarks This method should only be called from a synchronous Operation that was dispatched 
+	 * via an OperationQueue. This method uses thread-local storage.
 	 * @memberof OperationQueue
 	 */
 	OperationQueue *(*currentQueue)(void);
 
 	/**
 	 * @fn OperationQueue *OperationQueue::init(OperationQueue *self)
-	 *
 	 * @brief Initializes this OperationQueue.
-	 *
+	 * @param self The OperationQueue.
 	 * @return The initialized OperationQueue, or `NULL` on error.
-	 *
 	 * @memberof OperationQueue
 	 */
 	OperationQueue *(*init)(OperationQueue *self);
 
 	/**
 	 * @fn int OperationQueue::operationCount(const OperationQueue *self)
-	 *
+	 * @param self The OperationQueue.
 	 * @return The instantaneous `count` of this OperationQueue's Operations.
-	 *
 	 * @memberof OperationQueue
 	 */
 	int (*operationCount)(const OperationQueue *self);
 
 	/**
 	 * @fn Array *OperationQueue::operations(const OperationQueue *self)
-	 *
+	 * @param self The OperationQueue.
 	 * @return An instantaneous copy of this OperationQueue's Operations.
-	 *
 	 * @memberof OperationQueue
 	 */
 	Array *(*operations)(const OperationQueue *self);
 
 	/**
 	 * @fn void OperationQueue::removeOperation(OperationQueue *self, Operation *operation)
-	 *
 	 * @brief Removes the Operation from this queue.
-	 *
+	 * @param self The OperationQueue.
 	 * @param operation The Operation to remove.
-	 *
 	 * @memberof OperationQueue
 	 */
 	void (*removeOperation)(OperationQueue *self, Operation *operation);
 
 	/**
 	 * @fn void OperationQueue::waitUntilAllOperationsAreFinished(OperationQueue *self)
-	 *
 	 * @brief Waits until all Operations submitted to this queue have finished.
-	 *
+	 * @param self The OperationQueue.
 	 * @memberof OperationQueue
 	 */
 	void (*waitUntilAllOperationsAreFinished)(OperationQueue *self);

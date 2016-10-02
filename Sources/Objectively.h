@@ -25,7 +25,6 @@
 
 /**
  * @file
- *
  * @brief Objectively: Ultra-lightweight object oriented framework for GNU C.
  */
 
