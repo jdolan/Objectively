@@ -92,7 +92,7 @@ struct Class {
 	/**
 	 * @brief The instance size (required).
 	 */
-	const size_t instanceSize;
+	size_t instanceSize;
 
 	/**
 	 * @brief The interface offset (required).
@@ -102,7 +102,7 @@ struct Class {
 	/**
 	 * @brief The interface size (required).
 	 */
-	const size_t interfaceSize;
+	size_t interfaceSize;
 
 	/**
 	 * @brief The Class name (required).
