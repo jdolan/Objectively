@@ -50,7 +50,7 @@ struct Hello {
 	Object object;
 
 	/**
-	 * @brief The type interface.
+	 * @brief The typed interface.
 	 */
 	HelloInterface *interface;
 
@@ -78,6 +78,7 @@ struct HelloInterface {
 	 * @static
 	 * @fn Hello *Hello::helloWithGreeting(const char *greeting)
 	 * @brief A factory method for instantiating Hello.
+	 * @param greeting The greeting.
 	 * @return A new Hello with the given `greeting`.
 	 * @memberof Hello
 	 */
@@ -86,6 +87,8 @@ struct HelloInterface {
 	/**
 	 * @fn Hello *Hello::initWithGreeting(Hello *self, const char *greeting)
 	 * @brief Initializes this Hello with the given `greeting`.
+	 * @param self The Hello.
+	 * @param greeting The greeting.
 	 * @return The initialized Hello, or `NULL` on error.
 	 * @memberof Hello
 	 */
@@ -94,6 +97,7 @@ struct HelloInterface {
 	/**
 	 * @fn void Hello::sayHello(const Hello *self)
 	 * @brief Prints this Hello's greeting to the console.
+	 * @param self The Hello.
 	 * @memberof Hello
 	 */
 	void (*sayHello)(const Hello *self);
@@ -155,12 +159,10 @@ static void sayHello(const Hello *self) {
  * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
-
-	HelloInterface *hello = (HelloInterface *) clazz->def->interface;
-
-	hello->helloWithGreeting = helloWithGreeting;
-	hello->initWithGreeting = initWithGreeting;
-	hello->sayHello = sayHello;
+ 
+	((HelloInterface *) clazz->def->interface)->helloWithGreeting = helloWithGreeting;
+	((HelloInterface *) clazz->def->interface)->initWithGreeting = initWithGreeting;
+	((HelloInterface *) clazz->def->interface)->sayHello = sayHello;
 }
 
 Class _Hello = {

@@ -24,7 +24,7 @@
 #include <cstdio>
 
 extern "C" {
-#include <Objectively.h>
+	#include <Objectively.h>
 }
 
 int main(int argc, const char **argv) {
@@ -36,6 +36,8 @@ int main(int argc, const char **argv) {
 	String *string = str("Hello World!");
 
 	std::printf("%s\n", string->chars);
+
+	release(string);
 
 	return 0;
 }

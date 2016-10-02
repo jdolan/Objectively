@@ -1,6 +1,6 @@
 AC_PREREQ(2.69)
 
-AC_INIT([Objectively], [0.3.0], [jay@jaydolan.com])
+AC_INIT([Objectively], [0.4.0], [jay@jaydolan.com])
 
 AC_CONFIG_HEADERS([Sources/Objectively/Config.h])
 AC_CONFIG_MACRO_DIR([m4])
