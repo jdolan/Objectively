@@ -42,23 +42,20 @@ static objClass *_classes;
  * @brief Called `atexit` to teardown Objectively.
  */
 static void teardown(void) {
-	objClass *c;
 
-	c = _classes;
+	objClass *c = _classes;
 	while (c) {
+
 		if (c->descriptor->destroy) {
 			c->descriptor->destroy(c->descriptor);
 		}
-		c = c->next;
-	}
 
-	c = _classes;
-	while (c) {
-		if (c->interface) {
-			free(c->interface);
-			c->interface = NULL;
-		}
-		c = c->next;
+		objClass *next = c->next;
+
+		free(c->interface);
+		free(c);
+
+		c = next;
 	}
 }
 
@@ -95,8 +92,6 @@ void _initialize(Class *clazz) {
 		def->descriptor = calloc(1, sizeof(Class));
 		assert(clazz->def->descriptor);
 
-		memcpy(clazz->def->descriptor, clazz, sizeof(Class));
-
 		clazz->def->interface = calloc(1, clazz->interfaceSize);
 		assert(clazz->def->interface);
 
@@ -117,7 +112,9 @@ void _initialize(Class *clazz) {
 		clazz->initialize(clazz);
 
 		def->next = __sync_lock_test_and_set(&_classes, def);
-		clazz->magic = CLASS_MAGIC;
+		def->descriptor->magic = clazz->magic = CLASS_MAGIC;
+
+		memcpy(clazz->def->descriptor, clazz, sizeof(Class));
 
 	} else {
 		while (clazz->magic != CLASS_MAGIC) {
