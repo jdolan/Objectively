@@ -34,7 +34,7 @@ START_TEST(object)
 		ck_assert(object != NULL);
 		ck_assert_ptr_eq(&_Object, classof(object));
 
-		ck_assert_ptr_eq(&_Object, classForName("Object"));
+		ck_assert_ptr_eq(&_Object.def->descriptor, classForName("Object"));
 
 		ck_assert($(object, isEqual, object));
 		ck_assert($(object, isKindOfClass, classof(object)));
