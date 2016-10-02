@@ -42,13 +42,19 @@ static objClass *_classes;
  * @brief Called `atexit` to teardown Objectively.
  */
 static void teardown(void) {
+	objClass *c;
 
-	objClass *c = _classes;
+	c = _classes;
 	while (c) {
-
 		if (c->descriptor.destroy) {
 			c->descriptor.destroy(&c->descriptor);
 		}
+
+		c = c->next;
+	}
+
+	c = _classes;
+	while (c) {
 
 		objClass *next = c->next;
 
