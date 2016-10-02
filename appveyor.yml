@@ -3,6 +3,8 @@ configuration: Release
 platform:
 - Win32
 - x64
+matrix:
+  fast_finish: true
 install:
 - ps: >-
     Push-Location "Objectively.vs15\"
@@ -36,4 +38,8 @@ on_success:
 
     $bodyAsJson = $body | ConvertTo-json
 
+    if ($env:Platform -Match "x64") {
+
     Invoke-Restmethod -uri 'https://ci.appveyor.com/api/builds' -Headers $headers -Method Post -Body $bodyAsjson -ContentType "application/json"
+
+    }
