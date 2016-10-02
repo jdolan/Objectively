@@ -266,11 +266,11 @@ static void warn(const Log *self, const char *fmt, ...) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->dealloc = dealloc;
 
-	LogInterface *log = (LogInterface *) clazz->interface;
+	LogInterface *log = (LogInterface *) clazz->def->interface;
 
 	log->debug = debug;
 	log->error = error;

@@ -130,11 +130,11 @@ static _Bool waitUntilDate(Condition *self, const Date *date) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->dealloc = dealloc;
 
-	ConditionInterface *condition = (ConditionInterface *) clazz->interface;
+	ConditionInterface *condition = (ConditionInterface *) clazz->def->interface;
 
 	condition->broadcast = broadcast;
 	condition->init = init;

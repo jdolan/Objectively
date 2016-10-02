@@ -185,13 +185,13 @@ static short shortValue(const Number *self) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->description = description;
 	object->hash = hash;
 	object->isEqual = isEqual;
 
-	NumberInterface *number = (NumberInterface *) clazz->interface;
+	NumberInterface *number = (NumberInterface *) clazz->def->interface;
 
 	number->boolValue = boolValue;
 	number->charValue = charValue;

@@ -47,6 +47,8 @@
  */
 #define CLASS_MAGIC 0xabcdef
 
+typedef struct objClass objClass;
+
 typedef struct Class Class;
 
 /**
@@ -57,23 +59,14 @@ typedef struct Class Class;
 struct Class {
 
 	/**
-	 * @private
-	 *
-	 * @brief For internal use only.
+	 * @brief Initialized Classes will have `CLASS_MAGIC`.
 	 */
-	struct {
+	volatile int magic;
 
-		/**
-		 * @brief Identifies this structure as an initialized Class.
-		 */
-		volatile int magic;
-
-		/**
-		 * @brief Provides chaining of initialized Classes.
-		 */
-		Class *next;
-
-	} locals;
+	/**
+	 * @brief The dynamically allocated Class runtime definition.
+	 */
+	objClass *def;
 
 	/**
 	 * @brief The Class destructor (optional).
@@ -102,11 +95,6 @@ struct Class {
 	const size_t instanceSize;
 
 	/**
-	 * @brief The interface handle (do *not* provide).
-	 */
-	ident interface;
-
-	/**
 	 * @brief The interface offset (required).
 	 */
 	ptrdiff_t interfaceOffset;
@@ -125,6 +113,27 @@ struct Class {
 	 * @brief The superclass (required). e.g. `&_Object`.
 	 */
 	Class *superclass;
+};
+
+/**
+ * @brief The runtime representation of a Class.
+ */
+struct objClass {
+
+	/**
+	 * @brief A dynamically allocated copy of the Class descriptor.
+	 */
+	Class descriptor;
+
+	/**
+	 * @brief The interface of the Class.
+	 */
+	ident interface;
+
+	/**
+	 * @brief Provides chaining of initialized Classes.
+	 */
+	objClass *next;
 };
 
 /**
@@ -191,7 +200,7 @@ extern size_t _pageSize;
  * @brief Resolve the typed interface of a Class.
  */
 #define interfaceof(type, clazz) \
-	((type##Interface *) (clazz)->interface)
+	((type##Interface *) (clazz)->def->interface)
 
 /**
  * @brief Invoke an instance method.

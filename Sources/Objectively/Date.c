@@ -162,12 +162,12 @@ static Date *initWithTime(Date *self, const Time *time) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->hash = hash;
 	object->isEqual = isEqual;
 
-	DateInterface *interface = (DateInterface *) clazz->interface;
+	DateInterface *interface = (DateInterface *) clazz->def->interface;
 
 	interface->compareTo = compareTo;
 	interface->date = date;

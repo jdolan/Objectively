@@ -224,7 +224,7 @@ static Array *pathComponents(const URL *self) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
@@ -232,7 +232,7 @@ static void initialize(Class *clazz) {
 	object->hash = hash;
 	object->isEqual = isEqual;
 
-	URLInterface *url = (URLInterface *) clazz->interface;
+	URLInterface *url = (URLInterface *) clazz->def->interface;
 
 	url->baseURL = baseURL;
 	url->initWithCharacters = initWithCharacters;

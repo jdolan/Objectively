@@ -101,11 +101,11 @@ static Value *initWithValue(Value *self, ident value) {
  */
 static void initialize(Class *clazz) {
 	
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->interface)->hash = hash;
-	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->def->interface)->hash = hash;
+	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
 	
-	((ValueInterface *) clazz->interface)->initWithValue = initWithValue;
+	((ValueInterface *) clazz->def->interface)->initWithValue = initWithValue;
 }
 
 Class _Value = {

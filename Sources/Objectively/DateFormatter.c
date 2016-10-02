@@ -119,7 +119,7 @@ static String *stringFromDate(const DateFormatter *self, const Date *date) {
  */
 static void initialize(Class *clazz) {
 
-	DateFormatterInterface *dateFormatter = (DateFormatterInterface *) clazz->interface;
+	DateFormatterInterface *dateFormatter = (DateFormatterInterface *) clazz->def->interface;
 
 	dateFormatter->dateFromCharacters = dateFromCharacters;
 	dateFormatter->dateFromString = dateFromString;

@@ -275,11 +275,11 @@ static void setObjectsForKeys(MutableDictionary *self, ...) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->copy = copy;
 
-	MutableDictionaryInterface *mutableDictionary = (MutableDictionaryInterface *) clazz->interface;
+	MutableDictionaryInterface *mutableDictionary = (MutableDictionaryInterface *) clazz->def->interface;
 
 	mutableDictionary->addEntriesFromDictionary = addEntriesFromDictionary;
 	mutableDictionary->dictionary = dictionary;

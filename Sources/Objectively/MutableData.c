@@ -169,11 +169,11 @@ static void setLength(MutableData *self, size_t length) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->copy = copy;
 
-	MutableDataInterface *mutableData = (MutableDataInterface *) clazz->interface;
+	MutableDataInterface *mutableData = (MutableDataInterface *) clazz->def->interface;
 
 	mutableData->appendBytes = appendBytes;
 	mutableData->appendData = appendData;

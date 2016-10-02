@@ -256,11 +256,11 @@ static MutableSet *setWithCapacity(size_t capacity) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->copy = copy;
 
-	MutableSetInterface *mutableSet = (MutableSetInterface *) clazz->interface;
+	MutableSetInterface *mutableSet = (MutableSetInterface *) clazz->def->interface;
 
 	mutableSet->addObject = addObject;
 	mutableSet->addObjectsFromArray = addObjectsFromArray;

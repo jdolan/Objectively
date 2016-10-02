@@ -87,11 +87,11 @@ static void setup(URLSessionTask *self) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->dealloc = dealloc;
 
-	URLSessionTaskInterface *sessionTask = (URLSessionTaskInterface *) clazz->interface;
+	URLSessionTaskInterface *sessionTask = (URLSessionTaskInterface *) clazz->def->interface;
 
 	sessionTask->setup = setup;
 }

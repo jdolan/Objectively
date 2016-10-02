@@ -344,7 +344,7 @@ static Set *setWithSet(const Set *set) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
@@ -352,7 +352,7 @@ static void initialize(Class *clazz) {
 	object->hash = hash;
 	object->isEqual = isEqual;
 
-	SetInterface *set = (SetInterface *) clazz->interface;
+	SetInterface *set = (SetInterface *) clazz->def->interface;
 
 	set->allObjects = allObjects;
 	set->containsObject = containsObject;

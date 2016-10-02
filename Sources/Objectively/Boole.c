@@ -94,12 +94,12 @@ static Boole *True(void) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->copy = copy;
 	object->description = description;
 
-	BooleInterface *boolean = (BooleInterface *) clazz->interface;
+	BooleInterface *boolean = (BooleInterface *) clazz->def->interface;
 
 	boolean->False = False;
 	boolean->True = True;

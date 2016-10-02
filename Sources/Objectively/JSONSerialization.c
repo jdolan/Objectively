@@ -498,7 +498,7 @@ static ident objectFromData(const Data *data, int options) {
  */
 static void initialize(Class *clazz) {
 
-	JSONSerializationInterface *json = (JSONSerializationInterface *) clazz->interface;
+	JSONSerializationInterface *json = (JSONSerializationInterface *) clazz->def->interface;
 
 	json->dataFromObject = dataFromObject;
 	json->objectFromData = objectFromData;

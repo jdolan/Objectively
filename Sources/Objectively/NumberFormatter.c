@@ -82,7 +82,7 @@ static String *stringFromNumber(const NumberFormatter *self, const Number *numbe
  */
 static void initialize(Class *clazz) {
 
-	NumberFormatterInterface *numberFormatter = (NumberFormatterInterface *) clazz->interface;
+	NumberFormatterInterface *numberFormatter = (NumberFormatterInterface *) clazz->def->interface;
 
 	numberFormatter->numberFromString = numberFromString;
 	numberFormatter->initWithFormat = initWithFormat;

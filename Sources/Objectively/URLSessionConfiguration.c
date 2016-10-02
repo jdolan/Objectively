@@ -52,9 +52,9 @@ static URLSessionConfiguration *init(URLSessionConfiguration *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
 
-	((URLSessionConfigurationInterface *) clazz->interface)->init = init;
+	((URLSessionConfigurationInterface *) clazz->def->interface)->init = init;
 }
 
 Class _URLSessionConfiguration = {

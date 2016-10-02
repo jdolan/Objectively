@@ -156,7 +156,7 @@ static void sayHello(const Hello *self) {
  */
 static void initialize(Class *clazz) {
 
-	HelloInterface *hello = (HelloInterface *) clazz->interface;
+	HelloInterface *hello = (HelloInterface *) clazz->def->interface;
 
 	hello->helloWithGreeting = helloWithGreeting;
 	hello->initWithGreeting = initWithGreeting;
@@ -188,7 +188,7 @@ See [Hello.c](Examples/Hello.c) for the full source to this example.
 
 Initialization
 ---
-There is no explicit setup or teardown with Objectively. To instantiate a type, simply call `alloc` from anywhere in your program. The first time a type is instantiated, an optional Class initializer, `initialize`, is called. Use `initialize` to setup your interface, override methods, or initialize a library your class wraps. When your application terminates, an optional Class destructor, `destroy`, is also called.
+There is no explicit setup or teardown with Objectively. To instantiate a type, simply call `alloc` from anywhere in your program. The first time a type is instantiated, its Class initializer, `initialize`, is called. Use `initialize` to setup your interface, override methods, or initialize a library your class wraps. When your application terminates, an optional Class destructor, `destroy`, is also called.
 
 Invoking an instance method
 ---
@@ -211,8 +211,8 @@ Overriding a method
 To override a method, overwrite the function pointer from within your Class' `initialize` method.
 
 ```c
-    ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
-    ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+    ((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+    ((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
 ```
 
 Calling super

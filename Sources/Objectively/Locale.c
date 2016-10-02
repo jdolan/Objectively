@@ -123,12 +123,12 @@ static Locale *systemLocale(void) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
 
-	((LocaleInterface *) clazz->interface)->initWithIdentifier = initWithIdentifier;
-	((LocaleInterface *) clazz->interface)->initWithLocale = initWithLocale;
-	((LocaleInterface *) clazz->interface)->systemLocale = systemLocale;
+	((LocaleInterface *) clazz->def->interface)->initWithIdentifier = initWithIdentifier;
+	((LocaleInterface *) clazz->def->interface)->initWithLocale = initWithLocale;
+	((LocaleInterface *) clazz->def->interface)->systemLocale = systemLocale;
 }
 
 Class _Locale = {

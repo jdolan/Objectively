@@ -646,7 +646,7 @@ static _Bool writeToFile(const String *self, const char *path, StringEncoding en
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->interface;
+	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
 
 	object->copy = copy;
 	object->dealloc = dealloc;
@@ -654,7 +654,7 @@ static void initialize(Class *clazz) {
 	object->hash = hash;
 	object->isEqual = isEqual;
 
-	StringInterface *string = (StringInterface *) clazz->interface;
+	StringInterface *string = (StringInterface *) clazz->def->interface;
 
 	string->compareTo = compareTo;
 	string->componentsSeparatedByCharacters = componentsSeparatedByCharacters;

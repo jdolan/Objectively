@@ -51,9 +51,9 @@ static ___FILEBASENAMEASIDENTIFIER___ *init(___FILEBASENAMEASIDENTIFIER___ *self
  */
 static void initialize(Class *clazz) {
 	
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
 	
-	((___FILEBASENAMEASIDENTIFIER___Interface *) clazz->interface)->init = init;
+	((___FILEBASENAMEASIDENTIFIER___Interface *) clazz->def->interface)->init = init;
 	
 	//..
 }
