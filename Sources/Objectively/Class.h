@@ -47,30 +47,10 @@
  */
 #define CLASS_MAGIC 0xabcdef
 
-typedef struct Class Class;
-
 typedef struct objClass objClass;
 
-/**
- * @brief The runtime representation of a Class.
- */
-struct objClass {
+typedef struct Class Class;
 
-	/**
-	 * @brief A dynamically allocated copy of the Class descriptor.
-	 */
-	Class *descriptor;
-
-	/**
-	 * @brief The interface of the Class.
-	 */
-	ident interface;
-
-	/**
-	 * @brief Provides chaining of initialized Classes.
-	 */
-	objClass *next;
-};
 /**
  * @brief The Class type.
  *
@@ -133,6 +113,27 @@ struct Class {
 	 * @brief The superclass (required). e.g. `&_Object`.
 	 */
 	Class *superclass;
+};
+
+/**
+ * @brief The runtime representation of a Class.
+ */
+struct objClass {
+
+	/**
+	 * @brief A dynamically allocated copy of the Class descriptor.
+	 */
+	Class descriptor;
+
+	/**
+	 * @brief The interface of the Class.
+	 */
+	ident interface;
+
+	/**
+	 * @brief Provides chaining of initialized Classes.
+	 */
+	objClass *next;
 };
 
 /**

@@ -46,8 +46,8 @@ static void teardown(void) {
 	objClass *c = _classes;
 	while (c) {
 
-		if (c->descriptor->destroy) {
-			c->descriptor->destroy(c->descriptor);
+		if (c->descriptor.destroy) {
+			c->descriptor.destroy(&c->descriptor);
 		}
 
 		objClass *next = c->next;
@@ -89,9 +89,6 @@ void _initialize(Class *clazz) {
 		objClass *def = clazz->def = calloc(1, sizeof(objClass));
 		assert(def);
 
-		def->descriptor = calloc(1, sizeof(Class));
-		assert(clazz->def->descriptor);
-
 		clazz->def->interface = calloc(1, clazz->interfaceSize);
 		assert(clazz->def->interface);
 
@@ -110,11 +107,10 @@ void _initialize(Class *clazz) {
 		}
 
 		clazz->initialize(clazz);
+		clazz->magic = CLASS_MAGIC;
 
+		def->descriptor = *clazz;
 		def->next = __sync_lock_test_and_set(&_classes, def);
-		def->descriptor->magic = clazz->magic = CLASS_MAGIC;
-
-		memcpy(clazz->def->descriptor, clazz, sizeof(Class));
 
 	} else {
 		while (clazz->magic != CLASS_MAGIC) {
@@ -169,8 +165,8 @@ Class *classForName(const char *name) {
 	if (name) {
 		objClass *c = _classes;
 		while (c) {
-			if (strcmp(name, c->descriptor->name) == 0) {
-				return c->descriptor;
+			if (strcmp(name, c->descriptor.name) == 0) {
+				return &c->descriptor;
 			}
 			c = c->next;
 		}
