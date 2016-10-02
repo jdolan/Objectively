@@ -28,11 +28,11 @@
 /**
  * @file
  * @brief Helpers for at-most-once semantics.
- * @ingroup Threads
  */
 
 /**
  * @brief The Once type.
+ * @ingroup Concurrency
  */
 typedef long Once;
 

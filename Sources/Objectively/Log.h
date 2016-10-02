@@ -34,8 +34,8 @@
 
 /**
  * @brief Every Log has a threshold for generating messages.
- * Messages beneath the set threshold level are not output. The default level
- * for newly initialized Logs is `LogLevelInfo`.
+ * @details Messages beneath the set threshold level are not output. The default level for newly
+ * initialized Logs is `LogLevelInfo`.
  */
 typedef enum {
 	LogLevelTrace,

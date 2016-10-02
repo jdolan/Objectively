@@ -30,7 +30,6 @@
 /**
  * @file
  * @brief Uniform Resource Locators (RFC 3986).
- * @see http://www.ietf.org/rfc/rfc3986.txt
  */
 
 typedef struct URL URL;

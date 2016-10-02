@@ -29,7 +29,6 @@
 /**
  * @file
  * @brief Use data tasks to send and receive Data in-memory.
- * Data tasks are well suited for web service invocations.
  */
 
 typedef struct URLSessionDataTask URLSessionDataTask;
@@ -37,7 +36,7 @@ typedef struct URLSessionDataTaskInterface URLSessionDataTaskInterface;
 
 /**
  * @brief Use data tasks to send and receive Data in-memory.
- * Data tasks are well suited for web service invocations.
+ * @details Data tasks are well suited for web service invocations.
  * @extends URLSessionTask
  * @ingroup URLSession
  */

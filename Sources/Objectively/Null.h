@@ -28,7 +28,6 @@
 /**
  * @file
  * @brief The Null sentinel.
- * Use this Object when you must place `NULL` into collections.
  */
 
 typedef struct Null Null;
@@ -36,7 +35,7 @@ typedef struct NullInterface NullInterface;
 
 /**
  * @brief The Null sentinel.
- * Use this Object when you must place `NULL` into collections.
+ * @details Use this Object when you must place `NULL` into collections.
  * @extends Object
  * @ingroup JSON
  */

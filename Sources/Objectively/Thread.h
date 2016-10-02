@@ -28,13 +28,13 @@
 /**
  * @file
  * @brief POSIX Threads.
- * @details Asynchronous computing via multiple threads of execution.
  */
 
 /**
  * @defgroup Concurrency Concurrency
  * @brief Parallel computing and synchronization via POSIX Threads.
  */
+
 typedef struct Thread Thread;
 typedef struct ThreadInterface ThreadInterface;
 

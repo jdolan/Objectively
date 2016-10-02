@@ -28,7 +28,6 @@
 /**
  * @file
  * @brief POSIX Threads locks.
- * Mediate access to a critical section by enforcing mutual exclusion.
  */
 
 typedef struct Lock Lock;
@@ -36,7 +35,7 @@ typedef struct LockInterface LockInterface;
 
 /**
  * @brief POSIX Threads locks.
- * Mediate access to a critical section by enforcing mutual exclusion.
+ * @details Mediate access to a critical section by enforcing mutual exclusion.
  * @extends Object
  * @ingroup Concurrency
  */

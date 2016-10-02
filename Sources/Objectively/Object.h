@@ -29,7 +29,6 @@
 /**
  * @file
  * @brief Object is the _root Class_ of The Objectively Class hierarchy.
- * Every Class descends from Object, and every instance can be cast to Object.
  */
 
 /**
@@ -41,7 +40,7 @@ typedef struct ObjectInterface ObjectInterface;
 
 /**
  * @brief Object is the _root Class_ of The Objectively Class hierarchy.
- * Every Class descends from Object, and every instance can be cast to Object.
+ * @details Every Class descends from Object, and every instance can be cast to Object.
  * @ingroup Core
  */
 struct Object {
