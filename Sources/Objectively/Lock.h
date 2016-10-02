@@ -44,13 +44,12 @@ struct Lock {
 
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	LockInterface *interface;
 

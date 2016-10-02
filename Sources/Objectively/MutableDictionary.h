@@ -41,13 +41,12 @@ struct MutableDictionary {
 
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	Dictionary dictionary;
 
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	MutableDictionaryInterface *interface;
 };

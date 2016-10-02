@@ -41,13 +41,12 @@ struct MutableString {
 
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	String string;
 
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	MutableStringInterface *interface;
 

@@ -27,7 +27,7 @@
 
 /**
  * @file
- * @brief The Value type.
+ * @brief Values provide Object encapsulation for C types.
  */
 
 typedef struct Value Value;
@@ -46,13 +46,12 @@ struct Value {
 	
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	Object object;
 	
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	ValueInterface *interface;
 

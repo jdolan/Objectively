@@ -27,7 +27,7 @@
 
 /**
  * @file
- * @brief The IndexPath type.
+ * @brief Index paths represent the path to an element or node within a tree or graph structure.
  */
 
 typedef struct IndexPath IndexPath;
@@ -41,13 +41,12 @@ struct IndexPath {
 	
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	Object object;
 	
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	IndexPathInterface *interface;
 

@@ -28,6 +28,11 @@
 #include <Objectively/Types.h>
 
 /**
+ * @file
+ * @brief Named enumerations.
+ */
+
+/**
  * @brief The EnumName type.
  */
 typedef struct {

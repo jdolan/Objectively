@@ -36,8 +36,8 @@ typedef struct ConditionInterface ConditionInterface;
 
 /**
  * @brief POSIX Threads conditional variables.
- * Conditions combine a Lock with a signaling mechanism, so that Threads may
- * inform one another when a condition is met.
+ * @details Conditions combine a Lock with a signaling mechanism, so that Threads may inform one 
+ * another when a condition is met.
  * @extends Lock
  * @ingroup Concurrency
  */
@@ -45,13 +45,12 @@ struct Condition {
 
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	Lock lock;
 
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	ConditionInterface *interface;
 

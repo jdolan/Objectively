@@ -45,13 +45,12 @@ struct OperationQueue {
 
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	OperationQueueInterface *interface;
 

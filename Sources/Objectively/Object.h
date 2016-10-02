@@ -53,7 +53,7 @@ struct Object {
 
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	ObjectInterface *interface;
 

@@ -57,13 +57,12 @@ struct URLRequest {
 
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	URLRequestInterface *interface;
 

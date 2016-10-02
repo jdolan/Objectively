@@ -63,13 +63,12 @@ struct URLSessionTask {
 
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	URLSessionTaskInterface *interface;
 

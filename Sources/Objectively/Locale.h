@@ -37,15 +37,14 @@ typedef _locale_t locale_t;
 
 /**
  * @file
- * 
- * @brief Locale.
- * @extends Object
+ * @brief Locale abstraction for language and data formatting.
  */
 
 /**
  * @defgroup Localization Localization
  * @brief Locale and localization facilities.
  */
+
 typedef struct Locale Locale;
 typedef struct LocaleInterface LocaleInterface;
 
@@ -58,13 +57,12 @@ struct Locale {
 
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	LocaleInterface *interface;
 

@@ -41,13 +41,12 @@ struct MutableArray {
 
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	Array array;
 
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	MutableArrayInterface *interface;
 

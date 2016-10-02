@@ -70,13 +70,12 @@ struct Date {
 
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	DateInterface *interface;
 
@@ -123,7 +122,6 @@ struct DateInterface {
 	 * @memberof Date
 	 */
 	Date *(*dateWithTimeSinceNow)(const Time *interval);
-
 
 	/**
 	 * @fn Date *Date::init(Date *self)

@@ -41,13 +41,12 @@ struct MutableData {
 
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	Data data;
 
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	MutableDataInterface *interface;
 

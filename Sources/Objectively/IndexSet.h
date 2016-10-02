@@ -27,7 +27,7 @@
 
 /**
  * @file
- * @brief The IndexSet type.
+ * @brief Index Sets represent the Set to an element or node within a tree or graph structure.
  */
 
 typedef struct IndexSet IndexSet;
@@ -41,13 +41,12 @@ struct IndexSet {
 	
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	Object object;
 	
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	IndexSetInterface *interface;
 

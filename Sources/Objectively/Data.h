@@ -46,13 +46,12 @@ struct Data {
 
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	DataInterface *interface;
 
@@ -110,7 +109,7 @@ struct DataInterface {
 	 * @memberof Data
 	 */
 	Data *(*dataWithMemory)(const ident mem, size_t length);
-	
+
 	/**
 	 * @fn Data *Data::initWithBytes(Data *self, const uint8_t *bytes, size_t length)
 	 * @brief Initializes this Data by copying `length` of `bytes`.

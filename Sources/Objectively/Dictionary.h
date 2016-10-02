@@ -35,7 +35,7 @@ typedef struct Dictionary Dictionary;
 typedef struct DictionaryInterface DictionaryInterface;
 
 /**
- * A function pointer for Dictionary enumeration (iteration).
+ * @brief A function pointer for Dictionary enumeration (iteration).
  * @param dictionary The Dictionary.
  * @param obj The Object for the current iteration.
  * @param key The key for the current iteration.
@@ -53,13 +53,12 @@ struct Dictionary {
 
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	Object object;
 
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	DictionaryInterface *interface;
 

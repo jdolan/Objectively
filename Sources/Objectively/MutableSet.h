@@ -42,13 +42,12 @@ struct MutableSet {
 
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	Set set;
 
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	MutableSetInterface *interface;
 };

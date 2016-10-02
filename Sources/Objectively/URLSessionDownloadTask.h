@@ -44,13 +44,12 @@ struct URLSessionDownloadTask {
 
 	/**
 	 * @brief The parent.
-	 * @private
 	 */
 	URLSessionTask urlSessionTask;
 
 	/**
 	 * @brief The typed interface.
-	 * @private
+	 * @protected
 	 */
 	URLSessionDownloadTaskInterface *interface;
 
