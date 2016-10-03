@@ -7,7 +7,7 @@ matrix:
   fast_finish: true
 install:
 - ps: >-
-    ssh
+    rsync
 
     Push-Location "Objectively.vs15\"
 
