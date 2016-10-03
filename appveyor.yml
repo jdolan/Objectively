@@ -7,6 +7,8 @@ matrix:
   fast_finish: true
 install:
 - ps: >-
+    ssh
+
     Push-Location "Objectively.vs15\"
 
     [Environment]::CurrentDirectory = $PWD
