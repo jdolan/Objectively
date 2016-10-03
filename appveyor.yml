@@ -7,8 +7,6 @@ matrix:
   fast_finish: true
 install:
 - ps: >-
-    rsync
-
     Push-Location "Objectively.vs15\"
 
     [Environment]::CurrentDirectory = $PWD
