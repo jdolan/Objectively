@@ -43,3 +43,5 @@ on_success:
     Invoke-Restmethod -uri 'https://ci.appveyor.com/api/builds' -Headers $headers -Method Post -Body $bodyAsjson -ContentType "application/json"
 
     }
+cache:
+  - Objectively.vs15\libs\curl\include\curl\tmp.tar.gz -> appveyor.yml
