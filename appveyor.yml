@@ -1,8 +1,13 @@
 version: 1.0.{build}
+branches:
+  only:
+  - master
 configuration: Release
 platform:
 - Win32
 - x64
+matrix:
+  fast_finish: true
 install:
 - ps: >-
     Push-Location "Objectively.vs15\"
@@ -26,3 +31,20 @@ test: off
 deploy: off
 artifacts:
 - path: __dep.zip
+on_success:
+- ps: >-
+    $token = $env:API_TOKEN
+
+    $headers = @{ "Authorization" = "Bearer $token"}
+
+    $body = @{accountName = $env:API_NAME; projectSlug = "objectivelymvc"}
+
+    $bodyAsJson = $body | ConvertTo-json
+
+    if ($env:Platform -Match "x64") {
+
+    Invoke-Restmethod -uri 'https://ci.appveyor.com/api/builds' -Headers $headers -Method Post -Body $bodyAsjson -ContentType "application/json"
+
+    }
+cache:
+  - Objectively.vs15\libs\curl\include\curl\tmp.tar.gz -> appveyor.yml
