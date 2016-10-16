@@ -20,7 +20,6 @@ typedef struct ___FILEBASENAMEASIDENTIFIER___Interface ___FILEBASENAMEASIDENTIFI
 
 /**
  * @brief The ___FILEBASENAMEASIDENTIFIER___ type.
- *
  * @extends ___VARIABLE_superclass:identifier___
  */
 struct ___FILEBASENAMEASIDENTIFIER___ {
