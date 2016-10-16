@@ -4,12 +4,10 @@ noinst_PROGRAMS = \
 
 CFLAGS += \
 	-I$(top_srcdir)/Sources \
-	-I$(top_builddir)/Sources \
 	@HOST_CFLAGS@
 
 CXXFLAGS += \
 	-I$(top_srcdir)/Sources \
-	-I$(top_builddir)/Sources \
 	@HOST_CFLAGS@
 	
 LDADD = \
