@@ -59,6 +59,7 @@
 #include <Objectively/OperationQueue.h>
 #include <Objectively/Once.h>
 #include <Objectively/Regex.h>
+#include <Objectively/Resource.h>
 #include <Objectively/Set.h>
 #include <Objectively/String.h>
 #include <Objectively/Thread.h>

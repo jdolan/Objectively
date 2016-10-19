@@ -36,6 +36,7 @@ pkginclude_HEADERS = \
 	OperationQueue.h \
 	Once.h \
 	Regex.h \
+	Resource.h \
 	Set.h \
 	String.h \
 	Thread.h \
@@ -84,6 +85,7 @@ libObjectively_la_SOURCES = \
 	Operation.c \
 	OperationQueue.c \
 	Regex.c \
+	Resource.c \
 	Set.c \
 	String.c \
 	Thread.c \
