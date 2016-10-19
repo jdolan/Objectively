@@ -78,6 +78,8 @@ extern char *asprintf(char ** __restrict ret, char * __restrict format, ...);
 #define fileno _fileno
 #define tzset _tzset
 #define alloca _alloca
+#define stat _stat64
+#define S_ISREG(m)	(((m) & _S_IFREG) == _S_IFREG)
 #endif
 
 #define iconv(c0, c1, c2, c3, c4) libiconv(c0, (const char **)c1, c2, c3, c4)

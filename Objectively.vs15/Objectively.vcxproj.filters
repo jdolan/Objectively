@@ -153,6 +153,9 @@
     <ClInclude Include="Sources\Objectively\Config.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\Resource.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Sources\Objectively\MutableArray.c">
@@ -286,6 +289,9 @@
     </ClCompile>
     <ClCompile Include="Sources\WinRegex.cpp">
       <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\Resource.c">
+      <Filter>Sources\Objectively</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

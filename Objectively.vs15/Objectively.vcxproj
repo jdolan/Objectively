@@ -51,6 +51,7 @@
     <ClInclude Include="..\Sources\Objectively\Operation.h" />
     <ClInclude Include="..\Sources\Objectively\OperationQueue.h" />
     <ClInclude Include="..\Sources\Objectively\Regex.h" />
+    <ClInclude Include="..\Sources\Objectively\Resource.h" />
     <ClInclude Include="..\Sources\Objectively\Set.h" />
     <ClInclude Include="..\Sources\Objectively\String.h" />
     <ClInclude Include="..\Sources\Objectively\Thread.h" />
@@ -99,6 +100,7 @@
     <ClCompile Include="..\Sources\Objectively\Operation.c" />
     <ClCompile Include="..\Sources\Objectively\OperationQueue.c" />
     <ClCompile Include="..\Sources\Objectively\Regex.c" />
+    <ClCompile Include="..\Sources\Objectively\Resource.c" />
     <ClCompile Include="..\Sources\Objectively\Set.c" />
     <ClCompile Include="..\Sources\Objectively\String.c" />
     <ClCompile Include="..\Sources\Objectively\Thread.c" />
