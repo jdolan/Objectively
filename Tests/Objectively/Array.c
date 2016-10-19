@@ -29,7 +29,7 @@ static void enumerator(const Array *array, ident obj, ident data) {
 	(*(int *) data)++;
 }
 
-_Bool predicate(ident obj, ident data) {
+_Bool predicate(const ident obj, ident data) {
 	return obj == data;
 }
 

@@ -98,7 +98,8 @@ libObjectively_la_SOURCES = \
 	Value.c
 
 libObjectively_la_CFLAGS = \
-	-I .. -I ../.. \
+	-I $(top_srcdir) \
+	-I $(top_srcdir)/Sources \
 	@HOST_CFLAGS@ \
 	@CURL_CFLAGS@
 
