@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE3BCDD11DB6FA62002E6C6D /* Resource.c in Sources */ = {isa = PBXBuildFile; fileRef = CE3BCDCF1DB6FA62002E6C6D /* Resource.c */; };
+		CE3BCDD21DB6FA62002E6C6D /* Resource.h in Headers */ = {isa = PBXBuildFile; fileRef = CE3BCDD01DB6FA62002E6C6D /* Resource.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE6BC16C1D79960C0070FB2D /* Enum.c in Sources */ = {isa = PBXBuildFile; fileRef = CE6BC16A1D79960C0070FB2D /* Enum.c */; };
 		CE6BC16D1D79960C0070FB2D /* Enum.h in Headers */ = {isa = PBXBuildFile; fileRef = CE6BC16B1D79960C0070FB2D /* Enum.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76D96E1C4821CE0096DD31 /* Array.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D85E1C481C4E0096DD31 /* Array.c */; };
@@ -170,6 +172,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CE3BCDCF1DB6FA62002E6C6D /* Resource.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Resource.c; sourceTree = "<group>"; };
+		CE3BCDD01DB6FA62002E6C6D /* Resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resource.h; sourceTree = "<group>"; };
 		CE6BC16A1D79960C0070FB2D /* Enum.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Enum.c; sourceTree = "<group>"; };
 		CE6BC16B1D79960C0070FB2D /* Enum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enum.h; sourceTree = "<group>"; };
 		CE76D7FF1C481C4E0096DD31 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
@@ -451,6 +455,8 @@
 				CE76D8E21C481C4E0096DD31 /* OperationQueue.h */,
 				CE76D8E31C481C4E0096DD31 /* Regex.c */,
 				CE76D8E41C481C4E0096DD31 /* Regex.h */,
+				CE3BCDCF1DB6FA62002E6C6D /* Resource.c */,
+				CE3BCDD01DB6FA62002E6C6D /* Resource.h */,
 				CE76D8E51C481C4E0096DD31 /* Set.c */,
 				CE76D8E61C481C4E0096DD31 /* Set.h */,
 				CE76D8E71C481C4E0096DD31 /* String.c */,
@@ -652,6 +658,7 @@
 				CE76DA1E1C4860120096DD31 /* Operation.h in Headers */,
 				CE76DA1F1C4860120096DD31 /* OperationQueue.h in Headers */,
 				CE76DA201C4860130096DD31 /* Regex.h in Headers */,
+				CE3BCDD21DB6FA62002E6C6D /* Resource.h in Headers */,
 				CE76DA211C4860130096DD31 /* Set.h in Headers */,
 				CE76DA221C4860130096DD31 /* String.h in Headers */,
 				CE76DA231C4860130096DD31 /* Thread.h in Headers */,
@@ -846,6 +853,7 @@
 				CE76D9861C4821CE0096DD31 /* Operation.c in Sources */,
 				CE76D9871C4821CE0096DD31 /* OperationQueue.c in Sources */,
 				CE76D9881C4821CE0096DD31 /* Regex.c in Sources */,
+				CE3BCDD11DB6FA62002E6C6D /* Resource.c in Sources */,
 				CE76D9891C4821CE0096DD31 /* Set.c in Sources */,
 				CE76D98A1C4821CE0096DD31 /* String.c in Sources */,
 				CE76D98B1C4821CE0096DD31 /* Thread.c in Sources */,
