@@ -116,7 +116,7 @@ static void removeResourcePath(const char *path) {
 
 /**
  * @fn Resource *Resource::resourceWithName(const char *name)
- * @ memberof Resource
+ * @memberof Resource
  */
 static Resource *resourceWithName(const char *name) {
 	return $(alloc(Resource), initWithName, name);

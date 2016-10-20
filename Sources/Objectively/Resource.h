@@ -27,14 +27,14 @@
 
 /**
  * @file
- * @brief Resources provide an abstraction for file resources.
+ * @brief Resources provide an abstraction for file and stream resources.
  */
 
 typedef struct Resource Resource;
 typedef struct ResourceInterface ResourceInterface;
 
 /**
- * @brief Resources provide an abstraction for file resources.
+ * @brief Resources provide an abstraction for file and stream resources.
  * @extends Object
  */
 struct Resource {
@@ -50,8 +50,14 @@ struct Resource {
 	 */
 	ResourceInterface *interface;
 
+	/**
+	 * @brief The resource data.
+	 */
 	Data *data;
 
+	/**
+	 * @brief The resource name.
+	 */
 	char *name;
 };
 
@@ -69,6 +75,8 @@ struct ResourceInterface {
 	 * @static
 	 * @fn void Resource::addResourcePath(const char *path)
 	 * @brief Adds the specified Resource path.
+	 * @param path The resource path to add.
+	 * @remarks Resource paths may be relative to the working directory, or absolute.
 	 * @memberof Resource
 	 */
 	void (*addResourcePath)(const char *path);
@@ -76,7 +84,7 @@ struct ResourceInterface {
 	/**
 	 * @fn Resource *Resource::initWithData(Resource *self, Data *data, const char *name)
 	 * @brief Initializes this Resource with the specified Data.
-	 * @param The Resource.
+	 * @param self The Resource.
 	 * @param data The Data.
 	 * @param name The resource name.
 	 * @return The initialized Resource, or `NULL` on error.
@@ -87,7 +95,7 @@ struct ResourceInterface {
 	/**
 	 * @fn Resource *Resource::initWithName(Resource *self, const char *name)
 	 * @brief Initializes this Resource with the specified `name`.
-	 * @param The Resource.
+	 * @param self The Resource.
 	 * @param name The resource name.
 	 * @return The initialized Resource, or `NULL` on error.
 	 * @details The configured resource paths are searched, in order, for a file by the given name.
@@ -99,6 +107,7 @@ struct ResourceInterface {
 	 * @static
 	 * @fn void Resource::removeResourcePath(const char *path)
 	 * @brief Removes the specified Resource path.
+	 * @param path The resource path.
 	 * @memberof Resource
 	 */
 	void (*removeResourcePath)(const char *path);
@@ -109,7 +118,7 @@ struct ResourceInterface {
 	 * @brief Returns a new Resource with the specified `name`.
 	 * @param name The resource name.
 	 * @return The new Resource, or `NULL` on error.
-	 * @ memberof Resource
+	 * @memberof Resource
 	 */
 	Resource *(*resourceWithName)(const char *name);
 };
