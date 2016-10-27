@@ -27,15 +27,12 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#undef interface
+
 /**
  * @file
  * @brief Objectively base types.
  */
-
-/**
- * @brief Undefine interface for MinGW-w64 / Windows.
- */
-#undef interface
 
 /**
  * @brief The identity type, similar to Objective-C `id`.
