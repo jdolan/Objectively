@@ -40,6 +40,12 @@
 #define __DBL_EPSILON__ DBL_EPSILON
 #endif
 
+#ifdef _WIN64
+    typedef signed __int64 ssize_t;
+#else
+    typedef signed int     ssize_t;
+#endif
+
 // TIME STUFF
 struct timezone
 {
