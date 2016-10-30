@@ -375,7 +375,7 @@ static ident objectForKey(const Dictionary *self, const ident key) {
 	Array *array = self->elements[bin];
 	if (array) {
 
-		int index = $(array, indexOfObject, key);
+		const ssize_t index = $(array, indexOfObject, key);
 		if (index > -1) {
 			return $(array, objectAtIndex, index + 1);
 		}

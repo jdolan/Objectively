@@ -206,7 +206,7 @@ static void removeObject(MutableSet *self, const ident obj) {
 	MutableArray *array = self->set.elements[bin];
 	if (array) {
 
-		int index = $((Array *) array, indexOfObject, obj);
+		const ssize_t index = $((Array *) array, indexOfObject, obj);
 		if (index > -1) {
 
 			$(array, removeObjectAtIndex, index);

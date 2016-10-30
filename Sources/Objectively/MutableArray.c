@@ -200,8 +200,8 @@ static void removeAllObjects(MutableArray *self) {
  */
 static void removeObject(MutableArray *self, const ident obj) {
 
-	int index = $((Array *) self, indexOfObject, obj);
-	if (index != -1) {
+	const ssize_t index = $((Array *) self, indexOfObject, obj);
+	if (index > -1) {
 		$(self, removeObjectAtIndex, index);
 	}
 }

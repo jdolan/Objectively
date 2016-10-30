@@ -146,7 +146,7 @@ static void removeObjectForKey(MutableDictionary *self, const ident key) {
 	MutableArray *array = self->dictionary.elements[bin];
 	if (array) {
 
-		int index = $((Array *) array, indexOfObject, key);
+		const ssize_t index = $((Array *) array, indexOfObject, key);
 		if (index > -1) {
 
 			$(array, removeObjectAtIndex, index);
@@ -223,7 +223,7 @@ static void setObjectForKey(MutableDictionary *self, const ident obj, const iden
 		array = dict->elements[bin] = $(alloc(MutableArray), init);
 	}
 
-	const int index = $((Array *) array, indexOfObject, key);
+	const ssize_t index = $((Array *) array, indexOfObject, key);
 	if (index > -1) {
 		$(array, setObjectAtIndex, obj, index + 1);
 	} else {

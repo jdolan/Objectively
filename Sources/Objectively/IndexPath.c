@@ -116,34 +116,29 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - IndexPath
 
 /**
- * @fn int IndexPath::indexAtPosition(const IndexPath *self, int position)
+ * @fn size_t IndexPath::indexAtPosition(const IndexPath *self, size_t position)
  * @memberof IndexPath
  */
-static int indexAtPosition(const IndexPath *self, int position) {
+static size_t indexAtPosition(const IndexPath *self, size_t position) {
 
-	assert(position > -1);
 	assert(position < self->length);
 
 	return self->indexes[position];
 }
 
 /**
- * @fn IndexPath *IndexPath::initWithIndex(IndexPath *self, int index)
+ * @fn IndexPath *IndexPath::initWithIndex(IndexPath *self, size_t index)
  * @memberof IndexPath
  */
-static IndexPath *initWithIndex(IndexPath *self, int index) {
+static IndexPath *initWithIndex(IndexPath *self, size_t index) {
 	return $(self, initWithIndexes, &index, 1);
 }
 
 /**
- * @fn IndexPath *IndexPath::initWithIndexes(IndexPath *self, int *indexes, size_t length)
- * @brief Initializes this IndexPath with the specified indexes and length.
- * @param indexes The indexes.
- * @param length The length of `indexes`.
- * @return The intialized IndexPath, or `NULL` on error.
+ * @fn IndexPath *IndexPath::initWithIndexes(IndexPath *self, size_t *indexes, size_t length)
  * @memberof IndexPath
  */
-static IndexPath *initWithIndexes(IndexPath *self, int *indexes, size_t length) {
+static IndexPath *initWithIndexes(IndexPath *self, size_t *indexes, size_t length) {
 	
 	self = (IndexPath *) super(Object, self, init);
 	if (self) {
@@ -151,10 +146,10 @@ static IndexPath *initWithIndexes(IndexPath *self, int *indexes, size_t length) 
 		self->length = length;
 		assert(self->length);
 		
-		self->indexes = calloc(sizeof(int), length);
+		self->indexes = calloc(sizeof(size_t), length);
 		assert(self->indexes);
 
-		memcpy(self->indexes, indexes, sizeof(int) * length);
+		memcpy(self->indexes, indexes, sizeof(size_t) * length);
 	}
 	
 	return self;

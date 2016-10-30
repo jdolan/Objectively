@@ -178,13 +178,13 @@ struct ArrayInterface {
 	ident (*firstObject)(const Array *self);
 	
 	/**
-	 * @fn int Array::indexOfObject(const Array *self, const ident obj)
+	 * @fn ssize_t Array::indexOfObject(const Array *self, const ident obj)
 	 * @param self The Array.
 	 * @param obj An Object.
 	 * @return The index of the given Object, or `-1` if not found.
 	 * @memberof Array
 	 */
-	int (*indexOfObject)(const Array *self, const ident obj);
+	ssize_t (*indexOfObject)(const Array *self, const ident obj);
 
 	/**
 	 * @fn Array *Array::initWithArray(Array *self, const Array *array)

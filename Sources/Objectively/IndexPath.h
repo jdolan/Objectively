@@ -53,7 +53,7 @@ struct IndexPath {
 	/**
 	 * @brief The indexes.
 	 */
-	int *indexes;
+	size_t *indexes;
 
 	/**
 	 * @brief The length of `indexes`.
@@ -72,26 +72,26 @@ struct IndexPathInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @fn int IndexPath::indexAtPosition(const IndexPath *self, int position)
+	 * @fn size_t IndexPath::indexAtPosition(const IndexPath *self, size_t position)
 	 * @param self The IndexPath.
 	 * @param position The index position.
 	 * @return The index at the given position.
 	 * @memberof IndexPath
 	 */
-	int (*indexAtPosition)(const IndexPath *self, int position);
+	size_t (*indexAtPosition)(const IndexPath *self, size_t position);
 
 	/**
-	 * @fn IndexPath *IndexPath::initWithIndex(IndexPath *self, int index)
+	 * @fn IndexPath *IndexPath::initWithIndex(IndexPath *self, size_t index)
 	 * @brief Initializes this IndexPath with the specified index.
 	 * @param self The IndexPath.
 	 * @param index The index.
 	 * @return The intialized IndexPath, or `NULL` on error.
 	 * @memberof IndexPath
 	 */
-	IndexPath *(*initWithIndex)(IndexPath *self, int index);
+	IndexPath *(*initWithIndex)(IndexPath *self, size_t index);
 
 	/**
-	 * @fn IndexPath *IndexPath::initWithIndexes(IndexPath *self, int *indexes, size_t length)
+	 * @fn IndexPath *IndexPath::initWithIndexes(IndexPath *self, size_t *indexes, size_t length)
 	 * @brief Initializes this IndexPath with the specified indexes and length.
 	 * @param self The IndexPath.
 	 * @param indexes The indexes.
@@ -99,7 +99,7 @@ struct IndexPathInterface {
 	 * @return The intialized IndexPath, or `NULL` on error.
 	 * @memberof IndexPath
 	 */
-	IndexPath *(*initWithIndexes)(IndexPath *self, int *indexes, size_t length);
+	IndexPath *(*initWithIndexes)(IndexPath *self, size_t *indexes, size_t length);
 };
 
 /**

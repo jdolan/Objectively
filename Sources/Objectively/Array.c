@@ -277,10 +277,10 @@ static ident firstObject(const Array *self) {
 }
 
 /**
- * @fn int Array::indexOfObject(const Array *self, const ident obj)
+ * @fn ssize_t Array::indexOfObject(const Array *self, const ident obj)
  * @memberof Array
  */
-static int indexOfObject(const Array *self, const ident obj) {
+static ssize_t indexOfObject(const Array *self, const ident obj) {
 
 	Object *object = cast(Object, obj);
 
@@ -288,7 +288,7 @@ static int indexOfObject(const Array *self, const ident obj) {
 
 	for (size_t i = 0; i < self->count; i++) {
 		if ($(object, isEqual, (Object * ) self->elements[i])) {
-			return (int) i;
+			return i;
 		}
 	}
 
