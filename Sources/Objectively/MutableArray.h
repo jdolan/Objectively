@@ -170,16 +170,16 @@ struct MutableArrayInterface {
 	void (*removeObject)(MutableArray *self, const ident obj);
 
 	/**
-	 * @fn void MutableArray::removeObjectAtIndex(MutableArray *self, const int index)
+	 * @fn void MutableArray::removeObjectAtIndex(MutableArray *self, size_t index)
 	 * @brief Removes the Object at the specified index.
 	 * @param self The MutableArray.
 	 * @param index The index of the Object to remove.
 	 * @memberof MutableArray
 	 */
-	void (*removeObjectAtIndex)(MutableArray *self, const int index);
+	void (*removeObjectAtIndex)(MutableArray *self, size_t index);
 
 	/**
-	 * @fn void MutableArray::setObjectAtIndex(MutableArray *self, const ident obj, int index)
+	 * @fn void MutableArray::setObjectAtIndex(MutableArray *self, const ident obj, size_t index)
 	 * @brief Replaces the Object at the specified index.
 	 * @param self The MutableArray.
 	 * @param obj The Object with which to replace.
@@ -187,7 +187,7 @@ struct MutableArrayInterface {
 	 * @remarks The index must not exceed the size of the MutableArray.
 	 * @memberof MutableArray
 	 */
-	void (*setObjectAtIndex)(MutableArray *self, const ident obj, int index);
+	void (*setObjectAtIndex)(MutableArray *self, const ident obj, size_t index);
 
 	/**
 	 * @fn void MutableArray::sort(MutableArray *self, Comparator comparator)

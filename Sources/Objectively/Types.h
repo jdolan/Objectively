@@ -26,6 +26,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <sys/types.h>
 
 #undef interface
 
@@ -47,12 +48,12 @@ typedef struct {
 	/**
 	 * @brief The location.
 	 */
-	int location;
+	ssize_t location;
 
 	/**
 	 * @brief The length.
 	 */
-	int length;
+	size_t length;
 } Range;
 
 /**

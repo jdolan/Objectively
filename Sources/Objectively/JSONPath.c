@@ -77,7 +77,7 @@ static ident objectForKeyPath(const ident root, const char *path) {
 		} else if (*segment->chars == '[') {
 
 			const Array *array = cast(Array, obj);
-			const unsigned index = strtoul(segment->chars + 1, NULL, 10);
+			const unsigned long index = strtoul(segment->chars + 1, NULL, 10);
 			if (index < array->count) {
 				obj = $(array, objectAtIndex, index);
 			} else {

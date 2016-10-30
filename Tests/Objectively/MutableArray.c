@@ -95,8 +95,6 @@ START_TEST(mutableArray)
 
 		ck_assert_int_eq(((Array *) array)->count, 0);
 
-		srand(time(NULL));
-
 		for (size_t i = 0; i < 100; i++) {
 
 			Number *number = $$(Number, numberWithValue, rand());

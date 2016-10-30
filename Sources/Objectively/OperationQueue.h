@@ -129,12 +129,12 @@ struct OperationQueueInterface {
 	OperationQueue *(*init)(OperationQueue *self);
 
 	/**
-	 * @fn int OperationQueue::operationCount(const OperationQueue *self)
+	 * @fn size_t OperationQueue::operationCount(const OperationQueue *self)
 	 * @param self The OperationQueue.
 	 * @return The instantaneous `count` of this OperationQueue's Operations.
 	 * @memberof OperationQueue
 	 */
-	int (*operationCount)(const OperationQueue *self);
+	size_t (*operationCount)(const OperationQueue *self);
 
 	/**
 	 * @fn Array *OperationQueue::operations(const OperationQueue *self)

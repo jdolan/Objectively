@@ -207,12 +207,11 @@ static void removeObject(MutableArray *self, const ident obj) {
 }
 
 /**
- * @fn void MutableArray::removeObjectAtIndex(MutableArray *self, const int index)
+ * @fn void MutableArray::removeObjectAtIndex(MutableArray *self, size_t index)
  * @memberof MutableArray
  */
-static void removeObjectAtIndex(MutableArray *self, const int index) {
+static void removeObjectAtIndex(MutableArray *self, size_t index) {
 
-	assert(index > -1);
 	assert(index < self->array.count);
 
 	release(self->array.elements[index]);
@@ -225,12 +224,11 @@ static void removeObjectAtIndex(MutableArray *self, const int index) {
 }
 
 /**
- * @fn void MutableArray::setObjectAtIndex(MutableArray *self, const ident obj, int index)
+ * @fn void MutableArray::setObjectAtIndex(MutableArray *self, const ident obj, size_t index)
  * @memberof MutableArray
  */
-static void setObjectAtIndex(MutableArray *self, const ident obj, int index) {
+static void setObjectAtIndex(MutableArray *self, const ident obj, size_t index) {
 
-	assert(index > -1);
 	assert(index < self->array.count);
 
 	retain(obj);

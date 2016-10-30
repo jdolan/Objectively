@@ -228,7 +228,7 @@ struct ArrayInterface {
 	 * @return The Object at the specified index.
 	 * @memberof Array
 	 */
-	ident (*objectAtIndex)(const Array *self, int index);
+	ident (*objectAtIndex)(const Array *self, size_t index);
 
 	/**
 	 * @fn Array *Array::sortedArray(const Array *self, Comparator comparator)

@@ -453,7 +453,7 @@ static Range rangeOfCharacters(const String *self, const char *chars, const Rang
 
 	assert(chars);
 	assert(range.location > -1);
-	assert(range.length > -1);
+	assert(range.length > 0);
 	assert(range.location + range.length <= self->length);
 
 	Range match = { -1, 0 };

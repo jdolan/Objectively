@@ -167,12 +167,12 @@ static OperationQueue *init(OperationQueue *self) {
 }
 
 /**
- * @fn int OperationQueue::operationCount(const OperationQueue *self)
+ * @fn size_t OperationQueue::operationCount(const OperationQueue *self)
  * @memberof OperationQueue
  */
-static int operationCount(const OperationQueue *self) {
+static size_t operationCount(const OperationQueue *self) {
 
-	int count;
+	size_t count;
 
 	WithLock(self->locals.condition, {
 		count = ((Array *) self->locals.operations)->count;
