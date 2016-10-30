@@ -166,12 +166,11 @@ static MutableArray *initWithCapacity(MutableArray *self, size_t capacity) {
 }
 
 /**
- * @fn void MutableArray::insertObjectAtIndex(MutableArray *self, ident obj, int index)
+ * @fn void MutableArray::insertObjectAtIndex(MutableArray *self, ident obj, size_t index)
  * @memberof MutableArray
  */
-static void insertObjectAtIndex(MutableArray *self, ident obj, int index) {
+static void insertObjectAtIndex(MutableArray *self, ident obj, size_t index) {
 
-	assert(index > -1);
 	assert(index < self->array.count);
 
 	$(self, addObject, obj);

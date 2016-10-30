@@ -180,10 +180,10 @@ static MutableString *initWithString(MutableString *self, const String *string) 
 }
 
 /**
- * @fn void MutableString::insertCharactersAtIndex(MutableString *self, const char *chars, int index)
+ * @fn void MutableString::insertCharactersAtIndex(MutableString *self, const char *chars, size_t index)
  * @memberof MutableString
  */
-static void insertCharactersAtIndex(MutableString *self, const char *chars, int index) {
+static void insertCharactersAtIndex(MutableString *self, const char *chars, size_t index) {
 	
 	const Range range = { .location = index };
 	
@@ -191,10 +191,10 @@ static void insertCharactersAtIndex(MutableString *self, const char *chars, int 
 }
 
 /**
- * @fn void MutableString::insertStringAtIndex(MutableString *self, const String *string, int index)
+ * @fn void MutableString::insertStringAtIndex(MutableString *self, const String *string, size_t index)
  * @memberof MutableString
  */
-static void insertStringAtIndex(MutableString *self, const String *string, int index) {
+static void insertStringAtIndex(MutableString *self, const String *string, size_t index) {
 	
 	$(self, insertCharactersAtIndex, string->chars, index);
 }

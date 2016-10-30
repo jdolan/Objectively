@@ -33,18 +33,22 @@
  * @brief qsort comparator for indexes.
  */
 static int compare(const void *a, const void *b) {
-	return (*(int *) a - *(int *) b);
+
+	const size_t sa = *(size_t *) a;
+	const size_t sb = *(size_t *) b;
+
+	return sa < sb ? -1 : sa > sb ? 1 : 0;
 }
 
 /**
  * @brief Sorts and compacts the given array to contain only unique values.
  */
-static size_t compact(int *indexes, size_t count) {
+static size_t compact(size_t *indexes, size_t count) {
 
 	size_t size = 0;
 
 	if (count) {
-		qsort(indexes, count, sizeof(int), compare);
+		qsort(indexes, count, sizeof(size_t), compare);
 
 		for (size_t i = 1; i < count; i++) {
 			if (indexes[i] != indexes[size]) {
@@ -135,7 +139,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 		const IndexSet *that = (IndexSet *) other;
 
 		if (this->count == that->count) {
-			return memcmp(this->indexes, that->indexes, this->count * sizeof(int)) == 0;
+			return memcmp(this->indexes, that->indexes, this->count * sizeof(size_t)) == 0;
 		}
 	}
 
@@ -145,10 +149,10 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - IndexSet
 
 /**
- * @fn _Bool IndexSet::containsIndex(const IndexSet *self, int index)
+ * @fn _Bool IndexSet::containsIndex(const IndexSet *self, size_t index)
  * @memberof IndexSet
  */
-static _Bool containsIndex(const IndexSet *self, int index) {
+static _Bool containsIndex(const IndexSet *self, size_t index) {
 
 	for (size_t i = 0; i < self->count; i++) {
 		if (self->indexes[i] == index) {
@@ -160,22 +164,18 @@ static _Bool containsIndex(const IndexSet *self, int index) {
 }
 
 /**
- * @fn IndexSet *IndexSet::initWithIndex(IndexSet *self, int index)
+ * @fn IndexSet *IndexSet::initWithIndex(IndexSet *self, size_t index)
  * @memberof IndexSet
  */
-static IndexSet *initWithIndex(IndexSet *self, int index) {
+static IndexSet *initWithIndex(IndexSet *self, size_t index) {
 	return $(self, initWithIndexes, &index, 1);
 }
 
 /**
- * @fn IndexSet *IndexSet::initWithIndexes(IndexSet *self, int *indexes, size_t count)
- * @brief Initializes this IndexSet with the specified indexes and count.
- * @param indexes The indexes.
- * @param count The count of `indexes`.
- * @return The intialized IndexSet, or `NULL` on error.
+ * @fn IndexSet *IndexSet::initWithIndexes(IndexSet *self, size_t *indexes, size_t count)
  * @memberof IndexSet
  */
-static IndexSet *initWithIndexes(IndexSet *self, int *indexes, size_t count) {
+static IndexSet *initWithIndexes(IndexSet *self, size_t *indexes, size_t count) {
 	
 	self = (IndexSet *) super(Object, self, init);
 	if (self) {
@@ -183,10 +183,10 @@ static IndexSet *initWithIndexes(IndexSet *self, int *indexes, size_t count) {
 		self->count = compact(indexes, count);
 		if (self->count) {
 
-			self->indexes = calloc(sizeof(int), self->count);
+			self->indexes = calloc(sizeof(size_t), self->count);
 			assert(self->indexes);
 
-			memcpy(self->indexes, indexes, sizeof(int) * self->count);
+			memcpy(self->indexes, indexes, sizeof(size_t) * self->count);
 		}
 	}
 	

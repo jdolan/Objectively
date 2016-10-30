@@ -144,24 +144,24 @@ struct MutableStringInterface {
 	MutableString *(*initWithString)(MutableString *self, const String *string);
 
 	/**
-	 * @fn void MutableString::insertCharactersAtIndex(MutableString *self, const char *chars, int index)
+	 * @fn void MutableString::insertCharactersAtIndex(MutableString *self, const char *chars, size_t index)
 	 * @brief Inserts the specified String at the given index.
 	 * @param self The MutableString.
 	 * @param chars The null-terminated UTF-8 encoded C string to insert.
 	 * @param index The index.
 	 * @memberof MutableString
 	 */
-	void (*insertCharactersAtIndex)(MutableString *self, const char *chars, int index);
+	void (*insertCharactersAtIndex)(MutableString *self, const char *chars, size_t index);
 	
 	/**
-	 * @fn void MutableString::insertStringAtIndex(MutableString *self, const String *string, int index)
+	 * @fn void MutableString::insertStringAtIndex(MutableString *self, const String *string, size_t index)
 	 * @brief Inserts the specified String at the given index.
 	 * @param self The MutableString.
 	 * @param string The String to insert.
 	 * @param index The index.
 	 * @memberof MutableString
 	 */
-	void (*insertStringAtIndex)(MutableString *self, const String *string, int index);
+	void (*insertStringAtIndex)(MutableString *self, const String *string, size_t index);
 	
 	/**
 	 * @fn void MutableString::replaceCharactersInRange(MutableString *self, const Range range, const char *chars)

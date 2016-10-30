@@ -27,7 +27,7 @@
 
 START_TEST(indexSet)
 	{
-		int indexes[] = { 1, 2, 3, 3, 2 };
+		size_t indexes[] = { 1, 2, 3, 3, 2 };
 		IndexSet *indexSet = $(alloc(IndexSet), initWithIndexes, indexes, lengthof(indexes));
 
 		ck_assert(indexSet != NULL);

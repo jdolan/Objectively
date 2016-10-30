@@ -106,7 +106,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 		const IndexPath *that = (IndexPath *) other;
 
 		if (this->length == that->length) {
-			return memcmp(this->indexes, that->indexes, this->length * sizeof(int)) == 0;
+			return memcmp(this->indexes, that->indexes, this->length * sizeof(size_t)) == 0;
 		}
 	}
 

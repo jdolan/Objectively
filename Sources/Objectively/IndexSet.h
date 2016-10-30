@@ -53,7 +53,7 @@ struct IndexSet {
 	/**
 	 * @brief The indexes.
 	 */
-	int *indexes;
+	size_t *indexes;
 
 	/**
 	 * @brief The count of `indexes`.
@@ -72,26 +72,26 @@ struct IndexSetInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @fn _Bool IndexSet::containsIndex(const IndexSet *self, int index)
+	 * @fn _Bool IndexSet::containsIndex(const IndexSet *self, size_t index)
 	 * @param self The IndexSet.
 	 * @param index The index.
 	 * @return True if this IndexSet contains `index`, false otherwise.
 	 * @memberof IndexSet
 	 */
-	_Bool (*containsIndex)(const IndexSet *self, int index);
+	_Bool (*containsIndex)(const IndexSet *self, size_t index);
 
 	/**
-	 * @fn IndexSet *IndexSet::initWithIndex(IndexSet *self, int index)
+	 * @fn IndexSet *IndexSet::initWithIndex(IndexSet *self, size_t index)
 	 * @brief Initializes this IndexSet with the specified index.
 	 * @param self The IndexSet.
 	 * @param index The index.
 	 * @return The intialized IndexSet, or `NULL` on error.
 	 * @memberof IndexSet
 	 */
-	IndexSet *(*initWithIndex)(IndexSet *self, int index);
+	IndexSet *(*initWithIndex)(IndexSet *self, size_t index);
 
 	/**
-	 * @fn IndexSet *IndexSet::initWithIndexes(IndexSet *self, int *indexes, size_t count)
+	 * @fn IndexSet *IndexSet::initWithIndexes(IndexSet *self, size_t *indexes, size_t count)
 	 * @brief Initializes this IndexSet with the specified indexes and count.
 	 * @param self The IndexSet.
 	 * @param indexes The indexes.
@@ -99,7 +99,7 @@ struct IndexSetInterface {
 	 * @return The intialized IndexSet, or `NULL` on error.
 	 * @memberof IndexSet
 	 */
-	IndexSet *(*initWithIndexes)(IndexSet *self, int *indexes, size_t count);
+	IndexSet *(*initWithIndexes)(IndexSet *self, size_t *indexes, size_t count);
 };
 
 /**
