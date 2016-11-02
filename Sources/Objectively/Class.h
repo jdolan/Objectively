@@ -27,7 +27,7 @@
 
 /**
  * @file
- * @brief The Class structure.
+ * @brief Classes describe the state and behavior of an Objectively type.
  */
 
 /**
@@ -35,14 +35,14 @@
  */
 #define CLASS_MAGIC 0xabcdef
 
-typedef struct objClass objClass;
+typedef struct ClassDef ClassDef;
 typedef struct Class Class;
 
 /**
- * @brief The Class type.
- * @remarks Classes are the bridge between Objects and their interfaces. They provide an entry point
- * to the framework via the library function <code>_alloc</code>.
- * @remarks Each Class describes a type and initializes an interface. Each instance of that type 
+ * @brief Classes describe the state and behavior of an Objectively type.
+ * @details Classes are the bridge between Objects and their interfaces. They provide an entry
+ * point to the framework via the library function <code>_alloc</code>.
+ * @details Each Class describes a type and initializes an interface. Each instance of that type
  * will reference the Class and, in turn, its interface.
  * @ingroup Core
  */
@@ -54,9 +54,9 @@ struct Class {
 	volatile int magic;
 
 	/**
-	 * @brief The dynamically allocated Class runtime definition.
+	 * @brief The dynamically allocated Class definition.
 	 */
-	objClass *def;
+	ClassDef *def;
 
 	/**
 	 * @brief The Class destructor (optional).
@@ -65,8 +65,8 @@ struct Class {
 	void (*destroy)(Class *clazz);
 
 	/**
-	 * @brief The Class initializer (required).
-	 * @remarks Objectively invokes your Class initializer the first time your Class is required;
+	 * @brief The Class initializer (optional).
+	 * @details Objectively invokes your Class initializer the first time your Class is required;
 	 * either via `_alloc`, or via static method invocation. The Class initializer is responsible 
 	 * for populating the Class' `interface` with valid method implementations:
 	 * ```
@@ -110,7 +110,7 @@ struct Class {
 /**
  * @brief The runtime representation of a Class.
  */
-struct objClass {
+struct ClassDef {
 
 	/**
 	 * @brief A dynamically allocated copy of the Class descriptor.
@@ -125,7 +125,7 @@ struct objClass {
 	/**
 	 * @brief Provides chaining of initialized Classes.
 	 */
-	objClass *next;
+	ClassDef *next;
 };
 
 /**

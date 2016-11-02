@@ -36,13 +36,13 @@
 
 size_t _pageSize;
 
-static objClass *_classes;
+static ClassDef *_classes;
 
 /**
  * @brief Called `atexit` to teardown Objectively.
  */
 static void teardown(void) {
-	objClass *c;
+	ClassDef *c;
 
 	c = _classes;
 	while (c) {
@@ -56,7 +56,7 @@ static void teardown(void) {
 	c = _classes;
 	while (c) {
 
-		objClass *next = c->next;
+		ClassDef *next = c->next;
 
 		free(c->interface);
 		free(c);
@@ -92,8 +92,10 @@ void _initialize(Class *clazz) {
 		assert(clazz->interfaceSize);
 		assert(clazz->interfaceOffset);
 
-		objClass *def = clazz->def = calloc(1, sizeof(objClass));
+		ClassDef *def = clazz->def = calloc(1, sizeof(ClassDef));
 		assert(def);
+
+		def->descriptor = *clazz;
 
 		def->interface = calloc(1, clazz->interfaceSize);
 		assert(def->interface);
@@ -112,11 +114,14 @@ void _initialize(Class *clazz) {
 			memcpy(def->interface, super->def->interface, super->interfaceSize);
 		}
 
-		clazz->initialize(clazz);
-		clazz->magic = CLASS_MAGIC;
+		if (clazz->initialize) {
+			clazz->initialize(clazz);
+		}
 
-		def->descriptor = *clazz;
+		def->descriptor.magic = CLASS_MAGIC;
 		def->next = __sync_lock_test_and_set(&_classes, def);
+
+		clazz->magic = CLASS_MAGIC;
 
 	} else {
 		while (clazz->magic != CLASS_MAGIC) {
@@ -169,7 +174,7 @@ ident _cast(Class *clazz, const ident obj) {
 Class *classForName(const char *name) {
 
 	if (name) {
-		objClass *c = _classes;
+		ClassDef *c = _classes;
 		while (c) {
 			if (strcmp(name, c->descriptor.name) == 0) {
 				return &c->descriptor;
