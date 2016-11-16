@@ -215,7 +215,7 @@ static void removeObjectAtIndex(MutableArray *self, size_t index) {
 
 	release(self->array.elements[index]);
 
-	for (size_t i = index; i < self->array.count; i++) {
+	for (size_t i = index; i < self->array.count - 1; i++) {
 		self->array.elements[i] = self->array.elements[i + 1];
 	}
 
