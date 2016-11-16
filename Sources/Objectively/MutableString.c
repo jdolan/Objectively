@@ -206,7 +206,7 @@ static void insertStringAtIndex(MutableString *self, const String *string, size_
 static void replaceCharactersInRange(MutableString *self, const Range range, const char *chars) {
 
 	assert(range.location >= 0);
-	assert(range.location + range.length < self->string.length);
+	assert(range.location + range.length <= self->string.length);
 
 	char *remainder = strdup(self->string.chars + range.location + range.length);
 
@@ -217,6 +217,45 @@ static void replaceCharactersInRange(MutableString *self, const Range range, con
 	$(self, appendCharacters, remainder);
 	
 	free(remainder);
+}
+
+/**
+ * @fn void MutableString::replaceOccurrencesOfCharactersInRange(MutableString *self, const char *chars, const Range range, const char *replacement)
+ * @memberof MutableString
+ */
+static void replaceOccurrencesOfCharactersInRange(MutableString *self, const char *chars, const Range range, const char *replacement) {
+
+	assert(chars);
+	assert(replacement);
+
+	assert(range.location >= 0);
+	assert(range.location + range.length <= self->string.length);
+
+	Range search = range;
+	while (true) {
+
+		const Range result = $((String *) self, rangeOfCharacters, chars, search);
+		if (result.location == -1) {
+			break;
+		}
+
+		$(self, replaceCharactersInRange, result, replacement);
+
+		search.location = result.location + strlen(replacement);
+		search.length = range.length - (result.location - range.location) - (strlen(replacement) - strlen(chars));
+	}
+}
+
+/**
+ * @fn void MutableString::replaceOccurrencesOfStringInRange(MutableString *self, const String *string, const Range range, const String *replacement)
+ * @memberof MutableString
+ */
+static void replaceOccurrencesOfStringInRange(MutableString *self, const String *string, const Range range, const String *replacement) {
+
+	assert(string);
+	assert(replacement);
+
+	$(self, replaceOccurrencesOfCharactersInRange, string->chars, range, replacement->chars);
 }
 
 /**
@@ -270,6 +309,8 @@ static void initialize(Class *clazz) {
 	mutableString->insertCharactersAtIndex = insertCharactersAtIndex;
 	mutableString->insertStringAtIndex = insertStringAtIndex;
 	mutableString->replaceCharactersInRange = replaceCharactersInRange;
+	mutableString->replaceOccurrencesOfCharactersInRange = replaceOccurrencesOfCharactersInRange;
+	mutableString->replaceOccurrencesOfStringInRange = replaceOccurrencesOfStringInRange;
 	mutableString->replaceStringInRange = replaceStringInRange;
 	mutableString->string = string;
 	mutableString->stringWithCapacity = stringWithCapacity;

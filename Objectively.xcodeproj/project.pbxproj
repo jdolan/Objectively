@@ -92,6 +92,7 @@
 		CE76DA2D1C4860130096DD31 /* Objectively.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8FC1C481C4E0096DD31 /* Objectively.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA6F1C4B17980096DD31 /* URLSession.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9631C481E390096DD31 /* URLSession.c */; };
 		CE76DAFB1C4B186F0096DD31 /* HelloObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9191C481E390096DD31 /* HelloObjC.m */; };
+		CE783FEB1DDD102F0076ACC2 /* MutableString.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9591C481E390096DD31 /* MutableString.c */; };
 		CE84A8821DA15AD8008BC685 /* Array.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9431C481E390096DD31 /* Array.c */; };
 		CE84A8831DA15AD8008BC685 /* Boole.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9441C481E390096DD31 /* Boole.c */; };
 		CE84A8841DA15AD8008BC685 /* Data.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9471C481E390096DD31 /* Data.c */; };
@@ -116,7 +117,6 @@
 		CE84A8971DA15AD8008BC685 /* String.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9601C481E390096DD31 /* String.c */; };
 		CE84A8981DA15AD8008BC685 /* Thread.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9611C481E390096DD31 /* Thread.c */; };
 		CE84A8991DA15AD8008BC685 /* URL.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9621C481E390096DD31 /* URL.c */; };
-		CE84A8A71DA15BAD008BC685 /* URLSession.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9631C481E390096DD31 /* URLSession.c */; };
 		CE84A8A81DA15BB4008BC685 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
 		CE84A8A91DA15BD5008BC685 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */; };
 		CE84A8B41DA17B52008BC685 /* Hello.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9131C481E390096DD31 /* Hello.c */; };
@@ -915,7 +915,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE84A8A71DA15BAD008BC685 /* URLSession.c in Sources */,
+				CE783FEB1DDD102F0076ACC2 /* MutableString.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

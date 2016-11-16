@@ -42,9 +42,11 @@ START_TEST(string)
 
 		String *goodbye = str("goodbye cruel");
 
-		Range range = { 0, 5 };
-		$(string, replaceStringInRange, range, goodbye);
+		$(string, replaceStringInRange, (Range) { 0, 5 }, goodbye);
 		ck_assert_str_eq("goodbye cruel world!", string->string.chars);
+
+		$(string, replaceOccurrencesOfCharactersInRange, " ", (Range) { 0, 20 }, "  ");
+		ck_assert_str_eq("goodbye  cruel  world!", string->string.chars);
 
 		String *copy = (String *) $((Object * ) string, copy);
 		ck_assert(classof(copy) == &_MutableString);

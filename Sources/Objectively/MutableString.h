@@ -165,14 +165,36 @@ struct MutableStringInterface {
 	
 	/**
 	 * @fn void MutableString::replaceCharactersInRange(MutableString *self, const Range range, const char *chars)
-	 * @brief Replaces the characters in `range` with the give characters.
+	 * @brief Replaces the characters in `range` with the given characters.
 	 * @param self The MutableString.
 	 * @param range The Range of characters to replace.
 	 * @param chars The null-terminated UTF-8 encoded C string to substitute.
 	 * @memberof MutableString
 	 */
 	void (*replaceCharactersInRange)(MutableString *self, const Range range, const char *chars);
-	
+
+	/**
+	 * @fn void MutableString::replaceOccurrencesOfCharactersInRange(MutableString *self, const char *chars, const Range range, const char *replacement)
+	 * @brief Replaces occurrences of `chars` in `range` with the given `replacement`.
+	 * @param self The MutableString.
+	 * @param chars The null-terminated UTF-8 encoded C string to replace.
+	 * @param range The Range in which to replace.
+	 * @param replacement The null-terminated UTF-8 encoded C string replacement.
+	 * @memberof MutableString
+	 */
+	void (*replaceOccurrencesOfCharactersInRange)(MutableString *self, const char *chars, const Range range, const char *replacement);
+
+	/**
+	 * @fn void MutableString::replaceOccurrencesOfStringInRange(MutableString *self, const String *string, const Range range, const String *replacement)
+	 * @brief Replaces occurrences of `string` in `range` with the given `replacement`.
+	 * @param self The MutableString.
+	 * @param string The String to replace.
+	 * @param range The Range in which to replace.
+	 * @param replacement The String replacement.
+	 * @memberof MutableString
+	 */
+	void (*replaceOccurrencesOfStringInRange)(MutableString *self, const String *string, const Range range, const String *replacement);
+
 	/**
 	 * @fn void MutableString::replaceStringInRange(MutableString *self, const Range range, const String *string)
 	 * @brief Replaces the characters in `range` with the contents of `string`.
