@@ -57,7 +57,9 @@ static void dealloc(Object *self) {
  * @memberof Resource
  */
 static void addResourcePath(const char *path) {
-	$(_resourcePaths, addObject, str(path));
+	String *temp = str(path);
+	$(_resourcePaths, addObject, temp);
+	release(temp);
 }
 
 /**
@@ -140,7 +142,9 @@ static void initialize(Class *clazz) {
 	_resourcePaths = $(alloc(MutableArray), init);
 	assert(_resourcePaths);
 
-	$(_resourcePaths, addObject, str("."));
+	String *temp = str(".");
+	$(_resourcePaths, addObject, temp);
+	release(temp);
 }
 
 /**
