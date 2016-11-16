@@ -150,6 +150,51 @@ static Date *initWithTime(Date *self, const Time *time) {
 	return self;
 }
 
+/**
+ * @fn Time Date::timeSinceDate(const Date *self, const Date *date)
+ * @memberof Date
+ */
+static Time timeSinceDate(const Date *self, const Date *date) {
+
+	assert(date);
+
+	return $(self, timeSinceTime, &date->time);
+}
+
+/**
+ * @fn Time Date::timeSinceNow(const Date *self)
+ * @memberof Date
+ */
+static Time timeSinceNow(const Date *self) {
+
+	Date *date = $$(Date, date);
+
+	Time time = $(self, timeSinceDate, date);
+
+	release(date);
+
+	return time;
+}
+
+/**
+ * @fn Time Date::timeSinceTime(const Date *self, const Time *time)
+ * @memberof Date
+ */
+static Time timeSinceTime(const Date *self, const Time *time) {
+
+	Time delta = {
+		.tv_sec = self->time.tv_sec - time->tv_sec,
+		.tv_usec = self->time.tv_usec - time->tv_usec
+	};
+
+	if (delta.tv_usec < 0) {
+		delta.tv_sec--;
+		delta.tv_usec += MSEC_PER_SEC;
+	}
+
+	return delta;
+}
+
 #pragma mark - Class lifecycle
 
 /**
@@ -169,6 +214,9 @@ static void initialize(Class *clazz) {
 	interface->dateWithTimeSinceNow = dateWithTimeSinceNow;
 	interface->init = init;
 	interface->initWithTime = initWithTime;
+	interface->timeSinceDate = timeSinceDate;
+	interface->timeSinceNow = timeSinceNow;
+	interface->timeSinceTime = timeSinceTime;
 }
 
 Class _Date = {

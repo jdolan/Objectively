@@ -46,6 +46,9 @@ START_TEST(date)
 		ck_assert($(date1, compareTo, date1) == OrderSame);
 		ck_assert($(date1, compareTo, date2) == OrderAscending);
 
+		Time time = $(date1, timeSinceDate, date2);
+		ck_assert(time.tv_sec < 0.0);
+
 		$(dateFormatter, initWithFormat, "%B");
 
 		String *string = $(dateFormatter, stringFromDate, date1);

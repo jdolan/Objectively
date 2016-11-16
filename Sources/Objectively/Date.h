@@ -141,6 +141,35 @@ struct DateInterface {
 	 * @memberof Date
 	 */
 	Date *(*initWithTime)(Date *self, const Time *time);
+
+	/**
+	 * @fn Time Date::timeSinceDate(const Date *self, const Date *date)
+	 * @param self The Date.
+	 * @param date The Date from whence to return a Time delta.
+	 * @return The interval between this Date and `date`.
+	 * @remarks If `date` is earlier than this Date, the returned interval will be negative.
+	 * @memberof Date
+	 */
+	Time (*timeSinceDate)(const Date *self, const Date *date);
+
+	/**
+	 * @fn Time Date::timeSinceNow(const Date *self)
+	 * @param self The Date.
+	 * @return The interval between this Date and the current date.
+	 * @remarks If this Date is later than the current date, the returned interval will be negative.
+	 * @memberof Date
+	 */
+	Time (*timeSinceNow)(const Date *self);
+
+	/**
+	 * @fn Time Date::timeSinceTime(const Date *self, const Time *time)
+	 * @param self The Date.
+	 * @param time A Time value.
+	 * @return The interval between this Date and `time`.
+	 * @remarks If `time` is earlier than this Date, the returned interval will be negative.
+	 * @memberof Date
+	 */
+	Time (*timeSinceTime)(const Date *self, const Time *time);
 };
 
 /**
