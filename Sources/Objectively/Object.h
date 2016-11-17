@@ -51,7 +51,7 @@ struct Object {
 	Class *clazz;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	ObjectInterface *interface;

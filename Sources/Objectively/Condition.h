@@ -44,12 +44,12 @@ typedef struct ConditionInterface ConditionInterface;
 struct Condition {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Lock lock;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	ConditionInterface *interface;
@@ -67,7 +67,7 @@ struct Condition {
 struct ConditionInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	LockInterface lockInterface;
 

@@ -56,12 +56,12 @@ typedef struct LocaleInterface LocaleInterface;
 struct Locale {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	LocaleInterface *interface;
@@ -85,7 +85,7 @@ struct Locale {
 struct LocaleInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

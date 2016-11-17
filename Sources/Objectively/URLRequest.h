@@ -56,12 +56,12 @@ typedef enum {
 struct URLRequest {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	URLRequestInterface *interface;
@@ -93,7 +93,7 @@ struct URLRequest {
 struct URLRequestInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

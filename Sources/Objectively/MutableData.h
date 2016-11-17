@@ -40,12 +40,12 @@ typedef struct MutableDataInterface MutableDataInterface;
 struct MutableData {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Data data;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	MutableDataInterface *interface;
@@ -63,7 +63,7 @@ struct MutableData {
 struct MutableDataInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	DataInterface dataInterface;
 

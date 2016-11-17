@@ -44,12 +44,12 @@ typedef struct OperationQueueInterface OperationQueueInterface;
 struct OperationQueue {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	OperationQueueInterface *interface;
@@ -88,7 +88,7 @@ struct OperationQueue {
 struct OperationQueueInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

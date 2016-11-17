@@ -43,12 +43,12 @@ typedef struct RegexInterface RegexInterface;
 struct Regex {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	RegexInterface *interface;
@@ -80,7 +80,7 @@ struct Regex {
 struct RegexInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

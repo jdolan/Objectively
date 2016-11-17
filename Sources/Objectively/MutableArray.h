@@ -40,12 +40,12 @@ typedef struct MutableArrayInterface MutableArrayInterface;
 struct MutableArray {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Array array;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	MutableArrayInterface *interface;
@@ -63,7 +63,7 @@ struct MutableArray {
 struct MutableArrayInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ArrayInterface arrayInterface;
 

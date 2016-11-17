@@ -42,12 +42,12 @@ typedef struct JSONPathInterface JSONPathInterface;
 struct JSONPath {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	JSONPathInterface *interface;
@@ -59,7 +59,7 @@ struct JSONPath {
 struct JSONPathInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

@@ -25,12 +25,12 @@ typedef struct ___FILEBASENAMEASIDENTIFIER___Interface ___FILEBASENAMEASIDENTIFI
 struct ___FILEBASENAMEASIDENTIFIER___ {
 	
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	___VARIABLE_superclass:identifier___ ___VARIABLE_superclassMember:identifier___;
 	
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	___FILEBASENAMEASIDENTIFIER___Interface *interface;
@@ -44,7 +44,7 @@ struct ___FILEBASENAMEASIDENTIFIER___ {
 struct ___FILEBASENAMEASIDENTIFIER___Interface {
 	
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	___VARIABLE_superclass:identifier___Interface ___VARIABLE_superclassMember:identifier___Interface;
 	

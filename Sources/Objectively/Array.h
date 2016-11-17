@@ -54,12 +54,12 @@ typedef void (*ArrayEnumerator)(const Array *array, ident obj, ident data);
 struct Array {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	ArrayInterface *interface;
@@ -84,7 +84,7 @@ typedef struct MutableArray MutableArray;
 struct ArrayInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

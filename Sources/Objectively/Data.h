@@ -45,12 +45,12 @@ typedef struct DataInterface DataInterface;
 struct Data {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	DataInterface *interface;
@@ -74,7 +74,7 @@ typedef struct MutableData MutableData;
 struct DataInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

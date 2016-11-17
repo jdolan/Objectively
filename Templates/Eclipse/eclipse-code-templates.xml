@@ -81,12 +81,12 @@ typedef struct ${file_base}Interface ${file_base}Interface;
 struct ${file_base} {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	${file_base}Interface *interface;
@@ -100,7 +100,7 @@ struct ${file_base} {
 struct ${file_base}Interface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

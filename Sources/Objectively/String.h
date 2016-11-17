@@ -68,12 +68,12 @@ typedef struct StringInterface StringInterface;
 struct String {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	StringInterface *interface;
@@ -97,7 +97,7 @@ typedef struct MutableString MutableString;
 struct StringInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

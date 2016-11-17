@@ -44,12 +44,12 @@ typedef struct URLInterface URLInterface;
 struct URL {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	URLInterface *interface;
@@ -96,7 +96,7 @@ struct URL {
 struct URLInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

@@ -40,12 +40,12 @@ typedef struct ResourceInterface ResourceInterface;
 struct Resource {
 	
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 	
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	ResourceInterface *interface;
@@ -67,7 +67,7 @@ struct Resource {
 struct ResourceInterface {
 	
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

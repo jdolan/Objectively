@@ -52,12 +52,12 @@ typedef struct JSONSerializationInterface JSONSerializationInterface;
 struct JSONSerialization {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	JSONSerializationInterface *interface;
@@ -69,7 +69,7 @@ struct JSONSerialization {
 struct JSONSerializationInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

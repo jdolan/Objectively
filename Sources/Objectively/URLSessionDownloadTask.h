@@ -43,12 +43,12 @@ typedef struct URLSessionDownloadTaskInterface URLSessionDownloadTaskInterface;
 struct URLSessionDownloadTask {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	URLSessionTask urlSessionTask;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	URLSessionDownloadTaskInterface *interface;
@@ -65,7 +65,7 @@ struct URLSessionDownloadTask {
 struct URLSessionDownloadTaskInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	URLSessionTaskInterface urlSessionTaskInterface;
 };

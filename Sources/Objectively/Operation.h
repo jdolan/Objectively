@@ -50,12 +50,12 @@ typedef void (*OperationFunction)(Operation *operation);
 struct Operation {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	OperationInterface *interface;
@@ -115,7 +115,7 @@ struct Operation {
 struct OperationInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

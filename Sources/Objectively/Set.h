@@ -55,12 +55,12 @@ typedef void (*SetEnumerator)(const Set *set, ident obj, ident data);
 struct Set {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	SetInterface *interface;
@@ -89,7 +89,7 @@ struct Set {
 struct SetInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

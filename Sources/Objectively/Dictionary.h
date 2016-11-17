@@ -52,12 +52,12 @@ typedef _Bool (*DictionaryEnumerator)(const Dictionary *dictionary, ident obj, i
 struct Dictionary {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	DictionaryInterface *interface;
@@ -88,7 +88,7 @@ typedef struct MutableDictionary MutableDictionary;
 struct DictionaryInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 	

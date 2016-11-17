@@ -48,12 +48,12 @@ typedef struct DateFormatterInterface DateFormatterInterface;
 struct DateFormatter {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	DateFormatterInterface *interface;
@@ -70,7 +70,7 @@ struct DateFormatter {
 struct DateFormatterInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

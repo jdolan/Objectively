@@ -41,12 +41,12 @@ typedef struct MutableSetInterface MutableSetInterface;
 struct MutableSet {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Set set;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	MutableSetInterface *interface;
@@ -58,7 +58,7 @@ struct MutableSet {
 struct MutableSetInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	SetInterface setInterface;
 

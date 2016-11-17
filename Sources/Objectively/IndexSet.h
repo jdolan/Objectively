@@ -40,12 +40,12 @@ typedef struct IndexSetInterface IndexSetInterface;
 struct IndexSet {
 	
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 	
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	IndexSetInterface *interface;
@@ -67,7 +67,7 @@ struct IndexSet {
 struct IndexSetInterface {
 	
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

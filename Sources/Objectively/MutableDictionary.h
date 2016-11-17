@@ -40,12 +40,12 @@ typedef struct MutableDictionaryInterface MutableDictionaryInterface;
 struct MutableDictionary {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Dictionary dictionary;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	MutableDictionaryInterface *interface;
@@ -57,7 +57,7 @@ struct MutableDictionary {
 struct MutableDictionaryInterface {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	DictionaryInterface dictionaryInterface;
 

@@ -40,12 +40,12 @@ typedef struct MutableStringInterface MutableStringInterface;
 struct MutableString {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	String string;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	MutableStringInterface *interface;
@@ -64,7 +64,7 @@ struct MutableString {
 struct MutableStringInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	StringInterface stringInterface;
 

@@ -43,12 +43,12 @@ typedef struct URLSessionUploadTaskInterface URLSessionUploadTaskInterface;
 struct URLSessionUploadTask {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	URLSessionTask urlSessionTask;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	URLSessionUploadTaskInterface *interface;
@@ -65,7 +65,7 @@ struct URLSessionUploadTask {
 struct URLSessionUploadTaskInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	URLSessionTaskInterface urlSessionTaskInterface;
 };

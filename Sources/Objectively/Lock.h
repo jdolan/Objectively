@@ -42,12 +42,12 @@ typedef struct LockInterface LockInterface;
 struct Lock {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	LockInterface *interface;
@@ -65,7 +65,7 @@ struct Lock {
 struct LockInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

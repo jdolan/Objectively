@@ -53,12 +53,12 @@ typedef ident (*ThreadFunction)(Thread *thread);
 struct Thread {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	ThreadInterface *interface;
@@ -106,7 +106,7 @@ struct Thread {
 struct ThreadInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

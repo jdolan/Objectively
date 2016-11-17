@@ -45,12 +45,12 @@ typedef void (*ValueDestructor)(ident value);
 struct Value {
 	
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 	
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	ValueInterface *interface;
@@ -72,7 +72,7 @@ struct Value {
 struct ValueInterface {
 	
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 	

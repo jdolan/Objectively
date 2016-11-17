@@ -69,12 +69,12 @@ typedef struct DateInterface DateInterface;
 struct Date {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	DateInterface *interface;
@@ -91,7 +91,7 @@ struct Date {
 struct DateInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

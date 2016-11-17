@@ -54,12 +54,12 @@ typedef struct URLSessionInterface URLSessionInterface;
 struct URLSession {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	URLSessionInterface *interface;
@@ -103,7 +103,7 @@ struct URLSession {
 struct URLSessionInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

@@ -42,12 +42,12 @@ typedef struct NullInterface NullInterface;
 struct Null {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	NullInterface *interface;
@@ -59,7 +59,7 @@ struct Null {
 struct NullInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 

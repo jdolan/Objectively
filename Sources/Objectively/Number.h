@@ -41,12 +41,12 @@ typedef struct NumberInterface NumberInterface;
 struct Number {
 
 	/**
-	 * @brief The parent.
+	 * @brief The superclass.
 	 */
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 * @protected
 	 */
 	NumberInterface *interface;
@@ -63,7 +63,7 @@ struct Number {
 struct NumberInterface {
 
 	/**
-	 * @brief The parent interface.
+	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
 
