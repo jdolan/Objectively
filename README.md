@@ -1,6 +1,6 @@
 [![Build Status](http://ci.quetoo.org/buildStatus/icon?job=Objectively-Linux-x86_64)](http://ci.quetoo.org/job/Objectively-Linux-x86_64/)
 [![Zlib License](https://img.shields.io/badge/license-Zlib-brightgreen.svg)](https://opensource.org/licenses/Zlib)
-![This software is ALPHA](https://img.shields.io/badge/development_stage-ALPHA-yellow.svg)
+![This software is ALPHA](https://img.shields.io/badge/development_stage-BETA-green.svg)
 
 Objectively
 ===
@@ -9,6 +9,18 @@ Ultra-lightweight object oriented framework for [GNU C](http://www.gnu.org/softw
 [Foundation](https://developer.apple.com/reference/foundation)-inspired [core library](http://jaydolan.com/projects/Objectively).
 
 Zlib [license](./COPYING).
+
+About
+---
+ Objectively is a cross-platform object oriented framework for the C programming language. Unlike [GObject](https://developer.gnome.org/gobject/stable/), Objectively is not a platform on which to build OO languages. Rather, Objectiely provides rich OO semantics to enable object oriented programming directly in C. It is based on C99, but utilizes several GNU extensions, and therefore requires `gcc` or `clang`. While others may work, the following targets are actively supported:
+ 
+ * Apple OS X with clang
+ * Apple OS X with gcc
+ * GNU / Linux with clang
+ * GNU / Linux with gcc
+ * [MinGW-w64](https://mingw-w64.org) cross compile
+ * MinGW-w64 Windows native
+ * Visual Studio 2015 or later with clang
 
 Adding Objectively to your project
 ---
@@ -262,21 +274,21 @@ static void destroy(Class *clazz) {
 URLSession *session = $$(URLSession, sharedInstance);
 ```
 
-See [Once.h](Sources/Objectively/Once.h) for details on `do_once`.
+Remember to wire up the desctructor in your Class' initialization block. See [Once.h](Sources/Objectively/Once.h) for details on `do_once`.
     
 Code Templates
 ---
 Objectively provides code templates for Xcode and Eclipse CDT that greatly cut down on the boilerplate required to declare and implement a type. These are _highly recommended_, as they will save you time and reduce errors in type declaration.
 
-#### Xcode 7.x
-Install the Xcode 7.x code templates by simply building the Xcode project.
+#### Xcode 8.x
+Install the Xcode 8.x code templates by simply building the Xcode project.
 
-![Objectively code templates in Xcode 7](Documentation/xcode-template-dialog.png)
+![Objectively code templates in Xcode 8](Documentation/xcode-template-dialog.png)
 
 #### Eclipse CDT
 Install the Eclipse CDT templates through the Eclipse CDT preferences:
 
-![Objectively code templates in Xcode 7](Documentation/eclipse-template-dialog.png)
+![Objectively code templates in Eclipse CDT](Documentation/eclipse-template-dialog.png)
 
 API documentation
 ---
