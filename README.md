@@ -12,7 +12,7 @@ Zlib [license](./COPYING).
 
 About
 ---
- Objectively is a cross-platform object oriented framework for the C programming language. Unlike [GObject](https://developer.gnome.org/gobject/stable/), Objectively is not a platform on which to build OO languages. Rather, Objectiely provides rich OO semantics to enable object oriented programming directly in C. It is based on C99, but utilizes several GNU extensions, and therefore requires `gcc` or `clang`. While others may work, the following targets are actively supported:
+ Objectively is a cross-platform object oriented framework for the C programming language. Unlike [GObject](https://developer.gnome.org/gobject/stable/), Objectively is not a platform on which to build OO languages. Rather, Objectively provides rich OO semantics to enable object oriented programming directly in C. It is based on C99, but utilizes several GNU extensions, and therefore requires `gcc` or `clang`. While others may work, the following targets are actively supported:
  
  * Apple OS X with clang
  * Apple OS X with gcc
