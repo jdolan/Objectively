@@ -236,4 +236,4 @@ extern Class _MutableString;
  * @return A new MutableString, or `NULL` on error.
  * @relates String
  */
-MutableString *mstr(const char *fmt, ...);
+extern MutableString *mstr(const char *fmt, ...);

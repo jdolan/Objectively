@@ -403,14 +403,14 @@ extern Class _String;
  * 
  * @relates String
  */
-const char *NameForStringEncoding(StringEncoding encoding);
+extern const char *NameForStringEncoding(StringEncoding encoding);
 
 /**
  * @param name The case-insensitive name of the encoding.
  * @return The StringEncoding for the given `name`.
  * @relates String
  */
-StringEncoding StringEncodingForName(const char *name);
+extern StringEncoding StringEncodingForName(const char *name);
 
 /**
  * @brief A convenience function for instantiating Strings.
@@ -418,4 +418,4 @@ StringEncoding StringEncodingForName(const char *name);
  * @return A new String, or `NULL` on error.
  * @relates String
  */
-String *str(const char *fmt, ...);
+extern String *str(const char *fmt, ...);
