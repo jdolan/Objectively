@@ -70,13 +70,19 @@ static void initialize(Class *clazz) {
 	((URLSessionTaskInterface *) clazz->def->interface)->setup = setup;
 }
 
-Class _URLSessionDownloadTask = {
-	.name = "URLSessionDownloadTask",
-	.superclass = &_URLSessionTask,
-	.instanceSize = sizeof(URLSessionDownloadTask),
-	.interfaceOffset = offsetof(URLSessionDownloadTask, interface),
-	.interfaceSize = sizeof(URLSessionDownloadTaskInterface),
-	.initialize = initialize,
-};
+Class *_URLSessionDownloadTask(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "URLSessionDownloadTask";
+		_class.superclass = _URLSessionTask();
+		_class.instanceSize = sizeof(URLSessionDownloadTask);
+		_class.interfaceOffset = offsetof(URLSessionDownloadTask, interface);
+		_class.interfaceSize = sizeof(URLSessionDownloadTaskInterface);
+		_class.initialize = initialize;
+	}
+
+	return &_class;
+}
 
 #undef _Class

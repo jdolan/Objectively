@@ -186,4 +186,4 @@ struct ThreadInterface {
 /**
  * @brief The Thread Class.
  */
-extern Class _Thread;
+extern Class *_Thread(void);

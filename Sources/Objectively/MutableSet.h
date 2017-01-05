@@ -148,4 +148,4 @@ struct MutableSetInterface {
 /**
  * @brief The MutableSet Class.
  */
-extern Class _MutableSet;
+extern Class *_MutableSet(void);

@@ -125,13 +125,19 @@ static void initialize(Class *clazz) {
 	tzset();
 }
 
-Class _DateFormatter = {
-	.name = "DateFormatter",
-	.superclass = &_Object,
-	.instanceSize = sizeof(DateFormatter),
-	.interfaceOffset = offsetof(DateFormatter, interface),
-	.interfaceSize = sizeof(DateFormatterInterface),
-	.initialize = initialize,
-};
+Class *_DateFormatter(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "DateFormatter";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(DateFormatter);
+		_class.interfaceOffset = offsetof(DateFormatter, interface);
+		_class.interfaceSize = sizeof(DateFormatterInterface);
+		_class.initialize = initialize;
+	}
+
+	return &_class;
+}
 
 #undef _Class

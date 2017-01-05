@@ -122,4 +122,4 @@ struct ConditionInterface {
 /**
  * @brief The Condition Class.
  */
-extern Class _Condition;
+extern Class *_Condition(void);

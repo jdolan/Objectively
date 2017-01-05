@@ -250,12 +250,18 @@ static void initialize(Class *clazz) {
 	queue->waitUntilAllOperationsAreFinished = waitUntilAllOperationsAreFinished;
 }
 
-Class _OperationQueue = {
-	.name = "OperationQueue",
-	.superclass = &_Object,
-	.instanceSize = sizeof(OperationQueue),
-	.interfaceOffset = offsetof(OperationQueue, interface),
-	.interfaceSize = sizeof(OperationQueueInterface),
-	.initialize = initialize, };
+Class *_OperationQueue(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "OperationQueue";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(OperationQueue);
+		_class.interfaceOffset = offsetof(OperationQueue, interface);
+		_class.interfaceSize = sizeof(OperationQueueInterface);
+		_class.initialize = initialize;
+	}
 
+	return &_class;
+}
 #undef _Class

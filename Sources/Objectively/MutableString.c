@@ -316,14 +316,20 @@ static void initialize(Class *clazz) {
 	mutableString->stringWithCapacity = stringWithCapacity;
 }
 
-Class _MutableString = {
-	.name = "MutableString",
-	.superclass = &_String,
-	.instanceSize = sizeof(MutableString),
-	.interfaceOffset = offsetof(MutableString, interface),
-	.interfaceSize = sizeof(MutableStringInterface),
-	.initialize = initialize,
-};
+Class *_MutableString(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "MutableString";
+		_class.superclass = _String();
+		_class.instanceSize = sizeof(MutableString);
+		_class.interfaceOffset = offsetof(MutableString, interface);
+		_class.interfaceSize = sizeof(MutableStringInterface);
+		_class.initialize = initialize;
+	}
+
+	return &_class;
+}
 
 #undef _Class
 

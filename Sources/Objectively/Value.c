@@ -66,7 +66,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 		return true;
 	}
 
-	if (other && $(other, isKindOfClass, &_Value)) {
+	if (other && $(other, isKindOfClass, _Value())) {
 
 		const Value *this = (Value *) self;
 		const Value *that = (Value *) other;
@@ -107,14 +107,20 @@ static void initialize(Class *clazz) {
 	((ValueInterface *) clazz->def->interface)->initWithValue = initWithValue;
 }
 
-Class _Value = {
-	.name = "Value",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Value),
-	.interfaceOffset = offsetof(Value, interface),
-	.interfaceSize = sizeof(ValueInterface),
-	.initialize = initialize,
-};
+Class *_Value(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "Value";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(Value);
+		_class.interfaceOffset = offsetof(Value, interface);
+		_class.interfaceSize = sizeof(ValueInterface);
+		_class.initialize = initialize;
+	}
+
+	return &_class;
+}
 
 #undef _Class
 

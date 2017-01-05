@@ -168,17 +168,17 @@ static void writeElement(JSONWriter *writer, const ident obj) {
 
 	const Object *object = cast(Object, obj);
 	if (object) {
-		if ($(object, isKindOfClass, &_Dictionary)) {
+		if ($(object, isKindOfClass, _Dictionary())) {
 			writeObject(writer, (Dictionary *) object);
-		} else if ($(object, isKindOfClass, &_Array)) {
+		} else if ($(object, isKindOfClass, _Array())) {
 			writeArray(writer, (Array *) object);
-		} else if ($(object, isKindOfClass, &_String)) {
+		} else if ($(object, isKindOfClass, _String())) {
 			writeString(writer, (String *) object);
-		} else if ($(object, isKindOfClass, &_Number)) {
+		} else if ($(object, isKindOfClass, _Number())) {
 			writeNumber(writer, (Number *) object);
-		} else if ($(object, isKindOfClass, &_Boole)) {
+		} else if ($(object, isKindOfClass, _Boole())) {
 			writeBoole(writer, (Boole *) object);
-		} else if ($(object, isKindOfClass, &_Null)) {
+		} else if ($(object, isKindOfClass, _Null())) {
 			writeNull(writer, (Null *) object);
 		}
 	}
@@ -474,13 +474,19 @@ static void initialize(Class *clazz) {
 	json->objectFromData = objectFromData;
 }
 
-Class _JSONSerialization = {
-	.name = "JSONSerialization",
-	.superclass = &_Object,
-	.instanceSize = sizeof(JSONSerialization),
-	.interfaceOffset = offsetof(JSONSerialization, interface),
-	.interfaceSize = sizeof(JSONSerializationInterface),
-	.initialize = initialize,
-};
+Class *_JSONSerialization(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "JSONSerialization";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(JSONSerialization);
+		_class.interfaceOffset = offsetof(JSONSerialization, interface);
+		_class.interfaceSize = sizeof(JSONSerializationInterface);
+		_class.initialize = initialize;
+	}
+
+	return &_class;
+}
 
 #undef _Class

@@ -128,13 +128,19 @@ static void initialize(Class *clazz) {
 	((LocaleInterface *) clazz->def->interface)->systemLocale = systemLocale;
 }
 
-Class _Locale = {
-	.name = "Locale",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Locale),
-	.interfaceOffset = offsetof(Locale, interface),
-	.interfaceSize = sizeof(LocaleInterface),
-	.initialize = initialize,
-};
+Class *_Locale(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "Locale";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(Locale);
+		_class.interfaceOffset = offsetof(Locale, interface);
+		_class.interfaceSize = sizeof(LocaleInterface);
+		_class.initialize = initialize;
+	}
+
+	return &_class;
+}
 
 #undef _Class

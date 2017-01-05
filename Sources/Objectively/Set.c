@@ -356,14 +356,20 @@ static void initialize(Class *clazz) {
 	set->setWithSet = setWithSet;
 }
 
-Class _Set = {
-	.name = "Set",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Set),
-	.interfaceOffset = offsetof(Set, interface),
-	.interfaceSize = sizeof(SetInterface),
-	.initialize = initialize,
-};
+Class *_Set(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "Set";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(Set);
+		_class.interfaceOffset = offsetof(Set, interface);
+		_class.interfaceSize = sizeof(SetInterface);
+		_class.initialize = initialize;
+	}
+
+	return &_class;
+}
 
 #undef _Class
 

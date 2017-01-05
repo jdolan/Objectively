@@ -233,13 +233,19 @@ static void initialize(Class *clazz) {
 	operation->waitUntilFinished = waitUntilFinished;
 }
 
-Class _Operation = {
-	.name = "Operation",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Operation),
-	.interfaceOffset = offsetof(Operation, interface),
-	.interfaceSize = sizeof(OperationInterface),
-	.initialize = initialize,
-};
+Class *_Operation(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "Operation";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(Operation);
+		_class.interfaceOffset = offsetof(Operation, interface);
+		_class.interfaceSize = sizeof(OperationInterface);
+		_class.initialize = initialize;
+	}
+
+	return &_class;
+}
 
 #undef _Class

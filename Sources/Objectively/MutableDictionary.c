@@ -282,13 +282,19 @@ static void initialize(Class *clazz) {
 	mutableDictionary->setObjectsForKeys = setObjectsForKeys;
 }
 
-Class _MutableDictionary = {
-	.name = "MutableDictionary",
-	.superclass = &_Dictionary,
-	.instanceSize = sizeof(MutableDictionary),
-	.interfaceOffset = offsetof(MutableDictionary, interface),
-	.interfaceSize = sizeof(MutableDictionaryInterface),
-	.initialize = initialize,
-};
+Class *_MutableDictionary(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "MutableDictionary";
+		_class.superclass = _Dictionary();
+		_class.instanceSize = sizeof(MutableDictionary);
+		_class.interfaceOffset = offsetof(MutableDictionary, interface);
+		_class.interfaceSize = sizeof(MutableDictionaryInterface);
+		_class.initialize = initialize;
+	}
+
+	return &_class;
+}
 
 #undef _Class

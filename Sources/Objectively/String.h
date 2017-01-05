@@ -395,7 +395,7 @@ struct StringInterface {
 /**
  * @brief The String Class.
  */
-extern Class _String;
+extern Class *_String(void);
 
 /**
  * @param encoding A StringEncoding.

@@ -154,15 +154,21 @@ static void destroy(Class *clazz) {
 	release(_resourcePaths);
 }
 
-Class _Resource = {
-	.name = "Resource",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Resource),
-	.interfaceOffset = offsetof(Resource, interface),
-	.interfaceSize = sizeof(ResourceInterface),
-	.initialize = initialize,
-	.destroy = destroy,
-};
+Class *_Resource(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "Resource";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(Resource);
+		_class.interfaceOffset = offsetof(Resource, interface);
+		_class.interfaceSize = sizeof(ResourceInterface);
+		_class.initialize = initialize;
+		_class.destroy = destroy;
+	}
+
+	return &_class;
+}
 
 #undef _Class
 

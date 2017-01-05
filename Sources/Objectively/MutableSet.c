@@ -263,13 +263,19 @@ static void initialize(Class *clazz) {
 	mutableSet->setWithCapacity = setWithCapacity;
 }
 
-Class _MutableSet = {
-	.name = "MutableSet",
-	.superclass = &_Set,
-	.instanceSize = sizeof(MutableSet),
-	.interfaceOffset = offsetof(MutableSet, interface),
-	.interfaceSize = sizeof(MutableSetInterface),
-	.initialize = initialize,
-};
+Class *_MutableSet(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "MutableSet";
+		_class.superclass = _Set();
+		_class.instanceSize = sizeof(MutableSet);
+		_class.interfaceOffset = offsetof(MutableSet, interface);
+		_class.interfaceSize = sizeof(MutableSetInterface);
+		_class.initialize = initialize;
+	}
+
+	return &_class;
+}
 
 #undef _Class

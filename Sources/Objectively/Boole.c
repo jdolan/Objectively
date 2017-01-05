@@ -112,14 +112,20 @@ static void destroy(Class *clazz) {
 	release(_True);
 }
 
-Class _Boole = {
-	.name = "Boole",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Boole),
-	.interfaceOffset = offsetof(Boole, interface),
-	.interfaceSize = sizeof(BooleInterface),
-	.initialize = initialize,
-	.destroy = destroy,
-};
+Class *_Boole(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "Boole";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(Boole);
+		_class.interfaceOffset = offsetof(Boole, interface);
+		_class.interfaceSize = sizeof(BooleInterface);
+		_class.initialize = initialize;
+		_class.destroy = destroy;
+	}
+
+	return &_class;
+}
 
 #undef _Class

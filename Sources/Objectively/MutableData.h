@@ -152,4 +152,4 @@ struct MutableDataInterface {
 /**
  * @brief The MutableData Class.
  */
-extern Class _MutableData;
+extern Class *_MutableData(void);

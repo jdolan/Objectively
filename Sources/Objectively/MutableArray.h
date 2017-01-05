@@ -202,4 +202,4 @@ struct MutableArrayInterface {
 /**
  * @brief The MutableArray Class.
  */
-extern Class _MutableArray;
+extern Class *_MutableArray(void);

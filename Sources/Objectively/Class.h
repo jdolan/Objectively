@@ -102,7 +102,7 @@ struct Class {
 	const char *name;
 
 	/**
-	 * @brief The superclass (required). e.g. `&_Object`.
+	 * @brief The superclass (required). e.g. `_Object()`.
 	 */
 	Class *superclass;
 };
@@ -172,13 +172,13 @@ extern size_t _pageSize;
  * @brief Allocate and initialize and instance of `type`.
  */
 #define alloc(type) \
-	((type *) _alloc(&_##type))
+	((type *) _alloc(_##type()))
 
 /**
  * @brief Safely cast to a type.
  */
 #define cast(type, obj) \
-	((type *) _cast(&_##type, (const ident) obj))
+	((type *) _cast(_##type(), (const ident) obj))
 
 /**
  * @brief Resolve the Class of an Object instance.
@@ -206,12 +206,12 @@ extern size_t _pageSize;
  */
 #define $$(type, method, ...) \
 	({ \
-		_initialize(&_##type); \
-		interfaceof(type, &_##type)->method(__VA_ARGS__); \
+		_initialize(_##type()); \
+		interfaceof(type, _##type())->method(__VA_ARGS__); \
 	})
 
 /**
  * @brief Invoke a Superclass instance method.
  */
 #define super(type, obj, method, ...) \
-	interfaceof(type, _Class.superclass)->method(cast(type, obj), ## __VA_ARGS__)
+	interfaceof(type, _Class()->superclass)->method(cast(type, obj), ## __VA_ARGS__)

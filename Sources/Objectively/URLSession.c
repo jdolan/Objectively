@@ -373,14 +373,20 @@ static void destroy(Class *clazz) {
 	curl_global_cleanup();
 }
 
-Class _URLSession = {
-	.name = "URLSession",
-	.superclass = &_Object,
-	.instanceSize = sizeof(URLSession),
-	.interfaceOffset = offsetof(URLSession, interface),
-	.interfaceSize = sizeof(URLSessionInterface),
-	.initialize = initialize,
-	.destroy = destroy,
-};
+Class *_URLSession(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "URLSession";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(URLSession);
+		_class.interfaceOffset = offsetof(URLSession, interface);
+		_class.interfaceSize = sizeof(URLSessionInterface);
+		_class.initialize = initialize;
+		_class.destroy = destroy;
+	}
+
+	return &_class;
+}
 
 #undef _Class

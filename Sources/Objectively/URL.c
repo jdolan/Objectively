@@ -246,14 +246,20 @@ static void destroy(Class *clazz) {
 	release(_regex);
 }
 
-Class _URL = {
-	.name = "URL",
-	.superclass = &_Object,
-	.instanceSize = sizeof(URL),
-	.interfaceOffset = offsetof(URL, interface),
-	.interfaceSize = sizeof(URLInterface),
-	.initialize = initialize,
-	.destroy = destroy,
-};
+Class *_URL(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "URL";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(URL);
+		_class.interfaceOffset = offsetof(URL, interface);
+		_class.interfaceSize = sizeof(URLInterface);
+		_class.initialize = initialize;
+		_class.destroy = destroy;
+	}
+
+	return &_class;
+}
 
 #undef _Class

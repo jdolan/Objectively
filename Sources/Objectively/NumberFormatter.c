@@ -86,13 +86,19 @@ static void initialize(Class *clazz) {
 	numberFormatter->stringFromNumber = stringFromNumber;
 }
 
-Class _NumberFormatter = {
-	.name = "NumberFormatter",
-	.superclass = &_Object,
-	.instanceSize = sizeof(NumberFormatter),
-	.interfaceOffset = offsetof(NumberFormatter, interface),
-	.interfaceSize = sizeof(NumberFormatterInterface),
-	.initialize = initialize,
-};
+Class *_NumberFormatter(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "NumberFormatter";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(NumberFormatter);
+		_class.interfaceOffset = offsetof(NumberFormatter, interface);
+		_class.interfaceSize = sizeof(NumberFormatterInterface);
+		_class.initialize = initialize;
+	}
+
+	return &_class;
+}
 
 #undef _Class

@@ -199,4 +199,4 @@ struct DictionaryInterface {
 /**
  * @brief The Dictionary Class.
  */
-extern Class _Dictionary;
+extern Class *_Dictionary(void);

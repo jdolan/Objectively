@@ -132,4 +132,4 @@ struct RegexInterface {
 /**
  * @brief The Regex Class.
  */
-extern Class _Regex;
+extern Class *_Regex(void);

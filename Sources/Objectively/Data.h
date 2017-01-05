@@ -164,4 +164,4 @@ struct DataInterface {
 /**
  * @brief The Data Class.
  */
-extern Class _Data;
+extern Class *_Data(void);

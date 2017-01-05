@@ -105,5 +105,5 @@ struct IndexSetInterface {
 /**
  * @brief The IndexSet Class.
  */
-extern Class _IndexSet;
+extern Class *_IndexSet(void);
 

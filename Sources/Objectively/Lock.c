@@ -126,14 +126,20 @@ static void initialize(Class *clazz) {
 	interface->unlock = unlock;
 }
 
-Class _Lock = {
-	.name = "Lock",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Lock),
-	.interfaceOffset = offsetof(Lock, interface),
-	.interfaceSize = sizeof(LockInterface),
-	.initialize = initialize,
-};
+Class *_Lock(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "Lock";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(Lock);
+		_class.interfaceOffset = offsetof(Lock, interface);
+		_class.interfaceSize = sizeof(LockInterface);
+		_class.initialize = initialize;
+	};
+
+	return &_class;
+}
 
 #undef _Class
 

@@ -112,14 +112,20 @@ static void destroy(Class *clazz) {
 	release(_regex);
 }
 
-Class _JSONPath = {
-	.name = "JSONPath",
-	.superclass = &_Object,
-	.instanceSize = sizeof(JSONPath),
-	.interfaceOffset = offsetof(JSONPath, interface),
-	.interfaceSize = sizeof(JSONPathInterface),
-	.initialize = initialize,
-	.destroy = destroy,
-};
+Class *_JSONPath(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "JSONPath";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(JSONPath);
+		_class.interfaceOffset = offsetof(JSONPath, interface);
+		_class.interfaceSize = sizeof(JSONPathInterface);
+		_class.initialize = initialize;
+		_class.destroy = destroy;
+	}
+
+	return &_class;
+}
 
 #undef _Class

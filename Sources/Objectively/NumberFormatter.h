@@ -118,4 +118,4 @@ struct NumberFormatterInterface {
 /**
  * @brief The NumberFormatter Class.
  */
-extern Class _NumberFormatter;
+extern Class *_NumberFormatter(void);

@@ -129,12 +129,18 @@ static void initialize(Class *clazz) {
 	object->isKindOfClass = isKindOfClass;
 }
 
-Class _Object = {
-	.name = "Object",
-	.instanceSize = sizeof(Object),
-	.interfaceOffset = offsetof(Object, interface),
-	.interfaceSize = sizeof(ObjectInterface),
-	.initialize = initialize,
-};
+Class *_Object(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "Object";
+		_class.instanceSize = sizeof(Object);
+		_class.interfaceOffset = offsetof(Object, interface);
+		_class.interfaceSize = sizeof(ObjectInterface);
+		_class.initialize = initialize;
+	}
+
+	return &_class;
+}
 
 #undef _Class

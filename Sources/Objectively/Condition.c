@@ -138,14 +138,20 @@ static void initialize(Class *clazz) {
 	condition->waitUntilDate = waitUntilDate;
 }
 
-Class _Condition = {
-	.name = "Condition",
-	.superclass = &_Lock,
-	.instanceSize = sizeof(Condition),
-	.interfaceOffset = offsetof(Condition, interface),
-	.interfaceSize = sizeof(ConditionInterface),
-	.initialize = initialize,
-};
+Class *_Condition(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "Condition";
+		_class.superclass = _Lock();
+		_class.instanceSize = sizeof(Condition);
+		_class.interfaceOffset = offsetof(Condition, interface);
+		_class.interfaceSize = sizeof(ConditionInterface);
+		_class.initialize = initialize;
+	}
+
+	return &_class;
+}
 
 #undef _Class
 

@@ -107,7 +107,7 @@ struct LockInterface {
 /**
  * @brief The Lock Class.
  */
-extern Class _Lock;
+extern Class *_Lock(void);
 
 /**
  * @brief Wraps `statements` with calls to `lock` and `unlock`.

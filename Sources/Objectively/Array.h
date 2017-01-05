@@ -243,4 +243,4 @@ struct ArrayInterface {
 /**
  * @brief The Array Class.
  */
-extern Class _Array;
+extern Class *_Array(void);

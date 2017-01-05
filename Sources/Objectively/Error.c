@@ -163,13 +163,19 @@ static void initialize(Class *clazz) {
 	error->initWithDomain = initWithDomain;
 }
 
-Class _Error = {
-	.name = "Error",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Error),
-	.interfaceOffset = offsetof(Error, interface),
-	.interfaceSize = sizeof(ErrorInterface),
-	.initialize = initialize,
-};
+Class *_Error(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "Error";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(Error);
+		_class.interfaceOffset = offsetof(Error, interface);
+		_class.interfaceSize = sizeof(ErrorInterface);
+		_class.initialize = initialize;
+	}
+
+	return &_class;
+}
 
 #undef _Class

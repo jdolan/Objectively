@@ -118,4 +118,4 @@ struct DateFormatterInterface {
 /**
  * @brief The DateFormatter Class.
  */
-extern Class _DateFormatter;
+extern Class *_DateFormatter(void);

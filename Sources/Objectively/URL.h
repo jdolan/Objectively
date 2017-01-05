@@ -140,4 +140,4 @@ struct URLInterface {
 /**
  * @brief The URL Class.
  */
-extern Class _URL;
+extern Class *_URL(void);

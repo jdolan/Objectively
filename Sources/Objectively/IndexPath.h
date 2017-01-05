@@ -105,5 +105,5 @@ struct IndexPathInterface {
 /**
  * @brief The IndexPath Class.
  */
-extern Class _IndexPath;
+extern Class *_IndexPath(void);
 

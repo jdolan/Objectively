@@ -228,7 +228,7 @@ struct MutableStringInterface {
 /**
  * @brief The MutableString Class.
  */
-extern Class _MutableString;
+extern Class *_MutableString(void);
 
 /**
  * @brief A convenience function for instantiating MutableStrings.

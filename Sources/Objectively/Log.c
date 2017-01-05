@@ -282,14 +282,20 @@ static void destroy(Class *clazz) {
 	release(_sharedInstance);
 }
 
-Class _Log = {
-	.name = "Log",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Log),
-	.interfaceOffset = offsetof(Log, interface),
-	.interfaceSize = sizeof(LogInterface),
-	.initialize = initialize,
-	.destroy = destroy,
-};
+Class *_Log(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "Log";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(Log);
+		_class.interfaceOffset = offsetof(Log, interface);
+		_class.interfaceSize = sizeof(LogInterface);
+		_class.initialize = initialize;
+		_class.destroy = destroy;
+	}
+
+	return &_class;
+}
 
 #undef _Class

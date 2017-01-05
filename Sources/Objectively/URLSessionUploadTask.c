@@ -80,13 +80,19 @@ static void initialize(Class *clazz) {
 	((URLSessionTaskInterface *) clazz->def->interface)->setup = setup;
 }
 
-Class _URLSessionUploadTask = {
-	.name = "URLSessionUploadTask",
-	.superclass = &_URLSessionTask,
-	.instanceSize = sizeof(URLSessionUploadTask),
-	.interfaceOffset = offsetof(URLSessionUploadTask, interface),
-	.interfaceSize = sizeof(URLSessionUploadTaskInterface),
-	.initialize = initialize,
-};
+Class *_URLSessionUploadTask(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "URLSessionUploadTask";
+		_class.superclass = _URLSessionTask();
+		_class.instanceSize = sizeof(URLSessionUploadTask);
+		_class.interfaceOffset = offsetof(URLSessionUploadTask, interface);
+		_class.interfaceSize = sizeof(URLSessionUploadTaskInterface);
+		_class.initialize = initialize;
+	}
+
+	return &_class;
+}
 
 #undef _Class

@@ -195,13 +195,19 @@ static void initialize(Class *clazz) {
 	number->shortValue = shortValue;
 }
 
-Class _Number = {
-	.name = "Number",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Number),
-	.interfaceOffset = offsetof(Number, interface),
-	.interfaceSize = sizeof(NumberInterface),
-	.initialize = initialize,
-};
+Class *_Number(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "Number";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(Number);
+		_class.interfaceOffset = offsetof(Number, interface);
+		_class.interfaceSize = sizeof(NumberInterface);
+		_class.initialize = initialize;
+	}
+
+	return &_class;
+}
 
 #undef _Class

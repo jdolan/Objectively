@@ -76,14 +76,20 @@ static void destroy(Class *clazz) {
 	release(_null);
 }
 
-Class _Null = {
-	.name = "Null",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Null),
-	.interfaceOffset = offsetof(Null, interface),
-	.interfaceSize = sizeof(NullInterface),
-	.initialize = initialize,
-	.destroy = destroy,
-};
+Class *_Null(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "Null";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(Null);
+		_class.interfaceOffset = offsetof(Null, interface);
+		_class.interfaceSize = sizeof(NullInterface);
+		_class.initialize = initialize;
+		_class.destroy = destroy;
+	}
+
+	return &_class;
+}
 
 #undef _Class

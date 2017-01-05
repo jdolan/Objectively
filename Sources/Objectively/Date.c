@@ -54,7 +54,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 		return true;
 	}
 
-	if (other && $(other, isKindOfClass, &_Date)) {
+	if (other && $(other, isKindOfClass, _Date())) {
 
 		const Date *this = (Date *) self;
 		const Date *that = (Date *) other;
@@ -219,14 +219,20 @@ static void initialize(Class *clazz) {
 	interface->timeSinceTime = timeSinceTime;
 }
 
-Class _Date = {
-	.name = "Date",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Date),
-	.interfaceOffset = offsetof(Date, interface),
-	.interfaceSize = sizeof(DateInterface),
-	.initialize = initialize,
-};
+Class *_Date(void) {
+	static Class _class;
+	
+	if (!_class.name) {
+		_class.name = "Date";
+		_class.superclass = _Object();
+		_class.instanceSize = sizeof(Date);
+		_class.interfaceOffset = offsetof(Date, interface);
+		_class.interfaceSize = sizeof(DateInterface);
+		_class.initialize = initialize;
+	}
+
+	return &_class;
+}
 
 #undef _Class
 

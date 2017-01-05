@@ -73,4 +73,4 @@ struct URLSessionUploadTaskInterface {
 /**
  * @brief The URLSessionUploadTask Class.
  */
-extern Class _URLSessionUploadTask;
+extern Class *_URLSessionUploadTask(void);

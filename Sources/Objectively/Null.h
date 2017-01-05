@@ -75,4 +75,4 @@ struct NullInterface {
 /**
  * @brief The Null Class.
  */
-extern Class _Null;
+extern Class *_Null(void);
