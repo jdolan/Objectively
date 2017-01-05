@@ -205,14 +205,14 @@ static void initialize(Class *clazz) {
 Class *_Thread(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "Thread";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Thread);
 		clazz.interfaceOffset = offsetof(Thread, interface);
 		clazz.interfaceSize = sizeof(ThreadInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

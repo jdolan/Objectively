@@ -128,14 +128,14 @@ static void initialize(Class *clazz) {
 Class *_DateFormatter(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "DateFormatter";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(DateFormatter);
 		clazz.interfaceOffset = offsetof(DateFormatter, interface);
 		clazz.interfaceSize = sizeof(DateFormatterInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

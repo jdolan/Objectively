@@ -35,7 +35,6 @@
 #endif
 
 #include <Objectively/Log.h>
-#include <Objectively/Once.h>
 
 #define _Class _Log
 
@@ -211,9 +210,8 @@ static Log *_sharedInstance;
  * @memberof Log
  */
 static Log *sharedInstance(void) {
-	static Once once;
 	
-	do_once(&once, {
+	do_once({
 		_sharedInstance = $(alloc(Log), init);
 	});
 	
@@ -285,7 +283,7 @@ static void destroy(Class *clazz) {
 Class *_Log(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "Log";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Log);
@@ -293,7 +291,7 @@ Class *_Log(void) {
 		clazz.interfaceSize = sizeof(LogInterface);
 		clazz.initialize = initialize;
 		clazz.destroy = destroy;
-	}
+	});
 
 	return &clazz;
 }

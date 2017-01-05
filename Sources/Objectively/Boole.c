@@ -24,7 +24,6 @@
 #include <assert.h>
 
 #include <Objectively/Boole.h>
-#include <Objectively/Once.h>
 #include <Objectively/String.h>
 
 #define _Class _Boole
@@ -58,9 +57,8 @@ static Boole *_False;
  * @memberof Boole
  */
 static Boole *False(void) {
-	static Once once;
-
-	do_once(&once, {
+	
+	do_once({
 		_False = (Boole *) $((Object *) alloc(Boole), init);
 		_False->value = false;
 	});
@@ -75,9 +73,8 @@ static Boole *_True;
  * @memberof Boole
  */
 static Boole *True(void) {
-	static Once once;
-
-	do_once(&once, {
+	
+	do_once({
 		_True = (Boole *) $((Object *) alloc(Boole), init);
 		_True->value = true;
 	});
@@ -115,7 +112,7 @@ static void destroy(Class *clazz) {
 Class *_Boole(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "Boole";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Boole);
@@ -123,7 +120,7 @@ Class *_Boole(void) {
 		clazz.interfaceSize = sizeof(BooleInterface);
 		clazz.initialize = initialize;
 		clazz.destroy = destroy;
-	}
+	});
 
 	return &clazz;
 }

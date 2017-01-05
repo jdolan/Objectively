@@ -257,14 +257,14 @@ static void initialize(Class *clazz) {
 Class *_Data(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "Data";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Data);
 		clazz.interfaceOffset = offsetof(Data, interface);
 		clazz.interfaceSize = sizeof(DataInterface);
 		clazz.initialize = initialize;
-	};
+	});;
 
 	return &clazz;
 }

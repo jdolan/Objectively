@@ -180,14 +180,14 @@ static void initialize(Class *clazz) {
 Class *_MutableData(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "MutableData";
 		clazz.superclass = _Data();
 		clazz.instanceSize = sizeof(MutableData);
 		clazz.interfaceOffset = offsetof(MutableData, interface);
 		clazz.interfaceSize = sizeof(MutableDataInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

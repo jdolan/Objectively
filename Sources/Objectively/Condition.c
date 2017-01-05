@@ -141,14 +141,14 @@ static void initialize(Class *clazz) {
 Class *_Condition(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "Condition";
 		clazz.superclass = _Lock();
 		clazz.instanceSize = sizeof(Condition);
 		clazz.interfaceOffset = offsetof(Condition, interface);
 		clazz.interfaceSize = sizeof(ConditionInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

@@ -658,14 +658,14 @@ static void initialize(Class *clazz) {
 Class *_String(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "String";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(String);
 		clazz.interfaceOffset = offsetof(String, interface);
 		clazz.interfaceSize = sizeof(StringInterface);
 		clazz.initialize = initialize;
-	}
+	});
 	
 	return &clazz;
 }

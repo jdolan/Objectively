@@ -285,14 +285,14 @@ static void initialize(Class *clazz) {
 Class *_MutableDictionary(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "MutableDictionary";
 		clazz.superclass = _Dictionary();
 		clazz.instanceSize = sizeof(MutableDictionary);
 		clazz.interfaceOffset = offsetof(MutableDictionary, interface);
 		clazz.interfaceSize = sizeof(MutableDictionaryInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

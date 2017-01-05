@@ -26,7 +26,6 @@
 
 #include <Objectively/Hash.h>
 #include <Objectively/Locale.h>
-#include <Objectively/Once.h>
 #include <Objectively/String.h>
 
 #define _Class _Locale
@@ -131,14 +130,14 @@ static void initialize(Class *clazz) {
 Class *_Locale(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "Locale";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Locale);
 		clazz.interfaceOffset = offsetof(Locale, interface);
 		clazz.interfaceSize = sizeof(LocaleInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

@@ -359,14 +359,14 @@ static void initialize(Class *clazz) {
 Class *_Set(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "Set";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Set);
 		clazz.interfaceOffset = offsetof(Set, interface);
 		clazz.interfaceSize = sizeof(SetInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

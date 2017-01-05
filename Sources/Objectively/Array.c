@@ -442,14 +442,14 @@ static void initialize(Class *clazz) {
 Class *_Array(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "Array";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Array);
 		clazz.interfaceOffset = offsetof(Array, interface);
 		clazz.interfaceSize = sizeof(ArrayInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

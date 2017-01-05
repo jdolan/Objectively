@@ -198,14 +198,14 @@ static void initialize(Class *clazz) {
 Class *_Number(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "Number";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Number);
 		clazz.interfaceOffset = offsetof(Number, interface);
 		clazz.interfaceSize = sizeof(NumberInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

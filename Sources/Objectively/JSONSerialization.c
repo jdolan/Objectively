@@ -477,14 +477,14 @@ static void initialize(Class *clazz) {
 Class *_JSONSerialization(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "JSONSerialization";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(JSONSerialization);
 		clazz.interfaceOffset = offsetof(JSONSerialization, interface);
 		clazz.interfaceSize = sizeof(JSONSerializationInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

@@ -24,7 +24,6 @@
 #include <assert.h>
 
 #include <Objectively/Null.h>
-#include <Objectively/Once.h>
 
 #define _Class _Null
 
@@ -47,9 +46,8 @@ static Null *_null;
  * @memberof Null
  */
 static Null *null(void) {
-	static Once once;
-
-	do_once(&once, {
+	
+	do_once({
 		_null = (Null *) $((Object *) alloc(Null), init);
 	});
 
@@ -79,7 +77,7 @@ static void destroy(Class *clazz) {
 Class *_Null(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "Null";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Null);
@@ -87,7 +85,7 @@ Class *_Null(void) {
 		clazz.interfaceSize = sizeof(NullInterface);
 		clazz.initialize = initialize;
 		clazz.destroy = destroy;
-	}
+	});
 
 	return &clazz;
 }

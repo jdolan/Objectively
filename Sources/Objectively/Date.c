@@ -222,14 +222,14 @@ static void initialize(Class *clazz) {
 Class *_Date(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "Date";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Date);
 		clazz.interfaceOffset = offsetof(Date, interface);
 		clazz.interfaceSize = sizeof(DateInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

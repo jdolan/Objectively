@@ -176,14 +176,14 @@ static void initialize(Class *clazz) {
 Class *_IndexPath(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "IndexPath";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(IndexPath);
 		clazz.interfaceOffset = offsetof(IndexPath, interface);
 		clazz.interfaceSize = sizeof(IndexPathInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

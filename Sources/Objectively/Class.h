@@ -24,6 +24,7 @@
 #pragma once
 
 #include <Objectively/Types.h>
+#include <Objectively/Once.h>
 
 /**
  * @file

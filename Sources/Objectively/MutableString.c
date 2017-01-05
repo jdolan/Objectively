@@ -319,14 +319,14 @@ static void initialize(Class *clazz) {
 Class *_MutableString(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "MutableString";
 		clazz.superclass = _String();
 		clazz.instanceSize = sizeof(MutableString);
 		clazz.interfaceOffset = offsetof(MutableString, interface);
 		clazz.interfaceSize = sizeof(MutableStringInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

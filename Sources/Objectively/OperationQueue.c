@@ -23,7 +23,6 @@
 
 #include <assert.h>
 
-#include <Objectively/Once.h>
 #include <Objectively/OperationQueue.h>
 
 #define _Class _OperationQueue
@@ -253,14 +252,14 @@ static void initialize(Class *clazz) {
 Class *_OperationQueue(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "OperationQueue";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(OperationQueue);
 		clazz.interfaceOffset = offsetof(OperationQueue, interface);
 		clazz.interfaceSize = sizeof(OperationQueueInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

@@ -166,14 +166,14 @@ static void initialize(Class *clazz) {
 Class *_Error(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "Error";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Error);
 		clazz.interfaceOffset = offsetof(Error, interface);
 		clazz.interfaceSize = sizeof(ErrorInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

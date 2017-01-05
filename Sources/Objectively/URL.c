@@ -249,7 +249,7 @@ static void destroy(Class *clazz) {
 Class *_URL(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "URL";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(URL);
@@ -257,7 +257,7 @@ Class *_URL(void) {
 		clazz.interfaceSize = sizeof(URLInterface);
 		clazz.initialize = initialize;
 		clazz.destroy = destroy;
-	}
+	});
 
 	return &clazz;
 }

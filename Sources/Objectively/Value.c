@@ -110,14 +110,14 @@ static void initialize(Class *clazz) {
 Class *_Value(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "Value";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Value);
 		clazz.interfaceOffset = offsetof(Value, interface);
 		clazz.interfaceSize = sizeof(ValueInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

@@ -129,14 +129,14 @@ static void initialize(Class *clazz) {
 Class *_Lock(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "Lock";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Lock);
 		clazz.interfaceOffset = offsetof(Lock, interface);
 		clazz.interfaceSize = sizeof(LockInterface);
 		clazz.initialize = initialize;
-	};
+	});;
 
 	return &clazz;
 }

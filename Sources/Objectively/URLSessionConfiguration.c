@@ -58,14 +58,14 @@ static void initialize(Class *clazz) {
 Class *_URLSessionConfiguration(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "URLSessionConfiguration";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(URLSessionConfiguration);
 		clazz.interfaceOffset = offsetof(URLSessionConfiguration, interface);
 		clazz.interfaceSize = sizeof(URLSessionConfigurationInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

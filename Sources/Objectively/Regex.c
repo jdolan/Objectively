@@ -199,14 +199,14 @@ static void initialize(Class *clazz) {
 Class *_Regex(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "Regex";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Regex);
 		clazz.interfaceOffset = offsetof(Regex, interface);
 		clazz.interfaceSize = sizeof(RegexInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

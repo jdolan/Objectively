@@ -132,13 +132,13 @@ static void initialize(Class *clazz) {
 Class *_Object(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "Object";
 		clazz.instanceSize = sizeof(Object);
 		clazz.interfaceOffset = offsetof(Object, interface);
 		clazz.interfaceSize = sizeof(ObjectInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

@@ -266,14 +266,14 @@ static void initialize(Class *clazz) {
 Class *_MutableSet(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "MutableSet";
 		clazz.superclass = _Set();
 		clazz.instanceSize = sizeof(MutableSet);
 		clazz.interfaceOffset = offsetof(MutableSet, interface);
 		clazz.interfaceSize = sizeof(MutableSetInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

@@ -323,14 +323,14 @@ static void initialize(Class *clazz) {
 Class *_MutableArray(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "MutableArray";
 		clazz.superclass = _Array();
 		clazz.instanceSize = sizeof(MutableArray);
 		clazz.interfaceOffset = offsetof(MutableArray, interface);
 		clazz.interfaceSize = sizeof(MutableArrayInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

@@ -89,14 +89,14 @@ static void initialize(Class *clazz) {
 Class *_NumberFormatter(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "NumberFormatter";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(NumberFormatter);
 		clazz.interfaceOffset = offsetof(NumberFormatter, interface);
 		clazz.interfaceSize = sizeof(NumberFormatterInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

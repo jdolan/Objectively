@@ -268,14 +268,14 @@ static void initialize(Class *clazz) {
 Class *_URLSessionTask(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "URLSessionTask";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(URLSessionTask);
 		clazz.interfaceOffset = offsetof(URLSessionTask, interface);
 		clazz.interfaceSize = sizeof(URLSessionTaskInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

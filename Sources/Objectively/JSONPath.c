@@ -29,7 +29,6 @@
 #include <Objectively/Dictionary.h>
 #include <Objectively/JSONPath.h>
 #include <Objectively/Number.h>
-#include <Objectively/Once.h>
 #include <Objectively/Regex.h>
 #include <Objectively/String.h>
 
@@ -115,7 +114,7 @@ static void destroy(Class *clazz) {
 Class *_JSONPath(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "JSONPath";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(JSONPath);
@@ -123,7 +122,7 @@ Class *_JSONPath(void) {
 		clazz.interfaceSize = sizeof(JSONPathInterface);
 		clazz.initialize = initialize;
 		clazz.destroy = destroy;
-	}
+	});
 
 	return &clazz;
 }

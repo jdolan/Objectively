@@ -121,14 +121,14 @@ static void initialize(Class *clazz) {
 Class *_URLRequest(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "URLRequest";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(URLRequest);
 		clazz.interfaceOffset = offsetof(URLRequest, interface);
 		clazz.interfaceSize = sizeof(URLRequestInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }

@@ -214,14 +214,14 @@ static void initialize(Class *clazz) {
 Class *_IndexSet(void) {
 	static Class clazz;
 	
-	if (!clazz.name) {
+	do_once({
 		clazz.name = "IndexSet";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(IndexSet);
 		clazz.interfaceOffset = offsetof(IndexSet, interface);
 		clazz.interfaceSize = sizeof(IndexSetInterface);
 		clazz.initialize = initialize;
-	}
+	});
 
 	return &clazz;
 }
