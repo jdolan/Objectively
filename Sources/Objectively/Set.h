@@ -195,4 +195,4 @@ struct SetInterface {
 /**
  * @brief The Set Class.
  */
-extern Class *_Set(void);
+OBJECTIVELY_EXPORT Class *_Set(void);

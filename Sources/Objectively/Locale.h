@@ -121,4 +121,4 @@ struct LocaleInterface {
 /**
  * @brief The Locale Class.
  */
-extern Class *_Locale(void);
+OBJECTIVELY_EXPORT Class *_Locale(void);

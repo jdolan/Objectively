@@ -126,5 +126,5 @@ struct ResourceInterface {
 /**
  * @brief The Resource Class.
  */
-extern Class *_Resource(void);
+OBJECTIVELY_EXPORT Class *_Resource(void);
 

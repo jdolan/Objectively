@@ -207,4 +207,4 @@ struct OperationInterface {
 /**
  * @brief The Operation Class.
  */
-extern Class *_Operation(void);
+OBJECTIVELY_EXPORT Class *_Operation(void);

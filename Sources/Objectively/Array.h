@@ -243,4 +243,4 @@ struct ArrayInterface {
 /**
  * @brief The Array Class.
  */
-extern Class *_Array(void);
+OBJECTIVELY_EXPORT Class *_Array(void);

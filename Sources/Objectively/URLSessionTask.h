@@ -204,4 +204,4 @@ struct URLSessionTaskInterface {
 /**
  * @brief The URLSessionTask Class.
  */
-extern Class *_URLSessionTask(void);
+OBJECTIVELY_EXPORT Class *_URLSessionTask(void);

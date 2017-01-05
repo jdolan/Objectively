@@ -82,4 +82,4 @@ struct JSONPathInterface {
 /**
  * @brief The JSONPath Class.
  */
-extern Class *_JSONPath(void);
+OBJECTIVELY_EXPORT Class *_JSONPath(void);

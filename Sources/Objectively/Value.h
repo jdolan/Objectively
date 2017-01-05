@@ -90,5 +90,5 @@ struct ValueInterface {
 /**
  * @brief The Value Class.
  */
-extern Class *_Value(void);
+OBJECTIVELY_EXPORT Class *_Value(void);
 

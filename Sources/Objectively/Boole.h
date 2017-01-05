@@ -87,4 +87,4 @@ struct BooleInterface {
 /**
  * @brief The Boole Class.
  */
-extern Class *_Boole(void);
+OBJECTIVELY_EXPORT Class *_Boole(void);

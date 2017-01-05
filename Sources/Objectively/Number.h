@@ -157,4 +157,4 @@ struct NumberInterface {
 /**
  * @brief The Number Class.
  */
-extern Class *_Number(void);
+OBJECTIVELY_EXPORT Class *_Number(void);

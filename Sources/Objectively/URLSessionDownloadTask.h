@@ -73,4 +73,4 @@ struct URLSessionDownloadTaskInterface {
 /**
  * @brief The URLSessionDownloadTask Class.
  */
-extern Class *_URLSessionDownloadTask(void);
+OBJECTIVELY_EXPORT Class *_URLSessionDownloadTask(void);

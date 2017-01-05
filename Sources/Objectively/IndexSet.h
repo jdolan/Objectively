@@ -105,5 +105,5 @@ struct IndexSetInterface {
 /**
  * @brief The IndexSet Class.
  */
-extern Class *_IndexSet(void);
+OBJECTIVELY_EXPORT Class *_IndexSet(void);
 

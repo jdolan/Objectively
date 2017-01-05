@@ -136,4 +136,4 @@ struct ObjectInterface {
 /**
  * @brief The Object Class.
  */
-extern Class *_Object(void);
+OBJECTIVELY_EXPORT Class *_Object(void);

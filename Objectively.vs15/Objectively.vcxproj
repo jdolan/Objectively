@@ -125,25 +125,25 @@
   <Import Project="build_settings.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -169,31 +169,35 @@
     <IncludePath>..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
     <IntDir>tmp\$(ProjectName)\$(Platform)$(Configuration)\</IntDir>
     <UseMultiToolTask>true</UseMultiToolTask>
+    <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>bin\$(Platform)$(Configuration)\</OutDir>
     <IncludePath>..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
     <IntDir>tmp\$(ProjectName)\$(Platform)$(Configuration)\</IntDir>
     <UseMultiToolTask>true</UseMultiToolTask>
+    <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
     <OutDir>bin\$(Platform)$(Configuration)\</OutDir>
     <IntDir>tmp\$(ProjectName)\$(Platform)$(Configuration)\</IntDir>
     <UseMultiToolTask>true</UseMultiToolTask>
+    <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>bin\$(Platform)$(Configuration)\</OutDir>
     <IntDir>tmp\$(ProjectName)\$(Platform)$(Configuration)\</IntDir>
     <IncludePath>..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
     <UseMultiToolTask>true</UseMultiToolTask>
+    <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>EnableAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILDING_OBJECTIVELY;PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAs>Default</CompileAs>
       <DisableSpecificWarnings>4068;4996;4115;4706;4204;4244;4245;4100;4267;4305;4267;4018;4702;4311</DisableSpecificWarnings>
       <SDLCheck>true</SDLCheck>
@@ -203,6 +207,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>Wldap32.lib;ws2_32.lib;pthread.lib;iconv.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalDependencies>
@@ -215,7 +220,7 @@
       </PrecompiledHeader>
       <WarningLevel>EnableAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILDING_OBJECTIVELY;PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4068;4996;4115;4706;4204;4244;4245;4100;4267;4305;4267;4018;4702;4311</DisableSpecificWarnings>
       <CLanguageStandard>gnu99</CLanguageStandard>
       <AdditionalOptions>-ferror-limit=0 %(AdditionalOptions)</AdditionalOptions>
@@ -223,6 +228,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>Wldap32.lib;ws2_32.lib;pthread.lib;iconv.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -232,7 +238,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;NDEBUG;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILDING_OBJECTIVELY;PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;NDEBUG;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAs>Default</CompileAs>
       <DisableSpecificWarnings>4068;4996;4115;4706;4204;4244;4245;4100;4267;4305;4267;4018;4702;4311</DisableSpecificWarnings>
       <SDLCheck>true</SDLCheck>
@@ -243,6 +249,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>Wldap32.lib;ws2_32.lib;pthread.lib;iconv.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalDependencies>
@@ -257,7 +264,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;NDEBUG;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILDING_OBJECTIVELY;PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;NDEBUG;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4068;4996;4115;4706;4204;4244;4245;4100;4267;4305;4267;4018;4702;4311</DisableSpecificWarnings>
       <CLanguageStandard>gnu99</CLanguageStandard>
       <AdditionalOptions>-ferror-limit=0 %(AdditionalOptions)</AdditionalOptions>
@@ -266,6 +273,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>Wldap32.lib;ws2_32.lib;pthread.lib;iconv.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

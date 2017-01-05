@@ -147,4 +147,4 @@ struct MutableDictionaryInterface {
 /**
  * @brief The MutableDictionary Class.
  */
-extern Class *_MutableDictionary(void);
+OBJECTIVELY_EXPORT Class *_MutableDictionary(void);

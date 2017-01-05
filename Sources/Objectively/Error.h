@@ -93,4 +93,4 @@ struct ErrorInterface {
 /**
  * @brief The Error Class.
  */
-extern Class *_Error(void);
+OBJECTIVELY_EXPORT Class *_Error(void);

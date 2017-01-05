@@ -99,4 +99,4 @@ struct JSONSerializationInterface {
 /**
  * @brief The JSONSerialization Class.
  */
-extern Class *_JSONSerialization(void);
+OBJECTIVELY_EXPORT Class *_JSONSerialization(void);

@@ -214,4 +214,4 @@ struct URLSessionInterface {
 /**
  * @brief The URLSession Class.
  */
-extern Class *_URLSession(void);
+OBJECTIVELY_EXPORT Class *_URLSession(void);

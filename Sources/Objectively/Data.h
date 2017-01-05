@@ -164,4 +164,4 @@ struct DataInterface {
 /**
  * @brief The Data Class.
  */
-extern Class *_Data(void);
+OBJECTIVELY_EXPORT Class *_Data(void);

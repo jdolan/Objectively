@@ -103,4 +103,4 @@ struct URLSessionConfigurationInterface {
 /**
  * @brief The URLSessionConfiguration Class.
  */
-extern Class *_URLSessionConfiguration(void);
+OBJECTIVELY_EXPORT Class *_URLSessionConfiguration(void);

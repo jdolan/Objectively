@@ -165,4 +165,4 @@ struct OperationQueueInterface {
 /**
  * @brief The OperationQueue Class.
  */
-extern Class *_OperationQueue(void);
+OBJECTIVELY_EXPORT Class *_OperationQueue(void);

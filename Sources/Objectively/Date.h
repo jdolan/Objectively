@@ -175,4 +175,4 @@ struct DateInterface {
 /**
  * @brief The Date Class.
  */
-extern Class *_Date(void);
+OBJECTIVELY_EXPORT Class *_Date(void);

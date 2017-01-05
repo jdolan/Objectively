@@ -66,7 +66,7 @@ typedef struct
 #define REG_ENOSYS			-14
 #define REG_BADFLG			-15
 
-extern int    regcomp(regex_t * __restrict, const char * __restrict, int);
-extern size_t regerror(int, const regex_t * __restrict, char * __restrict, size_t);
-extern int    regexec(const regex_t * __restrict, const char * __restrict, size_t, regmatch_t * __restrict, int);
-extern void   regfree(regex_t *);
+int    regcomp(regex_t * __restrict, const char * __restrict, int);
+size_t regerror(int, const regex_t * __restrict, char * __restrict, size_t);
+int    regexec(const regex_t * __restrict, const char * __restrict, size_t, regmatch_t * __restrict, int);
+void   regfree(regex_t *);

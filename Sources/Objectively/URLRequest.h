@@ -121,4 +121,4 @@ struct URLRequestInterface {
 /**
  * @brief The URLRequest Class.
  */
-extern Class *_URLRequest(void);
+OBJECTIVELY_EXPORT Class *_URLRequest(void);

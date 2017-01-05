@@ -73,4 +73,4 @@ struct URLSessionUploadTaskInterface {
 /**
  * @brief The URLSessionUploadTask Class.
  */
-extern Class *_URLSessionUploadTask(void);
+OBJECTIVELY_EXPORT Class *_URLSessionUploadTask(void);

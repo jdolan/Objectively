@@ -68,4 +68,4 @@ typedef struct {
  * @param string A null-terminated C string.
  * @return The `value` of the EnumName matching `string`, or `-1`.
  */
-extern int valueof(const EnumName *names, const char *string);
+OBJECTIVELY_EXPORT int valueof(const EnumName *names, const char *string);

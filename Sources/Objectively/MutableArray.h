@@ -202,4 +202,4 @@ struct MutableArrayInterface {
 /**
  * @brief The MutableArray Class.
  */
-extern Class *_MutableArray(void);
+OBJECTIVELY_EXPORT Class *_MutableArray(void);

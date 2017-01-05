@@ -395,7 +395,7 @@ struct StringInterface {
 /**
  * @brief The String Class.
  */
-extern Class *_String(void);
+OBJECTIVELY_EXPORT Class *_String(void);
 
 /**
  * @param encoding A StringEncoding.
@@ -403,14 +403,14 @@ extern Class *_String(void);
  * 
  * @relates String
  */
-extern const char *NameForStringEncoding(StringEncoding encoding);
+OBJECTIVELY_EXPORT const char *NameForStringEncoding(StringEncoding encoding);
 
 /**
  * @param name The case-insensitive name of the encoding.
  * @return The StringEncoding for the given `name`.
  * @relates String
  */
-extern StringEncoding StringEncodingForName(const char *name);
+OBJECTIVELY_EXPORT StringEncoding StringEncodingForName(const char *name);
 
 /**
  * @brief A convenience function for instantiating Strings.
@@ -418,4 +418,4 @@ extern StringEncoding StringEncodingForName(const char *name);
  * @return A new String, or `NULL` on error.
  * @relates String
  */
-extern String *str(const char *fmt, ...);
+OBJECTIVELY_EXPORT String *str(const char *fmt, ...);

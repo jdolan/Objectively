@@ -73,4 +73,4 @@ struct URLSessionDataTaskInterface {
 /**
  * @brief The URLSessionDataTask Class.
  */
-extern Class *_URLSessionDataTask(void);
+OBJECTIVELY_EXPORT Class *_URLSessionDataTask(void);
