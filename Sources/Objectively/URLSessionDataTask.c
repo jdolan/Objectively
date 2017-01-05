@@ -97,18 +97,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_URLSessionDataTask(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "URLSessionDataTask";
-		_class.superclass = _URLSessionTask();
-		_class.instanceSize = sizeof(URLSessionDataTask);
-		_class.interfaceOffset = offsetof(URLSessionDataTask, interface);
-		_class.interfaceSize = sizeof(URLSessionDataTaskInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "URLSessionDataTask";
+		clazz.superclass = _URLSessionTask();
+		clazz.instanceSize = sizeof(URLSessionDataTask);
+		clazz.interfaceOffset = offsetof(URLSessionDataTask, interface);
+		clazz.interfaceSize = sizeof(URLSessionDataTaskInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

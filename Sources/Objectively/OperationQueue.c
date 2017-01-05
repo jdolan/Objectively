@@ -251,17 +251,17 @@ static void initialize(Class *clazz) {
 }
 
 Class *_OperationQueue(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "OperationQueue";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(OperationQueue);
-		_class.interfaceOffset = offsetof(OperationQueue, interface);
-		_class.interfaceSize = sizeof(OperationQueueInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "OperationQueue";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(OperationQueue);
+		clazz.interfaceOffset = offsetof(OperationQueue, interface);
+		clazz.interfaceSize = sizeof(OperationQueueInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 #undef _Class

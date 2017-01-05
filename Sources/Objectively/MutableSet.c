@@ -264,18 +264,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_MutableSet(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "MutableSet";
-		_class.superclass = _Set();
-		_class.instanceSize = sizeof(MutableSet);
-		_class.interfaceOffset = offsetof(MutableSet, interface);
-		_class.interfaceSize = sizeof(MutableSetInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "MutableSet";
+		clazz.superclass = _Set();
+		clazz.instanceSize = sizeof(MutableSet);
+		clazz.interfaceOffset = offsetof(MutableSet, interface);
+		clazz.interfaceSize = sizeof(MutableSetInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

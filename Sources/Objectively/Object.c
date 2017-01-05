@@ -130,17 +130,17 @@ static void initialize(Class *clazz) {
 }
 
 Class *_Object(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "Object";
-		_class.instanceSize = sizeof(Object);
-		_class.interfaceOffset = offsetof(Object, interface);
-		_class.interfaceSize = sizeof(ObjectInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "Object";
+		clazz.instanceSize = sizeof(Object);
+		clazz.interfaceOffset = offsetof(Object, interface);
+		clazz.interfaceSize = sizeof(ObjectInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

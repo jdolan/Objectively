@@ -283,19 +283,19 @@ static void destroy(Class *clazz) {
 }
 
 Class *_Log(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "Log";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(Log);
-		_class.interfaceOffset = offsetof(Log, interface);
-		_class.interfaceSize = sizeof(LogInterface);
-		_class.initialize = initialize;
-		_class.destroy = destroy;
+	if (!clazz.name) {
+		clazz.name = "Log";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Log);
+		clazz.interfaceOffset = offsetof(Log, interface);
+		clazz.interfaceSize = sizeof(LogInterface);
+		clazz.initialize = initialize;
+		clazz.destroy = destroy;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

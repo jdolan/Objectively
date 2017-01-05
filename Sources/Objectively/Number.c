@@ -196,18 +196,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_Number(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "Number";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(Number);
-		_class.interfaceOffset = offsetof(Number, interface);
-		_class.interfaceSize = sizeof(NumberInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "Number";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Number);
+		clazz.interfaceOffset = offsetof(Number, interface);
+		clazz.interfaceSize = sizeof(NumberInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

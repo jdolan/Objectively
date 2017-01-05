@@ -656,18 +656,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_String(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "String";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(String);
-		_class.interfaceOffset = offsetof(String, interface);
-		_class.interfaceSize = sizeof(StringInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "String";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(String);
+		clazz.interfaceOffset = offsetof(String, interface);
+		clazz.interfaceSize = sizeof(StringInterface);
+		clazz.initialize = initialize;
 	}
 	
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

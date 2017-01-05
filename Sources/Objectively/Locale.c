@@ -129,18 +129,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_Locale(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "Locale";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(Locale);
-		_class.interfaceOffset = offsetof(Locale, interface);
-		_class.interfaceSize = sizeof(LocaleInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "Locale";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Locale);
+		clazz.interfaceOffset = offsetof(Locale, interface);
+		clazz.interfaceSize = sizeof(LocaleInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

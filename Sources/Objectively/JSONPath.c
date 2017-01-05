@@ -113,19 +113,19 @@ static void destroy(Class *clazz) {
 }
 
 Class *_JSONPath(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "JSONPath";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(JSONPath);
-		_class.interfaceOffset = offsetof(JSONPath, interface);
-		_class.interfaceSize = sizeof(JSONPathInterface);
-		_class.initialize = initialize;
-		_class.destroy = destroy;
+	if (!clazz.name) {
+		clazz.name = "JSONPath";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(JSONPath);
+		clazz.interfaceOffset = offsetof(JSONPath, interface);
+		clazz.interfaceSize = sizeof(JSONPathInterface);
+		clazz.initialize = initialize;
+		clazz.destroy = destroy;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

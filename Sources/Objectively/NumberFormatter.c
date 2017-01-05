@@ -87,18 +87,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_NumberFormatter(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "NumberFormatter";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(NumberFormatter);
-		_class.interfaceOffset = offsetof(NumberFormatter, interface);
-		_class.interfaceSize = sizeof(NumberFormatterInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "NumberFormatter";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(NumberFormatter);
+		clazz.interfaceOffset = offsetof(NumberFormatter, interface);
+		clazz.interfaceSize = sizeof(NumberFormatterInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

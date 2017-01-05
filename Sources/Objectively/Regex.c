@@ -197,18 +197,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_Regex(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "Regex";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(Regex);
-		_class.interfaceOffset = offsetof(Regex, interface);
-		_class.interfaceSize = sizeof(RegexInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "Regex";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Regex);
+		clazz.interfaceOffset = offsetof(Regex, interface);
+		clazz.interfaceSize = sizeof(RegexInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

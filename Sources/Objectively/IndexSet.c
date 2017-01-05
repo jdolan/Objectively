@@ -212,18 +212,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_IndexSet(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "IndexSet";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(IndexSet);
-		_class.interfaceOffset = offsetof(IndexSet, interface);
-		_class.interfaceSize = sizeof(IndexSetInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "IndexSet";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(IndexSet);
+		clazz.interfaceOffset = offsetof(IndexSet, interface);
+		clazz.interfaceSize = sizeof(IndexSetInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

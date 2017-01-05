@@ -203,18 +203,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_Thread(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "Thread";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(Thread);
-		_class.interfaceOffset = offsetof(Thread, interface);
-		_class.interfaceSize = sizeof(ThreadInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "Thread";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Thread);
+		clazz.interfaceOffset = offsetof(Thread, interface);
+		clazz.interfaceSize = sizeof(ThreadInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

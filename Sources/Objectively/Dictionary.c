@@ -432,18 +432,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_Dictionary(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "Dictionary";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(Dictionary);
-		_class.interfaceOffset = offsetof(Dictionary, interface);
-		_class.interfaceSize = sizeof(DictionaryInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "Dictionary";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Dictionary);
+		clazz.interfaceOffset = offsetof(Dictionary, interface);
+		clazz.interfaceSize = sizeof(DictionaryInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

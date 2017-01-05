@@ -440,18 +440,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_Array(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "Array";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(Array);
-		_class.interfaceOffset = offsetof(Array, interface);
-		_class.interfaceSize = sizeof(ArrayInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "Array";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Array);
+		clazz.interfaceOffset = offsetof(Array, interface);
+		clazz.interfaceSize = sizeof(ArrayInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

@@ -139,18 +139,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_Condition(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "Condition";
-		_class.superclass = _Lock();
-		_class.instanceSize = sizeof(Condition);
-		_class.interfaceOffset = offsetof(Condition, interface);
-		_class.interfaceSize = sizeof(ConditionInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "Condition";
+		clazz.superclass = _Lock();
+		clazz.instanceSize = sizeof(Condition);
+		clazz.interfaceOffset = offsetof(Condition, interface);
+		clazz.interfaceSize = sizeof(ConditionInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

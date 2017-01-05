@@ -126,18 +126,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_DateFormatter(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "DateFormatter";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(DateFormatter);
-		_class.interfaceOffset = offsetof(DateFormatter, interface);
-		_class.interfaceSize = sizeof(DateFormatterInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "DateFormatter";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(DateFormatter);
+		clazz.interfaceOffset = offsetof(DateFormatter, interface);
+		clazz.interfaceSize = sizeof(DateFormatterInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

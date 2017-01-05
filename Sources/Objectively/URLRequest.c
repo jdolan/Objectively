@@ -119,18 +119,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_URLRequest(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "URLRequest";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(URLRequest);
-		_class.interfaceOffset = offsetof(URLRequest, interface);
-		_class.interfaceSize = sizeof(URLRequestInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "URLRequest";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(URLRequest);
+		clazz.interfaceOffset = offsetof(URLRequest, interface);
+		clazz.interfaceSize = sizeof(URLRequestInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

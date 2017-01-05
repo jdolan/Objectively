@@ -475,18 +475,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_JSONSerialization(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "JSONSerialization";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(JSONSerialization);
-		_class.interfaceOffset = offsetof(JSONSerialization, interface);
-		_class.interfaceSize = sizeof(JSONSerializationInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "JSONSerialization";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(JSONSerialization);
+		clazz.interfaceOffset = offsetof(JSONSerialization, interface);
+		clazz.interfaceSize = sizeof(JSONSerializationInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

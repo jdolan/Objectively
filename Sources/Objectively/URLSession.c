@@ -374,19 +374,19 @@ static void destroy(Class *clazz) {
 }
 
 Class *_URLSession(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "URLSession";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(URLSession);
-		_class.interfaceOffset = offsetof(URLSession, interface);
-		_class.interfaceSize = sizeof(URLSessionInterface);
-		_class.initialize = initialize;
-		_class.destroy = destroy;
+	if (!clazz.name) {
+		clazz.name = "URLSession";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(URLSession);
+		clazz.interfaceOffset = offsetof(URLSession, interface);
+		clazz.interfaceSize = sizeof(URLSessionInterface);
+		clazz.initialize = initialize;
+		clazz.destroy = destroy;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

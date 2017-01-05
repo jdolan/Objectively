@@ -155,19 +155,19 @@ static void destroy(Class *clazz) {
 }
 
 Class *_Resource(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "Resource";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(Resource);
-		_class.interfaceOffset = offsetof(Resource, interface);
-		_class.interfaceSize = sizeof(ResourceInterface);
-		_class.initialize = initialize;
-		_class.destroy = destroy;
+	if (!clazz.name) {
+		clazz.name = "Resource";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Resource);
+		clazz.interfaceOffset = offsetof(Resource, interface);
+		clazz.interfaceSize = sizeof(ResourceInterface);
+		clazz.initialize = initialize;
+		clazz.destroy = destroy;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

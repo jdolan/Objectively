@@ -174,18 +174,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_IndexPath(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "IndexPath";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(IndexPath);
-		_class.interfaceOffset = offsetof(IndexPath, interface);
-		_class.interfaceSize = sizeof(IndexPathInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "IndexPath";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(IndexPath);
+		clazz.interfaceOffset = offsetof(IndexPath, interface);
+		clazz.interfaceSize = sizeof(IndexPathInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

@@ -317,18 +317,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_MutableString(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "MutableString";
-		_class.superclass = _String();
-		_class.instanceSize = sizeof(MutableString);
-		_class.interfaceOffset = offsetof(MutableString, interface);
-		_class.interfaceSize = sizeof(MutableStringInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "MutableString";
+		clazz.superclass = _String();
+		clazz.instanceSize = sizeof(MutableString);
+		clazz.interfaceOffset = offsetof(MutableString, interface);
+		clazz.interfaceSize = sizeof(MutableStringInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

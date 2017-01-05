@@ -357,18 +357,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_Set(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "Set";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(Set);
-		_class.interfaceOffset = offsetof(Set, interface);
-		_class.interfaceSize = sizeof(SetInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "Set";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Set);
+		clazz.interfaceOffset = offsetof(Set, interface);
+		clazz.interfaceSize = sizeof(SetInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

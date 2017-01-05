@@ -164,18 +164,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_Error(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "Error";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(Error);
-		_class.interfaceOffset = offsetof(Error, interface);
-		_class.interfaceSize = sizeof(ErrorInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "Error";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Error);
+		clazz.interfaceOffset = offsetof(Error, interface);
+		clazz.interfaceSize = sizeof(ErrorInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

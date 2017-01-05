@@ -321,18 +321,18 @@ static void initialize(Class *clazz) {
 }
 
 Class *_MutableArray(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "MutableArray";
-		_class.superclass = _Array();
-		_class.instanceSize = sizeof(MutableArray);
-		_class.interfaceOffset = offsetof(MutableArray, interface);
-		_class.interfaceSize = sizeof(MutableArrayInterface);
-		_class.initialize = initialize;
+	if (!clazz.name) {
+		clazz.name = "MutableArray";
+		clazz.superclass = _Array();
+		clazz.instanceSize = sizeof(MutableArray);
+		clazz.interfaceOffset = offsetof(MutableArray, interface);
+		clazz.interfaceSize = sizeof(MutableArrayInterface);
+		clazz.initialize = initialize;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class

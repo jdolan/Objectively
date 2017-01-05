@@ -113,19 +113,19 @@ static void destroy(Class *clazz) {
 }
 
 Class *_Boole(void) {
-	static Class _class;
+	static Class clazz;
 	
-	if (!_class.name) {
-		_class.name = "Boole";
-		_class.superclass = _Object();
-		_class.instanceSize = sizeof(Boole);
-		_class.interfaceOffset = offsetof(Boole, interface);
-		_class.interfaceSize = sizeof(BooleInterface);
-		_class.initialize = initialize;
-		_class.destroy = destroy;
+	if (!clazz.name) {
+		clazz.name = "Boole";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Boole);
+		clazz.interfaceOffset = offsetof(Boole, interface);
+		clazz.interfaceSize = sizeof(BooleInterface);
+		clazz.initialize = initialize;
+		clazz.destroy = destroy;
 	}
 
-	return &_class;
+	return &clazz;
 }
 
 #undef _Class
