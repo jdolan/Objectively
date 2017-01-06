@@ -30,7 +30,7 @@ START_TEST(mutableDictionary)
 		MutableDictionary *dict = $$(MutableDictionary, dictionaryWithCapacity, 4);
 
 		ck_assert(dict != NULL);
-		ck_assert_ptr_eq(&_MutableDictionary, classof(dict));
+		ck_assert_ptr_eq(_MutableDictionary(), classof(dict));
 
 		ck_assert_int_eq(0, ((Dictionary *) dict)->count);
 		ck_assert_int_eq(4, ((Dictionary *) dict)->capacity);

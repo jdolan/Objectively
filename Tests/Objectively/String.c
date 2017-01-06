@@ -31,7 +31,7 @@ START_TEST(string)
 		String *string = str("hello %s!", "world");
 
 		ck_assert(string != NULL);
-		ck_assert_ptr_eq(&_String, classof(string));
+		ck_assert_ptr_eq(_String(), classof(string));
 
 		String *copy = (String *) $((Object * ) string, copy);
 		ck_assert_str_eq("hello world!", copy->chars);
