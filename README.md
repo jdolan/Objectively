@@ -136,7 +136,7 @@ struct HelloInterface {
 /**
  * @brief The Hello Class.
  */
-extern Class _Hello;
+OBJECTIVELY_EXPORT Class *_Hello(void);
 ```
 
 Implementing a type

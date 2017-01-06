@@ -129,6 +129,10 @@ static void initialize(Class *clazz) {
 	object->isKindOfClass = isKindOfClass;
 }
 
+/**
+ * @fn Class *Object::_Object(void)
+ * @memberof Object
+ */
 Class *_Object(void) {
 	static Class clazz;
 	static Once once;
