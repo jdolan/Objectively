@@ -284,8 +284,9 @@ static void initialize(Class *clazz) {
 
 Class *_MutableDictionary(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "MutableDictionary";
 		clazz.superclass = _Dictionary();
 		clazz.instanceSize = sizeof(MutableDictionary);

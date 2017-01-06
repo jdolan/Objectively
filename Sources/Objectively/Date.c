@@ -221,8 +221,9 @@ static void initialize(Class *clazz) {
 
 Class *_Date(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "Date";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Date);

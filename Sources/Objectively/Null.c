@@ -47,7 +47,9 @@ static Null *_null;
  */
 static Null *null(void) {
 	
-	do_once({
+	static Once once;
+	
+	do_once(&once, {
 		_null = (Null *) $((Object *) alloc(Null), init);
 	});
 
@@ -76,8 +78,9 @@ static void destroy(Class *clazz) {
 
 Class *_Null(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "Null";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Null);

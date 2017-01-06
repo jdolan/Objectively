@@ -175,8 +175,9 @@ static void initialize(Class *clazz) {
 
 Class *_IndexPath(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "IndexPath";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(IndexPath);

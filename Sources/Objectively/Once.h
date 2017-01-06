@@ -39,12 +39,9 @@ typedef long Once;
 /**
  * @brief Executes the given `block` at most one time.
  */
-#define do_once(block) \
-	{ \
-		static Once once; \
-		if (__sync_val_compare_and_swap(&once, 0, -1) == 0) { \
-			block; once = 1; \
+#define do_once(once, block) \
+		if (__sync_val_compare_and_swap(once, 0, -1) == 0) { \
+			block; *once = 1; \
 		} else { \
-			while (once != 1) ; \
+			while (*once != 1) ; \
 		} \
-	}

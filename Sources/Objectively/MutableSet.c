@@ -265,8 +265,9 @@ static void initialize(Class *clazz) {
 
 Class *_MutableSet(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "MutableSet";
 		clazz.superclass = _Set();
 		clazz.instanceSize = sizeof(MutableSet);

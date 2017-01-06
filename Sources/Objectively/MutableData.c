@@ -179,8 +179,9 @@ static void initialize(Class *clazz) {
 
 Class *_MutableData(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "MutableData";
 		clazz.superclass = _Data();
 		clazz.instanceSize = sizeof(MutableData);

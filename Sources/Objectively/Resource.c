@@ -156,8 +156,9 @@ static void destroy(Class *clazz) {
 
 Class *_Resource(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "Resource";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Resource);

@@ -213,8 +213,9 @@ static void initialize(Class *clazz) {
 
 Class *_IndexSet(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "IndexSet";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(IndexSet);

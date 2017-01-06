@@ -88,8 +88,9 @@ static void initialize(Class *clazz) {
 
 Class *_NumberFormatter(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "NumberFormatter";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(NumberFormatter);

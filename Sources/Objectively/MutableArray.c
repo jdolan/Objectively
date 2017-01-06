@@ -322,8 +322,9 @@ static void initialize(Class *clazz) {
 
 Class *_MutableArray(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "MutableArray";
 		clazz.superclass = _Array();
 		clazz.instanceSize = sizeof(MutableArray);

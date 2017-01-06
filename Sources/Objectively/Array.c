@@ -441,8 +441,9 @@ static void initialize(Class *clazz) {
 
 Class *_Array(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "Array";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Array);

@@ -318,8 +318,9 @@ static void initialize(Class *clazz) {
 
 Class *_MutableString(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "MutableString";
 		clazz.superclass = _String();
 		clazz.instanceSize = sizeof(MutableString);

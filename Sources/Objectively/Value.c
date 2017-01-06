@@ -109,8 +109,9 @@ static void initialize(Class *clazz) {
 
 Class *_Value(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "Value";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Value);

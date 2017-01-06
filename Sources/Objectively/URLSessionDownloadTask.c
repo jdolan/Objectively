@@ -72,8 +72,9 @@ static void initialize(Class *clazz) {
 
 Class *_URLSessionDownloadTask(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "URLSessionDownloadTask";
 		clazz.superclass = _URLSessionTask();
 		clazz.instanceSize = sizeof(URLSessionDownloadTask);

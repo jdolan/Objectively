@@ -58,7 +58,9 @@ static Boole *_False;
  */
 static Boole *False(void) {
 	
-	do_once({
+	static Once once;
+	
+	do_once(&once, {
 		_False = (Boole *) $((Object *) alloc(Boole), init);
 		_False->value = false;
 	});
@@ -74,7 +76,9 @@ static Boole *_True;
  */
 static Boole *True(void) {
 	
-	do_once({
+	static Once once;
+	
+	do_once(&once, {
 		_True = (Boole *) $((Object *) alloc(Boole), init);
 		_True->value = true;
 	});
@@ -111,8 +115,9 @@ static void destroy(Class *clazz) {
 
 Class *_Boole(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "Boole";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Boole);

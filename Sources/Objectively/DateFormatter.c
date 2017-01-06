@@ -127,8 +127,9 @@ static void initialize(Class *clazz) {
 
 Class *_DateFormatter(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "DateFormatter";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(DateFormatter);

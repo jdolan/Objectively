@@ -129,8 +129,9 @@ static void initialize(Class *clazz) {
 
 Class *_Locale(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "Locale";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Locale);

@@ -113,8 +113,9 @@ static void destroy(Class *clazz) {
 
 Class *_JSONPath(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "JSONPath";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(JSONPath);

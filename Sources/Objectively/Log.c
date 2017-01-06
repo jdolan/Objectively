@@ -211,7 +211,9 @@ static Log *_sharedInstance;
  */
 static Log *sharedInstance(void) {
 	
-	do_once({
+	static Once once;
+	
+	do_once(&once, {
 		_sharedInstance = $(alloc(Log), init);
 	});
 	
@@ -282,8 +284,9 @@ static void destroy(Class *clazz) {
 
 Class *_Log(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "Log";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Log);

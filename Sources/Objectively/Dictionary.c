@@ -433,8 +433,9 @@ static void initialize(Class *clazz) {
 
 Class *_Dictionary(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "Dictionary";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Dictionary);

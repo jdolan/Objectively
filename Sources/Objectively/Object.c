@@ -131,8 +131,9 @@ static void initialize(Class *clazz) {
 
 Class *_Object(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "Object";
 		clazz.instanceSize = sizeof(Object);
 		clazz.interfaceOffset = offsetof(Object, interface);

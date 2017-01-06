@@ -204,8 +204,9 @@ static void initialize(Class *clazz) {
 
 Class *_Thread(void) {
 	static Class clazz;
+	static Once once;
 	
-	do_once({
+	do_once(&once, {
 		clazz.name = "Thread";
 		clazz.superclass = _Object();
 		clazz.instanceSize = sizeof(Thread);
