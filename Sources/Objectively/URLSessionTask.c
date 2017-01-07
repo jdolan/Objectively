@@ -265,6 +265,10 @@ static void initialize(Class *clazz) {
 	task->teardown = teardown;
 }
 
+/**
+ * @fn Class *URLSessionTask::_URLSessionTask(void)
+ * @memberof URLSessionTask
+ */
 Class *_URLSessionTask(void) {
 	static Class clazz;
 	static Once once;

@@ -86,6 +86,10 @@ static void initialize(Class *clazz) {
 	numberFormatter->stringFromNumber = stringFromNumber;
 }
 
+/**
+ * @fn Class *NumberFormatter::_NumberFormatter(void)
+ * @memberof NumberFormatter
+ */
 Class *_NumberFormatter(void) {
 	static Class clazz;
 	static Once once;

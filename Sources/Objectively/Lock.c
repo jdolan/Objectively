@@ -126,6 +126,10 @@ static void initialize(Class *clazz) {
 	interface->unlock = unlock;
 }
 
+/**
+ * @fn Class *Lock::_Lock(void)
+ * @memberof Lock
+ */
 Class *_Lock(void) {
 	static Class clazz;
 	static Once once;

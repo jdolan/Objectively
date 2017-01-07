@@ -177,6 +177,10 @@ static void initialize(Class *clazz) {
 	mutableData->setLength = setLength;
 }
 
+/**
+ * @fn Class *MutableData::_MutableData(void)
+ * @memberof MutableData
+ */
 Class *_MutableData(void) {
 	static Class clazz;
 	static Once once;

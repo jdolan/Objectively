@@ -246,6 +246,10 @@ static void destroy(Class *clazz) {
 	release(_regex);
 }
 
+/**
+ * @fn Class *URL::_URL(void)
+ * @memberof URL
+ */
 Class *_URL(void) {
 	static Class clazz;
 	static Once once;

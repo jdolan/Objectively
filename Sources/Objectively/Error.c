@@ -163,6 +163,10 @@ static void initialize(Class *clazz) {
 	error->initWithDomain = initWithDomain;
 }
 
+/**
+ * @fn Class *Error::_Error(void)
+ * @memberof Error
+ */
 Class *_Error(void) {
 	static Class clazz;
 	static Once once;

@@ -96,6 +96,10 @@ static void initialize(Class *clazz) {
 	sessionTask->setup = setup;
 }
 
+/**
+ * @fn Class *URLSessionDataTask::_URLSessionDataTask(void)
+ * @memberof URLSessionDataTask
+ */
 Class *_URLSessionDataTask(void) {
 	static Class clazz;
 	static Once once;

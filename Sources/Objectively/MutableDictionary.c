@@ -282,6 +282,10 @@ static void initialize(Class *clazz) {
 	mutableDictionary->setObjectsForKeys = setObjectsForKeys;
 }
 
+/**
+ * @fn Class *MutableDictionary::_MutableDictionary(void)
+ * @memberof MutableDictionary
+ */
 Class *_MutableDictionary(void) {
 	static Class clazz;
 	static Once once;

@@ -111,6 +111,10 @@ static void destroy(Class *clazz) {
 	release(_regex);
 }
 
+/**
+ * @fn Class *JSONPath::_JSONPath(void)
+ * @memberof JSONPath
+ */
 Class *_JSONPath(void) {
 	static Class clazz;
 	static Once once;

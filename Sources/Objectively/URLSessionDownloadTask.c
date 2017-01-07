@@ -70,6 +70,10 @@ static void initialize(Class *clazz) {
 	((URLSessionTaskInterface *) clazz->def->interface)->setup = setup;
 }
 
+/**
+ * @fn Class *URLSessionDownloadTask::_URLSessionDownloadTask(void)
+ * @memberof URLSessionDownloadTask
+ */
 Class *_URLSessionDownloadTask(void) {
 	static Class clazz;
 	static Once once;

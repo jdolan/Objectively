@@ -138,6 +138,10 @@ static void initialize(Class *clazz) {
 	condition->waitUntilDate = waitUntilDate;
 }
 
+/**
+ * @fn Class *Condition::_Condition(void)
+ * @memberof Condition
+ */
 Class *_Condition(void) {
 	static Class clazz;
 	static Once once;

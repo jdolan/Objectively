@@ -431,6 +431,10 @@ static void initialize(Class *clazz) {
 	dictionary->objectForKeyPath = objectForKeyPath;
 }
 
+/**
+ * @fn Class *Dictionary::_Dictionary(void)
+ * @memberof Dictionary
+ */
 Class *_Dictionary(void) {
 	static Class clazz;
 	static Once once;

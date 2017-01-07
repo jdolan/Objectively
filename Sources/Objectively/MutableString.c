@@ -316,6 +316,10 @@ static void initialize(Class *clazz) {
 	mutableString->stringWithCapacity = stringWithCapacity;
 }
 
+/**
+ * @fn Class *MutableString::_MutableString(void)
+ * @memberof MutableString
+ */
 Class *_MutableString(void) {
 	static Class clazz;
 	static Once once;

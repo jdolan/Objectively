@@ -356,6 +356,10 @@ static void initialize(Class *clazz) {
 	set->setWithSet = setWithSet;
 }
 
+/**
+ * @fn Class *Set::_Set(void)
+ * @memberof Set
+ */
 Class *_Set(void) {
 	static Class clazz;
 	static Once once;

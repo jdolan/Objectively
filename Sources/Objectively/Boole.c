@@ -113,6 +113,10 @@ static void destroy(Class *clazz) {
 	release(_True);
 }
 
+/**
+ * @fn Class *Boole::_Boole(void)
+ * @memberof Boole
+ */
 Class *_Boole(void) {
 	static Class clazz;
 	static Once once;

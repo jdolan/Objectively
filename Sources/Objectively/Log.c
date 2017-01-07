@@ -282,6 +282,10 @@ static void destroy(Class *clazz) {
 	release(_sharedInstance);
 }
 
+/**
+ * @fn Class *Log::_Log(void)
+ * @memberof Log
+ */
 Class *_Log(void) {
 	static Class clazz;
 	static Once once;

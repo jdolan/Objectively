@@ -254,6 +254,10 @@ static void initialize(Class *clazz) {
 	data->writeToFile = writeToFile;
 }
 
+/**
+ * @fn Class *Data::_Data(void)
+ * @memberof Data
+ */
 Class *_Data(void) {
 	static Class clazz;
 	static Once once;

@@ -127,6 +127,10 @@ static void initialize(Class *clazz) {
 	((LocaleInterface *) clazz->def->interface)->systemLocale = systemLocale;
 }
 
+/**
+ * @fn Class *Locale::_Locale(void)
+ * @memberof Locale
+ */
 Class *_Locale(void) {
 	static Class clazz;
 	static Once once;

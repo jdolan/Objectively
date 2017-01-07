@@ -118,6 +118,10 @@ static void initialize(Class *clazz) {
 	request->setValueForHTTPHeaderField = setValueForHTTPHeaderField;
 }
 
+/**
+ * @fn Class *URLRequest::_URLRequest(void)
+ * @memberof URLRequest
+ */
 Class *_URLRequest(void) {
 	static Class clazz;
 	static Once once;

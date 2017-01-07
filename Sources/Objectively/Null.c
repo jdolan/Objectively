@@ -76,6 +76,10 @@ static void destroy(Class *clazz) {
 	release(_null);
 }
 
+/**
+ * @fn Class *Null::_Null(void)
+ * @memberof Null
+ */
 Class *_Null(void) {
 	static Class clazz;
 	static Once once;

@@ -233,6 +233,10 @@ static void initialize(Class *clazz) {
 	operation->waitUntilFinished = waitUntilFinished;
 }
 
+/**
+ * @fn Class *Operation::_Operation(void)
+ * @memberof Operation
+ */
 Class *_Operation(void) {
 	static Class clazz;
 	static Once once;

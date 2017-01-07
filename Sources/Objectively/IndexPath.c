@@ -173,6 +173,10 @@ static void initialize(Class *clazz) {
 	((IndexPathInterface *) clazz->def->interface)->initWithIndexes = initWithIndexes;
 }
 
+/**
+ * @fn Class *IndexPath::_IndexPath(void)
+ * @memberof IndexPath
+ */
 Class *_IndexPath(void) {
 	static Class clazz;
 	static Once once;

@@ -263,6 +263,10 @@ static void initialize(Class *clazz) {
 	mutableSet->setWithCapacity = setWithCapacity;
 }
 
+/**
+ * @fn Class *MutableSet::_MutableSet(void)
+ * @memberof MutableSet
+ */
 Class *_MutableSet(void) {
 	static Class clazz;
 	static Once once;

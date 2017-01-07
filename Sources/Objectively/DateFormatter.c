@@ -125,6 +125,10 @@ static void initialize(Class *clazz) {
 	tzset();
 }
 
+/**
+ * @fn Class *DateFormatter::_DateFormatter(void)
+ * @memberof DateFormatter
+ */
 Class *_DateFormatter(void) {
 	static Class clazz;
 	static Once once;

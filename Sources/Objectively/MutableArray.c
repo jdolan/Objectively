@@ -320,6 +320,10 @@ static void initialize(Class *clazz) {
 	mutableArray->sort = sort;
 }
 
+/**
+ * @fn Class *MutableArray::_MutableArray(void)
+ * @memberof MutableArray
+ */
 Class *_MutableArray(void) {
 	static Class clazz;
 	static Once once;

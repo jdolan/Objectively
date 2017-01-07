@@ -439,6 +439,10 @@ static void initialize(Class *clazz) {
 	array->sortedArray = sortedArray;
 }
 
+/**
+ * @fn Class *Array::_Array(void)
+ * @memberof Array
+ */
 Class *_Array(void) {
 	static Class clazz;
 	static Once once;

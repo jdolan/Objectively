@@ -219,6 +219,10 @@ static void initialize(Class *clazz) {
 	interface->timeSinceTime = timeSinceTime;
 }
 
+/**
+ * @fn Class *Date::_Date(void)
+ * @memberof Date
+ */
 Class *_Date(void) {
 	static Class clazz;
 	static Once once;

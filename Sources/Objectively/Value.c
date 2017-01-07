@@ -107,6 +107,10 @@ static void initialize(Class *clazz) {
 	((ValueInterface *) clazz->def->interface)->initWithValue = initWithValue;
 }
 
+/**
+ * @fn Class *Value::_Value(void)
+ * @memberof Value
+ */
 Class *_Value(void) {
 	static Class clazz;
 	static Once once;

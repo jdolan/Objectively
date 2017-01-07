@@ -211,6 +211,10 @@ static void initialize(Class *clazz) {
 	((IndexSetInterface *) clazz->def->interface)->initWithIndexes = initWithIndexes;
 }
 
+/**
+ * @fn Class *IndexSet::_IndexSet(void)
+ * @memberof IndexSet
+ */
 Class *_IndexSet(void) {
 	static Class clazz;
 	static Once once;

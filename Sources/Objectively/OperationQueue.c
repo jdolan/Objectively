@@ -249,6 +249,10 @@ static void initialize(Class *clazz) {
 	queue->waitUntilAllOperationsAreFinished = waitUntilAllOperationsAreFinished;
 }
 
+/**
+ * @fn Class *OperationQueue::_OperationQueue(void)
+ * @memberof OperationQueue
+ */
 Class *_OperationQueue(void) {
 	static Class clazz;
 	static Once once;

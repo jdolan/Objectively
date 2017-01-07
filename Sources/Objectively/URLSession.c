@@ -373,6 +373,10 @@ static void destroy(Class *clazz) {
 	curl_global_cleanup();
 }
 
+/**
+ * @fn Class *URLSession::_URLSession(void)
+ * @memberof URLSession
+ */
 Class *_URLSession(void) {
 	static Class clazz;
 	static Once once;

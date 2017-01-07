@@ -118,6 +118,10 @@ static void initialize(Class *clazz) {
 	hello->sayHello = sayHello;
 }
 
+/**
+ * @fn Class *Hello::_Hello(void)
+ * @memberof Hello
+ */
 Class *_Hello(void) {
 	static Class clazz;
 	static Once once;

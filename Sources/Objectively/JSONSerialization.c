@@ -50,7 +50,7 @@ typedef struct {
 static void writeElement(JSONWriter *writer, const ident obj);
 
 /**
- * Writes `null` to `writer`.
+ * @brief Writes `null` to `writer`.
  * @param writer The JSONWriter.
  * @param null The Null to write.
  */
@@ -60,7 +60,7 @@ static void writeNull(JSONWriter *writer, const Null *null) {
 }
 
 /**
- * Writes `boolean` to `writer`.
+ * @brief Writes `boolean` to `writer`.
  * @param writer The JSONWriter.
  * @param boolean The Boole to write.
  */
@@ -74,7 +74,7 @@ static void writeBoole(JSONWriter *writer, const Boole *boolean) {
 }
 
 /**
- * Writes `string` to `writer`.
+ * @brief Writes `string` to `writer`.
  * @param writer The JSONWriter.
  * @param string The String to write.
  */
@@ -86,7 +86,7 @@ static void writeString(JSONWriter *writer, const String *string) {
 }
 
 /**
- * Writes `number` to `writer`.
+ * @brief Writes `number` to `writer`.
  * @param writer The JSONWriter.
  * @param number The Number to write.
  */
@@ -100,7 +100,7 @@ static void writeNumber(JSONWriter *writer, const Number *number) {
 }
 
 /**
- * Writes the label (field name) `label` to `writer`.
+ * @brief Writes the label (field name) `label` to `writer`.
  * @param writer The JSONWriter.
  * @param label The label to write.
  */
@@ -111,7 +111,7 @@ static void writeLabel(JSONWriter *writer, const String *label) {
 }
 
 /**
- * Writes `object` to `writer`.
+ * @brief Writes `object` to `writer`.
  * @param writer The JSONWriter.
  * @param object The object (Dictionary) to write.
  */
@@ -139,7 +139,7 @@ static void writeObject(JSONWriter *writer, const Dictionary *object) {
 }
 
 /**
- * Writes `array` to `writer`.
+ * @brief Writes `array` to `writer`.
  * @param writer The JSONWriter.
  * @param array The Array to write.
  */
@@ -160,7 +160,7 @@ static void writeArray(JSONWriter *writer, const Array *array) {
 }
 
 /**
- * Writes the specified JSON element to `writer`.
+ * @brief Writes the specified JSON element to `writer`.
  * @param writer The JSONWriter.
  * @param obj The JSON element to write.
  */
@@ -474,6 +474,10 @@ static void initialize(Class *clazz) {
 	json->objectFromData = objectFromData;
 }
 
+/**
+ * @fn Class *JSONSerialization::_JSONSerialization(void)
+ * @memberof JSONSerialization
+ */
 Class *_JSONSerialization(void) {
 	static Class clazz;
 	static Once once;

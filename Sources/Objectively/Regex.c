@@ -196,6 +196,10 @@ static void initialize(Class *clazz) {
 	regex->matchesString = matchesString;
 }
 
+/**
+ * @fn Class *Regex::_Regex(void)
+ * @memberof Regex
+ */
 Class *_Regex(void) {
 	static Class clazz;
 	static Once once;

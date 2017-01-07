@@ -202,6 +202,10 @@ static void initialize(Class *clazz) {
 	thread->start = start;
 }
 
+/**
+ * @fn Class *Thread::_Thread(void)
+ * @memberof Thread
+ */
 Class *_Thread(void) {
 	static Class clazz;
 	static Once once;

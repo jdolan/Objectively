@@ -655,6 +655,10 @@ static void initialize(Class *clazz) {
 	string->writeToFile = writeToFile;
 }
 
+/**
+ * @fn Class *String::_String(void)
+ * @memberof String
+ */
 Class *_String(void) {
 	static Class clazz;
 	static Once once;

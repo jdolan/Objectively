@@ -55,6 +55,10 @@ static void initialize(Class *clazz) {
 	((URLSessionConfigurationInterface *) clazz->def->interface)->init = init;
 }
 
+/**
+ * @fn Class *URLSessionConfiguration::_URLSessionConfiguration(void)
+ * @memberof URLSessionConfiguration
+ */
 Class *_URLSessionConfiguration(void) {
 	static Class clazz;
 	static Once once;

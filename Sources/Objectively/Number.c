@@ -195,6 +195,10 @@ static void initialize(Class *clazz) {
 	number->shortValue = shortValue;
 }
 
+/**
+ * @fn Class *Number::_Number(void)
+ * @memberof Number
+ */
 Class *_Number(void) {
 	static Class clazz;
 	static Once once;

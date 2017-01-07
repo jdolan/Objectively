@@ -57,8 +57,11 @@ static void dealloc(Object *self) {
  * @memberof Resource
  */
 static void addResourcePath(const char *path) {
+
 	String *temp = str(path);
+
 	$(_resourcePaths, addObject, temp);
+
 	release(temp);
 }
 
@@ -112,7 +115,9 @@ static Resource *initWithName(Resource *self, const char *name) {
 static void removeResourcePath(const char *path) {
 
 	String *string = $$(String, stringWithCharacters, path);
+
 	$(_resourcePaths, removeObject, string);
+
 	release(string);
 }
 
@@ -154,6 +159,10 @@ static void destroy(Class *clazz) {
 	release(_resourcePaths);
 }
 
+/**
+ * @fn Class *Resource::_Resource(void)
+ * @memberof Resource
+ */
 Class *_Resource(void) {
 	static Class clazz;
 	static Once once;
