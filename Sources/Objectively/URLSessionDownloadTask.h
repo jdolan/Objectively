@@ -71,6 +71,9 @@ struct URLSessionDownloadTaskInterface {
 };
 
 /**
- * @brief The URLSessionDownloadTask Class.
+ * @fn Class *URLSessionDownloadTask::_URLSessionDownloadTask(void)
+ * @brief The URLSessionDownloadTask archetype.
+ * @return The URLSessionDownloadTask Class.
+ * @memberof URLSessionDownloadTask
  */
 OBJECTIVELY_EXPORT Class *_URLSessionDownloadTask(void);

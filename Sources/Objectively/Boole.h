@@ -85,6 +85,9 @@ struct BooleInterface {
 };
 
 /**
- * @brief The Boole Class.
+ * @fn Class *Boole::_Boole(void)
+ * @brief The Boole archetype.
+ * @return The Boole Class.
+ * @memberof Boole
  */
 OBJECTIVELY_EXPORT Class *_Boole(void);

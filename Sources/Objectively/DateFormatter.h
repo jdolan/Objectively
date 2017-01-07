@@ -116,6 +116,9 @@ struct DateFormatterInterface {
 };
 
 /**
- * @brief The DateFormatter Class.
+ * @fn Class *DateFormatter::_DateFormatter(void)
+ * @brief The DateFormatter archetype.
+ * @return The DateFormatter Class.
+ * @memberof DateFormatter
  */
 OBJECTIVELY_EXPORT Class *_DateFormatter(void);

@@ -65,7 +65,10 @@ struct HelloInterface {
 };
 
 /**
- * @brief The Hello Class.
+ * @fn Class *Hello::_Hello(void)
+ * @brief The Hello archetype.
+ * @return The Hello Class.
+ * @memberof Hello
  */
 OBJECTIVELY_EXPORT Class *_Hello(void);
 

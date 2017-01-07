@@ -193,6 +193,9 @@ struct SetInterface {
 };
 
 /**
- * @brief The Set Class.
+ * @fn Class *Set::_Set(void)
+ * @brief The Set archetype.
+ * @return The Set Class.
+ * @memberof Set
  */
 OBJECTIVELY_EXPORT Class *_Set(void);

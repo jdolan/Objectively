@@ -212,6 +212,9 @@ struct URLSessionInterface {
 };
 
 /**
- * @brief The URLSession Class.
+ * @fn Class *URLSession::_URLSession(void)
+ * @brief The URLSession archetype.
+ * @return The URLSession Class.
+ * @memberof URLSession
  */
 OBJECTIVELY_EXPORT Class *_URLSession(void);

@@ -119,6 +119,9 @@ struct URLRequestInterface {
 };
 
 /**
- * @brief The URLRequest Class.
+ * @fn Class *URLRequest::_URLRequest(void)
+ * @brief The URLRequest archetype.
+ * @return The URLRequest Class.
+ * @memberof URLRequest
  */
 OBJECTIVELY_EXPORT Class *_URLRequest(void);

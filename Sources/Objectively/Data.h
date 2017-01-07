@@ -162,6 +162,9 @@ struct DataInterface {
 };
 
 /**
- * @brief The Data Class.
+ * @fn Class *Data::_Data(void)
+ * @brief The Data archetype.
+ * @return The Data Class.
+ * @memberof Data
  */
 OBJECTIVELY_EXPORT Class *_Data(void);

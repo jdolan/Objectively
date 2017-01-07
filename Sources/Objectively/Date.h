@@ -173,6 +173,9 @@ struct DateInterface {
 };
 
 /**
- * @brief The Date Class.
+ * @fn Class *Date::_Date(void)
+ * @brief The Date archetype.
+ * @return The Date Class.
+ * @memberof Date
  */
 OBJECTIVELY_EXPORT Class *_Date(void);

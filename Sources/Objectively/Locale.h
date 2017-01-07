@@ -119,6 +119,9 @@ struct LocaleInterface {
 };
 
 /**
- * @brief The Locale Class.
+ * @fn Class *Locale::_Locale(void)
+ * @brief The Locale archetype.
+ * @return The Locale Class.
+ * @memberof Locale
  */
 OBJECTIVELY_EXPORT Class *_Locale(void);

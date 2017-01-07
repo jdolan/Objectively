@@ -71,6 +71,9 @@ struct URLSessionDataTaskInterface {
 };
 
 /**
- * @brief The URLSessionDataTask Class.
+ * @fn Class *URLSessionDataTask::_URLSessionDataTask(void)
+ * @brief The URLSessionDataTask archetype.
+ * @return The URLSessionDataTask Class.
+ * @memberof URLSessionDataTask
  */
 OBJECTIVELY_EXPORT Class *_URLSessionDataTask(void);

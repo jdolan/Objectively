@@ -105,7 +105,10 @@ struct LockInterface {
 };
 
 /**
- * @brief The Lock Class.
+ * @fn Class *Lock::_Lock(void)
+ * @brief The Lock archetype.
+ * @return The Lock Class.
+ * @memberof Lock
  */
 OBJECTIVELY_EXPORT Class *_Lock(void);
 

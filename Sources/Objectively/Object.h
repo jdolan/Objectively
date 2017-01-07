@@ -135,7 +135,7 @@ struct ObjectInterface {
 
 /**
  * @fn Class *Object::_Object(void)
- * @brief The Object Class archetype.
+ * @brief The Object archetype.
  * @return The Object Class.
  * @memberof Object
  */

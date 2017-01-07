@@ -226,7 +226,10 @@ struct MutableStringInterface {
 };
 
 /**
- * @brief The MutableString Class.
+ * @fn Class *MutableString::_MutableString(void)
+ * @brief The MutableString archetype.
+ * @return The MutableString Class.
+ * @memberof MutableString
  */
 OBJECTIVELY_EXPORT Class *_MutableString(void);
 

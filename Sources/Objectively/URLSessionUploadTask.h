@@ -71,6 +71,9 @@ struct URLSessionUploadTaskInterface {
 };
 
 /**
- * @brief The URLSessionUploadTask Class.
+ * @fn Class *URLSessionUploadTask::_URLSessionUploadTask(void)
+ * @brief The URLSessionUploadTask archetype.
+ * @return The URLSessionUploadTask Class.
+ * @memberof URLSessionUploadTask
  */
 OBJECTIVELY_EXPORT Class *_URLSessionUploadTask(void);

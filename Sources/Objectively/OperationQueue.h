@@ -163,6 +163,9 @@ struct OperationQueueInterface {
 };
 
 /**
- * @brief The OperationQueue Class.
+ * @fn Class *OperationQueue::_OperationQueue(void)
+ * @brief The OperationQueue archetype.
+ * @return The OperationQueue Class.
+ * @memberof OperationQueue
  */
 OBJECTIVELY_EXPORT Class *_OperationQueue(void);

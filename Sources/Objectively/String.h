@@ -393,7 +393,10 @@ struct StringInterface {
 };
 
 /**
- * @brief The String Class.
+ * @fn Class *String::_String(void)
+ * @brief The String archetype.
+ * @return The String Class.
+ * @memberof String
  */
 OBJECTIVELY_EXPORT Class *_String(void);
 

@@ -202,6 +202,9 @@ struct URLSessionTaskInterface {
 };
 
 /**
- * @brief The URLSessionTask Class.
+ * @fn Class *URLSessionTask::_URLSessionTask(void)
+ * @brief The URLSessionTask archetype.
+ * @return The URLSessionTask Class.
+ * @memberof URLSessionTask
  */
 OBJECTIVELY_EXPORT Class *_URLSessionTask(void);

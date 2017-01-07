@@ -80,6 +80,9 @@ struct JSONPathInterface {
 };
 
 /**
- * @brief The JSONPath Class.
+ * @fn Class *JSONPath::_JSONPath(void)
+ * @brief The JSONPath archetype.
+ * @return The JSONPath Class.
+ * @memberof JSONPath
  */
 OBJECTIVELY_EXPORT Class *_JSONPath(void);

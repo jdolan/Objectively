@@ -205,6 +205,9 @@ struct OperationInterface {
 };
 
 /**
- * @brief The Operation Class.
+ * @fn Class *Operation::_Operation(void)
+ * @brief The Operation archetype.
+ * @return The Operation Class.
+ * @memberof Operation
  */
 OBJECTIVELY_EXPORT Class *_Operation(void);

@@ -145,6 +145,9 @@ struct MutableDictionaryInterface {
 };
 
 /**
- * @brief The MutableDictionary Class.
+ * @fn Class *MutableDictionary::_MutableDictionary(void)
+ * @brief The MutableDictionary archetype.
+ * @return The MutableDictionary Class.
+ * @memberof MutableDictionary
  */
 OBJECTIVELY_EXPORT Class *_MutableDictionary(void);

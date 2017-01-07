@@ -146,6 +146,9 @@ struct MutableSetInterface {
 };
 
 /**
- * @brief The MutableSet Class.
+ * @fn Class *MutableSet::_MutableSet(void)
+ * @brief The MutableSet archetype.
+ * @return The MutableSet Class.
+ * @memberof MutableSet
  */
 OBJECTIVELY_EXPORT Class *_MutableSet(void);

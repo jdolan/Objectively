@@ -150,6 +150,9 @@ struct MutableDataInterface {
 };
 
 /**
- * @brief The MutableData Class.
+ * @fn Class *MutableData::_MutableData(void)
+ * @brief The MutableData archetype.
+ * @return The MutableData Class.
+ * @memberof MutableData
  */
 OBJECTIVELY_EXPORT Class *_MutableData(void);

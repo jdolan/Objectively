@@ -61,7 +61,10 @@ struct ___FILEBASENAMEASIDENTIFIER___Interface {
 };
 
 /**
- * @brief The ___FILEBASENAMEASIDENTIFIER___ Class.
+ * @fn Class *___FILEBASENAMEASIDENTIFIER___::____FILEBASENAMEASIDENTIFIER___(void)
+ * @brief The ___FILEBASENAMEASIDENTIFIER___ archetype.
+ * @return The ___FILEBASENAMEASIDENTIFIER___ Class.
+ * @memberof ___FILEBASENAMEASIDENTIFIER___
  */
 extern Class ____FILEBASENAMEASIDENTIFIER___;
 

@@ -138,6 +138,9 @@ struct URLInterface {
 };
 
 /**
- * @brief The URL Class.
+ * @fn Class *URL::_URL(void)
+ * @brief The URL archetype.
+ * @return The URL Class.
+ * @memberof URL
  */
 OBJECTIVELY_EXPORT Class *_URL(void);
