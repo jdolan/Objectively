@@ -1,0 +1,39 @@
+body, table, div, p, dl {
+	font-size: 16px;
+	color: #333;
+}
+
+body {
+	width: 980px;
+	max-width: 100%;
+	margin: 2em auto;
+	border: 1px solid #d8d8d8;
+	border-radius: 2px;
+	padding: 1em;
+}
+
+h1, h2, h3 {
+	border-bottom: 1px solid #eee;
+	padding-bottom: 0.3em;
+}
+
+img {
+	max-width: 80%;
+}
+
+div.line {
+	margin: 4px;
+}
+
+div.line, div.line * {
+	font-family: monospace, fixed !important;
+}
+
+html * {
+	font-family: Helvetica, Arial, sans-serif !important;
+}
+
+#titlearea {
+	margin-bottom: 0.3em;
+}
+
