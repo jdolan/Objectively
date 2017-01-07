@@ -195,13 +195,24 @@ static void initialize(Class *clazz) {
 	number->shortValue = shortValue;
 }
 
-Class _Number = {
-	.name = "Number",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Number),
-	.interfaceOffset = offsetof(Number, interface),
-	.interfaceSize = sizeof(NumberInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *Number::_Number(void)
+ * @memberof Number
+ */
+Class *_Number(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "Number";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Number);
+		clazz.interfaceOffset = offsetof(Number, interface);
+		clazz.interfaceSize = sizeof(NumberInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class

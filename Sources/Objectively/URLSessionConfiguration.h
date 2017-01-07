@@ -101,6 +101,9 @@ struct URLSessionConfigurationInterface {
 };
 
 /**
- * @brief The URLSessionConfiguration Class.
+ * @fn Class *URLSessionConfiguration::_URLSessionConfiguration(void)
+ * @brief The URLSessionConfiguration archetype.
+ * @return The URLSessionConfiguration Class.
+ * @memberof URLSessionConfiguration
  */
-extern Class _URLSessionConfiguration;
+OBJECTIVELY_EXPORT Class *_URLSessionConfiguration(void);

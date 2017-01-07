@@ -100,7 +100,7 @@ void _initialize(Class *clazz) {
 		def->interface = calloc(1, clazz->interfaceSize);
 		assert(def->interface);
 
-		if (clazz == &_Object) {
+		if (clazz == _Object()) {
 			setup();
 		} else {
 			Class *super = clazz->superclass;
@@ -159,7 +159,7 @@ ident _cast(Class *clazz, const ident obj) {
 
 			// as a special case, we optimize for _Object
 
-			if (c == clazz || clazz == &_Object) {
+			if (c == clazz || clazz == _Object()) {
 				break;
 			}
 

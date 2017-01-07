@@ -80,13 +80,24 @@ static void initialize(Class *clazz) {
 	((URLSessionTaskInterface *) clazz->def->interface)->setup = setup;
 }
 
-Class _URLSessionUploadTask = {
-	.name = "URLSessionUploadTask",
-	.superclass = &_URLSessionTask,
-	.instanceSize = sizeof(URLSessionUploadTask),
-	.interfaceOffset = offsetof(URLSessionUploadTask, interface),
-	.interfaceSize = sizeof(URLSessionUploadTaskInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *URLSessionUploadTask::_URLSessionUploadTask(void)
+ * @memberof URLSessionUploadTask
+ */
+Class *_URLSessionUploadTask(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "URLSessionUploadTask";
+		clazz.superclass = _URLSessionTask();
+		clazz.instanceSize = sizeof(URLSessionUploadTask);
+		clazz.interfaceOffset = offsetof(URLSessionUploadTask, interface);
+		clazz.interfaceSize = sizeof(URLSessionUploadTaskInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class

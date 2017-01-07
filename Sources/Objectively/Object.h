@@ -134,6 +134,9 @@ struct ObjectInterface {
 };
 
 /**
- * @brief The Object Class.
+ * @fn Class *Object::_Object(void)
+ * @brief The Object archetype.
+ * @return The Object Class.
+ * @memberof Object
  */
-extern Class _Object;
+OBJECTIVELY_EXPORT Class *_Object(void);

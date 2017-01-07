@@ -65,9 +65,12 @@ struct HelloInterface {
 };
 
 /**
- * @brief The Hello Class.
+ * @fn Class *Hello::_Hello(void)
+ * @brief The Hello archetype.
+ * @return The Hello Class.
+ * @memberof Hello
  */
-extern Class _Hello;
+OBJECTIVELY_EXPORT Class *_Hello(void);
 
 // Hello.c
 
@@ -115,13 +118,24 @@ static void initialize(Class *clazz) {
 	hello->sayHello = sayHello;
 }
 
-Class _Hello = {
-	.name = "Hello",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Hello),
-	.interfaceOffset = offsetof(Hello, interface),
-	.interfaceSize = sizeof(HelloInterface),
-	.initialize = initialize,
+/**
+ * @fn Class *Hello::_Hello(void)
+ * @memberof Hello
+ */
+Class *_Hello(void) {
+	static Class clazz;
+	static Once once;
+
+	do_once(&once, {
+		clazz.name = "Hello";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Hello);
+		clazz.interfaceOffset = offsetof(Hello, interface);
+		clazz.interfaceSize = sizeof(HelloInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
 };
 
 #undef _Class

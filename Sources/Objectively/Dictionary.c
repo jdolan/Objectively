@@ -126,7 +126,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 		return true;
 	}
 
-	if (other && $(other, isKindOfClass, &_Dictionary)) {
+	if (other && $(other, isKindOfClass, _Dictionary())) {
 
 		const Dictionary *this = (Dictionary *) self;
 		const Dictionary *that = (Dictionary *) other;
@@ -431,14 +431,25 @@ static void initialize(Class *clazz) {
 	dictionary->objectForKeyPath = objectForKeyPath;
 }
 
-Class _Dictionary = {
-	.name = "Dictionary",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Dictionary),
-	.interfaceOffset = offsetof(Dictionary, interface),
-	.interfaceSize = sizeof(DictionaryInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *Dictionary::_Dictionary(void)
+ * @memberof Dictionary
+ */
+Class *_Dictionary(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "Dictionary";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Dictionary);
+		clazz.interfaceOffset = offsetof(Dictionary, interface);
+		clazz.interfaceSize = sizeof(DictionaryInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class
 

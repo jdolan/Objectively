@@ -184,6 +184,9 @@ struct ThreadInterface {
 };
 
 /**
- * @brief The Thread Class.
+ * @fn Class *Thread::_Thread(void)
+ * @brief The Thread archetype.
+ * @return The Thread Class.
+ * @memberof Thread
  */
-extern Class _Thread;
+OBJECTIVELY_EXPORT Class *_Thread(void);

@@ -241,6 +241,9 @@ struct ArrayInterface {
 };
 
 /**
- * @brief The Array Class.
+ * @fn Class *Array::_Array(void)
+ * @brief The Array archetype.
+ * @return The Array Class.
+ * @memberof Array
  */
-extern Class _Array;
+OBJECTIVELY_EXPORT Class *_Array(void);

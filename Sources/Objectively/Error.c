@@ -163,13 +163,24 @@ static void initialize(Class *clazz) {
 	error->initWithDomain = initWithDomain;
 }
 
-Class _Error = {
-	.name = "Error",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Error),
-	.interfaceOffset = offsetof(Error, interface),
-	.interfaceSize = sizeof(ErrorInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *Error::_Error(void)
+ * @memberof Error
+ */
+Class *_Error(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "Error";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Error);
+		clazz.interfaceOffset = offsetof(Error, interface);
+		clazz.interfaceSize = sizeof(ErrorInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class

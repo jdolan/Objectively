@@ -24,6 +24,7 @@
 #pragma once
 
 #include <Objectively/Types.h>
+#include <Objectively/Once.h>
 
 /**
  * @file
@@ -102,7 +103,7 @@ struct Class {
 	const char *name;
 
 	/**
-	 * @brief The superclass (required). e.g. `&_Object`.
+	 * @brief The superclass (required). e.g. `_Object()`.
 	 */
 	Class *superclass;
 };
@@ -131,28 +132,28 @@ struct ClassDef {
 /**
  * @brief Initializes the given Class.
  */
-extern void _initialize(Class *clazz);
+OBJECTIVELY_EXPORT void _initialize(Class *clazz);
 
 /**
  * @brief Instantiate a type through the given Class.
  */
-extern ident _alloc(Class *clazz);
+OBJECTIVELY_EXPORT ident _alloc(Class *clazz);
 
 /**
  * @brief Perform a type-checking cast.
  */
-extern ident _cast(Class *clazz, const ident obj);
+OBJECTIVELY_EXPORT ident _cast(Class *clazz, const ident obj);
 
 /**
  * @return The Class with the given name, or `NULL` if no such Class has been initialized.
  */
-extern Class *classForName(const char *name);
+OBJECTIVELY_EXPORT Class *classForName(const char *name);
 
 /**
  * @brief Atomically decrement the given Object's reference count. If the
  * resulting reference count is `0`, the Object is deallocated.
  */
-extern void release(ident obj);
+OBJECTIVELY_EXPORT void release(ident obj);
 
 /**
  * @brief Atomically increment the given Object's reference count.
@@ -161,24 +162,24 @@ extern void release(ident obj);
  * and preventing it from being released. Be sure to balance calls to `retain`
  * with calls to `release`.
  */
-extern ident retain(ident obj);
+OBJECTIVELY_EXPORT ident retain(ident obj);
 
 /**
  * @brief The page size, in bytes, of the target host.
  */
-extern size_t _pageSize;
+OBJECTIVELY_EXPORT size_t _pageSize;
 
 /**
  * @brief Allocate and initialize and instance of `type`.
  */
 #define alloc(type) \
-	((type *) _alloc(&_##type))
+	((type *) _alloc(_##type()))
 
 /**
  * @brief Safely cast to a type.
  */
 #define cast(type, obj) \
-	((type *) _cast(&_##type, (const ident) obj))
+	((type *) _cast(_##type(), (const ident) obj))
 
 /**
  * @brief Resolve the Class of an Object instance.
@@ -206,12 +207,12 @@ extern size_t _pageSize;
  */
 #define $$(type, method, ...) \
 	({ \
-		_initialize(&_##type); \
-		interfaceof(type, &_##type)->method(__VA_ARGS__); \
+		_initialize(_##type()); \
+		interfaceof(type, _##type())->method(__VA_ARGS__); \
 	})
 
 /**
  * @brief Invoke a Superclass instance method.
  */
 #define super(type, obj, method, ...) \
-	interfaceof(type, _Class.superclass)->method(cast(type, obj), ## __VA_ARGS__)
+	interfaceof(type, _Class()->superclass)->method(cast(type, obj), ## __VA_ARGS__)

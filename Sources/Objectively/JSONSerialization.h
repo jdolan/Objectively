@@ -97,6 +97,9 @@ struct JSONSerializationInterface {
 };
 
 /**
- * @brief The JSONSerialization Class.
+ * @fn Class *JSONSerialization::_JSONSerialization(void)
+ * @brief The JSONSerialization archetype.
+ * @return The JSONSerialization Class.
+ * @memberof JSONSerialization
  */
-extern Class _JSONSerialization;
+OBJECTIVELY_EXPORT Class *_JSONSerialization(void);

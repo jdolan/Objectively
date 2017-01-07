@@ -43,7 +43,7 @@
  * @param range The Range to hash.
  * @return The accumulated hash value.
  */
-extern int HashForBytes(int hash, const uint8_t *bytes, const Range range);
+OBJECTIVELY_EXPORT int HashForBytes(int hash, const uint8_t *bytes, const Range range);
 
 /**
  * @brief Accumulates the hash value of `chars` into `hash`.
@@ -52,7 +52,7 @@ extern int HashForBytes(int hash, const uint8_t *bytes, const Range range);
  * @param range The Range to hash.
  * @return The accumulated hash value.
  */
-extern int HashForCharacters(int hash, const char *chars, const Range range);
+OBJECTIVELY_EXPORT int HashForCharacters(int hash, const char *chars, const Range range);
 
 /**
  * @brief Accumulates the hash value of the null-terminated `string` into `hash`.
@@ -60,7 +60,7 @@ extern int HashForCharacters(int hash, const char *chars, const Range range);
  * @param chars The null-terminated C string.
  * @return The accumulated hash value.
  */
-extern int HashForCString(int hash, const char *chars);
+OBJECTIVELY_EXPORT int HashForCString(int hash, const char *chars);
 
 /**
  * @brief Accumulates the hash value of `decimal` into `hash`.
@@ -68,7 +68,7 @@ extern int HashForCString(int hash, const char *chars);
  * @param decimal The decimal to hash.
  * @return The accumulated hash value.
  */
-extern int HashForDecimal(int hash, const double decimal);
+OBJECTIVELY_EXPORT int HashForDecimal(int hash, const double decimal);
 
 /**
  * @brief Accumulates the hash value of `integer` into `hash`.
@@ -76,7 +76,7 @@ extern int HashForDecimal(int hash, const double decimal);
  * @param integer The integer to hash.
  * @return The accumulated hash value.
  */
-extern int HashForInteger(int hash, const long integer);
+OBJECTIVELY_EXPORT int HashForInteger(int hash, const long integer);
 
 /**
  * @brief Accumulates the hash value of `object` into `hash`.
@@ -84,4 +84,4 @@ extern int HashForInteger(int hash, const long integer);
  * @param obj The Object to hash.
  * @return The accumulated hash value.
  */
-extern int HashForObject(int hash, const ident obj);
+OBJECTIVELY_EXPORT int HashForObject(int hash, const ident obj);

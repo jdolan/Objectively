@@ -86,13 +86,24 @@ static void initialize(Class *clazz) {
 	numberFormatter->stringFromNumber = stringFromNumber;
 }
 
-Class _NumberFormatter = {
-	.name = "NumberFormatter",
-	.superclass = &_Object,
-	.instanceSize = sizeof(NumberFormatter),
-	.interfaceOffset = offsetof(NumberFormatter, interface),
-	.interfaceSize = sizeof(NumberFormatterInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *NumberFormatter::_NumberFormatter(void)
+ * @memberof NumberFormatter
+ */
+Class *_NumberFormatter(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "NumberFormatter";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(NumberFormatter);
+		clazz.interfaceOffset = offsetof(NumberFormatter, interface);
+		clazz.interfaceSize = sizeof(NumberFormatterInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class

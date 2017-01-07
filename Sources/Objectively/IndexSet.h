@@ -103,7 +103,10 @@ struct IndexSetInterface {
 };
 
 /**
- * @brief The IndexSet Class.
+ * @fn Class *IndexSet::_IndexSet(void)
+ * @brief The IndexSet archetype.
+ * @return The IndexSet Class.
+ * @memberof IndexSet
  */
-extern Class _IndexSet;
+OBJECTIVELY_EXPORT Class *_IndexSet(void);
 

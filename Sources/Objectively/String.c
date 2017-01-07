@@ -93,7 +93,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 		return true;
 	}
 
-	if (other && $(other, isKindOfClass, &_String)) {
+	if (other && $(other, isKindOfClass, _String())) {
 
 		const String *this = (String *) self;
 		const String *that = (String *) other;
@@ -655,14 +655,25 @@ static void initialize(Class *clazz) {
 	string->writeToFile = writeToFile;
 }
 
-Class _String = {
-	.name = "String",
-	.superclass = &_Object,
-	.instanceSize = sizeof(String),
-	.interfaceOffset = offsetof(String, interface),
-	.interfaceSize = sizeof(StringInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *String::_String(void)
+ * @memberof String
+ */
+Class *_String(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "String";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(String);
+		clazz.interfaceOffset = offsetof(String, interface);
+		clazz.interfaceSize = sizeof(StringInterface);
+		clazz.initialize = initialize;
+	});
+	
+	return &clazz;
+}
 
 #undef _Class
 

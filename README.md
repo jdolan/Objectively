@@ -130,13 +130,16 @@ struct HelloInterface {
 };
 ```
 
-3) The class descriptor, serving to tie 1) and 2) together.
+3) The class archetype, serving to tie 1) and 2) together.
 
 ```c
 /**
- * @brief The Hello Class.
+ * @fn Class *Hello::_Hello(void)
+ * @brief The Hello archetype.
+ * @return The Hello Class.
+ * @memberof Hello
  */
-extern Class _Hello;
+OBJECTIVELY_EXPORT Class *_Hello(void);
 ```
 
 Implementing a type
@@ -191,13 +194,24 @@ static void initialize(Class *clazz) {
 	((HelloInterface *) clazz->def->interface)->sayHello = sayHello;
 }
 
-Class _Hello = {
-	.name = "Hello",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Hello),
-	.interfaceOffset = offsetof(Hello, interface),
-	.interfaceSize = sizeof(HelloInterface),
-	.initialize = initialize,
+/**
+ * @fn Class *Hello::_Hello(void)
+ * @memberof Hello
+ */
+Class *_Hello(void) {
+	static Class clazz;
+	static Once once;
+
+	do_once(&once, {
+		clazz.name = "Hello";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Hello);
+		clazz.interfaceOffset = offsetof(Hello, interface);
+		clazz.interfaceSize = sizeof(HelloInterface);
+		clazz.initialize = initialize;
+	});
+ 
+	return &clazz;
 };
     
 #undef _Class
@@ -290,6 +304,15 @@ URLSession *session = $$(URLSession, sharedInstance);
 
 Remember to wire up the desctructor in your Class' initialization block. See [Once.h](Sources/Objectively/Once.h) for details on `do_once`.
     
+Examples & projects using Objectively
+---
+
+1. The Hello example above can be seen [here](Examples/Hello.c).
+1. The [unit tests](Tests/Objectively) provide examples for using every Objectively class.
+1. [ObjectivelyMVC](https://github.com/jdolan/ObjectivelyMVC) is a cross-platform user interface and interaction framework for SDL2 and OpenGL built on Objectively.
+
+![ObjectivelyMVC](https://github.com/jdolan/ObjectivelyMVC/blob/master/Documentation/demo.gif)
+
 Code Templates
 ---
 Objectively provides code templates for Xcode and Eclipse CDT that greatly cut down on the boilerplate required to declare and implement a type. These are _highly recommended_, as they will save you time and reduce errors in type declaration.

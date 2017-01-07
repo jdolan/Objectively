@@ -265,12 +265,24 @@ static void initialize(Class *clazz) {
 	task->teardown = teardown;
 }
 
-Class _URLSessionTask = {
-	.name = "URLSessionTask",
-	.superclass = &_Object,
-	.instanceSize = sizeof(URLSessionTask),
-	.interfaceOffset = offsetof(URLSessionTask, interface),
-	.interfaceSize = sizeof(URLSessionTaskInterface),
-	.initialize = initialize, };
+/**
+ * @fn Class *URLSessionTask::_URLSessionTask(void)
+ * @memberof URLSessionTask
+ */
+Class *_URLSessionTask(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "URLSessionTask";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(URLSessionTask);
+		clazz.interfaceOffset = offsetof(URLSessionTask, interface);
+		clazz.interfaceSize = sizeof(URLSessionTaskInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class

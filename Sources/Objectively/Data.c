@@ -85,7 +85,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 		return true;
 	}
 
-	if (other && $(other, isKindOfClass, &_Data)) {
+	if (other && $(other, isKindOfClass, _Data())) {
 
 		const Data *this = (Data *) self;
 		const Data *that = (Data *) other;
@@ -254,13 +254,24 @@ static void initialize(Class *clazz) {
 	data->writeToFile = writeToFile;
 }
 
-Class _Data = {
-	.name = "Data",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Data),
-	.interfaceOffset = offsetof(Data, interface),
-	.interfaceSize = sizeof(DataInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *Data::_Data(void)
+ * @memberof Data
+ */
+Class *_Data(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "Data";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Data);
+		clazz.interfaceOffset = offsetof(Data, interface);
+		clazz.interfaceSize = sizeof(DataInterface);
+		clazz.initialize = initialize;
+	});;
+
+	return &clazz;
+}
 
 #undef _Class

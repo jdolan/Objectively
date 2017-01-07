@@ -53,11 +53,11 @@ struct timezone
 	_Bool		tz_dsttime;     /* type of dst correction */
 };
 
-extern int gettimeofday(struct timeval *tv, struct timezone *tz);
+int gettimeofday(struct timeval *tv, struct timezone *tz);
 
 // STRING STUFF
-extern int vasprintf(char ** __restrict ret, const char * __restrict format, va_list ap);
-extern char *asprintf(char ** __restrict ret, char * __restrict format, ...);
+int vasprintf(char ** __restrict ret, const char * __restrict format, va_list ap);
+char *asprintf(char ** __restrict ret, char * __restrict format, ...);
 
 #define towupper_l _towupper_l
 #define towlower_l _towlower_l
@@ -90,4 +90,8 @@ extern char *asprintf(char ** __restrict ret, char * __restrict format, ...);
 
 #define iconv(c0, c1, c2, c3, c4) libiconv(c0, (const char **)c1, c2, c3, c4)
 
-#undef interface
+#ifdef BUILDING_OBJECTIVELY
+ #define OBJECTIVELY_EXPORT __declspec(dllexport)
+#else
+ #define OBJECTIVELY_EXPORT __declspec(dllimport)
+#endif

@@ -155,6 +155,9 @@ struct NumberInterface {
 };
 
 /**
- * @brief The Number Class.
+ * @fn Class *Number::_Number(void)
+ * @brief The Number archetype.
+ * @return The Number Class.
+ * @memberof Number
  */
-extern Class _Number;
+OBJECTIVELY_EXPORT Class *_Number(void);

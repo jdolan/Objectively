@@ -200,6 +200,9 @@ struct MutableArrayInterface {
 };
 
 /**
- * @brief The MutableArray Class.
+ * @fn Class *MutableArray::_MutableArray(void)
+ * @brief The MutableArray archetype.
+ * @return The MutableArray Class.
+ * @memberof MutableArray
  */
-extern Class _MutableArray;
+OBJECTIVELY_EXPORT Class *_MutableArray(void);

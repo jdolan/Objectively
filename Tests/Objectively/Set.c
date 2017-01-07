@@ -42,7 +42,7 @@ START_TEST(set)
 		Set *set = $$(Set, setWithObjects, one, two, three, three, NULL);
 
 		ck_assert(set != NULL);
-		ck_assert_ptr_eq(&_Set, classof(set));
+		ck_assert_ptr_eq(_Set(), classof(set));
 
 		ck_assert_int_eq(3, set->count);
 

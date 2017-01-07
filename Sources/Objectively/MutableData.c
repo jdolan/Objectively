@@ -177,13 +177,24 @@ static void initialize(Class *clazz) {
 	mutableData->setLength = setLength;
 }
 
-Class _MutableData = {
-	.name = "MutableData",
-	.superclass = &_Data,
-	.instanceSize = sizeof(MutableData),
-	.interfaceOffset = offsetof(MutableData, interface),
-	.interfaceSize = sizeof(MutableDataInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *MutableData::_MutableData(void)
+ * @memberof MutableData
+ */
+Class *_MutableData(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "MutableData";
+		clazz.superclass = _Data();
+		clazz.instanceSize = sizeof(MutableData);
+		clazz.interfaceOffset = offsetof(MutableData, interface);
+		clazz.interfaceSize = sizeof(MutableDataInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class

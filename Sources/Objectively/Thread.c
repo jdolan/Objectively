@@ -202,13 +202,24 @@ static void initialize(Class *clazz) {
 	thread->start = start;
 }
 
-Class _Thread = {
-	.name = "Thread",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Thread),
-	.interfaceOffset = offsetof(Thread, interface),
-	.interfaceSize = sizeof(ThreadInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *Thread::_Thread(void)
+ * @memberof Thread
+ */
+Class *_Thread(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "Thread";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Thread);
+		clazz.interfaceOffset = offsetof(Thread, interface);
+		clazz.interfaceSize = sizeof(ThreadInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class

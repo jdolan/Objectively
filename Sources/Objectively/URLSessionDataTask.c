@@ -96,13 +96,24 @@ static void initialize(Class *clazz) {
 	sessionTask->setup = setup;
 }
 
-Class _URLSessionDataTask = {
-	.name = "URLSessionDataTask",
-	.superclass = &_URLSessionTask,
-	.instanceSize = sizeof(URLSessionDataTask),
-	.interfaceOffset = offsetof(URLSessionDataTask, interface),
-	.interfaceSize = sizeof(URLSessionDataTaskInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *URLSessionDataTask::_URLSessionDataTask(void)
+ * @memberof URLSessionDataTask
+ */
+Class *_URLSessionDataTask(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "URLSessionDataTask";
+		clazz.superclass = _URLSessionTask();
+		clazz.instanceSize = sizeof(URLSessionDataTask);
+		clazz.interfaceOffset = offsetof(URLSessionDataTask, interface);
+		clazz.interfaceSize = sizeof(URLSessionDataTaskInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class

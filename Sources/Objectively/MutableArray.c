@@ -320,13 +320,24 @@ static void initialize(Class *clazz) {
 	mutableArray->sort = sort;
 }
 
-Class _MutableArray = {
-	.name = "MutableArray",
-	.superclass = &_Array,
-	.instanceSize = sizeof(MutableArray),
-	.interfaceOffset = offsetof(MutableArray, interface),
-	.interfaceSize = sizeof(MutableArrayInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *MutableArray::_MutableArray(void)
+ * @memberof MutableArray
+ */
+Class *_MutableArray(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "MutableArray";
+		clazz.superclass = _Array();
+		clazz.instanceSize = sizeof(MutableArray);
+		clazz.interfaceOffset = offsetof(MutableArray, interface);
+		clazz.interfaceSize = sizeof(MutableArrayInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class

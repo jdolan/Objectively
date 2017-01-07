@@ -30,7 +30,7 @@ START_TEST(string)
 		MutableString *string = $$(MutableString, string);
 
 		ck_assert(string != NULL);
-		ck_assert_ptr_eq(&_MutableString, classof(string));
+		ck_assert_ptr_eq(_MutableString(), classof(string));
 
 		String *hello = str("hello");
 
@@ -49,7 +49,7 @@ START_TEST(string)
 		ck_assert_str_eq("goodbye  cruel  world!", string->string.chars);
 
 		String *copy = (String *) $((Object * ) string, copy);
-		ck_assert(classof(copy) == &_MutableString);
+		ck_assert_ptr_eq(_MutableString(), classof(copy));
 		ck_assert($((Object *) string, isEqual, (Object *) copy));
 
 		release(hello);

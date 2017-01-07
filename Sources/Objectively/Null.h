@@ -73,6 +73,9 @@ struct NullInterface {
 };
 
 /**
- * @brief The Null Class.
+ * @fn Class *Null::_Null(void)
+ * @brief The Null archetype.
+ * @return The Null Class.
+ * @memberof Null
  */
-extern Class _Null;
+OBJECTIVELY_EXPORT Class *_Null(void);

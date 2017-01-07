@@ -207,6 +207,9 @@ struct LogInterface {
 };
 
 /**
- * @brief The Log Class.
+ * @fn Class *Log::_Log(void)
+ * @brief The Log archetype.
+ * @return The Log Class.
+ * @memberof Log
  */
-extern Class _Log;
+OBJECTIVELY_EXPORT Class *_Log(void);

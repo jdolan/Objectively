@@ -99,7 +99,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 		return true;
 	}
 
-	if (other && $(other, isKindOfClass, &_Array)) {
+	if (other && $(other, isKindOfClass, _Array())) {
 
 		const Array *this = (Array *) self;
 		const Array *that = (Array *) other;
@@ -439,13 +439,24 @@ static void initialize(Class *clazz) {
 	array->sortedArray = sortedArray;
 }
 
-Class _Array = {
-	.name = "Array",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Array),
-	.interfaceOffset = offsetof(Array, interface),
-	.interfaceSize = sizeof(ArrayInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *Array::_Array(void)
+ * @memberof Array
+ */
+Class *_Array(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "Array";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Array);
+		clazz.interfaceOffset = offsetof(Array, interface);
+		clazz.interfaceSize = sizeof(ArrayInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class
