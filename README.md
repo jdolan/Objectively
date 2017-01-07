@@ -304,6 +304,15 @@ URLSession *session = $$(URLSession, sharedInstance);
 
 Remember to wire up the desctructor in your Class' initialization block. See [Once.h](Sources/Objectively/Once.h) for details on `do_once`.
     
+Examples & projects using Objectively
+---
+
+1. The Hello example above can be seen [here](Examples/Hello.c).
+1. The [unit tests](Tests/Objectively) provide examples for using every Objectively class.
+1. [ObjectivelyMVC](https://github.com/jdolan/ObjectivelyMVC) is a cross-platform user interface and interaction framework for SDL2 and OpenGL built on Objectively.
+
+![Hello](Documentation/demo.gif)
+
 Code Templates
 ---
 Objectively provides code templates for Xcode and Eclipse CDT that greatly cut down on the boilerplate required to declare and implement a type. These are _highly recommended_, as they will save you time and reduce errors in type declaration.
