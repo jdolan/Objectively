@@ -311,7 +311,7 @@ Examples & projects using Objectively
 1. The [unit tests](Tests/Objectively) provide examples for using every Objectively class.
 1. [ObjectivelyMVC](https://github.com/jdolan/ObjectivelyMVC) is a cross-platform user interface and interaction framework for SDL2 and OpenGL built on Objectively.
 
-![Hello](Documentation/demo.gif)
+![ObjectivelyMVC](https://github.com/jdolan/ObjectivelyMVC/blob/master/Documentation/demo.gif)
 
 Code Templates
 ---
