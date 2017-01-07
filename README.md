@@ -130,7 +130,7 @@ struct HelloInterface {
 };
 ```
 
-3) The class descriptor, serving to tie 1) and 2) together.
+3) The class archetype, serving to tie 1) and 2) together.
 
 ```c
 /**
@@ -194,13 +194,24 @@ static void initialize(Class *clazz) {
 	((HelloInterface *) clazz->def->interface)->sayHello = sayHello;
 }
 
-Class _Hello = {
-	.name = "Hello",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Hello),
-	.interfaceOffset = offsetof(Hello, interface),
-	.interfaceSize = sizeof(HelloInterface),
-	.initialize = initialize,
+/**
+ * @fn Class *Hello::_Hello(void)
+ * @memberof Hello
+ */
+Class *_Hello(void) {
+	static Class clazz;
+	static Once once;
+
+	do_once(&once, {
+		clazz.name = "Hello";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Hello);
+		clazz.interfaceOffset = offsetof(Hello, interface);
+		clazz.interfaceSize = sizeof(HelloInterface);
+		clazz.initialize = initialize;
+	});
+ 
+	return &clazz;
 };
     
 #undef _Class
