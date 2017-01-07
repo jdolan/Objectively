@@ -255,15 +255,15 @@ static Array *filteredArray(const Array *self, Predicate predicate, ident data) 
  * @memberof Array
  */
 static ident findObject(const Array *self, Predicate predicate, ident data) {
-	
+
 	assert(predicate);
-	
+
 	for (size_t i = 0; i < self->count; i++) {
 		if (predicate(self->elements[i], data)) {
 			return self->elements[i];
 		}
 	}
-	
+
 	return NULL;
 }
 
@@ -272,7 +272,7 @@ static ident findObject(const Array *self, Predicate predicate, ident data) {
  * @memberof Array
  */
 static ident firstObject(const Array *self) {
-	
+
 	return self->count ? $(self, objectAtIndex, 0) : NULL;
 }
 
@@ -360,7 +360,7 @@ static Array *initWithObjects(Array *self, ...) {
  * @memberof Array
  */
 static ident lastObject(const Array *self) {
-	
+
 	return self->count ? $(self, objectAtIndex, self->count - 1) : NULL;
 }
 
@@ -398,7 +398,7 @@ static Array *sortedArray(const Array *self, Comparator comparator) {
 	assert(comparator);
 
 	MutableArray *array = $(self, mutableCopy);
-	
+
 	$(array, sort, comparator);
 
 	return (Array *) array;
@@ -446,7 +446,7 @@ static void initialize(Class *clazz) {
 Class *_Array(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "Array";
 		clazz.superclass = _Object();

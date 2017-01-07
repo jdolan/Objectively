@@ -256,7 +256,7 @@ static void initialize(Class *clazz) {
 Class *_OperationQueue(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "OperationQueue";
 		clazz.superclass = _Object();

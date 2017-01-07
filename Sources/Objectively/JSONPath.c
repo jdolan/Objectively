@@ -66,7 +66,7 @@ static ident objectForKeyPath(const ident root, const char *path) {
 
 			const Dictionary *dictionary = cast(Dictionary, obj);
 			const Range range = { .location = 1, .length = segment->length - 1 };
-			
+
 			String *key = $(segment, substring, range);
 
 			obj = $(dictionary, objectForKey, key);
@@ -118,7 +118,7 @@ static void destroy(Class *clazz) {
 Class *_JSONPath(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "JSONPath";
 		clazz.superclass = _Object();

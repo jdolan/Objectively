@@ -158,7 +158,7 @@ struct ArrayInterface {
 	 * @memberof Array
 	 */
 	Array *(*filteredArray)(const Array *self, Predicate predicate, ident data);
-	
+
 	/**
 	 * @fn ident Array::findObject(const Array *self, Predicate predicate, ident data)
 	 * @param self The Array.
@@ -168,7 +168,7 @@ struct ArrayInterface {
 	 * @memberof Array
 	 */
 	ident (*findObject)(const Array *self, Predicate predicate, ident data);
-	
+
 	/**
 	 * @fn ident Array::firstObject(const Array *self)
 	 * @param self The Array.
@@ -176,7 +176,7 @@ struct ArrayInterface {
 	 * @memberof Array
 	 */
 	ident (*firstObject)(const Array *self);
-	
+
 	/**
 	 * @fn ssize_t Array::indexOfObject(const Array *self, const ident obj)
 	 * @param self The Array.
@@ -212,7 +212,7 @@ struct ArrayInterface {
 	 * @memberof Array
 	 */
 	ident (*lastObject)(const Array *self);
-	
+
 	/**
 	 * @fn MutableArray *Array::mutableCopy(const Array *self)
 	 * @param self The Array.

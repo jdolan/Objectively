@@ -62,7 +62,7 @@ static void initialize(Class *clazz) {
 Class *_URLSessionConfiguration(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "URLSessionConfiguration";
 		clazz.superclass = _Object();

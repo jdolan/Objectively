@@ -186,8 +186,8 @@ struct OperationInterface {
 	 * @fn void Operation::start(Operation *self)
 	 * @brief Starts this Operation.
 	 * @param self The Operation.
-	 * @remarks The default implementation of this method checks the state of the Operation and, if 
-	 * all criteria are met, dispatches the configured `function` synchronously. When this method 
+	 * @remarks The default implementation of this method checks the state of the Operation and, if
+	 * all criteria are met, dispatches the configured `function` synchronously. When this method
 	 * returns, the Operation `isFinished` and has removed itself from any queues it belonged to.
 	 * @remarks Asynchronous Operations should override this method and coordinate their own state
 	 * transitions and queue removal. This method should _not_ be invoked by `super`.

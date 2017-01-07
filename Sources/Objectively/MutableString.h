@@ -94,7 +94,7 @@ struct MutableStringInterface {
 	 * @memberof MutableString
 	 */
 	void (*appendString)(MutableString *self, const String *string);
-	
+
 	/**
 	 * @fn void MutableString::appendVaList(MutableString *self, const char *fmt, va_list args)
 	 * @brief Appends the specified format string.
@@ -152,7 +152,7 @@ struct MutableStringInterface {
 	 * @memberof MutableString
 	 */
 	void (*insertCharactersAtIndex)(MutableString *self, const char *chars, size_t index);
-	
+
 	/**
 	 * @fn void MutableString::insertStringAtIndex(MutableString *self, const String *string, size_t index)
 	 * @brief Inserts the specified String at the given index.
@@ -162,7 +162,7 @@ struct MutableStringInterface {
 	 * @memberof MutableString
 	 */
 	void (*insertStringAtIndex)(MutableString *self, const String *string, size_t index);
-	
+
 	/**
 	 * @fn void MutableString::replaceCharactersInRange(MutableString *self, const Range range, const char *chars)
 	 * @brief Replaces the characters in `range` with the given characters.

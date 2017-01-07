@@ -81,11 +81,11 @@ static Object *copy(const Object *self) {
  * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
-	
+
 	IndexSet *this = (IndexSet *) self;
 
 	free(this->indexes);
-	
+
 	super(Object, self, dealloc);
 }
 
@@ -132,7 +132,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 	if (super(Object, self, isEqual, other)) {
 		return true;
 	}
-	
+
 	if (other && $(other, isKindOfClass, _IndexSet())) {
 
 		const IndexSet *this = (IndexSet *) self;
@@ -176,7 +176,7 @@ static IndexSet *initWithIndex(IndexSet *self, size_t index) {
  * @memberof IndexSet
  */
 static IndexSet *initWithIndexes(IndexSet *self, size_t *indexes, size_t count) {
-	
+
 	self = (IndexSet *) super(Object, self, init);
 	if (self) {
 
@@ -189,7 +189,7 @@ static IndexSet *initWithIndexes(IndexSet *self, size_t *indexes, size_t count) 
 			memcpy(self->indexes, indexes, sizeof(size_t) * self->count);
 		}
 	}
-	
+
 	return self;
 }
 
@@ -218,7 +218,7 @@ static void initialize(Class *clazz) {
 Class *_IndexSet(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "IndexSet";
 		clazz.superclass = _Object();

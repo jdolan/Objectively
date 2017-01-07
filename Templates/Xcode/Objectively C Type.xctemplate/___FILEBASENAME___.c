@@ -18,9 +18,9 @@
  * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
-	
+
 	//..
-	
+
 	super(Object, self, dealloc);
 }
 
@@ -31,13 +31,13 @@ static void dealloc(Object *self) {
  * @memberof ___FILEBASENAMEASIDENTIFIER___
  */
 static ___FILEBASENAMEASIDENTIFIER___ *init(___FILEBASENAMEASIDENTIFIER___ *self) {
-	
+
 	self = (___FILEBASENAMEASIDENTIFIER___ *) super(___VARIABLE_superclass:identifier___, self, init);
 	if (self) {
-		
+
 		//..
 	}
-	
+
 	return self;
 }
 
@@ -49,11 +49,11 @@ static ___FILEBASENAMEASIDENTIFIER___ *init(___FILEBASENAMEASIDENTIFIER___ *self
  * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
-	
+
 	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
-	
+
 	((___FILEBASENAMEASIDENTIFIER___Interface *) clazz->def->interface)->init = init;
-	
+
 	//..
 }
 

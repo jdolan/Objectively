@@ -68,7 +68,7 @@ struct Class {
 	/**
 	 * @brief The Class initializer (optional).
 	 * @details Objectively invokes your Class initializer the first time your Class is required;
-	 * either via `_alloc`, or via static method invocation. The Class initializer is responsible 
+	 * either via `_alloc`, or via static method invocation. The Class initializer is responsible
 	 * for populating the Class' `interface` with valid method implementations:
 	 * ```
 	 * static void initialize(Class *clazz) {
@@ -77,7 +77,7 @@ struct Class {
 	 * }
 	 * ```
 	 * @remarks Each Class' `interface` is copied from its superclass before this initializer is
-	 * called. Therefore, only overridden methods, and methods unique to the Class itself, must be 
+	 * called. Therefore, only overridden methods, and methods unique to the Class itself, must be
 	 * set via `initialize`.
 	 */
 	void (*initialize)(Class *clazz);

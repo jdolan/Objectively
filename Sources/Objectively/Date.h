@@ -104,7 +104,7 @@ struct DateInterface {
 	 * @memberof Date
 	 */
 	Order (*compareTo)(const Date *self, const Date *other);
-	
+
 	/**
 	 * @static
 	 * @fn Date *Date::date(void)
@@ -113,7 +113,7 @@ struct DateInterface {
 	 * @memberof Date
 	 */
 	Date *(*date)(void);
-	
+
 	/**
 	 * @static
 	 * @fn Date *Date::dateWithTimeSinceNow(const Time interval)

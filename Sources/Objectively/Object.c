@@ -43,7 +43,7 @@ static Object *copy(const Object *self) {
 
 	Object *object = memcpy(obj, self, self->clazz->instanceSize);
 	object->referenceCount = 1;
-	
+
 	return object;
 }
 
@@ -136,7 +136,7 @@ static void initialize(Class *clazz) {
 Class *_Object(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "Object";
 		clazz.instanceSize = sizeof(Object);

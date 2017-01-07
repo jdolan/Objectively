@@ -275,14 +275,14 @@ static void initWithSet_enumerator(const Set *set, ident obj, ident data) {
  * @memberof Set
  */
 static Set *initWithSet(Set *self, const Set *set) {
-	
+
 	self = (Set *) super(Object, self, init);
 	if (self) {
 		if (set) {
 			$(set, enumerateObjects, initWithSet_enumerator, self);
 		}
 	}
-	
+
 	return self;
 }
 
@@ -363,7 +363,7 @@ static void initialize(Class *clazz) {
 Class *_Set(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "Set";
 		clazz.superclass = _Object();

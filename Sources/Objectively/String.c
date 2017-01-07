@@ -662,7 +662,7 @@ static void initialize(Class *clazz) {
 Class *_String(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "String";
 		clazz.superclass = _Object();
@@ -671,7 +671,7 @@ Class *_String(void) {
 		clazz.interfaceSize = sizeof(StringInterface);
 		clazz.initialize = initialize;
 	});
-	
+
 	return &clazz;
 }
 

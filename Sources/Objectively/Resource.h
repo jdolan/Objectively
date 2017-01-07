@@ -38,12 +38,12 @@ typedef struct ResourceInterface ResourceInterface;
  * @extends Object
  */
 struct Resource {
-	
+
 	/**
 	 * @brief The superclass.
 	 */
 	Object object;
-	
+
 	/**
 	 * @brief The interface.
 	 * @protected
@@ -65,7 +65,7 @@ struct Resource {
  * @brief The Resource interface.
  */
 struct ResourceInterface {
-	
+
 	/**
 	 * @brief The superclass interface.
 	 */
@@ -80,7 +80,7 @@ struct ResourceInterface {
 	 * @memberof Resource
 	 */
 	void (*addResourcePath)(const char *path);
-	
+
 	/**
 	 * @fn Resource *Resource::initWithData(Resource *self, Data *data, const char *name)
 	 * @brief Initializes this Resource with the specified Data.

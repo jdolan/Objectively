@@ -38,12 +38,12 @@ typedef struct IndexSetInterface IndexSetInterface;
  * @extends Object
  */
 struct IndexSet {
-	
+
 	/**
 	 * @brief The superclass.
 	 */
 	Object object;
-	
+
 	/**
 	 * @brief The interface.
 	 * @protected
@@ -65,7 +65,7 @@ struct IndexSet {
  * @brief The IndexSet interface.
  */
 struct IndexSetInterface {
-	
+
 	/**
 	 * @brief The superclass interface.
 	 */

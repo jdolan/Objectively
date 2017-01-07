@@ -203,7 +203,7 @@ static void initialize(Class *clazz) {
 Class *_Regex(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "Regex";
 		clazz.superclass = _Object();

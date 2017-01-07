@@ -50,16 +50,16 @@ static NumberFormatter *initWithFormat(NumberFormatter *self, const char *fmt) {
  * @memberof NumberFormatter
  */
 static Number *numberFromString(const NumberFormatter *self, const String *string) {
-	
+
 	if (string) {
 		double value;
-		
+
 		const int res = sscanf(string->chars, self->fmt, &value);
 		if (res == 1) {
 			return $(alloc(Number), initWithValue, value);
 		}
 	}
-	
+
 	return NULL;
 }
 
@@ -93,7 +93,7 @@ static void initialize(Class *clazz) {
 Class *_NumberFormatter(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "NumberFormatter";
 		clazz.superclass = _Object();

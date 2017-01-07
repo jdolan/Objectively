@@ -40,7 +40,7 @@ static MutableArray *_resourcePaths;
  * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
-	
+
 	Resource *this = (Resource *) self;
 
 	release(this->data);
@@ -70,7 +70,7 @@ static void addResourcePath(const char *path) {
  * @memberof Resource
  */
 static Resource *initWithData(Resource *self, Data *data, const char *name) {
-	
+
 	self = (Resource *) super(Object, self, init);
 	if (self) {
 		assert(data);
@@ -79,7 +79,7 @@ static Resource *initWithData(Resource *self, Data *data, const char *name) {
 		assert(name);
 		self->name = strdup(name);
 	}
-	
+
 	return self;
 }
 
@@ -135,7 +135,7 @@ static Resource *resourceWithName(const char *name) {
  * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
-	
+
 	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
 
 	((ResourceInterface *) clazz->def->interface)->addResourcePath = addResourcePath;
@@ -166,7 +166,7 @@ static void destroy(Class *clazz) {
 Class *_Resource(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "Resource";
 		clazz.superclass = _Object();

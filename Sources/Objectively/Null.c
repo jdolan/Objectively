@@ -46,9 +46,9 @@ static Null *_null;
  * @memberof Null
  */
 static Null *null(void) {
-	
+
 	static Once once;
-	
+
 	do_once(&once, {
 		_null = (Null *) $((Object *) alloc(Null), init);
 	});
@@ -83,7 +83,7 @@ static void destroy(Class *clazz) {
 Class *_Null(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "Null";
 		clazz.superclass = _Object();

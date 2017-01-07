@@ -48,7 +48,7 @@ int gettimeofday(struct timeval *tv, struct timezone *tz)
 
 		/*converting file time to unix epoch*/
 		tmpres /= 10;  /*convert into microseconds*/
-		tmpres -= DELTA_EPOCH_IN_MICROSECS; 
+		tmpres -= DELTA_EPOCH_IN_MICROSECS;
 		tv->tv_sec = (int32_t)(tmpres * 0.000001);
 		tv->tv_usec = (tmpres % 1000000);
 	}
@@ -101,13 +101,13 @@ int vasprintf(char ** __restrict ret, const char * __restrict format, va_list ap
 
 char *asprintf(char ** __restrict ret, char * __restrict format, ...)
 {
-	va_list ap; 
+	va_list ap;
 	int len;
 
 	if (!format)
 		return NULL;
 
-	va_start(ap, format); 
+	va_start(ap, format);
 
 	/* Get Length */
 	len = _vscprintf(format, ap);

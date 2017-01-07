@@ -111,12 +111,12 @@ static void appendString(MutableString *self, const String *string) {
  */
 static void appendVaList(MutableString *self, const char *fmt, va_list args) {
 	char *chars;
-	
+
 	const int len = vasprintf(&chars, fmt, args);
 	if (len > 0) {
 		$(self, appendCharacters, chars);
 	}
-	
+
 	free(chars);
 }
 
@@ -142,7 +142,7 @@ static void deleteCharactersInRange(MutableString *self, const Range range) {
  * @memberof MutableString
  */
 static MutableString *init(MutableString *self) {
-	
+
 	return $(self, initWithCapacity, 0);
 }
 
@@ -151,17 +151,17 @@ static MutableString *init(MutableString *self) {
  * @memberof MutableString
  */
 static MutableString *initWithCapacity(MutableString *self, size_t capacity) {
-	
+
 	self = (MutableString *) super(String, self, initWithMemory, NULL, 0);
 	if (self) {
 		if (capacity) {
 			self->string.chars = calloc(capacity, sizeof(char));
 			assert(self->string.chars);
-			
+
 			self->capacity = capacity;
 		}
 	}
-	
+
 	return self;
 }
 
@@ -184,9 +184,9 @@ static MutableString *initWithString(MutableString *self, const String *string) 
  * @memberof MutableString
  */
 static void insertCharactersAtIndex(MutableString *self, const char *chars, size_t index) {
-	
+
 	const Range range = { .location = index };
-	
+
 	$(self, replaceCharactersInRange, range, chars);
 }
 
@@ -195,7 +195,7 @@ static void insertCharactersAtIndex(MutableString *self, const char *chars, size
  * @memberof MutableString
  */
 static void insertStringAtIndex(MutableString *self, const String *string, size_t index) {
-	
+
 	$(self, insertCharactersAtIndex, string->chars, index);
 }
 
@@ -215,7 +215,7 @@ static void replaceCharactersInRange(MutableString *self, const Range range, con
 
 	$(self, appendCharacters, chars);
 	$(self, appendCharacters, remainder);
-	
+
 	free(remainder);
 }
 
@@ -263,7 +263,7 @@ static void replaceOccurrencesOfStringInRange(MutableString *self, const String 
  * @memberof MutableString
  */
 static void replaceStringInRange(MutableString *self, const Range range, const String *string) {
-	
+
 	$(self, replaceCharactersInRange, range, string->chars);
 }
 
@@ -323,7 +323,7 @@ static void initialize(Class *clazz) {
 Class *_MutableString(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "MutableString";
 		clazz.superclass = _String();
@@ -339,14 +339,14 @@ Class *_MutableString(void) {
 #undef _Class
 
 MutableString *mstr(const char *fmt, ...) {
-	
+
 	MutableString *string = $$(MutableString, string);
-	
+
 	va_list args;
 	va_start(args, fmt);
-	
+
 	$(string, appendVaList, fmt, args);
-	
+
 	va_end(args);
 	return string;
 }

@@ -210,13 +210,13 @@ static Log *_sharedInstance;
  * @memberof Log
  */
 static Log *sharedInstance(void) {
-	
+
 	static Once once;
-	
+
 	do_once(&once, {
 		_sharedInstance = $(alloc(Log), init);
 	});
-	
+
 	return _sharedInstance;
 }
 
@@ -289,7 +289,7 @@ static void destroy(Class *clazz) {
 Class *_Log(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "Log";
 		clazz.superclass = _Object();

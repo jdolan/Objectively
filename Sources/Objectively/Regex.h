@@ -104,8 +104,8 @@ struct RegexInterface {
 	 * @param matches An optional pointer to return matched sub-expressions.
 	 * @return `true` if this Regex matched `chars`, `false` otherwise.
 	 * @remarks If provided, `matches` will be dynamically allocated and contain
-	 * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the Range of `chars` that 
-	 * matched the entire pattern. `matches[1..n]` will identify the Range of each corresponding 
+	 * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the Range of `chars` that
+	 * matched the entire pattern. `matches[1..n]` will identify the Range of each corresponding
 	 * sub-expression. The caller must free `matches` when done with it.
 	 * @see regexec(3)
 	 * @memberof Regex
@@ -121,8 +121,8 @@ struct RegexInterface {
 	 * @param matches An optional pointer to return matched sub-expressions.
 	 * @return `true` if this expression matches `string`, `false` otherwise.
 	 * @remarks If provided, `matches` will be dynamically allocated and contain
-	 * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the Range of `chars` that 
-	 * matched the entire pattern. `matches[1..n]` will identify the Range of each corresponding 
+	 * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the Range of `chars` that
+	 * matched the entire pattern. `matches[1..n]` will identify the Range of each corresponding
 	 * sub-expression. The caller must free `matches` when done with it.
 	 * @memberof Regex
 	 */

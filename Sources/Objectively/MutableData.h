@@ -88,7 +88,7 @@ struct MutableDataInterface {
 	 * @memberof MutableData
 	 */
 	void (*appendData)(MutableData *self, const Data *data);
-	
+
 	/**
 	 * @static
 	 * @fn MutableData *MutableData::data(void)
@@ -97,7 +97,7 @@ struct MutableDataInterface {
 	 * @memberof MutableData
 	 */
 	MutableData *(*data)(void);
-	
+
 	/**
 	 * @static
 	 * @fn MutableData *MutableData::dataWithCapacity(size_t capacity)
@@ -107,7 +107,7 @@ struct MutableDataInterface {
 	 * @memberof MutableData
 	 */
 	MutableData *(*dataWithCapacity)(size_t capacity);
-	
+
 	/**
 	 * @fn MutableData *MutableData::init(MutableData *self)
 	 * @brief Initializes this Data with length `0`.

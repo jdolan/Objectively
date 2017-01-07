@@ -108,7 +108,7 @@ static void addObjectsFromArray(MutableArray *self, const Array *array) {
  * @memberof MutableArray
  */
 static MutableArray *array(void) {
-	
+
 	return $(alloc(MutableArray), init);
 }
 
@@ -117,7 +117,7 @@ static MutableArray *array(void) {
  * @memberof MutableArray
  */
 static MutableArray *arrayWithCapacity(size_t capacity) {
-	
+
 	return $(alloc(MutableArray), initWithCapacity, capacity);
 }
 
@@ -248,7 +248,7 @@ static int _sort(void *data, const void *a, const void *b) {
 
 /**
  * @fn void MutableArray::sort(MutableArray *self, Comparator comparator)
- * 
+ *
  * @memberof MutableArray
  */
 static void sort(MutableArray *self, Comparator comparator) {
@@ -327,7 +327,7 @@ static void initialize(Class *clazz) {
 Class *_MutableArray(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "MutableArray";
 		clazz.superclass = _Array();

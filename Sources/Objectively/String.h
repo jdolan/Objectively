@@ -59,8 +59,8 @@ typedef struct StringInterface StringInterface;
 
 /**
  * @brief Immutable UTF-8 strings.
- * @remarks Because Strings are encoded using UTF-8, they must not be treated as ASCII C strings. 
- * That is, a single Unicode code point will often span multiple `char`s. Be mindful of this when 
+ * @remarks Because Strings are encoded using UTF-8, they must not be treated as ASCII C strings.
+ * That is, a single Unicode code point will often span multiple `char`s. Be mindful of this when
  * executing Range operations.
  * @extends Object
  * @ingroup ByteStreams
@@ -403,7 +403,7 @@ OBJECTIVELY_EXPORT Class *_String(void);
 /**
  * @param encoding A StringEncoding.
  * @return The canonical name for the given encoding.
- * 
+ *
  * @relates String
  */
 OBJECTIVELY_EXPORT const char *NameForStringEncoding(StringEncoding encoding);

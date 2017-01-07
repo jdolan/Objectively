@@ -133,7 +133,7 @@ static void initialize(Class *clazz) {
 Class *_Lock(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "Lock";
 		clazz.superclass = _Object();

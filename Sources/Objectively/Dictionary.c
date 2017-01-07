@@ -202,7 +202,7 @@ static Array *allObjects(const Dictionary *self) {
  * @memberof Dictionary
  */
 static Dictionary *dictionaryWithDictionary(const Dictionary *dictionary) {
-	
+
 	return $(alloc(Dictionary), initWithDictionary, dictionary);
 }
 
@@ -211,24 +211,24 @@ static Dictionary *dictionaryWithDictionary(const Dictionary *dictionary) {
  * @memberof Dictionary
  */
 static Dictionary *dictionaryWithObjectsAndKeys(ident obj, ...) {
-	
+
 	Dictionary *dict = (Dictionary *) $((Object *) alloc(Dictionary), init);
 	if (dict) {
-		
+
 		va_list args;
 		va_start(args, obj);
-		
+
 		while (obj) {
 			ident key = va_arg(args, ident);
-			
+
 			$$(MutableDictionary, setObjectForKey, (MutableDictionary *) dict, obj, key);
-			
+
 			obj = va_arg(args, ident);
 		}
-		
+
 		va_end(args);
 	}
-	
+
 	return dict;
 }
 
@@ -391,7 +391,7 @@ static ident objectForKey(const Dictionary *self, const ident key) {
 static ident objectForKeyPath(const Dictionary *self, const char *path) {
 
 	assert(path);
-	
+
 	String *key = str(path);
 
 	ident obj = $(self, objectForKey, key);
@@ -438,7 +438,7 @@ static void initialize(Class *clazz) {
 Class *_Dictionary(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "Dictionary";
 		clazz.superclass = _Object();

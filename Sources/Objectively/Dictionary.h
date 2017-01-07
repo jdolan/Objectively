@@ -91,7 +91,7 @@ struct DictionaryInterface {
 	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
-	
+
 	/**
 	 * @fn Array *Dictionary::allKeys(const Dictionary *self)
 	 * @param self The Dictionary.
@@ -107,7 +107,7 @@ struct DictionaryInterface {
 	 * @memberof Dictionary
 	 */
 	Array *(*allObjects)(const Dictionary *self);
-	
+
 	/**
 	 * @static
 	 * @fn Dictionary *Dictionary::dictionaryWithDictionary(const Dictionary *dictionary)
@@ -117,7 +117,7 @@ struct DictionaryInterface {
 	 * @memberof Dictionary
 	 */
 	Dictionary *(*dictionaryWithDictionary)(const Dictionary *dictionary);
-	
+
 	/**
 	 * @static
 	 * @fn Dictionary *Dictionary::dictionaryWithObjectsAndKeys(ident obj, ...)

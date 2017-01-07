@@ -253,7 +253,7 @@ static void destroy(Class *clazz) {
 Class *_URL(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "URL";
 		clazz.superclass = _Object();

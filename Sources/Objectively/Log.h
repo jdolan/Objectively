@@ -190,7 +190,7 @@ struct LogInterface {
 	 * @memberof Log
 	 */
 	Log *(*sharedInstance)(void);
-	
+
 	/**
 	 * @fn void Log::trace(const Log *self, const char *fmt, ...)
 	 * @brief Log a trace message.

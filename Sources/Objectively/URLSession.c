@@ -295,9 +295,9 @@ static URLSession *_sharedInstance;
  * @memberof URLSession
  */
 static URLSession *sharedInstance(void) {
-	
+
 	static Once once;
-	
+
 	do_once(&once, {
 		_sharedInstance = $(alloc(URLSession), init);
 	});
@@ -380,7 +380,7 @@ static void destroy(Class *clazz) {
 Class *_URLSession(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "URLSession";
 		clazz.superclass = _Object();

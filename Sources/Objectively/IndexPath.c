@@ -48,11 +48,11 @@ static Object *copy(const Object *self) {
  * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
-	
+
 	IndexPath *this = (IndexPath *) self;
 
 	free(this->indexes);
-	
+
 	super(Object, self, dealloc);
 }
 
@@ -99,7 +99,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 	if (super(Object, self, isEqual, other)) {
 		return true;
 	}
-	
+
 	if (other && $(other, isKindOfClass, _IndexPath())) {
 
 		const IndexPath *this = (IndexPath *) self;
@@ -139,19 +139,19 @@ static IndexPath *initWithIndex(IndexPath *self, size_t index) {
  * @memberof IndexPath
  */
 static IndexPath *initWithIndexes(IndexPath *self, size_t *indexes, size_t length) {
-	
+
 	self = (IndexPath *) super(Object, self, init);
 	if (self) {
 
 		self->length = length;
 		assert(self->length);
-		
+
 		self->indexes = calloc(sizeof(size_t), length);
 		assert(self->indexes);
 
 		memcpy(self->indexes, indexes, sizeof(size_t) * length);
 	}
-	
+
 	return self;
 }
 
@@ -180,7 +180,7 @@ static void initialize(Class *clazz) {
 Class *_IndexPath(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "IndexPath";
 		clazz.superclass = _Object();

@@ -43,12 +43,12 @@ typedef void (*ValueDestructor)(ident value);
  * @extends Object
  */
 struct Value {
-	
+
 	/**
 	 * @brief The superclass.
 	 */
 	Object object;
-	
+
 	/**
 	 * @brief The interface.
 	 * @protected
@@ -70,12 +70,12 @@ struct Value {
  * @brief The Value interface.
  */
 struct ValueInterface {
-	
+
 	/**
 	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
-	
+
 	/**
 	 * @fn Value *Value::initWithValue(Value *self, ident value)
 	 * @brief Initializes this Value.

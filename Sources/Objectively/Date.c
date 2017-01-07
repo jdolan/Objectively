@@ -96,7 +96,7 @@ static Order compareTo(const Date *self, const Date *other) {
  * @memberof Date
  */
 static Date *date(void) {
-	
+
 	return $$(Date, dateWithTimeSinceNow, NULL);
 }
 
@@ -105,7 +105,7 @@ static Date *date(void) {
  * @memberof Date
  */
 static Date *dateWithTimeSinceNow(const Time *interval) {
-	
+
 	Date *date = $(alloc(Date), init);
 	if (date) {
 		if (interval) {
@@ -120,7 +120,7 @@ static Date *dateWithTimeSinceNow(const Time *interval) {
 			}
 		}
 	}
-	
+
 	return date;
 }
 
@@ -226,7 +226,7 @@ static void initialize(Class *clazz) {
 Class *_Date(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "Date";
 		clazz.superclass = _Object();

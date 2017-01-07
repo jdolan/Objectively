@@ -481,7 +481,7 @@ static void initialize(Class *clazz) {
 Class *_JSONSerialization(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "JSONSerialization";
 		clazz.superclass = _Object();

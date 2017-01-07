@@ -170,7 +170,7 @@ static void initialize(Class *clazz) {
 Class *_Error(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "Error";
 		clazz.superclass = _Object();

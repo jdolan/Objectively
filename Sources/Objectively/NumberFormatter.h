@@ -103,7 +103,7 @@ struct NumberFormatterInterface {
 	 * @memberof NumberFormatter
 	 */
 	Number *(*numberFromString)(const NumberFormatter *self, const String *string);
-	
+
 	/**
 	 * @fn String *NumberFormatter::stringFromNumber(const NumberFormatter *self, const Number *number)
 	 * @brief Yields a String representation of the specified Number instance.

@@ -145,7 +145,7 @@ static void initialize(Class *clazz) {
 Class *_Condition(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "Condition";
 		clazz.superclass = _Lock();

@@ -240,7 +240,7 @@ static void initialize(Class *clazz) {
 Class *_Operation(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "Operation";
 		clazz.superclass = _Object();

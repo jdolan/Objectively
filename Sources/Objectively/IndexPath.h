@@ -38,12 +38,12 @@ typedef struct IndexPathInterface IndexPathInterface;
  * @extends Object
  */
 struct IndexPath {
-	
+
 	/**
 	 * @brief The superclass.
 	 */
 	Object object;
-	
+
 	/**
 	 * @brief The interface.
 	 * @protected
@@ -65,7 +65,7 @@ struct IndexPath {
  * @brief The IndexPath interface.
  */
 struct IndexPathInterface {
-	
+
 	/**
 	 * @brief The superclass interface.
 	 */

@@ -93,7 +93,7 @@ struct MutableArrayInterface {
 	 * @memberof MutableArray
 	 */
 	void (*addObjectsFromArray)(MutableArray *self, const Array *array);
-	
+
 	/**
 	 * @static
 	 * @fn MutableArray *MutableArray::array(void)
@@ -102,7 +102,7 @@ struct MutableArrayInterface {
 	 * @memberof MutableArray
 	 */
 	MutableArray *(*array)(void);
-	
+
 	/**
 	 * @static
 	 * @fn MutableArray *MutableArray::arrayWithCapacity(size_t capacity)

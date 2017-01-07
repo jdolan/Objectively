@@ -35,13 +35,13 @@
  * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
-	
+
 	Value *this = (Value *) self;
 
 	if (this->destroy) {
 		this->destroy(this->value);
 	}
-	
+
 	super(Object, self, dealloc);
 }
 
@@ -84,12 +84,12 @@ static _Bool isEqual(const Object *self, const Object *other) {
  * @memberof Value
  */
 static Value *initWithValue(Value *self, ident value) {
-	
+
 	self = (Value *) super(Object, self, init);
 	if (self) {
 		self->value = value;
 	}
-	
+
 	return self;
 }
 
@@ -99,11 +99,11 @@ static Value *initWithValue(Value *self, ident value) {
  * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
-	
+
 	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
 	((ObjectInterface *) clazz->def->interface)->hash = hash;
 	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
-	
+
 	((ValueInterface *) clazz->def->interface)->initWithValue = initWithValue;
 }
 
@@ -114,7 +114,7 @@ static void initialize(Class *clazz) {
 Class *_Value(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "Value";
 		clazz.superclass = _Object();

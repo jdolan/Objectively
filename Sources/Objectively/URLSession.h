@@ -181,7 +181,7 @@ struct URLSessionInterface {
 	 * @memberof URLSession
 	 */
 	void (*invalidateAndCancel)(URLSession *self);
-	
+
 	/**
 	 * @static
 	 * @fn URLSession *URLSession::sharedInstance(void)

@@ -73,7 +73,7 @@ static void appendData(MutableData *self, const Data *data) {
  * @memberof MutableData
  */
 static MutableData *data(void) {
-	
+
 	return $(alloc(MutableData), init);
 }
 
@@ -82,7 +82,7 @@ static MutableData *data(void) {
  * @memberof MutableData
  */
 static MutableData *dataWithCapacity(size_t capacity) {
-	
+
 	return $(alloc(MutableData), initWithCapacity, capacity);
 }
 
@@ -184,7 +184,7 @@ static void initialize(Class *clazz) {
 Class *_MutableData(void) {
 	static Class clazz;
 	static Once once;
-	
+
 	do_once(&once, {
 		clazz.name = "MutableData";
 		clazz.superclass = _Data();
