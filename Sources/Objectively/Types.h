@@ -32,6 +32,10 @@
  #include "Windowly.h"
 #endif
 
+#ifndef OBJECTIVELY_EXPORT
+ #define OBJECTIVELY_EXPORT extern
+#endif
+
 #undef interface
 
 /**

@@ -246,14 +246,25 @@ static void destroy(Class *clazz) {
 	release(_regex);
 }
 
-Class _URL = {
-	.name = "URL",
-	.superclass = &_Object,
-	.instanceSize = sizeof(URL),
-	.interfaceOffset = offsetof(URL, interface),
-	.interfaceSize = sizeof(URLInterface),
-	.initialize = initialize,
-	.destroy = destroy,
-};
+/**
+ * @fn Class *URL::_URL(void)
+ * @memberof URL
+ */
+Class *_URL(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "URL";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(URL);
+		clazz.interfaceOffset = offsetof(URL, interface);
+		clazz.interfaceSize = sizeof(URLInterface);
+		clazz.initialize = initialize;
+		clazz.destroy = destroy;
+	});
+
+	return &clazz;
+}
 
 #undef _Class

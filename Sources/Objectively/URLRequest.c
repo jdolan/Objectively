@@ -118,13 +118,24 @@ static void initialize(Class *clazz) {
 	request->setValueForHTTPHeaderField = setValueForHTTPHeaderField;
 }
 
-Class _URLRequest = {
-	.name = "URLRequest",
-	.superclass = &_Object,
-	.instanceSize = sizeof(URLRequest),
-	.interfaceOffset = offsetof(URLRequest, interface),
-	.interfaceSize = sizeof(URLRequestInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *URLRequest::_URLRequest(void)
+ * @memberof URLRequest
+ */
+Class *_URLRequest(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "URLRequest";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(URLRequest);
+		clazz.interfaceOffset = offsetof(URLRequest, interface);
+		clazz.interfaceSize = sizeof(URLRequestInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class

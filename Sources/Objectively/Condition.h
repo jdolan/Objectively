@@ -120,6 +120,9 @@ struct ConditionInterface {
 };
 
 /**
- * @brief The Condition Class.
+ * @fn Class *Condition::_Condition(void)
+ * @brief The Condition archetype.
+ * @return The Condition Class.
+ * @memberof Condition
  */
-extern Class _Condition;
+OBJECTIVELY_EXPORT Class *_Condition(void);

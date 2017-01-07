@@ -57,8 +57,11 @@ static void dealloc(Object *self) {
  * @memberof Resource
  */
 static void addResourcePath(const char *path) {
+
 	String *temp = str(path);
+
 	$(_resourcePaths, addObject, temp);
+
 	release(temp);
 }
 
@@ -112,7 +115,9 @@ static Resource *initWithName(Resource *self, const char *name) {
 static void removeResourcePath(const char *path) {
 
 	String *string = $$(String, stringWithCharacters, path);
+
 	$(_resourcePaths, removeObject, string);
+
 	release(string);
 }
 
@@ -154,15 +159,26 @@ static void destroy(Class *clazz) {
 	release(_resourcePaths);
 }
 
-Class _Resource = {
-	.name = "Resource",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Resource),
-	.interfaceOffset = offsetof(Resource, interface),
-	.interfaceSize = sizeof(ResourceInterface),
-	.initialize = initialize,
-	.destroy = destroy,
-};
+/**
+ * @fn Class *Resource::_Resource(void)
+ * @memberof Resource
+ */
+Class *_Resource(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "Resource";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Resource);
+		clazz.interfaceOffset = offsetof(Resource, interface);
+		clazz.interfaceSize = sizeof(ResourceInterface);
+		clazz.initialize = initialize;
+		clazz.destroy = destroy;
+	});
+
+	return &clazz;
+}
 
 #undef _Class
 

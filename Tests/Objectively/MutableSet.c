@@ -34,7 +34,7 @@ START_TEST(mutableSet)
 		MutableSet *set = $$(MutableSet, setWithCapacity, 5);
 
 		ck_assert(set != NULL);
-		ck_assert_ptr_eq(&_MutableSet, classof(set));
+		ck_assert_ptr_eq(_MutableSet(), classof(set));
 
 		ck_assert_int_eq(0, ((Set *) set)->count);
 

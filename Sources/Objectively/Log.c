@@ -35,7 +35,6 @@
 #endif
 
 #include <Objectively/Log.h>
-#include <Objectively/Once.h>
 
 #define _Class _Log
 
@@ -211,6 +210,7 @@ static Log *_sharedInstance;
  * @memberof Log
  */
 static Log *sharedInstance(void) {
+	
 	static Once once;
 	
 	do_once(&once, {
@@ -282,14 +282,25 @@ static void destroy(Class *clazz) {
 	release(_sharedInstance);
 }
 
-Class _Log = {
-	.name = "Log",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Log),
-	.interfaceOffset = offsetof(Log, interface),
-	.interfaceSize = sizeof(LogInterface),
-	.initialize = initialize,
-	.destroy = destroy,
-};
+/**
+ * @fn Class *Log::_Log(void)
+ * @memberof Log
+ */
+Class *_Log(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "Log";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Log);
+		clazz.interfaceOffset = offsetof(Log, interface);
+		clazz.interfaceSize = sizeof(LogInterface);
+		clazz.initialize = initialize;
+		clazz.destroy = destroy;
+	});
+
+	return &clazz;
+}
 
 #undef _Class

@@ -25,7 +25,6 @@
 
 #include <curl/curl.h>
 
-#include <Objectively/Once.h>
 #include <Objectively/URLSession.h>
 
 #define _Class _URLSession
@@ -296,8 +295,9 @@ static URLSession *_sharedInstance;
  * @memberof URLSession
  */
 static URLSession *sharedInstance(void) {
+	
 	static Once once;
-
+	
 	do_once(&once, {
 		_sharedInstance = $(alloc(URLSession), init);
 	});
@@ -373,14 +373,25 @@ static void destroy(Class *clazz) {
 	curl_global_cleanup();
 }
 
-Class _URLSession = {
-	.name = "URLSession",
-	.superclass = &_Object,
-	.instanceSize = sizeof(URLSession),
-	.interfaceOffset = offsetof(URLSession, interface),
-	.interfaceSize = sizeof(URLSessionInterface),
-	.initialize = initialize,
-	.destroy = destroy,
-};
+/**
+ * @fn Class *URLSession::_URLSession(void)
+ * @memberof URLSession
+ */
+Class *_URLSession(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "URLSession";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(URLSession);
+		clazz.interfaceOffset = offsetof(URLSession, interface);
+		clazz.interfaceSize = sizeof(URLSessionInterface);
+		clazz.initialize = initialize;
+		clazz.destroy = destroy;
+	});
+
+	return &clazz;
+}
 
 #undef _Class

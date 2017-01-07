@@ -126,14 +126,25 @@ static void initialize(Class *clazz) {
 	interface->unlock = unlock;
 }
 
-Class _Lock = {
-	.name = "Lock",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Lock),
-	.interfaceOffset = offsetof(Lock, interface),
-	.interfaceSize = sizeof(LockInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *Lock::_Lock(void)
+ * @memberof Lock
+ */
+Class *_Lock(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "Lock";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Lock);
+		clazz.interfaceOffset = offsetof(Lock, interface);
+		clazz.interfaceSize = sizeof(LockInterface);
+		clazz.initialize = initialize;
+	});;
+
+	return &clazz;
+}
 
 #undef _Class
 

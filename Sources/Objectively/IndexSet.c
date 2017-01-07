@@ -133,7 +133,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 		return true;
 	}
 	
-	if (other && $(other, isKindOfClass, &_IndexSet)) {
+	if (other && $(other, isKindOfClass, _IndexSet())) {
 
 		const IndexSet *this = (IndexSet *) self;
 		const IndexSet *that = (IndexSet *) other;
@@ -211,14 +211,25 @@ static void initialize(Class *clazz) {
 	((IndexSetInterface *) clazz->def->interface)->initWithIndexes = initWithIndexes;
 }
 
-Class _IndexSet = {
-	.name = "IndexSet",
-	.superclass = &_Object,
-	.instanceSize = sizeof(IndexSet),
-	.interfaceOffset = offsetof(IndexSet, interface),
-	.interfaceSize = sizeof(IndexSetInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *IndexSet::_IndexSet(void)
+ * @memberof IndexSet
+ */
+Class *_IndexSet(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "IndexSet";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(IndexSet);
+		clazz.interfaceOffset = offsetof(IndexSet, interface);
+		clazz.interfaceSize = sizeof(IndexSetInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class
 

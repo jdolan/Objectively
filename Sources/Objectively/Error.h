@@ -91,6 +91,9 @@ struct ErrorInterface {
 };
 
 /**
- * @brief The Error Class.
+ * @fn Class *Error::_Error(void)
+ * @brief The Error archetype.
+ * @return The Error Class.
+ * @memberof Error
  */
-extern Class _Error;
+OBJECTIVELY_EXPORT Class *_Error(void);

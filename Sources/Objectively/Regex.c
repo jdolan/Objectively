@@ -90,7 +90,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 		return true;
 	}
 
-	if (other && $(other, isKindOfClass, &_Regex)) {
+	if (other && $(other, isKindOfClass, _Regex())) {
 
 		const Regex *this = (Regex *) self;
 		const Regex *that = (Regex *) other;
@@ -196,13 +196,24 @@ static void initialize(Class *clazz) {
 	regex->matchesString = matchesString;
 }
 
-Class _Regex = {
-	.name = "Regex",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Regex),
-	.interfaceOffset = offsetof(Regex, interface),
-	.interfaceSize = sizeof(RegexInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *Regex::_Regex(void)
+ * @memberof Regex
+ */
+Class *_Regex(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "Regex";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Regex);
+		clazz.interfaceOffset = offsetof(Regex, interface);
+		clazz.interfaceSize = sizeof(RegexInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class

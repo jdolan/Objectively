@@ -103,7 +103,10 @@ struct IndexPathInterface {
 };
 
 /**
- * @brief The IndexPath Class.
+ * @fn Class *IndexPath::_IndexPath(void)
+ * @brief The IndexPath archetype.
+ * @return The IndexPath Class.
+ * @memberof IndexPath
  */
-extern Class _IndexPath;
+OBJECTIVELY_EXPORT Class *_IndexPath(void);
 

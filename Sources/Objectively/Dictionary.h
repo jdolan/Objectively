@@ -197,6 +197,9 @@ struct DictionaryInterface {
 };
 
 /**
- * @brief The Dictionary Class.
+ * @fn Class *Dictionary::_Dictionary(void)
+ * @brief The Dictionary archetype.
+ * @return The Dictionary Class.
+ * @memberof Dictionary
  */
-extern Class _Dictionary;
+OBJECTIVELY_EXPORT Class *_Dictionary(void);

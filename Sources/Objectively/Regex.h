@@ -130,6 +130,9 @@ struct RegexInterface {
 };
 
 /**
- * @brief The Regex Class.
+ * @fn Class *Regex::_Regex(void)
+ * @brief The Regex archetype.
+ * @return The Regex Class.
+ * @memberof Regex
  */
-extern Class _Regex;
+OBJECTIVELY_EXPORT Class *_Regex(void);

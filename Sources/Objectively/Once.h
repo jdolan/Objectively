@@ -38,10 +38,11 @@ typedef long Once;
 
 /**
  * @brief Executes the given `block` at most one time.
+ * @ingroup Concurrency
  */
 #define do_once(once, block) \
-	if (__sync_val_compare_and_swap(once, 0, -1) == 0) { \
-		block; *once = 1; \
-	} else { \
-		while (*once != 1) ; \
-	}
+		if (__sync_val_compare_and_swap(once, 0, -1) == 0) { \
+			block; *once = 1; \
+		} else { \
+			while (*once != 1) ; \
+		} \

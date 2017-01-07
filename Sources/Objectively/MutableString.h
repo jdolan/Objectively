@@ -226,9 +226,12 @@ struct MutableStringInterface {
 };
 
 /**
- * @brief The MutableString Class.
+ * @fn Class *MutableString::_MutableString(void)
+ * @brief The MutableString archetype.
+ * @return The MutableString Class.
+ * @memberof MutableString
  */
-extern Class _MutableString;
+OBJECTIVELY_EXPORT Class *_MutableString(void);
 
 /**
  * @brief A convenience function for instantiating MutableStrings.
@@ -236,4 +239,4 @@ extern Class _MutableString;
  * @return A new MutableString, or `NULL` on error.
  * @relates String
  */
-extern MutableString *mstr(const char *fmt, ...);
+OBJECTIVELY_EXPORT MutableString *mstr(const char *fmt, ...);

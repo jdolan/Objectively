@@ -233,13 +233,24 @@ static void initialize(Class *clazz) {
 	operation->waitUntilFinished = waitUntilFinished;
 }
 
-Class _Operation = {
-	.name = "Operation",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Operation),
-	.interfaceOffset = offsetof(Operation, interface),
-	.interfaceSize = sizeof(OperationInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *Operation::_Operation(void)
+ * @memberof Operation
+ */
+Class *_Operation(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "Operation";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Operation);
+		clazz.interfaceOffset = offsetof(Operation, interface);
+		clazz.interfaceSize = sizeof(OperationInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class

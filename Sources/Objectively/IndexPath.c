@@ -100,7 +100,7 @@ static _Bool isEqual(const Object *self, const Object *other) {
 		return true;
 	}
 	
-	if (other && $(other, isKindOfClass, &_IndexPath)) {
+	if (other && $(other, isKindOfClass, _IndexPath())) {
 
 		const IndexPath *this = (IndexPath *) self;
 		const IndexPath *that = (IndexPath *) other;
@@ -173,14 +173,25 @@ static void initialize(Class *clazz) {
 	((IndexPathInterface *) clazz->def->interface)->initWithIndexes = initWithIndexes;
 }
 
-Class _IndexPath = {
-	.name = "IndexPath",
-	.superclass = &_Object,
-	.instanceSize = sizeof(IndexPath),
-	.interfaceOffset = offsetof(IndexPath, interface),
-	.interfaceSize = sizeof(IndexPathInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *IndexPath::_IndexPath(void)
+ * @memberof IndexPath
+ */
+Class *_IndexPath(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "IndexPath";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(IndexPath);
+		clazz.interfaceOffset = offsetof(IndexPath, interface);
+		clazz.interfaceSize = sizeof(IndexPathInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class
 

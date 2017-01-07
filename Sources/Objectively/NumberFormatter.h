@@ -116,6 +116,9 @@ struct NumberFormatterInterface {
 };
 
 /**
- * @brief The NumberFormatter Class.
+ * @fn Class *NumberFormatter::_NumberFormatter(void)
+ * @brief The NumberFormatter archetype.
+ * @return The NumberFormatter Class.
+ * @memberof NumberFormatter
  */
-extern Class _NumberFormatter;
+OBJECTIVELY_EXPORT Class *_NumberFormatter(void);

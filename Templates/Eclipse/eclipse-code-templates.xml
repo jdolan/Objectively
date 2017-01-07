@@ -51,16 +51,28 @@ static void initialize(Class *clazz) {
 	//..
 }
 
-Class _${file_base} = {
-	.name = "${file_base}",
-	.superclass = &amp;_Object,
-	.instanceSize = sizeof(${file_base}),
-	.interfaceOffset = offsetof(${file_base}, interface),
-	.interfaceSize = sizeof(${file_base}Interface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *${file_base}::_${file_base}(void)
+ * @memberof ${file_base}
+ */
+Class *_${file_base}(void) {
+	static Class clazz;
+	static Once once;
+
+	do_once(&amp;once, {
+		clazz.name = "${file_base}";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(${file_base});
+		clazz.interfaceOffset = offsetof(${file_base}, interface);
+		clazz.interfaceSize = sizeof(${file_base}Interface);
+		clazz.initialize = initialize;
+	});
+
+	return &amp;clazz;
+}
 
 #undef _Class
+
 </template><template autoinsert="false" context="org.eclipse.cdt.core.cHeader.contenttype_context" deleted="false" description="" enabled="true" name="Objectively Type Header">${filecomment}
 
 #pragma once
@@ -117,8 +129,11 @@ struct ${file_base}Interface {
 };
 
 /**
- * @brief The ${file_base} Class.
+ * @fn Class *${file_base}::_${file_base}(void)
+ * @brief The ${file_base} archetype.
+ * @return The ${file_base} Class.
+ * @memberof ${file_base}
  */
-extern Class _${file_base};
+OBJECTIVELY_EXPORT Class *_${file_base}(void);
 
 </template></templates>

@@ -124,7 +124,10 @@ struct ResourceInterface {
 };
 
 /**
- * @brief The Resource Class.
+ * @fn Class *Resource::_Resource(void)
+ * @brief The Resource archetype.
+ * @return The Resource Class.
+ * @memberof Resource
  */
-extern Class _Resource;
+OBJECTIVELY_EXPORT Class *_Resource(void);
 

@@ -88,7 +88,10 @@ struct ValueInterface {
 };
 
 /**
- * @brief The Value Class.
+ * @fn Class *Value::_Value(void)
+ * @brief The Value archetype.
+ * @return The Value Class.
+ * @memberof Value
  */
-extern Class _Value;
+OBJECTIVELY_EXPORT Class *_Value(void);
 

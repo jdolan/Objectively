@@ -138,14 +138,25 @@ static void initialize(Class *clazz) {
 	condition->waitUntilDate = waitUntilDate;
 }
 
-Class _Condition = {
-	.name = "Condition",
-	.superclass = &_Lock,
-	.instanceSize = sizeof(Condition),
-	.interfaceOffset = offsetof(Condition, interface),
-	.interfaceSize = sizeof(ConditionInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *Condition::_Condition(void)
+ * @memberof Condition
+ */
+Class *_Condition(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "Condition";
+		clazz.superclass = _Lock();
+		clazz.instanceSize = sizeof(Condition);
+		clazz.interfaceOffset = offsetof(Condition, interface);
+		clazz.interfaceSize = sizeof(ConditionInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class
 

@@ -316,14 +316,25 @@ static void initialize(Class *clazz) {
 	mutableString->stringWithCapacity = stringWithCapacity;
 }
 
-Class _MutableString = {
-	.name = "MutableString",
-	.superclass = &_String,
-	.instanceSize = sizeof(MutableString),
-	.interfaceOffset = offsetof(MutableString, interface),
-	.interfaceSize = sizeof(MutableStringInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *MutableString::_MutableString(void)
+ * @memberof MutableString
+ */
+Class *_MutableString(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "MutableString";
+		clazz.superclass = _String();
+		clazz.instanceSize = sizeof(MutableString);
+		clazz.interfaceOffset = offsetof(MutableString, interface);
+		clazz.interfaceSize = sizeof(MutableStringInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class
 

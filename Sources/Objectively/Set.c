@@ -356,14 +356,25 @@ static void initialize(Class *clazz) {
 	set->setWithSet = setWithSet;
 }
 
-Class _Set = {
-	.name = "Set",
-	.superclass = &_Object,
-	.instanceSize = sizeof(Set),
-	.interfaceOffset = offsetof(Set, interface),
-	.interfaceSize = sizeof(SetInterface),
-	.initialize = initialize,
-};
+/**
+ * @fn Class *Set::_Set(void)
+ * @memberof Set
+ */
+Class *_Set(void) {
+	static Class clazz;
+	static Once once;
+	
+	do_once(&once, {
+		clazz.name = "Set";
+		clazz.superclass = _Object();
+		clazz.instanceSize = sizeof(Set);
+		clazz.interfaceOffset = offsetof(Set, interface);
+		clazz.interfaceSize = sizeof(SetInterface);
+		clazz.initialize = initialize;
+	});
+
+	return &clazz;
+}
 
 #undef _Class
 
