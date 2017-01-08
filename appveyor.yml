@@ -27,6 +27,10 @@ after_build:
     7z a __dep.zip -r *.h
 
     7z a __dep.zip -r *.lib
+
+    7z a __dep.zip -r *.dll
+
+    7z a __dep.zip -r *.pdb
 test: off
 deploy: off
 artifacts:
