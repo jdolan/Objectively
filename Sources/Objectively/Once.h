@@ -45,4 +45,4 @@ typedef long Once;
 			block; *once = 1; \
 		} else { \
 			while (*once != 1) ; \
-		} \
+		}
