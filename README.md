@@ -42,7 +42,7 @@ Adding Objectively to your project
 1) Do the Autotools dance.
 
 ```shell
-./configure; make; sudo make install
+autoreconf -i; ./configure; make; sudo make install
 ```
 
 2) Include the main header file in your source.
