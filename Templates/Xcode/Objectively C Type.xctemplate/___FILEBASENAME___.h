@@ -51,7 +51,7 @@ struct ___FILEBASENAMEASIDENTIFIER___Interface {
 	/**
 	 * @fn ___FILEBASENAMEASIDENTIFIER___ *___FILEBASENAMEASIDENTIFIER___::init(___FILEBASENAMEASIDENTIFIER___ *self)
 	 * @brief Initializes this ___FILEBASENAMEASIDENTIFIER___.
-	 * @param The ___FILEBASENAMEASIDENTIFIER___.
+	 * @param self The ___FILEBASENAMEASIDENTIFIER___.
 	 * @return The initialized ___FILEBASENAMEASIDENTIFIER___, or `NULL` on error.
 	 * @memberof ___FILEBASENAMEASIDENTIFIER___
 	 */
