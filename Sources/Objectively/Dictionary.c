@@ -206,6 +206,14 @@ static _Bool containsKey(const Dictionary *self, const ident key) {
 }
 
 /**
+ * @fn _Bool Dictionary::containsKeyPath(const Dictionary *self, const char *path)
+ * @memberof Dictionary
+ */
+static _Bool containsKeyPath(const Dictionary *self, const char *path) {
+	return $(self, objectForKeyPath, path) != NULL;
+}
+
+/**
  * @fn Dictionary *Dictionary::dictionaryWithDictionary(const Dictionary *dictionary)
  * @memberof Dictionary
  */
@@ -429,6 +437,7 @@ static void initialize(Class *clazz) {
 	dictionary->allKeys = allKeys;
 	dictionary->allObjects = allObjects;
 	dictionary->containsKey = containsKey;
+	dictionary->containsKeyPath = containsKeyPath;
 	dictionary->dictionaryWithDictionary = dictionaryWithDictionary;
 	dictionary->dictionaryWithObjectsAndKeys = dictionaryWithObjectsAndKeys;
 	dictionary->enumerateObjectsAndKeys = enumerateObjectsAndKeys;
