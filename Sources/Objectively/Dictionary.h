@@ -109,6 +109,15 @@ struct DictionaryInterface {
 	Array *(*allObjects)(const Dictionary *self);
 
 	/**
+	 * @fn _Bool Dictionary::containsKey(const Dictionary *self, const ident key)
+	 * @param self The Dictionary.
+	 * @param key The key to test.
+	 * @return True if this Dictionary contains the specified key, false otherwise.
+	 * @memberof Dictionary
+	 */
+	_Bool (*containsKey)(const Dictionary *self, const ident key);
+
+	/**
 	 * @static
 	 * @fn Dictionary *Dictionary::dictionaryWithDictionary(const Dictionary *dictionary)
 	 * @brief Returns a new Dictionary containing all pairs from `dictionary`.

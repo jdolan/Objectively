@@ -198,6 +198,14 @@ static Array *allObjects(const Dictionary *self) {
 }
 
 /**
+ * @fn _Bool Dictionary::containsKey(const Dictionary *self, const ident key)
+ * @memberof Dictionary
+ */
+static _Bool containsKey(const Dictionary *self, const ident key) {
+	return $(self, objectForKey, key) != NULL;
+}
+
+/**
  * @fn Dictionary *Dictionary::dictionaryWithDictionary(const Dictionary *dictionary)
  * @memberof Dictionary
  */
@@ -420,6 +428,7 @@ static void initialize(Class *clazz) {
 
 	dictionary->allKeys = allKeys;
 	dictionary->allObjects = allObjects;
+	dictionary->containsKey = containsKey;
 	dictionary->dictionaryWithDictionary = dictionaryWithDictionary;
 	dictionary->dictionaryWithObjectsAndKeys = dictionaryWithObjectsAndKeys;
 	dictionary->enumerateObjectsAndKeys = enumerateObjectsAndKeys;
