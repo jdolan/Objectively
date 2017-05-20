@@ -216,18 +216,16 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <WarningLevel>EnableAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>BUILDING_OBJECTIVELY;PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
       <DisableSpecificWarnings>4068;4996;4115;4706;4204;4244;4245;4100;4267;4305;4267;4018;4702;4311</DisableSpecificWarnings>
       <CLanguageStandard>gnu99</CLanguageStandard>
+      <PreprocessorDefinitions>BUILDING_OBJECTIVELY;PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>-ferror-limit=0 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>Wldap32.lib;ws2_32.lib;pthread.lib;iconv.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -246,7 +244,6 @@
       <AdditionalOptions>-ferror-limit=0 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>Wldap32.lib;ws2_32.lib;pthread.lib;iconv.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -259,18 +256,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>EnableAllWarnings</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>BUILDING_OBJECTIVELY;PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;NDEBUG;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
       <DisableSpecificWarnings>4068;4996;4115;4706;4204;4244;4245;4100;4267;4305;4267;4018;4702;4311</DisableSpecificWarnings>
       <CLanguageStandard>gnu99</CLanguageStandard>
       <AdditionalOptions>-ferror-limit=0 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>Wldap32.lib;ws2_32.lib;pthread.lib;iconv.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
