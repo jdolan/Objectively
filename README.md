@@ -51,13 +51,21 @@ autoreconf -i; ./configure; make; sudo make install
 #include <Objectively.h>
 ```
 
-3) Compile and link with Objectively.
+3) Use Objectively in your application.
+
+```c
+Object *obj = $(alloc(Object), init);
+printf("%d\n", $(obj, hashCode));
+release(obj);
+````
+
+4) Compile and link with Objectively.
 
 ```shell
 gcc `pkg-config --cflags --libs Objectively` -o myprogram *.c
 ```
 
-Declaring a type
+Declaring a custom type
 ---
 
 Types in Objectively are comprised of 3 components:
