@@ -364,6 +364,15 @@ struct StringInterface {
 	String *(*substring)(const String *self, const Range range);
 
 	/**
+	 * @fn String *String::trimmedString(const String *self)
+	 * @brief Creates a copy of this String with leading and trailing whitespace removed.
+	 * @param self The String.
+	 * @return The trimmed String.
+	 * @memberof String
+	 */
+	String *(*trimmedString)(const String *self);
+
+	/**
 	 * @fn String *String::uppercaseString(const String *self)
 	 * @param self The String.
 	 * @return An uppercase representation of this String in the default Locale.

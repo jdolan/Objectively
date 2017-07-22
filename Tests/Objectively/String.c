@@ -78,6 +78,10 @@ START_TEST(string)
 		String *lower = $(upper, lowercaseString);
 		ck_assert_str_eq("hello world!", lower->chars);
 
+		String *whitespace = str(" hello ");
+		String *trimmed = $(whitespace, trimmedString);
+		ck_assert_str_eq("hello", trimmed->chars);
+
 		const char *path = "/tmp/Objectively_String.test";
 		ck_assert($(string, writeToFile, path, STRING_ENCODING_UTF8));
 
@@ -89,6 +93,8 @@ START_TEST(string)
 		release(fromFile);
 		release(upper);
 		release(lower);
+		release(whitespace);
+		release(trimmed);
 		release(sep);
 		release(components);
 		release(substring);

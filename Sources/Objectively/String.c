@@ -560,6 +560,25 @@ static String *substring(const String *self, const Range range) {
 }
 
 /**
+ * @fn String *String::trimmedString(const String *self)
+ * @memberof String
+ */
+static String *trimmedString(const String *self) {
+
+	Range range = { .location = 0, .length = self->length };
+
+	while (isspace(self->chars[range.location])) {
+		range.location++, range.length--;
+	}
+
+	while (isspace(self->chars[range.length])) {
+		range.length--;
+	}
+
+	return $(self, substring, range);
+}
+
+/**
  * @fn String *String::uppercaseString(const String *self)
  * @memberof String
  */
@@ -650,6 +669,7 @@ static void initialize(Class *clazz) {
 	string->stringWithFormat = stringWithFormat;
 	string->stringWithMemory = stringWithMemory;
 	string->substring = substring;
+	string->trimmedString = trimmedString;
 	string->uppercaseString = uppercaseString;
 	string->uppercaseStringWithLocale = uppercaseStringWithLocale;
 	string->writeToFile = writeToFile;

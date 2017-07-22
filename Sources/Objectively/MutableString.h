@@ -223,6 +223,14 @@ struct MutableStringInterface {
 	 * @memberof MutableString
 	 */
 	MutableString *(*stringWithCapacity)(size_t capacity);
+
+	/**
+	 * @fn void MutableString::trim(MutableString *self)
+	 * @brief Trims leading and trailing whitespace from this MutableString.
+	 * @param self The MutableString.
+	 * @memberof MutableString
+	 */
+	void (*trim)(MutableString *self);
 };
 
 /**

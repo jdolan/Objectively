@@ -285,6 +285,19 @@ static MutableString *stringWithCapacity(size_t capacity) {
 	return $(alloc(MutableString), initWithCapacity, capacity);
 }
 
+/**
+ * @fn void MutableString::trim(MutableString *self)
+ * @memberof MutableString
+ */
+static void trim(MutableString *self) {
+
+	String *trimmed = $((String *) self, trimmedString);
+
+	$(self, replaceStringInRange, (const Range) { .length = self->string.length }, trimmed);
+
+	release(trimmed);
+}
+
 #pragma mark - Class lifecycle
 
 /**
@@ -314,6 +327,7 @@ static void initialize(Class *clazz) {
 	mutableString->replaceStringInRange = replaceStringInRange;
 	mutableString->string = string;
 	mutableString->stringWithCapacity = stringWithCapacity;
+	mutableString->trim = trim;
 }
 
 /**
