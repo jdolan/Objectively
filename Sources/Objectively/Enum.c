@@ -24,16 +24,23 @@
 #include <assert.h>
 
 #include <Objectively/Enum.h>
-#include <Objectively/String.h>
 
 int valueof(const EnumName *names, const char *chars) {
 
-	for (const EnumName *en = names; en->name; en++) {
-		if (strcmp(en->name, chars) == 0) {
-			return en->value;
+	int value = 0;
+
+	const char *c = chars;
+	while (*c) {
+		const size_t size = strcspn(c, " |");
+		if (size) {
+			for (const EnumName *en = names; en->name; en++) {
+				if (strncmp(en->name, c, size) == 0) {
+					value |= en->value;
+				}
+			}
 		}
+		c += size + 1;
 	}
 
-	assert(false);
-	return -1;
+	return value;
 }
