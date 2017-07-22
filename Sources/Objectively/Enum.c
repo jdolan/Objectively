@@ -24,11 +24,12 @@
 #include <assert.h>
 
 #include <Objectively/Enum.h>
+#include <Objectively/String.h>
 
-int valueof(const EnumName *names, const char *string) {
+int valueof(const EnumName *names, const char *chars) {
 
 	for (const EnumName *en = names; en->name; en++) {
-		if (strcmp(en->name, string) == 0) {
+		if (strcmp(en->name, chars) == 0) {
 			return en->value;
 		}
 	}
