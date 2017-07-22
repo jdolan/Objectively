@@ -22,6 +22,7 @@
  */
 
 #include <assert.h>
+#include <stdio.h>
 
 #include <Objectively/Enum.h>
 
@@ -33,13 +34,19 @@ int valueof(const EnumName *names, const char *chars) {
 	while (*c) {
 		const size_t size = strcspn(c, " |");
 		if (size) {
-			for (const EnumName *en = names; en->name; en++) {
+			const EnumName *en;
+			for (en = names; en->name; en++) {
 				if (strncmp(en->name, c, size) == 0) {
 					value |= en->value;
+					break;
 				}
 			}
+			if (en->name == NULL) {
+				fprintf(stderr, "%s: Unknown character sequence: %s\n", __func__, c);
+			}
 		}
-		c += size + 1;
+		c += size;
+		c += strspn(c, " |");
 	}
 
 	return value;
