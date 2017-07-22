@@ -220,7 +220,7 @@ struct ArrayInterface {
 	 * @param functor The Functor.
 	 * @param data User data.
 	 * @return An Array containing the transformed elements of this Array.
-	 * @memberof Array.
+	 * @memberof Array
 	 */
 	Array *(*mappedArray)(const Array *self, Functor functor, ident data);
 

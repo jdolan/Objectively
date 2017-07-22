@@ -170,7 +170,7 @@ struct SetInterface {
 	 * @param functor The Functor.
 	 * @param data User data.
 	 * @return A Set containing the transformed elements of this Set.
-	 * @memberof Set.
+	 * @memberof Set
 	 */
 	Set *(*mappedSet)(const Set *self, Functor functor, ident data);
 
