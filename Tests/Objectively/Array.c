@@ -33,6 +33,14 @@ _Bool predicate(const ident obj, ident data) {
 	return obj == data;
 }
 
+ident functor(const ident obj, ident data) {
+	return $((Object *) obj, copy);
+}
+
+ident reducer(const ident obj, ident accumulator, ident data) {
+	return (ident) (intptr_t) accumulator + 1;
+}
+
 START_TEST(array)
 	{
 		Object *one = $(alloc(Object), init);
@@ -72,6 +80,15 @@ START_TEST(array)
 		ck_assert_int_eq(1, filtered->count);
 		ck_assert($(filtered, containsObject, two));
 
+		Array *mapped = $(array, mappedArray, functor, NULL);
+
+		ck_assert_int_eq(array->count, mapped->count);
+
+		int reduced = (int) $(mapped, reduce, reducer, (ident) 0, NULL);
+
+		ck_assert_int_eq(3, reduced);
+
+		release(mapped);
 		release(filtered);
 		release(array);
 

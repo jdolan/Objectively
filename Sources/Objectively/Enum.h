@@ -65,7 +65,7 @@ typedef struct {
 /**
  * @brief Parse `string`, returning the corresponding enum value.
  * @param names A null-terminated array of EnumNames.
- * @param string A null-terminated C string.
+ * @param chars A null-terminated C string.
  * @return The `value` of the EnumName matching `string`, or `-1`.
  */
-OBJECTIVELY_EXPORT int valueof(const EnumName *names, const char *string);
+OBJECTIVELY_EXPORT int valueof(const EnumName *names, const char *chars);

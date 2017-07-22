@@ -365,16 +365,38 @@ static ident lastObject(const Array *self) {
 }
 
 /**
+ * @fn Array *Array::mappedArray(const Array *self, Functor functor, ident data)
+ * @memberof Array
+ */
+static Array *mappedArray(const Array *self, Functor functor, ident data) {
+
+	assert(functor);
+
+	MutableArray *array = $$(MutableArray, arrayWithCapacity, self->count);
+	assert(array);
+	
+	for (size_t i = 0; i < self->count; i++) {
+
+		ident obj = functor(self->elements[i], data);
+
+		$(array, addObject, obj);
+
+		release(obj);
+	}
+
+	return (Array *) array;
+}
+
+/**
  * @fn MutableArray *Array::mutableCopy(const Array *self)
  * @memberof Array
  */
 static MutableArray *mutableCopy(const Array *self) {
 
 	MutableArray *copy = $(alloc(MutableArray), initWithCapacity, self->count);
-	if (copy) {
-		$(copy, addObjectsFromArray, self);
-	}
+	assert(copy);
 
+	$(copy, addObjectsFromArray, self);
 	return copy;
 }
 
@@ -387,6 +409,21 @@ static ident objectAtIndex(const Array *self, size_t index) {
 	assert(index < self->count);
 
 	return self->elements[index];
+}
+
+/**
+ * @fn ident Array::reduce(const Array *self, Reducer reducer, ident accumulator, ident data)
+ * @memberof Array
+ */
+static ident reduce(const Array *self, Reducer reducer, ident accumulator, ident data) {
+
+	assert(reducer);
+
+	for (size_t i = 0; i < self->count; i++) {
+		accumulator = reducer(self->elements[i], accumulator, data);
+	}
+
+	return accumulator;
 }
 
 /**
@@ -434,8 +471,10 @@ static void initialize(Class *clazz) {
 	array->initWithArray = initWithArray;
 	array->initWithObjects = initWithObjects;
 	array->lastObject = lastObject;
+	array->mappedArray = mappedArray;
 	array->mutableCopy = mutableCopy;
 	array->objectAtIndex = objectAtIndex;
+	array->reduce = reduce;
 	array->sortedArray = sortedArray;
 }
 

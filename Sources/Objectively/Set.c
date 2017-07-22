@@ -287,6 +287,71 @@ static Set *initWithSet(Set *self, const Set *set) {
 }
 
 /**
+ * @fn Set *Set::mappedSet(const Set *self, Functor functor, ident data)
+ * @memberof Set
+ */
+static Set *mappedSet(const Set *self, Functor functor, ident data) {
+
+	assert(functor);
+
+	MutableSet *set = $(alloc(MutableSet), initWithCapacity, self->count);
+	assert(set);
+
+	for (size_t i = 0; i < self->capacity; i++) {
+
+		const Array *array = self->elements[i];
+		if (array) {
+
+			for (size_t j = 0; j < array->count; j++) {
+
+				ident obj = functor(array->elements[j], data);
+
+				$(set, addObject, obj);
+
+				release(obj);
+			}
+		}
+	}
+
+	return (Set *) set;
+}
+
+/**
+ * @fn MutableSet *Set::mutableCopy(const Set *self)
+ * @memberof Set
+ */
+static MutableSet *mutableCopy(const Set *self) {
+
+	MutableSet *copy = $(alloc(MutableSet), initWithCapacity, self->count);
+	assert(copy);
+
+	$(copy, addObjectsFromSet, self);
+	return copy;
+}
+
+/**
+ * @fn ident Set::reduce(const Set *self, Reducer reducer, ident accumulator, ident data)
+ * @memberof Set
+ */
+static ident reduce(const Set *self, Reducer reducer, ident accumulator, ident data) {
+
+	assert(reducer);
+
+	for (size_t i = 0; i < self->capacity; i++) {
+
+		const Array *array = self->elements[i];
+		if (array) {
+
+			for (size_t j = 0; j < array->count; j++) {
+				accumulator = reducer(array->elements[j], accumulator, data);
+			}
+		}
+	}
+
+	return accumulator;
+}
+
+/**
  * @fn Set *Set::setWithArray(const Array *array)
  * @memberof Set
  */
@@ -351,6 +416,9 @@ static void initialize(Class *clazz) {
 	set->initWithArray = initWithArray;
 	set->initWithSet = initWithSet;
 	set->initWithObjects = initWithObjects;
+	set->mappedSet = mappedSet;
+	set->mutableCopy = mutableCopy;
+	set->reduce = reduce;
 	set->setWithArray = setWithArray;
 	set->setWithObjects = setWithObjects;
 	set->setWithSet = setWithSet;

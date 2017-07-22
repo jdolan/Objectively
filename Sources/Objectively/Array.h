@@ -214,6 +214,17 @@ struct ArrayInterface {
 	ident (*lastObject)(const Array *self);
 
 	/**
+	 * @fn Array *Array::mappedArray(const Array *self, Functor functor, ident data)
+	 * @brief Transforms the elements in this Array by `functor`.
+	 * @param self The Array.
+	 * @param functor The Functor.
+	 * @param data User data.
+	 * @return An Array containing the transformed elements of this Array.
+	 * @memberof Array.
+	 */
+	Array *(*mappedArray)(const Array *self, Functor functor, ident data);
+
+	/**
 	 * @fn MutableArray *Array::mutableCopy(const Array *self)
 	 * @param self The Array.
 	 * @return A MutableArray with the contents of this Array.
@@ -229,6 +240,17 @@ struct ArrayInterface {
 	 * @memberof Array
 	 */
 	ident (*objectAtIndex)(const Array *self, size_t index);
+
+	/**
+	 * @fn ident Array::reduce(const Array *self, Reducer reducer, ident accumulator, ident data)
+	 * @param self The Array.
+	 * @param reducer The Reducer.
+	 * @param accumulator The initial accumulator value.
+	 * @param data User data.
+	 * @return The reduction result.
+	 * @memberof Array
+	 */
+	ident (*reduce)(const Array *self, Reducer reducer, ident accumulator, ident data);
 
 	/**
 	 * @fn Array *Array::sortedArray(const Array *self, Comparator comparator)

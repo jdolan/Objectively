@@ -30,7 +30,6 @@
  * @brief Mutable sets.
  */
 
-typedef struct MutableSet MutableSet;
 typedef struct MutableSetInterface MutableSetInterface;
 
 /**
@@ -88,6 +87,16 @@ struct MutableSetInterface {
 	 * @memberof MutableSet
 	 */
 	void (*addObjectsFromSet)(MutableSet *self, const Set *set);
+
+	/**
+	 * @fn void MutableSet::filter(MutableSet *self, Predicate predicate, ident data)
+	 * @brief Filters this MutableSet in place using `predicate`.
+	 * @param self The MutableSet.
+	 * @param predicate A Predicate.
+	 * @param data User data.
+	 * @memberof MutableSet
+	 */
+	void (*filter)(MutableSet *self, Predicate predicate, ident data);
 
 	/**
 	 * @fn MutableSet *MutableSet::init(MutableSet *self)

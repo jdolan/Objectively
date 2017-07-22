@@ -75,15 +75,36 @@ typedef enum {
 
 /**
  * @brief The Comparator function type for ordering Objects.
+ * @param obj1 The first Object.
+ * @param obj2 The second Object.
  * @return The Order of `obj1` relative to `obj2`.
  */
 typedef Order (*Comparator)(const ident obj1, const ident obj2);
 
 /**
  * @brief The Predicate function type for filtering Objects.
+ * @param obj The Object to test.
+ * @param data User data.
  * @return True if `obj` satisfies the predicate, false otherwise.
  */
 typedef _Bool (*Predicate)(const ident obj, ident data);
+
+/**
+ * @brief The Functor function type for transforming Objects.
+ * @param obj The Object to transform.
+ * @param data User data.
+ * @return The transformation result.
+ */
+typedef ident (*Functor)(const ident obj, ident data);
+
+/**
+ * @brief The Reducer function type for reducing collections.
+ * @param obj The Object to reduce.
+ * @param accumulator The accumulator.
+ * @param data User data.
+ * @return The reduction result.
+ */
+typedef ident (*Reducer)(const ident obj, ident accumulator, ident data);
 
 /**
  * @return The value, clamped to the bounds.

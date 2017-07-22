@@ -33,6 +33,14 @@ static _Bool filter(ident obj, ident data) {
 	return obj == data;
 }
 
+static ident functor(const ident obj, ident data) {
+	return $((Object *) obj, copy);
+}
+
+static ident reducer(const ident obj, ident accumulator, ident data) {
+	return (ident) (intptr_t) accumulator + 1;
+}
+
 START_TEST(set)
 	{
 		Object *one = $(alloc(Object), init);
@@ -68,6 +76,14 @@ START_TEST(set)
 		ck_assert_int_eq(1, filtered->count);
 		ck_assert($(filtered, containsObject, two));
 
+		Set *mapped = $(set, mappedSet, functor, NULL);
+
+		ck_assert_int_eq(set->count, mapped->count);
+
+		int reduced = (int) $(set, reduce, reducer, (ident) 0, NULL);
+		ck_assert_int_eq(3, reduced);
+
+		release(mapped);
 		release(filtered);
 		release(set);
 

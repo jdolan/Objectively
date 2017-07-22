@@ -90,37 +90,37 @@
 		CE76DA2B1C4860130096DD31 /* URLSessionTask.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8F91C481C4E0096DD31 /* URLSessionTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA2C1C4860130096DD31 /* URLSessionUploadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8FB1C481C4E0096DD31 /* URLSessionUploadTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA2D1C4860130096DD31 /* Objectively.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8FC1C481C4E0096DD31 /* Objectively.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE76DA6F1C4B17980096DD31 /* URLSession.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9631C481E390096DD31 /* URLSession.c */; };
 		CE76DAFB1C4B186F0096DD31 /* HelloObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9191C481E390096DD31 /* HelloObjC.m */; };
-		CE783FEB1DDD102F0076ACC2 /* MutableString.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9591C481E390096DD31 /* MutableString.c */; };
-		CE84A8821DA15AD8008BC685 /* Array.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9431C481E390096DD31 /* Array.c */; };
-		CE84A8831DA15AD8008BC685 /* Boole.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9441C481E390096DD31 /* Boole.c */; };
-		CE84A8841DA15AD8008BC685 /* Data.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9471C481E390096DD31 /* Data.c */; };
-		CE84A8851DA15AD8008BC685 /* Date.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9481C481E390096DD31 /* Date.c */; };
-		CE84A8861DA15AD8008BC685 /* Dictionary.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9491C481E390096DD31 /* Dictionary.c */; };
-		CE84A8871DA15AD8008BC685 /* IndexPath.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB078C51D76088900ABA6B3 /* IndexPath.c */; };
-		CE84A8881DA15AD8008BC685 /* IndexSet.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB20D581D77492A000EF6F3 /* IndexSet.c */; };
-		CE84A8891DA15AD8008BC685 /* JSON.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D94D1C481E390096DD31 /* JSON.c */; };
-		CE84A88A1DA15AD8008BC685 /* Locale.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9501C481E390096DD31 /* Locale.c */; };
-		CE84A88B1DA15AD8008BC685 /* Log.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9511C481E390096DD31 /* Log.c */; };
-		CE84A88C1DA15AD8008BC685 /* MutableArray.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9551C481E390096DD31 /* MutableArray.c */; };
-		CE84A88D1DA15AD8008BC685 /* MutableData.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9561C481E390096DD31 /* MutableData.c */; };
-		CE84A88E1DA15AD8008BC685 /* MutableDictionary.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9571C481E390096DD31 /* MutableDictionary.c */; };
-		CE84A88F1DA15AD8008BC685 /* MutableSet.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9581C481E390096DD31 /* MutableSet.c */; };
-		CE84A8901DA15AD8008BC685 /* MutableString.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9591C481E390096DD31 /* MutableString.c */; };
-		CE84A8911DA15AD8008BC685 /* Null.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95A1C481E390096DD31 /* Null.c */; };
-		CE84A8921DA15AD8008BC685 /* Number.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95B1C481E390096DD31 /* Number.c */; };
-		CE84A8931DA15AD8008BC685 /* Object.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95C1C481E390096DD31 /* Object.c */; };
-		CE84A8941DA15AD8008BC685 /* Operation.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95D1C481E390096DD31 /* Operation.c */; };
-		CE84A8951DA15AD8008BC685 /* Regex.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95E1C481E390096DD31 /* Regex.c */; };
 		CE84A8961DA15AD8008BC685 /* Set.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95F1C481E390096DD31 /* Set.c */; };
-		CE84A8971DA15AD8008BC685 /* String.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9601C481E390096DD31 /* String.c */; };
-		CE84A8981DA15AD8008BC685 /* Thread.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9611C481E390096DD31 /* Thread.c */; };
-		CE84A8991DA15AD8008BC685 /* URL.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9621C481E390096DD31 /* URL.c */; };
 		CE84A8A81DA15BB4008BC685 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
 		CE84A8A91DA15BD5008BC685 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */; };
 		CE84A8B41DA17B52008BC685 /* Hello.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9131C481E390096DD31 /* Hello.c */; };
 		CE84A8B51DA17B52008BC685 /* HelloCpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CED1578E1C4B1A2100FBA2DE /* HelloCpp.cpp */; };
+		CE89D9A61F24037D005BF96C /* Array.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9431C481E390096DD31 /* Array.c */; };
+		CE89D9A71F24037D005BF96C /* Boole.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9441C481E390096DD31 /* Boole.c */; };
+		CE89D9A81F24037D005BF96C /* Data.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9471C481E390096DD31 /* Data.c */; };
+		CE89D9A91F24037D005BF96C /* Date.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9481C481E390096DD31 /* Date.c */; };
+		CE89D9AA1F24037D005BF96C /* Dictionary.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9491C481E390096DD31 /* Dictionary.c */; };
+		CE89D9AB1F24037D005BF96C /* IndexPath.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB078C51D76088900ABA6B3 /* IndexPath.c */; };
+		CE89D9AC1F24037D005BF96C /* IndexSet.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB20D581D77492A000EF6F3 /* IndexSet.c */; };
+		CE89D9AD1F24037D005BF96C /* JSON.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D94D1C481E390096DD31 /* JSON.c */; };
+		CE89D9AE1F24037D005BF96C /* Locale.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9501C481E390096DD31 /* Locale.c */; };
+		CE89D9AF1F24037D005BF96C /* Log.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9511C481E390096DD31 /* Log.c */; };
+		CE89D9B01F24037D005BF96C /* MutableArray.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9551C481E390096DD31 /* MutableArray.c */; };
+		CE89D9B11F24037D005BF96C /* MutableData.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9561C481E390096DD31 /* MutableData.c */; };
+		CE89D9B21F24037D005BF96C /* MutableDictionary.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9571C481E390096DD31 /* MutableDictionary.c */; };
+		CE89D9B31F24037D005BF96C /* MutableSet.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9581C481E390096DD31 /* MutableSet.c */; };
+		CE89D9B41F24037D005BF96C /* MutableString.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9591C481E390096DD31 /* MutableString.c */; };
+		CE89D9B51F24037D005BF96C /* Null.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95A1C481E390096DD31 /* Null.c */; };
+		CE89D9B61F24037D005BF96C /* Number.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95B1C481E390096DD31 /* Number.c */; };
+		CE89D9B71F24037D005BF96C /* Object.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95C1C481E390096DD31 /* Object.c */; };
+		CE89D9B81F24037D005BF96C /* Operation.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95D1C481E390096DD31 /* Operation.c */; };
+		CE89D9B91F24037D005BF96C /* Regex.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95E1C481E390096DD31 /* Regex.c */; };
+		CE89D9BA1F24037D005BF96C /* String.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9601C481E390096DD31 /* String.c */; };
+		CE89D9BB1F24037D005BF96C /* Thread.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9611C481E390096DD31 /* Thread.c */; };
+		CE89D9BC1F24037D005BF96C /* URL.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9621C481E390096DD31 /* URL.c */; };
+		CE89D9BD1F24037D005BF96C /* URLSession.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9631C481E390096DD31 /* URLSession.c */; };
+		CE89D9BF1F24060F005BF96C /* Array.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9431C481E390096DD31 /* Array.c */; };
 		CE9305BF1D9B1C5D00D62770 /* Config.h in Headers */ = {isa = PBXBuildFile; fileRef = CE9305BE1D9B1C5D00D62770 /* Config.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEA3B0881CBBE95E0082EE04 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */; };
 		CEB078B71D73B74800ABA6B3 /* Value.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB078B51D73B74800ABA6B3 /* Value.c */; };
@@ -871,31 +871,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE84A8821DA15AD8008BC685 /* Array.c in Sources */,
-				CE84A8831DA15AD8008BC685 /* Boole.c in Sources */,
-				CE84A8841DA15AD8008BC685 /* Data.c in Sources */,
-				CE84A8851DA15AD8008BC685 /* Date.c in Sources */,
-				CE84A8861DA15AD8008BC685 /* Dictionary.c in Sources */,
-				CE84A8871DA15AD8008BC685 /* IndexPath.c in Sources */,
-				CE84A8881DA15AD8008BC685 /* IndexSet.c in Sources */,
-				CE84A8891DA15AD8008BC685 /* JSON.c in Sources */,
-				CE84A88A1DA15AD8008BC685 /* Locale.c in Sources */,
-				CE84A88B1DA15AD8008BC685 /* Log.c in Sources */,
-				CE84A88C1DA15AD8008BC685 /* MutableArray.c in Sources */,
-				CE84A88D1DA15AD8008BC685 /* MutableData.c in Sources */,
-				CE84A88E1DA15AD8008BC685 /* MutableDictionary.c in Sources */,
-				CE84A88F1DA15AD8008BC685 /* MutableSet.c in Sources */,
-				CE84A8901DA15AD8008BC685 /* MutableString.c in Sources */,
-				CE84A8911DA15AD8008BC685 /* Null.c in Sources */,
-				CE84A8921DA15AD8008BC685 /* Number.c in Sources */,
-				CE84A8931DA15AD8008BC685 /* Object.c in Sources */,
-				CE84A8941DA15AD8008BC685 /* Operation.c in Sources */,
-				CE84A8951DA15AD8008BC685 /* Regex.c in Sources */,
+				CE89D9A61F24037D005BF96C /* Array.c in Sources */,
+				CE89D9A71F24037D005BF96C /* Boole.c in Sources */,
+				CE89D9A81F24037D005BF96C /* Data.c in Sources */,
+				CE89D9A91F24037D005BF96C /* Date.c in Sources */,
+				CE89D9AA1F24037D005BF96C /* Dictionary.c in Sources */,
+				CE89D9AB1F24037D005BF96C /* IndexPath.c in Sources */,
+				CE89D9AC1F24037D005BF96C /* IndexSet.c in Sources */,
+				CE89D9AD1F24037D005BF96C /* JSON.c in Sources */,
+				CE89D9AE1F24037D005BF96C /* Locale.c in Sources */,
+				CE89D9AF1F24037D005BF96C /* Log.c in Sources */,
+				CE89D9B01F24037D005BF96C /* MutableArray.c in Sources */,
+				CE89D9B11F24037D005BF96C /* MutableData.c in Sources */,
+				CE89D9B21F24037D005BF96C /* MutableDictionary.c in Sources */,
+				CE89D9B31F24037D005BF96C /* MutableSet.c in Sources */,
+				CE89D9B41F24037D005BF96C /* MutableString.c in Sources */,
+				CE89D9B51F24037D005BF96C /* Null.c in Sources */,
+				CE89D9B61F24037D005BF96C /* Number.c in Sources */,
+				CE89D9B71F24037D005BF96C /* Object.c in Sources */,
+				CE89D9B81F24037D005BF96C /* Operation.c in Sources */,
+				CE89D9B91F24037D005BF96C /* Regex.c in Sources */,
 				CE84A8961DA15AD8008BC685 /* Set.c in Sources */,
-				CE84A8971DA15AD8008BC685 /* String.c in Sources */,
-				CE84A8981DA15AD8008BC685 /* Thread.c in Sources */,
-				CE84A8991DA15AD8008BC685 /* URL.c in Sources */,
-				CE76DA6F1C4B17980096DD31 /* URLSession.c in Sources */,
+				CE89D9BA1F24037D005BF96C /* String.c in Sources */,
+				CE89D9BB1F24037D005BF96C /* Thread.c in Sources */,
+				CE89D9BC1F24037D005BF96C /* URL.c in Sources */,
+				CE89D9BD1F24037D005BF96C /* URLSession.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -913,7 +913,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE783FEB1DDD102F0076ACC2 /* MutableString.c in Sources */,
+				CE89D9BF1F24060F005BF96C /* Array.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

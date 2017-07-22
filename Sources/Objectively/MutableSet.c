@@ -149,6 +149,33 @@ static void addObjectsFromSet(MutableSet *self, const Set *set) {
 }
 
 /**
+ * @fn void MutableSet::filter(MutableSet *self, Predicate predicate, ident data)
+ * @memberof MutableSet
+ */
+static void filter(MutableSet *self, Predicate predicate, ident data) {
+
+	assert(predicate);
+
+	self->set.count = 0;
+
+	for (size_t i = 0; i < self->set.capacity; i++) {
+
+		MutableArray *array = self->set.elements[i];
+		if (array) {
+
+			$(array, filter, predicate, data);
+
+			if (array->array.count == 0) {
+				release(array);
+				self->set.elements[i] = NULL;
+			} else {
+				self->set.count += array->array.count;
+			}
+		}
+	}
+}
+
+/**
  * @fn MutableSet *MutableSet::init(MutableSet *self)
  * @memberof MutableSet
  */
@@ -255,6 +282,7 @@ static void initialize(Class *clazz) {
 	mutableSet->addObject = addObject;
 	mutableSet->addObjectsFromArray = addObjectsFromArray;
 	mutableSet->addObjectsFromSet = addObjectsFromSet;
+	mutableSet->filter = filter;
 	mutableSet->init = init;
 	mutableSet->initWithCapacity = initWithCapacity;
 	mutableSet->removeAllObjects = removeAllObjects;

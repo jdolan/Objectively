@@ -83,6 +83,8 @@ struct Set {
 	ident *elements;
 };
 
+typedef struct MutableSet MutableSet;
+
 /**
  * @brief The Set interface.
  */
@@ -160,6 +162,36 @@ struct SetInterface {
 	 * @memberof Set
 	 */
 	Set *(*initWithSet)(Set *self, const Set *set);
+
+	/**
+	 * @fn Set *Set::mappedSet(const Set *self, Functor functor, ident data)
+	 * @brief Transforms the elements in this Set by `functor`.
+	 * @param self The Set.
+	 * @param functor The Functor.
+	 * @param data User data.
+	 * @return A Set containing the transformed elements of this Set.
+	 * @memberof Set.
+	 */
+	Set *(*mappedSet)(const Set *self, Functor functor, ident data);
+
+	/**
+	 * @fn MutableSet *Set::mutableCopy(const Set *self)
+	 * @param self The Set.
+	 * @return A MutableSet with the contents of this Set.
+	 * @memberof Set
+	 */
+	MutableSet *(*mutableCopy)(const Set *self);
+
+	/**
+	 * @fn ident Set::reduce(const Set *self, Reducer reducer, ident accumulator, ident data)
+	 * @param self The Set.
+	 * @param reducer The Reducer.
+	 * @param accumulator The initial accumulator value.
+	 * @param data User data.
+	 * @return The reduction result.
+	 * @memberof Set
+	 */
+	ident (*reduce)(const Set *self, Reducer reducer, ident accumulator, ident data);
 
 	/**
 	 * @static
