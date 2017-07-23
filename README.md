@@ -39,19 +39,19 @@ Features
 Adding Objectively to your project
 ---
 
-1) Do the Autotools dance.
+1. Do the Autotools dance.
 
 ```shell
 autoreconf -i; ./configure; make; sudo make install
 ```
 
-2) Include the main header file in your source.
+2. Include the main header file in your source.
 
 ```c
 #include <Objectively.h>
 ```
 
-3) Use Objectively in your application.
+3. Use Objectively in your application.
 
 ```c
 Object *obj = $(alloc(Object), init);
@@ -59,7 +59,7 @@ printf("%d\n", $(obj, hashCode));
 release(obj);
 ````
 
-4) Compile and link with Objectively.
+4. Compile and link with Objectively.
 
 ```shell
 gcc `pkg-config --cflags --libs Objectively` -o myprogram *.c
@@ -70,7 +70,7 @@ Declaring a custom type
 
 Types in Objectively are comprised of 3 components:
 
-1) The instance `struct`, beginning with the parent type, followed by the interface, and any instance variables.
+1. The instance `struct`, beginning with the parent type, followed by the interface, and any instance variables.
 
 ```c
 /**
@@ -95,7 +95,7 @@ struct Hello {
 };
 ```
 
-2) The interface `struct`, beginning with the parent interface, followed by any Class or instance methods.
+2. The interface `struct`, beginning with the parent interface, followed by any Class or instance methods.
 
 ```c
 /**
@@ -138,7 +138,7 @@ struct HelloInterface {
 };
 ```
 
-3) The class archetype, serving to tie 1) and 2) together.
+3) The Class archetype, serving to tie 1. and 2. together.
 
 ```c
 /**
@@ -289,7 +289,7 @@ static URLSession *_sharedInstance;
  * @memberof URLSession
  */
 static *URLSession sharedInstance(void) {
-    static Once once;
+	static Once once;
 
 	do_once(&once, {
 		_sharedInstance = $(alloc(URLSession), init);
