@@ -70,7 +70,7 @@ Declaring a custom type
 
 Types in Objectively are comprised of 3 components:
 
-1) The instance `struct`, beginning with the parent type, followed by the interface pointer, and any additional instance variables.
+1) The instance `struct`, beginning with the parent type, followed by the interface, and any instance variables.
 
 ```c
 /**
@@ -84,7 +84,7 @@ struct Hello {
 	Object object;
 
 	/**
-	 * @brief The typed interface.
+	 * @brief The interface.
 	 */
 	HelloInterface *interface;
 
