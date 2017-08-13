@@ -22,6 +22,7 @@
  */
 
 #include <assert.h>
+#include <regex.h>
 #include <stdlib.h>
 #include <string.h>
 
