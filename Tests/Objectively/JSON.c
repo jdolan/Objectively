@@ -30,7 +30,7 @@ static char *path;
 START_TEST(json)
 	{
 		Data *data = $(alloc(Data), initWithContentsOfFile, path);
-		ck_assert(data->length);
+		ck_assert(data);
 
 		Dictionary *dict0 = $$(JSONSerialization, objectFromData, data, 0);
 		ck_assert(dict0->count);
