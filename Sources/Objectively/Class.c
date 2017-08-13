@@ -142,7 +142,6 @@ ident _alloc(Class *clazz) {
 	object->clazz = clazz;
 	object->referenceCount = 1;
 
-
 	ident interface = clazz->def->interface;
 	do {
 		*(ident *) (obj + clazz->interfaceOffset) = interface;
