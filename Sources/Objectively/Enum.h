@@ -23,8 +23,6 @@
 
 #pragma once
 
-#include <string.h>
-
 #include <Objectively/Types.h>
 
 /**
