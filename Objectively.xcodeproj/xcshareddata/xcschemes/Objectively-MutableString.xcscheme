@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CE4A532F1F40E0A600927421"
-               BuildableName = "Objectively-Tests"
-               BlueprintName = "Objectively-Tests"
+               BlueprintIdentifier = "CEEB02551F40DBD7004C2EDD"
+               BuildableName = "Objectively-MutableString"
+               BlueprintName = "Objectively-MutableString"
                ReferencedContainer = "container:Objectively.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,6 +29,15 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "CEEB02551F40DBD7004C2EDD"
+            BuildableName = "Objectively-MutableString"
+            BlueprintName = "Objectively-MutableString"
+            ReferencedContainer = "container:Objectively.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -42,15 +51,23 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CE4A532F1F40E0A600927421"
-            BuildableName = "Objectively-Tests"
-            BlueprintName = "Objectively-Tests"
+            BlueprintIdentifier = "CEEB02551F40DBD7004C2EDD"
+            BuildableName = "Objectively-MutableString"
+            BlueprintName = "Objectively-MutableString"
             ReferencedContainer = "container:Objectively.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "CK_FORK"
+            value = "no"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -60,15 +77,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CE4A532F1F40E0A600927421"
-            BuildableName = "Objectively-Tests"
-            BlueprintName = "Objectively-Tests"
+            BlueprintIdentifier = "CEEB02551F40DBD7004C2EDD"
+            BuildableName = "Objectively-MutableString"
+            BlueprintName = "Objectively-MutableString"
             ReferencedContainer = "container:Objectively.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
