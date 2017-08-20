@@ -23,15 +23,16 @@
 
 #pragma once
 
+#include <locale.h>
+
 #include <Objectively/Config.h>
 
 #if HAVE_XLOCALE_H
 #include <xlocale.h>
-#else
-#include <locale.h>
+#endif
+
 #if defined(_WIN32)
 typedef _locale_t locale_t;
-#endif
 #endif
 
 #include <Objectively/Object.h>
