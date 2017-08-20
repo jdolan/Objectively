@@ -38,7 +38,7 @@
 static Date *dateFromCharacters(const DateFormatter *self, const char *chars) {
 
 #if defined(_WIN32)
-	fprintf(stderr, "WARNING:%s: not implemented (Windows)\n", __func__);
+	fprintf(stderr, "WARNING: %s: not implemented (Windows)\n", __func__);
 #else
 	if (chars) {
 		struct tm time;

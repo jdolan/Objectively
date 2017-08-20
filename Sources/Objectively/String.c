@@ -329,10 +329,10 @@ static String *initWithContentsOfFile(String *self, const char *path, StringEnco
 	Data *data = $$(Data, dataWithContentsOfFile, path);
 	if (data) {
 		self = $(self, initWithData, data, encoding);
-		release(data);
 	} else {
 		self = $(self, initWithMemory, NULL, 0);
 	}
+	release(data);
 
 	return self;
 }
