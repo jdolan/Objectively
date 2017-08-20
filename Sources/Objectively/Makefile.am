@@ -39,6 +39,7 @@ pkginclude_HEADERS = \
 	Resource.h \
 	Set.h \
 	String.h \
+	StringReader.h \
 	Thread.h \
 	Types.h \
 	URL.h \
@@ -88,6 +89,7 @@ libObjectively_la_SOURCES = \
 	Resource.c \
 	Set.c \
 	String.c \
+	StringReader.c \
 	Thread.c \
 	URL.c \
 	URLRequest.c \

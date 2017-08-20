@@ -71,6 +71,11 @@
 		CE4A53A21F40E27F00927421 /* MutableSet.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9581C481E390096DD31 /* MutableSet.c */; };
 		CE4A53A31F40E28600927421 /* MutableString.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9591C481E390096DD31 /* MutableString.c */; };
 		CE4A53A41F40E28C00927421 /* Null.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95A1C481E390096DD31 /* Null.c */; };
+		CE594BD31F47BA07004D74FF /* StringReader.c in Sources */ = {isa = PBXBuildFile; fileRef = CE594BD11F47BA07004D74FF /* StringReader.c */; };
+		CE594BD41F47BA07004D74FF /* StringReader.h in Headers */ = {isa = PBXBuildFile; fileRef = CE594BD21F47BA07004D74FF /* StringReader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE594BDC1F49F931004D74FF /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */; };
+		CE594BDD1F49F931004D74FF /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
+		CE594BE31F49F93F004D74FF /* StringReader.c in Sources */ = {isa = PBXBuildFile; fileRef = CE594BD51F49F8DB004D74FF /* StringReader.c */; };
 		CE6BC16C1D79960C0070FB2D /* Enum.c in Sources */ = {isa = PBXBuildFile; fileRef = CE6BC16A1D79960C0070FB2D /* Enum.c */; };
 		CE6BC16D1D79960C0070FB2D /* Enum.h in Headers */ = {isa = PBXBuildFile; fileRef = CE6BC16B1D79960C0070FB2D /* Enum.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76D96E1C4821CE0096DD31 /* Array.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D85E1C481C4E0096DD31 /* Array.c */; };
@@ -452,6 +457,13 @@
 			remoteGlobalIDString = CE4A53221F40E00A00927421;
 			remoteInfo = "Objectively-HelloObjC";
 		};
+		CE594BD81F49F931004D74FF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE76D9671C48218E0096DD31;
+			remoteInfo = Objectively;
+		};
 		CE84A8A51DA15B88008BC685 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
@@ -649,6 +661,15 @@
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 		CE4A53291F40E00A00927421 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		CE594BDE1F49F931004D74FF /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -890,6 +911,10 @@
 		CE4A53131F40DFE800927421 /* Objectively-Hello */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Hello"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A53201F40DFFC00927421 /* Objectively-HelloCpp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-HelloCpp"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A532D1F40E00A00927421 /* Objectively-HelloObjC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-HelloObjC"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE594BD11F47BA07004D74FF /* StringReader.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = StringReader.c; sourceTree = "<group>"; };
+		CE594BD21F47BA07004D74FF /* StringReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringReader.h; sourceTree = "<group>"; };
+		CE594BD51F49F8DB004D74FF /* StringReader.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = StringReader.c; sourceTree = "<group>"; };
+		CE594BE21F49F931004D74FF /* Objectively-StringReader */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-StringReader"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE6BC16A1D79960C0070FB2D /* Enum.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Enum.c; sourceTree = "<group>"; };
 		CE6BC16B1D79960C0070FB2D /* Enum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enum.h; sourceTree = "<group>"; };
 		CE6C2D0E1E213E9000F55B0A /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
@@ -1081,6 +1106,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE4A53281F40E00A00927421 /* libObjectively.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE594BDB1F49F931004D74FF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE594BDC1F49F931004D74FF /* libcheck.0.dylib in Frameworks */,
+				CE594BDD1F49F931004D74FF /* libObjectively.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1421,6 +1455,8 @@
 				CE76D8E61C481C4E0096DD31 /* Set.h */,
 				CE76D8E71C481C4E0096DD31 /* String.c */,
 				CE76D8E81C481C4E0096DD31 /* String.h */,
+				CE594BD11F47BA07004D74FF /* StringReader.c */,
+				CE594BD21F47BA07004D74FF /* StringReader.h */,
 				CE76D8E91C481C4E0096DD31 /* Thread.c */,
 				CE76D8EA1C481C4E0096DD31 /* Thread.h */,
 				CE76D8EB1C481C4E0096DD31 /* Types.h */,
@@ -1504,6 +1540,7 @@
 				CE76D95E1C481E390096DD31 /* Regex.c */,
 				CE76D95F1C481E390096DD31 /* Set.c */,
 				CE76D9601C481E390096DD31 /* String.c */,
+				CE594BD51F49F8DB004D74FF /* StringReader.c */,
 				CE76D9611C481E390096DD31 /* Thread.c */,
 				CE76D9621C481E390096DD31 /* URL.c */,
 				CE76D9631C481E390096DD31 /* URLSession.c */,
@@ -1552,6 +1589,7 @@
 				CE4A53131F40DFE800927421 /* Objectively-Hello */,
 				CE4A53201F40DFFC00927421 /* Objectively-HelloCpp */,
 				CE4A532D1F40E00A00927421 /* Objectively-HelloObjC */,
+				CE594BE21F49F931004D74FF /* Objectively-StringReader */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1645,6 +1683,7 @@
 				CE3BCDD21DB6FA62002E6C6D /* Resource.h in Headers */,
 				CE76DA211C4860130096DD31 /* Set.h in Headers */,
 				CE76DA221C4860130096DD31 /* String.h in Headers */,
+				CE594BD41F47BA07004D74FF /* StringReader.h in Headers */,
 				CE76DA231C4860130096DD31 /* Thread.h in Headers */,
 				CE76DA241C4860130096DD31 /* Types.h in Headers */,
 				CE76DA251C4860130096DD31 /* URL.h in Headers */,
@@ -1715,6 +1754,24 @@
 			name = "Objectively-HelloObjC";
 			productName = "Objectively-Test";
 			productReference = CE4A532D1F40E00A00927421 /* Objectively-HelloObjC */;
+			productType = "com.apple.product-type.tool";
+		};
+		CE594BD61F49F931004D74FF /* Objectively-StringReader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE594BDF1F49F931004D74FF /* Build configuration list for PBXNativeTarget "Objectively-StringReader" */;
+			buildPhases = (
+				CE594BD91F49F931004D74FF /* Sources */,
+				CE594BDB1F49F931004D74FF /* Frameworks */,
+				CE594BDE1F49F931004D74FF /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE594BD71F49F931004D74FF /* PBXTargetDependency */,
+			);
+			name = "Objectively-StringReader";
+			productName = "Objectively-Test";
+			productReference = CE594BE21F49F931004D74FF /* Objectively-StringReader */;
 			productType = "com.apple.product-type.tool";
 		};
 		CE76D9671C48218E0096DD31 /* Objectively */ = {
@@ -2240,6 +2297,7 @@
 				CEEB02AD1F40DD26004C2EDD /* Objectively-Regex */,
 				CEEB02BA1F40DD27004C2EDD /* Objectively-Set */,
 				CEEB02C71F40DD29004C2EDD /* Objectively-String */,
+				CE594BD61F49F931004D74FF /* Objectively-StringReader */,
 				CEEB02D41F40DD2B004C2EDD /* Objectively-Thread */,
 				CEEB02E11F40DD4E004C2EDD /* Objectively-URL */,
 				CEEB02EE1F40DD4F004C2EDD /* Objectively-URLSession */,
@@ -2307,6 +2365,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CE594BD91F49F931004D74FF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE594BE31F49F93F004D74FF /* StringReader.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CE76D9641C48218E0096DD31 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2344,6 +2410,7 @@
 				CE3BCDD11DB6FA62002E6C6D /* Resource.c in Sources */,
 				CE76D9891C4821CE0096DD31 /* Set.c in Sources */,
 				CE76D98A1C4821CE0096DD31 /* String.c in Sources */,
+				CE594BD31F47BA07004D74FF /* StringReader.c in Sources */,
 				CE76D98B1C4821CE0096DD31 /* Thread.c in Sources */,
 				CE76D98C1C4821CE0096DD31 /* URL.c in Sources */,
 				CE76D98D1C4821CE0096DD31 /* URLRequest.c in Sources */,
@@ -2715,6 +2782,11 @@
 			target = CE4A53221F40E00A00927421 /* Objectively-HelloObjC */;
 			targetProxy = CE4A539F1F40E0E100927421 /* PBXContainerItemProxy */;
 		};
+		CE594BD71F49F931004D74FF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE76D9671C48218E0096DD31 /* Objectively */;
+			targetProxy = CE594BD81F49F931004D74FF /* PBXContainerItemProxy */;
+		};
 		CE84A8A61DA15B88008BC685 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CE76D9671C48218E0096DD31 /* Objectively */;
@@ -2922,6 +2994,24 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		CE594BE01F49F931004D74FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		CE594BE11F49F931004D74FF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -3531,6 +3621,15 @@
 			buildConfigurations = (
 				CE4A53991F40E0CD00927421 /* Debug */,
 				CE4A539A1F40E0CD00927421 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE594BDF1F49F931004D74FF /* Build configuration list for PBXNativeTarget "Objectively-StringReader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE594BE01F49F931004D74FF /* Debug */,
+				CE594BE11F49F931004D74FF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -62,6 +62,7 @@
 #include <Objectively/Resource.h>
 #include <Objectively/Set.h>
 #include <Objectively/String.h>
+#include <Objectively/StringReader.h>
 #include <Objectively/Thread.h>
 #include <Objectively/Types.h>
 #include <Objectively/URL.h>
