@@ -99,10 +99,10 @@ static Locale *initWithIdentifier(Locale *self, const char *identifier) {
 }
 
 /**
- * @fn Locale *Locale::initWithLocale(Locale *self, locale_t locale)
+ * @fn Locale *Locale::initWithLocale(Locale *self, ident locale)
  * @memberof Locale
  */
-static Locale *initWithLocale(Locale *self, locale_t locale) {
+static Locale *initWithLocale(Locale *self, ident locale) {
 
 	self = (Locale *) super(Object, self, init);
 	if (self) {

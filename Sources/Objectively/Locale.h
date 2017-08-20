@@ -31,10 +31,6 @@
 #include <xlocale.h>
 #endif
 
-#if defined(_WIN32)
-typedef _locale_t locale_t;
-#endif
-
 #include <Objectively/Object.h>
 
 /**
@@ -111,13 +107,13 @@ struct LocaleInterface {
 
 	/**
 	 * @fn Locale *Locale::initWithLocale(Locale *self, locale_t locale)
-	 * @brief Initializes this Locale with the given locale.
+	 * @brief Initializes this Locale with the given system locale.
 	 * @param self The Locale.
 	 * @param locale The backing locale.
 	 * @return The initialized Locale, or `NULL` on error.
 	 * @memberof Locale
 	 */
-	Locale *(*initWithLocale)(Locale *self, locale_t locale);
+	Locale *(*initWithLocale)(Locale *self, ident locale);
 
 	/**
 	 * @static
