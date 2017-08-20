@@ -23,12 +23,15 @@
 
 #pragma once
 
-#include <locale.h>
+#include <Objectively/Config.h>
 
+#if HAVE_XLOCALE_H
+#include <xlocale.h>
+#else
+#include <locale.h>
 #if defined(_WIN32)
 typedef _locale_t locale_t;
-#else
-#include <xlocale.h>
+#endif
 #endif
 
 #include <Objectively/Object.h>
@@ -65,10 +68,10 @@ struct Locale {
 	LocaleInterface *interface;
 
 	/**
-	 * @brief The locale identifier, e.g. `en_US`.
+	 * @brief The locale identifier, e.g. `en_US.UTF-8`.
 	 * @see xlocale.h, locale.h
 	 */
-	const char *identifier;
+	char *identifier;
 
 	/**
 	 * @brief The internal C representation.
@@ -86,6 +89,14 @@ struct LocaleInterface {
 	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
+
+	/**
+	 * @static
+	 * @fn Locale *Locale::currentLocale(void)
+	 * @return A copy of the current Locale.
+	 * @memberof Locale
+	 */
+	Locale *(*currentLocale)(void);
 
 	/**
 	 * @fn Locale *Locale::initWithIdentifier(Locale *self, const char *identifier)
@@ -109,11 +120,11 @@ struct LocaleInterface {
 
 	/**
 	 * @static
-	 * @fn Locale *Locale::systemLocale(void)
-	 * @return The system Locale.
+	 * @fn Locale *Locale::UTF8(void)
+	 * @return The shared UTF-8 Locale.
 	 * @memberof Locale
 	 */
-	Locale *(*systemLocale)(void);
+	Locale *(*UTF8)(void);
 };
 
 /**

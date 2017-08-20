@@ -22,6 +22,7 @@
  */
 
 #include <assert.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include <Objectively/Hash.h>
@@ -50,6 +51,8 @@ static void dealloc(Object *self) {
 
 	Locale *this = (Locale *) self;
 
+	free(this->identifier);
+
 #if defined(_WIN32)
 	_free_locale(this->locale);
 #else
@@ -62,6 +65,18 @@ static void dealloc(Object *self) {
 #pragma mark - Locale
 
 /**
+ * @fn Locale *Locale::currentLocale(void)
+ * @memberof Locale
+ */
+static Locale *currentLocale(void) {
+#if defined(_WIN32)
+	return $(alloc(Locale), initWithLocale, _get_current_locale());
+#else
+	return $(alloc(Locale), initWithLocale, duplocale(LC_GLOBAL_LOCALE));
+#endif
+}
+
+/**
  * @fn Locale *Locale::initWithIdentifier(Locale *self, const char *identifier)
  * @memberof Locale
  */
@@ -69,7 +84,7 @@ static Locale *initWithIdentifier(Locale *self, const char *identifier) {
 
 	self = (Locale *) super(Object, self, init);
 	if (self) {
-		self->identifier = identifier;
+		self->identifier = strdup(identifier);
 		assert(self->identifier);
 
 #if defined(_WIN32)
@@ -93,23 +108,26 @@ static Locale *initWithLocale(Locale *self, locale_t locale) {
 	if (self) {
 		self->locale = locale;
 		assert(self->locale);
-
-		self->identifier = "";
 	}
 
 	return self;
 }
 
+static Locale *_utf8;
+
 /**
- * @fn Locale *Locale::systemLocale(void)
+ * @fn Locale *Locale::UTF8(void)
  * @memberof Locale
  */
-static Locale *systemLocale(void) {
-#if defined(_WIN32)
-	return $(alloc(Locale), initWithLocale, _get_current_locale());
-#else
-	return $(alloc(Locale), initWithLocale, duplocale(LC_GLOBAL_LOCALE));
-#endif
+static Locale *UTF8(void) {
+	static Once once;
+
+	do_once(&once, {
+		_utf8 = $(alloc(Locale), initWithIdentifier, "en_US.UTF-8");
+		assert(_utf8);
+	})
+
+	return _utf8;
 }
 
 #pragma mark - Class lifecycle
@@ -122,9 +140,17 @@ static void initialize(Class *clazz) {
 	((ObjectInterface *) clazz->def->interface)->copy = copy;
 	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
 
+	((LocaleInterface *) clazz->def->interface)->currentLocale = currentLocale;
 	((LocaleInterface *) clazz->def->interface)->initWithIdentifier = initWithIdentifier;
 	((LocaleInterface *) clazz->def->interface)->initWithLocale = initWithLocale;
-	((LocaleInterface *) clazz->def->interface)->systemLocale = systemLocale;
+	((LocaleInterface *) clazz->def->interface)->UTF8 = UTF8;
+}
+
+/**
+ * @see Class::destroy(Class *)
+ */
+static void destroy(Class *clazz) {
+	release(_utf8);
 }
 
 /**
@@ -142,6 +168,7 @@ Class *_Locale(void) {
 		clazz.interfaceOffset = offsetof(Locale, interface);
 		clazz.interfaceSize = sizeof(LocaleInterface);
 		clazz.initialize = initialize;
+		clazz.destroy = destroy;
 	});
 
 	return &clazz;

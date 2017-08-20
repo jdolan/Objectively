@@ -27,17 +27,17 @@
 
 START_TEST(locale)
 	{
-		Locale *system = $$(Locale, systemLocale);
+		Locale *C = $$(Locale, currentLocale);
 
-		ck_assert(system != NULL);
-		ck_assert_ptr_eq(_Locale(), classof(system));
+		ck_assert(C != NULL);
+		ck_assert_ptr_eq(_Locale(), classof(C));
 
 		Locale *en_US = $(alloc(Locale), initWithIdentifier, "en_US");
 
 		ck_assert(en_US != NULL);
 		ck_assert_ptr_eq(_Locale(), classof(en_US));
 
-		release(system);
+		release(C);
 		release(en_US);
 
 	}END_TEST
