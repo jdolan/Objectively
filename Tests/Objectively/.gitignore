@@ -24,6 +24,7 @@ Operation
 Regex
 Set
 String
+StringReader
 Thread
 URL
 URLSession

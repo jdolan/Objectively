@@ -8,9 +8,9 @@ DEFAULT_INCLUDES = \
 TESTS = \
 	Array \
 	Boole \
+	Data \
 	Date \
 	Dictionary \
-	Data \
 	IndexPath \
 	IndexSet \
 	JSON \
@@ -28,6 +28,7 @@ TESTS = \
 	Regex \
 	Set \
 	String \
+	StringReader \
 	Thread \
 	URL \
 	URLSession
