@@ -93,7 +93,11 @@ static StringReader *initWithString(StringReader *self, String *string) {
 static Unicode next(StringReader *self, StringReaderMode mode) {
 	Unicode c;
 
+#if defined(_WIN32)
+	const int bytes = _mbtowc_l(&c, self->head, sizeof(Unicode), $$(Locale, UTF8)->locale);
+#else
 	const int bytes = mbtowc_l(&c, self->head, sizeof(Unicode), $$(Locale, UTF8)->locale);
+#endif
 	if (bytes > 0) {
 		if (mode == StringReaderRead) {
 			self->head += bytes;
