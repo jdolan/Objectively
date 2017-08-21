@@ -93,11 +93,7 @@ static StringReader *initWithString(StringReader *self, String *string) {
 static Unicode next(StringReader *self, StringReaderMode mode) {
 	Unicode c;
 
-#if defined(_WIN32)
-	const int bytes = _mbtowc(&c, self->head, sizeof(Unicode));
-#else
 	const int bytes = mbtowc(&c, self->head, sizeof(Unicode));
-#endif
 	if (bytes > 0) {
 		if (mode == StringReaderRead) {
 			self->head += bytes;
