@@ -57,7 +57,6 @@ AM_CONDITIONAL([LINUX], [test "x$HOST_NAME" = "xLINUX"])
 
 AC_CHECK_HEADERS([iconv.h])
 AC_CHECK_HEADERS([locale.h])
-AC_CHECK_HEADERS([xlocale.h])
 AC_CHECK_HEADERS([pthread.h])
 AC_CHECK_HEADERS([sys/time.h])
 

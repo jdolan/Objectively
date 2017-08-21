@@ -29,7 +29,6 @@
 
 #include <Objectively/Array.h>
 #include <Objectively/Data.h>
-#include <Objectively/Locale.h>
 
 /**
  * @file
@@ -243,19 +242,10 @@ struct StringInterface {
 	/**
 	 * @fn String *String::lowercaseString(const String *self)
 	 * @param self The String.
-	 * @return A lowercase representation of this String in the default Locale.
+	 * @return A lowercase representation of this String in the current locale.
 	 * @memberof String
 	 */
 	String *(*lowercaseString)(const String *self);
-
-	/**
-	 * @fn String *String::lowercaseStringWithLocale(const String *self, const Locale *locale)
-	 * @param self The String.
-	 * @param locale The desired Locale.
-	 * @return A lowercase representation of this String in the given Locale.
-	 * @memberof String
-	 */
-	String *(*lowercaseStringWithLocale)(const String *self, const Locale *locale);
 
 	/**
 	 * @fn MutableString *String::mutableCopy(const String *self)
@@ -375,19 +365,10 @@ struct StringInterface {
 	/**
 	 * @fn String *String::uppercaseString(const String *self)
 	 * @param self The String.
-	 * @return An uppercase representation of this String in the default Locale.
+	 * @return An uppercase representation of this String in the current locale.
 	 * @memberof String
 	 */
 	String *(*uppercaseString)(const String *self);
-
-	/**
-	 * @fn String *String::uppercaseStringWithLocale(const String *self, const Locale *locale)
-	 * @param self The String.
-	 * @param locale The desired Locale.
-	 * @return A uppercase representation of this String in the given Locale.
-	 * @memberof String
-	 */
-	String *(*uppercaseStringWithLocale)(const String *self, const Locale *locale);
 
 	/**
 	 * @fn _Bool String::writeToFile(const String *self, const char *path, StringEncoding encoding)

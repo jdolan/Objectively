@@ -20,7 +20,6 @@ pkginclude_HEADERS = \
 	IndexSet.h \
 	JSONPath.h \
 	JSONSerialization.h \
-	Locale.h \
 	Lock.h \
 	Log.h \
 	MutableArray.h \
@@ -71,7 +70,6 @@ libObjectively_la_SOURCES = \
 	IndexSet.c \
 	JSONPath.c \
 	JSONSerialization.c \
-	Locale.c \
 	Lock.c \
 	Log.c \
 	MutableArray.c \

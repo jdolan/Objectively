@@ -22,7 +22,6 @@
 				CE4A533E1F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53401F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53421F40E0C800927421 /* PBXTargetDependency */,
-				CE4A53441F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53461F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53481F40E0C800927421 /* PBXTargetDependency */,
 				CE4A534A1F40E0C800927421 /* PBXTargetDependency */,
@@ -36,6 +35,7 @@
 				CE4A535A1F40E0C800927421 /* PBXTargetDependency */,
 				CE4A535C1F40E0C800927421 /* PBXTargetDependency */,
 				CE4A535E1F40E0C800927421 /* PBXTargetDependency */,
+				CE594BE51F4B05D1004D74FF /* PBXTargetDependency */,
 				CE4A53601F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53621F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53641F40E0C800927421 /* PBXTargetDependency */,
@@ -90,7 +90,6 @@
 		CE76D9771C4821CE0096DD31 /* Hash.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8701C481C4E0096DD31 /* Hash.c */; };
 		CE76D9781C4821CE0096DD31 /* JSONPath.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8721C481C4E0096DD31 /* JSONPath.c */; };
 		CE76D9791C4821CE0096DD31 /* JSONSerialization.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8741C481C4E0096DD31 /* JSONSerialization.c */; };
-		CE76D97A1C4821CE0096DD31 /* Locale.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8C31C481C4E0096DD31 /* Locale.c */; };
 		CE76D97B1C4821CE0096DD31 /* Lock.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8C51C481C4E0096DD31 /* Lock.c */; };
 		CE76D97C1C4821CE0096DD31 /* Log.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8C71C481C4E0096DD31 /* Log.c */; };
 		CE76D97D1C4821CE0096DD31 /* MutableArray.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8CC1C481C4E0096DD31 /* MutableArray.c */; };
@@ -128,7 +127,6 @@
 		CE76DA0E1C4860120096DD31 /* Hash.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8711C481C4E0096DD31 /* Hash.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA0F1C4860120096DD31 /* JSONPath.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8731C481C4E0096DD31 /* JSONPath.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA101C4860120096DD31 /* JSONSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8751C481C4E0096DD31 /* JSONSerialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE76DA111C4860120096DD31 /* Locale.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8C41C481C4E0096DD31 /* Locale.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA121C4860120096DD31 /* Lock.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8C61C481C4E0096DD31 /* Lock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA131C4860120096DD31 /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8C81C481C4E0096DD31 /* Log.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA141C4860120096DD31 /* MutableArray.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8CD1C481C4E0096DD31 /* MutableArray.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -206,7 +204,6 @@
 		CEEB027F1F40DCC0004C2EDD /* IndexPath.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB078C51D76088900ABA6B3 /* IndexPath.c */; };
 		CEEB02801F40DCC5004C2EDD /* IndexSet.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB20D581D77492A000EF6F3 /* IndexSet.c */; };
 		CEEB02811F40DCC8004C2EDD /* JSON.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D94D1C481E390096DD31 /* JSON.c */; };
-		CEEB02821F40DCCE004C2EDD /* Locale.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9501C481E390096DD31 /* Locale.c */; };
 		CEEB02831F40DCDD004C2EDD /* Log.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9511C481E390096DD31 /* Log.c */; };
 		CEEB02841F40DCE2004C2EDD /* MutableArray.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9551C481E390096DD31 /* MutableArray.c */; };
 		CEEB02851F40DCED004C2EDD /* MutableData.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9561C481E390096DD31 /* MutableData.c */; };
@@ -316,13 +313,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = CEEB01F71F40DB52004C2EDD;
 			remoteInfo = "Objectively-JSON";
-		};
-		CE4A53431F40E0C800927421 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CEEB02041F40DB55004C2EDD;
-			remoteInfo = "Objectively-Locale";
 		};
 		CE4A53451F40E0C800927421 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -463,6 +453,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = CE76D9671C48218E0096DD31;
 			remoteInfo = Objectively;
+		};
+		CE594BE41F4B05D1004D74FF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE594BD61F49F931004D74FF;
+			remoteInfo = "Objectively-StringReader";
 		};
 		CE84A8A51DA15B88008BC685 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -943,8 +940,6 @@
 		CE76D8731C481C4E0096DD31 /* JSONPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSONPath.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CE76D8741C481C4E0096DD31 /* JSONSerialization.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = JSONSerialization.c; sourceTree = "<group>"; };
 		CE76D8751C481C4E0096DD31 /* JSONSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSONSerialization.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		CE76D8C31C481C4E0096DD31 /* Locale.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Locale.c; sourceTree = "<group>"; };
-		CE76D8C41C481C4E0096DD31 /* Locale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Locale.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CE76D8C51C481C4E0096DD31 /* Lock.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Lock.c; sourceTree = "<group>"; };
 		CE76D8C61C481C4E0096DD31 /* Lock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Lock.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CE76D8C71C481C4E0096DD31 /* Log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Log.c; sourceTree = "<group>"; };
@@ -1018,7 +1013,6 @@
 		CE76D9491C481E390096DD31 /* Dictionary.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Dictionary.c; sourceTree = "<group>"; };
 		CE76D94B1C481E390096DD31 /* test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
 		CE76D94D1C481E390096DD31 /* JSON.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = JSON.c; sourceTree = "<group>"; };
-		CE76D9501C481E390096DD31 /* Locale.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Locale.c; sourceTree = "<group>"; };
 		CE76D9511C481E390096DD31 /* Log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Log.c; sourceTree = "<group>"; };
 		CE76D9531C481E390096DD31 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		CE76D9551C481E390096DD31 /* MutableArray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MutableArray.c; sourceTree = "<group>"; };
@@ -1418,8 +1412,6 @@
 				CE76D8731C481C4E0096DD31 /* JSONPath.h */,
 				CE76D8741C481C4E0096DD31 /* JSONSerialization.c */,
 				CE76D8751C481C4E0096DD31 /* JSONSerialization.h */,
-				CE76D8C31C481C4E0096DD31 /* Locale.c */,
-				CE76D8C41C481C4E0096DD31 /* Locale.h */,
 				CE76D8C51C481C4E0096DD31 /* Lock.c */,
 				CE76D8C61C481C4E0096DD31 /* Lock.h */,
 				CE76D8C71C481C4E0096DD31 /* Log.c */,
@@ -1526,7 +1518,6 @@
 				CEB078C51D76088900ABA6B3 /* IndexPath.c */,
 				CEB20D581D77492A000EF6F3 /* IndexSet.c */,
 				CE76D94D1C481E390096DD31 /* JSON.c */,
-				CE76D9501C481E390096DD31 /* Locale.c */,
 				CE76D9511C481E390096DD31 /* Log.c */,
 				CE76D9551C481E390096DD31 /* MutableArray.c */,
 				CE76D9561C481E390096DD31 /* MutableData.c */,
@@ -1664,7 +1655,6 @@
 				CEB20D551D771B6F000EF6F3 /* IndexSet.h in Headers */,
 				CE76DA0F1C4860120096DD31 /* JSONPath.h in Headers */,
 				CE76DA101C4860120096DD31 /* JSONSerialization.h in Headers */,
-				CE76DA111C4860120096DD31 /* Locale.h in Headers */,
 				CE76DA121C4860120096DD31 /* Lock.h in Headers */,
 				CE76DA131C4860120096DD31 /* Log.h in Headers */,
 				CE76DA141C4860120096DD31 /* MutableArray.h in Headers */,
@@ -2336,7 +2326,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$BUILT_PRODUCTS_DIR/Objectively-Array &&\n$BUILT_PRODUCTS_DIR/Objectively-Boole &&\n$BUILT_PRODUCTS_DIR/Objectively-Data &&\n$BUILT_PRODUCTS_DIR/Objectively-Date &&\n$BUILT_PRODUCTS_DIR/Objectively-Dictionary &&\n$BUILT_PRODUCTS_DIR/Objectively-IndexPath &&\n$BUILT_PRODUCTS_DIR/Objectively-IndexSet &&\n$BUILT_PRODUCTS_DIR/Objectively-JSON $SRCROOT/Tests/Objectively/Fixtures/test.json &&\n$BUILT_PRODUCTS_DIR/Objectively-Locale &&\n$BUILT_PRODUCTS_DIR/Objectively-Log &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableArray &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableData &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableDictionary &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableSet &&\n$BUILT_PRODUCTS_DIR/Objectively-Null &&\n$BUILT_PRODUCTS_DIR/Objectively-Number &&\n$BUILT_PRODUCTS_DIR/Objectively-Object &&\n$BUILT_PRODUCTS_DIR/Objectively-Operation &&\n$BUILT_PRODUCTS_DIR/Objectively-Regex &&\n$BUILT_PRODUCTS_DIR/Objectively-Set &&\n$BUILT_PRODUCTS_DIR/Objectively-String &&\n$BUILT_PRODUCTS_DIR/Objectively-Thread &&\n$BUILT_PRODUCTS_DIR/Objectively-URL &&\n$BUILT_PRODUCTS_DIR/Objectively-URLSession";
+			shellScript = "$BUILT_PRODUCTS_DIR/Objectively-Array &&\n$BUILT_PRODUCTS_DIR/Objectively-Boole &&\n$BUILT_PRODUCTS_DIR/Objectively-Data &&\n$BUILT_PRODUCTS_DIR/Objectively-Date &&\n$BUILT_PRODUCTS_DIR/Objectively-Dictionary &&\n$BUILT_PRODUCTS_DIR/Objectively-IndexPath &&\n$BUILT_PRODUCTS_DIR/Objectively-IndexSet &&\n$BUILT_PRODUCTS_DIR/Objectively-JSON $SRCROOT/Tests/Objectively/Fixtures/test.json &&\n$BUILT_PRODUCTS_DIR/Objectively-Log &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableArray &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableData &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableDictionary &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableSet &&\n$BUILT_PRODUCTS_DIR/Objectively-Null &&\n$BUILT_PRODUCTS_DIR/Objectively-Number &&\n$BUILT_PRODUCTS_DIR/Objectively-Object &&\n$BUILT_PRODUCTS_DIR/Objectively-Operation &&\n$BUILT_PRODUCTS_DIR/Objectively-Regex &&\n$BUILT_PRODUCTS_DIR/Objectively-Set &&\n$BUILT_PRODUCTS_DIR/Objectively-String &&\n$BUILT_PRODUCTS_DIR/Objectively-StringReader &&\n$BUILT_PRODUCTS_DIR/Objectively-Thread &&\n$BUILT_PRODUCTS_DIR/Objectively-URL &&\n$BUILT_PRODUCTS_DIR/Objectively-URLSession";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2392,7 +2382,6 @@
 				CEB20D571D771B7A000EF6F3 /* IndexSet.c in Sources */,
 				CE76D9781C4821CE0096DD31 /* JSONPath.c in Sources */,
 				CE76D9791C4821CE0096DD31 /* JSONSerialization.c in Sources */,
-				CE76D97A1C4821CE0096DD31 /* Locale.c in Sources */,
 				CE76D97B1C4821CE0096DD31 /* Lock.c in Sources */,
 				CE76D97C1C4821CE0096DD31 /* Log.c in Sources */,
 				CE76D97D1C4821CE0096DD31 /* MutableArray.c in Sources */,
@@ -2492,7 +2481,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB02821F40DCCE004C2EDD /* Locale.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2682,11 +2670,6 @@
 			target = CEEB01F71F40DB52004C2EDD /* Objectively-JSON */;
 			targetProxy = CE4A53411F40E0C800927421 /* PBXContainerItemProxy */;
 		};
-		CE4A53441F40E0C800927421 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CEEB02041F40DB55004C2EDD /* Objectively-Locale */;
-			targetProxy = CE4A53431F40E0C800927421 /* PBXContainerItemProxy */;
-		};
 		CE4A53461F40E0C800927421 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CEEB02141F40DBCD004C2EDD /* Objectively-Log */;
@@ -2786,6 +2769,11 @@
 			isa = PBXTargetDependency;
 			target = CE76D9671C48218E0096DD31 /* Objectively */;
 			targetProxy = CE594BD81F49F931004D74FF /* PBXContainerItemProxy */;
+		};
+		CE594BE51F4B05D1004D74FF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE594BD61F49F931004D74FF /* Objectively-StringReader */;
+			targetProxy = CE594BE41F4B05D1004D74FF /* PBXContainerItemProxy */;
 		};
 		CE84A8A61DA15B88008BC685 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

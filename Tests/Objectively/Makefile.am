@@ -14,7 +14,6 @@ TESTS = \
 	IndexPath \
 	IndexSet \
 	JSON \
-	Locale \
 	Log \
 	MutableArray \
 	MutableData \

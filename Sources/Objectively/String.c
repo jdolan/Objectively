@@ -23,6 +23,7 @@
 
 #include <assert.h>
 #include <iconv.h>
+#include <locale.h>
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -407,14 +408,6 @@ static String *initWithVaList(String *self, const char *fmt, va_list args) {
  * @memberof String
  */
 static String *lowercaseString(const String *self) {
-	return $(self, lowercaseStringWithLocale, NULL);
-}
-
-/**
- * @fn String *String::lowercaseStringWithLocale(const String *self, const Locale *locale)
- * @memberof String
- */
-static String *lowercaseStringWithLocale(const String *self, const Locale *locale) {
 
 	Data *data = $(self, getData, STRING_ENCODING_WCHAR);
 	assert(data);
@@ -423,11 +416,7 @@ static String *lowercaseStringWithLocale(const String *self, const Locale *local
 	Unicode *unicode = (Unicode *) data->bytes;
 
 	for (size_t i = 0; i < codepoints; i++, unicode++) {
-		if (locale) {
-			*unicode = towlower_l(*unicode, locale->locale);
-		} else {
-			*unicode = towlower(*unicode);
-		}
+		*unicode = towlower(*unicode);
 	}
 
 	String *lowercase = $$(String, stringWithData, data, STRING_ENCODING_WCHAR);
@@ -583,14 +572,6 @@ static String *trimmedString(const String *self) {
  * @memberof String
  */
 static String *uppercaseString(const String *self) {
-	return $(self, uppercaseStringWithLocale, NULL);
-}
-
-/**
- * @fn String *String::uppercaseStringWithLocale(const String *self, const Locale *locale)
- * @memberof String
- */
-static String *uppercaseStringWithLocale(const String *self, const Locale *locale) {
 
 	Data *data = $(self, getData, STRING_ENCODING_WCHAR);
 	assert(data);
@@ -599,11 +580,7 @@ static String *uppercaseStringWithLocale(const String *self, const Locale *local
 	Unicode *unicode = (Unicode *) data->bytes;
 
 	for (size_t i = 0; i < codepoints; i++, unicode++) {
-		if (locale) {
-			*unicode = towupper_l(*unicode, locale->locale);
-		} else {
-			*unicode = towupper(*unicode);
-		}
+		*unicode = towupper(*unicode);
 	}
 
 	String *uppercase = $$(String, stringWithData, data, STRING_ENCODING_WCHAR);
@@ -658,7 +635,6 @@ static void initialize(Class *clazz) {
 	string->initWithMemory = initWithMemory;
 	string->initWithVaList = initWithVaList;
 	string->lowercaseString = lowercaseString;
-	string->lowercaseStringWithLocale = lowercaseStringWithLocale;
 	string->mutableCopy = mutableCopy;
 	string->rangeOfCharacters = rangeOfCharacters;
 	string->rangeOfString = rangeOfString;
@@ -671,8 +647,9 @@ static void initialize(Class *clazz) {
 	string->substring = substring;
 	string->trimmedString = trimmedString;
 	string->uppercaseString = uppercaseString;
-	string->uppercaseStringWithLocale = uppercaseStringWithLocale;
 	string->writeToFile = writeToFile;
+
+	setlocale(LC_CTYPE, "");
 }
 
 /**
