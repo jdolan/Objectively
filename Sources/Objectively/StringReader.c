@@ -121,14 +121,14 @@ static Unicode read(StringReader *self) {
 }
 
 /**
- * @fn int StringReader::readToken(StringReader *self, const Unicode *stop)
+ * @fn int StringReader::readToken(StringReader *self, const Unicode *charset, Unicode *stop)
  * @memberof StringReader
  */
-static String *readToken(StringReader *self, const Unicode *stop) {
+static String *readToken(StringReader *self, const Unicode *charset, Unicode *stop) {
 
 	while (true) {
 		const Unicode c = $(self, peek);
-		if (c == -1 || wcschr(stop, c) == NULL) {
+		if (c == -1 || wcschr(charset, c) == NULL) {
 			break;
 		}
 		$(self, read);
@@ -138,13 +138,16 @@ static String *readToken(StringReader *self, const Unicode *stop) {
 
 	while (true) {
 		const Unicode c = $(self, peek);
-		if (c == -1 || wcschr(stop, c)) {
+		if (c == -1 || wcschr(charset, c)) {
+			if (stop) {
+				*stop = c;
+			}
 			break;
 		}
 		$(self, read);
 	}
 
-	if (self->head - start) {
+	if (self->head - start > 0) {
 		const Range range = {
 			.location = start - self->string->chars,
 			.length = self->head - start

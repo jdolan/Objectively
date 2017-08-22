@@ -58,7 +58,7 @@ struct StringReader {
 	/**
 	 * @brief The StringReader head.
 	 */
-	const char *head;
+	char *head;
 
 	/**
 	 * @brief The String to read.
@@ -127,14 +127,15 @@ struct StringReaderInterface {
 	Unicode (*read)(StringReader *self);
 
 	/**
-	 * @fn String *StringReader::readToken(StringReader *self, const Unicode *stop)
-	 * @brief Reads characters from this StringReader until a character in `stop` is encountered.
+	 * @fn String *StringReader::readToken(StringReader *self, const Unicode *charset, Unocide *stop)
+	 * @brief Reads characters from this StringReader until a character in `charset` is encountered.
 	 * @param self The StringReader.
-	 * @param stop The stop characters.
-	 * @return The token accumulated before `stop`, or `-1` if the StringReader is exhausted.
+	 * @param charset The array of potential `stop` characters.
+	 * @param stop Optionally returns the stop character from `charset`.
+	 * @return The token accumulated before `stop`, or `NULL` if the StringReader is exhausted.
 	 * @memberof StringReader
 	 */
-	String *(*readToken)(StringReader *self, const Unicode *stop);
+	String *(*readToken)(StringReader *self, const Unicode *charset, Unicode *stop);
 
 	/**
 	 * @fn void StringReader::reset(StringReader *self)

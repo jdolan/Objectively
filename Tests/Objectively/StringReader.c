@@ -80,30 +80,37 @@ START_TEST(readToken) {
 	ck_assert(reader != NULL);
 
 	String *token;
-	const Unicode *stop = L" ";
+	const Unicode *charset = L" ";
+	Unicode stop;
 
-	token = $(reader, readToken, stop);
+	token = $(reader, readToken, charset, &stop);
 	ck_assert_str_eq("ṮḧḭṠ", token->chars);
+	ck_assert_int_eq(' ', stop);
 	release(token);
 
-	token = $(reader, readToken, stop);
+	token = $(reader, readToken, charset, &stop);
 	ck_assert_str_eq("ḭṠ", token->chars);
+	ck_assert_int_eq(' ', stop);
 	release(token);
 
-	token = $(reader, readToken, stop);
+	token = $(reader, readToken, charset, &stop);
 	ck_assert_str_eq("ṏṆḶẏ", token->chars);
+	ck_assert_int_eq(' ', stop);
 	release(token);
 
-	token = $(reader, readToken, stop);
+	token = $(reader, readToken, charset, &stop);
 	ck_assert_str_eq("Ḁ", token->chars);
+	ck_assert_int_eq(' ', stop);
 	release(token);
 
-	token = $(reader, readToken, stop);
+	token = $(reader, readToken, charset, &stop);
 	ck_assert_str_eq("ṮḕṠṮ", token->chars);
+	ck_assert_int_eq(-1, stop);
 	release(token);
 
-	token = $(reader, readToken, stop);
+	token = $(reader, readToken, charset, &stop);
 	ck_assert(token == NULL);
+	ck_assert_int_eq(-1, stop);
 
 	release(reader);
 } END_TEST
