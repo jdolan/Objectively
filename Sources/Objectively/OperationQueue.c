@@ -67,7 +67,7 @@ static void addOperation(OperationQueue *self, Operation *operation) {
 	assert(operation->isExecuting == false);
 	assert(operation->isFinished == false);
 
-	WithLock(self->locals.condition, {
+	synchronized(self->locals.condition, {
 		$(self->locals.operations, addObject, operation);
 		$(self->locals.condition, broadcast);
 	});
@@ -131,7 +131,7 @@ static ident run(Thread *thread) {
 		const Time interval = { .tv_usec = 10 };
 		Date *date = $$(Date, dateWithTimeSinceNow, &interval);
 
-		WithLock(self->locals.condition, {
+		synchronized(self->locals.condition, {
 			$(self->locals.condition, waitUntilDate, date);
 		});
 
@@ -173,7 +173,7 @@ static size_t operationCount(const OperationQueue *self) {
 
 	size_t count;
 
-	WithLock(self->locals.condition, {
+	synchronized(self->locals.condition, {
 		count = ((Array *) self->locals.operations)->count;
 	});
 
@@ -188,7 +188,7 @@ static Array *operations(const OperationQueue *self) {
 
 	ident operations;
 
-	WithLock(self->locals.condition, {
+	synchronized(self->locals.condition, {
 		operations = $((Object * ) self->locals.operations, copy);
 	});
 
@@ -204,7 +204,7 @@ static void removeOperation(OperationQueue *self, Operation *operation) {
 	assert(operation);
 	assert(operation->isExecuting == false);
 
-	WithLock(self->locals.condition, {
+	synchronized(self->locals.condition, {
 		$(self->locals.operations, removeObject, operation);
 		$(self->locals.condition, broadcast);
 	});
@@ -219,7 +219,7 @@ static void waitUntilAllOperationsAreFinished(OperationQueue *self) {
 	Array *operations = (Array *) self->locals.operations;
 	while (operations->count > 0) {
 
-		WithLock(self->locals.condition, {
+		synchronized(self->locals.condition, {
 			$(self->locals.condition, wait);
 		});
 	}

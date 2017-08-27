@@ -28,7 +28,7 @@
 #include <Objectively/Condition.h>
 #include <Objectively/Thread.h>
 
-Condition *condition;
+static Condition *condition;
 
 static ident increment(Thread *self) {
 
@@ -36,7 +36,7 @@ static ident increment(Thread *self) {
 
 	while (!stop) {
 
-		WithLock(condition, {
+		synchronized(condition, {
 			if (++(*(int *) self->data) == 0xbeaf) {
 				$(condition, signal);
 				stop = true;
@@ -59,7 +59,7 @@ START_TEST(thread)
 
 		$(thread, start);
 
-		WithLock(condition, $(condition, wait));
+		synchronized(condition, $(condition, wait));
 		ck_assert_int_eq(0xbeaf, criticalSection);
 
 		ident ret;
@@ -75,7 +75,7 @@ static ident signalBeforeDate(Thread *self) {
 
 	usleep(((Date *) self->data)->time.tv_usec / 2);
 
-	WithLock(condition, $(condition, signal));
+	synchronized(condition, $(condition, signal));
 
 	return NULL;
 }
@@ -89,7 +89,7 @@ START_TEST(cond)
 		Date *date = $$(Date, dateWithTimeSinceNow, &time);
 		ck_assert(date != NULL);
 
-		WithLock(condition, {
+		synchronized(condition, {
 			ck_assert($(condition, waitUntilDate, date) == false);
 		});
 
@@ -103,7 +103,7 @@ START_TEST(cond)
 
 		$(thread, start);
 
-		WithLock(condition, {
+		synchronized(condition, {
 			ck_assert($(condition, waitUntilDate, date));
 		});
 

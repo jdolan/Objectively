@@ -117,7 +117,7 @@ OBJECTIVELY_EXPORT Class *_Lock(void);
  * @param _lock The Lock instance.
  * @param statements The statements to perform while the Lock is held.
  */
-#define WithLock(_lock, statements) { \
+#define synchronized(_lock, statements) { \
 	$((Lock *) _lock, lock); \
 		statements; \
 	$((Lock *) _lock, unlock); \

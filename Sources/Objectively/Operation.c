@@ -185,7 +185,7 @@ static void start(Operation *self) {
 
 	self->isFinished = true;
 
-	WithLock(self->locals.condition, {
+	synchronized(self->locals.condition, {
 		$(self->locals.condition, broadcast);
 	});
 
@@ -201,7 +201,7 @@ static void start(Operation *self) {
  */
 static void waitUntilFinished(const Operation *self) {
 
-	WithLock(self->locals.condition, {
+	synchronized(self->locals.condition, {
 		while (self->isFinished == false) {
 			$(self->locals.condition, wait);
 		}

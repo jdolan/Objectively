@@ -60,7 +60,7 @@ static URLSessionDataTask *dataTaskWithRequest(URLSession *self, URLRequest *req
 	URLSessionTask *task = (URLSessionTask *) alloc(URLSessionDataTask);
 	task = $(task, initWithRequestInSession, request, self, completion);
 
-	WithLock(self->locals.lock, {
+	synchronized(self->locals.lock, {
 		$(self->locals.tasks, addObject, task);
 	});
 
@@ -93,7 +93,7 @@ static URLSessionDownloadTask *downloadTaskWithRequest(URLSession *self, URLRequ
 	URLSessionTask *task = (URLSessionTask *) alloc(URLSessionDownloadTask);
 	task = $(task, initWithRequestInSession, request, self, completion);
 
-	WithLock(self->locals.lock, {
+	synchronized(self->locals.lock, {
 		$(self->locals.tasks, addObject, task);
 	})
 
@@ -193,7 +193,7 @@ static ident run(Thread *thread) {
 
 				$(task, teardown);
 
-				WithLock(self->locals.lock, {
+				synchronized(self->locals.lock, {
 					$(self->locals.tasks, removeObject, task);
 				});
 			}
@@ -233,7 +233,7 @@ static ident run(Thread *thread) {
 
 				$(task, teardown);
 
-				WithLock(self->locals.lock, {
+				synchronized(self->locals.lock, {
 					$(self->locals.tasks, removeObject, task);
 				});
 			}
@@ -313,7 +313,7 @@ static Array *tasks(const URLSession *self) {
 
 	Array *array;
 
-	WithLock(self->locals.lock, {
+	synchronized(self->locals.lock, {
 		array = $$(Array, arrayWithArray, (Array *) self->locals.tasks);
 	});
 
@@ -330,7 +330,7 @@ static URLSessionUploadTask *uploadTaskWithRequest(URLSession *self, URLRequest 
 	URLSessionTask *task = (URLSessionTask *) alloc(URLSessionUploadTask);
 	task = $(task, initWithRequestInSession, request, self, completion);
 
-	WithLock(self->locals.lock, {
+	synchronized(self->locals.lock, {
 		$(self->locals.tasks, addObject, task);
 	})
 
