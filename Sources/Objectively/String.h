@@ -105,7 +105,7 @@ struct StringInterface {
 	 * @brief Compares this String lexicographically to another.
 	 * @param self The String.
 	 * @param other The String to compare to.
-	 * @param range The character range to compare.
+	 * @param range The character Range to compare.
 	 * @return The ordering of this String compared to `other`.
 	 * @memberof String
 	 */
@@ -260,7 +260,7 @@ struct StringInterface {
 	 * @brief Finds and returns the first occurrence of `chars` in this String.
 	 * @param self The String.
 	 * @param chars The characters to search for.
-	 * @param range The range in which to search.
+	 * @param range The Range in which to search.
 	 * @return A Range specifying the first occurrence of `chars` in this String.
 	 * @memberof String
 	 */
@@ -271,7 +271,7 @@ struct StringInterface {
 	 * @brief Finds and returns the first occurrence of `string` in this String.
 	 * @param self The String.
 	 * @param string The String to search for.
-	 * @param range The range in which to search.
+	 * @param range The Range in which to search.
 	 * @return A Range specifying the first occurrence of `string` in this String.
 	 * @memberof String
 	 */
@@ -347,7 +347,7 @@ struct StringInterface {
 	 * @fn String *String::substring(const String *self, const Range range)
 	 * @brief Creates a new String from a subset of this one.
 	 * @param self The String.
-	 * @param range The character range.
+	 * @param range The character Range.
 	 * @return The new String.
 	 * @memberof String
 	 */
