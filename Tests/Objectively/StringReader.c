@@ -21,7 +21,6 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#include <unistd.h>
 #include <check.h>
 
 #include <Objectively.h>

@@ -29,15 +29,15 @@ static void enumerator(const Array *array, ident obj, ident data) {
 	(*(int *) data)++;
 }
 
-_Bool predicate(const ident obj, ident data) {
+static _Bool predicate(const ident obj, ident data) {
 	return obj == data;
 }
 
-ident functor(const ident obj, ident data) {
+static ident functor(const ident obj, ident data) {
 	return $((Object *) obj, copy);
 }
 
-ident reducer(const ident obj, ident accumulator, ident data) {
+static ident reducer(const ident obj, ident accumulator, ident data) {
 	return (ident) (intptr_t) accumulator + 1;
 }
 

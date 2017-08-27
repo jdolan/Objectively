@@ -25,11 +25,11 @@
 
 #include <Objectively.h>
 
-static void producer_func(Operation *operation) {
+static void produce(Operation *operation) {
 	*((Object **) operation->data) = $(alloc(Object), init);
 }
 
-static void consumer_func(Operation *operation) {
+static void consume(Operation *operation) {
 	ck_assert(cast(Object, *((Object **) operation->data)) != NULL);
 }
 
@@ -40,8 +40,8 @@ START_TEST(producerConsumer)
 
 		Object *object;
 
-		Operation *producer = $(alloc(Operation), initWithFunction, producer_func, &object);
-		Operation *consumer = $(alloc(Operation), initWithFunction, consumer_func, &object);
+		Operation *producer = $(alloc(Operation), initWithFunction, produce, &object);
+		Operation *consumer = $(alloc(Operation), initWithFunction, consume, &object);
 
 		$(consumer, addDependency, producer);
 

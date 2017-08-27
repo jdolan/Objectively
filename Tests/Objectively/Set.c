@@ -80,7 +80,7 @@ START_TEST(set)
 
 		ck_assert_int_eq(set->count, mapped->count);
 
-		int reduced = (intptr_t) $(set, reduce, reducer, (ident) 0, NULL);
+		int reduced = (int) (intptr_t) $(set, reduce, reducer, (ident) 0, NULL);
 		ck_assert_int_eq(3, reduced);
 
 		release(mapped);
