@@ -23,6 +23,8 @@
 
 #pragma once
 
+#include <regex.h>
+
 #include <Objectively/Object.h>
 #include <Objectively/String.h>
 
@@ -98,7 +100,7 @@ struct RegexInterface {
 	 * @brief Matches this regular expression against the given characters.
 	 * @param self The Regex.
 	 * @param chars The characters to match.
-	 * @param options A bitwise-or of `REG_falseTBOL`, `REG_falseTEOL`.
+	 * @param options A bitwise-or of `REG_NOTBOL`, `REG_NOTEOL`.
 	 * @param matches An optional pointer to return matched sub-expressions.
 	 * @return `true` if this Regex matched `chars`, `false` otherwise.
 	 * @remarks If provided, `matches` will be dynamically allocated and contain
@@ -115,7 +117,7 @@ struct RegexInterface {
 	 * @brief Matches this regular expression against the given String.
 	 * @param self The Regex.
 	 * @param string The String to match.
-	 * @param options A bitwise-or of `REG_falseTBOL`, `REG_falseTEOL`.
+	 * @param options A bitwise-or of `REG_NOTBOL`, `REG_NOTEOL`.
 	 * @param matches An optional pointer to return matched sub-expressions.
 	 * @return `true` if this expression matches `string`, `false` otherwise.
 	 * @remarks If provided, `matches` will be dynamically allocated and contain
@@ -134,3 +136,12 @@ struct RegexInterface {
  * @memberof Regex
  */
 OBJECTIVELY_EXPORT Class *_Regex(void);
+
+/**
+ * @brief A convenience function for instantiating Regexs.
+ * @param pattern The POSIX regular expression pattern.
+ * @param options A bitwise-or of `REG_ICASE`, `REG_NEWLINE`.
+ * @return A new Regex, or `NULL` on error.
+ * @relates Regex
+ */
+OBJECTIVELY_EXPORT Regex *rex(const char *pattern, int options);

@@ -140,17 +140,17 @@ static URL *initWithCharacters(URL *self, const char *chars) {
 	self = (URL *) super(Object, self, init);
 	if (self) {
 
-		Range *matches;
-		if ($(_regex, matchesCharacters, chars, 0, &matches)) {
+		Range *ranges;
+		if ($(_regex, matchesCharacters, chars, 0, &ranges)) {
 
 			self->urlString = $(alloc(String), initWithCharacters, chars);
 
-			Range *scheme = &matches[1];
-			Range *host = &matches[2];
-			Range *port = &matches[3];
-			Range *path = &matches[4];
-			Range *query = &matches[5];
-			Range *fragment = &matches[6];
+			Range *scheme = &ranges[1];
+			Range *host = &ranges[2];
+			Range *port = &ranges[3];
+			Range *path = &ranges[4];
+			Range *query = &ranges[5];
+			Range *fragment = &ranges[6];
 
 			self->scheme = $(self->urlString, substring, *scheme);
 
@@ -183,7 +183,7 @@ static URL *initWithCharacters(URL *self, const char *chars) {
 				self->fragment = $(self->urlString, substring, *fragment);
 			}
 
-			free(matches);
+			free(ranges);
 		} else {
 			release(self);
 			self = NULL;
@@ -235,7 +235,7 @@ static void initialize(Class *clazz) {
 	url->initWithString = initWithString;
 	url->pathComponents = pathComponents;
 
-	_regex = $(alloc(Regex), initWithPattern, "([a-z]+)://([^:/\?]+)?(:[0-9]+)?(/[^\?#]+)?([^#]+)?(#.*)?", 0);
+	_regex = rex("([a-z]+)://([^:/\?]+)?(:[0-9]+)?(/[^\?#]+)?([^#]+)?(#.*)?", 0);
 }
 
 /**

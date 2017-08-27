@@ -22,7 +22,6 @@
  */
 
 #include <assert.h>
-#include <regex.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -40,7 +39,7 @@ static Object *copy(const Object *self) {
 
 	const Regex *this = (Regex *) self;
 
-	return (Object *) $(alloc(Regex), initWithPattern, this->pattern, this->options);
+	return (Object *) rex(this->pattern, this->options);
 }
 
 /**
@@ -218,3 +217,7 @@ Class *_Regex(void) {
 }
 
 #undef _Class
+
+Regex *rex(const char *pattern, int options) {
+	return $(alloc(Regex), initWithPattern, pattern, options);
+}
