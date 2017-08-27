@@ -174,6 +174,16 @@ struct MutableStringInterface {
 	void (*replaceCharactersInRange)(MutableString *self, const Range range, const char *chars);
 
 	/**
+	 * @fn void MutableString::replaceOccurrencesOfCharacters(MutableString *self, const char *chars, const char *replacement)
+	 * @brief Replaces all occurrences of `chars` with the given `replacement`.
+	 * @param self The MutableString.
+	 * @param chars The null-terminated UTF-8 encoded C string to replace.
+	 * @param replacement The null-terminated UTF-8 encoded C string replacement.
+	 * @memberof MutableString
+	 */
+	void (*replaceOccurrencesOfCharacters)(MutableString *self, const char *chars, const char *replacement);
+
+	/**
 	 * @fn void MutableString::replaceOccurrencesOfCharactersInRange(MutableString *self, const char *chars, const Range range, const char *replacement)
 	 * @brief Replaces occurrences of `chars` in `range` with the given `replacement`.
 	 * @param self The MutableString.
@@ -183,6 +193,16 @@ struct MutableStringInterface {
 	 * @memberof MutableString
 	 */
 	void (*replaceOccurrencesOfCharactersInRange)(MutableString *self, const char *chars, const Range range, const char *replacement);
+
+	/**
+	 * @fn void MutableString::replaceOccurrencesOfString(MutableString *self, const String *string, const String *replacement)
+	 * @brief Replaces all occurrences of `string` with the given `replacement`.
+	 * @param self The MutableString.
+	 * @param string The String to replace.
+	 * @param replacement The String replacement.
+	 * @memberof MutableString
+	 */
+	void (*replaceOccurrencesOfString)(MutableString *self, const String *string, const String *replacement);
 
 	/**
 	 * @fn void MutableString::replaceOccurrencesOfStringInRange(MutableString *self, const String *string, const Range range, const String *replacement)

@@ -220,6 +220,14 @@ static void replaceCharactersInRange(MutableString *self, const Range range, con
 }
 
 /**
+ * @fn void MutableString::replaceOccurrencesOfCharacters(MutableString *self, const char *chars, const char *replacement)
+ * @memberof MutableString
+ */
+static void replaceOccurrencesOfCharacters(MutableString *self, const char *chars, const char *replacement) {
+	$(self, replaceOccurrencesOfCharactersInRange, chars, (Range) { .length = self->string.length }, replacement);
+}
+
+/**
  * @fn void MutableString::replaceOccurrencesOfCharactersInRange(MutableString *self, const char *chars, const Range range, const char *replacement)
  * @memberof MutableString
  */
@@ -244,6 +252,14 @@ static void replaceOccurrencesOfCharactersInRange(MutableString *self, const cha
 		search.location = result.location + strlen(replacement);
 		search.length = range.length - (result.location - range.location) - (strlen(replacement) - strlen(chars));
 	}
+}
+
+/**
+ * @fn void MutableString::replaceOccurrencesOfString(MutableString *self, const String *string, const String *replacement)
+ * @memberof MutableString
+ */
+static void replaceOccurrencesOfString(MutableString *self, const String *string, const String *replacement) {
+	$(self, replaceOccurrencesOfStringInRange, string, (Range) { .length = self->string.length }, replacement);
 }
 
 /**
@@ -322,7 +338,9 @@ static void initialize(Class *clazz) {
 	mutableString->insertCharactersAtIndex = insertCharactersAtIndex;
 	mutableString->insertStringAtIndex = insertStringAtIndex;
 	mutableString->replaceCharactersInRange = replaceCharactersInRange;
+	mutableString->replaceOccurrencesOfCharacters = replaceOccurrencesOfCharacters;
 	mutableString->replaceOccurrencesOfCharactersInRange = replaceOccurrencesOfCharactersInRange;
+	mutableString->replaceOccurrencesOfString = replaceOccurrencesOfString;
 	mutableString->replaceOccurrencesOfStringInRange = replaceOccurrencesOfStringInRange;
 	mutableString->replaceStringInRange = replaceStringInRange;
 	mutableString->string = string;
