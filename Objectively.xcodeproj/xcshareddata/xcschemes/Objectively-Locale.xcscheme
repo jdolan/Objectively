@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CE594BD61F49F931004D74FF"
-               BuildableName = "Objectively-StringReader"
-               BlueprintName = "Objectively-StringReader"
+               BlueprintIdentifier = "CEEB02041F40DB55004C2EDD"
+               BuildableName = "Objectively-Locale"
+               BlueprintName = "Objectively-Locale"
                ReferencedContainer = "container:Objectively.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CE594BD61F49F931004D74FF"
-            BuildableName = "Objectively-StringReader"
-            BlueprintName = "Objectively-StringReader"
+            BlueprintIdentifier = "CEEB02041F40DB55004C2EDD"
+            BuildableName = "Objectively-Locale"
+            BlueprintName = "Objectively-Locale"
             ReferencedContainer = "container:Objectively.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -55,9 +55,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CE594BD61F49F931004D74FF"
-            BuildableName = "Objectively-StringReader"
-            BlueprintName = "Objectively-StringReader"
+            BlueprintIdentifier = "CEEB02041F40DB55004C2EDD"
+            BuildableName = "Objectively-Locale"
+            BlueprintName = "Objectively-Locale"
             ReferencedContainer = "container:Objectively.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -74,9 +74,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CE594BD61F49F931004D74FF"
-            BuildableName = "Objectively-StringReader"
-            BlueprintName = "Objectively-StringReader"
+            BlueprintIdentifier = "CEEB02041F40DB55004C2EDD"
+            BuildableName = "Objectively-Locale"
+            BlueprintName = "Objectively-Locale"
             ReferencedContainer = "container:Objectively.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
