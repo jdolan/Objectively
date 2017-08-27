@@ -249,8 +249,11 @@ static void replaceOccurrencesOfCharactersInRange(MutableString *self, const cha
 
 		$(self, replaceCharactersInRange, result, replacement);
 
+		search.length -= (result.location - search.location);
+		search.length -= strlen(replacement);
+		search.length += ((int) strlen(replacement) - (int) strlen(chars));
+
 		search.location = result.location + strlen(replacement);
-		search.length = range.length - (result.location - range.location) - (strlen(replacement) - strlen(chars));
 	}
 }
 
