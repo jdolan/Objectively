@@ -1,3 +1,6 @@
+noinst_HEADERS = \
+	Hello.h
+
 noinst_PROGRAMS = \
 	Hello \
 	HelloCpp

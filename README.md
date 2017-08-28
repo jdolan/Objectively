@@ -234,7 +234,7 @@ $(hello, sayHello);
 
 release(hello);
 ```
-See [Hello.c](Examples/Hello.c) for the full source to this example.
+See [Hello.h](Examples/Hello.h) and [Hello.c](Examples/Hello.c) for the full source to this example.
 
 Initialization
 ---

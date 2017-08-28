@@ -905,6 +905,7 @@
 /* Begin PBXFileReference section */
 		CE3BCDCF1DB6FA62002E6C6D /* Resource.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Resource.c; sourceTree = "<group>"; };
 		CE3BCDD01DB6FA62002E6C6D /* Resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Resource.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		CE423A501F544CFB002767E7 /* Hello.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hello.h; sourceTree = "<group>"; };
 		CE4A53131F40DFE800927421 /* Objectively-Hello */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Hello"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A53201F40DFFC00927421 /* Objectively-HelloCpp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-HelloCpp"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A532D1F40E00A00927421 /* Objectively-HelloObjC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-HelloObjC"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1490,6 +1491,7 @@
 			isa = PBXGroup;
 			children = (
 				CE76D9131C481E390096DD31 /* Hello.c */,
+				CE423A501F544CFB002767E7 /* Hello.h */,
 				CED1578E1C4B1A2100FBA2DE /* HelloCpp.cpp */,
 				CE76D9191C481E390096DD31 /* HelloObjC.m */,
 				CE76D91C1C481E390096DD31 /* Makefile.am */,
