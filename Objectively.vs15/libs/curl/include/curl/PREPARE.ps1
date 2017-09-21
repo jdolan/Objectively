@@ -1,9 +1,9 @@
-If (!(Test-Path tmp.tar.gz)) {
+If (!(Test-Path tmp7551.tar.gz)) {
     Write-Output "Downloading cURL..."
-    (New-Object System.Net.WebClient).DownloadFile("https://curl.haxx.se/download/curl-7.50.3.tar.gz", "tmp.tar.gz")
+    (New-Object System.Net.WebClient).DownloadFile("https://github.com/curl/curl/releases/download/curl-7_55_1/curl-7.55.1.tar.gz", "tmp7551.tar.gz")
 }
 
 Write-Output "Extracting cURL..."
-7z x tmp.tar.gz
-7z e tmp.tar -aos "curl-7.50.3\include\curl\*.h"
-Remove-Item "tmp.tar"
+7z x tmp7551.tar.gz
+7z e tmp7551.tar -aos "curl-7.55.1\include\curl\*.h"
+Remove-Item "tmp7551.tar"
