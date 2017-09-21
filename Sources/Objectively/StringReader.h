@@ -35,6 +35,8 @@ typedef enum {
 	StringReaderRead
 } StringReaderMode;
 
+#define READER_EOF ((Unicode) -1)
+
 typedef struct StringReader StringReader;
 typedef struct StringReaderInterface StringReaderInterface;
 

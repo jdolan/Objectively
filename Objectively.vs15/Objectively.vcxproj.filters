@@ -12,82 +12,13 @@
     <ClInclude Include="..\Sources\Objectively.h">
       <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\MutableArray.h">
-      <Filter>Sources\Objectively</Filter>
+    <ClInclude Include="Sources\Windowly.h">
+      <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\MutableData.h">
-      <Filter>Sources\Objectively</Filter>
+    <ClInclude Include="Sources\regex.h">
+      <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\MutableDictionary.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\MutableSet.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\MutableString.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\Null.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\Number.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\NumberFormatter.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\Object.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\Once.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\Operation.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\OperationQueue.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\Regex.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\Set.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\String.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\Thread.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\Types.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\URL.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\URLRequest.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\URLSession.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\URLSessionConfiguration.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\URLSessionDataTask.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\URLSessionDownloadTask.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\URLSessionTask.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\URLSessionUploadTask.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\Value.h">
+    <ClInclude Include="Sources\Objectively\Config.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
     <ClInclude Include="..\Sources\Objectively\Array.h">
@@ -135,100 +66,103 @@
     <ClInclude Include="..\Sources\Objectively\JSONSerialization.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\Locale.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
     <ClInclude Include="..\Sources\Objectively\Lock.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
     <ClInclude Include="..\Sources\Objectively\Log.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\Windowly.h">
-      <Filter>Sources</Filter>
+    <ClInclude Include="..\Sources\Objectively\MutableArray.h">
+      <Filter>Sources\Objectively</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\regex.h">
-      <Filter>Sources</Filter>
+    <ClInclude Include="..\Sources\Objectively\MutableData.h">
+      <Filter>Sources\Objectively</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\Objectively\Config.h">
+    <ClInclude Include="..\Sources\Objectively\MutableDictionary.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\MutableSet.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\MutableString.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\Null.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\Number.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\NumberFormatter.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\Object.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\Once.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\Operation.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\OperationQueue.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\Regex.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
     <ClInclude Include="..\Sources\Objectively\Resource.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\Set.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\String.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\StringReader.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\Thread.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\Types.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\URL.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\URLRequest.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\URLSession.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\URLSessionConfiguration.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\URLSessionDataTask.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\URLSessionDownloadTask.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\URLSessionTask.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\URLSessionUploadTask.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\Value.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Sources\Objectively\MutableArray.c">
-      <Filter>Sources\Objectively</Filter>
+    <ClCompile Include="Sources\Windowly.c">
+      <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\MutableData.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\MutableDictionary.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\MutableSet.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\MutableString.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\Null.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\Number.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\NumberFormatter.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\Object.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\Operation.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\OperationQueue.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\Regex.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\Set.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\String.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\Thread.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\URL.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\URLRequest.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\URLSession.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\URLSessionConfiguration.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\URLSessionDataTask.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\URLSessionDownloadTask.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\URLSessionTask.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\URLSessionUploadTask.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\Value.c">
-      <Filter>Sources\Objectively</Filter>
+    <ClCompile Include="Sources\WinRegex.cpp">
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\Sources\Objectively\Array.c">
       <Filter>Sources\Objectively</Filter>
@@ -275,22 +209,88 @@
     <ClCompile Include="..\Sources\Objectively\JSONSerialization.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\Locale.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
     <ClCompile Include="..\Sources\Objectively\Lock.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
     <ClCompile Include="..\Sources\Objectively\Log.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\Windowly.c">
-      <Filter>Sources</Filter>
+    <ClCompile Include="..\Sources\Objectively\MutableArray.c">
+      <Filter>Sources\Objectively</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\WinRegex.cpp">
-      <Filter>Sources</Filter>
+    <ClCompile Include="..\Sources\Objectively\MutableData.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\MutableDictionary.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\MutableSet.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\MutableString.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\Null.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\Number.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\NumberFormatter.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\Object.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\Operation.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\OperationQueue.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\Regex.c">
+      <Filter>Sources\Objectively</Filter>
     </ClCompile>
     <ClCompile Include="..\Sources\Objectively\Resource.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\Set.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\String.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\StringReader.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\Thread.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\URL.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\URLRequest.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\URLSession.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\URLSessionConfiguration.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\URLSessionDataTask.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\URLSessionDownloadTask.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\URLSessionTask.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\URLSessionUploadTask.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\Value.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
   </ItemGroup>

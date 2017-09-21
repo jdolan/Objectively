@@ -35,7 +35,6 @@
     <ClInclude Include="..\Sources\Objectively\IndexSet.h" />
     <ClInclude Include="..\Sources\Objectively\JSONPath.h" />
     <ClInclude Include="..\Sources\Objectively\JSONSerialization.h" />
-    <ClInclude Include="..\Sources\Objectively\Locale.h" />
     <ClInclude Include="..\Sources\Objectively\Lock.h" />
     <ClInclude Include="..\Sources\Objectively\Log.h" />
     <ClInclude Include="..\Sources\Objectively\MutableArray.h" />
@@ -54,6 +53,7 @@
     <ClInclude Include="..\Sources\Objectively\Resource.h" />
     <ClInclude Include="..\Sources\Objectively\Set.h" />
     <ClInclude Include="..\Sources\Objectively\String.h" />
+    <ClInclude Include="..\Sources\Objectively\StringReader.h" />
     <ClInclude Include="..\Sources\Objectively\Thread.h" />
     <ClInclude Include="..\Sources\Objectively\Types.h" />
     <ClInclude Include="..\Sources\Objectively\URL.h" />
@@ -85,7 +85,6 @@
     <ClCompile Include="..\Sources\Objectively\IndexSet.c" />
     <ClCompile Include="..\Sources\Objectively\JSONPath.c" />
     <ClCompile Include="..\Sources\Objectively\JSONSerialization.c" />
-    <ClCompile Include="..\Sources\Objectively\Locale.c" />
     <ClCompile Include="..\Sources\Objectively\Lock.c" />
     <ClCompile Include="..\Sources\Objectively\Log.c" />
     <ClCompile Include="..\Sources\Objectively\MutableArray.c" />
@@ -103,6 +102,7 @@
     <ClCompile Include="..\Sources\Objectively\Resource.c" />
     <ClCompile Include="..\Sources\Objectively\Set.c" />
     <ClCompile Include="..\Sources\Objectively\String.c" />
+    <ClCompile Include="..\Sources\Objectively\StringReader.c" />
     <ClCompile Include="..\Sources\Objectively\Thread.c" />
     <ClCompile Include="..\Sources\Objectively\URL.c" />
     <ClCompile Include="..\Sources\Objectively\URLRequest.c" />

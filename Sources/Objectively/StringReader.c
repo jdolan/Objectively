@@ -101,7 +101,7 @@ static Unicode next(StringReader *self, StringReaderMode mode) {
 		return c;
 	}
 
-	return -1;
+	return READER_EOF;
 }
 
 /**
@@ -128,7 +128,7 @@ static String *readToken(StringReader *self, const Unicode *charset, Unicode *st
 
 	while (true) {
 		const Unicode c = $(self, peek);
-		if (c == -1 || wcschr(charset, c) == NULL) {
+		if (c == READER_EOF || wcschr(charset, c) == NULL) {
 			break;
 		}
 		$(self, read);
@@ -138,7 +138,7 @@ static String *readToken(StringReader *self, const Unicode *charset, Unicode *st
 
 	while (true) {
 		const Unicode c = $(self, peek);
-		if (c == -1 || wcschr(charset, c)) {
+		if (c == READER_EOF || wcschr(charset, c)) {
 			if (stop) {
 				*stop = c;
 			}
