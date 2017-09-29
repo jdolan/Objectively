@@ -25,7 +25,6 @@
 
 // WinSock2 is included since it includes Windows.h
 // and includes def for timeval.
-#include <WinSock2.h>
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -46,6 +45,11 @@
     typedef signed int     ssize_t;
 #endif
 
+struct timeval {
+	long tv_sec;
+	long tv_usec;
+};
+
 // TIME STUFF
 struct timezone
 {
@@ -62,11 +66,6 @@ char *asprintf(char ** __restrict ret, char * __restrict format, ...);
 #define towupper_l _towupper_l
 #define towlower_l _towlower_l
 #define strcasecmp _stricmp
-
-// INTERLOCK STUFF
-#define __sync_val_compare_and_swap(c0, c1, c2) InterlockedCompareExchange((volatile long*)c0, c1, c2)
-#define __sync_add_and_fetch(c0, c1) InterlockedAdd((volatile long*)c0, c1)
-#define __sync_lock_test_and_set(c0, c1) InterlockedExchangePointer((PVOID volatile *)c0, (PVOID)c1)
 
 // POSIX STUFF
 #define strdup _strdup
@@ -95,3 +94,12 @@ char *asprintf(char ** __restrict ret, char * __restrict format, ...);
 #else
  #define OBJECTIVELY_EXPORT __declspec(dllimport)
 #endif
+
+// INTERLOCK STUFF
+OBJECTIVELY_EXPORT long __sync_val_compare_and_swap_(long volatile *Destination, long Exchange, long Comparand);
+OBJECTIVELY_EXPORT long __sync_add_and_fetch_(long volatile *Append, long Value);
+OBJECTIVELY_EXPORT void *__sync_lock_test_and_set_(void *volatile *Target, void *Value);
+
+#define __sync_val_compare_and_swap(c0, c1, c2) __sync_val_compare_and_swap_((volatile long *) c0, c1, c2)
+#define __sync_add_and_fetch(c0, c1) __sync_add_and_fetch_((volatile long *) c0, c1)
+#define __sync_lock_test_and_set(c0, c1) __sync_lock_test_and_set_((void *volatile *) c0, (void *) c1)

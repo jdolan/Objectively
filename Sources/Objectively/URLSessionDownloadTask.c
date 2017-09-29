@@ -22,7 +22,9 @@
  */
 
 #include <assert.h>
+#define timeval __real_timeval
 #include <curl/curl.h>
+#undef timeval
 
 #include <Objectively/URLSessionDownloadTask.h>
 

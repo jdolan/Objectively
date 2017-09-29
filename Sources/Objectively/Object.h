@@ -60,7 +60,7 @@ struct Object {
 	 * @brief The reference count of this Object.
 	 * @private
 	 */
-	unsigned referenceCount;
+	unsigned int referenceCount;
 };
 
 typedef struct String String;
