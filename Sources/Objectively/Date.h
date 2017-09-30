@@ -26,10 +26,9 @@
 #include <Objectively/Config.h>
 
 #if HAVE_SYS_TIME_H
-#include <sys/time.h>
+ #include <sys/time.h>
 #elif defined(_WIN32)
-#define WIN32_LEAN_AND_MEAN
-#include <WinSock2.h>
+ #include <WinSock2.h>
 #endif
 
 #include <time.h>

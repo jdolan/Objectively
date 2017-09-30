@@ -23,9 +23,6 @@
 
 #pragma once
 
-// WinSock2 is included since it includes Windows.h
-// and includes def for timeval.
-
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -52,7 +49,9 @@ struct timezone
 	_Bool		tz_dsttime;     /* type of dst correction */
 };
 
-int gettimeofday(struct timeval *tv, struct timezone *tz);
+typedef struct timeval _timeval;
+
+int gettimeofday(_timeval *tv, struct timezone *tz);
 
 // STRING STUFF
 int vasprintf(char ** __restrict ret, const char * __restrict format, va_list ap);

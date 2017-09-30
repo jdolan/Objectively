@@ -23,7 +23,7 @@
 
 // Visual Studio Windows-related shims and adjustments
 
-#include <Windows.h>
+#include <WinSock2.h>
 
 #include <Objectively/Config.h>
 #include "Windowly.h"
