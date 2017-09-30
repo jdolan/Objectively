@@ -23,9 +23,7 @@
 
 // Visual Studio Windows-related shims and adjustments
 
-#define timeval __real_timeval
 #include <Windows.h>
-#undef timeval
 
 #include <Objectively/Config.h>
 #include "Windowly.h"

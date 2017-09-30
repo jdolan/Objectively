@@ -24,9 +24,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
-#define timeval __real_timeval
 #include <curl/curl.h>
-#undef timeval
 
 #include <Objectively/MutableData.h>
 #include <Objectively/URLSessionDataTask.h>

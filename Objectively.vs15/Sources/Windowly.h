@@ -45,11 +45,6 @@
     typedef signed int     ssize_t;
 #endif
 
-struct timeval {
-	long tv_sec;
-	long tv_usec;
-};
-
 // TIME STUFF
 struct timezone
 {
