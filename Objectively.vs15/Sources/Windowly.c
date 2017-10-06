@@ -23,6 +23,8 @@
 
 // Visual Studio Windows-related shims and adjustments
 
+#include <WinSock2.h>
+
 #include <Objectively/Config.h>
 #include "Windowly.h"
 
@@ -30,9 +32,18 @@
 
 const int64_t DELTA_EPOCH_IN_MICROSECS = 11644473600000000;
 
+long __sync_val_compare_and_swap_(long volatile *Destination, long Exchange, long Comparand) {
+	return InterlockedCompareExchange(Destination, Exchange, Comparand);
+}
+long __sync_add_and_fetch_(long volatile *Append, long Value) {
+	return InterlockedAdd(Append, Value);
+}
+void *__sync_lock_test_and_set_(void *volatile *Target, void *Value) {
+	return InterlockedExchangePointer(Target, Value);
+}
+
 int gettimeofday(struct timeval *tv, struct timezone *tz)
 {
-
 	if (tv)
 	{
 		FILETIME ft;
