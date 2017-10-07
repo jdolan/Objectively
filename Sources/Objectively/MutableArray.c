@@ -194,6 +194,17 @@ static void removeAllObjects(MutableArray *self) {
 }
 
 /**
+ * @fn void MutableArray::removeLastObject(MutableArray *self)
+ * @memberof MutableArray
+ */
+static void removeLastObject(MutableArray *self) {
+
+	if (self->array.count) {
+		$(self, removeObjectAtIndex, self->array.count - 1);
+	}
+}
+
+/**
  * @fn void MutableArray::removeObject(MutableArray *self, const ident obj)
  * @memberof MutableArray
  */
@@ -314,6 +325,7 @@ static void initialize(Class *clazz) {
 	mutableArray->initWithCapacity = initWithCapacity;
 	mutableArray->insertObjectAtIndex = insertObjectAtIndex;
 	mutableArray->removeAllObjects = removeAllObjects;
+	mutableArray->removeLastObject = removeLastObject;
 	mutableArray->removeObject = removeObject;
 	mutableArray->removeObjectAtIndex = removeObjectAtIndex;
 	mutableArray->setObjectAtIndex = setObjectAtIndex;

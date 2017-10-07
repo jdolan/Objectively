@@ -161,6 +161,14 @@ struct MutableArrayInterface {
 	void (*removeAllObjects)(MutableArray *self);
 
 	/**
+	 * @fn void MutableArray::removeLastObject(MutableArray *self)
+	 * @brief Removes the last Object from this MutableArray.
+	 * @param self The MutableArray
+	 * @memberof MutableArray
+	 */
+	void (*removeLastObject)(MutableArray *self);
+
+	/**
 	 * @fn void MutableArray::removeObject(MutableArray *self, const ident obj)
 	 * @brief Removes the specified Object from this MutableArray.
 	 * @param self The MutableArray.
