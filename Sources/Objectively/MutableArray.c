@@ -171,7 +171,7 @@ static MutableArray *initWithCapacity(MutableArray *self, size_t capacity) {
  */
 static void insertObjectAtIndex(MutableArray *self, ident obj, size_t index) {
 
-	assert(index < self->array.count);
+	assert(index <= self->array.count);
 
 	$(self, addObject, obj);
 
