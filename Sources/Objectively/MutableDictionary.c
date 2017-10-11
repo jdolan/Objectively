@@ -28,6 +28,7 @@
 #include <Objectively/Hash.h>
 #include <Objectively/MutableArray.h>
 #include <Objectively/MutableDictionary.h>
+#include <Objectively/String.h>
 
 #define _Class _MutableDictionary
 
@@ -207,7 +208,7 @@ static void setObjectForKey_resize(Dictionary *dict) {
 }
 
 /**
- * @fn void MutableDictionary ::setObjectForKey(MutableDictionary *self, const ident obj, const ident key)
+ * @fn void MutableDictionary::setObjectForKey(MutableDictionary *self, const ident obj, const ident key)
  * @memberof MutableDictionary
  */
 static void setObjectForKey(MutableDictionary *self, const ident obj, const ident key) {
@@ -235,7 +236,43 @@ static void setObjectForKey(MutableDictionary *self, const ident obj, const iden
 }
 
 /**
- * @fn void MutableDictionary ::setObjectsForKeys(MutableDictionary *self, ...)
+ * @fn void MutableDictionary::setObjectForKeyPath(MutableDictionary *self, const ident obj, const char *path)
+ * @memberof MutableDictionary
+ */
+static void setObjectForKeyPath(MutableDictionary *self, const ident obj, const char *path) {
+
+	String *key = $$(String, stringWithCharacters, path);
+
+	$(self, setObjectForKey, obj, key);
+
+	release(key);
+}
+
+/**
+ * @fn void MutableDictionary::setObjectsForKeyPaths(MutableDictionary *self, ...)
+ * @memberof MutableDictionary
+ */
+static void setObjectsForKeyPaths(MutableDictionary *self, ...) {
+
+	va_list args;
+	va_start(args, self);
+
+	while (true) {
+
+		ident obj = va_arg(args, ident);
+		if (obj) {
+			const char *path = va_arg(args, const char *);
+			$(self, setObjectForKeyPath, obj, path);
+		} else {
+			break;
+		}
+	}
+
+	va_end(args);
+}
+
+/**
+ * @fn void MutableDictionary::setObjectsForKeys(MutableDictionary *self, ...)
  * @memberof MutableDictionary
  */
 static void setObjectsForKeys(MutableDictionary *self, ...) {
@@ -247,7 +284,6 @@ static void setObjectsForKeys(MutableDictionary *self, ...) {
 
 		ident obj = va_arg(args, ident);
 		if (obj) {
-
 			ident key = va_arg(args, ident);
 			$(self, setObjectForKey, obj, key);
 		} else {
@@ -279,6 +315,8 @@ static void initialize(Class *clazz) {
 	mutableDictionary->removeAllObjects = removeAllObjects;
 	mutableDictionary->removeObjectForKey = removeObjectForKey;
 	mutableDictionary->setObjectForKey = setObjectForKey;
+	mutableDictionary->setObjectForKeyPath = setObjectForKeyPath;
+	mutableDictionary->setObjectsForKeyPaths = setObjectsForKeyPaths;
 	mutableDictionary->setObjectsForKeys = setObjectsForKeys;
 }
 

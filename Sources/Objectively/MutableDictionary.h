@@ -136,7 +136,25 @@ struct MutableDictionaryInterface {
 	void (*setObjectForKey)(MutableDictionary *self, const ident obj, const ident key);
 
 	/**
-	 * @fn void MutableDictionary ::setObjectsForKeys(MutableDictionary *self, ...)
+	 * @fn void MutableDictionary::setObjectForKeyPath(MutableDictionary *self, const ident obj, const char *path)
+	 * @brief Sets a pair in this MutableDictionary.
+	 * @param self The MutableDictionary.
+	 * @param obj The Object to set.
+	 * @param path The key path of the Object to set.
+	 * @memberof MutableDictionary
+	 */
+	void (*setObjectForKeyPath)(MutableDictionary *self, const ident obj, const char *path);
+
+	/**
+	 * @fn void MutableDictionary::setObjectsForKeyPaths(MutableDictionary *self, ...)
+	 * @brief Sets pairs in this MutableDictionary from the NULL-terminated list.
+	 * @param self The MutableDictionary.
+	 * @memberof MutableDictionary
+	 */
+	void (*setObjectsForKeyPaths)(MutableDictionary *self, ...);
+
+	/**
+	 * @fn void MutableDictionary::setObjectsForKeys(MutableDictionary *self, ...)
 	 * @brief Sets pairs in this MutableDictionary from the NULL-terminated list.
 	 * @param self The MutableDictionary.
 	 * @memberof MutableDictionary

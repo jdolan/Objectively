@@ -96,7 +96,17 @@ START_TEST(mutableDictionary)
 
 		$(dict, removeAllObjects);
 
-		ck_assert_int_eq(((Dictionary *) dict)->count, 0);
+		ck_assert_int_eq(0, ((Dictionary *) dict)->count);
+
+		objectOne = $(alloc(Object), init);
+		objectTwo = $(alloc(Object), init);
+
+		$(dict, setObjectsForKeyPaths, objectOne, "one", objectTwo, "two", NULL);
+
+		ck_assert_int_eq(2, ((Dictionary *) dict)->count);
+
+		release(objectOne);
+		release(objectTwo);
 
 		release(dict);
 
