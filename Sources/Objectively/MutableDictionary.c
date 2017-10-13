@@ -57,9 +57,8 @@ static Object *copy(const Object *self) {
 /**
  * @brief DictionaryEnumerator for addEntriesFromDictionary.
  */
-static _Bool addEntriesFromDictionary_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
-
-	$((MutableDictionary *) data, setObjectForKey, obj, key); return false;
+static void addEntriesFromDictionary_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
+	$((MutableDictionary *) data, setObjectForKey, obj, key);
 }
 
 /**

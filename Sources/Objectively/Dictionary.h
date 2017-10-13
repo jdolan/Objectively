@@ -35,14 +35,22 @@ typedef struct Dictionary Dictionary;
 typedef struct DictionaryInterface DictionaryInterface;
 
 /**
- * @brief A function pointer for Dictionary enumeration (iteration).
+ * @brief A function type for Dictionary enumeration (iteration).
  * @param dictionary The Dictionary.
  * @param obj The Object for the current iteration.
  * @param key The key for the current iteration.
  * @param data User data.
- * @return See the documentation for the enumeration methods.
  */
-typedef _Bool (*DictionaryEnumerator)(const Dictionary *dictionary, ident obj, ident key, ident data);
+typedef void (*DictionaryEnumerator)(const Dictionary *dictionary, ident obj, ident key, ident data);
+
+/**
+ * @brief A function pointer for Dictionary filtering.
+ * @param obj The Object to filter.
+ * @param key The key to filter.
+ * @param data User data.
+ * @return True if the pair passes the filter, false otherwise.
+ */
+typedef _Bool (*DictionaryPredicate)(ident obj, ident key, ident data);
 
 /**
  * @brief Immutable key-value stores.
@@ -158,15 +166,15 @@ struct DictionaryInterface {
 	void (*enumerateObjectsAndKeys)(const Dictionary *self, DictionaryEnumerator enumerator, ident data);
 
 	/**
-	 * @fn void Dictionary::filterObjectsAndKeys(const Dictionary *self, DictionaryEnumerator enumerator, ident data)
+	 * @fn void Dictionary::filterObjectsAndKeys(const Dictionary *self, DictionaryPredicate predicate, ident data)
 	 * @brief Creates a new Dictionary with pairs that pass the filter function.
 	 * @param self The Dictionary.
-	 * @param enumerator The enumerator function.
+	 * @param predicate The predicate function.
 	 * @param data User data.
 	 * @return The new, filtered Dictionary.
 	 * @memberof Dictionary
 	 */
-	Dictionary *(*filterObjectsAndKeys)(const Dictionary *self, DictionaryEnumerator enumerator, ident data);
+	Dictionary *(*filterObjectsAndKeys)(const Dictionary *self, DictionaryPredicate predicate, ident data);
 
 	/**
 	 * @fn Dictionary *Dictionary::initWithDictionary(Dictionary *self, const Dictionary *dictionary)

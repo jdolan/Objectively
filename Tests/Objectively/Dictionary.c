@@ -25,11 +25,11 @@
 
 #include <Objectively.h>
 
-static _Bool enumerator(const Dictionary *dictionary, ident obj, ident key, ident data) {
-	(* (int *) data)++; return false;
+static void enumerator(const Dictionary *dictionary, ident obj, ident key, ident data) {
+	(* (int *) data)++;
 }
 
-static _Bool filter(const Dictionary *dictionary, ident obj, ident key, ident data) {
+static _Bool predicate(ident obj, ident key, ident data) {
 	return strcmp("two", ((String *) key)->chars) == 0;
 }
 
@@ -73,7 +73,7 @@ START_TEST(dictionary)
 
 		ck_assert_int_eq(dict->count, counter);
 
-		Dictionary *filtered = $(dict, filterObjectsAndKeys, filter, NULL);
+		Dictionary *filtered = $(dict, filterObjectsAndKeys, predicate, NULL);
 
 		ck_assert_int_eq(1, filtered->count);
 		ck_assert($(filtered, objectForKey, keyTwo) == objectTwo);

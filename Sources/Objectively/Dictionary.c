@@ -66,7 +66,7 @@ static void dealloc(Object *self) {
 /**
  * @brief A DictionaryEnumerator for description.
  */
-static _Bool description_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
+static void description_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
 
 	MutableString *desc = (MutableString *) data;
 
@@ -77,8 +77,6 @@ static _Bool description_enumerator(const Dictionary *dict, ident obj, ident key
 
 	release(objDesc);
 	release(keyDesc);
-
-	return false;
 }
 
 /**
@@ -160,8 +158,8 @@ static _Bool isEqual(const Object *self, const Object *other) {
 /**
  * @brief DictionaryEnumerator for allKeys.
  */
-static _Bool allKeys_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
-	$((MutableArray *) data, addObject, key); return false;
+static void allKeys_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
+	$((MutableArray *) data, addObject, key);
 }
 
 /**
@@ -180,8 +178,8 @@ static Array *allKeys(const Dictionary *self) {
 /**
  * @brief DictionaryEnumerator for allObjects.
  */
-static _Bool allObjects_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
-	$((MutableArray *) data, addObject, obj); return false;
+static void allObjects_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
+	$((MutableArray *) data, addObject, obj);
 }
 
 /**
@@ -267,22 +265,19 @@ static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator
 				ident key = $(array, objectAtIndex, j);
 				ident obj = $(array, objectAtIndex, j + 1);
 
-				if (enumerator(self, obj, key, data)) {
-					return;
-				}
+				enumerator(self, obj, key, data);
 			}
 		}
 	}
 }
 
 /**
- * @fn void Dictionary::filterObjectsAndKeys(const Dictionary *self, DictionaryEnumerator enumerator, ident data)
+ * @fn void Dictionary::filterObjectsAndKeys(const Dictionary *self, DictionaryPredicate predicate, ident data)
  * @memberof Dictionary
  */
-static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumerator enumerator,
-		ident data) {
+static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryPredicate predicate, ident data) {
 
-	assert(enumerator);
+	assert(predicate);
 
 	MutableDictionary *dictionary = $(alloc(MutableDictionary), init);
 
@@ -296,7 +291,7 @@ static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryEnumer
 				ident key = $(array, objectAtIndex, j);
 				ident obj = $(array, objectAtIndex, j + 1);
 
-				if (enumerator(self, obj, key, data)) {
+				if (predicate(obj, key, data)) {
 					$(dictionary, setObjectForKey, obj, key);
 				}
 			}

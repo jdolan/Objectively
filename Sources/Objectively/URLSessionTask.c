@@ -125,7 +125,7 @@ static void resume(URLSessionTask *self) {
 /**
  * @brief A helper to populate the headers list for CURL.
  */
-static _Bool httpHeaders_enumerator(const Dictionary *dictionary, ident obj, ident key, ident data) {
+static void httpHeaders_enumerator(const Dictionary *dictionary, ident obj, ident key, ident data) {
 
 	String *header = $(alloc(String), initWithFormat, "%s: %s", ((String * ) key)->chars, ((String * ) obj)->chars);
 
@@ -133,7 +133,6 @@ static _Bool httpHeaders_enumerator(const Dictionary *dictionary, ident obj, ide
 	*headers = curl_slist_append(*headers, header->chars);
 
 	release(header);
-	return false;
 }
 
 /**
