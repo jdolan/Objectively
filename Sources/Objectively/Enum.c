@@ -26,6 +26,31 @@
 #include <string.h>
 
 #include <Objectively/Enum.h>
+#include <Objectively/MutableString.h>
+
+String *nameof(const EnumName *names, int value) {
+
+	for (const EnumName *name = names; name->name; name++) {
+		if (name->value == value) {
+			return $$(String, stringWithCharacters, name->name);
+		}
+	}
+
+	MutableString *string = NULL;
+
+	for (const EnumName *name = names; name->name; name++) {
+		if (name->value & value) {
+			if (string == NULL) {
+				string = $$(MutableString, string);
+			} else {
+				$(string, appendCharacters, " | ");
+			}
+			$(string, appendCharacters, name->name);
+		}
+	}
+
+	return (String *) string;
+}
 
 int valueof(const EnumName *names, const char *chars) {
 
