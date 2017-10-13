@@ -69,7 +69,7 @@ struct BooleInterface {
 
 	/**
 	 * @static
-	 * @fn Bool *Bool::False(void)
+	 * @fn Boole *Boole::False(void)
 	 * @return The `false` Boole.
 	 * @memberof Boole
 	 */
@@ -77,11 +77,20 @@ struct BooleInterface {
 
 	/**
 	 * @static
-	 * @fn Bool *Bool::True(void)
+	 * @fn Boole *Boole::True(void)
 	 * @return The `true` Boole.
 	 * @memberof Boole
 	 */
 	Boole *(*True)(void);
+
+	/**
+	 * @static
+	 * @fn Boole *Boole::valueof(_Bool value)
+	 * @param value The boolean.
+	 * @return The Boole representation of `value`.
+	 * @memberof Boole
+	 */
+	Boole *(*valueof)(_Bool value);
 };
 
 /**

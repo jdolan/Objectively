@@ -53,7 +53,7 @@ static String *description(const Object *self) {
 static Boole *_False;
 
 /**
- * @fn Bool *Bool::False(void)
+ * @fn Boole *Boole::False(void)
  * @memberof Boole
  */
 static Boole *False(void) {
@@ -71,7 +71,7 @@ static Boole *False(void) {
 static Boole *_True;
 
 /**
- * @fn Bool *Bool::True(void)
+ * @fn Boole *Boole::True(void)
  * @memberof Boole
  */
 static Boole *True(void) {
@@ -84,6 +84,14 @@ static Boole *True(void) {
 	});
 
 	return _True;
+}
+
+/**
+ * @fn Boole *Boole::valueof(_Bool value)
+ * @memberof Boole
+ */
+static Boole *valueof(_Bool value) {
+	return value ? $$(Boole, True) : $$(Boole, False);
 }
 
 #pragma mark - Class lifecycle
@@ -102,6 +110,7 @@ static void initialize(Class *clazz) {
 
 	boolean->False = False;
 	boolean->True = True;
+	boolean->valueof = valueof;
 }
 
 /**
