@@ -163,6 +163,19 @@ static void removeObjectForKey(MutableDictionary *self, const ident key) {
 }
 
 /**
+ * @fn void MutableDictionary::removeObjectForKeyPath(MutableDictionary *self, const char *path)
+ * @memberof MutableDictionary
+ */
+static void removeObjectForKeyPath(MutableDictionary *self, const char *path) {
+
+	String *key = $$(String, stringWithCharacters, path);
+
+	$(self, removeObjectForKey, key);
+
+	release(key);
+}
+
+/**
  * @brief A helper for resizing Dictionaries as pairs are added to them.
  * @remarks Static method invocations are used for all operations.
  */
@@ -313,6 +326,7 @@ static void initialize(Class *clazz) {
 	mutableDictionary->initWithCapacity = initWithCapacity;
 	mutableDictionary->removeAllObjects = removeAllObjects;
 	mutableDictionary->removeObjectForKey = removeObjectForKey;
+	mutableDictionary->removeObjectForKeyPath = removeObjectForKeyPath;
 	mutableDictionary->setObjectForKey = setObjectForKey;
 	mutableDictionary->setObjectForKeyPath = setObjectForKeyPath;
 	mutableDictionary->setObjectsForKeyPaths = setObjectsForKeyPaths;
