@@ -24,6 +24,7 @@
 #pragma once
 
 #include <Objectively/Types.h>
+#include <Objectively/String.h>
 
 /**
  * @file
@@ -59,6 +60,14 @@ typedef struct {
 			.value = 0 \
 		} \
 	}
+
+/**
+ * @brief Marshal `value`, returning a String of `OR`'ed EnumNames for the given enum value.
+ * @param names A null-terminated array of EnumNames.
+ * @param value The enum value, which may be a bitwise `OR` of multiple enum values.
+ * @return A String of EnumNames matching value, or `NULL`.
+ */
+OBJECTIVELY_EXPORT String *nameof(const EnumName *names, int value);
 
 /**
  * @brief Parse `string`, returning the corresponding enum value.
