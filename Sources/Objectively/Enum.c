@@ -39,13 +39,15 @@ String *nameof(const EnumName *names, int value) {
 	MutableString *string = NULL;
 
 	for (const EnumName *name = names; name->name; name++) {
-		if (name->value & value) {
-			if (string == NULL) {
-				string = $$(MutableString, string);
-			} else {
-				$(string, appendCharacters, " | ");
+		if (name->value) {
+			if ((name->value & value) == name->value) {
+				if (string == NULL) {
+					string = $$(MutableString, string);
+				} else {
+					$(string, appendCharacters, " | ");
+				}
+				$(string, appendCharacters, name->name);
 			}
-			$(string, appendCharacters, name->name);
 		}
 	}
 
