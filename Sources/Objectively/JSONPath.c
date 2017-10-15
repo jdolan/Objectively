@@ -36,7 +36,7 @@
 
 #pragma mark - JSONPath
 
-static Regex *_regex;
+static Regexp *_re;
 
 /**
  * @fn ident JSONPATH::objectForKeyPath(const ident root, const char *path)
@@ -54,7 +54,7 @@ static ident objectForKeyPath(const ident root, const char *path) {
 	while (obj) {
 
 		Range *matches;
-		if ($(_regex, matchesCharacters, c, 0, &matches) == false) {
+		if ($(_re, matchesCharacters, c, 0, &matches) == false) {
 			break;
 		}
 
@@ -100,7 +100,7 @@ static void initialize(Class *clazz) {
 
 	((JSONPathInterface *) clazz->def->interface)->objectForKeyPath = objectForKeyPath;
 
-	_regex = rex("(.[^.\\[]+|\\[[0-9]+\\])", 0);
+	_re = re("(.[^.\\[]+|\\[[0-9]+\\])", 0);
 }
 
 /**
@@ -108,7 +108,7 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	release(_regex);
+	release(_re);
 }
 
 /**

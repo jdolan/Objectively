@@ -24,7 +24,7 @@ TESTS = \
 	Number \
 	Object \
 	Operation \
-	Regex \
+	Regexp \
 	Set \
 	String \
 	StringReader \

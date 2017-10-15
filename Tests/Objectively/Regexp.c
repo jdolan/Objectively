@@ -26,17 +26,17 @@
 
 #include <Objectively.h>
 
-START_TEST(regex)
+START_TEST(regexp)
 	{
-		Regex *regex = rex("([a-z]*)://(.*)", 0);
-		ck_assert(regex != NULL);
+		Regexp *regexp = re("([a-z]*)://(.*)", 0);
+		ck_assert(regexp != NULL);
 
-		ck_assert_int_eq(2, regex->numberOfSubExpressions);
+		ck_assert_int_eq(2, regexp->numberOfSubExpressions);
 
 		String *url = str("http://github.com");
 
 		Range *matches;
-		ck_assert($(regex, matchesString, url, 0, &matches));
+		ck_assert($(regexp, matchesString, url, 0, &matches));
 
 		String *scheme = $(url, substring, matches[1]);
 		ck_assert_str_eq("http", scheme->chars);
@@ -48,16 +48,16 @@ START_TEST(regex)
 		release(scheme);
 		release(host);
 		release(url);
-		release(regex);
+		release(regexp);
 
 	}END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("regex");
-	tcase_add_test(tcase, regex);
+	TCase *tcase = tcase_create("regexp");
+	tcase_add_test(tcase, regexp);
 
-	Suite *suite = suite_create("regex");
+	Suite *suite = suite_create("regexp");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);

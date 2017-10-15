@@ -76,6 +76,8 @@
 		CE594BDC1F49F931004D74FF /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */; };
 		CE594BDD1F49F931004D74FF /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
 		CE594BE31F49F93F004D74FF /* StringReader.c in Sources */ = {isa = PBXBuildFile; fileRef = CE594BD51F49F8DB004D74FF /* StringReader.c */; };
+		CE6717091F93C289001C2767 /* Regexp.h in Headers */ = {isa = PBXBuildFile; fileRef = CE6717071F93C289001C2767 /* Regexp.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE67170A1F93C289001C2767 /* Regexp.c in Sources */ = {isa = PBXBuildFile; fileRef = CE6717081F93C289001C2767 /* Regexp.c */; };
 		CE6BC16C1D79960C0070FB2D /* Enum.c in Sources */ = {isa = PBXBuildFile; fileRef = CE6BC16A1D79960C0070FB2D /* Enum.c */; };
 		CE6BC16D1D79960C0070FB2D /* Enum.h in Headers */ = {isa = PBXBuildFile; fileRef = CE6BC16B1D79960C0070FB2D /* Enum.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76D96E1C4821CE0096DD31 /* Array.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D85E1C481C4E0096DD31 /* Array.c */; };
@@ -103,7 +105,6 @@
 		CE76D9851C4821CE0096DD31 /* Object.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8DC1C481C4E0096DD31 /* Object.c */; };
 		CE76D9861C4821CE0096DD31 /* Operation.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8DF1C481C4E0096DD31 /* Operation.c */; };
 		CE76D9871C4821CE0096DD31 /* OperationQueue.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8E11C481C4E0096DD31 /* OperationQueue.c */; };
-		CE76D9881C4821CE0096DD31 /* Regex.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8E31C481C4E0096DD31 /* Regex.c */; };
 		CE76D9891C4821CE0096DD31 /* Set.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8E51C481C4E0096DD31 /* Set.c */; };
 		CE76D98A1C4821CE0096DD31 /* String.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8E71C481C4E0096DD31 /* String.c */; };
 		CE76D98B1C4821CE0096DD31 /* Thread.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8E91C481C4E0096DD31 /* Thread.c */; };
@@ -141,7 +142,6 @@
 		CE76DA1D1C4860120096DD31 /* Once.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8DE1C481C4E0096DD31 /* Once.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA1E1C4860120096DD31 /* Operation.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8E01C481C4E0096DD31 /* Operation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA1F1C4860120096DD31 /* OperationQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8E21C481C4E0096DD31 /* OperationQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE76DA201C4860130096DD31 /* Regex.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8E41C481C4E0096DD31 /* Regex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA211C4860130096DD31 /* Set.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8E61C481C4E0096DD31 /* Set.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA221C4860130096DD31 /* String.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8E81C481C4E0096DD31 /* String.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA231C4860130096DD31 /* Thread.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8EA1C481C4E0096DD31 /* Thread.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -230,7 +230,7 @@
 		CEEB030A1F40DD72004C2EDD /* Thread.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9611C481E390096DD31 /* Thread.c */; };
 		CEEB030B1F40DD78004C2EDD /* String.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9601C481E390096DD31 /* String.c */; };
 		CEEB030C1F40DD7F004C2EDD /* Set.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95F1C481E390096DD31 /* Set.c */; };
-		CEEB030D1F40DD83004C2EDD /* Regex.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95E1C481E390096DD31 /* Regex.c */; };
+		CEEB030D1F40DD83004C2EDD /* Regexp.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95E1C481E390096DD31 /* Regexp.c */; };
 		CEEB030E1F40DD89004C2EDD /* Operation.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95D1C481E390096DD31 /* Operation.c */; };
 		CEEB030F1F40DD8D004C2EDD /* Object.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95C1C481E390096DD31 /* Object.c */; };
 		CEEB03101F40DD93004C2EDD /* Number.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95B1C481E390096DD31 /* Number.c */; };
@@ -913,6 +913,8 @@
 		CE594BD21F47BA07004D74FF /* StringReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringReader.h; sourceTree = "<group>"; };
 		CE594BD51F49F8DB004D74FF /* StringReader.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = StringReader.c; sourceTree = "<group>"; };
 		CE594BE21F49F931004D74FF /* Objectively-StringReader */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-StringReader"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE6717071F93C289001C2767 /* Regexp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Regexp.h; sourceTree = "<group>"; };
+		CE6717081F93C289001C2767 /* Regexp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Regexp.c; sourceTree = "<group>"; };
 		CE6BC16A1D79960C0070FB2D /* Enum.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Enum.c; sourceTree = "<group>"; };
 		CE6BC16B1D79960C0070FB2D /* Enum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enum.h; sourceTree = "<group>"; };
 		CE6C2D0E1E213E9000F55B0A /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
@@ -969,8 +971,6 @@
 		CE76D8E01C481C4E0096DD31 /* Operation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Operation.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CE76D8E11C481C4E0096DD31 /* OperationQueue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = OperationQueue.c; sourceTree = "<group>"; };
 		CE76D8E21C481C4E0096DD31 /* OperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = OperationQueue.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		CE76D8E31C481C4E0096DD31 /* Regex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Regex.c; sourceTree = "<group>"; };
-		CE76D8E41C481C4E0096DD31 /* Regex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Regex.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CE76D8E51C481C4E0096DD31 /* Set.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Set.c; sourceTree = "<group>"; };
 		CE76D8E61C481C4E0096DD31 /* Set.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Set.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CE76D8E71C481C4E0096DD31 /* String.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = String.c; sourceTree = "<group>"; };
@@ -1025,7 +1025,7 @@
 		CE76D95B1C481E390096DD31 /* Number.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Number.c; sourceTree = "<group>"; };
 		CE76D95C1C481E390096DD31 /* Object.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Object.c; sourceTree = "<group>"; };
 		CE76D95D1C481E390096DD31 /* Operation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Operation.c; sourceTree = "<group>"; };
-		CE76D95E1C481E390096DD31 /* Regex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Regex.c; sourceTree = "<group>"; };
+		CE76D95E1C481E390096DD31 /* Regexp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Regexp.c; sourceTree = "<group>"; };
 		CE76D95F1C481E390096DD31 /* Set.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Set.c; sourceTree = "<group>"; };
 		CE76D9601C481E390096DD31 /* String.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = String.c; sourceTree = "<group>"; };
 		CE76D9611C481E390096DD31 /* Thread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Thread.c; sourceTree = "<group>"; };
@@ -1071,7 +1071,7 @@
 		CEEB02921F40DD20004C2EDD /* Objectively-Number */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Number"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB029F1F40DD22004C2EDD /* Objectively-Object */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Object"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB02AC1F40DD24004C2EDD /* Objectively-Operation */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Operation"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEEB02B91F40DD26004C2EDD /* Objectively-Regex */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Regex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEEB02B91F40DD26004C2EDD /* Objectively-Regexp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Regexp"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB02C61F40DD27004C2EDD /* Objectively-Set */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Set"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB02D31F40DD29004C2EDD /* Objectively-String */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-String"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB02E01F40DD2B004C2EDD /* Objectively-Thread */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Thread"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1440,8 +1440,8 @@
 				CE76D8E01C481C4E0096DD31 /* Operation.h */,
 				CE76D8E11C481C4E0096DD31 /* OperationQueue.c */,
 				CE76D8E21C481C4E0096DD31 /* OperationQueue.h */,
-				CE76D8E31C481C4E0096DD31 /* Regex.c */,
-				CE76D8E41C481C4E0096DD31 /* Regex.h */,
+				CE6717081F93C289001C2767 /* Regexp.c */,
+				CE6717071F93C289001C2767 /* Regexp.h */,
 				CE3BCDCF1DB6FA62002E6C6D /* Resource.c */,
 				CE3BCDD01DB6FA62002E6C6D /* Resource.h */,
 				CE76D8E51C481C4E0096DD31 /* Set.c */,
@@ -1530,7 +1530,7 @@
 				CE76D95B1C481E390096DD31 /* Number.c */,
 				CE76D95C1C481E390096DD31 /* Object.c */,
 				CE76D95D1C481E390096DD31 /* Operation.c */,
-				CE76D95E1C481E390096DD31 /* Regex.c */,
+				CE76D95E1C481E390096DD31 /* Regexp.c */,
 				CE76D95F1C481E390096DD31 /* Set.c */,
 				CE76D9601C481E390096DD31 /* String.c */,
 				CE594BD51F49F8DB004D74FF /* StringReader.c */,
@@ -1573,7 +1573,7 @@
 				CEEB02921F40DD20004C2EDD /* Objectively-Number */,
 				CEEB029F1F40DD22004C2EDD /* Objectively-Object */,
 				CEEB02AC1F40DD24004C2EDD /* Objectively-Operation */,
-				CEEB02B91F40DD26004C2EDD /* Objectively-Regex */,
+				CEEB02B91F40DD26004C2EDD /* Objectively-Regexp */,
 				CEEB02C61F40DD27004C2EDD /* Objectively-Set */,
 				CEEB02D31F40DD29004C2EDD /* Objectively-String */,
 				CEEB02E01F40DD2B004C2EDD /* Objectively-Thread */,
@@ -1670,8 +1670,8 @@
 				CE76DA1C1C4860120096DD31 /* Object.h in Headers */,
 				CE76DA1D1C4860120096DD31 /* Once.h in Headers */,
 				CE76DA1E1C4860120096DD31 /* Operation.h in Headers */,
+				CE6717091F93C289001C2767 /* Regexp.h in Headers */,
 				CE76DA1F1C4860120096DD31 /* OperationQueue.h in Headers */,
-				CE76DA201C4860130096DD31 /* Regex.h in Headers */,
 				CE3BCDD21DB6FA62002E6C6D /* Resource.h in Headers */,
 				CE76DA211C4860130096DD31 /* Set.h in Headers */,
 				CE76DA221C4860130096DD31 /* String.h in Headers */,
@@ -2126,9 +2126,9 @@
 			productReference = CEEB02AC1F40DD24004C2EDD /* Objectively-Operation */;
 			productType = "com.apple.product-type.tool";
 		};
-		CEEB02AD1F40DD26004C2EDD /* Objectively-Regex */ = {
+		CEEB02AD1F40DD26004C2EDD /* Objectively-Regexp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CEEB02B61F40DD26004C2EDD /* Build configuration list for PBXNativeTarget "Objectively-Regex" */;
+			buildConfigurationList = CEEB02B61F40DD26004C2EDD /* Build configuration list for PBXNativeTarget "Objectively-Regexp" */;
 			buildPhases = (
 				CEEB02B01F40DD26004C2EDD /* Sources */,
 				CEEB02B21F40DD26004C2EDD /* Frameworks */,
@@ -2139,9 +2139,9 @@
 			dependencies = (
 				CEEB02AE1F40DD26004C2EDD /* PBXTargetDependency */,
 			);
-			name = "Objectively-Regex";
+			name = "Objectively-Regexp";
 			productName = "Objectively-Test";
-			productReference = CEEB02B91F40DD26004C2EDD /* Objectively-Regex */;
+			productReference = CEEB02B91F40DD26004C2EDD /* Objectively-Regexp */;
 			productType = "com.apple.product-type.tool";
 		};
 		CEEB02BA1F40DD27004C2EDD /* Objectively-Set */ = {
@@ -2286,7 +2286,7 @@
 				CEEB02861F40DD20004C2EDD /* Objectively-Number */,
 				CEEB02931F40DD22004C2EDD /* Objectively-Object */,
 				CEEB02A01F40DD24004C2EDD /* Objectively-Operation */,
-				CEEB02AD1F40DD26004C2EDD /* Objectively-Regex */,
+				CEEB02AD1F40DD26004C2EDD /* Objectively-Regexp */,
 				CEEB02BA1F40DD27004C2EDD /* Objectively-Set */,
 				CEEB02C71F40DD29004C2EDD /* Objectively-String */,
 				CE594BD61F49F931004D74FF /* Objectively-StringReader */,
@@ -2328,7 +2328,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$BUILT_PRODUCTS_DIR/Objectively-Array &&\n$BUILT_PRODUCTS_DIR/Objectively-Boole &&\n$BUILT_PRODUCTS_DIR/Objectively-Data &&\n$BUILT_PRODUCTS_DIR/Objectively-Date &&\n$BUILT_PRODUCTS_DIR/Objectively-Dictionary &&\n$BUILT_PRODUCTS_DIR/Objectively-IndexPath &&\n$BUILT_PRODUCTS_DIR/Objectively-IndexSet &&\n$BUILT_PRODUCTS_DIR/Objectively-JSON $SRCROOT/Tests/Objectively/Fixtures/test.json &&\n$BUILT_PRODUCTS_DIR/Objectively-Log &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableArray &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableData &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableDictionary &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableSet &&\n$BUILT_PRODUCTS_DIR/Objectively-Null &&\n$BUILT_PRODUCTS_DIR/Objectively-Number &&\n$BUILT_PRODUCTS_DIR/Objectively-Object &&\n$BUILT_PRODUCTS_DIR/Objectively-Operation &&\n$BUILT_PRODUCTS_DIR/Objectively-Regex &&\n$BUILT_PRODUCTS_DIR/Objectively-Set &&\n$BUILT_PRODUCTS_DIR/Objectively-String &&\n$BUILT_PRODUCTS_DIR/Objectively-StringReader &&\n$BUILT_PRODUCTS_DIR/Objectively-Thread &&\n$BUILT_PRODUCTS_DIR/Objectively-URL &&\n$BUILT_PRODUCTS_DIR/Objectively-URLSession";
+			shellScript = "$BUILT_PRODUCTS_DIR/Objectively-Array &&\n$BUILT_PRODUCTS_DIR/Objectively-Boole &&\n$BUILT_PRODUCTS_DIR/Objectively-Data &&\n$BUILT_PRODUCTS_DIR/Objectively-Date &&\n$BUILT_PRODUCTS_DIR/Objectively-Dictionary &&\n$BUILT_PRODUCTS_DIR/Objectively-IndexPath &&\n$BUILT_PRODUCTS_DIR/Objectively-IndexSet &&\n$BUILT_PRODUCTS_DIR/Objectively-JSON $SRCROOT/Tests/Objectively/Fixtures/test.json &&\n$BUILT_PRODUCTS_DIR/Objectively-Log &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableArray &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableData &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableDictionary &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableSet &&\n$BUILT_PRODUCTS_DIR/Objectively-Null &&\n$BUILT_PRODUCTS_DIR/Objectively-Number &&\n$BUILT_PRODUCTS_DIR/Objectively-Object &&\n$BUILT_PRODUCTS_DIR/Objectively-Operation &&\n$BUILT_PRODUCTS_DIR/Objectively-Regexp &&\n$BUILT_PRODUCTS_DIR/Objectively-Set &&\n$BUILT_PRODUCTS_DIR/Objectively-String &&\n$BUILT_PRODUCTS_DIR/Objectively-StringReader &&\n$BUILT_PRODUCTS_DIR/Objectively-Thread &&\n$BUILT_PRODUCTS_DIR/Objectively-URL &&\n$BUILT_PRODUCTS_DIR/Objectively-URLSession";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2397,7 +2397,7 @@
 				CE76D9851C4821CE0096DD31 /* Object.c in Sources */,
 				CE76D9861C4821CE0096DD31 /* Operation.c in Sources */,
 				CE76D9871C4821CE0096DD31 /* OperationQueue.c in Sources */,
-				CE76D9881C4821CE0096DD31 /* Regex.c in Sources */,
+				CE67170A1F93C289001C2767 /* Regexp.c in Sources */,
 				CE3BCDD11DB6FA62002E6C6D /* Resource.c in Sources */,
 				CE76D9891C4821CE0096DD31 /* Set.c in Sources */,
 				CE76D98A1C4821CE0096DD31 /* String.c in Sources */,
@@ -2570,7 +2570,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB030D1F40DD83004C2EDD /* Regex.c in Sources */,
+				CEEB030D1F40DD83004C2EDD /* Regexp.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2724,7 +2724,7 @@
 		};
 		CE4A535A1F40E0C800927421 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CEEB02AD1F40DD26004C2EDD /* Objectively-Regex */;
+			target = CEEB02AD1F40DD26004C2EDD /* Objectively-Regexp */;
 			targetProxy = CE4A53591F40E0C800927421 /* PBXContainerItemProxy */;
 		};
 		CE4A535C1F40E0C800927421 /* PBXTargetDependency */ = {
@@ -3823,7 +3823,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CEEB02B61F40DD26004C2EDD /* Build configuration list for PBXNativeTarget "Objectively-Regex" */ = {
+		CEEB02B61F40DD26004C2EDD /* Build configuration list for PBXNativeTarget "Objectively-Regexp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CEEB02B71F40DD26004C2EDD /* Debug */,

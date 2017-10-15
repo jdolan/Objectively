@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CEEB02AD1F40DD26004C2EDD"
-               BuildableName = "Objectively-Regex"
-               BlueprintName = "Objectively-Regex"
+               BuildableName = "Objectively-Regexp"
+               BlueprintName = "Objectively-Regexp"
                ReferencedContainer = "container:Objectively.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,8 +34,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CEEB02AD1F40DD26004C2EDD"
-            BuildableName = "Objectively-Regex"
-            BlueprintName = "Objectively-Regex"
+            BuildableName = "Objectively-Regexp"
+            BlueprintName = "Objectively-Regexp"
             ReferencedContainer = "container:Objectively.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -58,8 +58,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CEEB02AD1F40DD26004C2EDD"
-            BuildableName = "Objectively-Regex"
-            BlueprintName = "Objectively-Regex"
+            BuildableName = "Objectively-Regexp"
+            BlueprintName = "Objectively-Regexp"
             ReferencedContainer = "container:Objectively.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -84,8 +84,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CEEB02AD1F40DD26004C2EDD"
-            BuildableName = "Objectively-Regex"
-            BlueprintName = "Objectively-Regex"
+            BuildableName = "Objectively-Regexp"
+            BlueprintName = "Objectively-Regexp"
             ReferencedContainer = "container:Objectively.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

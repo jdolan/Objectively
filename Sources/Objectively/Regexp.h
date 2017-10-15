@@ -33,14 +33,14 @@
  * @brief Extended POSIX regular expressions.
  */
 
-typedef struct Regex Regex;
-typedef struct RegexInterface RegexInterface;
+typedef struct Regexp Regexp;
+typedef struct RegexpInterface RegexpInterface;
 
 /**
  * @brief Extended POSIX regular expressions.
  * @extends Object
  */
-struct Regex {
+struct Regexp {
 
 	/**
 	 * @brief The superclass.
@@ -51,7 +51,7 @@ struct Regex {
 	 * @brief The interface.
 	 * @protected
 	 */
-	RegexInterface *interface;
+	RegexpInterface *interface;
 
 	/**
 	 * @brief The pattern
@@ -75,9 +75,9 @@ struct Regex {
 };
 
 /**
- * @brief The Regex type.
+ * @brief The Regexp interface.
  */
-struct RegexInterface {
+struct RegexpInterface {
 
 	/**
 	 * @brief The superclass interface.
@@ -85,37 +85,37 @@ struct RegexInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @fn Regex *Regex::initWithPattern(Regex *self, const char *pattern, int options)
+	 * @fn Regexp *Regexp::initWithPattern(Regexp *self, const char *pattern, int options)
 	 * @brief Initializes this regular expression.
-	 * @param self The Regex.
+	 * @param self The Regexp.
 	 * @param pattern The POSIX regular expression pattern.
 	 * @param options A bitwise-or of `REG_ICASE`, `REG_NEWLINE`.
 	 * @return The initialized regular expression, or `NULL` on error.
-	 * @memberof Regex
+	 * @memberof Regexp
 	 */
-	Regex *(*initWithPattern)(Regex *self, const char *pattern, int options);
+	Regexp *(*initWithPattern)(Regexp *self, const char *pattern, int options);
 
 	/**
-	 * @fn _Bool Regex::matchesCharacters(const Regex *self, const char *chars, int options, Range **matches)
+	 * @fn _Bool Regexp::matchesCharacters(const Regexp *self, const char *chars, int options, Range **matches)
 	 * @brief Matches this regular expression against the given characters.
-	 * @param self The Regex.
+	 * @param self The Regexp.
 	 * @param chars The characters to match.
 	 * @param options A bitwise-or of `REG_NOTBOL`, `REG_NOTEOL`.
 	 * @param matches An optional pointer to return matched sub-expressions.
-	 * @return `true` if this Regex matched `chars`, `false` otherwise.
+	 * @return `true` if this Regexp matched `chars`, `false` otherwise.
 	 * @remarks If provided, `matches` will be dynamically allocated and contain
 	 * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the Range of `chars` that
 	 * matched the entire pattern. `matches[1..n]` will identify the Range of each corresponding
 	 * sub-expression. The caller must free `matches` when done with it.
 	 * @see regexec(3)
-	 * @memberof Regex
+	 * @memberof Regexp
 	 */
-	_Bool (*matchesCharacters)(const Regex *self, const char *chars, int options, Range **matches);
+	_Bool (*matchesCharacters)(const Regexp *self, const char *chars, int options, Range **matches);
 
 	/**
-	 * @fn _Bool Regex::matchesString(const Regex *self, const String *string, int options, Range **matches)
+	 * @fn _Bool Regexp::matchesString(const Regexp *self, const String *string, int options, Range **matches)
 	 * @brief Matches this regular expression against the given String.
-	 * @param self The Regex.
+	 * @param self The Regexp.
 	 * @param string The String to match.
 	 * @param options A bitwise-or of `REG_NOTBOL`, `REG_NOTEOL`.
 	 * @param matches An optional pointer to return matched sub-expressions.
@@ -124,24 +124,24 @@ struct RegexInterface {
 	 * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the Range of `chars` that
 	 * matched the entire pattern. `matches[1..n]` will identify the Range of each corresponding
 	 * sub-expression. The caller must free `matches` when done with it.
-	 * @memberof Regex
+	 * @memberof Regexp
 	 */
-	_Bool (*matchesString)(const Regex *self, const String *string, int options, Range **matches);
+	_Bool (*matchesString)(const Regexp *self, const String *string, int options, Range **matches);
 };
 
 /**
- * @fn Class *Regex::_Regex(void)
- * @brief The Regex archetype.
- * @return The Regex Class.
- * @memberof Regex
+ * @fn Class *Regexp::_Regexp(void)
+ * @brief The Regexp archetype.
+ * @return The Regexp Class.
+ * @memberof Regexp
  */
-OBJECTIVELY_EXPORT Class *_Regex(void);
+OBJECTIVELY_EXPORT Class *_Regexp(void);
 
 /**
- * @brief A convenience function for instantiating Regexs.
+ * @brief A convenience function for instantiating Regexps.
  * @param pattern The POSIX regular expression pattern.
  * @param options A bitwise-or of `REG_ICASE`, `REG_NEWLINE`.
- * @return A new Regex, or `NULL` on error.
- * @relates Regex
+ * @return A new Regexp, or `NULL` on error.
+ * @relates Regexp
  */
-OBJECTIVELY_EXPORT Regex *rex(const char *pattern, int options);
+OBJECTIVELY_EXPORT Regexp *re(const char *pattern, int options);

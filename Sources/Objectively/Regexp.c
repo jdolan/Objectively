@@ -28,7 +28,7 @@
 #include <Objectively/Hash.h>
 #include <Objectively/Regexp.h>
 
-#define _Class _Regex
+#define _Class _Regexp
 
 #pragma mark - Object
 
@@ -37,9 +37,9 @@
  */
 static Object *copy(const Object *self) {
 
-	const Regex *this = (Regex *) self;
+	const Regexp *this = (Regexp *) self;
 
-	return (Object *) rex(this->pattern, this->options);
+	return (Object *) re(this->pattern, this->options);
 }
 
 /**
@@ -47,7 +47,7 @@ static Object *copy(const Object *self) {
  */
 static String *description(const Object *self) {
 
-	const Regex *this = (Regex *) self;
+	const Regexp *this = (Regexp *) self;
 
 	return $$(String, stringWithCharacters, this->pattern);
 }
@@ -57,7 +57,7 @@ static String *description(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	Regex *this = (Regex *) self;
+	Regexp *this = (Regexp *) self;
 
 	regfree(this->regex);
 	free(this->regex);
@@ -70,7 +70,7 @@ static void dealloc(Object *self) {
  */
 static int hash(const Object *self) {
 
-	Regex *this = (Regex *) self;
+	Regexp *this = (Regexp *) self;
 
 	int hash = HASH_SEED;
 	hash = HashForInteger(hash, this->options);
@@ -90,10 +90,10 @@ static _Bool isEqual(const Object *self, const Object *other) {
 		return true;
 	}
 
-	if (other && $(other, isKindOfClass, _Regex())) {
+	if (other && $(other, isKindOfClass, _Regexp())) {
 
-		const Regex *this = (Regex *) self;
-		const Regex *that = (Regex *) other;
+		const Regexp *this = (Regexp *) self;
+		const Regexp *that = (Regexp *) other;
 
 		if (this->options == that->options) {
 			return strcmp(this->pattern, that->pattern) == 0;
@@ -103,15 +103,15 @@ static _Bool isEqual(const Object *self, const Object *other) {
 	return false;
 }
 
-#pragma mark - Regex
+#pragma mark - Regexp
 
 /**
- * @fn Regex *Regex::initWithPattern(Regex *self, const char *pattern, int options)
- * @memberof Regex
+ * @fn Regexp *Regexp::initWithPattern(Regexp *self, const char *pattern, int options)
+ * @memberof Regexp
  */
-static Regex *initWithPattern(Regex *self, const char *pattern, int options) {
+static Regexp *initWithPattern(Regexp *self, const char *pattern, int options) {
 
-	self = (Regex *) super(Object, self, init);
+	self = (Regexp *) super(Object, self, init);
 	if (self) {
 		self->regex = calloc(1, sizeof(regex_t));
 		assert(self->regex);
@@ -128,10 +128,10 @@ static Regex *initWithPattern(Regex *self, const char *pattern, int options) {
 }
 
 /**
- * @fn _Bool Regex::matchesCharacters(const Regex *self, const char *chars, int options, Range **matches)
- * @memberof Regex
+ * @fn _Bool Regexp::matchesCharacters(const Regexp *self, const char *chars, int options, Range **matches)
+ * @memberof Regexp
  */
-static _Bool matchesCharacters(const Regex *self, const char *chars, int options, Range **ranges) {
+static _Bool matchesCharacters(const Regexp *self, const char *chars, int options, Range **ranges) {
 
 	if (ranges) {
 		const size_t numberOfMatches = self->numberOfSubExpressions + 1;
@@ -164,10 +164,10 @@ static _Bool matchesCharacters(const Regex *self, const char *chars, int options
 }
 
 /**
- * @fn _Bool Regex::matchesString(const Regex *self, const String *string, int options, Range **matches)
- * @memberof Regex
+ * @fn _Bool Regexp::matchesString(const Regexp *self, const String *string, int options, Range **matches)
+ * @memberof Regexp
  */
-static _Bool matchesString(const Regex *self, const String *string, int options, Range **ranges) {
+static _Bool matchesString(const Regexp *self, const String *string, int options, Range **ranges) {
 
 	assert(string);
 
@@ -189,27 +189,27 @@ static void initialize(Class *clazz) {
 	object->hash = hash;
 	object->isEqual = isEqual;
 
-	RegexInterface *regex = (RegexInterface *) clazz->def->interface;
+	RegexpInterface *regexp = (RegexpInterface *) clazz->def->interface;
 
-	regex->initWithPattern = initWithPattern;
-	regex->matchesCharacters = matchesCharacters;
-	regex->matchesString = matchesString;
+	regexp->initWithPattern = initWithPattern;
+	regexp->matchesCharacters = matchesCharacters;
+	regexp->matchesString = matchesString;
 }
 
 /**
- * @fn Class *Regex::_Regex(void)
- * @memberof Regex
+ * @fn Class *Regexp::_Regexp(void)
+ * @memberof Regexp
  */
-Class *_Regex(void) {
+Class *_Regexp(void) {
 	static Class clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Regex";
+		clazz.name = "Regexp";
 		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Regex);
-		clazz.interfaceOffset = offsetof(Regex, interface);
-		clazz.interfaceSize = sizeof(RegexInterface);
+		clazz.instanceSize = sizeof(Regexp);
+		clazz.interfaceOffset = offsetof(Regexp, interface);
+		clazz.interfaceSize = sizeof(RegexpInterface);
 		clazz.initialize = initialize;
 	});
 
@@ -218,6 +218,6 @@ Class *_Regex(void) {
 
 #undef _Class
 
-Regex *rex(const char *pattern, int options) {
-	return $(alloc(Regex), initWithPattern, pattern, options);
+Regexp *re(const char *pattern, int options) {
+	return $(alloc(Regexp), initWithPattern, pattern, options);
 }

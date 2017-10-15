@@ -30,8 +30,6 @@
 
 #define _Class _URL
 
-static Regex *_regex;
-
 #pragma mark - Object
 
 /**
@@ -129,6 +127,8 @@ static URL *baseURL(const URL *self) {
 	return baseURL;
 }
 
+static Regexp *_re;
+
 /**
  * @fn URL *URL::initWithCharacters(URL *self, const char *chars)
  * @memberof URL
@@ -141,7 +141,7 @@ static URL *initWithCharacters(URL *self, const char *chars) {
 	if (self) {
 
 		Range *ranges;
-		if ($(_regex, matchesCharacters, chars, 0, &ranges)) {
+		if ($(_re, matchesCharacters, chars, 0, &ranges)) {
 
 			self->urlString = $(alloc(String), initWithCharacters, chars);
 
@@ -235,7 +235,7 @@ static void initialize(Class *clazz) {
 	url->initWithString = initWithString;
 	url->pathComponents = pathComponents;
 
-	_regex = rex("([a-z]+)://([^:/\?]+)?(:[0-9]+)?(/[^\?#]+)?([^#]+)?(#.*)?", 0);
+	_re = re("([a-z]+)://([^:/\?]+)?(:[0-9]+)?(/[^\?#]+)?([^#]+)?(#.*)?", 0);
 }
 
 /**
@@ -243,7 +243,7 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	release(_regex);
+	release(_re);
 }
 
 /**
