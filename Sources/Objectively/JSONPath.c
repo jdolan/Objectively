@@ -29,7 +29,7 @@
 #include <Objectively/Dictionary.h>
 #include <Objectively/JSONPath.h>
 #include <Objectively/Number.h>
-#include <Objectively/Regex.h>
+#include <Objectively/Regexp.h>
 #include <Objectively/String.h>
 
 #define _Class _JSONPath

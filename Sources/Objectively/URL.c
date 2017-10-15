@@ -25,7 +25,7 @@
 #include <stdlib.h>
 
 #include <Objectively/MutableString.h>
-#include <Objectively/Regex.h>
+#include <Objectively/Regexp.h>
 #include <Objectively/URL.h>
 
 #define _Class _URL

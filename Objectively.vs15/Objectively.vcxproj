@@ -49,7 +49,7 @@
     <ClInclude Include="..\Sources\Objectively\Once.h" />
     <ClInclude Include="..\Sources\Objectively\Operation.h" />
     <ClInclude Include="..\Sources\Objectively\OperationQueue.h" />
-    <ClInclude Include="..\Sources\Objectively\Regex.h" />
+    <ClInclude Include="..\Sources\Objectively\Regexp.h" />
     <ClInclude Include="..\Sources\Objectively\Resource.h" />
     <ClInclude Include="..\Sources\Objectively\Set.h" />
     <ClInclude Include="..\Sources\Objectively\String.h" />
@@ -65,8 +65,12 @@
     <ClInclude Include="..\Sources\Objectively\URLSessionTask.h" />
     <ClInclude Include="..\Sources\Objectively\URLSessionUploadTask.h" />
     <ClInclude Include="..\Sources\Objectively\Value.h" />
+    <ClInclude Include="Sources\gnu\config.h" />
+    <ClInclude Include="Sources\gnu\intprops.h" />
+    <ClInclude Include="Sources\gnu\langinfo.h" />
+    <ClInclude Include="Sources\gnu\regex.h" />
+    <ClInclude Include="Sources\gnu\regex_internal.h" />
     <ClInclude Include="Sources\Objectively\Config.h" />
-    <ClInclude Include="Sources\regex.h" />
     <ClInclude Include="Sources\Windowly.h" />
   </ItemGroup>
   <ItemGroup>
@@ -98,7 +102,7 @@
     <ClCompile Include="..\Sources\Objectively\Object.c" />
     <ClCompile Include="..\Sources\Objectively\Operation.c" />
     <ClCompile Include="..\Sources\Objectively\OperationQueue.c" />
-    <ClCompile Include="..\Sources\Objectively\Regex.c" />
+    <ClCompile Include="..\Sources\Objectively\Regexp.c" />
     <ClCompile Include="..\Sources\Objectively\Resource.c" />
     <ClCompile Include="..\Sources\Objectively\Set.c" />
     <ClCompile Include="..\Sources\Objectively\String.c" />
@@ -113,7 +117,7 @@
     <ClCompile Include="..\Sources\Objectively\URLSessionTask.c" />
     <ClCompile Include="..\Sources\Objectively\URLSessionUploadTask.c" />
     <ClCompile Include="..\Sources\Objectively\Value.c" />
-    <ClCompile Include="Sources\WinRegex.cpp" />
+    <ClCompile Include="Sources\gnu\regex.c" />
     <ClCompile Include="Sources\Windowly.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -166,20 +170,20 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>bin\$(Platform)$(Configuration)\</OutDir>
-    <IncludePath>..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
+    <IncludePath>Sources\gnu\;..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
     <IntDir>tmp\$(ProjectName)\$(Platform)$(Configuration)\</IntDir>
     <UseMultiToolTask>true</UseMultiToolTask>
     <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>bin\$(Platform)$(Configuration)\</OutDir>
-    <IncludePath>..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
+    <IncludePath>Sources\gnu\;..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
     <IntDir>tmp\$(ProjectName)\$(Platform)$(Configuration)\</IntDir>
     <UseMultiToolTask>true</UseMultiToolTask>
     <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
+    <IncludePath>Sources\gnu\;..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
     <OutDir>bin\$(Platform)$(Configuration)\</OutDir>
     <IntDir>tmp\$(ProjectName)\$(Platform)$(Configuration)\</IntDir>
     <UseMultiToolTask>true</UseMultiToolTask>
@@ -188,7 +192,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>bin\$(Platform)$(Configuration)\</OutDir>
     <IntDir>tmp\$(ProjectName)\$(Platform)$(Configuration)\</IntDir>
-    <IncludePath>..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
+    <IncludePath>Sources\gnu\;..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
     <UseMultiToolTask>true</UseMultiToolTask>
     <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>

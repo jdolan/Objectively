@@ -7,15 +7,15 @@
     <Filter Include="Sources\Objectively">
       <UniqueIdentifier>{bec79cfa-7c70-48a8-ad4e-02835e6eb71c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\gnu">
+      <UniqueIdentifier>{0f421d94-5b46-40d0-95b0-1fa806888993}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Sources\Objectively.h">
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Windowly.h">
-      <Filter>Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\regex.h">
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Objectively\Config.h">
@@ -108,9 +108,6 @@
     <ClInclude Include="..\Sources\Objectively\OperationQueue.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\Regex.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
     <ClInclude Include="..\Sources\Objectively\Resource.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
@@ -156,12 +153,27 @@
     <ClInclude Include="..\Sources\Objectively\Value.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\gnu\regex.h">
+      <Filter>Sources\gnu</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\gnu\regex_internal.h">
+      <Filter>Sources\gnu</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\gnu\langinfo.h">
+      <Filter>Sources\gnu</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\gnu\intprops.h">
+      <Filter>Sources\gnu</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\gnu\config.h">
+      <Filter>Sources\gnu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\Regexp.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\Windowly.c">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\WinRegex.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\Sources\Objectively\Array.c">
@@ -248,9 +260,6 @@
     <ClCompile Include="..\Sources\Objectively\OperationQueue.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\Regex.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
     <ClCompile Include="..\Sources\Objectively\Resource.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
@@ -292,6 +301,12 @@
     </ClCompile>
     <ClCompile Include="..\Sources\Objectively\Value.c">
       <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\Regexp.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\gnu\regex.c">
+      <Filter>Sources\gnu</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
