@@ -43,23 +43,23 @@ int HashForBytes(int hash, const uint8_t *bytes, const Range range) {
 }
 
 int HashForCharacters(int hash, const char *chars, const Range range) {
-
 	return HashForBytes(hash, (const uint8_t *) chars, range);
 }
 
 int HashForCString(int hash, const char *string) {
 
-	const Range range = { 0, strlen(string) };
-	return HashForCharacters(hash, string, range);
+	if (string) {
+		return HashForCharacters(hash, string, (Range) { 0, strlen(string) });
+	}
+
+	return 0;
 }
 
 int HashForDecimal(int hash, const double decimal) {
-
 	return hash + 31 * (int) decimal;
 }
 
 int HashForInteger(int hash, const long integer) {
-
 	return hash + 31 * (int) integer;
 }
 
