@@ -1,6 +1,7 @@
 #pragma once
 
 #define __USE_GNU
+#define __builtin_expect(x, y) (x)
 
 #define CODESET 0
 
