@@ -102,7 +102,7 @@ static _Bool isKindOfClass(const Object *self, const Class *clazz) {
 
 	const Class *c = self->clazz;
 	while (c) {
-		if (c == clazz) {
+		if (memcmp(c, clazz, sizeof(*c)) == 0) {
 			return true;
 		}
 		c = c->superclass;
