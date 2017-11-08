@@ -733,20 +733,20 @@ String *str(const char *fmt, ...) {
 	return string;
 }
 
-char *strtrim(const char *str) {
+char *strtrim(const char *s) {
 
-	assert(str);
-	while (isspace(*str)) {
-		str++;
+	assert(s);
+	while (isspace(*s)) {
+		s++;
 	}
 
-	char *trimmed = strdup(str);
-	assert(trimmed);
+	char *t = strdup(s);
+	assert(t);
 
-	size_t len = strlen(trimmed);
-	while (isspace(trimmed[len])) {
-		trimmed[len--] = '\0';
+	size_t len = strlen(t);
+	while (isspace(t[len])) {
+		t[len--] = '\0';
 	}
 
-	return trimmed;
+	return t;
 }
