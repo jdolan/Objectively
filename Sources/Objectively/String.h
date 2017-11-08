@@ -412,3 +412,10 @@ OBJECTIVELY_EXPORT StringEncoding StringEncodingForName(const char *name);
  * @relates String
  */
 OBJECTIVELY_EXPORT String *str(const char *fmt, ...);
+
+/**
+ * @brief Copies the given null-terminated C string, trimming leading and trailing whitespace.
+ * @param str A null-terminated C string.
+ * @return A trimmed copy of `str` which must be freed by the caller.
+ */
+OBJECTIVELY_EXPORT char *strtrim(const char *str);

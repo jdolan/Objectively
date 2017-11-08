@@ -100,6 +100,8 @@ static _Bool isEqual(const Object *self, const Object *other) {
  */
 static _Bool isKindOfClass(const Object *self, const Class *clazz) {
 
+	assert(clazz);
+	
 	const Class *c = self->clazz;
 	while (c) {
 		if (memcmp(c, clazz, sizeof(*c)) == 0) {

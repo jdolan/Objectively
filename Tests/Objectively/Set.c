@@ -47,7 +47,7 @@ START_TEST(set)
 		Object *two = $(alloc(Object), init);
 		Object *three = $(alloc(Object), init);
 
-		Set *set = $$(Set, setWithObjects, one, two, three, three, NULL);
+		Set *set = $$(Set, setWithObjects, one, one, two, two, three, three, NULL);
 
 		ck_assert(set != NULL);
 		ck_assert_ptr_eq(_Set(), classof(set));

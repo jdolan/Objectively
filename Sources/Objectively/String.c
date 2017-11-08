@@ -732,3 +732,21 @@ String *str(const char *fmt, ...) {
 
 	return string;
 }
+
+char *strtrim(const char *str) {
+
+	assert(str);
+	while (isspace(*str)) {
+		str++;
+	}
+
+	char *trimmed = strdup(str);
+	assert(trimmed);
+
+	size_t len = strlen(trimmed);
+	while (isspace(trimmed[len])) {
+		trimmed[len--] = '\0';
+	}
+
+	return trimmed;
+}
