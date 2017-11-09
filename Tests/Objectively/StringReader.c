@@ -75,7 +75,7 @@ START_TEST(read_japanese) {
 
 START_TEST(readToken) {
 
-	StringReader *reader = $(alloc(StringReader), initWithCharacters, "ṮḧḭṠ ḭṠ ṏṆḶẏ Ḁ ṮḕṠṮ");
+	StringReader *reader = $(alloc(StringReader), initWithCharacters, "ṮḧḭṠ  ḭṠ  ṏṆḶẏ  Ḁ  ṮḕṠṮ");
 	ck_assert(reader != NULL);
 
 	String *token;
