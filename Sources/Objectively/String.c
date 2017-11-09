@@ -740,13 +740,15 @@ char *strtrim(const char *s) {
 		s++;
 	}
 
-	char *t = strdup(s);
-	assert(t);
+	char *trimmed = strdup(s);
+	assert(trimmed);
 
-	size_t len = strlen(t);
-	while (isspace(t[len])) {
-		t[len--] = '\0';
+	char *end = trimmed + strlen(trimmed);
+	if (end > trimmed) {
+		while (isspace(*(--end))) {
+			*end = '\0';
+		}
 	}
 
-	return t;
+	return trimmed;
 }
