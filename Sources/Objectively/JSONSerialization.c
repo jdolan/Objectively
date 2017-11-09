@@ -419,7 +419,7 @@ static Array *readArray(JSONReader *reader) {
 /**
  * @brief Reads an element from `reader`. An element is any valid JSON type.
  * @param reader The JSONReader.
- * @return The element, or `NULL` if no element is available..
+ * @return The element, or `NULL` if no element is available.
  */
 static ident readElement(JSONReader *reader) {
 
