@@ -185,8 +185,7 @@ static URL *initWithCharacters(URL *self, const char *chars) {
 
 			free(ranges);
 		} else {
-			release(self);
-			self = NULL;
+			self = release(self);
 		}
 	}
 

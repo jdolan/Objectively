@@ -152,8 +152,9 @@ OBJECTIVELY_EXPORT Class *classForName(const char *name);
 /**
  * @brief Atomically decrement the given Object's reference count. If the
  * resulting reference count is `0`, the Object is deallocated.
+ * @return This function always returns `NULL`.
  */
-OBJECTIVELY_EXPORT void release(ident obj);
+OBJECTIVELY_EXPORT ident release(ident obj);
 
 /**
  * @brief Atomically increment the given Object's reference count.

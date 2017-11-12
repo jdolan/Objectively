@@ -173,8 +173,7 @@ static Data *initWithContentsOfFile(Data *self, const char *path) {
 		return $(self, initWithMemory, mem, length);
 	}
 
-	release(self);
-	return NULL;
+	return release(self);
 }
 
 /**

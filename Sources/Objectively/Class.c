@@ -185,7 +185,7 @@ Class *classForName(const char *name) {
 	return NULL;
 }
 
-void release(ident obj) {
+ident release(ident obj) {
 
 	if (obj) {
 		Object *object = cast(Object, obj);
@@ -196,6 +196,8 @@ void release(ident obj) {
 			$(object, dealloc);
 		}
 	}
+
+	return NULL;
 }
 
 ident retain(ident obj) {
