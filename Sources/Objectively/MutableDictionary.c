@@ -67,6 +67,8 @@ static void addEntriesFromDictionary_enumerator(const Dictionary *dict, ident ob
  */
 static void addEntriesFromDictionary(MutableDictionary *self, const Dictionary *dictionary) {
 
+	assert(dictionary);
+	
 	$(dictionary, enumerateObjectsAndKeys, addEntriesFromDictionary_enumerator, self);
 }
 
