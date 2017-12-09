@@ -557,7 +557,8 @@ static String *trimmedString(const String *self) {
 	Range range = { .location = 0, .length = self->length };
 
 	while (isspace(self->chars[range.location])) {
-		range.location++, range.length--;
+		range.location++;
+		range.length--;
 	}
 
 	while (isspace(self->chars[range.length])) {
