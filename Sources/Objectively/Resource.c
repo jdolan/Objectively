@@ -147,9 +147,24 @@ static void initialize(Class *clazz) {
 	_resourcePaths = $(alloc(MutableArray), init);
 	assert(_resourcePaths);
 
-	String *temp = str(".");
-	$(_resourcePaths, addObject, temp);
-	release(temp);
+	const char *env = getenv("OBJECTIVELY_RESOURCE_PATH");
+	if (env) {
+
+		// TODO: Add WIN32 ";" path delim support via config.h
+
+		String *string = $$(String, stringWithCharacters, env);
+		Array *paths = $(string, componentsSeparatedByCharacters, ":");
+
+		for (size_t i = 0; i < paths->count; i++) {
+			String *path = $(paths, objectAtIndex, i);
+			addResourcePath(path->chars);
+		}
+
+		release(paths);
+		release(string);
+	}
+
+	addResourcePath(".");
 }
 
 /**
