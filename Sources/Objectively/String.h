@@ -146,7 +146,7 @@ struct StringInterface {
 	 * @brief Checks this String for the given prefix.
 	 * @param self The String.
 	 * @param prefix The Prefix to check.
-	 * @return true if this String starts with prefix, false otherwise.
+	 * @return True if this String starts with prefix, false otherwise.
 	 * @memberof String
 	 */
 	_Bool (*hasPrefix)(const String *self, const String *prefix);
@@ -156,7 +156,7 @@ struct StringInterface {
 	 * @brief Checks this String for the given suffix.
 	 * @param self The String.
 	 * @param suffix The suffix to check.
-	 * @return true if this String ends with suffix, false otherwise.
+	 * @return True if this String ends with suffix, false otherwise.
 	 * @memberof String
 	 */
 	_Bool (*hasSuffix)(const String *self, const String *suffix);

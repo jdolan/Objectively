@@ -117,7 +117,7 @@ struct ObjectInterface {
 	 * @brief Tests equality of the other Object.
 	 * @param self The Object.
 	 * @param other The Object to test for equality.
-	 * @return true if other is deemed equal, false otherwise.
+	 * @return True if other is deemed equal, false otherwise.
 	 * @memberof Object
 	 */
 	_Bool (*isEqual)(const Object *self, const Object *other);
@@ -127,7 +127,7 @@ struct ObjectInterface {
 	 * @brief Tests for Class hierarchy membership.
 	 * @param self The Object.
 	 * @param clazz The Class to test for membership.
-	 * @return true if this instance belongs to Class' hierarchy, false otherwise.
+	 * @return True if this instance belongs to Class' hierarchy, false otherwise.
 	 * @memberof Object
 	 */
 	_Bool (*isKindOfClass)(const Object *self, const Class *clazz);
