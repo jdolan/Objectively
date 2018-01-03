@@ -36,6 +36,7 @@
  */
 typedef struct {
 	const char *name;
+	const char *alias;
 	int value;
 } EnumName;
 
@@ -46,6 +47,18 @@ typedef struct {
 #define MakeEnumName(en) \
 	{ \
 		.name = #en, \
+		.alias = NULL, \
+		.value = en, \
+	}
+
+/**
+ * @brief Creates an EnumName alias for `en` for use with `valueof`.
+ * @see valueof(constEnumName *, const char *, int)
+ */
+#define MakeEnumAlias(en, al) \
+	{ \
+		.name = #en, \
+		.alias = #al, \
 		.value = en, \
 	}
 

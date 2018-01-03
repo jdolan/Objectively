@@ -68,6 +68,10 @@ int valueof(const EnumName *names, const char *chars) {
 					value |= en->value;
 					break;
 				}
+				if (en->alias && strncmp(en->alias, c, size) == 0) {
+					value |= en->value;
+					break;
+				}
 			}
 			if (en->name == NULL) {
 				fprintf(stderr, "%s: Unknown character sequence: %s\n", __func__, c);
