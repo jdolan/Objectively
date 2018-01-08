@@ -38,7 +38,7 @@ static String *description(const Object *self) {
 
 	Number *this = (Number *) self;
 
-	return $(alloc(String), initWithFormat, "%.5f", this->value);
+	return $(alloc(String), initWithFormat, "%.2f", this->value);
 }
 
 /**
