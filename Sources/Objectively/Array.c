@@ -67,7 +67,7 @@ static String *description(const Object *self) {
 
 	String *components = $((Array *) self, componentsJoinedByCharacters, ", ");
 
-	String *desc = $(alloc(String), initWithFormat, "[%s]", components);
+	String *desc = $(alloc(String), initWithFormat, "[%s]", components->chars);
 
 	release(components);
 
