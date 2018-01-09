@@ -387,7 +387,7 @@ static ident objectForKey(const Dictionary *self, const ident key) {
 	if (array) {
 
 		const ssize_t index = $(array, indexOfObject, key);
-		if (index > -1) {
+		if (index > -1 && (index & 1) == 0) {
 			return $(array, objectAtIndex, index + 1);
 		}
 	}
