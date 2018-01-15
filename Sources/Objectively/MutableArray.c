@@ -191,6 +191,21 @@ static void removeAllObjects(MutableArray *self) {
 	for (size_t i = self->array.count; i > 0; i--) {
 		$(self, removeObjectAtIndex, i - 1);
 	}
+
+}
+
+/**
+ * @fn void MutableArray::removeAllObjectsWithEnumerator(MutableArray *self, ArrayEnumerator enumerator, ident data)
+ * @memberof MutableArray
+ */
+static void removeAllObjectsWithEnumerator(MutableArray *self, ArrayEnumerator enumerator, ident data) {
+
+	assert(enumerator);
+
+	for (size_t i = self->array.count; i > 0; i--) {
+		enumerator((Array *) self, self->array.elements[i - 1], data);
+		$(self, removeObjectAtIndex, i - 1);
+	}
 }
 
 /**
@@ -325,6 +340,7 @@ static void initialize(Class *clazz) {
 	mutableArray->initWithCapacity = initWithCapacity;
 	mutableArray->insertObjectAtIndex = insertObjectAtIndex;
 	mutableArray->removeAllObjects = removeAllObjects;
+	mutableArray->removeAllObjectsWithEnumerator = removeAllObjectsWithEnumerator;
 	mutableArray->removeLastObject = removeLastObject;
 	mutableArray->removeObject = removeObject;
 	mutableArray->removeObjectAtIndex = removeObjectAtIndex;

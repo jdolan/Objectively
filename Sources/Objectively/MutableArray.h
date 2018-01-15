@@ -161,6 +161,16 @@ struct MutableArrayInterface {
 	void (*removeAllObjects)(MutableArray *self);
 
 	/**
+	 * @fn void MutableArray::removeAllObjectsWithEnumerator(MutableArray *self, ArrayEnumerator enumerator, ident data)
+	 * @brief Removes all Objects from this MutableArray, invoking `enumerator` for each Object.
+	 * @param self The MutableArray.
+	 * @param enumerator The enumerator.
+	 * @param data The data.
+	 * @memberof MutableArray
+	 */
+	void (*removeAllObjectsWithEnumerator)(MutableArray *self, ArrayEnumerator enumerator, ident data);
+
+	/**
 	 * @fn void MutableArray::removeLastObject(MutableArray *self)
 	 * @brief Removes the last Object from this MutableArray.
 	 * @param self The MutableArray
