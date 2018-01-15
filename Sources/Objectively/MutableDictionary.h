@@ -117,6 +117,16 @@ struct MutableDictionaryInterface {
 	void (*removeAllObjects)(MutableDictionary *self);
 
 	/**
+	 * @fn void MutableDictionary::removeAllObjectsWithEnumerator(MutableDictionary *self, DictionaryEnumerator enumerator, ident data)
+	 * @brief Removes all Objects from this MutableDictionary, invoking `enumerator` for each Object and key pair.
+	 * @param self The MutableDictionary.
+	 * @param enumerator The enumerator.
+	 * @param data The data.
+	 * @memberof MutableArray
+	 */
+	void (*removeAllObjectsWithEnumerator)(MutableDictionary *self, DictionaryEnumerator enumerator, ident data);
+
+	/**
 	 * @fn void MutableDictionary::removeObjectForKey(MutableDictionary *self, const ident key)
 	 * @brief Removes the Object with the specified key from this MutableDictionary.
 	 * @param self The MutableDictionary.

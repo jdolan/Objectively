@@ -129,8 +129,37 @@ static void removeAllObjects(MutableDictionary *self) {
 
 		Array *array = self->dictionary.elements[i];
 		if (array) {
-			release(array);
-			self->dictionary.elements[i] = NULL;
+			self->dictionary.elements[i] = release(array);
+		}
+	}
+
+	self->dictionary.count = 0;
+}
+
+/**
+ * @fn void MutableDictionary::removeAllObjectsWithEnumerator(MutableDictionary *self, DictionaryEnumerator enumerator, ident data)
+ * @memberof MutableDictionary
+ */
+static void removeAllObjectsWithEnumerator(MutableDictionary *self, DictionaryEnumerator enumerator, ident data) {
+
+	assert(enumerator);
+
+	for (size_t i = 0; i < self->dictionary.capacity; i++) {
+
+		Array *array = self->dictionary.elements[i];
+		if (array) {
+			for (size_t j = array->count; j > 0; j -= 2) {
+
+				ident obj = array->elements[j - 1];
+				ident key = array->elements[j - 2];
+
+				enumerator((Dictionary *) self, obj, key, data);
+
+				$((MutableArray *) array, removeObjectAtIndex, j - 1);
+				$((MutableArray *) array, removeObjectAtIndex, j - 2);
+			}
+
+			self->dictionary.elements[i] = release(array);
 		}
 	}
 
@@ -155,8 +184,7 @@ static void removeObjectForKey(MutableDictionary *self, const ident key) {
 			$(array, removeObjectAtIndex, index);
 
 			if (((Array *) array)->count == 0) {
-				release(array);
-				self->dictionary.elements[bin] = NULL;
+				self->dictionary.elements[bin] = release(array);
 			}
 
 			self->dictionary.count--;
@@ -327,6 +355,7 @@ static void initialize(Class *clazz) {
 	mutableDictionary->init = init;
 	mutableDictionary->initWithCapacity = initWithCapacity;
 	mutableDictionary->removeAllObjects = removeAllObjects;
+	mutableDictionary->removeAllObjectsWithEnumerator = removeAllObjectsWithEnumerator;
 	mutableDictionary->removeObjectForKey = removeObjectForKey;
 	mutableDictionary->removeObjectForKeyPath = removeObjectForKeyPath;
 	mutableDictionary->setObjectForKey = setObjectForKey;
