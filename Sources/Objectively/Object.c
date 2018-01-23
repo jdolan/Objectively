@@ -120,15 +120,13 @@ static _Bool isKindOfClass(const Object *self, const Class *clazz) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
-
-	object->copy = copy;
-	object->dealloc = dealloc;
-	object->description = description;
-	object->hash = hash;
-	object->init = init;
-	object->isEqual = isEqual;
-	object->isKindOfClass = isKindOfClass;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->def->interface)->description = description;
+	((ObjectInterface *) clazz->def->interface)->hash = hash;
+	((ObjectInterface *) clazz->def->interface)->init = init;
+	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
+	((ObjectInterface *) clazz->def->interface)->isKindOfClass = isKindOfClass;
 }
 
 /**

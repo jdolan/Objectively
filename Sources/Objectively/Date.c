@@ -202,21 +202,17 @@ static Time timeSinceTime(const Date *self, const Time *time) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->hash = hash;
+	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
 
-	object->hash = hash;
-	object->isEqual = isEqual;
-
-	DateInterface *interface = (DateInterface *) clazz->def->interface;
-
-	interface->compareTo = compareTo;
-	interface->date = date;
-	interface->dateWithTimeSinceNow = dateWithTimeSinceNow;
-	interface->init = init;
-	interface->initWithTime = initWithTime;
-	interface->timeSinceDate = timeSinceDate;
-	interface->timeSinceNow = timeSinceNow;
-	interface->timeSinceTime = timeSinceTime;
+	((DateInterface *) clazz->def->interface)->compareTo = compareTo;
+	((DateInterface *) clazz->def->interface)->date = date;
+	((DateInterface *) clazz->def->interface)->dateWithTimeSinceNow = dateWithTimeSinceNow;
+	((DateInterface *) clazz->def->interface)->init = init;
+	((DateInterface *) clazz->def->interface)->initWithTime = initWithTime;
+	((DateInterface *) clazz->def->interface)->timeSinceDate = timeSinceDate;
+	((DateInterface *) clazz->def->interface)->timeSinceNow = timeSinceNow;
+	((DateInterface *) clazz->def->interface)->timeSinceTime = timeSinceTime;
 }
 
 /**

@@ -161,20 +161,16 @@ static void setLength(MutableData *self, size_t length) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
 
-	object->copy = copy;
-
-	MutableDataInterface *mutableData = (MutableDataInterface *) clazz->def->interface;
-
-	mutableData->appendBytes = appendBytes;
-	mutableData->appendData = appendData;
-	mutableData->data = data;
-	mutableData->dataWithCapacity = dataWithCapacity;
-	mutableData->init = init;
-	mutableData->initWithCapacity = initWithCapacity;
-	mutableData->initWithData = initWithData;
-	mutableData->setLength = setLength;
+	((MutableDataInterface *) clazz->def->interface)->appendBytes = appendBytes;
+	((MutableDataInterface *) clazz->def->interface)->appendData = appendData;
+	((MutableDataInterface *) clazz->def->interface)->data = data;
+	((MutableDataInterface *) clazz->def->interface)->dataWithCapacity = dataWithCapacity;
+	((MutableDataInterface *) clazz->def->interface)->init = init;
+	((MutableDataInterface *) clazz->def->interface)->initWithCapacity = initWithCapacity;
+	((MutableDataInterface *) clazz->def->interface)->initWithData = initWithData;
+	((MutableDataInterface *) clazz->def->interface)->setLength = setLength;
 }
 
 /**

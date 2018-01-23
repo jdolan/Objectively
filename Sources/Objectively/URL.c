@@ -219,20 +219,16 @@ static Array *pathComponents(const URL *self) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->def->interface)->description = description;
+	((ObjectInterface *) clazz->def->interface)->hash = hash;
+	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
 
-	object->copy = copy;
-	object->dealloc = dealloc;
-	object->description = description;
-	object->hash = hash;
-	object->isEqual = isEqual;
-
-	URLInterface *url = (URLInterface *) clazz->def->interface;
-
-	url->baseURL = baseURL;
-	url->initWithCharacters = initWithCharacters;
-	url->initWithString = initWithString;
-	url->pathComponents = pathComponents;
+	((URLInterface *) clazz->def->interface)->baseURL = baseURL;
+	((URLInterface *) clazz->def->interface)->initWithCharacters = initWithCharacters;
+	((URLInterface *) clazz->def->interface)->initWithString = initWithString;
+	((URLInterface *) clazz->def->interface)->pathComponents = pathComponents;
 
 	_re = re("([a-z]+)://([^:/\?]+)?(:[0-9]+)?(/[^\?#]+)?([^#]+)?(#.*)?", 0);
 }

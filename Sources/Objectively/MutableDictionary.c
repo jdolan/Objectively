@@ -343,25 +343,21 @@ static void setObjectsForKeys(MutableDictionary *self, ...) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
 
-	object->copy = copy;
-
-	MutableDictionaryInterface *mutableDictionary = (MutableDictionaryInterface *) clazz->def->interface;
-
-	mutableDictionary->addEntriesFromDictionary = addEntriesFromDictionary;
-	mutableDictionary->dictionary = dictionary;
-	mutableDictionary->dictionaryWithCapacity = dictionaryWithCapacity;
-	mutableDictionary->init = init;
-	mutableDictionary->initWithCapacity = initWithCapacity;
-	mutableDictionary->removeAllObjects = removeAllObjects;
-	mutableDictionary->removeAllObjectsWithEnumerator = removeAllObjectsWithEnumerator;
-	mutableDictionary->removeObjectForKey = removeObjectForKey;
-	mutableDictionary->removeObjectForKeyPath = removeObjectForKeyPath;
-	mutableDictionary->setObjectForKey = setObjectForKey;
-	mutableDictionary->setObjectForKeyPath = setObjectForKeyPath;
-	mutableDictionary->setObjectsForKeyPaths = setObjectsForKeyPaths;
-	mutableDictionary->setObjectsForKeys = setObjectsForKeys;
+	((MutableDictionaryInterface *) clazz->def->interface)->addEntriesFromDictionary = addEntriesFromDictionary;
+	((MutableDictionaryInterface *) clazz->def->interface)->dictionary = dictionary;
+	((MutableDictionaryInterface *) clazz->def->interface)->dictionaryWithCapacity = dictionaryWithCapacity;
+	((MutableDictionaryInterface *) clazz->def->interface)->init = init;
+	((MutableDictionaryInterface *) clazz->def->interface)->initWithCapacity = initWithCapacity;
+	((MutableDictionaryInterface *) clazz->def->interface)->removeAllObjects = removeAllObjects;
+	((MutableDictionaryInterface *) clazz->def->interface)->removeAllObjectsWithEnumerator = removeAllObjectsWithEnumerator;
+	((MutableDictionaryInterface *) clazz->def->interface)->removeObjectForKey = removeObjectForKey;
+	((MutableDictionaryInterface *) clazz->def->interface)->removeObjectForKeyPath = removeObjectForKeyPath;
+	((MutableDictionaryInterface *) clazz->def->interface)->setObjectForKey = setObjectForKey;
+	((MutableDictionaryInterface *) clazz->def->interface)->setObjectForKeyPath = setObjectForKeyPath;
+	((MutableDictionaryInterface *) clazz->def->interface)->setObjectsForKeyPaths = setObjectsForKeyPaths;
+	((MutableDictionaryInterface *) clazz->def->interface)->setObjectsForKeys = setObjectsForKeys;
 }
 
 /**

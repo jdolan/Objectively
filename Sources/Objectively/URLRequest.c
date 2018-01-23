@@ -107,15 +107,11 @@ void setValueForHTTPHeaderField(URLRequest *self, const char *value, const char 
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
 
-	object->copy = copy;
-	object->dealloc = dealloc;
-
-	URLRequestInterface *request = (URLRequestInterface *) clazz->def->interface;
-
-	request->initWithURL = initWithURL;
-	request->setValueForHTTPHeaderField = setValueForHTTPHeaderField;
+	((URLRequestInterface *) clazz->def->interface)->initWithURL = initWithURL;
+	((URLRequestInterface *) clazz->def->interface)->setValueForHTTPHeaderField = setValueForHTTPHeaderField;
 }
 
 /**

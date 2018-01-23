@@ -324,31 +324,27 @@ static void trim(MutableString *self) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
 
-	object->copy = copy;
-
-	MutableStringInterface *mutableString = (MutableStringInterface *) clazz->def->interface;
-
-	mutableString->appendCharacters = appendCharacters;
-	mutableString->appendFormat = appendFormat;
-	mutableString->appendString = appendString;
-	mutableString->appendVaList = appendVaList;
-	mutableString->deleteCharactersInRange = deleteCharactersInRange;
-	mutableString->init = init;
-	mutableString->initWithCapacity = initWithCapacity;
-	mutableString->initWithString = initWithString;
-	mutableString->insertCharactersAtIndex = insertCharactersAtIndex;
-	mutableString->insertStringAtIndex = insertStringAtIndex;
-	mutableString->replaceCharactersInRange = replaceCharactersInRange;
-	mutableString->replaceOccurrencesOfCharacters = replaceOccurrencesOfCharacters;
-	mutableString->replaceOccurrencesOfCharactersInRange = replaceOccurrencesOfCharactersInRange;
-	mutableString->replaceOccurrencesOfString = replaceOccurrencesOfString;
-	mutableString->replaceOccurrencesOfStringInRange = replaceOccurrencesOfStringInRange;
-	mutableString->replaceStringInRange = replaceStringInRange;
-	mutableString->string = string;
-	mutableString->stringWithCapacity = stringWithCapacity;
-	mutableString->trim = trim;
+	((MutableStringInterface *) clazz->def->interface)->appendCharacters = appendCharacters;
+	((MutableStringInterface *) clazz->def->interface)->appendFormat = appendFormat;
+	((MutableStringInterface *) clazz->def->interface)->appendString = appendString;
+	((MutableStringInterface *) clazz->def->interface)->appendVaList = appendVaList;
+	((MutableStringInterface *) clazz->def->interface)->deleteCharactersInRange = deleteCharactersInRange;
+	((MutableStringInterface *) clazz->def->interface)->init = init;
+	((MutableStringInterface *) clazz->def->interface)->initWithCapacity = initWithCapacity;
+	((MutableStringInterface *) clazz->def->interface)->initWithString = initWithString;
+	((MutableStringInterface *) clazz->def->interface)->insertCharactersAtIndex = insertCharactersAtIndex;
+	((MutableStringInterface *) clazz->def->interface)->insertStringAtIndex = insertStringAtIndex;
+	((MutableStringInterface *) clazz->def->interface)->replaceCharactersInRange = replaceCharactersInRange;
+	((MutableStringInterface *) clazz->def->interface)->replaceOccurrencesOfCharacters = replaceOccurrencesOfCharacters;
+	((MutableStringInterface *) clazz->def->interface)->replaceOccurrencesOfCharactersInRange = replaceOccurrencesOfCharactersInRange;
+	((MutableStringInterface *) clazz->def->interface)->replaceOccurrencesOfString = replaceOccurrencesOfString;
+	((MutableStringInterface *) clazz->def->interface)->replaceOccurrencesOfStringInRange = replaceOccurrencesOfStringInRange;
+	((MutableStringInterface *) clazz->def->interface)->replaceStringInRange = replaceStringInRange;
+	((MutableStringInterface *) clazz->def->interface)->string = string;
+	((MutableStringInterface *) clazz->def->interface)->stringWithCapacity = stringWithCapacity;
+	((MutableStringInterface *) clazz->def->interface)->trim = trim;
 }
 
 /**

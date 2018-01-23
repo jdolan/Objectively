@@ -175,24 +175,20 @@ static short shortValue(const Number *self) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->description = description;
+	((ObjectInterface *) clazz->def->interface)->hash = hash;
+	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
 
-	object->description = description;
-	object->hash = hash;
-	object->isEqual = isEqual;
-
-	NumberInterface *number = (NumberInterface *) clazz->def->interface;
-
-	number->boolValue = boolValue;
-	number->charValue = charValue;
-	number->compareTo = compareTo;
-	number->doubleValue = doubleValue;
-	number->floatValue = floatValue;
-	number->longValue = longValue;
-	number->initWithValue = initWithValue;
-	number->intValue = intValue;
-	number->numberWithValue = numberWithValue;
-	number->shortValue = shortValue;
+	((NumberInterface *) clazz->def->interface)->boolValue = boolValue;
+	((NumberInterface *) clazz->def->interface)->charValue = charValue;
+	((NumberInterface *) clazz->def->interface)->compareTo = compareTo;
+	((NumberInterface *) clazz->def->interface)->doubleValue = doubleValue;
+	((NumberInterface *) clazz->def->interface)->floatValue = floatValue;
+	((NumberInterface *) clazz->def->interface)->longValue = longValue;
+	((NumberInterface *) clazz->def->interface)->initWithValue = initWithValue;
+	((NumberInterface *) clazz->def->interface)->intValue = intValue;
+	((NumberInterface *) clazz->def->interface)->numberWithValue = numberWithValue;
+	((NumberInterface *) clazz->def->interface)->shortValue = shortValue;
 }
 
 /**

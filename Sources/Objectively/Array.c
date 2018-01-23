@@ -448,34 +448,30 @@ static Array *sortedArray(const Array *self, Comparator comparator) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->def->interface)->description = description;
+	((ObjectInterface *) clazz->def->interface)->hash = hash;
+	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
 
-	object->copy = copy;
-	object->dealloc = dealloc;
-	object->description = description;
-	object->hash = hash;
-	object->isEqual = isEqual;
-
-	ArrayInterface *array = (ArrayInterface *) clazz->def->interface;
-
-	array->arrayWithArray = arrayWithArray;
-	array->arrayWithObjects = arrayWithObjects;
-	array->componentsJoinedByCharacters = componentsJoinedByCharacters;
-	array->componentsJoinedByString = componentsJoinedByString;
-	array->containsObject = containsObject;
-	array->enumerateObjects = enumerateObjects;
-	array->filteredArray = filteredArray;
-	array->findObject = findObject;
-	array->firstObject = firstObject;
-	array->indexOfObject = indexOfObject;
-	array->initWithArray = initWithArray;
-	array->initWithObjects = initWithObjects;
-	array->lastObject = lastObject;
-	array->mappedArray = mappedArray;
-	array->mutableCopy = mutableCopy;
-	array->objectAtIndex = objectAtIndex;
-	array->reduce = reduce;
-	array->sortedArray = sortedArray;
+	((ArrayInterface *) clazz->def->interface)->arrayWithArray = arrayWithArray;
+	((ArrayInterface *) clazz->def->interface)->arrayWithObjects = arrayWithObjects;
+	((ArrayInterface *) clazz->def->interface)->componentsJoinedByCharacters = componentsJoinedByCharacters;
+	((ArrayInterface *) clazz->def->interface)->componentsJoinedByString = componentsJoinedByString;
+	((ArrayInterface *) clazz->def->interface)->containsObject = containsObject;
+	((ArrayInterface *) clazz->def->interface)->enumerateObjects = enumerateObjects;
+	((ArrayInterface *) clazz->def->interface)->filteredArray = filteredArray;
+	((ArrayInterface *) clazz->def->interface)->findObject = findObject;
+	((ArrayInterface *) clazz->def->interface)->firstObject = firstObject;
+	((ArrayInterface *) clazz->def->interface)->indexOfObject = indexOfObject;
+	((ArrayInterface *) clazz->def->interface)->initWithArray = initWithArray;
+	((ArrayInterface *) clazz->def->interface)->initWithObjects = initWithObjects;
+	((ArrayInterface *) clazz->def->interface)->lastObject = lastObject;
+	((ArrayInterface *) clazz->def->interface)->mappedArray = mappedArray;
+	((ArrayInterface *) clazz->def->interface)->mutableCopy = mutableCopy;
+	((ArrayInterface *) clazz->def->interface)->objectAtIndex = objectAtIndex;
+	((ArrayInterface *) clazz->def->interface)->reduce = reduce;
+	((ArrayInterface *) clazz->def->interface)->sortedArray = sortedArray;
 }
 
 /**

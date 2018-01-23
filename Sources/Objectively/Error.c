@@ -150,17 +150,13 @@ static Error *initWithDomain(Error *self, String *domain, int code, String *mess
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->def->interface)->description = description;
+	((ObjectInterface *) clazz->def->interface)->hash = hash;
+	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
 
-	object->copy = copy;
-	object->dealloc = dealloc;
-	object->description = description;
-	object->hash = hash;
-	object->isEqual = isEqual;
-
-	ErrorInterface *error = (ErrorInterface *) clazz->def->interface;
-
-	error->initWithDomain = initWithDomain;
+	((ErrorInterface *) clazz->def->interface)->initWithDomain = initWithDomain;
 }
 
 /**

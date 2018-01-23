@@ -115,12 +115,10 @@ static String *stringFromDate(const DateFormatter *self, const Date *date) {
  */
 static void initialize(Class *clazz) {
 
-	DateFormatterInterface *dateFormatter = (DateFormatterInterface *) clazz->def->interface;
-
-	dateFormatter->dateFromCharacters = dateFromCharacters;
-	dateFormatter->dateFromString = dateFromString;
-	dateFormatter->initWithFormat = initWithFormat;
-	dateFormatter->stringFromDate = stringFromDate;
+	((DateFormatterInterface *) clazz->def->interface)->dateFromCharacters = dateFromCharacters;
+	((DateFormatterInterface *) clazz->def->interface)->dateFromString = dateFromString;
+	((DateFormatterInterface *) clazz->def->interface)->initWithFormat = initWithFormat;
+	((DateFormatterInterface *) clazz->def->interface)->stringFromDate = stringFromDate;
 
 	tzset();
 }

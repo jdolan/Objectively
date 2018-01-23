@@ -175,11 +175,8 @@ static void start(Operation *self) {
 	}
 
 	if (self->isCancelled == false) {
-
 		self->isExecuting = true;
-
 		self->function(self);
-
 		self->isExecuting = false;
 	}
 
@@ -215,22 +212,18 @@ static void waitUntilFinished(const Operation *self) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
 
-	object->copy = copy;
-	object->dealloc = dealloc;
-
-	OperationInterface *operation = (OperationInterface *) clazz->def->interface;
-
-	operation->addDependency = addDependency;
-	operation->cancel = cancel;
-	operation->dependencies = dependencies;
-	operation->init = init;
-	operation->initWithFunction = initWithFunction;
-	operation->isReady = isReady;
-	operation->removeDependency = removeDepdenency;
-	operation->start = start;
-	operation->waitUntilFinished = waitUntilFinished;
+	((OperationInterface *) clazz->def->interface)->addDependency = addDependency;
+	((OperationInterface *) clazz->def->interface)->cancel = cancel;
+	((OperationInterface *) clazz->def->interface)->dependencies = dependencies;
+	((OperationInterface *) clazz->def->interface)->init = init;
+	((OperationInterface *) clazz->def->interface)->initWithFunction = initWithFunction;
+	((OperationInterface *) clazz->def->interface)->isReady = isReady;
+	((OperationInterface *) clazz->def->interface)->removeDependency = removeDepdenency;
+	((OperationInterface *) clazz->def->interface)->start = start;
+	((OperationInterface *) clazz->def->interface)->waitUntilFinished = waitUntilFinished;
 }
 
 /**

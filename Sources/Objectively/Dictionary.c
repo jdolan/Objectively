@@ -419,29 +419,25 @@ static ident objectForKeyPath(const Dictionary *self, const char *path) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->def->interface)->description = description;
+	((ObjectInterface *) clazz->def->interface)->hash = hash;
+	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
 
-	object->copy = copy;
-	object->dealloc = dealloc;
-	object->description = description;
-	object->hash = hash;
-	object->isEqual = isEqual;
-
-	DictionaryInterface *dictionary = (DictionaryInterface *) clazz->def->interface;
-
-	dictionary->allKeys = allKeys;
-	dictionary->allObjects = allObjects;
-	dictionary->containsKey = containsKey;
-	dictionary->containsKeyPath = containsKeyPath;
-	dictionary->dictionaryWithDictionary = dictionaryWithDictionary;
-	dictionary->dictionaryWithObjectsAndKeys = dictionaryWithObjectsAndKeys;
-	dictionary->enumerateObjectsAndKeys = enumerateObjectsAndKeys;
-	dictionary->filterObjectsAndKeys = filterObjectsAndKeys;
-	dictionary->initWithDictionary = initWithDictionary;
-	dictionary->initWithObjectsAndKeys = initWithObjectsAndKeys;
-	dictionary->mutableCopy = mutableCopy;
-	dictionary->objectForKey = objectForKey;
-	dictionary->objectForKeyPath = objectForKeyPath;
+	((DictionaryInterface *) clazz->def->interface)->allKeys = allKeys;
+	((DictionaryInterface *) clazz->def->interface)->allObjects = allObjects;
+	((DictionaryInterface *) clazz->def->interface)->containsKey = containsKey;
+	((DictionaryInterface *) clazz->def->interface)->containsKeyPath = containsKeyPath;
+	((DictionaryInterface *) clazz->def->interface)->dictionaryWithDictionary = dictionaryWithDictionary;
+	((DictionaryInterface *) clazz->def->interface)->dictionaryWithObjectsAndKeys = dictionaryWithObjectsAndKeys;
+	((DictionaryInterface *) clazz->def->interface)->enumerateObjectsAndKeys = enumerateObjectsAndKeys;
+	((DictionaryInterface *) clazz->def->interface)->filterObjectsAndKeys = filterObjectsAndKeys;
+	((DictionaryInterface *) clazz->def->interface)->initWithDictionary = initWithDictionary;
+	((DictionaryInterface *) clazz->def->interface)->initWithObjectsAndKeys = initWithObjectsAndKeys;
+	((DictionaryInterface *) clazz->def->interface)->mutableCopy = mutableCopy;
+	((DictionaryInterface *) clazz->def->interface)->objectForKey = objectForKey;
+	((DictionaryInterface *) clazz->def->interface)->objectForKeyPath = objectForKeyPath;
 }
 
 /**

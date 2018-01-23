@@ -324,28 +324,24 @@ static void sort(MutableArray *self, Comparator comparator) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
 
-	object->copy = copy;
-
-	MutableArrayInterface *mutableArray = (MutableArrayInterface *) clazz->def->interface;
-
-	mutableArray->addObject = addObject;
-	mutableArray->addObjects = addObjects;
-	mutableArray->addObjectsFromArray = addObjectsFromArray;
-	mutableArray->array = array;
-	mutableArray->arrayWithCapacity = arrayWithCapacity;
-	mutableArray->filter = filter;
-	mutableArray->init = init;
-	mutableArray->initWithCapacity = initWithCapacity;
-	mutableArray->insertObjectAtIndex = insertObjectAtIndex;
-	mutableArray->removeAllObjects = removeAllObjects;
-	mutableArray->removeAllObjectsWithEnumerator = removeAllObjectsWithEnumerator;
-	mutableArray->removeLastObject = removeLastObject;
-	mutableArray->removeObject = removeObject;
-	mutableArray->removeObjectAtIndex = removeObjectAtIndex;
-	mutableArray->setObjectAtIndex = setObjectAtIndex;
-	mutableArray->sort = sort;
+	((MutableArrayInterface *) clazz->def->interface)->addObject = addObject;
+	((MutableArrayInterface *) clazz->def->interface)->addObjects = addObjects;
+	((MutableArrayInterface *) clazz->def->interface)->addObjectsFromArray = addObjectsFromArray;
+	((MutableArrayInterface *) clazz->def->interface)->array = array;
+	((MutableArrayInterface *) clazz->def->interface)->arrayWithCapacity = arrayWithCapacity;
+	((MutableArrayInterface *) clazz->def->interface)->filter = filter;
+	((MutableArrayInterface *) clazz->def->interface)->init = init;
+	((MutableArrayInterface *) clazz->def->interface)->initWithCapacity = initWithCapacity;
+	((MutableArrayInterface *) clazz->def->interface)->insertObjectAtIndex = insertObjectAtIndex;
+	((MutableArrayInterface *) clazz->def->interface)->removeAllObjects = removeAllObjects;
+	((MutableArrayInterface *) clazz->def->interface)->removeAllObjectsWithEnumerator = removeAllObjectsWithEnumerator;
+	((MutableArrayInterface *) clazz->def->interface)->removeLastObject = removeLastObject;
+	((MutableArrayInterface *) clazz->def->interface)->removeObject = removeObject;
+	((MutableArrayInterface *) clazz->def->interface)->removeObjectAtIndex = removeObjectAtIndex;
+	((MutableArrayInterface *) clazz->def->interface)->setObjectAtIndex = setObjectAtIndex;
+	((MutableArrayInterface *) clazz->def->interface)->sort = sort;
 }
 
 /**

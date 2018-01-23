@@ -181,19 +181,15 @@ static _Bool matchesString(const Regexp *self, const String *string, int options
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->def->interface)->description = description;
+	((ObjectInterface *) clazz->def->interface)->hash = hash;
+	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
 
-	object->copy = copy;
-	object->dealloc = dealloc;
-	object->description = description;
-	object->hash = hash;
-	object->isEqual = isEqual;
-
-	RegexpInterface *regexp = (RegexpInterface *) clazz->def->interface;
-
-	regexp->initWithPattern = initWithPattern;
-	regexp->matchesCharacters = matchesCharacters;
-	regexp->matchesString = matchesString;
+	((RegexpInterface *) clazz->def->interface)->initWithPattern = initWithPattern;
+	((RegexpInterface *) clazz->def->interface)->matchesCharacters = matchesCharacters;
+	((RegexpInterface *) clazz->def->interface)->matchesString = matchesString;
 }
 
 /**

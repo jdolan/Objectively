@@ -101,16 +101,12 @@ static Boole *valueof(_Bool value) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->def->interface)->description = description;
 
-	object->copy = copy;
-	object->description = description;
-
-	BooleInterface *boolean = (BooleInterface *) clazz->def->interface;
-
-	boolean->False = False;
-	boolean->True = True;
-	boolean->valueof = valueof;
+	((BooleInterface *) clazz->def->interface)->False = False;
+	((BooleInterface *) clazz->def->interface)->True = True;
+	((BooleInterface *) clazz->def->interface)->valueof = valueof;
 }
 
 /**

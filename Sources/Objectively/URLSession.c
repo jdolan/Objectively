@@ -346,18 +346,16 @@ static void initialize(Class *clazz) {
 
 	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
 
-	URLSessionInterface *session = (URLSessionInterface *) clazz->def->interface;
-
-	session->dataTaskWithRequest = dataTaskWithRequest;
-	session->dataTaskWithURL = dataTaskWithURL;
-	session->downloadTaskWithRequest = downloadTaskWithRequest;
-	session->downloadTaskWithURL = downloadTaskWithURL;
-	session->init = init;
-	session->initWithConfiguration = initWithConfiguration;
-	session->invalidateAndCancel = invalidateAndCancel;
-	session->sharedInstance = sharedInstance;
-	session->tasks = tasks;
-	session->uploadTaskWithRequest = uploadTaskWithRequest;
+	((URLSessionInterface *) clazz->def->interface)->dataTaskWithRequest = dataTaskWithRequest;
+	((URLSessionInterface *) clazz->def->interface)->dataTaskWithURL = dataTaskWithURL;
+	((URLSessionInterface *) clazz->def->interface)->downloadTaskWithRequest = downloadTaskWithRequest;
+	((URLSessionInterface *) clazz->def->interface)->downloadTaskWithURL = downloadTaskWithURL;
+	((URLSessionInterface *) clazz->def->interface)->init = init;
+	((URLSessionInterface *) clazz->def->interface)->initWithConfiguration = initWithConfiguration;
+	((URLSessionInterface *) clazz->def->interface)->invalidateAndCancel = invalidateAndCancel;
+	((URLSessionInterface *) clazz->def->interface)->sharedInstance = sharedInstance;
+	((URLSessionInterface *) clazz->def->interface)->tasks = tasks;
+	((URLSessionInterface *) clazz->def->interface)->uploadTaskWithRequest = uploadTaskWithRequest;
 
 	const CURLcode code = curl_global_init(CURL_GLOBAL_ALL);
 	assert(code == CURLE_OK);

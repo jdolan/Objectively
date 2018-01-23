@@ -612,43 +612,39 @@ static _Bool writeToFile(const String *self, const char *path, StringEncoding en
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->def->interface)->description = description;
+	((ObjectInterface *) clazz->def->interface)->hash = hash;
+	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
 
-	object->copy = copy;
-	object->dealloc = dealloc;
-	object->description = description;
-	object->hash = hash;
-	object->isEqual = isEqual;
-
-	StringInterface *string = (StringInterface *) clazz->def->interface;
-
-	string->compareTo = compareTo;
-	string->componentsSeparatedByCharacters = componentsSeparatedByCharacters;
-	string->componentsSeparatedByString = componentsSeparatedByString;
-	string->getData = getData;
-	string->hasPrefix = hasPrefix;
-	string->hasSuffix = hasSuffix;
-	string->initWithBytes = initWithBytes;
-	string->initWithCharacters = initWithCharacters;
-	string->initWithContentsOfFile = initWithContentsOfFile;
-	string->initWithData = initWithData;
-	string->initWithFormat = initWithFormat;
-	string->initWithMemory = initWithMemory;
-	string->initWithVaList = initWithVaList;
-	string->lowercaseString = lowercaseString;
-	string->mutableCopy = mutableCopy;
-	string->rangeOfCharacters = rangeOfCharacters;
-	string->rangeOfString = rangeOfString;
-	string->stringWithBytes = stringWithBytes;
-	string->stringWithCharacters = stringWithCharacters;
-	string->stringWithContentsOfFile = stringWithContentsOfFile;
-	string->stringWithData = stringWithData;
-	string->stringWithFormat = stringWithFormat;
-	string->stringWithMemory = stringWithMemory;
-	string->substring = substring;
-	string->trimmedString = trimmedString;
-	string->uppercaseString = uppercaseString;
-	string->writeToFile = writeToFile;
+	((StringInterface *) clazz->def->interface)->compareTo = compareTo;
+	((StringInterface *) clazz->def->interface)->componentsSeparatedByCharacters = componentsSeparatedByCharacters;
+	((StringInterface *) clazz->def->interface)->componentsSeparatedByString = componentsSeparatedByString;
+	((StringInterface *) clazz->def->interface)->getData = getData;
+	((StringInterface *) clazz->def->interface)->hasPrefix = hasPrefix;
+	((StringInterface *) clazz->def->interface)->hasSuffix = hasSuffix;
+	((StringInterface *) clazz->def->interface)->initWithBytes = initWithBytes;
+	((StringInterface *) clazz->def->interface)->initWithCharacters = initWithCharacters;
+	((StringInterface *) clazz->def->interface)->initWithContentsOfFile = initWithContentsOfFile;
+	((StringInterface *) clazz->def->interface)->initWithData = initWithData;
+	((StringInterface *) clazz->def->interface)->initWithFormat = initWithFormat;
+	((StringInterface *) clazz->def->interface)->initWithMemory = initWithMemory;
+	((StringInterface *) clazz->def->interface)->initWithVaList = initWithVaList;
+	((StringInterface *) clazz->def->interface)->lowercaseString = lowercaseString;
+	((StringInterface *) clazz->def->interface)->mutableCopy = mutableCopy;
+	((StringInterface *) clazz->def->interface)->rangeOfCharacters = rangeOfCharacters;
+	((StringInterface *) clazz->def->interface)->rangeOfString = rangeOfString;
+	((StringInterface *) clazz->def->interface)->stringWithBytes = stringWithBytes;
+	((StringInterface *) clazz->def->interface)->stringWithCharacters = stringWithCharacters;
+	((StringInterface *) clazz->def->interface)->stringWithContentsOfFile = stringWithContentsOfFile;
+	((StringInterface *) clazz->def->interface)->stringWithData = stringWithData;
+	((StringInterface *) clazz->def->interface)->stringWithFormat = stringWithFormat;
+	((StringInterface *) clazz->def->interface)->stringWithMemory = stringWithMemory;
+	((StringInterface *) clazz->def->interface)->substring = substring;
+	((StringInterface *) clazz->def->interface)->trimmedString = trimmedString;
+	((StringInterface *) clazz->def->interface)->uppercaseString = uppercaseString;
+	((StringInterface *) clazz->def->interface)->writeToFile = writeToFile;
 
 	setlocale(LC_CTYPE, "");
 }

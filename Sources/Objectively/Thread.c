@@ -185,21 +185,17 @@ static void start(Thread *self) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
 
-	object->copy = copy;
-	object->dealloc = dealloc;
-
-	ThreadInterface *thread = (ThreadInterface *) clazz->def->interface;
-
-	thread->cancel = cancel;
-	thread->currentThread = currentThread;
-	thread->detach = detach;
-	thread->init = init;
-	thread->initWithFunction = initWithFunction;
-	thread->join = join;
-	thread->kill = _kill;
-	thread->start = start;
+	((ThreadInterface *) clazz->def->interface)->cancel = cancel;
+	((ThreadInterface *) clazz->def->interface)->currentThread = currentThread;
+	((ThreadInterface *) clazz->def->interface)->detach = detach;
+	((ThreadInterface *) clazz->def->interface)->init = init;
+	((ThreadInterface *) clazz->def->interface)->initWithFunction = initWithFunction;
+	((ThreadInterface *) clazz->def->interface)->join = join;
+	((ThreadInterface *) clazz->def->interface)->kill = _kill;
+	((ThreadInterface *) clazz->def->interface)->start = start;
 }
 
 /**

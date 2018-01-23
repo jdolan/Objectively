@@ -273,22 +273,18 @@ static MutableSet *setWithCapacity(size_t capacity) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
 
-	object->copy = copy;
-
-	MutableSetInterface *mutableSet = (MutableSetInterface *) clazz->def->interface;
-
-	mutableSet->addObject = addObject;
-	mutableSet->addObjectsFromArray = addObjectsFromArray;
-	mutableSet->addObjectsFromSet = addObjectsFromSet;
-	mutableSet->filter = filter;
-	mutableSet->init = init;
-	mutableSet->initWithCapacity = initWithCapacity;
-	mutableSet->removeAllObjects = removeAllObjects;
-	mutableSet->removeObject = removeObject;
-	mutableSet->set = set;
-	mutableSet->setWithCapacity = setWithCapacity;
+	((MutableSetInterface *) clazz->def->interface)->addObject = addObject;
+	((MutableSetInterface *) clazz->def->interface)->addObjectsFromArray = addObjectsFromArray;
+	((MutableSetInterface *) clazz->def->interface)->addObjectsFromSet = addObjectsFromSet;
+	((MutableSetInterface *) clazz->def->interface)->filter = filter;
+	((MutableSetInterface *) clazz->def->interface)->init = init;
+	((MutableSetInterface *) clazz->def->interface)->initWithCapacity = initWithCapacity;
+	((MutableSetInterface *) clazz->def->interface)->removeAllObjects = removeAllObjects;
+	((MutableSetInterface *) clazz->def->interface)->removeObject = removeObject;
+	((MutableSetInterface *) clazz->def->interface)->set = set;
+	((MutableSetInterface *) clazz->def->interface)->setWithCapacity = setWithCapacity;
 }
 
 /**

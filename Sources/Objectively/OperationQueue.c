@@ -232,21 +232,17 @@ static void waitUntilAllOperationsAreFinished(OperationQueue *self) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
 
-	object->copy = copy;
-	object->dealloc = dealloc;
-
-	OperationQueueInterface *queue = (OperationQueueInterface *) clazz->def->interface;
-
-	queue->addOperation = addOperation;
-	queue->cancelAllOperations = cancelAllOperations;
-	queue->currentQueue = currentQueue;
-	queue->init = init;
-	queue->operationCount = operationCount;
-	queue->operations = operations;
-	queue->removeOperation = removeOperation;
-	queue->waitUntilAllOperationsAreFinished = waitUntilAllOperationsAreFinished;
+	((OperationQueueInterface *) clazz->def->interface)->addOperation = addOperation;
+	((OperationQueueInterface *) clazz->def->interface)->cancelAllOperations = cancelAllOperations;
+	((OperationQueueInterface *) clazz->def->interface)->currentQueue = currentQueue;
+	((OperationQueueInterface *) clazz->def->interface)->init = init;
+	((OperationQueueInterface *) clazz->def->interface)->operationCount = operationCount;
+	((OperationQueueInterface *) clazz->def->interface)->operations = operations;
+	((OperationQueueInterface *) clazz->def->interface)->removeOperation = removeOperation;
+	((OperationQueueInterface *) clazz->def->interface)->waitUntilAllOperationsAreFinished = waitUntilAllOperationsAreFinished;
 }
 
 /**

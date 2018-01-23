@@ -113,17 +113,13 @@ static void unlock(Lock *self) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
 
-	object->copy = copy;
-	object->dealloc = dealloc;
-
-	LockInterface *interface = (LockInterface *) clazz->def->interface;
-
-	interface->init = init;
-	interface->lock = lock;
-	interface->tryLock = tryLock;
-	interface->unlock = unlock;
+	((LockInterface *) clazz->def->interface)->init = init;
+	((LockInterface *) clazz->def->interface)->lock = lock;
+	((LockInterface *) clazz->def->interface)->tryLock = tryLock;
+	((LockInterface *) clazz->def->interface)->unlock = unlock;
 }
 
 /**

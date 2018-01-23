@@ -399,29 +399,25 @@ static Set *setWithSet(const Set *set) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->def->interface)->description = description;
+	((ObjectInterface *) clazz->def->interface)->hash = hash;
+	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
 
-	object->copy = copy;
-	object->dealloc = dealloc;
-	object->description = description;
-	object->hash = hash;
-	object->isEqual = isEqual;
-
-	SetInterface *set = (SetInterface *) clazz->def->interface;
-
-	set->allObjects = allObjects;
-	set->containsObject = containsObject;
-	set->enumerateObjects = enumerateObjects;
-	set->filteredSet = filteredSet;
-	set->initWithArray = initWithArray;
-	set->initWithSet = initWithSet;
-	set->initWithObjects = initWithObjects;
-	set->mappedSet = mappedSet;
-	set->mutableCopy = mutableCopy;
-	set->reduce = reduce;
-	set->setWithArray = setWithArray;
-	set->setWithObjects = setWithObjects;
-	set->setWithSet = setWithSet;
+	((SetInterface *) clazz->def->interface)->allObjects = allObjects;
+	((SetInterface *) clazz->def->interface)->containsObject = containsObject;
+	((SetInterface *) clazz->def->interface)->enumerateObjects = enumerateObjects;
+	((SetInterface *) clazz->def->interface)->filteredSet = filteredSet;
+	((SetInterface *) clazz->def->interface)->initWithArray = initWithArray;
+	((SetInterface *) clazz->def->interface)->initWithSet = initWithSet;
+	((SetInterface *) clazz->def->interface)->initWithObjects = initWithObjects;
+	((SetInterface *) clazz->def->interface)->mappedSet = mappedSet;
+	((SetInterface *) clazz->def->interface)->mutableCopy = mutableCopy;
+	((SetInterface *) clazz->def->interface)->reduce = reduce;
+	((SetInterface *) clazz->def->interface)->setWithArray = setWithArray;
+	((SetInterface *) clazz->def->interface)->setWithObjects = setWithObjects;
+	((SetInterface *) clazz->def->interface)->setWithSet = setWithSet;
 }
 
 /**

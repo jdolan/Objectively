@@ -255,23 +255,19 @@ static void warn(const Log *self, const char *fmt, ...) {
  */
 static void initialize(Class *clazz) {
 
-	ObjectInterface *object = (ObjectInterface *) clazz->def->interface;
+	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
 
-	object->dealloc = dealloc;
-
-	LogInterface *log = (LogInterface *) clazz->def->interface;
-
-	log->debug = debug;
-	log->error = error;
-	log->fatal = fatal;
-	log->flush = flush;
-	log->info = info;
-	log->init = init;
-	log->initWithName = initWithName;
-	log->log = _log;
-	log->trace = trace;
-	log->sharedInstance = sharedInstance;
-	log->warn = warn;
+	((LogInterface *) clazz->def->interface)->debug = debug;
+	((LogInterface *) clazz->def->interface)->error = error;
+	((LogInterface *) clazz->def->interface)->fatal = fatal;
+	((LogInterface *) clazz->def->interface)->flush = flush;
+	((LogInterface *) clazz->def->interface)->info = info;
+	((LogInterface *) clazz->def->interface)->init = init;
+	((LogInterface *) clazz->def->interface)->initWithName = initWithName;
+	((LogInterface *) clazz->def->interface)->log = _log;
+	((LogInterface *) clazz->def->interface)->trace = trace;
+	((LogInterface *) clazz->def->interface)->sharedInstance = sharedInstance;
+	((LogInterface *) clazz->def->interface)->warn = warn;
 }
 
 /**
