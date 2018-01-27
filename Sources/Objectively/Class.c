@@ -24,7 +24,9 @@
 #include <Objectively/Config.h>
 
 #include <assert.h>
+#include <dlfcn.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #if HAVE_UNISTD_H
@@ -81,7 +83,7 @@ static void setup(void) {
 	atexit(teardown);
 }
 
-void _initialize(Class *clazz) {
+Class *_initialize(Class *clazz) {
 
 	assert(clazz);
 
@@ -128,6 +130,8 @@ void _initialize(Class *clazz) {
 			;
 		}
 	}
+
+	return &clazz->def->descriptor;
 }
 
 ident _alloc(Class *clazz) {
@@ -179,6 +183,25 @@ Class *classForName(const char *name) {
 				return &c->descriptor;
 			}
 			c = c->next;
+		}
+
+		ident handle = dlopen(NULL, 0);
+		if (handle) {
+			Class *clazz = NULL;
+
+			char *symbol;
+			if (asprintf(&symbol, "_%s", name) > 0) {
+
+				Class *(*archetype)(void) = dlsym(handle, symbol);
+				if (archetype) {
+					clazz = _initialize(archetype());
+				}
+
+				free(symbol);
+			}
+
+			dlclose(handle);
+			return clazz;
 		}
 	}
 
