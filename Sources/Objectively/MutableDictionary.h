@@ -139,7 +139,7 @@ struct MutableDictionaryInterface {
 	 * @fn void MutableDictionary::removeObjectForKeyPath(MutableDictionary *self, const char *path)
 	 * @brief Removes the Object with the specified key path from this MutableDictionary.
 	 * @param self The MutableDictionary.
-	 * @param key The key path of the Object to remove.
+	 * @param path The key path of the Object to remove.
 	 * @memberof MutableDictionary
 	 */
 	void (*removeObjectForKeyPath)(MutableDictionary *self, const char *path);
