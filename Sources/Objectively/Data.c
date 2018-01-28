@@ -53,8 +53,10 @@ static void dealloc(Object *self) {
 
 	Data *this = (Data *) self;
 
-	if (this->bytes) {
-		free(this->bytes);
+	if (this->destroy) {
+		if (this->bytes) {
+			this->destroy(this->bytes);
+		}
 	}
 
 	super(Object, self, dealloc);
@@ -110,6 +112,15 @@ static Data *dataWithBytes(const uint8_t *bytes, size_t length) {
 }
 
 /**
+ * @fn Data *Data::dataWithConstMemory(const ident mem, size_t length)
+ * @memberof Data
+ */
+static Data *dataWithConstMemory(const ident mem, size_t length) {
+
+	return $(alloc(Data), initWithConstMemory, mem, length);
+}
+
+/**
  * @fn Data *Data::dataWithContentsOfFile(const char *path)
  * @memberof Data
  */
@@ -119,10 +130,10 @@ static Data *dataWithContentsOfFile(const char *path) {
 }
 
 /**
- * @fn Data *Data::dataWithMemory(const ident mem, size_t length)
+ * @fn Data *Data::dataWithMemory(ident mem, size_t length)
  * @memberof Data
  */
-static Data *dataWithMemory(const ident mem, size_t length) {
+static Data *dataWithMemory(ident mem, size_t length) {
 
 	return $(alloc(Data), initWithMemory, mem, length);
 }
@@ -139,6 +150,21 @@ static Data *initWithBytes(Data *self, const uint8_t *bytes, size_t length) {
 	memcpy(mem, bytes, length);
 
 	return $(self, initWithMemory, mem, length);
+}
+
+/**
+ * @fn Data *Data::initWithConstMemory(Data *self, const ident mem, size_t length)
+ * @memberof Data
+ */
+static Data *initWithConstMemory(Data *self, const ident mem, size_t length) {
+
+	self = (Data *) super(Object, self, init);
+	if (self) {
+		self->bytes = mem;
+		self->length = length;
+	}
+
+	return self;
 }
 
 /**
@@ -177,15 +203,14 @@ static Data *initWithContentsOfFile(Data *self, const char *path) {
 }
 
 /**
- * @fn Data *Data::initWithMemory(Data *self, const ident mem, size_t length)
+ * @fn Data *Data::initWithMemory(Data *self, ident mem, size_t length)
  * @memberof Data
  */
-static Data *initWithMemory(Data *self, const ident mem, size_t length) {
+static Data *initWithMemory(Data *self, ident mem, size_t length) {
 
-	self = (Data *) super(Object, self, init);
+	self = $(self, initWithConstMemory, mem, length);
 	if (self) {
-		self->bytes = mem;
-		self->length = length;
+		self->destroy = free;
 	}
 
 	return self;
@@ -240,9 +265,11 @@ static void initialize(Class *clazz) {
 	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
 
 	((DataInterface *) clazz->def->interface)->dataWithBytes = dataWithBytes;
+	((DataInterface *) clazz->def->interface)->dataWithConstMemory = dataWithConstMemory;
 	((DataInterface *) clazz->def->interface)->dataWithContentsOfFile = dataWithContentsOfFile;
 	((DataInterface *) clazz->def->interface)->dataWithMemory = dataWithMemory;
 	((DataInterface *) clazz->def->interface)->initWithBytes = initWithBytes;
+	((DataInterface *) clazz->def->interface)->initWithConstMemory = initWithConstMemory;
 	((DataInterface *) clazz->def->interface)->initWithContentsOfFile = initWithContentsOfFile;
 	((DataInterface *) clazz->def->interface)->initWithMemory = initWithMemory;
 	((DataInterface *) clazz->def->interface)->mutableCopy = mutableCopy;

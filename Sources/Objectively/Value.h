@@ -61,7 +61,7 @@ struct Value {
 	ident value;
 
 	/**
-	 * @brief An optional destructor that, if iset, is called on `dealloc`.
+	 * @brief An optional destructor that, if set, is called on `dealloc`.
 	 */
 	ValueDestructor destroy;
 };

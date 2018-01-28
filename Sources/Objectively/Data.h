@@ -38,6 +38,11 @@ typedef struct Data Data;
 typedef struct DataInterface DataInterface;
 
 /**
+ * @brief Data may optionally reference destructor to be called on `dealloc`.
+ */
+typedef void (*DataDestructor)(ident mem);
+
+/**
  * @brief Immutable data buffers.
  * @extends Object
  * @ingroup ByteStreams
@@ -59,6 +64,11 @@ struct Data {
 	 * @brief The bytes.
 	 */
 	uint8_t *bytes;
+
+	/**
+	 * @brief An optional destructor that, if set, is called on `dealloc`.
+	 */
+	DataDestructor destroy;
 
 	/**
 	 * @brief The length of `bytes`.
@@ -91,6 +101,17 @@ struct DataInterface {
 
 	/**
 	 * @static
+	 * @fn Data *Data::dataWithConstMemory(const ident mem, size_t length)
+	 * @brief Returns a new Data, backed by the given const memory.
+	 * @param mem The constant memory to back this Data.
+	 * @param length The length of `mem` in bytes.
+	 * @return The new Data, or `NULL` on error.
+	 * @memberof Data
+	 */
+	Data *(*dataWithConstMemory)(ident mem, size_t length);
+
+	/**
+	 * @static
 	 * @fn Data *Data::dataWithContentsOfFile(const char *path)
 	 * @brief Returns a new Data with the contents of the file at `path`.
 	 * @param path The path of the file to read into memory.
@@ -101,14 +122,14 @@ struct DataInterface {
 
 	/**
 	 * @static
-	 * @fn Data *Data::dataWithMemory(const ident mem, size_t length)
+	 * @fn Data *Data::dataWithMemory(ident mem, size_t length)
 	 * @brief Returns a new Data, taking ownership of the specified memory.
 	 * @param mem The dynamically allocated memory to back this Data.
 	 * @param length The length of `mem` in bytes.
 	 * @return The new Data, or `NULL` on error.
 	 * @memberof Data
 	 */
-	Data *(*dataWithMemory)(const ident mem, size_t length);
+	Data *(*dataWithMemory)(ident mem, size_t length);
 
 	/**
 	 * @fn Data *Data::initWithBytes(Data *self, const uint8_t *bytes, size_t length)
@@ -122,6 +143,17 @@ struct DataInterface {
 	Data *(*initWithBytes)(Data *self, const uint8_t *bytes, size_t length);
 
 	/**
+	 * @fn Data *Data::initWithConstMemory(Data *self, const ident mem, size_t length)
+	 * @brief Initializes this Data with the given const memory.
+	 * @param self The Data.
+	 * @param mem The const memory to back this Data.
+	 * @param length The length of `mem` in bytes.
+	 * @return The initialized Data, or `NULL` on error.
+	 * @memberof Data
+	 */
+	Data *(*initWithConstMemory)(Data *self, const ident mem, size_t length);
+
+	/**
 	 * @fn Data *Data::initWithContentsOfFile(Data *self, const char *path)
 	 * @brief Initializes this Data with the contents of the file at `path`.
 	 * @param self The Data.
@@ -132,7 +164,7 @@ struct DataInterface {
 	Data *(*initWithContentsOfFile)(Data *self, const char *path);
 
 	/**
-	 * @fn Data *Data::initWithMemory(Data *self, const ident mem, size_t length)
+	 * @fn Data *Data::initWithMemory(Data *self, ident mem, size_t length)
 	 * @brief Initializes this Data, taking ownership of the specified memory.
 	 * @param self The Data.
 	 * @param mem The dynamically allocated memory to back this Data.
@@ -140,7 +172,7 @@ struct DataInterface {
 	 * @return The initialized Data, or `NULL` on error.
 	 * @memberof Data
 	 */
-	Data *(*initWithMemory)(Data *self, const ident mem, size_t length);
+	Data *(*initWithMemory)(Data *self, ident mem, size_t length);
 
 	/**
 	 * @fn MutableData *Data::mutableCopy(const Data *self)
