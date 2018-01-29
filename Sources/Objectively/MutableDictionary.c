@@ -263,7 +263,7 @@ static void setObjectForKey(MutableDictionary *self, const ident obj, const iden
 
 	MutableArray *array = dict->elements[bin];
 	if (array == NULL) {
-		array = dict->elements[bin] = $(alloc(MutableArray), init);
+		array = dict->elements[bin] = $$(MutableArray, arrayWithCapacity, (dict->capacity >> 2) + 1);
 	}
 
 	const ssize_t index = $((Array *) array, indexOfObject, key);
