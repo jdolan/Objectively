@@ -188,10 +188,9 @@ static void insertObjectAtIndex(MutableArray *self, ident obj, size_t index) {
  */
 static void removeAllObjects(MutableArray *self) {
 
-	for (size_t i = self->array.count; i > 0; i--) {
-		$(self, removeObjectAtIndex, i - 1);
+	while (self->array.count) {
+		$(self, removeLastObject);
 	}
-
 }
 
 /**
@@ -202,9 +201,11 @@ static void removeAllObjectsWithEnumerator(MutableArray *self, ArrayEnumerator e
 
 	assert(enumerator);
 
-	for (size_t i = self->array.count; i > 0; i--) {
-		enumerator((Array *) self, self->array.elements[i - 1], data);
-		$(self, removeObjectAtIndex, i - 1);
+	while (self->array.count) {
+
+		enumerator((Array *) self, $((Array *) self, lastObject), data);
+
+		$(self, removeLastObject);
 	}
 }
 
