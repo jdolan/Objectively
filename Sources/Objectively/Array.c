@@ -282,12 +282,10 @@ static ident firstObject(const Array *self) {
  */
 static ssize_t indexOfObject(const Array *self, const ident obj) {
 
-	Object *object = cast(Object, obj);
-
-	assert(object);
+	assert(obj);
 
 	for (size_t i = 0; i < self->count; i++) {
-		if ($(object, isEqual, (Object * ) self->elements[i])) {
+		if ($((Object * ) self->elements[i], isEqual, obj)) {
 			return i;
 		}
 	}
