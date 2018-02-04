@@ -38,8 +38,8 @@ static void dealloc(Object *self) {
 
 	Value *this = (Value *) self;
 
-	if (this->destroy) {
-		this->destroy(this->value);
+	if (this->destructor) {
+		this->destructor(this->value);
 	}
 
 	super(Object, self, dealloc);

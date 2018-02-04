@@ -63,7 +63,7 @@ struct Value {
 	/**
 	 * @brief An optional destructor that, if set, is called on `dealloc`.
 	 */
-	ValueDestructor destroy;
+	ValueDestructor destructor;
 };
 
 /**
