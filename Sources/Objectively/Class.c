@@ -211,8 +211,6 @@ Class *classForName(const char *name) {
 
 ident release(ident obj) {
 
-	classForName("HueColorPicker");
-
 	if (obj) {
 		Object *object = cast(Object, obj);
 
