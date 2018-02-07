@@ -24,7 +24,7 @@ int   dlclose(void *handle);
 void *dlsym(void *handle, const char *name);
 char *dlerror(void);
 #else
-#include <Windows.h>
+#include <windows.h>
 #include <psapi.h>
 
 static HMODULE _runningModule(void) {
