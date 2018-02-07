@@ -42,6 +42,11 @@ typedef struct Resource Resource;
 typedef struct ResourceInterface ResourceInterface;
 
 /**
+ * @brief Applications may specify a provider function for loading via file system abstractions.
+ */
+typedef Data *(*ResourceProvider)(const char *name);
+
+/**
  * @brief Resources provide an abstraction for file and stream resources.
  * @extends Object
  */
@@ -129,6 +134,16 @@ struct ResourceInterface {
 	 * @memberof Resource
 	 */
 	Resource *(*resourceWithName)(const char *name);
+
+	/**
+	 * @static
+	 * @fn void Resource::setProvider(ResourceProvider provider)
+	 * @brief Sets the Resource provider function.
+	 * @param provider The ResourceProvider.
+	 * @remarks If set, this function will take priority over configured resource paths.
+	 * @memberof Resource
+	 */
+	void (*setProvider)(ResourceProvider provider);
 };
 
 /**

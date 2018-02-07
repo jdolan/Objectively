@@ -32,6 +32,7 @@
 
 #define _Class _Resource
 
+static ResourceProvider _resourceProvider;
 static MutableArray *_resourcePaths;
 
 #pragma mark - Object
@@ -91,11 +92,14 @@ static Resource *initWithName(Resource *self, const char *name) {
 
 	Data *data = NULL;
 
+	if (_resourceProvider) {
+		data = _resourceProvider(name);
+	}
+
 	const Array *resourcePaths = (Array *) _resourcePaths;
 	for (size_t i = 0; i < resourcePaths->count && data == NULL; i++) {
 
 		const String *resourcePath = $(resourcePaths, objectAtIndex, i);
-		String *path = str("%s/%s", resourcePath->chars, name);
 		String *path = str("%s%s%s", resourcePath->chars, PATH_SEPAR, name);
 
 		struct stat s;
@@ -106,7 +110,15 @@ static Resource *initWithName(Resource *self, const char *name) {
 		release(path);
 	}
 
-	return $(self, initWithData, data, name);
+	if (data) {
+		self = $(self, initWithData, data, name);
+	} else {
+		self = release(self);
+	}
+
+	release(data);
+
+	return self;
 }
 
 /**
@@ -130,6 +142,14 @@ static Resource *resourceWithName(const char *name) {
 	return $(alloc(Resource), initWithName, name);
 }
 
+/**
+ * @fn void Resource::setProvider(ResourceProvider provider)
+ * @memberof Resource
+ */
+static void setProvider(ResourceProvider resourceProvider) {
+	_resourceProvider = resourceProvider;
+}
+
 #pragma mark - Class lifecycle
 
 /**
@@ -144,6 +164,7 @@ static void initialize(Class *clazz) {
 	((ResourceInterface *) clazz->def->interface)->initWithName = initWithName;
 	((ResourceInterface *) clazz->def->interface)->removeResourcePath = removeResourcePath;
 	((ResourceInterface *) clazz->def->interface)->resourceWithName = resourceWithName;
+	((ResourceInterface *) clazz->def->interface)->setProvider = setProvider;
 
 	_resourcePaths = $(alloc(MutableArray), init);
 	assert(_resourcePaths);

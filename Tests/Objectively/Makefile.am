@@ -25,6 +25,7 @@ TESTS = \
 	Object \
 	Operation \
 	Regexp \
+	Resource \
 	Set \
 	String \
 	StringReader \
