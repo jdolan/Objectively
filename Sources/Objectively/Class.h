@@ -131,8 +131,10 @@ struct ClassDef {
 
 /**
  * @brief Initializes the given Class.
+ * @param clazz The Class descriptor.
+ * @return The initialized Class.
  */
-OBJECTIVELY_EXPORT void _initialize(Class *clazz);
+OBJECTIVELY_EXPORT Class* _initialize(Class *clazz);
 
 /**
  * @brief Instantiate a type through the given Class.

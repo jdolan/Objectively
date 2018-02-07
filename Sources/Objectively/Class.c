@@ -24,7 +24,9 @@
 #include <Objectively/Config.h>
 
 #include <assert.h>
+#include <dlfcn.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #if HAVE_UNISTD_H
@@ -37,6 +39,7 @@
 size_t _pageSize;
 
 static ClassDef *_classes;
+static ident _handle;
 
 /**
  * @brief Called `atexit` to teardown Objectively.
@@ -63,6 +66,10 @@ static void teardown(void) {
 
 		c = next;
 	}
+
+	if (_handle) {
+		dlclose(_handle);
+	}
 }
 
 /**
@@ -81,7 +88,7 @@ static void setup(void) {
 	atexit(teardown);
 }
 
-void _initialize(Class *clazz) {
+Class *_initialize(Class *clazz) {
 
 	assert(clazz);
 
@@ -128,6 +135,8 @@ void _initialize(Class *clazz) {
 			;
 		}
 	}
+
+	return &clazz->def->descriptor;
 }
 
 ident _alloc(Class *clazz) {
@@ -157,7 +166,6 @@ ident _cast(Class *clazz, const ident obj) {
 		while (c) {
 
 			// as a special case, we optimize for _Object
-
 			if (c == clazz || clazz == _Object()) {
 				break;
 			}
@@ -179,6 +187,22 @@ Class *classForName(const char *name) {
 				return &c->descriptor;
 			}
 			c = c->next;
+		}
+
+		char *s;
+		if (asprintf(&s, "_%s", name) > 0) {
+			static Once once;
+
+			do_once(&once, _handle = dlopen(NULL, 0));
+
+			Class *clazz = NULL;
+			Class *(*archetype)(void) = dlsym(_handle, s);
+			if (archetype) {
+				clazz = _initialize(archetype());
+			}
+
+			free(s);
+			return clazz;
 		}
 	}
 

@@ -27,14 +27,15 @@
 
 START_TEST(object)
 	{
-		ck_assert_ptr_eq(NULL, classForName("Object"));
+		Class *clazz = classForName("Object");
+		ck_assert(clazz);
+
+		ck_assert_ptr_eq(&_Object()->def->descriptor, clazz);
 
 		Object *object = $(alloc(Object), init);
 
 		ck_assert(object != NULL);
 		ck_assert_ptr_eq(_Object(), classof(object));
-
-		ck_assert_ptr_eq(&_Object()->def->descriptor, classForName("Object"));
 
 		ck_assert($(object, isEqual, object));
 		ck_assert($(object, isKindOfClass, classof(object)));

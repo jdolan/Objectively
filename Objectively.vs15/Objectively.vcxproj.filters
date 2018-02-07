@@ -171,6 +171,9 @@
     <ClInclude Include="..\Sources\Objectively\Regexp.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\gnu\dlfcn.h">
+      <Filter>Sources\gnu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\Windowly.c">

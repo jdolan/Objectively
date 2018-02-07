@@ -1,6 +1,9 @@
 AUTOMAKE_OPTIONS = nostdinc
 AM_CPPFLAGS = -I$(top_srcdir)/Sources
 
+noinst_HEADERS = \
+	Config.h
+
 pkgincludedir = $(includedir)/Objectively
 
 pkginclude_HEADERS = \
@@ -8,7 +11,6 @@ pkginclude_HEADERS = \
 	Boole.h \
 	Class.h \
 	Condition.h \
-	Config.h \
 	Data.h \
 	Date.h \
 	DateFormatter.h \
