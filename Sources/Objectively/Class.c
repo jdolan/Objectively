@@ -24,15 +24,10 @@
 #include <Objectively/Config.h>
 
 #include <assert.h>
+#include <dlfcn.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-#if HAVE_DLFCN_H || defined(_MSC_VER)
-#include <dlfcn.h>
-#elif defined(__MINGW32__)
-#include "../Objectively.vs15/Sources/gnu/dlfcn.h"
-#endif
 
 #if HAVE_UNISTD_H
 #include <unistd.h>

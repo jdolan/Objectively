@@ -23,13 +23,14 @@
 
 #pragma once
 
-#if defined(_WIN32)
+#include <time.h>
+
+#if defined(_MSC_VER)
  #include <winsock2.h>
 #else
  #include <sys/time.h>
 #endif
 
-#include <time.h>
 
 #include <Objectively/Object.h>
 
