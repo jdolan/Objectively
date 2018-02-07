@@ -25,6 +25,14 @@
 
 #include <Objectively/Data.h>
 
+#if defined(_WIN32)
+ #define PATH_DELIM ";"
+ #define PATH_SEPAR "\\"
+#else
+ #define PATH_DELIM ":"
+ #define PATH_SEPAR "/"
+#endif
+
 /**
  * @file
  * @brief Resources provide an abstraction for file and stream resources.
@@ -130,4 +138,3 @@ struct ResourceInterface {
  * @memberof Resource
  */
 OBJECTIVELY_EXPORT Class *_Resource(void);
-

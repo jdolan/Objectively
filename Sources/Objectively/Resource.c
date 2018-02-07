@@ -96,6 +96,7 @@ static Resource *initWithName(Resource *self, const char *name) {
 
 		const String *resourcePath = $(resourcePaths, objectAtIndex, i);
 		String *path = str("%s/%s", resourcePath->chars, name);
+		String *path = str("%s%s%s", resourcePath->chars, PATH_SEPAR, name);
 
 		struct stat s;
 		if (stat(path->chars, &s) == 0 && S_ISREG(s.st_mode)) {
@@ -150,14 +151,11 @@ static void initialize(Class *clazz) {
 	const char *env = getenv("OBJECTIVELY_RESOURCE_PATH");
 	if (env) {
 
-		// TODO: Add WIN32 ";" path delim support via config.h
-
 		String *string = $$(String, stringWithCharacters, env);
-		Array *paths = $(string, componentsSeparatedByCharacters, ":");
+		Array *paths = $(string, componentsSeparatedByCharacters, PATH_DELIM);
 
 		for (size_t i = 0; i < paths->count; i++) {
-			String *path = $(paths, objectAtIndex, i);
-			addResourcePath(path->chars);
+			addResourcePath(((String *) $(paths, objectAtIndex, i))->chars);
 		}
 
 		release(paths);
