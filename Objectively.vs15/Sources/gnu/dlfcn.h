@@ -55,7 +55,7 @@ void *dlopen(const char *file, int mode) {
 
 int dlclose(void *handle) {
 	if (handle == _runningModule())
-		return;
+		return 0;
 
 	return FreeLibrary((HMODULE) handle);
 }
