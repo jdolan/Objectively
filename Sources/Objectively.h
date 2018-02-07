@@ -32,7 +32,6 @@
 #include <Objectively/Boole.h>
 #include <Objectively/Class.h>
 #include <Objectively/Condition.h>
-#include <Objectively/Config.h>
 #include <Objectively/Data.h>
 #include <Objectively/Date.h>
 #include <Objectively/DateFormatter.h>
