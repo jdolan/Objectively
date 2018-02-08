@@ -62,7 +62,7 @@ static void sayHello(const Hello *self) {
  */
 static void initialize(Class *clazz) {
 
-	HelloInterface *hello = (HelloInterface *) clazz->def->interface;
+	HelloInterface *hello = (HelloInterface *) clazz->interface;
 
 	hello->helloWithGreeting = helloWithGreeting;
 	hello->initWithGreeting = initWithGreeting;
@@ -74,20 +74,22 @@ static void initialize(Class *clazz) {
  * @memberof Hello
  */
 Class *_Hello(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Hello";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Hello);
-		clazz.interfaceOffset = offsetof(Hello, interface);
-		clazz.interfaceSize = sizeof(HelloInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Hello",
+			.superclass = _Object(),
+			.instanceSize = sizeof(Hello),
+			.interfaceOffset = offsetof(Hello, interface),
+			.interfaceSize = sizeof(HelloInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
-};
+	return clazz;
+}
 
 #undef _Class
 

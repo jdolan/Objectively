@@ -255,19 +255,19 @@ static void warn(const Log *self, const char *fmt, ...) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((LogInterface *) clazz->def->interface)->debug = debug;
-	((LogInterface *) clazz->def->interface)->error = error;
-	((LogInterface *) clazz->def->interface)->fatal = fatal;
-	((LogInterface *) clazz->def->interface)->flush = flush;
-	((LogInterface *) clazz->def->interface)->info = info;
-	((LogInterface *) clazz->def->interface)->init = init;
-	((LogInterface *) clazz->def->interface)->initWithName = initWithName;
-	((LogInterface *) clazz->def->interface)->log = _log;
-	((LogInterface *) clazz->def->interface)->trace = trace;
-	((LogInterface *) clazz->def->interface)->sharedInstance = sharedInstance;
-	((LogInterface *) clazz->def->interface)->warn = warn;
+	((LogInterface *) clazz->interface)->debug = debug;
+	((LogInterface *) clazz->interface)->error = error;
+	((LogInterface *) clazz->interface)->fatal = fatal;
+	((LogInterface *) clazz->interface)->flush = flush;
+	((LogInterface *) clazz->interface)->info = info;
+	((LogInterface *) clazz->interface)->init = init;
+	((LogInterface *) clazz->interface)->initWithName = initWithName;
+	((LogInterface *) clazz->interface)->log = _log;
+	((LogInterface *) clazz->interface)->trace = trace;
+	((LogInterface *) clazz->interface)->sharedInstance = sharedInstance;
+	((LogInterface *) clazz->interface)->warn = warn;
 }
 
 /**
@@ -283,20 +283,22 @@ static void destroy(Class *clazz) {
  * @memberof Log
  */
 Class *_Log(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Log";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Log);
-		clazz.interfaceOffset = offsetof(Log, interface);
-		clazz.interfaceSize = sizeof(LogInterface);
-		clazz.initialize = initialize;
-		clazz.destroy = destroy;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Log",
+			.superclass = _Object(),
+			.instanceSize = sizeof(Log),
+			.interfaceOffset = offsetof(Log, interface),
+			.interfaceSize = sizeof(LogInterface),
+			.initialize = initialize,
+			.destroy = destroy,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

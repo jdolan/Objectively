@@ -38,19 +38,19 @@
 
 size_t _pageSize;
 
-static ClassDef *_classes;
+static Class *_classes;
 static ident _handle;
 
 /**
  * @brief Called `atexit` to teardown Objectively.
  */
 static void teardown(void) {
-	ClassDef *c;
+	Class *c;
 
 	c = _classes;
 	while (c) {
-		if (c->descriptor.destroy) {
-			c->descriptor.destroy(&c->descriptor);
+		if (c->def.destroy) {
+			c->def.destroy(c);
 		}
 
 		c = c->next;
@@ -59,7 +59,7 @@ static void teardown(void) {
 	c = _classes;
 	while (c) {
 
-		ClassDef *next = c->next;
+		Class *next = c->next;
 
 		free(c->interface);
 		free(c);
@@ -88,62 +88,46 @@ static void setup(void) {
 	atexit(teardown);
 }
 
-Class *_initialize(Class *clazz) {
+Class *_initialize(const ClassDef *def) {
 
+	static Once once;
+	do_once(&once, setup());
+
+	assert(def);
+	assert(def->name);
+	assert(def->instanceSize);
+	assert(def->interfaceSize);
+	assert(def->interfaceOffset);
+
+	Class *clazz = calloc(1, sizeof(Class));
 	assert(clazz);
 
-	if (__sync_val_compare_and_swap(&clazz->magic, 0, -1) == 0) {
+	clazz->def = *def;
 
-		assert(clazz->name);
-		assert(clazz->instanceSize);
-		assert(clazz->interfaceSize);
-		assert(clazz->interfaceOffset);
+	clazz->interface = calloc(1, def->interfaceSize);
+	assert(clazz->interface);
 
-		ClassDef *def = clazz->def = calloc(1, sizeof(ClassDef));
-		assert(def);
+	Class *superclass = clazz->def.superclass;
+	if (superclass) {
 
-		def->descriptor = *clazz;
+		assert(superclass->def.instanceSize <= def->instanceSize);
+		assert(superclass->def.interfaceSize <= def->interfaceSize);
 
-		def->interface = calloc(1, clazz->interfaceSize);
-		assert(def->interface);
-
-		if (clazz == _Object()) {
-			setup();
-		} else {
-			Class *super = clazz->superclass;
-			assert(super);
-
-			assert(super->instanceSize <= clazz->instanceSize);
-			assert(super->interfaceSize <= clazz->interfaceSize);
-
-			_initialize(super);
-
-			memcpy(def->interface, super->def->interface, super->interfaceSize);
-		}
-
-		if (clazz->initialize) {
-			clazz->initialize(clazz);
-		}
-
-		def->descriptor.magic = CLASS_MAGIC;
-		def->next = __sync_lock_test_and_set(&_classes, def);
-
-		clazz->magic = CLASS_MAGIC;
-
-	} else {
-		while (clazz->magic != CLASS_MAGIC) {
-			;
-		}
+		memcpy(clazz->interface, superclass->interface, superclass->def.interfaceSize);
 	}
 
-	return &clazz->def->descriptor;
+	if (clazz->def.initialize) {
+		clazz->def.initialize(clazz);
+	}
+
+	clazz->next = __sync_lock_test_and_set(&_classes, clazz);
+
+	return clazz;
 }
 
 ident _alloc(Class *clazz) {
 
-	_initialize(clazz);
-
-	ident obj = calloc(1, clazz->instanceSize);
+	ident obj = calloc(1, clazz->def.instanceSize);
 	assert(obj);
 
 	Object *object = (Object *) obj;
@@ -151,10 +135,10 @@ ident _alloc(Class *clazz) {
 	object->clazz = clazz;
 	object->referenceCount = 1;
 
-	ident interface = clazz->def->interface;
+	ident interface = clazz->interface;
 	do {
-		*(ident *) (obj + clazz->interfaceOffset) = interface;
-	} while ((clazz = clazz->superclass));
+		*(ident *) (obj + clazz->def.interfaceOffset) = interface;
+	} while ((clazz = clazz->def.superclass));
 
 	return obj;
 }
@@ -170,7 +154,7 @@ ident _cast(Class *clazz, const ident obj) {
 				break;
 			}
 
-			c = c->superclass;
+			c = c->def.superclass;
 		}
 		assert(c);
 	}
@@ -181,10 +165,10 @@ ident _cast(Class *clazz, const ident obj) {
 Class *classForName(const char *name) {
 
 	if (name) {
-		ClassDef *c = _classes;
+		Class *c = _classes;
 		while (c) {
-			if (strcmp(name, c->descriptor.name) == 0) {
-				return &c->descriptor;
+			if (strcmp(name, c->def.name) == 0) {
+				return c;
 			}
 			c = c->next;
 		}
@@ -198,7 +182,7 @@ Class *classForName(const char *name) {
 			Class *clazz = NULL;
 			Class *(*archetype)(void) = dlsym(_handle, s);
 			if (archetype) {
-				clazz = _initialize(archetype());
+				clazz = archetype();
 			}
 
 			free(s);

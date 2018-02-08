@@ -202,17 +202,17 @@ static Time timeSinceTime(const Date *self, const Time *time) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->hash = hash;
-	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
+	((ObjectInterface *) clazz->interface)->hash = hash;
+	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((DateInterface *) clazz->def->interface)->compareTo = compareTo;
-	((DateInterface *) clazz->def->interface)->date = date;
-	((DateInterface *) clazz->def->interface)->dateWithTimeSinceNow = dateWithTimeSinceNow;
-	((DateInterface *) clazz->def->interface)->init = init;
-	((DateInterface *) clazz->def->interface)->initWithTime = initWithTime;
-	((DateInterface *) clazz->def->interface)->timeSinceDate = timeSinceDate;
-	((DateInterface *) clazz->def->interface)->timeSinceNow = timeSinceNow;
-	((DateInterface *) clazz->def->interface)->timeSinceTime = timeSinceTime;
+	((DateInterface *) clazz->interface)->compareTo = compareTo;
+	((DateInterface *) clazz->interface)->date = date;
+	((DateInterface *) clazz->interface)->dateWithTimeSinceNow = dateWithTimeSinceNow;
+	((DateInterface *) clazz->interface)->init = init;
+	((DateInterface *) clazz->interface)->initWithTime = initWithTime;
+	((DateInterface *) clazz->interface)->timeSinceDate = timeSinceDate;
+	((DateInterface *) clazz->interface)->timeSinceNow = timeSinceNow;
+	((DateInterface *) clazz->interface)->timeSinceTime = timeSinceTime;
 }
 
 /**
@@ -220,19 +220,21 @@ static void initialize(Class *clazz) {
  * @memberof Date
  */
 Class *_Date(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Date";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Date);
-		clazz.interfaceOffset = offsetof(Date, interface);
-		clazz.interfaceSize = sizeof(DateInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Date",
+			.superclass = _Object(),
+			.instanceSize = sizeof(Date),
+			.interfaceOffset = offsetof(Date, interface),
+			.interfaceSize = sizeof(DateInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

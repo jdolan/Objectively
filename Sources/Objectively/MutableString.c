@@ -326,27 +326,27 @@ static void trim(MutableString *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->copy = copy;
 
-	((MutableStringInterface *) clazz->def->interface)->appendCharacters = appendCharacters;
-	((MutableStringInterface *) clazz->def->interface)->appendFormat = appendFormat;
-	((MutableStringInterface *) clazz->def->interface)->appendString = appendString;
-	((MutableStringInterface *) clazz->def->interface)->appendVaList = appendVaList;
-	((MutableStringInterface *) clazz->def->interface)->deleteCharactersInRange = deleteCharactersInRange;
-	((MutableStringInterface *) clazz->def->interface)->init = init;
-	((MutableStringInterface *) clazz->def->interface)->initWithCapacity = initWithCapacity;
-	((MutableStringInterface *) clazz->def->interface)->initWithString = initWithString;
-	((MutableStringInterface *) clazz->def->interface)->insertCharactersAtIndex = insertCharactersAtIndex;
-	((MutableStringInterface *) clazz->def->interface)->insertStringAtIndex = insertStringAtIndex;
-	((MutableStringInterface *) clazz->def->interface)->replaceCharactersInRange = replaceCharactersInRange;
-	((MutableStringInterface *) clazz->def->interface)->replaceOccurrencesOfCharacters = replaceOccurrencesOfCharacters;
-	((MutableStringInterface *) clazz->def->interface)->replaceOccurrencesOfCharactersInRange = replaceOccurrencesOfCharactersInRange;
-	((MutableStringInterface *) clazz->def->interface)->replaceOccurrencesOfString = replaceOccurrencesOfString;
-	((MutableStringInterface *) clazz->def->interface)->replaceOccurrencesOfStringInRange = replaceOccurrencesOfStringInRange;
-	((MutableStringInterface *) clazz->def->interface)->replaceStringInRange = replaceStringInRange;
-	((MutableStringInterface *) clazz->def->interface)->string = string;
-	((MutableStringInterface *) clazz->def->interface)->stringWithCapacity = stringWithCapacity;
-	((MutableStringInterface *) clazz->def->interface)->trim = trim;
+	((MutableStringInterface *) clazz->interface)->appendCharacters = appendCharacters;
+	((MutableStringInterface *) clazz->interface)->appendFormat = appendFormat;
+	((MutableStringInterface *) clazz->interface)->appendString = appendString;
+	((MutableStringInterface *) clazz->interface)->appendVaList = appendVaList;
+	((MutableStringInterface *) clazz->interface)->deleteCharactersInRange = deleteCharactersInRange;
+	((MutableStringInterface *) clazz->interface)->init = init;
+	((MutableStringInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
+	((MutableStringInterface *) clazz->interface)->initWithString = initWithString;
+	((MutableStringInterface *) clazz->interface)->insertCharactersAtIndex = insertCharactersAtIndex;
+	((MutableStringInterface *) clazz->interface)->insertStringAtIndex = insertStringAtIndex;
+	((MutableStringInterface *) clazz->interface)->replaceCharactersInRange = replaceCharactersInRange;
+	((MutableStringInterface *) clazz->interface)->replaceOccurrencesOfCharacters = replaceOccurrencesOfCharacters;
+	((MutableStringInterface *) clazz->interface)->replaceOccurrencesOfCharactersInRange = replaceOccurrencesOfCharactersInRange;
+	((MutableStringInterface *) clazz->interface)->replaceOccurrencesOfString = replaceOccurrencesOfString;
+	((MutableStringInterface *) clazz->interface)->replaceOccurrencesOfStringInRange = replaceOccurrencesOfStringInRange;
+	((MutableStringInterface *) clazz->interface)->replaceStringInRange = replaceStringInRange;
+	((MutableStringInterface *) clazz->interface)->string = string;
+	((MutableStringInterface *) clazz->interface)->stringWithCapacity = stringWithCapacity;
+	((MutableStringInterface *) clazz->interface)->trim = trim;
 }
 
 /**
@@ -354,19 +354,21 @@ static void initialize(Class *clazz) {
  * @memberof MutableString
  */
 Class *_MutableString(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "MutableString";
-		clazz.superclass = _String();
-		clazz.instanceSize = sizeof(MutableString);
-		clazz.interfaceOffset = offsetof(MutableString, interface);
-		clazz.interfaceSize = sizeof(MutableStringInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "MutableString",
+			.superclass = _String(),
+			.instanceSize = sizeof(MutableString),
+			.interfaceOffset = offsetof(MutableString, interface),
+			.interfaceSize = sizeof(MutableStringInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

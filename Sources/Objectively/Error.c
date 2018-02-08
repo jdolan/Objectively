@@ -150,13 +150,13 @@ static Error *initWithDomain(Error *self, String *domain, int code, String *mess
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->def->interface)->description = description;
-	((ObjectInterface *) clazz->def->interface)->hash = hash;
-	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->description = description;
+	((ObjectInterface *) clazz->interface)->hash = hash;
+	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((ErrorInterface *) clazz->def->interface)->initWithDomain = initWithDomain;
+	((ErrorInterface *) clazz->interface)->initWithDomain = initWithDomain;
 }
 
 /**
@@ -164,19 +164,21 @@ static void initialize(Class *clazz) {
  * @memberof Error
  */
 Class *_Error(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Error";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Error);
-		clazz.interfaceOffset = offsetof(Error, interface);
-		clazz.interfaceSize = sizeof(ErrorInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Error",
+			.superclass = _Object(),
+			.instanceSize = sizeof(_Error),
+			.interfaceOffset = offsetof(Error, interface),
+			.interfaceSize = sizeof(ErrorInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

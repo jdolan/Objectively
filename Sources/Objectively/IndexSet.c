@@ -200,15 +200,15 @@ static IndexSet *initWithIndexes(IndexSet *self, size_t *indexes, size_t count) 
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->def->interface)->description = description;
-	((ObjectInterface *) clazz->def->interface)->hash = hash;
-	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->description = description;
+	((ObjectInterface *) clazz->interface)->hash = hash;
+	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((IndexSetInterface *) clazz->def->interface)->containsIndex = containsIndex;
-	((IndexSetInterface *) clazz->def->interface)->initWithIndex = initWithIndex;
-	((IndexSetInterface *) clazz->def->interface)->initWithIndexes = initWithIndexes;
+	((IndexSetInterface *) clazz->interface)->containsIndex = containsIndex;
+	((IndexSetInterface *) clazz->interface)->initWithIndex = initWithIndex;
+	((IndexSetInterface *) clazz->interface)->initWithIndexes = initWithIndexes;
 }
 
 /**
@@ -216,19 +216,21 @@ static void initialize(Class *clazz) {
  * @memberof IndexSet
  */
 Class *_IndexSet(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "IndexSet";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(IndexSet);
-		clazz.interfaceOffset = offsetof(IndexSet, interface);
-		clazz.interfaceSize = sizeof(IndexSetInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "IndexSet",
+			.superclass = _Object(),
+			.instanceSize = sizeof(IndexSet),
+			.interfaceOffset = offsetof(IndexSet, interface),
+			.interfaceSize = sizeof(IndexSetInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

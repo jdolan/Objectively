@@ -249,15 +249,15 @@ static void teardown(URLSessionTask *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((URLSessionTaskInterface *) clazz->def->interface)->cancel = cancel;
-	((URLSessionTaskInterface *) clazz->def->interface)->initWithRequestInSession = initWithRequestInSession;
-	((URLSessionTaskInterface *) clazz->def->interface)->resume = resume;
-	((URLSessionTaskInterface *) clazz->def->interface)->setup = setup;
-	((URLSessionTaskInterface *) clazz->def->interface)->suspend = suspend;
-	((URLSessionTaskInterface *) clazz->def->interface)->teardown = teardown;
+	((URLSessionTaskInterface *) clazz->interface)->cancel = cancel;
+	((URLSessionTaskInterface *) clazz->interface)->initWithRequestInSession = initWithRequestInSession;
+	((URLSessionTaskInterface *) clazz->interface)->resume = resume;
+	((URLSessionTaskInterface *) clazz->interface)->setup = setup;
+	((URLSessionTaskInterface *) clazz->interface)->suspend = suspend;
+	((URLSessionTaskInterface *) clazz->interface)->teardown = teardown;
 }
 
 /**
@@ -265,19 +265,21 @@ static void initialize(Class *clazz) {
  * @memberof URLSessionTask
  */
 Class *_URLSessionTask(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "URLSessionTask";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(URLSessionTask);
-		clazz.interfaceOffset = offsetof(URLSessionTask, interface);
-		clazz.interfaceSize = sizeof(URLSessionTaskInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "URLSessionTask",
+			.superclass = _Object(),
+			.instanceSize = sizeof(URLSessionTask),
+			.interfaceOffset = offsetof(URLSessionTask, interface),
+			.interfaceSize = sizeof(URLSessionTaskInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

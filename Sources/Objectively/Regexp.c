@@ -181,15 +181,15 @@ static _Bool matchesString(const Regexp *self, const String *string, int options
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->def->interface)->description = description;
-	((ObjectInterface *) clazz->def->interface)->hash = hash;
-	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->description = description;
+	((ObjectInterface *) clazz->interface)->hash = hash;
+	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((RegexpInterface *) clazz->def->interface)->initWithPattern = initWithPattern;
-	((RegexpInterface *) clazz->def->interface)->matchesCharacters = matchesCharacters;
-	((RegexpInterface *) clazz->def->interface)->matchesString = matchesString;
+	((RegexpInterface *) clazz->interface)->initWithPattern = initWithPattern;
+	((RegexpInterface *) clazz->interface)->matchesCharacters = matchesCharacters;
+	((RegexpInterface *) clazz->interface)->matchesString = matchesString;
 }
 
 /**
@@ -197,19 +197,21 @@ static void initialize(Class *clazz) {
  * @memberof Regexp
  */
 Class *_Regexp(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Regexp";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Regexp);
-		clazz.interfaceOffset = offsetof(Regexp, interface);
-		clazz.interfaceSize = sizeof(RegexpInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Regexp",
+			.superclass = _Object(),
+			.instanceSize = sizeof(Regexp),
+			.interfaceOffset = offsetof(Regexp, interface),
+			.interfaceSize = sizeof(RegexpInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

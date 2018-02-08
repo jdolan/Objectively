@@ -212,18 +212,18 @@ static void waitUntilFinished(const Operation *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((OperationInterface *) clazz->def->interface)->addDependency = addDependency;
-	((OperationInterface *) clazz->def->interface)->cancel = cancel;
-	((OperationInterface *) clazz->def->interface)->dependencies = dependencies;
-	((OperationInterface *) clazz->def->interface)->init = init;
-	((OperationInterface *) clazz->def->interface)->initWithFunction = initWithFunction;
-	((OperationInterface *) clazz->def->interface)->isReady = isReady;
-	((OperationInterface *) clazz->def->interface)->removeDependency = removeDepdenency;
-	((OperationInterface *) clazz->def->interface)->start = start;
-	((OperationInterface *) clazz->def->interface)->waitUntilFinished = waitUntilFinished;
+	((OperationInterface *) clazz->interface)->addDependency = addDependency;
+	((OperationInterface *) clazz->interface)->cancel = cancel;
+	((OperationInterface *) clazz->interface)->dependencies = dependencies;
+	((OperationInterface *) clazz->interface)->init = init;
+	((OperationInterface *) clazz->interface)->initWithFunction = initWithFunction;
+	((OperationInterface *) clazz->interface)->isReady = isReady;
+	((OperationInterface *) clazz->interface)->removeDependency = removeDepdenency;
+	((OperationInterface *) clazz->interface)->start = start;
+	((OperationInterface *) clazz->interface)->waitUntilFinished = waitUntilFinished;
 }
 
 /**
@@ -231,19 +231,21 @@ static void initialize(Class *clazz) {
  * @memberof Operation
  */
 Class *_Operation(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Operation";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Operation);
-		clazz.interfaceOffset = offsetof(Operation, interface);
-		clazz.interfaceSize = sizeof(OperationInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Operation",
+			.superclass = _Object(),
+			.instanceSize = sizeof(Operation),
+			.interfaceOffset = offsetof(Operation, interface),
+			.interfaceSize = sizeof(OperationInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

@@ -50,9 +50,9 @@ static URLSessionConfiguration *init(URLSessionConfiguration *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((URLSessionConfigurationInterface *) clazz->def->interface)->init = init;
+	((URLSessionConfigurationInterface *) clazz->interface)->init = init;
 }
 
 /**
@@ -60,19 +60,21 @@ static void initialize(Class *clazz) {
  * @memberof URLSessionConfiguration
  */
 Class *_URLSessionConfiguration(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "URLSessionConfiguration";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(URLSessionConfiguration);
-		clazz.interfaceOffset = offsetof(URLSessionConfiguration, interface);
-		clazz.interfaceSize = sizeof(URLSessionConfigurationInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "URLSessionConfiguration",
+			.superclass = _Object(),
+			.instanceSize = sizeof(URLSessionConfiguration),
+			.interfaceOffset = offsetof(URLSessionConfiguration, interface),
+			.interfaceSize = sizeof(URLSessionConfigurationInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

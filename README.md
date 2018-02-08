@@ -197,9 +197,9 @@ static void sayHello(const Hello *self) {
  */
 static void initialize(Class *clazz) {
  
-	((HelloInterface *) clazz->def->interface)->helloWithGreeting = helloWithGreeting;
-	((HelloInterface *) clazz->def->interface)->initWithGreeting = initWithGreeting;
-	((HelloInterface *) clazz->def->interface)->sayHello = sayHello;
+	((HelloInterface *) clazz->interface)->helloWithGreeting = helloWithGreeting;
+	((HelloInterface *) clazz->interface)->initWithGreeting = initWithGreeting;
+	((HelloInterface *) clazz->interface)->sayHello = sayHello;
 }
 
 /**
@@ -207,19 +207,21 @@ static void initialize(Class *clazz) {
  * @memberof Hello
  */
 Class *_Hello(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Hello";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Hello);
-		clazz.interfaceOffset = offsetof(Hello, interface);
-		clazz.interfaceSize = sizeof(HelloInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Hello",
+			.superclass = _Object(),
+			.instanceSize = sizeof(Hello),
+			.interfaceOffset = offsetof(Hello, interface),
+			.interfaceSize = sizeof(HelloInterface),
+			.initialize = initialize
+		});
 	});
  
-	return &clazz;
+	return clazz;
 };
     
 #undef _Class
@@ -228,7 +230,7 @@ Class *_Hello(void) {
 Using a type
 ---
 ```c
-Hello *hello = $$(Hello, helloWithGreeting, NULL);
+Hello *hello = $(alloc(Hello), initWithGreeting, NULL);
 
 $(hello, sayHello);
 
@@ -261,8 +263,8 @@ Overriding a method
 To override a method, overwrite the function pointer from within your Class' `initialize` method.
 
 ```c
-    ((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
-    ((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
+    ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+    ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 ```
 
 Calling super

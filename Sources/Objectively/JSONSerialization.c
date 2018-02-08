@@ -468,8 +468,8 @@ static ident objectFromData(const Data *data, int options) {
  */
 static void initialize(Class *clazz) {
 
-	((JSONSerializationInterface *) clazz->def->interface)->dataFromObject = dataFromObject;
-	((JSONSerializationInterface *) clazz->def->interface)->objectFromData = objectFromData;
+	((JSONSerializationInterface *) clazz->interface)->dataFromObject = dataFromObject;
+	((JSONSerializationInterface *) clazz->interface)->objectFromData = objectFromData;
 }
 
 /**
@@ -477,19 +477,21 @@ static void initialize(Class *clazz) {
  * @memberof JSONSerialization
  */
 Class *_JSONSerialization(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "JSONSerialization";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(JSONSerialization);
-		clazz.interfaceOffset = offsetof(JSONSerialization, interface);
-		clazz.interfaceSize = sizeof(JSONSerializationInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "JSONSerialization",
+			.superclass = _Object(),
+			.instanceSize = sizeof(JSONSerialization),
+			.interfaceOffset = offsetof(JSONSerialization, interface),
+			.interfaceSize = sizeof(JSONSerializationInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

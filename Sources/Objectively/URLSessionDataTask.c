@@ -87,9 +87,9 @@ static void setup(URLSessionTask *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((URLSessionTaskInterface *) clazz->def->interface)->setup = setup;
+	((URLSessionTaskInterface *) clazz->interface)->setup = setup;
 }
 
 /**
@@ -97,19 +97,21 @@ static void initialize(Class *clazz) {
  * @memberof URLSessionDataTask
  */
 Class *_URLSessionDataTask(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "URLSessionDataTask";
-		clazz.superclass = _URLSessionTask();
-		clazz.instanceSize = sizeof(URLSessionDataTask);
-		clazz.interfaceOffset = offsetof(URLSessionDataTask, interface);
-		clazz.interfaceSize = sizeof(URLSessionDataTaskInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "URLSessionDataTask",
+			.superclass = _URLSessionTask(),
+			.instanceSize = sizeof(URLSessionDataTask),
+			.interfaceOffset = offsetof(URLSessionDataTask, interface),
+			.interfaceSize = sizeof(URLSessionDataTaskInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

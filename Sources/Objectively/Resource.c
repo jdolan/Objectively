@@ -157,14 +157,14 @@ static void setProvider(ResourceProvider resourceProvider) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((ResourceInterface *) clazz->def->interface)->addResourcePath = addResourcePath;
-	((ResourceInterface *) clazz->def->interface)->initWithData = initWithData;
-	((ResourceInterface *) clazz->def->interface)->initWithName = initWithName;
-	((ResourceInterface *) clazz->def->interface)->removeResourcePath = removeResourcePath;
-	((ResourceInterface *) clazz->def->interface)->resourceWithName = resourceWithName;
-	((ResourceInterface *) clazz->def->interface)->setProvider = setProvider;
+	((ResourceInterface *) clazz->interface)->addResourcePath = addResourcePath;
+	((ResourceInterface *) clazz->interface)->initWithData = initWithData;
+	((ResourceInterface *) clazz->interface)->initWithName = initWithName;
+	((ResourceInterface *) clazz->interface)->removeResourcePath = removeResourcePath;
+	((ResourceInterface *) clazz->interface)->resourceWithName = resourceWithName;
+	((ResourceInterface *) clazz->interface)->setProvider = setProvider;
 
 	_resourcePaths = $(alloc(MutableArray), init);
 	assert(_resourcePaths);
@@ -198,20 +198,22 @@ static void destroy(Class *clazz) {
  * @memberof Resource
  */
 Class *_Resource(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Resource";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Resource);
-		clazz.interfaceOffset = offsetof(Resource, interface);
-		clazz.interfaceSize = sizeof(ResourceInterface);
-		clazz.initialize = initialize;
-		clazz.destroy = destroy;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Resource",
+			.superclass = _Object(),
+			.instanceSize = sizeof(Resource),
+			.interfaceOffset = offsetof(Resource, interface),
+			.interfaceSize = sizeof(ResourceInterface),
+			.initialize = initialize,
+			.destroy = destroy,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

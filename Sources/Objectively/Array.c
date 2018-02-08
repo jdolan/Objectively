@@ -446,30 +446,30 @@ static Array *sortedArray(const Array *self, Comparator comparator) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->def->interface)->description = description;
-	((ObjectInterface *) clazz->def->interface)->hash = hash;
-	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->description = description;
+	((ObjectInterface *) clazz->interface)->hash = hash;
+	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((ArrayInterface *) clazz->def->interface)->arrayWithArray = arrayWithArray;
-	((ArrayInterface *) clazz->def->interface)->arrayWithObjects = arrayWithObjects;
-	((ArrayInterface *) clazz->def->interface)->componentsJoinedByCharacters = componentsJoinedByCharacters;
-	((ArrayInterface *) clazz->def->interface)->componentsJoinedByString = componentsJoinedByString;
-	((ArrayInterface *) clazz->def->interface)->containsObject = containsObject;
-	((ArrayInterface *) clazz->def->interface)->enumerateObjects = enumerateObjects;
-	((ArrayInterface *) clazz->def->interface)->filteredArray = filteredArray;
-	((ArrayInterface *) clazz->def->interface)->findObject = findObject;
-	((ArrayInterface *) clazz->def->interface)->firstObject = firstObject;
-	((ArrayInterface *) clazz->def->interface)->indexOfObject = indexOfObject;
-	((ArrayInterface *) clazz->def->interface)->initWithArray = initWithArray;
-	((ArrayInterface *) clazz->def->interface)->initWithObjects = initWithObjects;
-	((ArrayInterface *) clazz->def->interface)->lastObject = lastObject;
-	((ArrayInterface *) clazz->def->interface)->mappedArray = mappedArray;
-	((ArrayInterface *) clazz->def->interface)->mutableCopy = mutableCopy;
-	((ArrayInterface *) clazz->def->interface)->objectAtIndex = objectAtIndex;
-	((ArrayInterface *) clazz->def->interface)->reduce = reduce;
-	((ArrayInterface *) clazz->def->interface)->sortedArray = sortedArray;
+	((ArrayInterface *) clazz->interface)->arrayWithArray = arrayWithArray;
+	((ArrayInterface *) clazz->interface)->arrayWithObjects = arrayWithObjects;
+	((ArrayInterface *) clazz->interface)->componentsJoinedByCharacters = componentsJoinedByCharacters;
+	((ArrayInterface *) clazz->interface)->componentsJoinedByString = componentsJoinedByString;
+	((ArrayInterface *) clazz->interface)->containsObject = containsObject;
+	((ArrayInterface *) clazz->interface)->enumerateObjects = enumerateObjects;
+	((ArrayInterface *) clazz->interface)->filteredArray = filteredArray;
+	((ArrayInterface *) clazz->interface)->findObject = findObject;
+	((ArrayInterface *) clazz->interface)->firstObject = firstObject;
+	((ArrayInterface *) clazz->interface)->indexOfObject = indexOfObject;
+	((ArrayInterface *) clazz->interface)->initWithArray = initWithArray;
+	((ArrayInterface *) clazz->interface)->initWithObjects = initWithObjects;
+	((ArrayInterface *) clazz->interface)->lastObject = lastObject;
+	((ArrayInterface *) clazz->interface)->mappedArray = mappedArray;
+	((ArrayInterface *) clazz->interface)->mutableCopy = mutableCopy;
+	((ArrayInterface *) clazz->interface)->objectAtIndex = objectAtIndex;
+	((ArrayInterface *) clazz->interface)->reduce = reduce;
+	((ArrayInterface *) clazz->interface)->sortedArray = sortedArray;
 }
 
 /**
@@ -477,19 +477,21 @@ static void initialize(Class *clazz) {
  * @memberof Array
  */
 Class *_Array(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Array";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Array);
-		clazz.interfaceOffset = offsetof(Array, interface);
-		clazz.interfaceSize = sizeof(ArrayInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Array",
+			.superclass = _Object(),
+			.instanceSize = sizeof(Array),
+			.interfaceOffset = offsetof(Array, interface),
+			.interfaceSize = sizeof(ArrayInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

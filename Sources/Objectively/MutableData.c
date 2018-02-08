@@ -161,16 +161,16 @@ static void setLength(MutableData *self, size_t length) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->copy = copy;
 
-	((MutableDataInterface *) clazz->def->interface)->appendBytes = appendBytes;
-	((MutableDataInterface *) clazz->def->interface)->appendData = appendData;
-	((MutableDataInterface *) clazz->def->interface)->data = data;
-	((MutableDataInterface *) clazz->def->interface)->dataWithCapacity = dataWithCapacity;
-	((MutableDataInterface *) clazz->def->interface)->init = init;
-	((MutableDataInterface *) clazz->def->interface)->initWithCapacity = initWithCapacity;
-	((MutableDataInterface *) clazz->def->interface)->initWithData = initWithData;
-	((MutableDataInterface *) clazz->def->interface)->setLength = setLength;
+	((MutableDataInterface *) clazz->interface)->appendBytes = appendBytes;
+	((MutableDataInterface *) clazz->interface)->appendData = appendData;
+	((MutableDataInterface *) clazz->interface)->data = data;
+	((MutableDataInterface *) clazz->interface)->dataWithCapacity = dataWithCapacity;
+	((MutableDataInterface *) clazz->interface)->init = init;
+	((MutableDataInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
+	((MutableDataInterface *) clazz->interface)->initWithData = initWithData;
+	((MutableDataInterface *) clazz->interface)->setLength = setLength;
 }
 
 /**
@@ -178,19 +178,21 @@ static void initialize(Class *clazz) {
  * @memberof MutableData
  */
 Class *_MutableData(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "MutableData";
-		clazz.superclass = _Data();
-		clazz.instanceSize = sizeof(MutableData);
-		clazz.interfaceOffset = offsetof(MutableData, interface);
-		clazz.interfaceSize = sizeof(MutableDataInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "MutableData",
+			.superclass = _Data(),
+			.instanceSize = sizeof(MutableData),
+			.interfaceOffset = offsetof(MutableData, interface),
+			.interfaceSize = sizeof(MutableDataInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

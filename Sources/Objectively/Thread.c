@@ -185,17 +185,17 @@ static void start(Thread *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((ThreadInterface *) clazz->def->interface)->cancel = cancel;
-	((ThreadInterface *) clazz->def->interface)->currentThread = currentThread;
-	((ThreadInterface *) clazz->def->interface)->detach = detach;
-	((ThreadInterface *) clazz->def->interface)->init = init;
-	((ThreadInterface *) clazz->def->interface)->initWithFunction = initWithFunction;
-	((ThreadInterface *) clazz->def->interface)->join = join;
-	((ThreadInterface *) clazz->def->interface)->kill = _kill;
-	((ThreadInterface *) clazz->def->interface)->start = start;
+	((ThreadInterface *) clazz->interface)->cancel = cancel;
+	((ThreadInterface *) clazz->interface)->currentThread = currentThread;
+	((ThreadInterface *) clazz->interface)->detach = detach;
+	((ThreadInterface *) clazz->interface)->init = init;
+	((ThreadInterface *) clazz->interface)->initWithFunction = initWithFunction;
+	((ThreadInterface *) clazz->interface)->join = join;
+	((ThreadInterface *) clazz->interface)->kill = _kill;
+	((ThreadInterface *) clazz->interface)->start = start;
 }
 
 /**
@@ -203,19 +203,21 @@ static void initialize(Class *clazz) {
  * @memberof Thread
  */
 Class *_Thread(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Thread";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Thread);
-		clazz.interfaceOffset = offsetof(Thread, interface);
-		clazz.interfaceSize = sizeof(ThreadInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Thread",
+			.superclass = _Object(),
+			.instanceSize = sizeof(Thread),
+			.interfaceOffset = offsetof(Thread, interface),
+			.interfaceSize = sizeof(ThreadInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

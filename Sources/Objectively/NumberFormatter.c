@@ -79,9 +79,9 @@ static String *stringFromNumber(const NumberFormatter *self, const Number *numbe
  */
 static void initialize(Class *clazz) {
 
-	((NumberFormatterInterface *) clazz->def->interface)->numberFromString = numberFromString;
-	((NumberFormatterInterface *) clazz->def->interface)->initWithFormat = initWithFormat;
-	((NumberFormatterInterface *) clazz->def->interface)->stringFromNumber = stringFromNumber;
+	((NumberFormatterInterface *) clazz->interface)->numberFromString = numberFromString;
+	((NumberFormatterInterface *) clazz->interface)->initWithFormat = initWithFormat;
+	((NumberFormatterInterface *) clazz->interface)->stringFromNumber = stringFromNumber;
 }
 
 /**
@@ -89,19 +89,21 @@ static void initialize(Class *clazz) {
  * @memberof NumberFormatter
  */
 Class *_NumberFormatter(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "NumberFormatter";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(NumberFormatter);
-		clazz.interfaceOffset = offsetof(NumberFormatter, interface);
-		clazz.interfaceSize = sizeof(NumberFormatterInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "NumberFormatter",
+			.superclass = _Object(),
+			.instanceSize = sizeof(NumberFormatter),
+			.interfaceOffset = offsetof(NumberFormatter, interface),
+			.interfaceSize = sizeof(NumberFormatterInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

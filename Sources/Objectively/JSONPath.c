@@ -98,7 +98,7 @@ static ident objectForKeyPath(const ident root, const char *path) {
  */
 static void initialize(Class *clazz) {
 
-	((JSONPathInterface *) clazz->def->interface)->objectForKeyPath = objectForKeyPath;
+	((JSONPathInterface *) clazz->interface)->objectForKeyPath = objectForKeyPath;
 
 	_re = re("(.[^.\\[]+|\\[[0-9]+\\])", 0);
 }
@@ -116,20 +116,22 @@ static void destroy(Class *clazz) {
  * @memberof JSONPath
  */
 Class *_JSONPath(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "JSONPath";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(JSONPath);
-		clazz.interfaceOffset = offsetof(JSONPath, interface);
-		clazz.interfaceSize = sizeof(JSONPathInterface);
-		clazz.initialize = initialize;
-		clazz.destroy = destroy;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "JSONPath",
+			.superclass = _Object(),
+			.instanceSize = sizeof(JSONPath),
+			.interfaceOffset = offsetof(JSONPath, interface),
+			.interfaceSize = sizeof(JSONPathInterface),
+			.initialize = initialize,
+			.destroy = destroy,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

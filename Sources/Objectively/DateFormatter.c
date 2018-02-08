@@ -117,10 +117,10 @@ static String *stringFromDate(const DateFormatter *self, const Date *date) {
  */
 static void initialize(Class *clazz) {
 
-	((DateFormatterInterface *) clazz->def->interface)->dateFromCharacters = dateFromCharacters;
-	((DateFormatterInterface *) clazz->def->interface)->dateFromString = dateFromString;
-	((DateFormatterInterface *) clazz->def->interface)->initWithFormat = initWithFormat;
-	((DateFormatterInterface *) clazz->def->interface)->stringFromDate = stringFromDate;
+	((DateFormatterInterface *) clazz->interface)->dateFromCharacters = dateFromCharacters;
+	((DateFormatterInterface *) clazz->interface)->dateFromString = dateFromString;
+	((DateFormatterInterface *) clazz->interface)->initWithFormat = initWithFormat;
+	((DateFormatterInterface *) clazz->interface)->stringFromDate = stringFromDate;
 
 	tzset();
 }
@@ -130,19 +130,21 @@ static void initialize(Class *clazz) {
  * @memberof DateFormatter
  */
 Class *_DateFormatter(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "DateFormatter";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(DateFormatter);
-		clazz.interfaceOffset = offsetof(DateFormatter, interface);
-		clazz.interfaceSize = sizeof(DateFormatterInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "DateFormatter",
+			.superclass = _Object(),
+			.instanceSize = sizeof(DateFormatter),
+			.interfaceOffset = offsetof(DateFormatter, interface),
+			.interfaceSize = sizeof(DateFormatterInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

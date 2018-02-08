@@ -107,11 +107,11 @@ void setValueForHTTPHeaderField(URLRequest *self, const char *value, const char 
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((URLRequestInterface *) clazz->def->interface)->initWithURL = initWithURL;
-	((URLRequestInterface *) clazz->def->interface)->setValueForHTTPHeaderField = setValueForHTTPHeaderField;
+	((URLRequestInterface *) clazz->interface)->initWithURL = initWithURL;
+	((URLRequestInterface *) clazz->interface)->setValueForHTTPHeaderField = setValueForHTTPHeaderField;
 }
 
 /**
@@ -119,19 +119,21 @@ static void initialize(Class *clazz) {
  * @memberof URLRequest
  */
 Class *_URLRequest(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "URLRequest";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(URLRequest);
-		clazz.interfaceOffset = offsetof(URLRequest, interface);
-		clazz.interfaceSize = sizeof(URLRequestInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "URLRequest",
+			.superclass = _Object(),
+			.instanceSize = sizeof(URLRequest),
+			.interfaceOffset = offsetof(URLRequest, interface),
+			.interfaceSize = sizeof(URLRequestInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

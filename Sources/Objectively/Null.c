@@ -63,9 +63,9 @@ static Null *null(void) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->copy = copy;
 
-	((NullInterface *) clazz->def->interface)->null = null;
+	((NullInterface *) clazz->interface)->null = null;
 }
 
 /**
@@ -81,20 +81,22 @@ static void destroy(Class *clazz) {
  * @memberof Null
  */
 Class *_Null(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Null";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Null);
-		clazz.interfaceOffset = offsetof(Null, interface);
-		clazz.interfaceSize = sizeof(NullInterface);
-		clazz.initialize = initialize;
-		clazz.destroy = destroy;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Null",
+			.superclass = _Object(),
+			.instanceSize = sizeof(Null),
+			.interfaceOffset = offsetof(Null, interface),
+			.interfaceSize = sizeof(NullInterface),
+			.initialize = initialize,
+			.destroy = destroy,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

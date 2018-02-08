@@ -113,13 +113,13 @@ static void unlock(Lock *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((LockInterface *) clazz->def->interface)->init = init;
-	((LockInterface *) clazz->def->interface)->lock = lock;
-	((LockInterface *) clazz->def->interface)->tryLock = tryLock;
-	((LockInterface *) clazz->def->interface)->unlock = unlock;
+	((LockInterface *) clazz->interface)->init = init;
+	((LockInterface *) clazz->interface)->lock = lock;
+	((LockInterface *) clazz->interface)->tryLock = tryLock;
+	((LockInterface *) clazz->interface)->unlock = unlock;
 }
 
 /**
@@ -127,19 +127,21 @@ static void initialize(Class *clazz) {
  * @memberof Lock
  */
 Class *_Lock(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Lock";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Lock);
-		clazz.interfaceOffset = offsetof(Lock, interface);
-		clazz.interfaceSize = sizeof(LockInterface);
-		clazz.initialize = initialize;
-	});;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Lock",
+			.superclass = _Object(),
+			.instanceSize = sizeof(Lock),
+			.interfaceOffset = offsetof(Lock, interface),
+			.interfaceSize = sizeof(LockInterface),
+			.initialize = initialize,
+		});
+	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

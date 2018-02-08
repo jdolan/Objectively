@@ -125,13 +125,13 @@ static _Bool waitUntilDate(Condition *self, const Date *date) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((ConditionInterface *) clazz->def->interface)->broadcast = broadcast;
-	((ConditionInterface *) clazz->def->interface)->init = init;
-	((ConditionInterface *) clazz->def->interface)->signal = _signal;
-	((ConditionInterface *) clazz->def->interface)->wait = _wait;
-	((ConditionInterface *) clazz->def->interface)->waitUntilDate = waitUntilDate;
+	((ConditionInterface *) clazz->interface)->broadcast = broadcast;
+	((ConditionInterface *) clazz->interface)->init = init;
+	((ConditionInterface *) clazz->interface)->signal = _signal;
+	((ConditionInterface *) clazz->interface)->wait = _wait;
+	((ConditionInterface *) clazz->interface)->waitUntilDate = waitUntilDate;
 }
 
 /**
@@ -139,19 +139,21 @@ static void initialize(Class *clazz) {
  * @memberof Condition
  */
 Class *_Condition(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Condition";
-		clazz.superclass = _Lock();
-		clazz.instanceSize = sizeof(Condition);
-		clazz.interfaceOffset = offsetof(Condition, interface);
-		clazz.interfaceSize = sizeof(ConditionInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Condition",
+			.superclass = _Lock(),
+			.instanceSize = sizeof(Condition),
+			.interfaceOffset = offsetof(Condition, interface),
+			.interfaceSize = sizeof(ConditionInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

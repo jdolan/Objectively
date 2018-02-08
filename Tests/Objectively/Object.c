@@ -30,7 +30,7 @@ START_TEST(object)
 		Class *clazz = classForName("Object");
 		ck_assert(clazz);
 
-		ck_assert_ptr_eq(&_Object()->def->descriptor, clazz);
+		ck_assert_ptr_eq(_Object(), clazz);
 
 		Object *object = $(alloc(Object), init);
 

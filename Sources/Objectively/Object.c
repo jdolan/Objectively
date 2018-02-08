@@ -38,10 +38,10 @@
  */
 static Object *copy(const Object *self) {
 
-	ident obj = calloc(1, self->clazz->instanceSize);
+	ident obj = calloc(1, self->clazz->def.instanceSize);
 	assert(obj);
 
-	Object *object = memcpy(obj, self, self->clazz->instanceSize);
+	Object *object = memcpy(obj, self, self->clazz->def.instanceSize);
 	object->referenceCount = 1;
 
 	return object;
@@ -62,7 +62,7 @@ static void dealloc(Object *self) {
  */
 static String *description(const Object *self) {
 
-	return $(alloc(String), initWithFormat, "%s@%p", self->clazz->name, self);
+	return $(alloc(String), initWithFormat, "%s@%p", self->clazz->def.name, self);
 }
 
 /**
@@ -107,7 +107,7 @@ static _Bool isKindOfClass(const Object *self, const Class *clazz) {
 		if (memcmp(c, clazz, sizeof(*c)) == 0) {
 			return true;
 		}
-		c = c->superclass;
+		c = c->def.superclass;
 	}
 
 	return false;
@@ -120,13 +120,13 @@ static _Bool isKindOfClass(const Object *self, const Class *clazz) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->def->interface)->description = description;
-	((ObjectInterface *) clazz->def->interface)->hash = hash;
-	((ObjectInterface *) clazz->def->interface)->init = init;
-	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
-	((ObjectInterface *) clazz->def->interface)->isKindOfClass = isKindOfClass;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->description = description;
+	((ObjectInterface *) clazz->interface)->hash = hash;
+	((ObjectInterface *) clazz->interface)->init = init;
+	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+	((ObjectInterface *) clazz->interface)->isKindOfClass = isKindOfClass;
 }
 
 /**
@@ -134,18 +134,20 @@ static void initialize(Class *clazz) {
  * @memberof Object
  */
 Class *_Object(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Object";
-		clazz.instanceSize = sizeof(Object);
-		clazz.interfaceOffset = offsetof(Object, interface);
-		clazz.interfaceSize = sizeof(ObjectInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Object",
+			.instanceSize = sizeof(Object),
+			.interfaceOffset = offsetof(Object, interface),
+			.interfaceSize = sizeof(ObjectInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class
