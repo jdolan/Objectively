@@ -31,20 +31,11 @@
  * @brief Classes describe the state and behavior of an Objectively type.
  */
 
-/**
- * @brief Initialized Classes reflect this value as their first word.
- */
-#define CLASS_MAGIC 0xabcdef
-
 typedef struct ClassDef ClassDef;
 typedef struct Class Class;
 
 /**
- * @brief Classes describe the state and behavior of an Objectively type.
- * @details Classes are the bridge between Objects and their interfaces. They provide an entry
- * point to the framework via the library function <code>_alloc</code>.
- * @details Each Class describes a type and initializes an interface. Each instance of that type
- * will reference the Class and, in turn, its interface.
+ * @brief ClassDefs are passed to `_initialize` via an _archetype_ to initialize a Class.
  * @ingroup Core
  */
 struct ClassDef {
@@ -103,6 +94,9 @@ struct ClassDef {
  */
 struct Class {
 
+	/**
+	 * @brief The Class definition.
+	 */
 	ClassDef def;
 
 	/**
