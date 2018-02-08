@@ -144,7 +144,6 @@ static void deleteCharactersInRange(MutableString *self, const Range range) {
  * @memberof MutableString
  */
 static MutableString *init(MutableString *self) {
-
 	return $(self, initWithCapacity, 0);
 }
 
