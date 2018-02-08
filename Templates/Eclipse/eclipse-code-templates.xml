@@ -56,19 +56,21 @@ static void initialize(Class *clazz) {
  * @memberof ${file_base}
  */
 Class *_${file_base}(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&amp;once, {
-		clazz.name = "${file_base}";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(${file_base});
-		clazz.interfaceOffset = offsetof(${file_base}, interface);
-		clazz.interfaceSize = sizeof(${file_base}Interface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&amp;(const ClassDef) {
+			.name = "${file_base}",
+			.superclass = _Object(),
+			.instanceSize = sizeof(${file_base}),
+			.interfaceOffset = offsetof(${file_base}, interface),
+			.interfaceSize = sizeof(${file_base}Interface),
+			.initialize = initialize,
+		});
 	});
 
-	return &amp;clazz;
+	return clazz;
 }
 
 #undef _Class

@@ -232,17 +232,17 @@ static void waitUntilAllOperationsAreFinished(OperationQueue *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((OperationQueueInterface *) clazz->def->interface)->addOperation = addOperation;
-	((OperationQueueInterface *) clazz->def->interface)->cancelAllOperations = cancelAllOperations;
-	((OperationQueueInterface *) clazz->def->interface)->currentQueue = currentQueue;
-	((OperationQueueInterface *) clazz->def->interface)->init = init;
-	((OperationQueueInterface *) clazz->def->interface)->operationCount = operationCount;
-	((OperationQueueInterface *) clazz->def->interface)->operations = operations;
-	((OperationQueueInterface *) clazz->def->interface)->removeOperation = removeOperation;
-	((OperationQueueInterface *) clazz->def->interface)->waitUntilAllOperationsAreFinished = waitUntilAllOperationsAreFinished;
+	((OperationQueueInterface *) clazz->interface)->addOperation = addOperation;
+	((OperationQueueInterface *) clazz->interface)->cancelAllOperations = cancelAllOperations;
+	((OperationQueueInterface *) clazz->interface)->currentQueue = currentQueue;
+	((OperationQueueInterface *) clazz->interface)->init = init;
+	((OperationQueueInterface *) clazz->interface)->operationCount = operationCount;
+	((OperationQueueInterface *) clazz->interface)->operations = operations;
+	((OperationQueueInterface *) clazz->interface)->removeOperation = removeOperation;
+	((OperationQueueInterface *) clazz->interface)->waitUntilAllOperationsAreFinished = waitUntilAllOperationsAreFinished;
 }
 
 /**
@@ -250,18 +250,21 @@ static void initialize(Class *clazz) {
  * @memberof OperationQueue
  */
 Class *_OperationQueue(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "OperationQueue";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(OperationQueue);
-		clazz.interfaceOffset = offsetof(OperationQueue, interface);
-		clazz.interfaceSize = sizeof(OperationQueueInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "OperationQueue",
+			.superclass = _Object(),
+			.instanceSize = sizeof(OperationQueue),
+			.interfaceOffset = offsetof(OperationQueue, interface),
+			.interfaceSize = sizeof(OperationQueueInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
+
 #undef _Class

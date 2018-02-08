@@ -219,16 +219,16 @@ static Array *pathComponents(const URL *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->def->interface)->description = description;
-	((ObjectInterface *) clazz->def->interface)->hash = hash;
-	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->description = description;
+	((ObjectInterface *) clazz->interface)->hash = hash;
+	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((URLInterface *) clazz->def->interface)->baseURL = baseURL;
-	((URLInterface *) clazz->def->interface)->initWithCharacters = initWithCharacters;
-	((URLInterface *) clazz->def->interface)->initWithString = initWithString;
-	((URLInterface *) clazz->def->interface)->pathComponents = pathComponents;
+	((URLInterface *) clazz->interface)->baseURL = baseURL;
+	((URLInterface *) clazz->interface)->initWithCharacters = initWithCharacters;
+	((URLInterface *) clazz->interface)->initWithString = initWithString;
+	((URLInterface *) clazz->interface)->pathComponents = pathComponents;
 
 	_re = re("([a-z]+)://([^:/\?]+)?(:[0-9]+)?(/[^\?#]+)?([^#]+)?(#.*)?", 0);
 }
@@ -246,20 +246,22 @@ static void destroy(Class *clazz) {
  * @memberof URL
  */
 Class *_URL(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "URL";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(URL);
-		clazz.interfaceOffset = offsetof(URL, interface);
-		clazz.interfaceSize = sizeof(URLInterface);
-		clazz.initialize = initialize;
-		clazz.destroy = destroy;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "URL",
+			.superclass = _Object(),
+			.instanceSize = sizeof(URL),
+			.interfaceOffset = offsetof(URL, interface),
+			.interfaceSize = sizeof(URLInterface),
+			.initialize = initialize,
+			.destroy = destroy,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

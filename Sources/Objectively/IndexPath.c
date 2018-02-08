@@ -162,15 +162,15 @@ static IndexPath *initWithIndexes(IndexPath *self, size_t *indexes, size_t lengt
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->def->interface)->description = description;
-	((ObjectInterface *) clazz->def->interface)->hash = hash;
-	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->description = description;
+	((ObjectInterface *) clazz->interface)->hash = hash;
+	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((IndexPathInterface *) clazz->def->interface)->indexAtPosition = indexAtPosition;
-	((IndexPathInterface *) clazz->def->interface)->initWithIndex = initWithIndex;
-	((IndexPathInterface *) clazz->def->interface)->initWithIndexes = initWithIndexes;
+	((IndexPathInterface *) clazz->interface)->indexAtPosition = indexAtPosition;
+	((IndexPathInterface *) clazz->interface)->initWithIndex = initWithIndex;
+	((IndexPathInterface *) clazz->interface)->initWithIndexes = initWithIndexes;
 }
 
 /**
@@ -178,19 +178,21 @@ static void initialize(Class *clazz) {
  * @memberof IndexPath
  */
 Class *_IndexPath(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "IndexPath";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(IndexPath);
-		clazz.interfaceOffset = offsetof(IndexPath, interface);
-		clazz.interfaceSize = sizeof(IndexPathInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "IndexPath",
+			.superclass = _Object(),
+			.instanceSize = sizeof(IndexPath),
+			.interfaceOffset = offsetof(IndexPath, interface),
+			.interfaceSize = sizeof(IndexPathInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

@@ -399,25 +399,25 @@ static Set *setWithSet(const Set *set) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->def->interface)->description = description;
-	((ObjectInterface *) clazz->def->interface)->hash = hash;
-	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->description = description;
+	((ObjectInterface *) clazz->interface)->hash = hash;
+	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((SetInterface *) clazz->def->interface)->allObjects = allObjects;
-	((SetInterface *) clazz->def->interface)->containsObject = containsObject;
-	((SetInterface *) clazz->def->interface)->enumerateObjects = enumerateObjects;
-	((SetInterface *) clazz->def->interface)->filteredSet = filteredSet;
-	((SetInterface *) clazz->def->interface)->initWithArray = initWithArray;
-	((SetInterface *) clazz->def->interface)->initWithSet = initWithSet;
-	((SetInterface *) clazz->def->interface)->initWithObjects = initWithObjects;
-	((SetInterface *) clazz->def->interface)->mappedSet = mappedSet;
-	((SetInterface *) clazz->def->interface)->mutableCopy = mutableCopy;
-	((SetInterface *) clazz->def->interface)->reduce = reduce;
-	((SetInterface *) clazz->def->interface)->setWithArray = setWithArray;
-	((SetInterface *) clazz->def->interface)->setWithObjects = setWithObjects;
-	((SetInterface *) clazz->def->interface)->setWithSet = setWithSet;
+	((SetInterface *) clazz->interface)->allObjects = allObjects;
+	((SetInterface *) clazz->interface)->containsObject = containsObject;
+	((SetInterface *) clazz->interface)->enumerateObjects = enumerateObjects;
+	((SetInterface *) clazz->interface)->filteredSet = filteredSet;
+	((SetInterface *) clazz->interface)->initWithArray = initWithArray;
+	((SetInterface *) clazz->interface)->initWithSet = initWithSet;
+	((SetInterface *) clazz->interface)->initWithObjects = initWithObjects;
+	((SetInterface *) clazz->interface)->mappedSet = mappedSet;
+	((SetInterface *) clazz->interface)->mutableCopy = mutableCopy;
+	((SetInterface *) clazz->interface)->reduce = reduce;
+	((SetInterface *) clazz->interface)->setWithArray = setWithArray;
+	((SetInterface *) clazz->interface)->setWithObjects = setWithObjects;
+	((SetInterface *) clazz->interface)->setWithSet = setWithSet;
 }
 
 /**
@@ -425,19 +425,21 @@ static void initialize(Class *clazz) {
  * @memberof Set
  */
 Class *_Set(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Set";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Set);
-		clazz.interfaceOffset = offsetof(Set, interface);
-		clazz.interfaceSize = sizeof(SetInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Set",
+			.superclass = _Object(),
+			.instanceSize = sizeof(Set),
+			.interfaceOffset = offsetof(Set, interface),
+			.interfaceSize = sizeof(SetInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

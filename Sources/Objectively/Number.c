@@ -175,20 +175,20 @@ static short shortValue(const Number *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->description = description;
-	((ObjectInterface *) clazz->def->interface)->hash = hash;
-	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
+	((ObjectInterface *) clazz->interface)->description = description;
+	((ObjectInterface *) clazz->interface)->hash = hash;
+	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((NumberInterface *) clazz->def->interface)->boolValue = boolValue;
-	((NumberInterface *) clazz->def->interface)->charValue = charValue;
-	((NumberInterface *) clazz->def->interface)->compareTo = compareTo;
-	((NumberInterface *) clazz->def->interface)->doubleValue = doubleValue;
-	((NumberInterface *) clazz->def->interface)->floatValue = floatValue;
-	((NumberInterface *) clazz->def->interface)->longValue = longValue;
-	((NumberInterface *) clazz->def->interface)->initWithValue = initWithValue;
-	((NumberInterface *) clazz->def->interface)->intValue = intValue;
-	((NumberInterface *) clazz->def->interface)->numberWithValue = numberWithValue;
-	((NumberInterface *) clazz->def->interface)->shortValue = shortValue;
+	((NumberInterface *) clazz->interface)->boolValue = boolValue;
+	((NumberInterface *) clazz->interface)->charValue = charValue;
+	((NumberInterface *) clazz->interface)->compareTo = compareTo;
+	((NumberInterface *) clazz->interface)->doubleValue = doubleValue;
+	((NumberInterface *) clazz->interface)->floatValue = floatValue;
+	((NumberInterface *) clazz->interface)->longValue = longValue;
+	((NumberInterface *) clazz->interface)->initWithValue = initWithValue;
+	((NumberInterface *) clazz->interface)->intValue = intValue;
+	((NumberInterface *) clazz->interface)->numberWithValue = numberWithValue;
+	((NumberInterface *) clazz->interface)->shortValue = shortValue;
 }
 
 /**
@@ -196,19 +196,21 @@ static void initialize(Class *clazz) {
  * @memberof Number
  */
 Class *_Number(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Number";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Number);
-		clazz.interfaceOffset = offsetof(Number, interface);
-		clazz.interfaceSize = sizeof(NumberInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Number",
+			.superclass = _Object(),
+			.instanceSize = sizeof(Number),
+			.interfaceOffset = offsetof(Number, interface),
+			.interfaceSize = sizeof(NumberInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

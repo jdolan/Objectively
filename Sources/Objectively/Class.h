@@ -47,17 +47,7 @@ typedef struct Class Class;
  * will reference the Class and, in turn, its interface.
  * @ingroup Core
  */
-struct Class {
-
-	/**
-	 * @brief Initialized Classes will have `CLASS_MAGIC`.
-	 */
-	volatile int magic;
-
-	/**
-	 * @brief The dynamically allocated Class definition.
-	 */
-	ClassDef *def;
+struct ClassDef {
 
 	/**
 	 * @brief The Class destructor (optional).
@@ -72,8 +62,8 @@ struct Class {
 	 * for populating the Class' `interface` with valid method implementations:
 	 * ```
 	 * static void initialize(Class *clazz) {
-	 *     ((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
-	 *     ((FooInterface *) clazz->def->interface)->bar = bar;
+	 *     ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	 *     ((FooInterface *) clazz->interface)->bar = bar;
 	 * }
 	 * ```
 	 * @remarks Each Class' `interface` is copied from its superclass before this initializer is
@@ -111,12 +101,9 @@ struct Class {
 /**
  * @brief The runtime representation of a Class.
  */
-struct ClassDef {
+struct Class {
 
-	/**
-	 * @brief A dynamically allocated copy of the Class descriptor.
-	 */
-	Class descriptor;
+	ClassDef def;
 
 	/**
 	 * @brief The interface of the Class.
@@ -126,7 +113,7 @@ struct ClassDef {
 	/**
 	 * @brief Provides chaining of initialized Classes.
 	 */
-	ClassDef *next;
+	Class *next;
 };
 
 /**
@@ -134,7 +121,7 @@ struct ClassDef {
  * @param clazz The Class descriptor.
  * @return The initialized Class.
  */
-OBJECTIVELY_EXPORT Class* _initialize(Class *clazz);
+OBJECTIVELY_EXPORT Class* _initialize(const ClassDef *clazz);
 
 /**
  * @brief Instantiate a type through the given Class.
@@ -194,7 +181,7 @@ OBJECTIVELY_EXPORT size_t _pageSize;
  * @brief Resolve the typed interface of a Class.
  */
 #define interfaceof(type, clazz) \
-	((type##Interface *) (clazz)->def->interface)
+	((type##Interface *) (clazz)->interface)
 
 /**
  * @brief Invoke an instance method.
@@ -210,7 +197,6 @@ OBJECTIVELY_EXPORT size_t _pageSize;
  */
 #define $$(type, method, ...) \
 	({ \
-		_initialize(_##type()); \
 		interfaceof(type, _##type())->method(__VA_ARGS__); \
 	})
 
@@ -218,4 +204,4 @@ OBJECTIVELY_EXPORT size_t _pageSize;
  * @brief Invoke a Superclass instance method.
  */
 #define super(type, obj, method, ...) \
-	interfaceof(type, _Class()->superclass)->method(cast(type, obj), ## __VA_ARGS__)
+	interfaceof(type, _Class()->def.superclass)->method(cast(type, obj), ## __VA_ARGS__)

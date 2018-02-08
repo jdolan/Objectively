@@ -50,9 +50,9 @@ static ___FILEBASENAMEASIDENTIFIER___ *init(___FILEBASENAMEASIDENTIFIER___ *self
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((___FILEBASENAMEASIDENTIFIER___Interface *) clazz->def->interface)->init = init;
+	((___FILEBASENAMEASIDENTIFIER___Interface *) clazz->interface)->init = init;
 
 	//..
 }
@@ -62,19 +62,21 @@ static void initialize(Class *clazz) {
  * @memberof ___FILEBASENAMEASIDENTIFIER___
  */
 Class *____FILEBASENAMEASIDENTIFIER___(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "___FILEBASENAMEASIDENTIFIER___";
-		clazz.superclass = ____VARIABLE_superclass:identifier___();
-		clazz.instanceSize = sizeof(___FILEBASENAMEASIDENTIFIER___);
-		clazz.interfaceOffset = offsetof(___FILEBASENAMEASIDENTIFIER___, interface);
-		clazz.interfaceSize = sizeof(___FILEBASENAMEASIDENTIFIER___Interface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "___FILEBASENAMEASIDENTIFIER___",
+			.superclass = ____VARIABLE_superclass:identifier___(),
+			.instanceSize = sizeof(___FILEBASENAMEASIDENTIFIER___),
+			.interfaceOffset = offsetof(___FILEBASENAMEASIDENTIFIER___, interface),
+			.interfaceSize = sizeof(___FILEBASENAMEASIDENTIFIER___Interface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

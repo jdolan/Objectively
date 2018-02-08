@@ -101,12 +101,12 @@ static Boole *valueof(_Bool value) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->description = description;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->description = description;
 
-	((BooleInterface *) clazz->def->interface)->False = False;
-	((BooleInterface *) clazz->def->interface)->True = True;
-	((BooleInterface *) clazz->def->interface)->valueof = valueof;
+	((BooleInterface *) clazz->interface)->False = False;
+	((BooleInterface *) clazz->interface)->True = True;
+	((BooleInterface *) clazz->interface)->valueof = valueof;
 }
 
 /**
@@ -123,20 +123,22 @@ static void destroy(Class *clazz) {
  * @memberof Boole
  */
 Class *_Boole(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Boole";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Boole);
-		clazz.interfaceOffset = offsetof(Boole, interface);
-		clazz.interfaceSize = sizeof(BooleInterface);
-		clazz.initialize = initialize;
-		clazz.destroy = destroy;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Boole",
+			.superclass = _Object(),
+			.instanceSize = sizeof(Boole),
+			.interfaceOffset = offsetof(Boole, interface),
+			.interfaceSize = sizeof(BooleInterface),
+			.initialize = initialize,
+			.destroy = destroy,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

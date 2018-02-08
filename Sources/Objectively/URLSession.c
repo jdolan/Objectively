@@ -344,18 +344,18 @@ static URLSessionUploadTask *uploadTaskWithRequest(URLSession *self, URLRequest 
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((URLSessionInterface *) clazz->def->interface)->dataTaskWithRequest = dataTaskWithRequest;
-	((URLSessionInterface *) clazz->def->interface)->dataTaskWithURL = dataTaskWithURL;
-	((URLSessionInterface *) clazz->def->interface)->downloadTaskWithRequest = downloadTaskWithRequest;
-	((URLSessionInterface *) clazz->def->interface)->downloadTaskWithURL = downloadTaskWithURL;
-	((URLSessionInterface *) clazz->def->interface)->init = init;
-	((URLSessionInterface *) clazz->def->interface)->initWithConfiguration = initWithConfiguration;
-	((URLSessionInterface *) clazz->def->interface)->invalidateAndCancel = invalidateAndCancel;
-	((URLSessionInterface *) clazz->def->interface)->sharedInstance = sharedInstance;
-	((URLSessionInterface *) clazz->def->interface)->tasks = tasks;
-	((URLSessionInterface *) clazz->def->interface)->uploadTaskWithRequest = uploadTaskWithRequest;
+	((URLSessionInterface *) clazz->interface)->dataTaskWithRequest = dataTaskWithRequest;
+	((URLSessionInterface *) clazz->interface)->dataTaskWithURL = dataTaskWithURL;
+	((URLSessionInterface *) clazz->interface)->downloadTaskWithRequest = downloadTaskWithRequest;
+	((URLSessionInterface *) clazz->interface)->downloadTaskWithURL = downloadTaskWithURL;
+	((URLSessionInterface *) clazz->interface)->init = init;
+	((URLSessionInterface *) clazz->interface)->initWithConfiguration = initWithConfiguration;
+	((URLSessionInterface *) clazz->interface)->invalidateAndCancel = invalidateAndCancel;
+	((URLSessionInterface *) clazz->interface)->sharedInstance = sharedInstance;
+	((URLSessionInterface *) clazz->interface)->tasks = tasks;
+	((URLSessionInterface *) clazz->interface)->uploadTaskWithRequest = uploadTaskWithRequest;
 
 	const CURLcode code = curl_global_init(CURL_GLOBAL_ALL);
 	assert(code == CURLE_OK);
@@ -376,20 +376,22 @@ static void destroy(Class *clazz) {
  * @memberof URLSession
  */
 Class *_URLSession(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "URLSession";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(URLSession);
-		clazz.interfaceOffset = offsetof(URLSession, interface);
-		clazz.interfaceSize = sizeof(URLSessionInterface);
-		clazz.initialize = initialize;
-		clazz.destroy = destroy;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "URLSession",
+			.superclass = _Object(),
+			.instanceSize = sizeof(URLSession),
+			.interfaceOffset = offsetof(URLSession, interface),
+			.interfaceSize = sizeof(URLSessionInterface),
+			.initialize = initialize,
+			.destroy = destroy,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

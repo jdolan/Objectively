@@ -273,18 +273,18 @@ static MutableSet *setWithCapacity(size_t capacity) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->copy = copy;
 
-	((MutableSetInterface *) clazz->def->interface)->addObject = addObject;
-	((MutableSetInterface *) clazz->def->interface)->addObjectsFromArray = addObjectsFromArray;
-	((MutableSetInterface *) clazz->def->interface)->addObjectsFromSet = addObjectsFromSet;
-	((MutableSetInterface *) clazz->def->interface)->filter = filter;
-	((MutableSetInterface *) clazz->def->interface)->init = init;
-	((MutableSetInterface *) clazz->def->interface)->initWithCapacity = initWithCapacity;
-	((MutableSetInterface *) clazz->def->interface)->removeAllObjects = removeAllObjects;
-	((MutableSetInterface *) clazz->def->interface)->removeObject = removeObject;
-	((MutableSetInterface *) clazz->def->interface)->set = set;
-	((MutableSetInterface *) clazz->def->interface)->setWithCapacity = setWithCapacity;
+	((MutableSetInterface *) clazz->interface)->addObject = addObject;
+	((MutableSetInterface *) clazz->interface)->addObjectsFromArray = addObjectsFromArray;
+	((MutableSetInterface *) clazz->interface)->addObjectsFromSet = addObjectsFromSet;
+	((MutableSetInterface *) clazz->interface)->filter = filter;
+	((MutableSetInterface *) clazz->interface)->init = init;
+	((MutableSetInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
+	((MutableSetInterface *) clazz->interface)->removeAllObjects = removeAllObjects;
+	((MutableSetInterface *) clazz->interface)->removeObject = removeObject;
+	((MutableSetInterface *) clazz->interface)->set = set;
+	((MutableSetInterface *) clazz->interface)->setWithCapacity = setWithCapacity;
 }
 
 /**
@@ -292,19 +292,21 @@ static void initialize(Class *clazz) {
  * @memberof MutableSet
  */
 Class *_MutableSet(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "MutableSet";
-		clazz.superclass = _Set();
-		clazz.instanceSize = sizeof(MutableSet);
-		clazz.interfaceOffset = offsetof(MutableSet, interface);
-		clazz.interfaceSize = sizeof(MutableSetInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "MutableSet",
+			.superclass = _Set(),
+			.instanceSize = sizeof(MutableSet),
+			.interfaceOffset = offsetof(MutableSet, interface),
+			.interfaceSize = sizeof(MutableSetInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

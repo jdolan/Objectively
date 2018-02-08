@@ -259,21 +259,21 @@ static _Bool writeToFile(const Data *self, const char *path) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->def->interface)->hash = hash;
-	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->hash = hash;
+	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((DataInterface *) clazz->def->interface)->dataWithBytes = dataWithBytes;
-	((DataInterface *) clazz->def->interface)->dataWithConstMemory = dataWithConstMemory;
-	((DataInterface *) clazz->def->interface)->dataWithContentsOfFile = dataWithContentsOfFile;
-	((DataInterface *) clazz->def->interface)->dataWithMemory = dataWithMemory;
-	((DataInterface *) clazz->def->interface)->initWithBytes = initWithBytes;
-	((DataInterface *) clazz->def->interface)->initWithConstMemory = initWithConstMemory;
-	((DataInterface *) clazz->def->interface)->initWithContentsOfFile = initWithContentsOfFile;
-	((DataInterface *) clazz->def->interface)->initWithMemory = initWithMemory;
-	((DataInterface *) clazz->def->interface)->mutableCopy = mutableCopy;
-	((DataInterface *) clazz->def->interface)->writeToFile = writeToFile;
+	((DataInterface *) clazz->interface)->dataWithBytes = dataWithBytes;
+	((DataInterface *) clazz->interface)->dataWithConstMemory = dataWithConstMemory;
+	((DataInterface *) clazz->interface)->dataWithContentsOfFile = dataWithContentsOfFile;
+	((DataInterface *) clazz->interface)->dataWithMemory = dataWithMemory;
+	((DataInterface *) clazz->interface)->initWithBytes = initWithBytes;
+	((DataInterface *) clazz->interface)->initWithConstMemory = initWithConstMemory;
+	((DataInterface *) clazz->interface)->initWithContentsOfFile = initWithContentsOfFile;
+	((DataInterface *) clazz->interface)->initWithMemory = initWithMemory;
+	((DataInterface *) clazz->interface)->mutableCopy = mutableCopy;
+	((DataInterface *) clazz->interface)->writeToFile = writeToFile;
 }
 
 /**
@@ -281,19 +281,21 @@ static void initialize(Class *clazz) {
  * @memberof Data
  */
 Class *_Data(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Data";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Data);
-		clazz.interfaceOffset = offsetof(Data, interface);
-		clazz.interfaceSize = sizeof(DataInterface);
-		clazz.initialize = initialize;
-	});;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Data",
+			.superclass = _Object(),
+			.instanceSize = sizeof(Data),
+			.interfaceOffset = offsetof(Data, interface),
+			.interfaceSize = sizeof(DataInterface),
+			.initialize = initialize,
+		});
+	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

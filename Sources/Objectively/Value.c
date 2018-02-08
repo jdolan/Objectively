@@ -100,11 +100,11 @@ static Value *initWithValue(Value *self, ident value) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->def->interface)->hash = hash;
-	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->hash = hash;
+	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((ValueInterface *) clazz->def->interface)->initWithValue = initWithValue;
+	((ValueInterface *) clazz->interface)->initWithValue = initWithValue;
 }
 
 /**
@@ -112,19 +112,21 @@ static void initialize(Class *clazz) {
  * @memberof Value
  */
 Class *_Value(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Value";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Value);
-		clazz.interfaceOffset = offsetof(Value, interface);
-		clazz.interfaceSize = sizeof(ValueInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Value",
+			.superclass = _Object(),
+			.instanceSize = sizeof(Value),
+			.interfaceOffset = offsetof(Value, interface),
+			.interfaceSize = sizeof(ValueInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

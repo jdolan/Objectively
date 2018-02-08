@@ -173,16 +173,16 @@ static void reset(StringReader *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((StringReaderInterface *) clazz->def->interface)->initWithCharacters = initWithCharacters;
-	((StringReaderInterface *) clazz->def->interface)->initWithString = initWithString;
-	((StringReaderInterface *) clazz->def->interface)->next = next;
-	((StringReaderInterface *) clazz->def->interface)->peek = peek;
-	((StringReaderInterface *) clazz->def->interface)->read = read;
-	((StringReaderInterface *) clazz->def->interface)->readToken = readToken;
-	((StringReaderInterface *) clazz->def->interface)->reset = reset;
+	((StringReaderInterface *) clazz->interface)->initWithCharacters = initWithCharacters;
+	((StringReaderInterface *) clazz->interface)->initWithString = initWithString;
+	((StringReaderInterface *) clazz->interface)->next = next;
+	((StringReaderInterface *) clazz->interface)->peek = peek;
+	((StringReaderInterface *) clazz->interface)->read = read;
+	((StringReaderInterface *) clazz->interface)->readToken = readToken;
+	((StringReaderInterface *) clazz->interface)->reset = reset;
 }
 
 /**
@@ -190,19 +190,21 @@ static void initialize(Class *clazz) {
  * @memberof StringReader
  */
 Class *_StringReader(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "StringReader";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(StringReader);
-		clazz.interfaceOffset = offsetof(StringReader, interface);
-		clazz.interfaceSize = sizeof(StringReaderInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "StringReader",
+			.superclass = _Object(),
+			.instanceSize = sizeof(StringReader),
+			.interfaceOffset = offsetof(StringReader, interface),
+			.interfaceSize = sizeof(StringReaderInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

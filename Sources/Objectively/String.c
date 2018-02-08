@@ -614,39 +614,39 @@ static _Bool writeToFile(const String *self, const char *path, StringEncoding en
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->def->interface)->description = description;
-	((ObjectInterface *) clazz->def->interface)->hash = hash;
-	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->description = description;
+	((ObjectInterface *) clazz->interface)->hash = hash;
+	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((StringInterface *) clazz->def->interface)->compareTo = compareTo;
-	((StringInterface *) clazz->def->interface)->componentsSeparatedByCharacters = componentsSeparatedByCharacters;
-	((StringInterface *) clazz->def->interface)->componentsSeparatedByString = componentsSeparatedByString;
-	((StringInterface *) clazz->def->interface)->getData = getData;
-	((StringInterface *) clazz->def->interface)->hasPrefix = hasPrefix;
-	((StringInterface *) clazz->def->interface)->hasSuffix = hasSuffix;
-	((StringInterface *) clazz->def->interface)->initWithBytes = initWithBytes;
-	((StringInterface *) clazz->def->interface)->initWithCharacters = initWithCharacters;
-	((StringInterface *) clazz->def->interface)->initWithContentsOfFile = initWithContentsOfFile;
-	((StringInterface *) clazz->def->interface)->initWithData = initWithData;
-	((StringInterface *) clazz->def->interface)->initWithFormat = initWithFormat;
-	((StringInterface *) clazz->def->interface)->initWithMemory = initWithMemory;
-	((StringInterface *) clazz->def->interface)->initWithVaList = initWithVaList;
-	((StringInterface *) clazz->def->interface)->lowercaseString = lowercaseString;
-	((StringInterface *) clazz->def->interface)->mutableCopy = mutableCopy;
-	((StringInterface *) clazz->def->interface)->rangeOfCharacters = rangeOfCharacters;
-	((StringInterface *) clazz->def->interface)->rangeOfString = rangeOfString;
-	((StringInterface *) clazz->def->interface)->stringWithBytes = stringWithBytes;
-	((StringInterface *) clazz->def->interface)->stringWithCharacters = stringWithCharacters;
-	((StringInterface *) clazz->def->interface)->stringWithContentsOfFile = stringWithContentsOfFile;
-	((StringInterface *) clazz->def->interface)->stringWithData = stringWithData;
-	((StringInterface *) clazz->def->interface)->stringWithFormat = stringWithFormat;
-	((StringInterface *) clazz->def->interface)->stringWithMemory = stringWithMemory;
-	((StringInterface *) clazz->def->interface)->substring = substring;
-	((StringInterface *) clazz->def->interface)->trimmedString = trimmedString;
-	((StringInterface *) clazz->def->interface)->uppercaseString = uppercaseString;
-	((StringInterface *) clazz->def->interface)->writeToFile = writeToFile;
+	((StringInterface *) clazz->interface)->compareTo = compareTo;
+	((StringInterface *) clazz->interface)->componentsSeparatedByCharacters = componentsSeparatedByCharacters;
+	((StringInterface *) clazz->interface)->componentsSeparatedByString = componentsSeparatedByString;
+	((StringInterface *) clazz->interface)->getData = getData;
+	((StringInterface *) clazz->interface)->hasPrefix = hasPrefix;
+	((StringInterface *) clazz->interface)->hasSuffix = hasSuffix;
+	((StringInterface *) clazz->interface)->initWithBytes = initWithBytes;
+	((StringInterface *) clazz->interface)->initWithCharacters = initWithCharacters;
+	((StringInterface *) clazz->interface)->initWithContentsOfFile = initWithContentsOfFile;
+	((StringInterface *) clazz->interface)->initWithData = initWithData;
+	((StringInterface *) clazz->interface)->initWithFormat = initWithFormat;
+	((StringInterface *) clazz->interface)->initWithMemory = initWithMemory;
+	((StringInterface *) clazz->interface)->initWithVaList = initWithVaList;
+	((StringInterface *) clazz->interface)->lowercaseString = lowercaseString;
+	((StringInterface *) clazz->interface)->mutableCopy = mutableCopy;
+	((StringInterface *) clazz->interface)->rangeOfCharacters = rangeOfCharacters;
+	((StringInterface *) clazz->interface)->rangeOfString = rangeOfString;
+	((StringInterface *) clazz->interface)->stringWithBytes = stringWithBytes;
+	((StringInterface *) clazz->interface)->stringWithCharacters = stringWithCharacters;
+	((StringInterface *) clazz->interface)->stringWithContentsOfFile = stringWithContentsOfFile;
+	((StringInterface *) clazz->interface)->stringWithData = stringWithData;
+	((StringInterface *) clazz->interface)->stringWithFormat = stringWithFormat;
+	((StringInterface *) clazz->interface)->stringWithMemory = stringWithMemory;
+	((StringInterface *) clazz->interface)->substring = substring;
+	((StringInterface *) clazz->interface)->trimmedString = trimmedString;
+	((StringInterface *) clazz->interface)->uppercaseString = uppercaseString;
+	((StringInterface *) clazz->interface)->writeToFile = writeToFile;
 
 	setlocale(LC_CTYPE, "");
 }
@@ -656,19 +656,21 @@ static void initialize(Class *clazz) {
  * @memberof String
  */
 Class *_String(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "String";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(String);
-		clazz.interfaceOffset = offsetof(String, interface);
-		clazz.interfaceSize = sizeof(StringInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "String",
+			.superclass = _Object(),
+			.instanceSize = sizeof(String),
+			.interfaceOffset = offsetof(String, interface),
+			.interfaceSize = sizeof(StringInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

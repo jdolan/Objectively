@@ -419,25 +419,25 @@ static ident objectForKeyPath(const Dictionary *self, const char *path) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
-	((ObjectInterface *) clazz->def->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->def->interface)->description = description;
-	((ObjectInterface *) clazz->def->interface)->hash = hash;
-	((ObjectInterface *) clazz->def->interface)->isEqual = isEqual;
+	((ObjectInterface *) clazz->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->description = description;
+	((ObjectInterface *) clazz->interface)->hash = hash;
+	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((DictionaryInterface *) clazz->def->interface)->allKeys = allKeys;
-	((DictionaryInterface *) clazz->def->interface)->allObjects = allObjects;
-	((DictionaryInterface *) clazz->def->interface)->containsKey = containsKey;
-	((DictionaryInterface *) clazz->def->interface)->containsKeyPath = containsKeyPath;
-	((DictionaryInterface *) clazz->def->interface)->dictionaryWithDictionary = dictionaryWithDictionary;
-	((DictionaryInterface *) clazz->def->interface)->dictionaryWithObjectsAndKeys = dictionaryWithObjectsAndKeys;
-	((DictionaryInterface *) clazz->def->interface)->enumerateObjectsAndKeys = enumerateObjectsAndKeys;
-	((DictionaryInterface *) clazz->def->interface)->filterObjectsAndKeys = filterObjectsAndKeys;
-	((DictionaryInterface *) clazz->def->interface)->initWithDictionary = initWithDictionary;
-	((DictionaryInterface *) clazz->def->interface)->initWithObjectsAndKeys = initWithObjectsAndKeys;
-	((DictionaryInterface *) clazz->def->interface)->mutableCopy = mutableCopy;
-	((DictionaryInterface *) clazz->def->interface)->objectForKey = objectForKey;
-	((DictionaryInterface *) clazz->def->interface)->objectForKeyPath = objectForKeyPath;
+	((DictionaryInterface *) clazz->interface)->allKeys = allKeys;
+	((DictionaryInterface *) clazz->interface)->allObjects = allObjects;
+	((DictionaryInterface *) clazz->interface)->containsKey = containsKey;
+	((DictionaryInterface *) clazz->interface)->containsKeyPath = containsKeyPath;
+	((DictionaryInterface *) clazz->interface)->dictionaryWithDictionary = dictionaryWithDictionary;
+	((DictionaryInterface *) clazz->interface)->dictionaryWithObjectsAndKeys = dictionaryWithObjectsAndKeys;
+	((DictionaryInterface *) clazz->interface)->enumerateObjectsAndKeys = enumerateObjectsAndKeys;
+	((DictionaryInterface *) clazz->interface)->filterObjectsAndKeys = filterObjectsAndKeys;
+	((DictionaryInterface *) clazz->interface)->initWithDictionary = initWithDictionary;
+	((DictionaryInterface *) clazz->interface)->initWithObjectsAndKeys = initWithObjectsAndKeys;
+	((DictionaryInterface *) clazz->interface)->mutableCopy = mutableCopy;
+	((DictionaryInterface *) clazz->interface)->objectForKey = objectForKey;
+	((DictionaryInterface *) clazz->interface)->objectForKeyPath = objectForKeyPath;
 }
 
 /**
@@ -445,19 +445,21 @@ static void initialize(Class *clazz) {
  * @memberof Dictionary
  */
 Class *_Dictionary(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "Dictionary";
-		clazz.superclass = _Object();
-		clazz.instanceSize = sizeof(Dictionary);
-		clazz.interfaceOffset = offsetof(Dictionary, interface);
-		clazz.interfaceSize = sizeof(DictionaryInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "Dictionary",
+			.superclass = _Object(),
+			.instanceSize = sizeof(Dictionary),
+			.interfaceOffset = offsetof(Dictionary, interface),
+			.interfaceSize = sizeof(DictionaryInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

@@ -327,24 +327,24 @@ static void sort(MutableArray *self, Comparator comparator) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->copy = copy;
 
-	((MutableArrayInterface *) clazz->def->interface)->addObject = addObject;
-	((MutableArrayInterface *) clazz->def->interface)->addObjects = addObjects;
-	((MutableArrayInterface *) clazz->def->interface)->addObjectsFromArray = addObjectsFromArray;
-	((MutableArrayInterface *) clazz->def->interface)->array = array;
-	((MutableArrayInterface *) clazz->def->interface)->arrayWithCapacity = arrayWithCapacity;
-	((MutableArrayInterface *) clazz->def->interface)->filter = filter;
-	((MutableArrayInterface *) clazz->def->interface)->init = init;
-	((MutableArrayInterface *) clazz->def->interface)->initWithCapacity = initWithCapacity;
-	((MutableArrayInterface *) clazz->def->interface)->insertObjectAtIndex = insertObjectAtIndex;
-	((MutableArrayInterface *) clazz->def->interface)->removeAllObjects = removeAllObjects;
-	((MutableArrayInterface *) clazz->def->interface)->removeAllObjectsWithEnumerator = removeAllObjectsWithEnumerator;
-	((MutableArrayInterface *) clazz->def->interface)->removeLastObject = removeLastObject;
-	((MutableArrayInterface *) clazz->def->interface)->removeObject = removeObject;
-	((MutableArrayInterface *) clazz->def->interface)->removeObjectAtIndex = removeObjectAtIndex;
-	((MutableArrayInterface *) clazz->def->interface)->setObjectAtIndex = setObjectAtIndex;
-	((MutableArrayInterface *) clazz->def->interface)->sort = sort;
+	((MutableArrayInterface *) clazz->interface)->addObject = addObject;
+	((MutableArrayInterface *) clazz->interface)->addObjects = addObjects;
+	((MutableArrayInterface *) clazz->interface)->addObjectsFromArray = addObjectsFromArray;
+	((MutableArrayInterface *) clazz->interface)->array = array;
+	((MutableArrayInterface *) clazz->interface)->arrayWithCapacity = arrayWithCapacity;
+	((MutableArrayInterface *) clazz->interface)->filter = filter;
+	((MutableArrayInterface *) clazz->interface)->init = init;
+	((MutableArrayInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
+	((MutableArrayInterface *) clazz->interface)->insertObjectAtIndex = insertObjectAtIndex;
+	((MutableArrayInterface *) clazz->interface)->removeAllObjects = removeAllObjects;
+	((MutableArrayInterface *) clazz->interface)->removeAllObjectsWithEnumerator = removeAllObjectsWithEnumerator;
+	((MutableArrayInterface *) clazz->interface)->removeLastObject = removeLastObject;
+	((MutableArrayInterface *) clazz->interface)->removeObject = removeObject;
+	((MutableArrayInterface *) clazz->interface)->removeObjectAtIndex = removeObjectAtIndex;
+	((MutableArrayInterface *) clazz->interface)->setObjectAtIndex = setObjectAtIndex;
+	((MutableArrayInterface *) clazz->interface)->sort = sort;
 }
 
 /**
@@ -352,19 +352,21 @@ static void initialize(Class *clazz) {
  * @memberof MutableArray
  */
 Class *_MutableArray(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "MutableArray";
-		clazz.superclass = _Array();
-		clazz.instanceSize = sizeof(MutableArray);
-		clazz.interfaceOffset = offsetof(MutableArray, interface);
-		clazz.interfaceSize = sizeof(MutableArrayInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "MutableArray",
+			.superclass = _Array(),
+			.instanceSize = sizeof(MutableArray),
+			.interfaceOffset = offsetof(MutableArray, interface),
+			.interfaceSize = sizeof(MutableArrayInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class

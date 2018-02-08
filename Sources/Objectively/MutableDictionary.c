@@ -343,21 +343,21 @@ static void setObjectsForKeys(MutableDictionary *self, ...) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->def->interface)->copy = copy;
+	((ObjectInterface *) clazz->interface)->copy = copy;
 
-	((MutableDictionaryInterface *) clazz->def->interface)->addEntriesFromDictionary = addEntriesFromDictionary;
-	((MutableDictionaryInterface *) clazz->def->interface)->dictionary = dictionary;
-	((MutableDictionaryInterface *) clazz->def->interface)->dictionaryWithCapacity = dictionaryWithCapacity;
-	((MutableDictionaryInterface *) clazz->def->interface)->init = init;
-	((MutableDictionaryInterface *) clazz->def->interface)->initWithCapacity = initWithCapacity;
-	((MutableDictionaryInterface *) clazz->def->interface)->removeAllObjects = removeAllObjects;
-	((MutableDictionaryInterface *) clazz->def->interface)->removeAllObjectsWithEnumerator = removeAllObjectsWithEnumerator;
-	((MutableDictionaryInterface *) clazz->def->interface)->removeObjectForKey = removeObjectForKey;
-	((MutableDictionaryInterface *) clazz->def->interface)->removeObjectForKeyPath = removeObjectForKeyPath;
-	((MutableDictionaryInterface *) clazz->def->interface)->setObjectForKey = setObjectForKey;
-	((MutableDictionaryInterface *) clazz->def->interface)->setObjectForKeyPath = setObjectForKeyPath;
-	((MutableDictionaryInterface *) clazz->def->interface)->setObjectsForKeyPaths = setObjectsForKeyPaths;
-	((MutableDictionaryInterface *) clazz->def->interface)->setObjectsForKeys = setObjectsForKeys;
+	((MutableDictionaryInterface *) clazz->interface)->addEntriesFromDictionary = addEntriesFromDictionary;
+	((MutableDictionaryInterface *) clazz->interface)->dictionary = dictionary;
+	((MutableDictionaryInterface *) clazz->interface)->dictionaryWithCapacity = dictionaryWithCapacity;
+	((MutableDictionaryInterface *) clazz->interface)->init = init;
+	((MutableDictionaryInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
+	((MutableDictionaryInterface *) clazz->interface)->removeAllObjects = removeAllObjects;
+	((MutableDictionaryInterface *) clazz->interface)->removeAllObjectsWithEnumerator = removeAllObjectsWithEnumerator;
+	((MutableDictionaryInterface *) clazz->interface)->removeObjectForKey = removeObjectForKey;
+	((MutableDictionaryInterface *) clazz->interface)->removeObjectForKeyPath = removeObjectForKeyPath;
+	((MutableDictionaryInterface *) clazz->interface)->setObjectForKey = setObjectForKey;
+	((MutableDictionaryInterface *) clazz->interface)->setObjectForKeyPath = setObjectForKeyPath;
+	((MutableDictionaryInterface *) clazz->interface)->setObjectsForKeyPaths = setObjectsForKeyPaths;
+	((MutableDictionaryInterface *) clazz->interface)->setObjectsForKeys = setObjectsForKeys;
 }
 
 /**
@@ -365,19 +365,21 @@ static void initialize(Class *clazz) {
  * @memberof MutableDictionary
  */
 Class *_MutableDictionary(void) {
-	static Class clazz;
+	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
-		clazz.name = "MutableDictionary";
-		clazz.superclass = _Dictionary();
-		clazz.instanceSize = sizeof(MutableDictionary);
-		clazz.interfaceOffset = offsetof(MutableDictionary, interface);
-		clazz.interfaceSize = sizeof(MutableDictionaryInterface);
-		clazz.initialize = initialize;
+		clazz = _initialize(&(const ClassDef) {
+			.name = "MutableDictionary",
+			.superclass = _Dictionary(),
+			.instanceSize = sizeof(MutableDictionary),
+			.interfaceOffset = offsetof(MutableDictionary, interface),
+			.interfaceSize = sizeof(MutableDictionaryInterface),
+			.initialize = initialize,
+		});
 	});
 
-	return &clazz;
+	return clazz;
 }
 
 #undef _Class
