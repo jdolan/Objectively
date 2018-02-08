@@ -172,6 +172,12 @@ OBJECTIVELY_EXPORT size_t _pageSize;
 	((Object *) obj)->clazz
 
 /**
+ * @brief Resolve the Class name of the given Object instance.
+ */
+#define classnameof(obj) \
+	classof(obj)->def.name
+
+/**
  * @brief Resolve the typed interface of a Class.
  */
 #define interfaceof(type, clazz) \
