@@ -23,6 +23,7 @@
 
 #include <assert.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <Objectively/Hash.h>
 #include <Objectively/Value.h>
@@ -80,6 +81,26 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - Value
 
 /**
+ * @fn Value *Value::initWithBytes(Value *self, const ident value, size_t length)
+ * @memberof Value
+ */
+static Value *initWithBytes(Value *self, ident value, size_t length) {
+
+	self = (Value *) super(Object, self, init);
+	if (self) {
+		if (value) {
+			self->value = calloc(1, length);
+			assert(self->value);
+
+			memcpy(self->value, value, length);
+			self->destructor = free;
+		}
+	}
+
+	return self;
+}
+
+/**
  * @fn Value *Value::initWithValue(Value *self, ident value)
  * @memberof Value
  */
@@ -104,6 +125,7 @@ static void initialize(Class *clazz) {
 	((ObjectInterface *) clazz->interface)->hash = hash;
 	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
+	((ValueInterface *) clazz->interface)->initWithBytes = initWithBytes;
 	((ValueInterface *) clazz->interface)->initWithValue = initWithValue;
 }
 
