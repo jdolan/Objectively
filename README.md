@@ -55,7 +55,7 @@ autoreconf -i; ./configure; make; sudo make install
 
 ```c
 Object *obj = $(alloc(Object), init);
-printf("%d\n", $(obj, hashCode));
+printf("%d\n", $(obj, hash));
 release(obj);
 ````
 
