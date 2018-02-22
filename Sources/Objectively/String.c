@@ -728,6 +728,7 @@ String *str(const char *fmt, ...) {
 	va_start(args, fmt);
 
 	String *string = $(alloc(String), initWithVaList, fmt, args);
+	assert(string);
 
 	va_end(args);
 
