@@ -36,6 +36,12 @@
 #define __DBL_EPSILON__ DBL_EPSILON
 #endif
 
+#ifdef BUILDING_OBJECTIVELY
+ #define OBJECTIVELY_EXPORT __declspec(dllexport)
+#else
+ #define OBJECTIVELY_EXPORT __declspec(dllimport)
+#endif
+
 #ifdef _WIN64
     typedef signed __int64 ssize_t;
 #else
@@ -51,11 +57,11 @@ struct timezone
 
 typedef struct timeval _timeval;
 
-int gettimeofday(_timeval *tv, struct timezone *tz);
+OBJECTIVELY_EXPORT int gettimeofday(_timeval *tv, struct timezone *tz);
 
 // STRING STUFF
-int vasprintf(char ** __restrict ret, const char * __restrict format, va_list ap);
-char *asprintf(char ** __restrict ret, char * __restrict format, ...);
+OBJECTIVELY_EXPORT int vasprintf(char ** __restrict ret, const char * __restrict format, va_list ap);
+OBJECTIVELY_EXPORT char *asprintf(char ** __restrict ret, char * __restrict format, ...);
 
 #define towupper_l _towupper_l
 #define towlower_l _towlower_l
@@ -82,12 +88,6 @@ char *asprintf(char ** __restrict ret, char * __restrict format, ...);
 #endif
 
 #define iconv(c0, c1, c2, c3, c4) libiconv(c0, (const char **)c1, c2, c3, c4)
-
-#ifdef BUILDING_OBJECTIVELY
- #define OBJECTIVELY_EXPORT __declspec(dllexport)
-#else
- #define OBJECTIVELY_EXPORT __declspec(dllimport)
-#endif
 
 // INTERLOCK STUFF
 OBJECTIVELY_EXPORT long __sync_val_compare_and_swap_(long volatile *Destination, long Exchange, long Comparand);
