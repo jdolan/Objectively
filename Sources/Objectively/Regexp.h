@@ -23,6 +23,8 @@
 
 #pragma once
 
+#include <regex.h>
+
 #include <Objectively/Object.h>
 #include <Objectively/String.h>
 
