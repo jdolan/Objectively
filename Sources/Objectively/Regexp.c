@@ -24,6 +24,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+#include <regex.h>
 
 #include <Objectively/Hash.h>
 #include <Objectively/Regexp.h>
