@@ -21,6 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+#include <stdlib.h>
 #include <unistd.h>
 #include <check.h>
 
@@ -105,10 +106,36 @@ START_TEST(string)
 
 	}END_TEST
 
+START_TEST(_strtrim)
+	{
+		char *trimmed = strtrim("hello world");
+		ck_assert_str_eq("hello world", trimmed);
+
+		free(trimmed);
+
+		trimmed = strtrim("\t hello world");
+		ck_assert_str_eq("hello world", trimmed);
+
+		free(trimmed);
+
+		trimmed = strtrim("hello world\t ");
+		ck_assert_str_eq("hello world", trimmed);
+
+		free(trimmed);
+
+		trimmed = strtrim("\n hello world \n\t");
+		ck_assert_str_eq("hello world", trimmed);
+
+		free(trimmed);
+	}END_TEST
+
 int main(int argc, char **argv) {
 
 	TCase *tcase = tcase_create("string");
 	tcase_add_test(tcase, string);
+
+	tcase = tcase_create("strtrim");
+	tcase_add_test(tcase, _strtrim);
 
 	Suite *suite = suite_create("string");
 	suite_add_tcase(suite, tcase);
