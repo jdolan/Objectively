@@ -8,17 +8,6 @@ platform:
 - x64
 matrix:
   fast_finish: true
-install:
-- ps: >-
-    Push-Location "Objectively.vs15\"
-
-    [Environment]::CurrentDirectory = $PWD
-
-    .\PREPARE_ALL.ps1
-
-    Pop-Location
-
-    [Environment]::CurrentDirectory = $PWD
 build:
   parallel: true
   verbosity: minimal
@@ -50,12 +39,3 @@ on_success:
     Invoke-Restmethod -uri 'https://ci.appveyor.com/api/builds' -Headers $headers -Method Post -Body $bodyAsjson -ContentType "application/json"
 
     }
-cache:
-  - Objectively.vs15\libs\curl\include\curl\tmp7551.tar.gz -> appveyor.yml
-  - Objectively.vs15\Sources\gnu\intprops.h -> appveyor.yml
-  - Objectively.vs15\Sources\gnu\regcomp.c -> appveyor.yml
-  - Objectively.vs15\Sources\gnu\regex.c -> appveyor.yml
-  - Objectively.vs15\Sources\gnu\regex.h -> appveyor.yml
-  - Objectively.vs15\Sources\gnu\regex_internal.c -> appveyor.yml
-  - Objectively.vs15\Sources\gnu\regex_internal.h -> appveyor.yml
-  - Objectively.vs15\Sources\gnu\regexec.h -> appveyor.yml

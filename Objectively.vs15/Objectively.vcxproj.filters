@@ -10,6 +10,12 @@
     <Filter Include="Sources\gnu">
       <UniqueIdentifier>{0f421d94-5b46-40d0-95b0-1fa806888993}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\libs">
+      <UniqueIdentifier>{bb2ddbbf-58d9-444e-be99-d9547aae5372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\libs\dlfcn">
+      <UniqueIdentifier>{cdf04fb1-ca24-4f1d-94d2-d4365099c196}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Sources\Objectively.h">
@@ -171,8 +177,8 @@
     <ClInclude Include="..\Sources\Objectively\Regexp.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\gnu\dlfcn.h">
-      <Filter>Sources\gnu</Filter>
+    <ClInclude Include="libs\dlfcn\dlfcn.h">
+      <Filter>Sources\libs\dlfcn</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -310,6 +316,9 @@
     </ClCompile>
     <ClCompile Include="Sources\gnu\regex.c">
       <Filter>Sources\gnu</Filter>
+    </ClCompile>
+    <ClCompile Include="libs\dlfcn\dlfcn.c">
+      <Filter>Sources\libs\dlfcn</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

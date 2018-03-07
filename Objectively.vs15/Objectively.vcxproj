@@ -65,8 +65,8 @@
     <ClInclude Include="..\Sources\Objectively\URLSessionTask.h" />
     <ClInclude Include="..\Sources\Objectively\URLSessionUploadTask.h" />
     <ClInclude Include="..\Sources\Objectively\Value.h" />
+    <ClInclude Include="libs\dlfcn\dlfcn.h" />
     <ClInclude Include="Sources\gnu\config.h" />
-    <ClInclude Include="Sources\gnu\dlfcn.h" />
     <ClInclude Include="Sources\gnu\intprops.h" />
     <ClInclude Include="Sources\gnu\langinfo.h" />
     <ClInclude Include="Sources\gnu\regex.h" />
@@ -118,6 +118,7 @@
     <ClCompile Include="..\Sources\Objectively\URLSessionTask.c" />
     <ClCompile Include="..\Sources\Objectively\URLSessionUploadTask.c" />
     <ClCompile Include="..\Sources\Objectively\Value.c" />
+    <ClCompile Include="libs\dlfcn\dlfcn.c" />
     <ClCompile Include="Sources\gnu\regex.c" />
     <ClCompile Include="Sources\Windowly.c" />
   </ItemGroup>
@@ -171,20 +172,20 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>bin\$(Platform)$(Configuration)\</OutDir>
-    <IncludePath>Sources\gnu\;..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
+    <IncludePath>Sources\gnu\;..\Sources\;Sources\;libs\iconv\include\;libs\dlfcn\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
     <IntDir>tmp\$(ProjectName)\$(Platform)$(Configuration)\</IntDir>
     <UseMultiToolTask>true</UseMultiToolTask>
     <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>bin\$(Platform)$(Configuration)\</OutDir>
-    <IncludePath>Sources\gnu\;..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
+    <IncludePath>Sources\gnu\;..\Sources\;Sources\;libs\iconv\include\;libs\dlfcn\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
     <IntDir>tmp\$(ProjectName)\$(Platform)$(Configuration)\</IntDir>
     <UseMultiToolTask>true</UseMultiToolTask>
     <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>Sources\gnu\;..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
+    <IncludePath>Sources\gnu\;..\Sources\;Sources\;libs\iconv\include\;libs\dlfcn\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
     <OutDir>bin\$(Platform)$(Configuration)\</OutDir>
     <IntDir>tmp\$(ProjectName)\$(Platform)$(Configuration)\</IntDir>
     <UseMultiToolTask>true</UseMultiToolTask>
@@ -193,7 +194,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>bin\$(Platform)$(Configuration)\</OutDir>
     <IntDir>tmp\$(ProjectName)\$(Platform)$(Configuration)\</IntDir>
-    <IncludePath>Sources\gnu\;..\Sources\;Sources\;libs\iconv\include\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
+    <IncludePath>Sources\gnu\;..\Sources\;Sources\;libs\iconv\include\;libs\dlfcn\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
     <UseMultiToolTask>true</UseMultiToolTask>
     <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
