@@ -118,7 +118,6 @@
     <ClCompile Include="..\Sources\Objectively\URLSessionTask.c" />
     <ClCompile Include="..\Sources\Objectively\URLSessionUploadTask.c" />
     <ClCompile Include="..\Sources\Objectively\Value.c" />
-    <ClCompile Include="libs\dlfcn\dlfcn.c" />
     <ClCompile Include="Sources\gnu\regex.c" />
     <ClCompile Include="Sources\Windowly.c" />
   </ItemGroup>
@@ -175,35 +174,35 @@
     <IncludePath>Sources\gnu\;..\Sources\;Sources\;libs\iconv\include\;libs\dlfcn\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
     <IntDir>tmp\$(ProjectName)\$(Platform)$(Configuration)\</IntDir>
     <UseMultiToolTask>true</UseMultiToolTask>
-    <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;libs\dlfcn\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>bin\$(Platform)$(Configuration)\</OutDir>
     <IncludePath>Sources\gnu\;..\Sources\;Sources\;libs\iconv\include\;libs\dlfcn\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
     <IntDir>tmp\$(ProjectName)\$(Platform)$(Configuration)\</IntDir>
     <UseMultiToolTask>true</UseMultiToolTask>
-    <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;libs\dlfcn\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>Sources\gnu\;..\Sources\;Sources\;libs\iconv\include\;libs\dlfcn\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
     <OutDir>bin\$(Platform)$(Configuration)\</OutDir>
     <IntDir>tmp\$(ProjectName)\$(Platform)$(Configuration)\</IntDir>
     <UseMultiToolTask>true</UseMultiToolTask>
-    <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;libs\dlfcn\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>bin\$(Platform)$(Configuration)\</OutDir>
     <IntDir>tmp\$(ProjectName)\$(Platform)$(Configuration)\</IntDir>
     <IncludePath>Sources\gnu\;..\Sources\;Sources\;libs\iconv\include\;libs\dlfcn\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
     <UseMultiToolTask>true</UseMultiToolTask>
-    <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;libs\dlfcn\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>EnableAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>PSAPI_VERSION=1;WIN32_LEAN_AND_MEAN;BUILDING_OBJECTIVELY;PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;BUILDING_OBJECTIVELY;PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAs>Default</CompileAs>
       <DisableSpecificWarnings>4068;4996;4115;4706;4204;4244;4245;4100;4267;4305;4267;4018;4702;4311</DisableSpecificWarnings>
       <SDLCheck>true</SDLCheck>
@@ -213,7 +212,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>Psapi.lib;Wldap32.lib;ws2_32.lib;pthread.lib;iconv.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dlfcn.lib;Wldap32.lib;ws2_32.lib;pthread.lib;iconv.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalDependencies>
@@ -227,12 +226,12 @@
       <SDLCheck>true</SDLCheck>
       <DisableSpecificWarnings>4068;4996;4115;4706;4204;4244;4245;4100;4267;4305;4267;4018;4702;4311</DisableSpecificWarnings>
       <CLanguageStandard>gnu99</CLanguageStandard>
-      <PreprocessorDefinitions>PSAPI_VERSION=1;WIN32_LEAN_AND_MEAN;BUILDING_OBJECTIVELY;PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;BUILDING_OBJECTIVELY;PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>-ferror-limit=0 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Psapi.lib;Wldap32.lib;ws2_32.lib;pthread.lib;iconv.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dlfcn.lib;Wldap32.lib;ws2_32.lib;pthread.lib;iconv.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -242,7 +241,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>PSAPI_VERSION=1;WIN32_LEAN_AND_MEAN;BUILDING_OBJECTIVELY;PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;NDEBUG;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;BUILDING_OBJECTIVELY;PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;NDEBUG;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAs>Default</CompileAs>
       <DisableSpecificWarnings>4068;4996;4115;4706;4204;4244;4245;4100;4267;4305;4267;4018;4702;4311</DisableSpecificWarnings>
       <SDLCheck>true</SDLCheck>
@@ -252,7 +251,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>Psapi.lib;Wldap32.lib;ws2_32.lib;pthread.lib;iconv.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dlfcn.lib;Wldap32.lib;ws2_32.lib;pthread.lib;iconv.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalDependencies>
@@ -265,7 +264,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>PSAPI_VERSION=1;WIN32_LEAN_AND_MEAN;BUILDING_OBJECTIVELY;PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;NDEBUG;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;BUILDING_OBJECTIVELY;PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;NDEBUG;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <DisableSpecificWarnings>4068;4996;4115;4706;4204;4244;4245;4100;4267;4305;4267;4018;4702;4311</DisableSpecificWarnings>
       <CLanguageStandard>gnu99</CLanguageStandard>
@@ -274,7 +273,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>Psapi.lib;Wldap32.lib;ws2_32.lib;pthread.lib;iconv.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dlfcn.lib;Wldap32.lib;ws2_32.lib;pthread.lib;iconv.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
