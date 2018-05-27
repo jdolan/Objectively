@@ -14,13 +14,11 @@ About
 ---
  Objectively is a cross-platform object oriented framework for the C programming language. Unlike [GObject](https://developer.gnome.org/gobject/stable/), Objectively is not a platform on which to build OO languages. Rather, Objectively provides rich OO semantics to enable object oriented programming directly in C. It is based on C99, but utilizes several GNU extensions, and therefore requires `gcc` or `clang`. While others may work, the following targets are actively supported:
  
- * Apple OS X with clang
- * Apple OS X with gcc
- * GNU / Linux with clang
- * GNU / Linux with gcc
+ * GNU / Linux with GCC or Clang
+ * macOS with GCC or Clang
  * [MinGW-w64](https://mingw-w64.org) cross compile
  * MinGW-w64 Windows native
- * Visual Studio 2015 or later with clang
+ * Visual Studio 2015 or later with Clang
 
 Features
 ---
