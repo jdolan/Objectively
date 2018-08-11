@@ -160,7 +160,7 @@ OBJECTIVELY_EXPORT size_t _pageSize;
 	((type *) _alloc(_##type()))
 
 /**
- * @brief Safely cast to a type.
+ * @brief Safely cast `obj` to `type`.
  */
 #define cast(type, obj) \
 	((type *) _cast(_##type(), (const ident) obj))
