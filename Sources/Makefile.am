@@ -1,5 +1,3 @@
-AUTOMAKE_OPTIONS = nostdinc
-
 SUBDIRS = \
 	Objectively
 
