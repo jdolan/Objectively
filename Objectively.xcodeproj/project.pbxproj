@@ -1138,8 +1138,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE4F5359202A8C6D00D71C07 /* libcheck.0.dylib in Frameworks */,
 				CE4F535A202A8C6D00D71C07 /* libObjectively.dylib in Frameworks */,
+				CE4F5359202A8C6D00D71C07 /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1147,8 +1147,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE594BDC1F49F931004D74FF /* libcheck.0.dylib in Frameworks */,
 				CE594BDD1F49F931004D74FF /* libObjectively.dylib in Frameworks */,
+				CE594BDC1F49F931004D74FF /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1165,8 +1165,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE84A8A91DA15BD5008BC685 /* libcheck.0.dylib in Frameworks */,
 				CE84A8A81DA15BB4008BC685 /* libObjectively.dylib in Frameworks */,
+				CE84A8A91DA15BD5008BC685 /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1174,8 +1174,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB01AF1F40DB3A004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB01B01F40DB3A004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB01AF1F40DB3A004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1183,8 +1183,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB01BC1F40DB3F004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB01BD1F40DB3F004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB01BC1F40DB3F004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1192,8 +1192,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB01C91F40DB47004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB01CA1F40DB47004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB01C91F40DB47004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1201,8 +1201,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB01D61F40DB4B004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB01D71F40DB4B004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB01D61F40DB4B004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1210,8 +1210,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB01E31F40DB4D004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB01E41F40DB4D004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB01E31F40DB4D004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1219,8 +1219,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB01F01F40DB50004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB01F11F40DB50004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB01F01F40DB50004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1228,8 +1228,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB01FD1F40DB52004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB01FE1F40DB52004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB01FD1F40DB52004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1237,8 +1237,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB020A1F40DB55004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB020B1F40DB55004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB020A1F40DB55004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1246,8 +1246,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB021A1F40DBCD004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB021B1F40DBCD004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB021A1F40DBCD004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1255,8 +1255,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB02271F40DBD0004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB02281F40DBD0004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB02271F40DBD0004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1264,8 +1264,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB02341F40DBD2004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB02351F40DBD2004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB02341F40DBD2004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1273,8 +1273,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB02411F40DBD4004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB02421F40DBD4004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB02411F40DBD4004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1282,8 +1282,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB024E1F40DBD5004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB024F1F40DBD5004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB024E1F40DBD5004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1291,8 +1291,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB025B1F40DBD7004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB025C1F40DBD7004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB025B1F40DBD7004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1300,8 +1300,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB02681F40DBD9004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB02691F40DBD9004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB02681F40DBD9004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1309,8 +1309,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB028C1F40DD20004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB028D1F40DD20004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB028C1F40DD20004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1318,8 +1318,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB02991F40DD22004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB029A1F40DD22004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB02991F40DD22004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1327,8 +1327,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB02A61F40DD24004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB02A71F40DD24004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB02A61F40DD24004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1336,8 +1336,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB02B31F40DD26004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB02B41F40DD26004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB02B31F40DD26004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1345,8 +1345,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB02C01F40DD27004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB02C11F40DD27004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB02C01F40DD27004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1354,8 +1354,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB02CD1F40DD29004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB02CE1F40DD29004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB02CD1F40DD29004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1363,8 +1363,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB02DA1F40DD2B004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB02DB1F40DD2B004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB02DA1F40DD2B004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1372,8 +1372,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB02E71F40DD4E004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB02E81F40DD4E004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB02E71F40DD4E004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1381,8 +1381,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB02F41F40DD4F004C2EDD /* libcheck.0.dylib in Frameworks */,
 				CEEB02F51F40DD4F004C2EDD /* libObjectively.dylib in Frameworks */,
+				CEEB02F41F40DD4F004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
