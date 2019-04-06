@@ -61,6 +61,8 @@ typedef struct StringInterface StringInterface;
  * @remarks Because Strings are encoded using UTF-8, they must not be treated as ASCII C strings.
  * That is, a single Unicode code point will often span multiple `char`s. Be mindful of this when
  * executing Range operations.
+ * @remarks Strings are locale-ready, but Objectively does not enable locale by default. Call
+ * `setlocale` to enable localization.
  * @extends Object
  * @ingroup ByteStreams
  */
@@ -242,7 +244,7 @@ struct StringInterface {
 	/**
 	 * @fn String *String::lowercaseString(const String *self)
 	 * @param self The String.
-	 * @return A lowercase representation of this String in the current locale.
+	 * @return A lowercase representation of this String.
 	 * @memberof String
 	 */
 	String *(*lowercaseString)(const String *self);
@@ -365,7 +367,7 @@ struct StringInterface {
 	/**
 	 * @fn String *String::uppercaseString(const String *self)
 	 * @param self The String.
-	 * @return An uppercase representation of this String in the current locale.
+	 * @return An uppercase representation of this String.
 	 * @memberof String
 	 */
 	String *(*uppercaseString)(const String *self);
