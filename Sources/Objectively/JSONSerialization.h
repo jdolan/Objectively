@@ -37,9 +37,20 @@
  */
 
 /**
- * @brief Enables pretty (indented) formatting of JSON output.
+ * @brief JSON write options.
  */
-#define JSON_WRITE_PRETTY 1
+typedef enum {
+
+	/**
+	 * @brief Enables pretty (indented) formatting of JSON output.
+	 */
+	JSON_WRITE_PRETTY = 0x1,
+
+	/**
+	 * @brief Enables lexicographic sorting of JSON output.
+	 */
+	JSON_WRITE_SORTED = 0x2
+}  JSONWriteOptions;
 
 typedef struct JSONSerialization JSONSerialization;
 typedef struct JSONSerializationInterface JSONSerializationInterface;

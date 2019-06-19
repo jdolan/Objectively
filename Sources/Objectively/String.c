@@ -314,8 +314,7 @@ static String *initWithCharacters(String *self, const char *chars) {
 		ident mem = strdup(chars);
 		assert(mem);
 
-		size_t length = strlen(chars);
-
+		const size_t length = strlen(chars);
 		return $(self, initWithMemory, mem, length);
 	}
 
@@ -717,6 +716,24 @@ StringEncoding StringEncodingForName(const char *name) {
 	}
 
 	return STRING_ENCODING_ASCII;
+}
+
+Order StringCompare(const ident a, const ident b) {
+
+	if (a) {
+		if (b) {
+			const int i = strcmp(((String *) a)->chars, ((String *) b)->chars);
+			if (i == 0) {
+				return OrderSame;
+			}
+			if (i > 0) {
+				return OrderDescending;
+			}
+		} else {
+			return OrderDescending;
+		}
+	}
+	return OrderAscending;
 }
 
 String *str(const char *fmt, ...) {

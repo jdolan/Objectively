@@ -92,7 +92,7 @@ static void writeString(JSONWriter *writer, const String *string) {
  */
 static void writeNumber(JSONWriter *writer, const Number *number) {
 
-	String *string = $(alloc(String), initWithFormat, "%.5f", number->value);
+	String *string = $(alloc(String), initWithFormat, "%g", number->value);
 
 	$(writer->data, appendBytes, (uint8_t *) string->chars, string->length);
 
@@ -111,6 +111,20 @@ static void writeLabel(JSONWriter *writer, const String *label) {
 }
 
 /**
+ * @brief Writes pretty formatting, if applicable, to `writer`.
+ * @param writer The JSONWriter.
+ */
+static void writePretty(JSONWriter *writer) {
+
+	if (writer->options & JSON_WRITE_PRETTY) {
+		$(writer->data, appendBytes, (uint8_t *) "\n", 1);
+		for (size_t i = 0; i < writer->depth; i++) {
+			$(writer->data, appendBytes, (uint8_t *) "  ", 2);
+		}
+	}
+}
+
+/**
  * @brief Writes `object` to `writer`.
  * @param writer The JSONWriter.
  * @param object The object (Dictionary) to write.
@@ -118,9 +132,18 @@ static void writeLabel(JSONWriter *writer, const String *label) {
 static void writeObject(JSONWriter *writer, const Dictionary *object) {
 
 	$(writer->data, appendBytes, (uint8_t * ) "{", 1);
+	writer->depth++;
 
 	Array *keys = $(object, allKeys);
+	if (writer->options & JSON_WRITE_SORTED) {
+		Array *sorted = $(keys, sortedArray, StringCompare);
+		release(keys);
+		keys = sorted;
+	}
+
 	for (size_t i = 0; i < keys->count; i++) {
+
+		writePretty(writer);
 
 		const ident key = $(keys, objectAtIndex, i);
 		writeLabel(writer, (String *) key);
@@ -129,11 +152,14 @@ static void writeObject(JSONWriter *writer, const Dictionary *object) {
 		writeElement(writer, obj);
 
 		if (i < keys->count - 1) {
-			$(writer->data, appendBytes, (uint8_t *) ", ", 2);
+			$(writer->data, appendBytes, (uint8_t *) ",", 1);
 		}
 	}
 
 	release(keys);
+
+	writer->depth--;
+	writePretty(writer);
 
 	$(writer->data, appendBytes, (uint8_t * ) "}", 1);
 }
@@ -146,15 +172,21 @@ static void writeObject(JSONWriter *writer, const Dictionary *object) {
 static void writeArray(JSONWriter *writer, const Array *array) {
 
 	$(writer->data, appendBytes, (uint8_t * ) "[", 1);
+	writer->depth++;
 
 	for (size_t i = 0; i < array->count; i++) {
 
+		writePretty(writer);
+		
 		writeElement(writer, $(array, objectAtIndex, i));
 
 		if (i < array->count - 1) {
-			$(writer->data, appendBytes, (uint8_t *) ", ", 2);
+			$(writer->data, appendBytes, (uint8_t *) ",", 1);
 		}
 	}
+
+	writer->depth--;
+	writePretty(writer);
 
 	$(writer->data, appendBytes, (uint8_t * ) "]", 1);
 }

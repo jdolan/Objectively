@@ -408,6 +408,11 @@ OBJECTIVELY_EXPORT const char *NameForStringEncoding(StringEncoding encoding);
 OBJECTIVELY_EXPORT StringEncoding StringEncodingForName(const char *name);
 
 /**
+ *
+ */
+OBJECTIVELY_EXPORT Order StringCompare(const ident a, const ident b);
+
+/**
  * @brief A convenience function for instantiating Strings.
  * @param fmt The format string.
  * @return A new String, or `NULL` on error.
@@ -421,3 +426,4 @@ OBJECTIVELY_EXPORT String *str(const char *fmt, ...);
  * @return A trimmed copy of `str` which must be freed by the caller.
  */
 OBJECTIVELY_EXPORT char *strtrim(const char *s);
+
