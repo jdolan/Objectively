@@ -60,10 +60,10 @@ static void dealloc(Object *self) {
  */
 static void addResourcePath(const char *path) {
 
+	assert(path);
 	String *string = str(path);
 
 	$(_resourcePaths, addObject, string);
-
 	release(string);
 }
 
@@ -73,11 +73,10 @@ static void addResourcePath(const char *path) {
  */
 static void addResourceProvider(ResourceProvider provider) {
 
+	assert(provider);
 	Value *value = $(alloc(Value), initWithValue, provider);
-
-
+	
 	$(_resourceProviders, addObject, value);
-
 	release(value);
 }
 
