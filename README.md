@@ -325,8 +325,8 @@ Code Templates
 ---
 Objectively provides code templates for Xcode and Eclipse CDT that greatly cut down on the boilerplate required to declare and implement a type. These are _highly recommended_, as they will save you time and reduce errors in type declaration.
 
-#### Xcode 8.x
-Install the Xcode 8.x code templates by simply building the Xcode project.
+#### Xcode
+Install the Xcode code templates by simply building the Xcode project.
 
 ![Objectively code templates in Xcode 8](Documentation/xcode-template-dialog.png)
 
