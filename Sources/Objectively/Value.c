@@ -81,18 +81,18 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - Value
 
 /**
- * @fn Value *Value::initWithBytes(Value *self, const ident value, size_t length)
+ * @fn Value *Value::initWithBytes(Value *self, const uint8_t *bytes, size_t length)
  * @memberof Value
  */
-static Value *initWithBytes(Value *self, ident value, size_t length) {
+static Value *initWithBytes(Value *self, const uint8_t *bytes, size_t length) {
 
 	self = (Value *) super(Object, self, init);
 	if (self) {
-		if (value) {
+		if (bytes) {
 			self->value = calloc(1, length);
 			assert(self->value);
 
-			memcpy(self->value, value, length);
+			memcpy(self->value, bytes, length);
 			self->destructor = free;
 		}
 	}

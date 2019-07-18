@@ -77,15 +77,16 @@ struct ValueInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @fn Value *Value::initWithBytes(Value *self, const ident value, size_t length)
+	 * @fn Value *Value::initWithBytes(Value *self, const uint8_t *bytes, size_t length)
 	 * @brief Initializes this Value by copying `length` of `bytes`.
+	 * @param self The Value.
 	 * @param bytes The bytes to copy.
 	 * @param length The count of `bytes` to copy.
 	 * @return The initialized Value, or `NULL` on error.
 	 * @remarks The copied bytes will be freed on `dealloc`.
 	 * @memberof Value
 	 */
-	Value *(*initWithBytes)(Value *self, const ident bytes, size_t length);
+	Value *(*initWithBytes)(Value *self, const uint8_t *bytes, size_t length);
 
 	/**
 	 * @fn Value *Value::initWithValue(Value *self, ident value)
