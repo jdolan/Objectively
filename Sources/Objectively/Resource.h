@@ -95,6 +95,15 @@ struct ResourceInterface {
 	void (*addResourcePath)(const char *path);
 
 	/**
+	 * @static
+	 * @fn void Resource::addResourceProvider(ResourceProvider provider)
+	 * @brief Adds the specified ResourceProvider.
+	 * @param provider The ResoureProvider to add.
+	 * @memberof Resource
+	 */
+	void (*addResourceProvider)(ResourceProvider provider);
+
+	/**
 	 * @fn Resource *Resource::initWithData(Resource *self, Data *data, const char *name)
 	 * @brief Initializes this Resource with the specified Data.
 	 * @param self The Resource.
@@ -120,10 +129,19 @@ struct ResourceInterface {
 	 * @static
 	 * @fn void Resource::removeResourcePath(const char *path)
 	 * @brief Removes the specified Resource path.
-	 * @param path The resource path.
+	 * @param path The resource path to remove.
 	 * @memberof Resource
 	 */
 	void (*removeResourcePath)(const char *path);
+
+	/**
+	 * @static
+	 * @fn void Resource::removeResourceProvider(ResourceProvider provider)
+	 * @brief Removes the specified ResourceProvider.
+	 * @param provider The ResourceProvider to remove.
+	 * @memberof Resource
+	 */
+	void (*removeResourceProvider)(ResourceProvider provider);
 
 	/**
 	 * @static
@@ -134,16 +152,6 @@ struct ResourceInterface {
 	 * @memberof Resource
 	 */
 	Resource *(*resourceWithName)(const char *name);
-
-	/**
-	 * @static
-	 * @fn void Resource::setProvider(ResourceProvider provider)
-	 * @brief Sets the Resource provider function.
-	 * @param provider The ResourceProvider.
-	 * @remarks If set, this function will take priority over configured resource paths.
-	 * @memberof Resource
-	 */
-	void (*setProvider)(ResourceProvider provider);
 };
 
 /**

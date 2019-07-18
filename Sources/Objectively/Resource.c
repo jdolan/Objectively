@@ -29,11 +29,12 @@
 #include <Objectively/MutableArray.h>
 #include <Objectively/Resource.h>
 #include <Objectively/String.h>
+#include <Objectively/Value.h>
 
 #define _Class _Resource
 
-static ResourceProvider _resourceProvider;
 static MutableArray *_resourcePaths;
+static MutableArray *_resourceProviders;
 
 #pragma mark - Object
 
@@ -59,11 +60,25 @@ static void dealloc(Object *self) {
  */
 static void addResourcePath(const char *path) {
 
-	String *temp = str(path);
+	String *string = str(path);
 
-	$(_resourcePaths, addObject, temp);
+	$(_resourcePaths, addObject, string);
 
-	release(temp);
+	release(string);
+}
+
+/**
+ * @fn void Resource::addResourceProvider(ResourceProvider provider)
+ * @memberof Resource
+ */
+static void addResourceProvider(ResourceProvider provider) {
+
+	Value *value = $(alloc(Value), initWithValue, provider);
+
+
+	$(_resourceProviders, addObject, value);
+
+	release(value);
 }
 
 /**
@@ -92,8 +107,11 @@ static Resource *initWithName(Resource *self, const char *name) {
 
 	Data *data = NULL;
 
-	if (_resourceProvider) {
-		data = _resourceProvider(name);
+	const Array *resourceProviders = (Array *) _resourceProviders;
+	for (size_t i = 0; i < resourceProviders->count && data == NULL; i++) {
+
+		const Value *value = $(resourceProviders, objectAtIndex, i);
+		data = ((ResourceProvider) (value->value))(name);
 	}
 
 	const Array *resourcePaths = (Array *) _resourcePaths;
@@ -135,19 +153,24 @@ static void removeResourcePath(const char *path) {
 }
 
 /**
+ * @fn void Resource::removeResourceProvider(ResourceProvider provider)
+ * @memberof Resource
+ */
+static void removeResourceProvider(ResourceProvider provider) {
+
+	Value *value = $(alloc(Value), initWithValue, provider);
+
+	$(_resourceProviders, removeObject, value);
+
+	release(value);
+}
+
+/**
  * @fn Resource *Resource::resourceWithName(const char *name)
  * @memberof Resource
  */
 static Resource *resourceWithName(const char *name) {
 	return $(alloc(Resource), initWithName, name);
-}
-
-/**
- * @fn void Resource::setProvider(ResourceProvider provider)
- * @memberof Resource
- */
-static void setProvider(ResourceProvider resourceProvider) {
-	_resourceProvider = resourceProvider;
 }
 
 #pragma mark - Class lifecycle
@@ -160,11 +183,12 @@ static void initialize(Class *clazz) {
 	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
 	((ResourceInterface *) clazz->interface)->addResourcePath = addResourcePath;
+	((ResourceInterface *) clazz->interface)->addResourceProvider = addResourceProvider;
 	((ResourceInterface *) clazz->interface)->initWithData = initWithData;
 	((ResourceInterface *) clazz->interface)->initWithName = initWithName;
 	((ResourceInterface *) clazz->interface)->removeResourcePath = removeResourcePath;
+	((ResourceInterface *) clazz->interface)->removeResourceProvider = removeResourceProvider;
 	((ResourceInterface *) clazz->interface)->resourceWithName = resourceWithName;
-	((ResourceInterface *) clazz->interface)->setProvider = setProvider;
 
 	_resourcePaths = $(alloc(MutableArray), init);
 	assert(_resourcePaths);
@@ -184,6 +208,9 @@ static void initialize(Class *clazz) {
 	}
 
 	addResourcePath(".");
+
+	_resourceProviders = $(alloc(MutableArray), init);
+	assert(_resourceProviders);
 }
 
 /**
@@ -191,6 +218,7 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 	release(_resourcePaths);
+	release(_resourceProviders);
 }
 
 /**
