@@ -33,63 +33,62 @@ static void consume(Operation *operation) {
 	ck_assert(cast(Object, *((Object **) operation->data)) != NULL);
 }
 
-START_TEST(producerConsumer)
-	{
-		OperationQueue *queue = $(alloc(OperationQueue), init);
-		ck_assert(queue != NULL);
+START_TEST(producerConsumer) {
 
-		Object *object;
+	OperationQueue *queue = $(alloc(OperationQueue), init);
+	ck_assert(queue != NULL);
 
-		Operation *producer = $(alloc(Operation), initWithFunction, produce, &object);
-		Operation *consumer = $(alloc(Operation), initWithFunction, consume, &object);
+	Object *object;
 
-		$(consumer, addDependency, producer);
+	Operation *producer = $(alloc(Operation), initWithFunction, produce, &object);
+	Operation *consumer = $(alloc(Operation), initWithFunction, consume, &object);
 
-		$(queue, addOperation, consumer);
-		$(queue, addOperation, producer);
+	$(consumer, addDependency, producer);
 
-		$(consumer, waitUntilFinished);
-		ck_assert(object != NULL);
+	$(queue, addOperation, consumer);
+	$(queue, addOperation, producer);
 
-		release(object);
-		release(producer);
-		release(consumer);
-		release(queue);
+	$(consumer, waitUntilFinished);
+	ck_assert(object != NULL);
 
-	}END_TEST
+	release(object);
+	release(producer);
+	release(consumer);
+	release(queue);
 
+} END_TEST
 
 static void suspendResume_func(Operation *operation) {
 	(*(int *) operation->data)++;
 }
 
-START_TEST(suspendResume)
-	{
-		OperationQueue *queue = $(alloc(OperationQueue), init);
-		ck_assert(queue != NULL);
+START_TEST(suspendResume) {
+	
+	OperationQueue *queue = $(alloc(OperationQueue), init);
+	ck_assert(queue != NULL);
 
-		queue->isSuspended = true;
-		int counter = 0;
+	queue->isSuspended = true;
+	int counter = 0;
 
-		Operation *operation;
-		for (int i = 0; i < 5; i++) {
-			operation = $(alloc(Operation), initWithFunction, suspendResume_func, &counter);
+	Operation *operation;
+	for (int i = 0; i < 5; i++) {
+		operation = $(alloc(Operation), initWithFunction, suspendResume_func, &counter);
 
-			$(queue, addOperation, operation);
+		$(queue, addOperation, operation);
 
-			release(operation);
-		}
+		release(operation);
+	}
 
-		ck_assert_int_eq(5, $(queue, operationCount));
+	ck_assert_int_eq(5, $(queue, operationCount));
 
-		queue->isSuspended = false;
+	queue->isSuspended = false;
 
-		$(queue, waitUntilAllOperationsAreFinished);
+	$(queue, waitUntilAllOperationsAreFinished);
 
-		ck_assert_int_eq(0, $(queue, operationCount));
+	ck_assert_int_eq(0, $(queue, operationCount));
 
-		release(queue);
-	}END_TEST
+	release(queue);
+} END_TEST
 
 int main(int argc, char **argv) {
 

@@ -13,7 +13,7 @@ CFLAGS += \
 
 CXXFLAGS += \
 	@HOST_CFLAGS@
-	
+
 LDADD = \
 	$(top_builddir)/Sources/Objectively/libObjectively.la \
 	@HOST_LIBS@

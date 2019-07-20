@@ -30,92 +30,92 @@ static Order comparator(const ident obj1, const ident obj2) {
 	return $((Number *) obj1, compareTo, (Number *) obj2);
 }
 
-START_TEST(mutableArray)
-	{
-		MutableArray *array = $$(MutableArray, array);
+START_TEST(mutableArray) {
 
-		ck_assert(array != NULL);
-		ck_assert_ptr_eq(_MutableArray(), classof(array));
+	MutableArray *array = $$(MutableArray, array);
 
-		ck_assert_int_eq(0, ((Array *) array)->count);
+	ck_assert(array != NULL);
+	ck_assert_ptr_eq(_MutableArray(), classof(array));
 
-		Object *one = $(alloc(Object), init);
-		Object *two = $(alloc(Object), init);
-		Object *three = $(alloc(Object), init);
+	ck_assert_int_eq(0, ((Array *) array)->count);
 
-		$(array, addObject, one);
-		$(array, addObject, two);
-		$(array, addObject, three);
+	Object *one = $(alloc(Object), init);
+	Object *two = $(alloc(Object), init);
+	Object *three = $(alloc(Object), init);
 
-		ck_assert_int_eq(3, ((Array *) array)->count);
+	$(array, addObject, one);
+	$(array, addObject, two);
+	$(array, addObject, three);
 
-		ck_assert($((Array *) array, containsObject, one));
-		ck_assert($((Array *) array, containsObject, two));
-		ck_assert($((Array *) array, containsObject, three));
+	ck_assert_int_eq(3, ((Array *) array)->count);
 
-		ck_assert_int_eq(0, $((Array *) array, indexOfObject, one));
-		ck_assert_int_eq(1, $((Array *) array, indexOfObject, two));
-		ck_assert_int_eq(2, $((Array *) array, indexOfObject, three));
+	ck_assert($((Array *) array, containsObject, one));
+	ck_assert($((Array *) array, containsObject, two));
+	ck_assert($((Array *) array, containsObject, three));
 
-		ck_assert_int_eq(2, one->referenceCount);
-		ck_assert_int_eq(2, two->referenceCount);
-		ck_assert_int_eq(2, three->referenceCount);
+	ck_assert_int_eq(0, $((Array *) array, indexOfObject, one));
+	ck_assert_int_eq(1, $((Array *) array, indexOfObject, two));
+	ck_assert_int_eq(2, $((Array *) array, indexOfObject, three));
 
-		$(array, removeObject, one);
+	ck_assert_int_eq(2, one->referenceCount);
+	ck_assert_int_eq(2, two->referenceCount);
+	ck_assert_int_eq(2, three->referenceCount);
 
-		ck_assert(!$((Array *) array, containsObject, one));
-		ck_assert_int_eq(1, one->referenceCount);
-		ck_assert_int_eq(2, ((Array *) array)->count);
+	$(array, removeObject, one);
 
-		$(array, insertObjectAtIndex, one, 0);
+	ck_assert(!$((Array *) array, containsObject, one));
+	ck_assert_int_eq(1, one->referenceCount);
+	ck_assert_int_eq(2, ((Array *) array)->count);
 
-		ck_assert_int_eq(0, $((Array *) array, indexOfObject, one));
-		ck_assert_int_eq(1, $((Array *) array, indexOfObject, two));
-		ck_assert_int_eq(2, $((Array *) array, indexOfObject, three));
+	$(array, insertObjectAtIndex, one, 0);
 
-		$(array, removeAllObjects);
+	ck_assert_int_eq(0, $((Array *) array, indexOfObject, one));
+	ck_assert_int_eq(1, $((Array *) array, indexOfObject, two));
+	ck_assert_int_eq(2, $((Array *) array, indexOfObject, three));
 
-		ck_assert_int_eq(0, ((Array *) array)->count);
+	$(array, removeAllObjects);
 
-		ck_assert(!$((Array *) array, containsObject, two));
-		ck_assert_int_eq(1, two->referenceCount);
+	ck_assert_int_eq(0, ((Array *) array)->count);
 
-		ck_assert(!$((Array *) array, containsObject, three));
-		ck_assert_int_eq(1, three->referenceCount);
+	ck_assert(!$((Array *) array, containsObject, two));
+	ck_assert_int_eq(1, two->referenceCount);
 
-		release(one);
-		release(two);
-		release(three);
+	ck_assert(!$((Array *) array, containsObject, three));
+	ck_assert_int_eq(1, three->referenceCount);
 
-		$(array, removeAllObjects);
+	release(one);
+	release(two);
+	release(three);
 
-		ck_assert_int_eq(((Array *) array)->count, 0);
+	$(array, removeAllObjects);
 
-		for (size_t i = 0; i < 100; i++) {
+	ck_assert_int_eq(((Array *) array)->count, 0);
 
-			Number *number = $$(Number, numberWithValue, rand());
+	for (size_t i = 0; i < 100; i++) {
 
-			$(array, addObject, number);
+		Number *number = $$(Number, numberWithValue, rand());
 
-			release(number);
-		}
+		$(array, addObject, number);
 
-		$(array, sort, comparator);
+		release(number);
+	}
 
-		int previous = -1;
+	$(array, sort, comparator);
 
-		for (size_t i = 0; i < ((Array *) array)->count; i++) {
+	int previous = -1;
 
-			Number *number = $((Array *) array, objectAtIndex, i);
+	for (size_t i = 0; i < ((Array *) array)->count; i++) {
 
-			ck_assert_int_ge($(number, intValue), previous);
+		Number *number = $((Array *) array, objectAtIndex, i);
 
-			previous = $(number, intValue);
-		}
+		ck_assert_int_ge($(number, intValue), previous);
 
-		release(array);
+		previous = $(number, intValue);
+	}
 
-	}END_TEST
+	release(array);
+
+} END_TEST
 
 int main(int argc, char **argv) {
 

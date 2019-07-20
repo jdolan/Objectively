@@ -26,32 +26,32 @@
 
 #include <Objectively.h>
 
-START_TEST(_log)
-	{
-		Log *log = $(alloc(Log), initWithName, "test");
-		ck_assert(log != NULL);
+START_TEST(_log) {
+	
+	Log *log = $(alloc(Log), initWithName, "test");
+	ck_assert(log != NULL);
 
-		ck_assert_str_eq("test", log->name);
+	ck_assert_str_eq("test", log->name);
 
-		log->file = fopen("/tmp/objectively-test.log", "w");
-		ck_assert(log->file != NULL);
-		ck_assert_int_eq(0, ftell(log->file));
+	log->file = fopen("/tmp/objectively-test.log", "w");
+	ck_assert(log->file != NULL);
+	ck_assert_int_eq(0, ftell(log->file));
 
-		$(log, info, "hello %s", "world!");
-		$(log, flush);
+	$(log, info, "hello %s", "world!");
+	$(log, flush);
 
-		long int len = ftell(log->file);
-		ck_assert_int_gt(len, 0);
+	long int len = ftell(log->file);
+	ck_assert_int_gt(len, 0);
 
-		$(log, debug, "hello again");
-		$(log, flush);
+	$(log, debug, "hello again");
+	$(log, flush);
 
-		long int len2 = ftell(log->file);
-		ck_assert_int_eq(len, len2);
+	long int len2 = ftell(log->file);
+	ck_assert_int_eq(len, len2);
 
-		release(log);
+	release(log);
 
-	}END_TEST
+} END_TEST
 
 int main(int argc, char **argv) {
 

@@ -25,17 +25,17 @@
 
 #include <Objectively.h>
 
-START_TEST(date)
-	{
-		Null *null1 = $$(Null, null);
-		ck_assert(null1 != NULL);
+START_TEST(date) {
+	
+	Null *null1 = $$(Null, null);
+	ck_assert(null1 != NULL);
 
-		Null *null2 = $$(Null, null);
-		ck_assert(null2 != NULL);
+	Null *null2 = $$(Null, null);
+	ck_assert(null2 != NULL);
 
-		ck_assert($((Object *) null1, isEqual, (Object *) null2));
+	ck_assert($((Object *) null1, isEqual, (Object *) null2));
 
-	}END_TEST
+} END_TEST
 
 int main(int argc, char **argv) {
 

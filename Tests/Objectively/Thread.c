@@ -47,29 +47,29 @@ static ident increment(Thread *self) {
 	return (ident) true;
 }
 
-START_TEST(thread)
-	{
-		condition = $(alloc(Condition), init);
-		ck_assert(condition != NULL);
+START_TEST(thread) {
 
-		int criticalSection = 0;
+	condition = $(alloc(Condition), init);
+	ck_assert(condition != NULL);
 
-		Thread *thread = $(alloc(Thread), initWithFunction, increment, &criticalSection);
-		ck_assert(thread != NULL);
+	int criticalSection = 0;
 
-		$(thread, start);
+	Thread *thread = $(alloc(Thread), initWithFunction, increment, &criticalSection);
+	ck_assert(thread != NULL);
 
-		synchronized(condition, $(condition, wait));
-		ck_assert_int_eq(0xbeaf, criticalSection);
+	$(thread, start);
 
-		ident ret;
-		$(thread, join, &ret);
-		ck_assert_int_eq(true, (_Bool ) ret);
+	synchronized(condition, $(condition, wait));
+	ck_assert_int_eq(0xbeaf, criticalSection);
 
-		release(thread);
-		release(condition);
+	ident ret;
+	$(thread, join, &ret);
+	ck_assert_int_eq(true, (_Bool ) ret);
 
-	}END_TEST
+	release(thread);
+	release(condition);
+
+} END_TEST
 
 static ident signalBeforeDate(Thread *self) {
 

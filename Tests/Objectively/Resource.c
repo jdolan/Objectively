@@ -30,24 +30,23 @@ static Data *resourceProvider(const char *path) {
 	return $$(Data, dataWithBytes, (uint8_t *) path, strlen(path) + 1);
 }
 
-START_TEST(resource)
-	{
-		Resource *resource;
+START_TEST(resource) {
+	Resource *resource;
 
-		resource = $$(Resource, resourceWithName, "not found");
-		ck_assert(resource == NULL);
+	resource = $$(Resource, resourceWithName, "not found");
+	ck_assert(resource == NULL);
 
-		$$(Resource, addResourceProvider, resourceProvider);
+	$$(Resource, addResourceProvider, resourceProvider);
 
-		resource = $$(Resource, resourceWithName, "Hello World!");
-		ck_assert(resource != NULL);
+	resource = $$(Resource, resourceWithName, "Hello World!");
+	ck_assert(resource != NULL);
 
-		ck_assert_str_eq("Hello World!", resource->name);
-		ck_assert_str_eq("Hello World!", (char *) resource->data->bytes);
+	ck_assert_str_eq("Hello World!", resource->name);
+	ck_assert_str_eq("Hello World!", (char *) resource->data->bytes);
 
-		release(resource);
+	release(resource);
 
-	}END_TEST
+} END_TEST
 
 int main(int argc, char **argv) {
 

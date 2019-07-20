@@ -25,68 +25,68 @@
 
 #include <Objectively.h>
 
-START_TEST(url)
-	{
-		URL *url = $(alloc(URL), initWithCharacters, "http://example.com");
-		ck_assert(url != NULL);
+START_TEST(url) {
 
-		ck_assert_str_eq("http", url->scheme->chars);
-		ck_assert_str_eq("example.com", url->host->chars);
+	URL *url = $(alloc(URL), initWithCharacters, "http://example.com");
+	ck_assert(url != NULL);
 
-		release(url);
+	ck_assert_str_eq("http", url->scheme->chars);
+	ck_assert_str_eq("example.com", url->host->chars);
 
-		url = $(alloc(URL), initWithCharacters, "http://example.com:80/path?query#fragment");
-		ck_assert(url != NULL);
+	release(url);
 
-		ck_assert_str_eq("http", url->scheme->chars);
-		ck_assert_str_eq("example.com", url->host->chars);
-		ck_assert_int_eq(80, url->port);
-		ck_assert_str_eq("/path", url->path->chars);
-		ck_assert_str_eq("query", url->query->chars);
-		ck_assert_str_eq("fragment", url->fragment->chars);
+	url = $(alloc(URL), initWithCharacters, "http://example.com:80/path?query#fragment");
+	ck_assert(url != NULL);
 
-		release(url);
+	ck_assert_str_eq("http", url->scheme->chars);
+	ck_assert_str_eq("example.com", url->host->chars);
+	ck_assert_int_eq(80, url->port);
+	ck_assert_str_eq("/path", url->path->chars);
+	ck_assert_str_eq("query", url->query->chars);
+	ck_assert_str_eq("fragment", url->fragment->chars);
 
-		url = $(alloc(URL), initWithCharacters, "http://example.com:80/path#fragment");
-		ck_assert(url != NULL);
+	release(url);
 
-		ck_assert_str_eq("http", url->scheme->chars);
-		ck_assert_str_eq("example.com", url->host->chars);
-		ck_assert_int_eq(80, url->port);
-		ck_assert_str_eq("/path", url->path->chars);
-		ck_assert(url->query == NULL);
-		ck_assert_str_eq("fragment", url->fragment->chars);
+	url = $(alloc(URL), initWithCharacters, "http://example.com:80/path#fragment");
+	ck_assert(url != NULL);
 
-		release(url);
+	ck_assert_str_eq("http", url->scheme->chars);
+	ck_assert_str_eq("example.com", url->host->chars);
+	ck_assert_int_eq(80, url->port);
+	ck_assert_str_eq("/path", url->path->chars);
+	ck_assert(url->query == NULL);
+	ck_assert_str_eq("fragment", url->fragment->chars);
 
-		url = $(alloc(URL), initWithCharacters, "http://example.com?query");
-		ck_assert(url != NULL);
+	release(url);
 
-		ck_assert_str_eq("http", url->scheme->chars);
-		ck_assert_str_eq("example.com", url->host->chars);
-		ck_assert_int_eq(0, url->port);
-		ck_assert(url->path == NULL);
-		ck_assert_str_eq("query", url->query->chars);
-		ck_assert(url->fragment == NULL);
+	url = $(alloc(URL), initWithCharacters, "http://example.com?query");
+	ck_assert(url != NULL);
 
-		release(url);
+	ck_assert_str_eq("http", url->scheme->chars);
+	ck_assert_str_eq("example.com", url->host->chars);
+	ck_assert_int_eq(0, url->port);
+	ck_assert(url->path == NULL);
+	ck_assert_str_eq("query", url->query->chars);
+	ck_assert(url->fragment == NULL);
 
-		url = $(alloc(URL), initWithCharacters, "file:///path");
-		ck_assert(url != NULL);
+	release(url);
 
-		ck_assert_str_eq("file", url->scheme->chars);
-		ck_assert(NULL == url->host);
-		ck_assert_int_eq(0, url->port);
-		ck_assert_str_eq("/path", url->path->chars);
-		ck_assert(url->query == NULL);
-		ck_assert(url->fragment == NULL);
+	url = $(alloc(URL), initWithCharacters, "file:///path");
+	ck_assert(url != NULL);
 
-		release(url);
+	ck_assert_str_eq("file", url->scheme->chars);
+	ck_assert(NULL == url->host);
+	ck_assert_int_eq(0, url->port);
+	ck_assert_str_eq("/path", url->path->chars);
+	ck_assert(url->query == NULL);
+	ck_assert(url->fragment == NULL);
 
-		url = $(alloc(URL), initWithCharacters, "malformed");
-		ck_assert(url == NULL);
+	release(url);
 
-	}END_TEST
+	url = $(alloc(URL), initWithCharacters, "malformed");
+	ck_assert(url == NULL);
+
+} END_TEST
 
 int main(int argc, char **argv) {
 

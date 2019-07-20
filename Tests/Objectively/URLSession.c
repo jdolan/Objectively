@@ -37,46 +37,46 @@ void completion(URLSessionTask *task, _Bool success) {
 	$(condition, signal);
 }
 
-START_TEST(urlSession)
-	{
-		URLSession *session = $$(URLSession, sharedInstance);
-		ck_assert(session != NULL);
+START_TEST(urlSession) {
 
-		URL *url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/Objectively");
-		ck_assert(url != NULL);
+	URLSession *session = $$(URLSession, sharedInstance);
+	ck_assert(session != NULL);
 
-		URLSessionDataTask *dataTask = $(session, dataTaskWithURL, url, completion);
-		ck_assert(dataTask != NULL);
+	URL *url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/Objectively");
+	ck_assert(url != NULL);
 
-		condition = $(alloc(Condition), init);
+	URLSessionDataTask *dataTask = $(session, dataTaskWithURL, url, completion);
+	ck_assert(dataTask != NULL);
 
-		$((URLSessionTask *) dataTask, resume);
+	condition = $(alloc(Condition), init);
 
-		$(condition, wait);
+	$((URLSessionTask *) dataTask, resume);
 
-		release(dataTask);
-		release(url);
+	$(condition, wait);
 
-		url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/Objectively/raw/master/README.md");
-		ck_assert(url != NULL);
+	release(dataTask);
+	release(url);
 
-		URLSessionDownloadTask *downloadTask = $(session, downloadTaskWithURL, url, completion);
+	url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/Objectively/raw/master/README.md");
+	ck_assert(url != NULL);
 
-		downloadTask->file = fopen("/tmp/README.md", "w");
-		ck_assert(downloadTask->file != NULL);
+	URLSessionDownloadTask *downloadTask = $(session, downloadTaskWithURL, url, completion);
 
-		$((URLSessionTask *) downloadTask, resume);
+	downloadTask->file = fopen("/tmp/README.md", "w");
+	ck_assert(downloadTask->file != NULL);
 
-		$(condition, wait);
+	$((URLSessionTask *) downloadTask, resume);
 
-		fclose(downloadTask->file);
+	$(condition, wait);
 
-		release(downloadTask);
-		release(url);
+	fclose(downloadTask->file);
 
-		release(condition);
+	release(downloadTask);
+	release(url);
 
-	}END_TEST
+	release(condition);
+
+} END_TEST
 
 int main(int argc, char **argv) {
 

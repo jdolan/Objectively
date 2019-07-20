@@ -26,37 +26,37 @@
 
 #include <Objectively.h>
 
-START_TEST(data)
-	{
-		Data *data1 = $(alloc(Data), initWithBytes, (uint8_t *) "abcdef", 6);
-		Data *data2 = $(alloc(Data), initWithBytes, (uint8_t *) "ghijkl", 6);
+START_TEST(data) {
+	
+	Data *data1 = $(alloc(Data), initWithBytes, (uint8_t *) "abcdef", 6);
+	Data *data2 = $(alloc(Data), initWithBytes, (uint8_t *) "ghijkl", 6);
 
-		ck_assert(data1 != NULL);
-		ck_assert(data2 != NULL);
+	ck_assert(data1 != NULL);
+	ck_assert(data2 != NULL);
 
-		ck_assert_int_eq(6, data1->length);
+	ck_assert_int_eq(6, data1->length);
 
-		ck_assert($((Object *) data1, isEqual, (Object *) data2) == false);
-		release(data2);
+	ck_assert($((Object *) data1, isEqual, (Object *) data2) == false);
+	release(data2);
 
-		data2 = (Data *) $((Object * ) data1, copy);
-		ck_assert(data2 != NULL);
+	data2 = (Data *) $((Object * ) data1, copy);
+	ck_assert(data2 != NULL);
 
-		ck_assert($((Object *) data1, isEqual, (Object *) data2) == true);
-		release(data2);
+	ck_assert($((Object *) data1, isEqual, (Object *) data2) == true);
+	release(data2);
 
-		const char *path = "/tmp/Objectively_Data.test";
-		ck_assert($(data1, writeToFile, path) == true);
+	const char *path = "/tmp/Objectively_Data.test";
+	ck_assert($(data1, writeToFile, path) == true);
 
-		data2 = $(alloc(Data), initWithContentsOfFile, path);
+	data2 = $(alloc(Data), initWithContentsOfFile, path);
 
-		unlink(path);
+	unlink(path);
 
-		ck_assert($((Object *) data1, isEqual, (Object *) data2) == true);
+	ck_assert($((Object *) data1, isEqual, (Object *) data2) == true);
 
-		release(data1);
-		release(data2);
-	}END_TEST
+	release(data1);
+	release(data2);
+} END_TEST
 
 int main(int argc, char **argv) {
 

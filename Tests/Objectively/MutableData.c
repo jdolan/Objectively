@@ -28,35 +28,35 @@
 
 #include <Objectively.h>
 
-START_TEST(mutableData)
-	{
-		MutableData *data = $(alloc(MutableData), init);
-		$(data, appendBytes, (uint8_t *) "123", 3);
+START_TEST(mutableData) {
 
-		ck_assert_int_eq(3, data->data.length);
-		ck_assert(strncmp("123", (char *) data->data.bytes, 3) == 0);
+	MutableData *data = $(alloc(MutableData), init);
+	$(data, appendBytes, (uint8_t *) "123", 3);
 
-		$(data, setLength, 128);
-		ck_assert_int_eq(128, data->data.length);
-		ck_assert_int_eq(0, data->data.bytes[data->data.length - 1]);
+	ck_assert_int_eq(3, data->data.length);
+	ck_assert(strncmp("123", (char *) data->data.bytes, 3) == 0);
 
-		ident mem = malloc(8192 * sizeof(uint8_t));
-		ck_assert(mem != NULL);
+	$(data, setLength, 128);
+	ck_assert_int_eq(128, data->data.length);
+	ck_assert_int_eq(0, data->data.bytes[data->data.length - 1]);
 
-		memset(mem, 1, 8192 * sizeof(uint8_t));
+	ident mem = malloc(8192 * sizeof(uint8_t));
+	ck_assert(mem != NULL);
 
-		Data *append = $(alloc(Data), initWithMemory, mem, 8192);
-		ck_assert(append != NULL);
+	memset(mem, 1, 8192 * sizeof(uint8_t));
 
-		$(data, appendData, append);
-		release(append);
+	Data *append = $(alloc(Data), initWithMemory, mem, 8192);
+	ck_assert(append != NULL);
 
-		ck_assert_int_eq(8192 + 128, data->data.length);
-		ck_assert_int_eq(1, data->data.bytes[data->data.length - 1]);
+	$(data, appendData, append);
+	release(append);
 
-		release(data);
+	ck_assert_int_eq(8192 + 128, data->data.length);
+	ck_assert_int_eq(1, data->data.bytes[data->data.length - 1]);
 
-	}END_TEST
+	release(data);
+
+} END_TEST
 
 int main(int argc, char **argv) {
 

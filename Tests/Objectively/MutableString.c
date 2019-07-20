@@ -25,42 +25,42 @@
 
 #include <Objectively.h>
 
-START_TEST(string)
-	{
-		MutableString *string = $$(MutableString, string);
+START_TEST(string) {
 
-		ck_assert(string != NULL);
-		ck_assert_ptr_eq(_MutableString(), classof(string));
+	MutableString *string = $$(MutableString, string);
 
-		String *hello = str("hello");
+	ck_assert(string != NULL);
+	ck_assert_ptr_eq(_MutableString(), classof(string));
 
-		$(string, appendString, hello);
-		ck_assert_str_eq("hello", string->string.chars);
+	String *hello = str("hello");
 
-		$(string, appendFormat, " %s", "world!");
-		ck_assert_str_eq("hello world!", string->string.chars);
+	$(string, appendString, hello);
+	ck_assert_str_eq("hello", string->string.chars);
 
-		String *goodbye = str("goodbye cruel");
+	$(string, appendFormat, " %s", "world!");
+	ck_assert_str_eq("hello world!", string->string.chars);
 
-		$(string, replaceStringInRange, (Range) { 0, 5 }, goodbye);
-		ck_assert_str_eq("goodbye cruel world!", string->string.chars);
+	String *goodbye = str("goodbye cruel");
 
-		$(string, replaceOccurrencesOfCharactersInRange, " ", (Range) { 0, 20 }, "  ");
-		ck_assert_str_eq("goodbye  cruel  world!", string->string.chars);
+	$(string, replaceStringInRange, (Range) { 0, 5 }, goodbye);
+	ck_assert_str_eq("goodbye cruel world!", string->string.chars);
 
-		$(string, replaceOccurrencesOfCharacters, " ", "");
-		ck_assert_str_eq("goodbyecruelworld!", string->string.chars);
+	$(string, replaceOccurrencesOfCharactersInRange, " ", (Range) { 0, 20 }, "  ");
+	ck_assert_str_eq("goodbye  cruel  world!", string->string.chars);
 
-		String *copy = (String *) $((Object * ) string, copy);
-		ck_assert_ptr_eq(_MutableString(), classof(copy));
-		ck_assert($((Object *) string, isEqual, (Object *) copy));
+	$(string, replaceOccurrencesOfCharacters, " ", "");
+	ck_assert_str_eq("goodbyecruelworld!", string->string.chars);
 
-		release(hello);
-		release(goodbye);
-		release(string);
-		release(copy);
+	String *copy = (String *) $((Object * ) string, copy);
+	ck_assert_ptr_eq(_MutableString(), classof(copy));
+	ck_assert($((Object *) string, isEqual, (Object *) copy));
 
-	}END_TEST
+	release(hello);
+	release(goodbye);
+	release(string);
+	release(copy);
+
+} END_TEST
 
 int main(int argc, char **argv) {
 

@@ -25,15 +25,14 @@
 
 #include <Objectively.h>
 
-START_TEST(boole)
-	{
-		Boole *True = $$(Boole, True);
-		ck_assert(True->value == true);
+START_TEST(boole) {
+	Boole *True = $$(Boole, True);
+	ck_assert(True->value == true);
 
-		Boole *False = $$(Boole, False);
-		ck_assert(False->value == false);
+	Boole *False = $$(Boole, False);
+	ck_assert(False->value == false);
 
-	}END_TEST
+} END_TEST
 
 int main(int argc, char **argv) {
 
@@ -49,6 +48,6 @@ int main(int argc, char **argv) {
 	int failed = srunner_ntests_failed(runner);
 
 	srunner_free(runner);
-
+	
 	return failed;
 }

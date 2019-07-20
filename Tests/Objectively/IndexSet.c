@@ -25,32 +25,32 @@
 
 #include <Objectively.h>
 
-START_TEST(indexSet)
-	{
-		size_t indexes[] = { 1, 2, 3, 3, 2 };
-		IndexSet *indexSet = $(alloc(IndexSet), initWithIndexes, indexes, lengthof(indexes));
+START_TEST(indexSet) {
+	
+	size_t indexes[] = { 1, 2, 3, 3, 2 };
+	IndexSet *indexSet = $(alloc(IndexSet), initWithIndexes, indexes, lengthof(indexes));
 
-		ck_assert(indexSet != NULL);
-		ck_assert_int_eq(3, indexSet->count);
-		ck_assert($(indexSet, containsIndex, 1));
-		ck_assert($(indexSet, containsIndex, 2));
-		ck_assert($(indexSet, containsIndex, 3));
+	ck_assert(indexSet != NULL);
+	ck_assert_int_eq(3, indexSet->count);
+	ck_assert($(indexSet, containsIndex, 1));
+	ck_assert($(indexSet, containsIndex, 2));
+	ck_assert($(indexSet, containsIndex, 3));
 
-		String *description = $((Object *) indexSet, description);
-		ck_assert_str_eq("[1, 2, 3]", description->chars);
+	String *description = $((Object *) indexSet, description);
+	ck_assert_str_eq("[1, 2, 3]", description->chars);
 
-		Object *object = (Object *) indexSet;
-		Object *copy = $(object, copy);
+	Object *object = (Object *) indexSet;
+	Object *copy = $(object, copy);
 
-		ck_assert(copy != NULL);
-		ck_assert_int_eq($(object, hash), $(copy, hash));
-		ck_assert($(object, isEqual, copy));
+	ck_assert(copy != NULL);
+	ck_assert_int_eq($(object, hash), $(copy, hash));
+	ck_assert($(object, isEqual, copy));
 
-		release(description);
-		release(copy);
-		release(indexSet);
+	release(description);
+	release(copy);
+	release(indexSet);
 
-	}END_TEST
+} END_TEST
 
 int main(int argc, char **argv) {
 

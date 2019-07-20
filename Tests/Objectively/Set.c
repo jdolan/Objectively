@@ -41,53 +41,53 @@ static ident reducer(const ident obj, ident accumulator, ident data) {
 	return (ident) (intptr_t) accumulator + 1;
 }
 
-START_TEST(set)
-	{
-		Object *one = $(alloc(Object), init);
-		Object *two = $(alloc(Object), init);
-		Object *three = $(alloc(Object), init);
+START_TEST(set) {
 
-		Set *set = $$(Set, setWithObjects, one, one, two, two, three, three, NULL);
+	Object *one = $(alloc(Object), init);
+	Object *two = $(alloc(Object), init);
+	Object *three = $(alloc(Object), init);
 
-		ck_assert(set != NULL);
-		ck_assert_ptr_eq(_Set(), classof(set));
+	Set *set = $$(Set, setWithObjects, one, one, two, two, three, three, NULL);
 
-		ck_assert_int_eq(3, set->count);
+	ck_assert(set != NULL);
+	ck_assert_ptr_eq(_Set(), classof(set));
 
-		ck_assert($(set, containsObject, one));
-		ck_assert($(set, containsObject, two));
-		ck_assert($(set, containsObject, three));
+	ck_assert_int_eq(3, set->count);
 
-		ck_assert_int_eq(2, one->referenceCount);
-		ck_assert_int_eq(2, two->referenceCount);
-		ck_assert_int_eq(2, three->referenceCount);
+	ck_assert($(set, containsObject, one));
+	ck_assert($(set, containsObject, two));
+	ck_assert($(set, containsObject, three));
 
-		release(one);
-		release(two);
-		release(three);
+	ck_assert_int_eq(2, one->referenceCount);
+	ck_assert_int_eq(2, two->referenceCount);
+	ck_assert_int_eq(2, three->referenceCount);
 
-		int count = 0;
-		$(set, enumerateObjects, enumerator, &count);
+	release(one);
+	release(two);
+	release(three);
 
-		ck_assert_int_eq(set->count, count);
+	int count = 0;
+	$(set, enumerateObjects, enumerator, &count);
 
-		Set *filtered = $(set, filteredSet, filter, two);
+	ck_assert_int_eq(set->count, count);
 
-		ck_assert_int_eq(1, filtered->count);
-		ck_assert($(filtered, containsObject, two));
+	Set *filtered = $(set, filteredSet, filter, two);
 
-		Set *mapped = $(set, mappedSet, functor, NULL);
+	ck_assert_int_eq(1, filtered->count);
+	ck_assert($(filtered, containsObject, two));
 
-		ck_assert_int_eq(set->count, mapped->count);
+	Set *mapped = $(set, mappedSet, functor, NULL);
 
-		int reduced = (int) (intptr_t) $(set, reduce, reducer, (ident) 0, NULL);
-		ck_assert_int_eq(3, reduced);
+	ck_assert_int_eq(set->count, mapped->count);
 
-		release(mapped);
-		release(filtered);
-		release(set);
+	int reduced = (int) (intptr_t) $(set, reduce, reducer, (ident) 0, NULL);
+	ck_assert_int_eq(3, reduced);
 
-	}END_TEST
+	release(mapped);
+	release(filtered);
+	release(set);
+
+} END_TEST
 
 int main(int argc, char **argv) {
 

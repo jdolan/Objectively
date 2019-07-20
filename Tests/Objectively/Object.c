@@ -25,32 +25,32 @@
 
 #include <Objectively.h>
 
-START_TEST(object)
-	{
-		Class *clazz = classForName("Object");
-		ck_assert_ptr_ne(NULL, clazz);
+START_TEST(object) {
 
-		ck_assert_ptr_eq(_Object(), clazz);
+	Class *clazz = classForName("Object");
+	ck_assert_ptr_ne(NULL, clazz);
 
-		Object *object = $(alloc(Object), init);
+	ck_assert_ptr_eq(_Object(), clazz);
 
-		ck_assert(object != NULL);
-		ck_assert_ptr_eq(_Object(), classof(object));
+	Object *object = $(alloc(Object), init);
 
-		ck_assert($(object, isEqual, object));
-		ck_assert($(object, isKindOfClass, classof(object)));
+	ck_assert(object != NULL);
+	ck_assert_ptr_eq(_Object(), classof(object));
 
-		Object *copy = $(object, copy);
+	ck_assert($(object, isEqual, object));
+	ck_assert($(object, isKindOfClass, classof(object)));
 
-		ck_assert(copy != NULL);
+	Object *copy = $(object, copy);
 
-		ck_assert(!$(copy, isEqual, object));
-		ck_assert($(copy, isKindOfClass, classof(object)));
+	ck_assert(copy != NULL);
 
-		release(copy);
-		release(object);
+	ck_assert(!$(copy, isEqual, object));
+	ck_assert($(copy, isKindOfClass, classof(object)));
 
-	}END_TEST
+	release(copy);
+	release(object);
+
+} END_TEST
 
 int main(int argc, char **argv) {
 

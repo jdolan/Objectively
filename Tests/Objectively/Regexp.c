@@ -26,31 +26,31 @@
 
 #include <Objectively.h>
 
-START_TEST(regexp)
-	{
-		Regexp *regexp = re("([a-z]*)://(.*)", 0);
-		ck_assert(regexp != NULL);
+START_TEST(regexp) {
 
-		ck_assert_int_eq(2, regexp->numberOfSubExpressions);
+	Regexp *regexp = re("([a-z]*)://(.*)", 0);
+	ck_assert(regexp != NULL);
 
-		String *url = str("http://github.com");
+	ck_assert_int_eq(2, regexp->numberOfSubExpressions);
 
-		Range *matches;
-		ck_assert($(regexp, matchesString, url, 0, &matches));
+	String *url = str("http://github.com");
 
-		String *scheme = $(url, substring, matches[1]);
-		ck_assert_str_eq("http", scheme->chars);
+	Range *matches;
+	ck_assert($(regexp, matchesString, url, 0, &matches));
 
-		String *host = $(url, substring, matches[2]);
-		ck_assert_str_eq("github.com", host->chars);
+	String *scheme = $(url, substring, matches[1]);
+	ck_assert_str_eq("http", scheme->chars);
 
-		free(matches);
-		release(scheme);
-		release(host);
-		release(url);
-		release(regexp);
+	String *host = $(url, substring, matches[2]);
+	ck_assert_str_eq("github.com", host->chars);
 
-	}END_TEST
+	free(matches);
+	release(scheme);
+	release(host);
+	release(url);
+	release(regexp);
+
+} END_TEST
 
 int main(int argc, char **argv) {
 
