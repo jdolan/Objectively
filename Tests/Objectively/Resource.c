@@ -37,7 +37,7 @@ START_TEST(resource)
 		resource = $$(Resource, resourceWithName, "not found");
 		ck_assert(resource == NULL);
 
-		$$(Resource, setProvider, resourceProvider);
+		$$(Resource, addResourceProvider, resourceProvider);
 
 		resource = $$(Resource, resourceWithName, "Hello World!");
 		ck_assert(resource != NULL);
