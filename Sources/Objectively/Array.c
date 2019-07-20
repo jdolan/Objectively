@@ -141,41 +141,32 @@ static Array *arrayWithArray(const Array *array) {
  */
 static Array *arrayWithObjects(ident obj, ...) {
 
-	Array *array = (Array *) $((Object *) alloc(Array), init);
+	Array *array = (Array *) super(Object, alloc(Array), init);
 	if (array) {
-
 		va_list args;
 		va_start(args, obj);
 
-		ident object = obj;
+		while (obj) {
+			array->elements = realloc(array->elements, ++array->count * sizeof(ident));
+			assert(array->elements);
 
-		while (object) {
-			array->count++;
-			object = va_arg(args, ident);
+			array->elements[array->count - 1] = retain(obj);
+			obj = va_arg(args, ident);
 		}
 
 		va_end(args);
-
-		if (array->count) {
-
-			array->elements = calloc(array->count, sizeof(ident));
-			assert(array->elements);
-
-			va_start(args, obj);
-
-			object = obj;
-			ident *elt = array->elements;
-
-			while (object) {
-				*elt++ = retain(object);
-				object = va_arg(args, ident);
-			}
-
-			va_end(args);
-		}
 	}
 
 	return array;
+}
+
+/**
+ * @fn Array *Array::arrayWithVaList(va_list args)
+ * @memberof Array
+ */
+static Array *arrayWithVaList(va_list args) {
+
+	return $(alloc(Array), initWithVaList, args);
 }
 
 /**
@@ -323,30 +314,31 @@ static Array *initWithArray(Array *self, const Array *array) {
  */
 static Array *initWithObjects(Array *self, ...) {
 
+	va_list args;
+	va_start(args, self);
+
+	self = $(self, initWithVaList, args);
+
+	va_end(args);
+	return self;
+}
+
+/**
+ * @fn Array *Array::initWithVaList(Array *self, va_list args)
+ * @memberof Array
+ */
+static Array *initWithVaList(Array *self, va_list args) {
+
 	self = (Array *) super(Object, self, init);
 	if (self) {
 
-		va_list args;
-		va_start(args, self);
-
-		while (va_arg(args, ident)) {
-			self->count++;
-		}
-
-		va_end(args);
-
-		if (self->count) {
-
-			self->elements = calloc(self->count, sizeof(ident));
+		ident element = va_arg(args, ident);
+		while (element) {
+			self->elements = realloc(self->elements, ++self->count * sizeof(ident));
 			assert(self->elements);
 
-			va_start(args, self);
-
-			for (size_t i = 0; i < self->count; i++) {
-				self->elements[i] = retain(va_arg(args, ident));
-			}
-
-			va_end(args);
+			self->elements[self->count - 1] = retain(element);
+			element = va_arg(args, ident);
 		}
 	}
 
@@ -454,6 +446,7 @@ static void initialize(Class *clazz) {
 
 	((ArrayInterface *) clazz->interface)->arrayWithArray = arrayWithArray;
 	((ArrayInterface *) clazz->interface)->arrayWithObjects = arrayWithObjects;
+	((ArrayInterface *) clazz->interface)->arrayWithVaList = arrayWithVaList;
 	((ArrayInterface *) clazz->interface)->componentsJoinedByCharacters = componentsJoinedByCharacters;
 	((ArrayInterface *) clazz->interface)->componentsJoinedByString = componentsJoinedByString;
 	((ArrayInterface *) clazz->interface)->containsObject = containsObject;
@@ -464,6 +457,7 @@ static void initialize(Class *clazz) {
 	((ArrayInterface *) clazz->interface)->indexOfObject = indexOfObject;
 	((ArrayInterface *) clazz->interface)->initWithArray = initWithArray;
 	((ArrayInterface *) clazz->interface)->initWithObjects = initWithObjects;
+	((ArrayInterface *) clazz->interface)->initWithVaList = initWithVaList;
 	((ArrayInterface *) clazz->interface)->lastObject = lastObject;
 	((ArrayInterface *) clazz->interface)->mappedArray = mappedArray;
 	((ArrayInterface *) clazz->interface)->mutableCopy = mutableCopy;

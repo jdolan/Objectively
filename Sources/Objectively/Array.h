@@ -23,6 +23,8 @@
 
 #pragma once
 
+#include <stdarg.h>
+
 #include <Objectively/Object.h>
 
 /**
@@ -102,11 +104,21 @@ struct ArrayInterface {
 	 * @static
 	 * @fn Array *Array::arrayWithObjects(ident obj, ...)
 	 * @brief Returns a new Array containing the given Objects.
-	 * @param obj The first in a `NULL`-terminated sequence of Objects.
+	 * @param obj The first in a `NULL`-terminated list of Objects.
 	 * @return The new Array, or `NULL` on error.
 	 * @memberof Array
 	 */
 	Array *(*arrayWithObjects)(ident obj, ...);
+
+	/**
+	 * @static
+	 * @fn Array *Array::arrayWithVaList(va_list args)
+	 * @brief Returns a new Array containing the Objects in the given `va_list`.
+	 * @param args The `NULL`-terminated va_list of Objects.
+	 * @return The new Array, or `NULL` on error.
+	 * @memberof Array
+	 */
+	Array *(*arrayWithVaList)(va_list args);
 
 	/**
 	 * @fn String *Array::componentsJoinedByCharacters(const Array *self, const char *chars)
@@ -198,12 +210,22 @@ struct ArrayInterface {
 
 	/**
 	 * @fn Array *Array::initWithObjects(Array *self, ...)
-	 * @brief Initializes this Array with the specified objects.
+	 * @brief Initializes this Array to contain the Objects in the `NULL`-terminated arguments list.
 	 * @param self The Array.
 	 * @return The initialized Array, or `NULL` on error.
 	 * @memberof Array
 	 */
 	Array *(*initWithObjects)(Array *self, ...);
+
+	/**
+	 * @fn Array *Array::initWithVaList(Array *self, va_list args)
+	 * @brief Initializes this Array to contain the Objects in the `NULL`-terminated va_list.
+	 * @param self The Array.
+	 * @param args The `NULL`-terminated va_list of Objects.
+	 * @return The initialized Array, or `NULL` on error.
+	 * @memberof Array
+	 */
+	Array *(*initWithVaList)(Array *self, va_list args);
 
 	/**
 	 * @fn ident Array::lastObject(const Array *self)
