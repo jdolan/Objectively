@@ -23,8 +23,8 @@
 
 #include <assert.h>
 
-#include <Objectively/MutableDictionary.h>
-#include <Objectively/URLRequest.h>
+#include "MutableDictionary.h"
+#include "URLRequest.h"
 
 #define _Class _URLRequest
 

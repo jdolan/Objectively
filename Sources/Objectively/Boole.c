@@ -23,8 +23,8 @@
 
 #include <assert.h>
 
-#include <Objectively/Boole.h>
-#include <Objectively/String.h>
+#include "Boole.h"
+#include "String.h"
 
 #define _Class _Boole
 

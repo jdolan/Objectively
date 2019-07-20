@@ -26,7 +26,7 @@
 
 #include <curl/curl.h>
 
-#include <Objectively/URLSessionUploadTask.h>
+#include "URLSessionUploadTask.h"
 
 #define _Class _URLSessionUploadTask
 

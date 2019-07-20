@@ -21,7 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#include <Objectively/Config.h>
+#include "Config.h"
 
 #include <assert.h>
 #include <iconv.h>
@@ -31,10 +31,10 @@
 #include <string.h>
 #include <wchar.h>
 
-#include <Objectively/Hash.h>
-#include <Objectively/MutableArray.h>
-#include <Objectively/MutableString.h>
-#include <Objectively/String.h>
+#include "Hash.h"
+#include "MutableArray.h"
+#include "MutableString.h"
+#include "String.h"
 
 #if defined(__MINGW32__)
 #define towlower_l _towlower_l

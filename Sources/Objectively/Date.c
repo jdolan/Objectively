@@ -23,8 +23,8 @@
 
 #include <assert.h>
 
-#include <Objectively/Date.h>
-#include <Objectively/Hash.h>
+#include "Date.h"
+#include "Hash.h"
 
 #define _Class _Date
 

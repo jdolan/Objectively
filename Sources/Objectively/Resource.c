@@ -26,10 +26,10 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#include <Objectively/MutableArray.h>
-#include <Objectively/Resource.h>
-#include <Objectively/String.h>
-#include <Objectively/Value.h>
+#include "MutableArray.h"
+#include "Resource.h"
+#include "String.h"
+#include "Value.h"
 
 #define _Class _Resource
 
@@ -78,6 +78,19 @@ static void addResourceProvider(ResourceProvider provider) {
 	
 	$(_resourceProviders, addObject, value);
 	release(value);
+}
+
+/**
+ * @fn Resource *Resource::initWithBytes(Resource *self, const uint8_t *bytes, size_t length, const char *name)
+ * @memberof Resource
+ */
+static Resource *initWithBytes(Resource *self, const uint8_t *bytes, size_t length, const char *name) {
+
+	Data *data = $$(Data, dataWithBytes, bytes, length);
+	self = $(self, initWithData, data, name);
+
+	release(data);
+	return self;
 }
 
 /**
@@ -183,6 +196,7 @@ static void initialize(Class *clazz) {
 
 	((ResourceInterface *) clazz->interface)->addResourcePath = addResourcePath;
 	((ResourceInterface *) clazz->interface)->addResourceProvider = addResourceProvider;
+	((ResourceInterface *) clazz->interface)->initWithBytes = initWithBytes;
 	((ResourceInterface *) clazz->interface)->initWithData = initWithData;
 	((ResourceInterface *) clazz->interface)->initWithName = initWithName;
 	((ResourceInterface *) clazz->interface)->removeResourcePath = removeResourcePath;

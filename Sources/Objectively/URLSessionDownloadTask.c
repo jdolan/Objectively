@@ -24,7 +24,7 @@
 #include <assert.h>
 #include <curl/curl.h>
 
-#include <Objectively/URLSessionDownloadTask.h>
+#include "URLSessionDownloadTask.h"
 
 #define _Class _URLSessionDownloadTask
 

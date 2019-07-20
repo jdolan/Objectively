@@ -23,9 +23,9 @@
 
 #include <assert.h>
 
-#include <Objectively/Error.h>
-#include <Objectively/Hash.h>
-#include <Objectively/MutableString.h>
+#include "Error.h"
+#include "Hash.h"
+#include "MutableString.h"
 
 #define _Class _Error
 

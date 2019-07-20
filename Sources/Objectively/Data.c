@@ -26,9 +26,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <Objectively/Data.h>
-#include <Objectively/Hash.h>
-#include <Objectively/MutableData.h>
+#include "Data.h"
+#include "Hash.h"
+#include "MutableData.h"
 
 #define _Class _Data
 

@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <Objectively/NumberFormatter.h>
+#include "NumberFormatter.h"
 
 #define _Class _NumberFormatter
 

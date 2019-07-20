@@ -104,6 +104,18 @@ struct ResourceInterface {
 	void (*addResourceProvider)(ResourceProvider provider);
 
 	/**
+	 * @fn Resource *Resource::initWithBytes(Resource *self, const uint8_t *bytes, size_t length, const char *name)
+	* @brief Initializes this Resource with the specified bytes.
+	 * @param self The Resource.
+	 * @param bytes The bytes.
+	 * @param length The length of bytes.
+	 * @param name The resource name.
+	 * @return The initialized Resource, or `NULL` on error.
+	 * @memberof Resource
+	 */
+	Resource *(*initWithBytes)(Resource *self, const uint8_t *bytes, size_t length, const char *name);
+
+	/**
 	 * @fn Resource *Resource::initWithData(Resource *self, Data *data, const char *name)
 	 * @brief Initializes this Resource with the specified Data.
 	 * @param self The Resource.

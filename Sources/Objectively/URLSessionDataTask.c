@@ -26,8 +26,8 @@
 #include <string.h>
 #include <curl/curl.h>
 
-#include <Objectively/MutableData.h>
-#include <Objectively/URLSessionDataTask.h>
+#include "MutableData.h"
+#include "URLSessionDataTask.h"
 
 #define _Class _URLSessionDataTask
 

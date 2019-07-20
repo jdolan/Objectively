@@ -25,8 +25,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <Objectively/Hash.h>
-#include <Objectively/Regexp.h>
+#include "Hash.h"
+#include "Regexp.h"
 
 #define _Class _Regexp
 

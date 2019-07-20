@@ -25,9 +25,9 @@
 #include <stdlib.h>
 #include <curl/curl.h>
 
-#include <Objectively/URLRequest.h>
-#include <Objectively/URLSession.h>
-#include <Objectively/URLSessionTask.h>
+#include "URLRequest.h"
+#include "URLSession.h"
+#include "URLSessionTask.h"
 
 #define _Class _URLSessionTask
 

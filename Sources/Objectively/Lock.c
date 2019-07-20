@@ -27,7 +27,7 @@
 
 #include <pthread.h>
 
-#include <Objectively/Lock.h>
+#include "Lock.h"
 
 #define _Class _Lock
 

@@ -25,14 +25,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <Objectively/Boole.h>
-#include <Objectively/JSONSerialization.h>
-#include <Objectively/MutableData.h>
-#include <Objectively/MutableDictionary.h>
-#include <Objectively/MutableArray.h>
-#include <Objectively/Null.h>
-#include <Objectively/Number.h>
-#include <Objectively/String.h>
+#include "Boole.h"
+#include "JSONSerialization.h"
+#include "MutableData.h"
+#include "MutableDictionary.h"
+#include "MutableArray.h"
+#include "Null.h"
+#include "Number.h"
+#include "String.h"
 
 #define _Class _JSONSerialization
 

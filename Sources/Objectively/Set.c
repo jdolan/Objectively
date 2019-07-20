@@ -25,11 +25,11 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-#include <Objectively/Hash.h>
-#include <Objectively/MutableArray.h>
-#include <Objectively/MutableSet.h>
-#include <Objectively/Set.h>
-#include <Objectively/String.h>
+#include "Hash.h"
+#include "MutableArray.h"
+#include "MutableSet.h"
+#include "Set.h"
+#include "String.h"
 
 #define _Class _Set
 

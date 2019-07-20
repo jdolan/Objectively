@@ -25,8 +25,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <Objectively/Object.h>
-#include <Objectively/String.h>
+#include "Object.h"
+#include "String.h"
 
 #define _Class _Object
 

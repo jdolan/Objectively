@@ -21,7 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#include <Objectively/Config.h>
+#include "Config.h"
 
 #include <assert.h>
 #include <dlfcn.h>
@@ -33,8 +33,8 @@
 #include <unistd.h>
 #endif
 
-#include <Objectively/Class.h>
-#include <Objectively/Object.h>
+#include "Class.h"
+#include "Object.h"
 
 size_t _pageSize;
 

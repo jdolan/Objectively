@@ -28,13 +28,13 @@
 #include <string.h>
 #include <time.h>
 
-#include <Objectively/Config.h>
+#include "Config.h"
 
 #if HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
-#include <Objectively/Log.h>
+#include "Log.h"
 
 #define _Class _Log
 

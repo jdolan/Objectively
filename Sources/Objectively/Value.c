@@ -25,8 +25,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <Objectively/Hash.h>
-#include <Objectively/Value.h>
+#include "Hash.h"
+#include "Value.h"
 
 #define _Class _Value
 

@@ -24,13 +24,13 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#include <Objectively/Array.h>
-#include <Objectively/Boole.h>
-#include <Objectively/Dictionary.h>
-#include <Objectively/JSONPath.h>
-#include <Objectively/Number.h>
-#include <Objectively/Regexp.h>
-#include <Objectively/String.h>
+#include "Array.h"
+#include "Boole.h"
+#include "Dictionary.h"
+#include "JSONPath.h"
+#include "Number.h"
+#include "Regexp.h"
+#include "String.h"
 
 #define _Class _JSONPath
 

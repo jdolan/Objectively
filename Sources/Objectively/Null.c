@@ -23,7 +23,7 @@
 
 #include <assert.h>
 
-#include <Objectively/Null.h>
+#include "Null.h"
 
 #define _Class _Null
 

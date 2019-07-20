@@ -25,9 +25,9 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-#include <Objectively/Hash.h>
-#include <Objectively/MutableArray.h>
-#include <Objectively/MutableSet.h>
+#include "Hash.h"
+#include "MutableArray.h"
+#include "MutableSet.h"
 
 #define _Class _MutableSet
 

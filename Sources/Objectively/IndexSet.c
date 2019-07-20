@@ -25,9 +25,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <Objectively/Hash.h>
-#include <Objectively/IndexSet.h>
-#include <Objectively/MutableString.h>
+#include "Hash.h"
+#include "IndexSet.h"
+#include "MutableString.h"
 
 /**
  * @brief qsort comparator for indexes.

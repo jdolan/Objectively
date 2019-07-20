@@ -27,7 +27,7 @@
 #include <string.h>
 #include <wchar.h>
 
-#include <Objectively/StringReader.h>
+#include "StringReader.h"
 
 #define _Class _StringReader
 

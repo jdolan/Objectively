@@ -21,7 +21,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#include <Objectively/Config.h>
+#include "Config.h"
 
 #include <assert.h>
 #include <stdarg.h>
@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <Objectively/MutableString.h>
+#include "MutableString.h"
 
 #define _Class _MutableString
 

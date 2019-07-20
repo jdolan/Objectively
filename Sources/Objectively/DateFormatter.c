@@ -21,13 +21,13 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#include <Objectively/Config.h>
+#include "Config.h"
 
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <Objectively/DateFormatter.h>
+#include "DateFormatter.h"
 
 #define _Class _DateFormatter
 

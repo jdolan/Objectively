@@ -24,9 +24,9 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#include <Objectively/MutableString.h>
-#include <Objectively/Regexp.h>
-#include <Objectively/URL.h>
+#include "MutableString.h"
+#include "Regexp.h"
+#include "URL.h"
 
 #define _Class _URL
 

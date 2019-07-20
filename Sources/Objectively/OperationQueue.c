@@ -23,7 +23,7 @@
 
 #include <assert.h>
 
-#include <Objectively/OperationQueue.h>
+#include "OperationQueue.h"
 
 #define _Class _OperationQueue
 

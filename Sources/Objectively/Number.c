@@ -23,9 +23,9 @@
 
 #include <assert.h>
 
-#include <Objectively/Hash.h>
-#include <Objectively/Number.h>
-#include <Objectively/String.h>
+#include "Hash.h"
+#include "Number.h"
+#include "String.h"
 
 #define _Class _Number
 

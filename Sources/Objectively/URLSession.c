@@ -25,7 +25,7 @@
 
 #include <curl/curl.h>
 
-#include <Objectively/URLSession.h>
+#include "URLSession.h"
 
 #define _Class _URLSession
 

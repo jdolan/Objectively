@@ -25,8 +25,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <Objectively/Enum.h>
-#include <Objectively/MutableString.h>
+#include "Enum.h"
+#include "MutableString.h"
 
 String *nameof(const EnumName *names, int value) {
 

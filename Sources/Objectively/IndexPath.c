@@ -25,9 +25,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <Objectively/Hash.h>
-#include <Objectively/IndexPath.h>
-#include <Objectively/MutableString.h>
+#include "Hash.h"
+#include "IndexPath.h"
+#include "MutableString.h"
 
 #define _Class _IndexPath
 

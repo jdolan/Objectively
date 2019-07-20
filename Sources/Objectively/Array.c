@@ -25,10 +25,10 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-#include <Objectively/Array.h>
-#include <Objectively/Hash.h>
-#include <Objectively/MutableArray.h>
-#include <Objectively/MutableString.h>
+#include "Array.h"
+#include "Hash.h"
+#include "MutableArray.h"
+#include "MutableString.h"
 
 #define _Class _Array
 

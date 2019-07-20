@@ -23,7 +23,7 @@
 
 #include <string.h>
 
-#include <Objectively/Hash.h>
+#include "Hash.h"
 
 int HashForBytes(int hash, const uint8_t *bytes, const Range range) {
 

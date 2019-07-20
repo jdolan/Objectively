@@ -28,7 +28,7 @@
 
 #include <pthread.h>
 
-#include <Objectively/Thread.h>
+#include "Thread.h"
 
 #define _Class _Thread
 

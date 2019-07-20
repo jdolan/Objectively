@@ -7,7 +7,7 @@
 
 #include <assert.h>
 
-#include <Objectively/URLSessionConfiguration.h>
+#include "URLSessionConfiguration.h"
 
 #define _Class _URLSessionConfiguration
 

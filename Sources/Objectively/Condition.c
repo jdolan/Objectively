@@ -29,7 +29,7 @@
 
 #include <pthread.h>
 
-#include <Objectively/Condition.h>
+#include "Condition.h"
 
 #define _Class _Condition
 

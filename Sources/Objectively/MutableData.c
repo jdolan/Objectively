@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <Objectively/MutableData.h>
+#include "MutableData.h"
 
 #define _Class _MutableData
 
