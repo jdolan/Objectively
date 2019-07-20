@@ -1,3 +1,6 @@
+AUTOMAKE_OPTIONS = nostdinc
+AM_CPPFLAGS = -I$(top_srcdir)/Sources
+
 noinst_HEADERS = \
 	Hello.h
 
@@ -6,11 +9,9 @@ noinst_PROGRAMS = \
 	HelloCpp
 
 CFLAGS += \
-	-I$(top_srcdir)/Sources \
 	@HOST_CFLAGS@
 
 CXXFLAGS += \
-	-I$(top_srcdir)/Sources \
 	@HOST_CFLAGS@
 	
 LDADD = \
@@ -29,7 +30,6 @@ noinst_PROGRAMS += \
 	HelloObjC
 
 OBJCFLAGS += \
-	-I$(top_srcdir)/Sources \
 	@HOST_CFLAGS@
 
 HelloObjC_SOURCES = \
