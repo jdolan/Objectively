@@ -131,18 +131,16 @@ START_TEST(_strtrim) {
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("string");
+	TCase *tcase = tcase_create("String");
 	tcase_add_test(tcase, string);
-
-	tcase = tcase_create("strtrim");
 	tcase_add_test(tcase, _strtrim);
 
-	Suite *suite = suite_create("string");
+	Suite *suite = suite_create("String");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_NORMAL);
+	srunner_run_all(runner, CK_VERBOSE);
 	int failed = srunner_ntests_failed(runner);
 
 	srunner_free(runner);
