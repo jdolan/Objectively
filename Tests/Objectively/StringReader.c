@@ -22,8 +22,17 @@
  */
 
 #include <check.h>
+#include <locale.h>
 
 #include <Objectively.h>
+
+static void setup(void) {
+	setlocale(LC_CTYPE, "en_US.UTF-8");
+}
+
+static void teardown(void) {
+	setlocale(LC_CTYPE, NULL);
+}
 
 START_TEST(initWithCharacters) {
 
@@ -51,7 +60,7 @@ START_TEST(read_english) {
 	ck_assert_int_eq(L'l', $(reader, read));
 	ck_assert_int_eq(L'd', $(reader, read));
 	ck_assert_int_eq(L'!', $(reader, read));
-	ck_assert_int_eq(-1, $(reader, read));
+	ck_assert_int_eq(READER_EOF, $(reader, read));
 
 	release(reader);
 } END_TEST
@@ -68,7 +77,7 @@ START_TEST(read_japanese) {
 	ck_assert_int_eq(L'は', $(reader, read));
 	ck_assert_int_eq(L'世', $(reader, read));
 	ck_assert_int_eq(L'界', $(reader, read));
-	ck_assert_int_eq(-1, $(reader, read));
+	ck_assert_int_eq(READER_EOF, $(reader, read));
 
 	release(reader);
 } END_TEST
@@ -83,33 +92,38 @@ START_TEST(readToken) {
 	Unicode stop;
 
 	token = $(reader, readToken, charset, &stop);
+	ck_assert_ptr_ne(NULL, token);
 	ck_assert_str_eq("ṮḧḭṠ", token->chars);
 	ck_assert_int_eq(' ', stop);
 	release(token);
 
 	token = $(reader, readToken, charset, &stop);
+	ck_assert_ptr_ne(NULL, token);
 	ck_assert_str_eq("ḭṠ", token->chars);
 	ck_assert_int_eq(' ', stop);
 	release(token);
 
 	token = $(reader, readToken, charset, &stop);
+	ck_assert_ptr_ne(NULL, token);
 	ck_assert_str_eq("ṏṆḶẏ", token->chars);
 	ck_assert_int_eq(' ', stop);
 	release(token);
 
 	token = $(reader, readToken, charset, &stop);
+	ck_assert_ptr_ne(NULL, token);
 	ck_assert_str_eq("Ḁ", token->chars);
 	ck_assert_int_eq(' ', stop);
 	release(token);
 
 	token = $(reader, readToken, charset, &stop);
+	ck_assert_ptr_ne(NULL, token);
 	ck_assert_str_eq("ṮḕṠṮ", token->chars);
 	ck_assert_int_eq(-1, stop);
 	release(token);
 
 	token = $(reader, readToken, charset, &stop);
-	ck_assert(token == NULL);
-	ck_assert_int_eq(-1, stop);
+	ck_assert_ptr_eq(NULL, token);
+	ck_assert_int_eq(READER_EOF, stop);
 
 	release(reader);
 } END_TEST
@@ -117,21 +131,15 @@ START_TEST(readToken) {
 
 int main(int argc, char **argv) {
 
-	TCase *tcase;
+	TCase *tcase = tcase_create("StringReader");
+	tcase_add_unchecked_fixture(tcase, setup, teardown);
 
-	tcase = tcase_create("initWithCharacters");
 	tcase_add_test(tcase, initWithCharacters);
-
-	tcase = tcase_create("read_english");
 	tcase_add_test(tcase, read_english);
-
-	tcase = tcase_create("read_japanese");
 	tcase_add_test(tcase, read_japanese);
-
-	tcase = tcase_create("readToken");
 	tcase_add_test(tcase, readToken);
 
-	Suite *suite = suite_create("stringReader");
+	Suite *suite = suite_create("StringReader");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);
