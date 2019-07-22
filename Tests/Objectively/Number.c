@@ -48,15 +48,15 @@ START_TEST(number) {
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("number");
+	TCase *tcase = tcase_create("Number");
 	tcase_add_test(tcase, number);
 
-	Suite *suite = suite_create("number");
+	Suite *suite = suite_create("Number");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_NORMAL);
+	srunner_run_all(runner, CK_VERBOSE);
 	int failed = srunner_ntests_failed(runner);
 
 	srunner_free(runner);

@@ -144,7 +144,7 @@ int main(int argc, char **argv) {
 
 	SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_NORMAL);
+	srunner_run_all(runner, CK_VERBOSE);
 	int failed = srunner_ntests_failed(runner);
 
 	srunner_free(runner);

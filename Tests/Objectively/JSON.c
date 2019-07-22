@@ -68,15 +68,15 @@ int main(int argc, char **argv) {
 		path = "Fixtures/test.json";
 	}
 
-	TCase *tcase = tcase_create("json");
+	TCase *tcase = tcase_create("Json");
 	tcase_add_test(tcase, json);
 
-	Suite *suite = suite_create("json");
+	Suite *suite = suite_create("Json");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_NORMAL);
+	srunner_run_all(runner, CK_VERBOSE);
 	int failed = srunner_ntests_failed(runner);
 
 	srunner_free(runner);

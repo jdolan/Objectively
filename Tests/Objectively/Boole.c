@@ -36,15 +36,15 @@ START_TEST(boole) {
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("boole");
+	TCase *tcase = tcase_create("Boole");
 	tcase_add_test(tcase, boole);
 
-	Suite *suite = suite_create("boole");
+	Suite *suite = suite_create("Boole");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_NORMAL);
+	srunner_run_all(runner, CK_VERBOSE);
 	int failed = srunner_ntests_failed(runner);
 
 	srunner_free(runner);

@@ -104,15 +104,15 @@ START_TEST(mutableSet) {
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("mutableSet");
+	TCase *tcase = tcase_create("MutableSet");
 	tcase_add_test(tcase, mutableSet);
 
-	Suite *suite = suite_create("mutableSet");
+	Suite *suite = suite_create("MutableSet");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_NORMAL);
+	srunner_run_all(runner, CK_VERBOSE);
 	int failed = srunner_ntests_failed(runner);
 
 	srunner_free(runner);

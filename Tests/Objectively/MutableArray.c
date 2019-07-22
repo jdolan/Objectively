@@ -119,15 +119,15 @@ START_TEST(mutableArray) {
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("mutableArray");
+	TCase *tcase = tcase_create("MutableArray");
 	tcase_add_test(tcase, mutableArray);
 
-	Suite *suite = suite_create("mutableArray");
+	Suite *suite = suite_create("MutableArray");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_NORMAL);
+	srunner_run_all(runner, CK_VERBOSE);
 	int failed = srunner_ntests_failed(runner);
 
 	srunner_free(runner);

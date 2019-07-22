@@ -116,16 +116,16 @@ START_TEST(cond)
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("thread");
+	TCase *tcase = tcase_create("Thread");
 	tcase_add_test(tcase, thread);
 	tcase_add_test(tcase, cond);
 
-	Suite *suite = suite_create("thread");
+	Suite *suite = suite_create("Thread");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_NORMAL);
+	srunner_run_all(runner, CK_VERBOSE);
 	int failed = srunner_ntests_failed(runner);
 
 	srunner_free(runner);

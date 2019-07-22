@@ -85,15 +85,15 @@ START_TEST(dictionary) {
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("dictionary");
+	TCase *tcase = tcase_create("Dictionary");
 	tcase_add_test(tcase, dictionary);
 
-	Suite *suite = suite_create("dictionary");
+	Suite *suite = suite_create("Dictionary");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_NORMAL);
+	srunner_run_all(runner, CK_VERBOSE);
 	int failed = srunner_ntests_failed(runner);
 
 	srunner_free(runner);

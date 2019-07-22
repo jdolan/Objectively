@@ -95,15 +95,15 @@ START_TEST(array) {
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("array");
+	TCase *tcase = tcase_create("Array");
 	tcase_add_test(tcase, array);
 
-	Suite *suite = suite_create("array");
+	Suite *suite = suite_create("Array");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_NORMAL);
+	srunner_run_all(runner, CK_VERBOSE);
 	int failed = srunner_ntests_failed(runner);
 
 	srunner_free(runner);

@@ -60,15 +60,15 @@ START_TEST(data) {
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("data");
+	TCase *tcase = tcase_create("Data");
 	tcase_add_test(tcase, data);
 
-	Suite *suite = suite_create("data");
+	Suite *suite = suite_create("Data");
 	suite_add_tcase(suite, tcase);
 
 	SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_NORMAL);
+	srunner_run_all(runner, CK_VERBOSE);
 	int failed = srunner_ntests_failed(runner);
 
 	srunner_free(runner);
