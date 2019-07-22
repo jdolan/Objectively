@@ -2300,7 +2300,7 @@
 		CE76D7F31C481B530096DD31 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1030;
 				TargetAttributes = {
 					CE4A532F1F40E0A600927421 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -2390,7 +2390,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$BUILT_PRODUCTS_DIR/Objectively-Array &&\n$BUILT_PRODUCTS_DIR/Objectively-Boole &&\n$BUILT_PRODUCTS_DIR/Objectively-Data &&\n$BUILT_PRODUCTS_DIR/Objectively-Date &&\n$BUILT_PRODUCTS_DIR/Objectively-Dictionary &&\n$BUILT_PRODUCTS_DIR/Objectively-IndexPath &&\n$BUILT_PRODUCTS_DIR/Objectively-IndexSet &&\n$BUILT_PRODUCTS_DIR/Objectively-JSON $SRCROOT/Tests/Objectively/Fixtures/test.json &&\n$BUILT_PRODUCTS_DIR/Objectively-Log &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableArray &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableData &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableDictionary &&\n$BUILT_PRODUCTS_DIR/Objectively-MutableSet &&\n$BUILT_PRODUCTS_DIR/Objectively-Null &&\n$BUILT_PRODUCTS_DIR/Objectively-Number &&\n$BUILT_PRODUCTS_DIR/Objectively-Object &&\n$BUILT_PRODUCTS_DIR/Objectively-Operation &&\n$BUILT_PRODUCTS_DIR/Objectively-Regexp &&\n$BUILT_PRODUCTS_DIR/Objectively-Resource &&\n$BUILT_PRODUCTS_DIR/Objectively-Set &&\n$BUILT_PRODUCTS_DIR/Objectively-String &&\n$BUILT_PRODUCTS_DIR/Objectively-StringReader &&\n$BUILT_PRODUCTS_DIR/Objectively-Thread &&\n$BUILT_PRODUCTS_DIR/Objectively-URL &&\n$BUILT_PRODUCTS_DIR/Objectively-URLSession";
+			shellScript = "cd $BUILT_PRODUCTS_DIR &&\n./Objectively-Array &&\n./Objectively-Boole &&\n./Objectively-Data &&\n./Objectively-Date &&\n./Objectively-Dictionary &&\n./Objectively-IndexPath &&\n./Objectively-IndexSet &&\n./Objectively-JSON \\\n    $SRCROOT/Tests/Objectively/Fixtures/test.json &&\n./Objectively-Log &&\n./Objectively-MutableArray &&\n./Objectively-MutableData &&\n./Objectively-MutableDictionary &&\n./Objectively-MutableSet &&\n./Objectively-Null &&\n./Objectively-Number &&\n./Objectively-Object &&\n./Objectively-Operation &&\n./Objectively-Regexp &&\n./Objectively-Resource &&\n./Objectively-Set &&\n./Objectively-String &&\n./Objectively-StringReader &&\n./Objectively-Thread &&\n./Objectively-URL &&\n./Objectively-URLSession\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2988,7 +2988,6 @@
 		CE4A53111F40DFE800927421 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -2996,7 +2995,6 @@
 		CE4A53121F40DFE800927421 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3004,7 +3002,6 @@
 		CE4A531E1F40DFFC00927421 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3012,7 +3009,6 @@
 		CE4A531F1F40DFFC00927421 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3020,7 +3016,6 @@
 		CE4A532B1F40E00A00927421 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3028,7 +3023,6 @@
 		CE4A532C1F40E00A00927421 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3036,7 +3030,6 @@
 		CE4A53311F40E0A600927421 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3044,7 +3037,6 @@
 		CE4A53321F40E0A600927421 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3052,7 +3044,6 @@
 		CE4A53991F40E0CD00927421 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3060,7 +3051,6 @@
 		CE4A539A1F40E0CD00927421 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3068,7 +3058,6 @@
 		CE4F535D202A8C6D00D71C07 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3076,7 +3065,6 @@
 		CE4F535E202A8C6D00D71C07 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3084,7 +3072,6 @@
 		CE594BE01F49F931004D74FF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3092,7 +3079,6 @@
 		CE594BE11F49F931004D74FF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3171,7 +3157,6 @@
 		CE76D96B1C48218E0096DD31 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				EXECUTABLE_PREFIX = lib;
 				PRIVATE_HEADERS_FOLDER_PATH = "/usr/local/include/$(PRODUCT_NAME)";
 				PRODUCT_NAME = Objectively;
@@ -3181,7 +3166,6 @@
 		CE76D96C1C48218E0096DD31 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				EXECUTABLE_PREFIX = lib;
 				PRIVATE_HEADERS_FOLDER_PATH = "/usr/local/include/$(PRODUCT_NAME)";
 				PRODUCT_NAME = Objectively;
@@ -3191,7 +3175,6 @@
 		CE84A8A31DA15B80008BC685 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3199,7 +3182,6 @@
 		CE84A8A41DA15B80008BC685 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3207,7 +3189,6 @@
 		CEEB01B31F40DB3A004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3215,7 +3196,6 @@
 		CEEB01B41F40DB3A004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3223,7 +3203,6 @@
 		CEEB01C01F40DB3F004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3231,7 +3210,6 @@
 		CEEB01C11F40DB3F004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3239,7 +3217,6 @@
 		CEEB01CD1F40DB47004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3247,7 +3224,6 @@
 		CEEB01CE1F40DB47004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3255,7 +3231,6 @@
 		CEEB01DA1F40DB4B004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3263,7 +3238,6 @@
 		CEEB01DB1F40DB4B004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3271,7 +3245,6 @@
 		CEEB01E71F40DB4D004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3279,7 +3252,6 @@
 		CEEB01E81F40DB4D004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3287,7 +3259,6 @@
 		CEEB01F41F40DB50004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3295,7 +3266,6 @@
 		CEEB01F51F40DB50004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3303,7 +3273,6 @@
 		CEEB02011F40DB52004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3311,7 +3280,6 @@
 		CEEB02021F40DB52004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3319,7 +3287,6 @@
 		CEEB020E1F40DB55004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3327,7 +3294,6 @@
 		CEEB020F1F40DB55004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3335,7 +3301,6 @@
 		CEEB021E1F40DBCD004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3343,7 +3308,6 @@
 		CEEB021F1F40DBCD004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3351,7 +3315,6 @@
 		CEEB022B1F40DBD0004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3359,7 +3322,6 @@
 		CEEB022C1F40DBD0004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3367,7 +3329,6 @@
 		CEEB02381F40DBD2004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3375,7 +3336,6 @@
 		CEEB02391F40DBD2004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3383,7 +3343,6 @@
 		CEEB02451F40DBD4004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3391,7 +3350,6 @@
 		CEEB02461F40DBD4004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3399,7 +3357,6 @@
 		CEEB02521F40DBD5004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3407,7 +3364,6 @@
 		CEEB02531F40DBD5004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3415,7 +3371,6 @@
 		CEEB025F1F40DBD7004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3423,7 +3378,6 @@
 		CEEB02601F40DBD7004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3431,7 +3385,6 @@
 		CEEB026C1F40DBD9004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3439,7 +3392,6 @@
 		CEEB026D1F40DBD9004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3447,7 +3399,6 @@
 		CEEB02901F40DD20004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3455,7 +3406,6 @@
 		CEEB02911F40DD20004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3463,7 +3413,6 @@
 		CEEB029D1F40DD22004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3471,7 +3420,6 @@
 		CEEB029E1F40DD22004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3479,7 +3427,6 @@
 		CEEB02AA1F40DD24004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3487,7 +3434,6 @@
 		CEEB02AB1F40DD24004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3495,7 +3441,6 @@
 		CEEB02B71F40DD26004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3503,7 +3448,6 @@
 		CEEB02B81F40DD26004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3511,7 +3455,6 @@
 		CEEB02C41F40DD27004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3519,7 +3462,6 @@
 		CEEB02C51F40DD27004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3527,7 +3469,6 @@
 		CEEB02D11F40DD29004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3535,7 +3476,6 @@
 		CEEB02D21F40DD29004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3543,7 +3483,6 @@
 		CEEB02DE1F40DD2B004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3551,7 +3490,6 @@
 		CEEB02DF1F40DD2B004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3559,7 +3497,6 @@
 		CEEB02EB1F40DD4E004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3567,7 +3504,6 @@
 		CEEB02EC1F40DD4E004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3575,7 +3511,6 @@
 		CEEB02F81F40DD4F004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3583,7 +3518,6 @@
 		CEEB02F91F40DD4F004C2EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
