@@ -240,9 +240,6 @@ static Array *filteredArray(const Array *self, Predicate predicate, ident data) 
 
 /**
  * @fn ident Array::findObject(const Array *self, Predicate predicate, ident data)
- * @param predicate The predicate function.
- * @param data User data.
- * @return The first element of this Array to pass the predicate function.
  * @memberof Array
  */
 static ident findObject(const Array *self, Predicate predicate, ident data) {
