@@ -82,12 +82,10 @@ typedef enum {
 typedef Order (*Comparator)(const ident obj1, const ident obj2);
 
 /**
- * @brief The Predicate function type for filtering Objects.
- * @param obj The Object to test.
+ * @brief The Consumer function type.
  * @param data User data.
- * @return True if `obj` satisfies the predicate, false otherwise.
  */
-typedef _Bool (*Predicate)(const ident obj, ident data);
+typedef void (*Consumer)(ident data);
 
 /**
  * @brief The Functor function type for transforming Objects.
@@ -96,6 +94,21 @@ typedef _Bool (*Predicate)(const ident obj, ident data);
  * @return The transformation result.
  */
 typedef ident (*Functor)(const ident obj, ident data);
+
+/**
+ * @brief The Predicate function type for filtering Objects.
+ * @param obj The Object to test.
+ * @param data User data.
+ * @return True if `obj` satisfies the predicate, false otherwise.
+ */
+typedef _Bool (*Predicate)(const ident obj, ident data);
+
+/**
+ * @brief The Producer function type.
+ * @param data User data.
+ * @return The product.
+ */
+typedef ident (*Producer)(ident data);
 
 /**
  * @brief The Reducer function type for reducing collections.
