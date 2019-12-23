@@ -26,7 +26,7 @@
 			<key>Name</key>
 			<string>Name:</string>
 			<key>Description</key>
-			<string>The name of the file to create</string>
+			<string>The name of the type to create.</string>
 			<key>Type</key>
 			<string>text</string>
 			<key>NotPersisted</key>
