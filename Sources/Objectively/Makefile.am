@@ -51,7 +51,8 @@ pkginclude_HEADERS = \
 	URLSessionDownloadTask.h \
 	URLSessionTask.h \
 	URLSessionUploadTask.h \
-	Value.h
+	Value.h \
+	Vector.h
 
 lib_LTLIBRARIES = \
 	libObjectively.la
@@ -99,7 +100,8 @@ libObjectively_la_SOURCES = \
 	URLSessionDownloadTask.c \
 	URLSessionTask.c \
 	URLSessionUploadTask.c \
-	Value.c
+	Value.c \
+	Vector.c
 
 libObjectively_la_CFLAGS = \
 	-I $(top_srcdir) \

@@ -31,7 +31,8 @@ TESTS = \
 	StringReader \
 	Thread \
 	URL \
-	URLSession
+	URLSession \
+	Vector
 
 CFLAGS += \
 	-I$(top_srcdir)/Sources \

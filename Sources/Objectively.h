@@ -73,3 +73,4 @@
 #include <Objectively/URLSessionTask.h>
 #include <Objectively/URLSessionUploadTask.h>
 #include <Objectively/Value.h>
+#include <Objectively/Vector.h>

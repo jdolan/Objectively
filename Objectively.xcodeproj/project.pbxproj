@@ -60,6 +60,11 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		CE129E5F23B7E4B4007D0433 /* Vector.h in Headers */ = {isa = PBXBuildFile; fileRef = CE129E5D23B7E4B4007D0433 /* Vector.h */; };
+		CE129E6023B7E4B4007D0433 /* Vector.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E5E23B7E4B4007D0433 /* Vector.c */; };
+		CE129E6823B8242B007D0433 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
+		CE129E6923B8242B007D0433 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */; };
+		CE129E6F23B8243C007D0433 /* Vector.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E6123B823F9007D0433 /* Vector.c */; };
 		CE3BCDD11DB6FA62002E6C6D /* Resource.c in Sources */ = {isa = PBXBuildFile; fileRef = CE3BCDCF1DB6FA62002E6C6D /* Resource.c */; };
 		CE3BCDD21DB6FA62002E6C6D /* Resource.h in Headers */ = {isa = PBXBuildFile; fileRef = CE3BCDD01DB6FA62002E6C6D /* Resource.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE4A530E1F40DFE800927421 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
@@ -241,6 +246,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		CE129E6423B8242B007D0433 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE76D9671C48218E0096DD31;
+			remoteInfo = Objectively;
+		};
 		CE4A53091F40DFE800927421 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
@@ -657,6 +669,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		CE129E6A23B8242B007D0433 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		CE4A530F1F40DFE800927421 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -930,6 +951,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CE129E5D23B7E4B4007D0433 /* Vector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
+		CE129E5E23B7E4B4007D0433 /* Vector.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Vector.c; sourceTree = "<group>"; };
+		CE129E6123B823F9007D0433 /* Vector.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Vector.c; sourceTree = "<group>"; };
+		CE129E6E23B8242B007D0433 /* Objectively-Vector */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Vector"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE3BCDCF1DB6FA62002E6C6D /* Resource.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Resource.c; sourceTree = "<group>"; };
 		CE3BCDD01DB6FA62002E6C6D /* Resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Resource.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CE423A501F544CFB002767E7 /* Hello.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hello.h; sourceTree = "<group>"; };
@@ -1110,6 +1135,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		CE129E6723B8242B007D0433 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE129E6823B8242B007D0433 /* libObjectively.dylib in Frameworks */,
+				CE129E6923B8242B007D0433 /* libcheck.0.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CE4A530C1F40DFE800927421 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1511,6 +1545,8 @@
 				CE76D8FB1C481C4E0096DD31 /* URLSessionUploadTask.h */,
 				CEB078B51D73B74800ABA6B3 /* Value.c */,
 				CEB078B61D73B74800ABA6B3 /* Value.h */,
+				CE129E5D23B7E4B4007D0433 /* Vector.h */,
+				CE129E5E23B7E4B4007D0433 /* Vector.c */,
 				CE76D8CA1C481C4E0096DD31 /* Makefile.am */,
 			);
 			path = Objectively;
@@ -1578,6 +1614,7 @@
 				CE76D9611C481E390096DD31 /* Thread.c */,
 				CE76D9621C481E390096DD31 /* URL.c */,
 				CE76D9631C481E390096DD31 /* URLSession.c */,
+				CE129E6123B823F9007D0433 /* Vector.c */,
 				CE76D9531C481E390096DD31 /* Makefile.am */,
 			);
 			path = Objectively;
@@ -1625,6 +1662,7 @@
 				CE4A532D1F40E00A00927421 /* Objectively-HelloObjC */,
 				CE594BE21F49F931004D74FF /* Objectively-StringReader */,
 				CE4F535F202A8C6D00D71C07 /* Objectively-Resource */,
+				CE129E6E23B8242B007D0433 /* Objectively-Vector */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1684,6 +1722,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE76DA2D1C4860130096DD31 /* Objectively.h in Headers */,
+				CE129E5F23B7E4B4007D0433 /* Vector.h in Headers */,
 				CE76DA051C4860120096DD31 /* Array.h in Headers */,
 				CE76DA061C4860120096DD31 /* Boole.h in Headers */,
 				CE76DA071C4860120096DD31 /* Class.h in Headers */,
@@ -1736,6 +1775,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		CE129E6223B8242B007D0433 /* Objectively-Vector */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE129E6B23B8242B007D0433 /* Build configuration list for PBXNativeTarget "Objectively-Vector" */;
+			buildPhases = (
+				CE129E6523B8242B007D0433 /* Sources */,
+				CE129E6723B8242B007D0433 /* Frameworks */,
+				CE129E6A23B8242B007D0433 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE129E6323B8242B007D0433 /* PBXTargetDependency */,
+			);
+			name = "Objectively-Vector";
+			productName = "Objectively-Test";
+			productReference = CE129E6E23B8242B007D0433 /* Objectively-Vector */;
+			productType = "com.apple.product-type.tool";
+		};
 		CE4A53071F40DFE800927421 /* Objectively-Hello */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CE4A53101F40DFE800927421 /* Build configuration list for PBXNativeTarget "Objectively-Hello" */;
@@ -2355,6 +2412,7 @@
 				CEEB02D41F40DD2B004C2EDD /* Objectively-Thread */,
 				CEEB02E11F40DD4E004C2EDD /* Objectively-URL */,
 				CEEB02EE1F40DD4F004C2EDD /* Objectively-URLSession */,
+				CE129E6223B8242B007D0433 /* Objectively-Vector */,
 				CE4A532F1F40E0A600927421 /* Objectively-Tests */,
 				CE4A53071F40DFE800927421 /* Objectively-Hello */,
 				CE4A53151F40DFFC00927421 /* Objectively-HelloCpp */,
@@ -2395,6 +2453,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		CE129E6523B8242B007D0433 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE129E6F23B8243C007D0433 /* Vector.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CE4A530A1F40DFE800927421 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2479,6 +2545,7 @@
 				CE76D98F1C4821CE0096DD31 /* URLSessionConfiguration.c in Sources */,
 				CE76D9901C4821CE0096DD31 /* URLSessionDataTask.c in Sources */,
 				CE76D9911C4821CE0096DD31 /* URLSessionDownloadTask.c in Sources */,
+				CE129E6023B7E4B4007D0433 /* Vector.c in Sources */,
 				CE76D9921C4821CE0096DD31 /* URLSessionTask.c in Sources */,
 				CE76D9931C4821CE0096DD31 /* URLSessionUploadTask.c in Sources */,
 				CEB078B71D73B74800ABA6B3 /* Value.c in Sources */,
@@ -2687,6 +2754,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		CE129E6323B8242B007D0433 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE76D9671C48218E0096DD31 /* Objectively */;
+			targetProxy = CE129E6423B8242B007D0433 /* PBXContainerItemProxy */;
+		};
 		CE4A53081F40DFE800927421 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CE76D9671C48218E0096DD31 /* Objectively */;
@@ -2985,6 +3057,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		CE129E6C23B8242B007D0433 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CE129E6D23B8242B007D0433 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		CE4A53111F40DFE800927421 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3527,6 +3613,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		CE129E6B23B8242B007D0433 /* Build configuration list for PBXNativeTarget "Objectively-Vector" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE129E6C23B8242B007D0433 /* Debug */,
+				CE129E6D23B8242B007D0433 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		CE4A53101F40DFE800927421 /* Build configuration list for PBXNativeTarget "Objectively-Hello" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
