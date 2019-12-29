@@ -51,7 +51,7 @@ static void dealloc(Object *self) {
  * @fn void Vector::addElement(Vector *self, const ident element)
  * @memberof Vector
  */
-static void addElement(Vector *self, ident element) {
+static void addElement(Vector *self, const ident element) {
 
 	if (self->count == self->capacity) {
 
@@ -100,10 +100,10 @@ static Vector *initWithSize(Vector *self, size_t size) {
 }
 
 /**
- * @fn void Vector::insertElementAtIndex(Vector *self, ident element, size_t index)
+ * @fn void Vector::insertElementAtIndex(Vector *self, const ident element, size_t index)
  * @memberof Vector
  */
-static void insertElementAtIndex(Vector *self, ident element, size_t index) {
+static void insertElementAtIndex(Vector *self, const ident element, size_t index) {
 
 	assert(index <= self->count);
 

@@ -124,14 +124,14 @@ struct VectorInterface {
 	Vector *(*initWithSize)(Vector *self, size_t size);
 
 	/**
-	 * @fn void Vector::insertElementAtIndex(Vector *self, ident element, size_t index)
+	 * @fn void Vector::insertElementAtIndex(Vector *self, const ident element, size_t index)
 	 * @brief Inserts the element at the specified index.
 	 * @param self The Vector.
 	 * @param element The element to insert.
 	 * @param index The index at which to insert.
 	 * @memberof Vector
 	 */
-	void (*insertElementAtIndex)(Vector *self, ident element, size_t index);
+	void (*insertElementAtIndex)(Vector *self, const ident element, size_t index);
 
 	/**
 	 * @fn void Vector::removeElementAtIndex(Vector *self, size_t index)
