@@ -155,7 +155,6 @@ struct ArrayInterface {
 	 * @param self The Array.
 	 * @param enumerator The enumerator function.
 	 * @param data User data.
-	 * @remarks The enumerator should return `true` to break the iteration.
 	 * @memberof Array
 	 */
 	void (*enumerateObjects)(const Array *self, ArrayEnumerator enumerator, ident data);
