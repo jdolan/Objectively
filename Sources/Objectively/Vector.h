@@ -36,6 +36,14 @@ typedef struct Vector Vector;
 typedef struct VectorInterface VectorInterface;
 
 /**
+ * @brief The VectorEnumerator function type.
+ * @param vector The Vector.
+ * @param obj The Object or element to enumerate.
+ * @param data User data.
+ */
+typedef void (*VectorEnumerator)(const Vector *vector, ident obj, ident data);
+
+/**
  * @brief Vectors.
  * @extends Object
  * @ingroup Collections
@@ -100,6 +108,16 @@ struct VectorInterface {
 	 * @memberof Vector
 	 */
 	void (*addElement)(Vector *self, const ident element);
+
+	/**
+	 * @fn void Vector::enumerateObjects(const Vector *self, VectorEnumerator enumerator)
+	 * @brief Eumerate the elements of this Vector with the given function.
+	 * @param self The Vector.
+	 * @param enumerator The enumerator function.
+	 * @param data User data.
+	 * @memberof Vector
+	 */
+	void (*enumerateElements)(const Vector *self, VectorEnumerator enumerator, ident data);
 
 	/**
 	 * @fn ssize_t Vector::indexOfElement(const Vector *self, const ident element)
