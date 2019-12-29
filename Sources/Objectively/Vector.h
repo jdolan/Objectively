@@ -102,6 +102,15 @@ struct VectorInterface {
 	void (*addElement)(Vector *self, const ident element);
 
 	/**
+	 * @fn ssize_t Vector::indexOfElement(const Vector *self, const ident element)
+	 * @param self The Vector.
+	 * @param element The element.
+	 * @return The index of the given element, or `-1` if not found.
+	 * @memberof Vector
+	 */
+	ssize_t (*indexOfElement)(const Vector *self, const ident element);
+
+	/**
 	 * @fn Vector *Vector::initWithElements(Vector *self, size_t size, size_t count, ident elements)
 	 * @brief Initializes this Vector with the specified elements.
 	 * @param self The Vector.

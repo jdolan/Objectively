@@ -71,6 +71,21 @@ static void addElement(Vector *self, const ident element) {
 }
 
 /**
+ * @fn ssize_t Vector::indexOfElement(const Vector *self, const ident element)
+ * @memberof Vector
+ */
+static ssize_t indexOfElement(const Vector *self, const ident element) {
+
+	for (size_t i = 0; i < self->count; i++) {
+		if (memcmp(self->elements + i * self->size, element, self->size) == 0) {
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+/**
  * @fn Vector *Vector::initWithElements(Vector *self, size_t size, size_t count, ident elements)
  * @memberof Vector
  */
@@ -141,6 +156,7 @@ static void initialize(Class *clazz) {
 	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
 	((VectorInterface *) clazz->interface)->addElement = addElement;
+	((VectorInterface *) clazz->interface)->indexOfElement = indexOfElement;
 	((VectorInterface *) clazz->interface)->initWithElements = initWithElements;
 	((VectorInterface *) clazz->interface)->initWithSize = initWithSize;
 	((VectorInterface *) clazz->interface)->insertElementAtIndex = insertElementAtIndex;
