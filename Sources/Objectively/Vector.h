@@ -77,6 +77,12 @@ struct Vector {
 typedef struct MutableVector MutableVector;
 
 /**
+ * @brief Access the typed element of vector at the specified index.
+ */
+#define VectorElement(vector, type, index) \
+	(((type *) vector->elements) + (index))
+
+/**
  * @brief The Vector interface.
  */
 struct VectorInterface {
