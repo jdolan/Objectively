@@ -23,7 +23,7 @@
 
 #include <check.h>
 
-#include <Objectively.h>
+#include "Objectively.h"
 
 static void enumerator(const Dictionary *dictionary, ident obj, ident key, ident data) {
 	(* (int *) data)++;

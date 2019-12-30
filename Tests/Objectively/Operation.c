@@ -23,7 +23,7 @@
 
 #include <check.h>
 
-#include <Objectively.h>
+#include "Objectively.h"
 
 static void produce(Operation *operation) {
 	*((Object **) operation->data) = $(alloc(Object), init);

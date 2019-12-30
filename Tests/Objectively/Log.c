@@ -24,7 +24,7 @@
 #include <check.h>
 #include <stdio.h>
 
-#include <Objectively.h>
+#include "Objectively.h"
 
 START_TEST(_log) {
 	

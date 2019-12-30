@@ -25,7 +25,7 @@
 #include <unistd.h>
 #include <check.h>
 
-#include <Objectively.h>
+#include "Objectively.h"
 
 START_TEST(string) {
 

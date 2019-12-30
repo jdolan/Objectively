@@ -24,7 +24,7 @@
 #include <check.h>
 #include <stdlib.h>
 
-#include <Objectively.h>
+#include "Objectively.h"
 
 typedef struct {
 	int bar;

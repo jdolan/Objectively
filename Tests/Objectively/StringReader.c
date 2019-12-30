@@ -24,7 +24,7 @@
 #include <check.h>
 #include <locale.h>
 
-#include <Objectively.h>
+#include "Objectively.h"
 
 static void setup(void) {
 	setlocale(LC_CTYPE, "en_US.UTF-8");

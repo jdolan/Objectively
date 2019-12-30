@@ -24,7 +24,7 @@
 #include <check.h>
 #include <stdlib.h>
 
-#include <Objectively.h>
+#include "Objectively.h"
 
 static Order comparator(const ident obj1, const ident obj2) {
 	return $((Number *) obj1, compareTo, (Number *) obj2);

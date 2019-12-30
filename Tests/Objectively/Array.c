@@ -23,7 +23,7 @@
 
 #include <check.h>
 
-#include <Objectively.h>
+#include "Objectively.h"
 
 static void enumerator(const Array *array, ident obj, ident data) {
 	(*(int *) data)++;

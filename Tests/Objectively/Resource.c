@@ -24,7 +24,7 @@
 #include <check.h>
 #include <stdlib.h>
 
-#include <Objectively.h>
+#include "Objectively.h"
 
 static Data *resourceProvider(const char *path) {
 	return $$(Data, dataWithBytes, (uint8_t *) path, strlen(path) + 1);

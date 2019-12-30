@@ -23,7 +23,7 @@
 
 #include <check.h>
 
-#include <Objectively.h>
+#include "Objectively.h"
 
 static Condition *condition;
 
