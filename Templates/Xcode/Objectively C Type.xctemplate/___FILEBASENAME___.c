@@ -8,7 +8,7 @@
 
 #include <assert.h>
 
-#include <___PROJECTNAME___/___FILEBASENAMEASIDENTIFIER___.h>
+#include "___FILEBASENAMEASIDENTIFIER___.h"
 
 #define _Class ____FILEBASENAMEASIDENTIFIER___
 

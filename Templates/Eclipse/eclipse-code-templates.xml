@@ -2,7 +2,7 @@
 
 #include &lt;assert.h&gt;
 
-#include &lt;${project_name}/${file_base}.h&gt;
+#include "${file_base}.h"
 
 #define _Class _${file_base}
 
