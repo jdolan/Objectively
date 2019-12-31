@@ -408,7 +408,11 @@ OBJECTIVELY_EXPORT const char *NameForStringEncoding(StringEncoding encoding);
 OBJECTIVELY_EXPORT StringEncoding StringEncodingForName(const char *name);
 
 /**
- *
+ * @brief A Comparator for sorting Strings.
+ * @param a A String.
+ * @param b A String.
+ * @return The Order of `a` to `b`.
+ * @relates String
  */
 OBJECTIVELY_EXPORT Order StringCompare(const ident a, const ident b);
 
