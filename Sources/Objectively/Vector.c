@@ -203,9 +203,9 @@ static void removeElementAtIndex(Vector *self, size_t index) {
 
 	assert(index < self->count);
 
-	memcpy(self->elements + index * self->size,
-		   self->elements + (index + 1) * self->size,
-		   (self->count - index - 1) * self->size);
+	const size_t size = (self->count - index) * self->size;
+	
+	memcpy(self->elements + index * self->size, self->elements + (index + 1) * self->size, size);
 
 	self->count--;
 }
