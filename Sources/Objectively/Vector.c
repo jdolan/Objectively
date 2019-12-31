@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "Hash.h"
 #include "Vector.h"
 
 #define _Class _Vector
@@ -32,6 +33,21 @@
 #define VECTOR_CHUNK_SIZE 64
 
 #pragma mark - Object
+
+/**
+ * @see Object::copy(const Object *)
+ */
+static Object *copy(const Object *self) {
+
+	const Vector *this = (Vector *) self;
+
+	Vector *copy = (Vector *) $(self, copy);
+
+	copy->elements = malloc(this->capacity * this->size);
+	memcpy(copy->elements, this->elements, this->count * this->size);
+
+	return (Object *) copy;
+}
 
 /**
  * @see Object::dealloc(Object *)
@@ -43,6 +59,43 @@ static void dealloc(Object *self) {
 	free(this->elements);
 
 	super(Object, self, dealloc);
+}
+
+/**
+ * @see Object::hash(const Object *)
+ */
+static int hash(const Object *self) {
+
+	Vector *this = (Vector *) self;
+
+	const Range range = {
+		.location = 0,
+		.length = this->count * this->size
+	};
+
+	return HashForBytes(HASH_SEED, this->elements, range);
+}
+
+/**
+ * @see Object::isEqual(const Object *, const Object *)
+ */
+static _Bool isEqual(const Object *self, const Object *other) {
+
+	if (super(Object, self, isEqual, other)) {
+		return true;
+	}
+
+	if (other && $(other, isKindOfClass, _Vector())) {
+
+		const Vector *this = (Vector *) self;
+		const Vector *that = (Vector *) other;
+
+		if (this->count == that->count) {
+			return memcmp(this->elements, that->elements, this->count * this->size) == 0;
+		}
+	}
+
+	return false;
 }
 
 #pragma mark - Vector
@@ -180,7 +233,10 @@ static Vector *vectorWithElements(size_t size, size_t count, ident elements) {
  */
 static void initialize(Class *clazz) {
 
+	((ObjectInterface *) clazz->interface)->copy = copy;
 	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->hash = hash;
+	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
 	((VectorInterface *) clazz->interface)->addElement = addElement;
 	((VectorInterface *) clazz->interface)->enumerateElements = enumerateElements;
