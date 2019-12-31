@@ -157,6 +157,22 @@ static void removeElementAtIndex(Vector *self, size_t index) {
 	self->count--;
 }
 
+/**
+ * @fn Vector *Vector::vectorWithSize(size_t size)
+ * @memberof Vector
+ */
+static Vector *vectorWithSize(size_t size) {
+	return $(alloc(Vector), initWithSize, size);
+}
+
+/**
+ * @fn Vector *Vector::vectorWithElements(size_t size, size_t count, ident elements)
+ * @memberof Vector
+ */
+static Vector *vectorWithElements(size_t size, size_t count, ident elements) {
+	return $(alloc(Vector), initWithElements, size, count, elements);
+}
+
 #pragma mark - Class lifecycle
 
 /**
@@ -173,6 +189,8 @@ static void initialize(Class *clazz) {
 	((VectorInterface *) clazz->interface)->initWithSize = initWithSize;
 	((VectorInterface *) clazz->interface)->insertElementAtIndex = insertElementAtIndex;
 	((VectorInterface *) clazz->interface)->removeElementAtIndex = removeElementAtIndex;
+	((VectorInterface *) clazz->interface)->vectorWithSize = vectorWithSize;
+	((VectorInterface *) clazz->interface)->vectorWithElements = vectorWithElements;
 }
 
 /**

@@ -168,6 +168,28 @@ struct VectorInterface {
 	 * @memberof Vector
 	 */
 	void (*removeElementAtIndex)(Vector *self, size_t index);
+
+	/**
+	 * @static
+	 * @fn Vector *Vector::vectorWithSize(size_t size)
+	 * @brief Creates a new Vector with the specified element size.
+	 * @param size The element size.
+	 * @return The new Vector.
+	 * @memberof Vector
+	 */
+	Vector *(*vectorWithSize)(size_t size);
+
+	/**
+	 * @static
+	 * @fn Vector *Vector::vectorWithElements(size_t size, size_t count, ident elements)
+	 * @brief Creates a new Vector with the specified elements.
+	 * @param size The element size.
+	 * @param count The count of elements.
+	 * @param elements THe elements, which will be freed when this Vector is released.
+	 * @return The new Vector.
+	 * @memberof Vector
+	 */
+	Vector *(*vectorWithElements)(size_t size, size_t count, ident elements);
 };
 
 /**
