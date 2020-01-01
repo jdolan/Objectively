@@ -30,14 +30,9 @@ typedef struct {
 	int bar;
 } Foo;
 
-START_TEST(vector) {
+START_TEST(addElement) {
 
 	Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
-
-	ck_assert_ptr_ne(NULL, vector);
-	ck_assert_ptr_eq(_Vector(), classof(vector));
-
-	ck_assert_int_eq(0, ((Array *) vector)->count);
 
 	Foo one = { 1 }, two = { 2 }, three = { 3 };
 
@@ -47,26 +42,124 @@ START_TEST(vector) {
 
 	ck_assert_int_eq(3, vector->count);
 
-	$(vector, removeElementAtIndex, 0);
+	const Foo *elements = vector->elements;
 
-	ck_assert_int_eq(2, vector->count);
-	ck_assert_int_eq(2, ((Foo *) vector->elements)[0].bar);
-	ck_assert_int_eq(3, ((Foo *) vector->elements)[1].bar);
-
-	$(vector, insertElementAtIndex, &one, 0);
-
-	ck_assert_int_eq(1, ((Foo *) vector->elements)[0].bar);
-	ck_assert_int_eq(2, ((Foo *) vector->elements)[1].bar);
-	ck_assert_int_eq(3, ((Foo *) vector->elements)[2].bar);
+	ck_assert_int_eq(1, elements[0].bar);
+	ck_assert_int_eq(2, elements[1].bar);
+	ck_assert_int_eq(3, elements[2].bar);
 
 	release(vector);
 
 } END_TEST
 
+static void enumerator(const Vector *vector, ident element, ident data) {
+	*(int *) data += *(int *) element;
+}
+
+START_TEST(enumerateElements) {
+
+	Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
+	ck_assert_ptr_ne(NULL, vector);
+
+	Foo one = { 1 }, two = { 2 }, three = { 3 };
+
+	$(vector, addElement, &one);
+	$(vector, addElement, &two);
+	$(vector, addElement, &three);
+
+	int sum;
+	$(vector, enumerateElements, enumerator, &sum);
+
+	ck_assert_int_eq(6, sum);
+
+	release(vector);
+
+} END_TEST
+
+START_TEST(initWithElements) {
+
+	Foo *foo = calloc(3, sizeof(Foo));
+	ck_assert_ptr_ne(NULL, foo);
+
+	Vector *vector = $(alloc(Vector), initWithElements, sizeof(Foo), 3, foo);
+	ck_assert_ptr_ne(NULL, vector);
+
+	ck_assert_int_eq(3, vector->count);
+	ck_assert_ptr_eq(foo, vector->elements);
+
+	release(vector);
+} END_TEST
+
+START_TEST(initWithSize) {
+
+	Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
+
+	ck_assert_ptr_ne(NULL, vector);
+	ck_assert_ptr_eq(_Vector(), classof(vector));
+
+	ck_assert_int_eq(0, vector->count);
+	ck_assert_int_eq(0, vector->capacity);
+	ck_assert_ptr_eq(NULL, vector->elements);
+
+	release(vector);
+
+} END_TEST
+
+START_TEST(insertElementAtIndex) {
+
+	Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
+
+	Foo one = { 1 }, two = { 2 }, three = { 3 };
+
+	$(vector, insertElementAtIndex, &one, 0);
+	$(vector, insertElementAtIndex, &two, 0);
+	$(vector, insertElementAtIndex, &three, 0);
+
+	ck_assert_int_eq(3, vector->count);
+
+	const Foo *elements = vector->elements;
+
+	ck_assert_int_eq(3, elements[0].bar);
+	ck_assert_int_eq(2, elements[1].bar);
+	ck_assert_int_eq(1, elements[2].bar);
+
+	release(vector);
+
+} END_TEST
+
+START_TEST(removeElementAtIndex) {
+
+	Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
+
+	Foo one = { 1 }, two = { 2 }, three = { 3 };
+
+	$(vector, addElement, &one);
+	$(vector, addElement, &two);
+	$(vector, addElement, &three);
+
+	$(vector, removeElementAtIndex, 0);
+
+	ck_assert_int_eq(2, vector->count);
+
+	const Foo *elements = vector->elements;
+
+	ck_assert_int_eq(2, elements[0].bar);
+	ck_assert_int_eq(3, elements[1].bar);
+
+	release(vector);
+
+} END_TEST
+
+
 int main(int argc, char **argv) {
 
 	TCase *tcase = tcase_create("Vector");
-	tcase_add_test(tcase, vector);
+	tcase_add_test(tcase, addElement);
+	tcase_add_test(tcase, enumerateElements);
+	tcase_add_test(tcase, initWithElements);
+	tcase_add_test(tcase, initWithSize);
+	tcase_add_test(tcase, insertElementAtIndex);
+	tcase_add_test(tcase, removeElementAtIndex);
 
 	Suite *suite = suite_create("Vector");
 	suite_add_tcase(suite, tcase);

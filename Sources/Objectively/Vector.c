@@ -130,7 +130,7 @@ static void addElement(Vector *self, const ident element) {
 static void enumerateElements(const Vector *self, VectorEnumerator enumerator, ident data) {
 
 	for (size_t i = 0; i < self->count; i++) {
-		enumerator(self, self->elements + i + self->size, data);
+		enumerator(self, self->elements + i * self->size, data);
 	}
 }
 
@@ -204,7 +204,7 @@ static void removeElementAtIndex(Vector *self, size_t index) {
 	assert(index < self->count);
 
 	const size_t size = (self->count - index) * self->size;
-	
+
 	memcpy(self->elements + index * self->size, self->elements + (index + 1) * self->size, size);
 
 	self->count--;
