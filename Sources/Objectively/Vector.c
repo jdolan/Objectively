@@ -124,6 +124,14 @@ static void addElement(Vector *self, const ident element) {
 }
 
 /**
+ * @fn void Vector::clear(Vector *self)
+ * @memberof Vector
+ */
+static void clear(Vector *self) {
+	self->count = 0;
+}
+
+/**
  * @fn void Vector::enumerateObjects(const Vector *self, VectorEnumerator enumerator)
  * @memberof Vector
  */
@@ -252,6 +260,7 @@ static void initialize(Class *clazz) {
 	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
 	((VectorInterface *) clazz->interface)->addElement = addElement;
+	((VectorInterface *) clazz->interface)->clear = clear;
 	((VectorInterface *) clazz->interface)->enumerateElements = enumerateElements;
 	((VectorInterface *) clazz->interface)->indexOfElement = indexOfElement;
 	((VectorInterface *) clazz->interface)->initWithElements = initWithElements;

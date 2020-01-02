@@ -52,6 +52,24 @@ START_TEST(addElement) {
 
 } END_TEST
 
+START_TEST(clear) {
+
+	Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
+
+	Foo one = { 1 }, two = { 2 }, three = { 3 };
+
+	$(vector, addElement, &one);
+	$(vector, addElement, &two);
+	$(vector, addElement, &three);
+
+	$(vector, clear);
+
+	ck_assert_int_eq(0, vector->count);
+
+	release(vector);
+
+} END_TEST
+
 static void enumerator(const Vector *vector, ident element, ident data) {
 	*(int *) data += *(int *) element;
 }
@@ -88,6 +106,7 @@ START_TEST(initWithElements) {
 	ck_assert_ptr_eq(foo, vector->elements);
 
 	release(vector);
+
 } END_TEST
 
 START_TEST(initWithSize) {
@@ -171,12 +190,14 @@ START_TEST(resize) {
 	ck_assert_int_eq(2, elements[1].bar);
 
 	release(vector);
+
 } END_TEST
 
 int main(int argc, char **argv) {
 
 	TCase *tcase = tcase_create("Vector");
 	tcase_add_test(tcase, addElement);
+	tcase_add_test(tcase, clear);
 	tcase_add_test(tcase, enumerateElements);
 	tcase_add_test(tcase, initWithElements);
 	tcase_add_test(tcase, initWithSize);

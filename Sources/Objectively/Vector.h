@@ -110,6 +110,14 @@ struct VectorInterface {
 	void (*addElement)(Vector *self, const ident element);
 
 	/**
+	 * @fn void Vector::clear(Vector *self)
+	 * @brief Removes all elements from this Vector without modifying its capacity.
+	 * @param self The Vector
+	 * @memberof Vector
+	 */
+	void (*clear)(Vector *self);
+
+	/**
 	 * @fn void Vector::enumerateObjects(const Vector *self, VectorEnumerator enumerator)
 	 * @brief Eumerate the elements of this Vector with the given function.
 	 * @param self The Vector.
