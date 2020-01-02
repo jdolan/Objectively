@@ -170,6 +170,15 @@ struct VectorInterface {
 	void (*removeElementAtIndex)(Vector *self, size_t index);
 
 	/**
+	 * @fn void Vector::resize(Vector *self, size_t capacity)
+	 * @brief Resizes this Vector to the specified capacity.
+	 * @param self The Vector.
+	 * @param capacity The desired capacity.
+	 * @memberof Vetor
+	 */
+	void (*resize)(Vector *self, size_t capacity);
+
+	/**
 	 * @static
 	 * @fn Vector *Vector::vectorWithSize(size_t size)
 	 * @brief Creates a new Vector with the specified element size.

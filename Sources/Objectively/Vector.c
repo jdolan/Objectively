@@ -211,6 +211,19 @@ static void removeElementAtIndex(Vector *self, size_t index) {
 }
 
 /**
+ * @fn void Vector::resize(Vector *self, size_t capacity)
+ * @memberof Vetor
+ */
+static void resize(Vector *self, size_t capacity) {
+
+	self->elements = realloc(self->elements, capacity * self->size);
+	assert(self->elements);
+
+	self->capacity = capacity;
+	self->count = min(self->count, self->capacity);
+}
+
+/**
  * @fn Vector *Vector::vectorWithSize(size_t size)
  * @memberof Vector
  */
@@ -245,6 +258,7 @@ static void initialize(Class *clazz) {
 	((VectorInterface *) clazz->interface)->initWithSize = initWithSize;
 	((VectorInterface *) clazz->interface)->insertElementAtIndex = insertElementAtIndex;
 	((VectorInterface *) clazz->interface)->removeElementAtIndex = removeElementAtIndex;
+	((VectorInterface *) clazz->interface)->resize = resize;
 	((VectorInterface *) clazz->interface)->vectorWithSize = vectorWithSize;
 	((VectorInterface *) clazz->interface)->vectorWithElements = vectorWithElements;
 }

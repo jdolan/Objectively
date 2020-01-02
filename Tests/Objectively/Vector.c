@@ -59,7 +59,6 @@ static void enumerator(const Vector *vector, ident element, ident data) {
 START_TEST(enumerateElements) {
 
 	Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
-	ck_assert_ptr_ne(NULL, vector);
 
 	Foo one = { 1 }, two = { 2 }, three = { 3 };
 
@@ -67,7 +66,7 @@ START_TEST(enumerateElements) {
 	$(vector, addElement, &two);
 	$(vector, addElement, &three);
 
-	int sum;
+	int sum = 0;
 	$(vector, enumerateElements, enumerator, &sum);
 
 	ck_assert_int_eq(6, sum);
@@ -83,6 +82,7 @@ START_TEST(initWithElements) {
 
 	Vector *vector = $(alloc(Vector), initWithElements, sizeof(Foo), 3, foo);
 	ck_assert_ptr_ne(NULL, vector);
+	ck_assert_ptr_eq(_Vector(), classof(vector));
 
 	ck_assert_int_eq(3, vector->count);
 	ck_assert_ptr_eq(foo, vector->elements);
@@ -93,7 +93,6 @@ START_TEST(initWithElements) {
 START_TEST(initWithSize) {
 
 	Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
-
 	ck_assert_ptr_ne(NULL, vector);
 	ck_assert_ptr_eq(_Vector(), classof(vector));
 
@@ -150,6 +149,29 @@ START_TEST(removeElementAtIndex) {
 
 } END_TEST
 
+START_TEST(resize) {
+
+	Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
+
+	Foo one = { 1 }, two = { 2 }, three = { 3 };
+
+	$(vector, addElement, &one);
+	$(vector, addElement, &two);
+	$(vector, addElement, &three);
+
+	ck_assert_int_eq(3, vector->count);
+
+	$(vector, resize, 2);
+
+	ck_assert_int_eq(2, vector->count);
+
+	const Foo *elements = vector->elements;
+
+	ck_assert_int_eq(1, elements[0].bar);
+	ck_assert_int_eq(2, elements[1].bar);
+
+	release(vector);
+} END_TEST
 
 int main(int argc, char **argv) {
 
@@ -160,6 +182,7 @@ int main(int argc, char **argv) {
 	tcase_add_test(tcase, initWithSize);
 	tcase_add_test(tcase, insertElementAtIndex);
 	tcase_add_test(tcase, removeElementAtIndex);
+	tcase_add_test(tcase, resize);
 
 	Suite *suite = suite_create("Vector");
 	suite_add_tcase(suite, tcase);

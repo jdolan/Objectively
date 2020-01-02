@@ -40,6 +40,7 @@
 				CE4A53601F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53621F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53641F40E0C800927421 /* PBXTargetDependency */,
+				CE161E4823BE31780023AC8D /* PBXTargetDependency */,
 			);
 			name = "Objectively-Tests";
 			productName = "Objectively-Tests";
@@ -252,6 +253,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = CE76D9671C48218E0096DD31;
 			remoteInfo = Objectively;
+		};
+		CE161E4723BE31780023AC8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE129E6223B8242B007D0433;
+			remoteInfo = "Objectively-Vector";
 		};
 		CE4A53091F40DFE800927421 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2448,7 +2456,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd $BUILT_PRODUCTS_DIR &&\n./Objectively-Array &&\n./Objectively-Boole &&\n./Objectively-Data &&\n./Objectively-Date &&\n./Objectively-Dictionary &&\n./Objectively-IndexPath &&\n./Objectively-IndexSet &&\n./Objectively-JSON \\\n    $SRCROOT/Tests/Objectively/Fixtures/test.json &&\n./Objectively-Log &&\n./Objectively-MutableArray &&\n./Objectively-MutableData &&\n./Objectively-MutableDictionary &&\n./Objectively-MutableSet &&\n./Objectively-Null &&\n./Objectively-Number &&\n./Objectively-Object &&\n./Objectively-Operation &&\n./Objectively-Regexp &&\n./Objectively-Resource &&\n./Objectively-Set &&\n./Objectively-String &&\n./Objectively-StringReader &&\n./Objectively-Thread &&\n./Objectively-URL &&\n./Objectively-URLSession\n";
+			shellScript = "cd $BUILT_PRODUCTS_DIR &&\n./Objectively-Array &&\n./Objectively-Boole &&\n./Objectively-Data &&\n./Objectively-Date &&\n./Objectively-Dictionary &&\n./Objectively-IndexPath &&\n./Objectively-IndexSet &&\n./Objectively-JSON \\\n    $SRCROOT/Tests/Objectively/Fixtures/test.json &&\n./Objectively-Log &&\n./Objectively-MutableArray &&\n./Objectively-MutableData &&\n./Objectively-MutableDictionary &&\n./Objectively-MutableSet &&\n./Objectively-Null &&\n./Objectively-Number &&\n./Objectively-Object &&\n./Objectively-Operation &&\n./Objectively-Regexp &&\n./Objectively-Resource &&\n./Objectively-Set &&\n./Objectively-String &&\n./Objectively-StringReader &&\n./Objectively-Thread &&\n./Objectively-URL &&\n./Objectively-URLSession &&\n./Objectively-Vector\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2758,6 +2766,11 @@
 			isa = PBXTargetDependency;
 			target = CE76D9671C48218E0096DD31 /* Objectively */;
 			targetProxy = CE129E6423B8242B007D0433 /* PBXContainerItemProxy */;
+		};
+		CE161E4823BE31780023AC8D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE129E6223B8242B007D0433 /* Objectively-Vector */;
+			targetProxy = CE161E4723BE31780023AC8D /* PBXContainerItemProxy */;
 		};
 		CE4A53081F40DFE800927421 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
