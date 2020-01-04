@@ -193,6 +193,34 @@ START_TEST(resize) {
 
 } END_TEST
 
+static Order comparator(const ident a, const ident b) {
+	return ((Foo *) b)->bar - ((Foo *) a)->bar;
+}
+
+START_TEST(sort) {
+
+	Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
+
+	Foo one = { 1 }, two = { 2 }, three = { 3 };
+
+	$(vector, addElement, &one);
+	$(vector, addElement, &two);
+	$(vector, addElement, &three);
+
+	ck_assert_int_eq(3, vector->count);
+
+	$(vector, sort, comparator);
+
+	const Foo *elements = vector->elements;
+
+	ck_assert_int_eq(3, elements[0].bar);
+	ck_assert_int_eq(2, elements[1].bar);
+	ck_assert_int_eq(1, elements[2].bar);
+
+	release(vector);
+
+} END_TEST
+
 int main(int argc, char **argv) {
 
 	TCase *tcase = tcase_create("Vector");
@@ -204,6 +232,7 @@ int main(int argc, char **argv) {
 	tcase_add_test(tcase, insertElementAtIndex);
 	tcase_add_test(tcase, removeElementAtIndex);
 	tcase_add_test(tcase, resize);
+	tcase_add_test(tcase, sort);
 
 	Suite *suite = suite_create("Vector");
 	suite_add_tcase(suite, tcase);

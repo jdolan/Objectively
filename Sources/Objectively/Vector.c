@@ -231,6 +231,59 @@ static void resize(Vector *self, size_t capacity) {
 	self->count = min(self->count, self->capacity);
 }
 
+#if defined(__APPLE__)
+
+/**
+ * @brief qsort_r comparator.
+ */
+static int _sort(void *data, const void *a, const void *b) {
+	return ((Comparator) data)((const ident) a, (const ident) b);
+}
+
+/**
+ * @fn void Vector::sort(Vector *self, Comparator comparator)
+ * @memberof Vector
+ */
+static void sort(Vector *self, Comparator comparator) {
+	qsort_r(self->elements, self->count, self->size, comparator, _sort);
+}
+
+#elif defined(_WIN32)
+
+/**
+ * @brief qsort_s comparator.
+ */
+static int _sort(void *data, const void *a, const void *b) {
+	return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
+}
+
+/**
+ * @fn void Vector::sort(Vector *self, Comparator comparator)
+ * @memberof Vector
+ */
+static void sort(Vector *self, Comparator comparator) {
+	qsort_s(self->elements, self->count, self->size, _sort, comparator);
+}
+
+#else
+
+/**
+ * @brief qsort_r comparator.
+ */
+static int _sort(const void *a, const void *b, void *data) {
+	return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
+}
+
+/**
+ * @fn void Vector::sort(Vector *self, Comparator comparator)
+ * @memberof Vector
+ */
+static void sort(Vector *self, Comparator comparator) {
+	qsort_r(self->elements, self->count, self->size, _sort, comparator);
+}
+
+#endif
+
 /**
  * @fn Vector *Vector::vectorWithSize(size_t size)
  * @memberof Vector
@@ -268,6 +321,7 @@ static void initialize(Class *clazz) {
 	((VectorInterface *) clazz->interface)->insertElementAtIndex = insertElementAtIndex;
 	((VectorInterface *) clazz->interface)->removeElementAtIndex = removeElementAtIndex;
 	((VectorInterface *) clazz->interface)->resize = resize;
+	((VectorInterface *) clazz->interface)->sort = sort;
 	((VectorInterface *) clazz->interface)->vectorWithSize = vectorWithSize;
 	((VectorInterface *) clazz->interface)->vectorWithElements = vectorWithElements;
 }

@@ -187,6 +187,15 @@ struct VectorInterface {
 	void (*resize)(Vector *self, size_t capacity);
 
 	/**
+	* @fn void Vector::sort(Vector *self, Comparator comparator)
+	* @brief Sorts this Vector in place using `comparator`.
+	* @param self The Vector.
+	* @param comparator A Comparator.
+	* @memberof Vector
+	*/
+	void (*sort)(Vector *self, Comparator comparator);
+
+	/**
 	 * @static
 	 * @fn Vector *Vector::vectorWithSize(size_t size)
 	 * @brief Creates a new Vector with the specified element size.
