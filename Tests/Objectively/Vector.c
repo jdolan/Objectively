@@ -93,6 +93,52 @@ START_TEST(enumerateElements) {
 
 } END_TEST
 
+static _Bool predicate(const ident obj, ident data) {
+	return ((Foo *) obj)->bar == (int) data;
+}
+
+START_TEST(filterElements) {
+
+	Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
+
+	Foo one = { 1 }, two = { 2 }, three = { 3 };
+
+	$(vector, addElement, &one);
+	$(vector, addElement, &two);
+	$(vector, addElement, &three);
+
+	$(vector, filterElements, predicate, (ident) 2);
+
+	ck_assert_int_eq(1, vector->count);
+	ck_assert_int_eq(2, VectorElement(vector, Foo, 0)->bar);
+
+	release(vector);
+	
+} END_TEST
+
+START_TEST(findElement) {
+
+	Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
+
+	Foo one = { 1 }, two = { 2 }, three = { 3 }, *foo;
+
+	$(vector, addElement, &one);
+	$(vector, addElement, &two);
+	$(vector, addElement, &three);
+
+	foo = $(vector, findElement, predicate, (ident) 1);
+	ck_assert_int_eq(1, foo->bar);
+
+	foo = $(vector, findElement, predicate, (ident) 2);
+	ck_assert_int_eq(2, foo->bar);;
+
+	foo = $(vector, findElement, predicate, (ident) 3);
+	ck_assert_int_eq(3, foo->bar);;
+
+	release(vector);
+
+} END_TEST
+
 START_TEST(initWithElements) {
 
 	Foo *foo = calloc(3, sizeof(Foo));
@@ -140,6 +186,26 @@ START_TEST(insertElementAtIndex) {
 	ck_assert_int_eq(3, elements[0].bar);
 	ck_assert_int_eq(2, elements[1].bar);
 	ck_assert_int_eq(1, elements[2].bar);
+
+	release(vector);
+
+} END_TEST
+
+static ident reducer(const ident obj, ident accumulator, ident data) {
+	return accumulator + ((Foo *) obj)->bar;
+}
+
+START_TEST(reduce) {
+
+	Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
+
+	Foo one = { 1 }, two = { 2 }, three = { 3 };
+
+	$(vector, addElement, &one);
+	$(vector, addElement, &two);
+	$(vector, addElement, &three);
+
+	ck_assert_int_eq(6, (int) $(vector, reduce, reducer, (ident) 0, NULL));
 
 	release(vector);
 
@@ -227,9 +293,12 @@ int main(int argc, char **argv) {
 	tcase_add_test(tcase, addElement);
 	tcase_add_test(tcase, clear);
 	tcase_add_test(tcase, enumerateElements);
+	tcase_add_test(tcase, filterElements);
+	tcase_add_test(tcase, findElement);
 	tcase_add_test(tcase, initWithElements);
 	tcase_add_test(tcase, initWithSize);
 	tcase_add_test(tcase, insertElementAtIndex);
+	tcase_add_test(tcase, reduce);
 	tcase_add_test(tcase, removeElementAtIndex);
 	tcase_add_test(tcase, resize);
 	tcase_add_test(tcase, sort);

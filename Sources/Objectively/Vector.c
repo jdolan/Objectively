@@ -143,6 +143,38 @@ static void enumerateElements(const Vector *self, VectorEnumerator enumerator, i
 }
 
 /**
+ * @fn void Vector::filterElements(Vector *self, Predicate predicate, ident data)
+ * @memberof Vector
+ */
+static void filterElements(Vector *self, Predicate predicate, ident data) {
+
+	assert(predicate);
+
+	for (size_t i = 0; i < self->count; i++) {
+		if (!predicate(self->elements + i * self->size, data)) {
+			$(self, removeElementAtIndex, i);
+		}
+	}
+}
+
+/**
+ * @fn ident Vector::findElement(const Vector *self, Predicate predicate, ident data)
+ * @memberof Vector
+ */
+static ident findElement(const Vector *self, Predicate predicate, ident data) {
+
+	assert(predicate);
+
+	for (size_t i = 0; i < self->count; i++) {
+		if (predicate(self->elements + i * self->size, data)) {
+			return self->elements + i * self->size;
+		}
+	}
+
+	return NULL;
+}
+
+/**
  * @fn ssize_t Vector::indexOfElement(const Vector *self, const ident element)
  * @memberof Vector
  */
@@ -201,6 +233,21 @@ static void insertElementAtIndex(Vector *self, const ident element, size_t index
 	}
 
 	memcpy(self->elements + index * self->size, element, self->size);
+}
+
+/**
+ * @fn ident Vector::reduce(const Vector *self, Reducer reducer, ident accumulator, ident data)
+ * @memberof Vector
+ */
+static ident reduce(const Vector *self, Reducer reducer, ident accumulator, ident data) {
+
+	assert(reducer);
+
+	for (size_t i = 0; i < self->count; i++) {
+		accumulator = reducer(self->elements + i * self->size, accumulator, data);
+	}
+
+	return accumulator;
 }
 
 /**
@@ -315,10 +362,13 @@ static void initialize(Class *clazz) {
 	((VectorInterface *) clazz->interface)->addElement = addElement;
 	((VectorInterface *) clazz->interface)->clear = clear;
 	((VectorInterface *) clazz->interface)->enumerateElements = enumerateElements;
+	((VectorInterface *) clazz->interface)->filterElements = filterElements;
+	((VectorInterface *) clazz->interface)->findElement = findElement;
 	((VectorInterface *) clazz->interface)->indexOfElement = indexOfElement;
 	((VectorInterface *) clazz->interface)->initWithElements = initWithElements;
 	((VectorInterface *) clazz->interface)->initWithSize = initWithSize;
 	((VectorInterface *) clazz->interface)->insertElementAtIndex = insertElementAtIndex;
+	((VectorInterface *) clazz->interface)->reduce = reduce;
 	((VectorInterface *) clazz->interface)->removeElementAtIndex = removeElementAtIndex;
 	((VectorInterface *) clazz->interface)->resize = resize;
 	((VectorInterface *) clazz->interface)->sort = sort;

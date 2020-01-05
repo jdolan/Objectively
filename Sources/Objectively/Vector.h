@@ -128,6 +128,26 @@ struct VectorInterface {
 	void (*enumerateElements)(const Vector *self, VectorEnumerator enumerator, ident data);
 
 	/**
+	 * @fn void Vector::filterElements(const Vector *self, Predicate predicate, ident data)
+	 * @brief Filters the elements of this Vector with the given Predicate.
+	 * @param self The Vector.
+	 * @param predicate The Predicate.
+	 * @param data User data.
+	 * @memberof Vector
+	 */
+	void (*filterElements)(Vector *self, Predicate predicate, ident data);
+
+	/**
+	 * @fn ident Vector::findElement(const Vector *self, Predicate predicate, ident data)
+	 * @param self The Vector.
+	 * @param predicate The Predicate.
+	 * @param data User data.
+	 * @return The first element of this Vector to pass the given Predicate.
+	 * @memberof Vector
+	 */
+	ident (*findElement)(const Vector *self, Predicate predicate, ident data);
+
+	/**
 	 * @fn ssize_t Vector::indexOfElement(const Vector *self, const ident element)
 	 * @param self The Vector.
 	 * @param element The element.
@@ -167,6 +187,17 @@ struct VectorInterface {
 	 * @memberof Vector
 	 */
 	void (*insertElementAtIndex)(Vector *self, const ident element, size_t index);
+
+	/**
+	 * @fn ident Vector::reduce(const Vector *self, Reducer reducer, ident accumulator, ident data)
+	 * @param self The Vector.
+	 * @param reducer The Reducer.
+	 * @param accumulator The initial accumulator value.
+	 * @param data User data.
+	 * @return The reduction result.
+	 * @memberof Vector
+	 */
+	ident (*reduce)(const Vector *self, Reducer reducer, ident accumulator, ident data);
 
 	/**
 	 * @fn void Vector::removeElementAtIndex(Vector *self, size_t index)
