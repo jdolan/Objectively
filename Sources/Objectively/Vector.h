@@ -82,8 +82,6 @@ struct Vector {
 	ident elements;
 };
 
-typedef struct MutableVector MutableVector;
-
 /**
  * @brief Access the typed element of vector at the specified index.
  */
@@ -118,8 +116,8 @@ struct VectorInterface {
 	void (*clear)(Vector *self);
 
 	/**
-	 * @fn void Vector::enumerateObjects(const Vector *self, VectorEnumerator enumerator)
-	 * @brief Eumerate the elements of this Vector with the given function.
+	 * @fn void Vector::enumerateElements(const Vector *self, VectorEnumerator enumerator, ident data)
+	 * @brief Enumerates the elements of this Vector with the given function.
 	 * @param self The Vector.
 	 * @param enumerator The enumerator function.
 	 * @param data User data.
@@ -213,7 +211,7 @@ struct VectorInterface {
 	 * @brief Resizes this Vector to the specified capacity.
 	 * @param self The Vector.
 	 * @param capacity The desired capacity.
-	 * @memberof Vetor
+	 * @memberof Vector
 	 */
 	void (*resize)(Vector *self, size_t capacity);
 

@@ -88,6 +88,13 @@ typedef Order (*Comparator)(const ident obj1, const ident obj2);
 typedef void (*Consumer)(ident data);
 
 /**
+ * @brief The BiConsumer function type.
+ * @param data1 The first argument.
+ * @param data2 The second argument.
+ */
+typedef void (*BiConsumer)(ident data1, ident data2);
+
+/**
  * @brief The Functor function type for transforming Objects.
  * @param obj The Object to transform.
  * @param data User data.

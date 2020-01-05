@@ -132,10 +132,12 @@ static void clear(Vector *self) {
 }
 
 /**
- * @fn void Vector::enumerateObjects(const Vector *self, VectorEnumerator enumerator)
+ * @fn void Vector::enumerateObjects(const Vector *self, VectorEnumerator enumerator, ident data)
  * @memberof Vector
  */
 static void enumerateElements(const Vector *self, VectorEnumerator enumerator, ident data) {
+
+	assert(enumerator);
 
 	for (size_t i = 0; i < self->count; i++) {
 		enumerator(self, self->elements + i * self->size, data);
@@ -267,7 +269,7 @@ static void removeElementAtIndex(Vector *self, size_t index) {
 
 /**
  * @fn void Vector::resize(Vector *self, size_t capacity)
- * @memberof Vetor
+ * @memberof Vector
  */
 static void resize(Vector *self, size_t capacity) {
 
