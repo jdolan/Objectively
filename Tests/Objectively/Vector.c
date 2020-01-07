@@ -52,24 +52,6 @@ START_TEST(addElement) {
 
 } END_TEST
 
-START_TEST(clear) {
-
-	Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
-
-	Foo one = { 1 }, two = { 2 }, three = { 3 };
-
-	$(vector, addElement, &one);
-	$(vector, addElement, &two);
-	$(vector, addElement, &three);
-
-	$(vector, clear);
-
-	ck_assert_int_eq(0, vector->count);
-
-	release(vector);
-
-} END_TEST
-
 static void enumerator(const Vector *vector, ident element, ident data) {
 	*(int *) data += *(int *) element;
 }
@@ -113,7 +95,7 @@ START_TEST(filterElements) {
 	ck_assert_int_eq(2, VectorElement(vector, Foo, 0)->bar);
 
 	release(vector);
-	
+
 } END_TEST
 
 START_TEST(findElement) {
@@ -211,6 +193,24 @@ START_TEST(reduce) {
 
 } END_TEST
 
+START_TEST(removeAllElements) {
+
+	Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
+
+	Foo one = { 1 }, two = { 2 }, three = { 3 };
+
+	$(vector, addElement, &one);
+	$(vector, addElement, &two);
+	$(vector, addElement, &three);
+
+	$(vector, removeAllElements);
+
+	ck_assert_int_eq(0, vector->count);
+
+	release(vector);
+
+} END_TEST
+
 START_TEST(removeElementAtIndex) {
 
 	Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
@@ -291,7 +291,6 @@ int main(int argc, char **argv) {
 
 	TCase *tcase = tcase_create("Vector");
 	tcase_add_test(tcase, addElement);
-	tcase_add_test(tcase, clear);
 	tcase_add_test(tcase, enumerateElements);
 	tcase_add_test(tcase, filterElements);
 	tcase_add_test(tcase, findElement);
@@ -299,6 +298,7 @@ int main(int argc, char **argv) {
 	tcase_add_test(tcase, initWithSize);
 	tcase_add_test(tcase, insertElementAtIndex);
 	tcase_add_test(tcase, reduce);
+	tcase_add_test(tcase, removeAllElements);
 	tcase_add_test(tcase, removeElementAtIndex);
 	tcase_add_test(tcase, resize);
 	tcase_add_test(tcase, sort);

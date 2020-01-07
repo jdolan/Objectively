@@ -108,14 +108,6 @@ struct VectorInterface {
 	void (*addElement)(Vector *self, const ident element);
 
 	/**
-	 * @fn void Vector::clear(Vector *self)
-	 * @brief Removes all elements from this Vector without modifying its capacity.
-	 * @param self The Vector
-	 * @memberof Vector
-	 */
-	void (*clear)(Vector *self);
-
-	/**
 	 * @fn void Vector::enumerateElements(const Vector *self, VectorEnumerator enumerator, ident data)
 	 * @brief Enumerates the elements of this Vector with the given function.
 	 * @param self The Vector.
@@ -197,6 +189,14 @@ struct VectorInterface {
 	 */
 	ident (*reduce)(const Vector *self, Reducer reducer, ident accumulator, ident data);
 
+	/**
+	 * @fn void Vector::removeAllElements(Vector *self)
+	 * @brief Removes all elements from this Vector without modifying its capacity.
+	 * @param self The Vector
+	 * @memberof Vector
+	 */
+	void (*removeAllElements)(Vector *self);
+	
 	/**
 	 * @fn void Vector::removeElementAtIndex(Vector *self, size_t index)
 	 * @brief Removes the element at the specified index.

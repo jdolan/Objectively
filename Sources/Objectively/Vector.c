@@ -124,14 +124,6 @@ static void addElement(Vector *self, const ident element) {
 }
 
 /**
- * @fn void Vector::clear(Vector *self)
- * @memberof Vector
- */
-static void clear(Vector *self) {
-	self->count = 0;
-}
-
-/**
  * @fn void Vector::enumerateObjects(const Vector *self, VectorEnumerator enumerator, ident data)
  * @memberof Vector
  */
@@ -253,6 +245,14 @@ static ident reduce(const Vector *self, Reducer reducer, ident accumulator, iden
 }
 
 /**
+ * @fn void Vector::removeAllElements(Vector *self)
+ * @memberof Vector
+ */
+static void removeAllElements(Vector *self) {
+	self->count = 0;
+}
+
+/**
  * @fn void Vector::removeElementAtIndex(Vector *self, size_t index)
  * @memberof Vector
  */
@@ -362,7 +362,6 @@ static void initialize(Class *clazz) {
 	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
 	((VectorInterface *) clazz->interface)->addElement = addElement;
-	((VectorInterface *) clazz->interface)->clear = clear;
 	((VectorInterface *) clazz->interface)->enumerateElements = enumerateElements;
 	((VectorInterface *) clazz->interface)->filterElements = filterElements;
 	((VectorInterface *) clazz->interface)->findElement = findElement;
@@ -371,6 +370,7 @@ static void initialize(Class *clazz) {
 	((VectorInterface *) clazz->interface)->initWithSize = initWithSize;
 	((VectorInterface *) clazz->interface)->insertElementAtIndex = insertElementAtIndex;
 	((VectorInterface *) clazz->interface)->reduce = reduce;
+	((VectorInterface *) clazz->interface)->removeAllElements = removeAllElements;
 	((VectorInterface *) clazz->interface)->removeElementAtIndex = removeElementAtIndex;
 	((VectorInterface *) clazz->interface)->resize = resize;
 	((VectorInterface *) clazz->interface)->sort = sort;
