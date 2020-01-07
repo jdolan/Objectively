@@ -27,15 +27,16 @@
 
 /**
  * @file
- * @brief Index Sets represent the Set to an element or node within a tree or graph structure.
+ * @brief Immutable collections of unique index values.
  */
 
 typedef struct IndexSet IndexSet;
 typedef struct IndexSetInterface IndexSetInterface;
 
 /**
- * @brief Index Sets represent the Set to an element or node within a tree or graph structure.
+ * @brief Immutable collections of unique index values.
  * @extends Object
+ * @ingroup Collections
  */
 struct IndexSet {
 

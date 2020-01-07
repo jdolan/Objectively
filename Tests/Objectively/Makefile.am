@@ -18,6 +18,7 @@ TESTS = \
 	MutableArray \
 	MutableData \
 	MutableDictionary \
+	MutableIndexSet \
 	MutableSet \
 	MutableString \
 	Null \

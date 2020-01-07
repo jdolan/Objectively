@@ -90,6 +90,11 @@
 		CE67170A1F93C289001C2767 /* Regexp.c in Sources */ = {isa = PBXBuildFile; fileRef = CE6717081F93C289001C2767 /* Regexp.c */; };
 		CE6BC16C1D79960C0070FB2D /* Enum.c in Sources */ = {isa = PBXBuildFile; fileRef = CE6BC16A1D79960C0070FB2D /* Enum.c */; };
 		CE6BC16D1D79960C0070FB2D /* Enum.h in Headers */ = {isa = PBXBuildFile; fileRef = CE6BC16B1D79960C0070FB2D /* Enum.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		CE75455023C3FC0600140C52 /* MutableIndexSet.h in Headers */ = {isa = PBXBuildFile; fileRef = CE75454E23C3FC0600140C52 /* MutableIndexSet.h */; };
+		CE75455123C3FC0600140C52 /* MutableIndexSet.c in Sources */ = {isa = PBXBuildFile; fileRef = CE75454F23C3FC0600140C52 /* MutableIndexSet.c */; };
+		CE75455923C417FD00140C52 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
+		CE75455A23C417FD00140C52 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */; };
+		CE75456023C4181300140C52 /* MutableIndexSet.c in Sources */ = {isa = PBXBuildFile; fileRef = CE75455223C417D700140C52 /* MutableIndexSet.c */; };
 		CE76D96E1C4821CE0096DD31 /* Array.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D85E1C481C4E0096DD31 /* Array.c */; };
 		CE76D96F1C4821CE0096DD31 /* Boole.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8601C481C4E0096DD31 /* Boole.c */; };
 		CE76D9701C4821CE0096DD31 /* Class.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8621C481C4E0096DD31 /* Class.c */; };
@@ -499,6 +504,13 @@
 			remoteGlobalIDString = CE594BD61F49F931004D74FF;
 			remoteInfo = "Objectively-StringReader";
 		};
+		CE75455523C417FD00140C52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE76D9671C48218E0096DD31;
+			remoteInfo = Objectively;
+		};
 		CE84A8A51DA15B88008BC685 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
@@ -723,6 +735,15 @@
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 		CE594BDE1F49F931004D74FF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		CE75455B23C417FD00140C52 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -981,6 +1002,10 @@
 		CE6BC16A1D79960C0070FB2D /* Enum.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Enum.c; sourceTree = "<group>"; };
 		CE6BC16B1D79960C0070FB2D /* Enum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enum.h; sourceTree = "<group>"; };
 		CE6C2D0E1E213E9000F55B0A /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
+		CE75454E23C3FC0600140C52 /* MutableIndexSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MutableIndexSet.h; sourceTree = "<group>"; };
+		CE75454F23C3FC0600140C52 /* MutableIndexSet.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MutableIndexSet.c; sourceTree = "<group>"; };
+		CE75455223C417D700140C52 /* MutableIndexSet.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MutableIndexSet.c; sourceTree = "<group>"; };
+		CE75455F23C417FD00140C52 /* Objectively-MutableIndexSet */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-MutableIndexSet"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE76D7FF1C481C4E0096DD31 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		CE76D85E1C481C4E0096DD31 /* Array.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Array.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		CE76D85F1C481C4E0096DD31 /* Array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Array.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1191,6 +1216,15 @@
 			files = (
 				CE594BDD1F49F931004D74FF /* libObjectively.dylib in Frameworks */,
 				CE594BDC1F49F931004D74FF /* libcheck.0.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE75455823C417FD00140C52 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE75455923C417FD00140C52 /* libObjectively.dylib in Frameworks */,
+				CE75455A23C417FD00140C52 /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1505,6 +1539,8 @@
 				CE76D8CF1C481C4E0096DD31 /* MutableData.h */,
 				CE76D8D01C481C4E0096DD31 /* MutableDictionary.c */,
 				CE76D8D11C481C4E0096DD31 /* MutableDictionary.h */,
+				CE75454E23C3FC0600140C52 /* MutableIndexSet.h */,
+				CE75454F23C3FC0600140C52 /* MutableIndexSet.c */,
 				CE76D8D21C481C4E0096DD31 /* MutableSet.c */,
 				CE76D8D31C481C4E0096DD31 /* MutableSet.h */,
 				CE76D8D41C481C4E0096DD31 /* MutableString.c */,
@@ -1608,6 +1644,7 @@
 				CE76D9551C481E390096DD31 /* MutableArray.c */,
 				CE76D9561C481E390096DD31 /* MutableData.c */,
 				CE76D9571C481E390096DD31 /* MutableDictionary.c */,
+				CE75455223C417D700140C52 /* MutableIndexSet.c */,
 				CE76D9581C481E390096DD31 /* MutableSet.c */,
 				CE76D9591C481E390096DD31 /* MutableString.c */,
 				CE76D95A1C481E390096DD31 /* Null.c */,
@@ -1671,6 +1708,7 @@
 				CE594BE21F49F931004D74FF /* Objectively-StringReader */,
 				CE4F535F202A8C6D00D71C07 /* Objectively-Resource */,
 				CE129E6E23B8242B007D0433 /* Objectively-Vector */,
+				CE75455F23C417FD00140C52 /* Objectively-MutableIndexSet */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1769,6 +1807,7 @@
 				CE76DA231C4860130096DD31 /* Thread.h in Headers */,
 				CE76DA241C4860130096DD31 /* Types.h in Headers */,
 				CE76DA251C4860130096DD31 /* URL.h in Headers */,
+				CE75455023C3FC0600140C52 /* MutableIndexSet.h in Headers */,
 				CE76DA261C4860130096DD31 /* URLRequest.h in Headers */,
 				CE76DA271C4860130096DD31 /* URLSession.h in Headers */,
 				CE76DA281C4860130096DD31 /* URLSessionConfiguration.h in Headers */,
@@ -1889,6 +1928,24 @@
 			name = "Objectively-StringReader";
 			productName = "Objectively-Test";
 			productReference = CE594BE21F49F931004D74FF /* Objectively-StringReader */;
+			productType = "com.apple.product-type.tool";
+		};
+		CE75455323C417FD00140C52 /* Objectively-MutableIndexSet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE75455C23C417FD00140C52 /* Build configuration list for PBXNativeTarget "Objectively-MutableIndexSet" */;
+			buildPhases = (
+				CE75455623C417FD00140C52 /* Sources */,
+				CE75455823C417FD00140C52 /* Frameworks */,
+				CE75455B23C417FD00140C52 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE75455423C417FD00140C52 /* PBXTargetDependency */,
+			);
+			name = "Objectively-MutableIndexSet";
+			productName = "Objectively-Test";
+			productReference = CE75455F23C417FD00140C52 /* Objectively-MutableIndexSet */;
 			productType = "com.apple.product-type.tool";
 		};
 		CE76D9671C48218E0096DD31 /* Objectively */ = {
@@ -2406,6 +2463,7 @@
 				CEEB02211F40DBD0004C2EDD /* Objectively-MutableArray */,
 				CEEB022E1F40DBD2004C2EDD /* Objectively-MutableData */,
 				CEEB023B1F40DBD4004C2EDD /* Objectively-MutableDictionary */,
+				CE75455323C417FD00140C52 /* Objectively-MutableIndexSet */,
 				CEEB02481F40DBD5004C2EDD /* Objectively-MutableSet */,
 				CEEB02551F40DBD7004C2EDD /* Objectively-MutableString */,
 				CEEB02621F40DBD9004C2EDD /* Objectively-Null */,
@@ -2509,6 +2567,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CE75455623C417FD00140C52 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE75456023C4181300140C52 /* MutableIndexSet.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CE76D9641C48218E0096DD31 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2521,6 +2587,7 @@
 				CE76D9731C4821CE0096DD31 /* Date.c in Sources */,
 				CE76D9741C4821CE0096DD31 /* DateFormatter.c in Sources */,
 				CE76D9751C4821CE0096DD31 /* Dictionary.c in Sources */,
+				CE75455123C3FC0600140C52 /* MutableIndexSet.c in Sources */,
 				CE76D9761C4821CE0096DD31 /* Error.c in Sources */,
 				CE76D9771C4821CE0096DD31 /* Hash.c in Sources */,
 				CE6BC16C1D79960C0070FB2D /* Enum.c in Sources */,
@@ -2942,6 +3009,11 @@
 			target = CE594BD61F49F931004D74FF /* Objectively-StringReader */;
 			targetProxy = CE594BE41F4B05D1004D74FF /* PBXContainerItemProxy */;
 		};
+		CE75455423C417FD00140C52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE76D9671C48218E0096DD31 /* Objectively */;
+			targetProxy = CE75455523C417FD00140C52 /* PBXContainerItemProxy */;
+		};
 		CE84A8A61DA15B88008BC685 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CE76D9671C48218E0096DD31 /* Objectively */;
@@ -3176,6 +3248,20 @@
 			name = Debug;
 		};
 		CE594BE11F49F931004D74FF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		CE75455D23C417FD00140C52 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CE75455E23C417FD00140C52 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3694,6 +3780,15 @@
 			buildConfigurations = (
 				CE594BE01F49F931004D74FF /* Debug */,
 				CE594BE11F49F931004D74FF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE75455C23C417FD00140C52 /* Build configuration list for PBXNativeTarget "Objectively-MutableIndexSet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE75455D23C417FD00140C52 /* Debug */,
+				CE75455E23C417FD00140C52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
