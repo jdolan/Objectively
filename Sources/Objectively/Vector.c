@@ -21,6 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+#include "Config.h"
+
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
@@ -303,7 +305,7 @@ static void sort(Vector *self, Comparator comparator) {
  * @brief qsort_s comparator.
  */
 static int _sort(void *data, const void *a, const void *b) {
-	return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
+	return ((Comparator) data)(((const ident) a), ((const ident) b));
 }
 
 /**
@@ -320,7 +322,7 @@ static void sort(Vector *self, Comparator comparator) {
  * @brief qsort_r comparator.
  */
 static int _sort(const void *a, const void *b, void *data) {
-	return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
+	return ((Comparator) data)(((const ident) a), ((const ident) b));
 }
 
 /**
