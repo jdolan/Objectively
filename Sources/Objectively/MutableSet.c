@@ -33,7 +33,7 @@
 
 #define MUTABLESET_DEFAULT_CAPACITY 64
 #define MUTABLESET_GROW_FACTOR 2.0
-#define MUTABLESET_MAX_LOAD 0.75
+#define MUTABLESET_MAX_LOAD 0.75f
 
 #pragma mark - Object
 
@@ -42,7 +42,7 @@
  */
 static Object *copy(const Object *self) {
 
-	Set *this = (Set *) self;
+	const Set *this = (Set *) self;
 
 	MutableSet *copy = $(alloc(MutableSet), initWithCapacity, this->capacity);
 

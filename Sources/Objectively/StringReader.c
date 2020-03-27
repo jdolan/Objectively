@@ -116,7 +116,7 @@ static Unicode peek(StringReader *self) {
  * @fn int StringReader::read(StringReader *self)
  * @memberof StringReader
  */
-static Unicode read(StringReader *self) {
+static Unicode stringReaderRead(StringReader *self) {
 	return $(self, next, StringReaderRead);
 }
 
@@ -180,7 +180,7 @@ static void initialize(Class *clazz) {
 	((StringReaderInterface *) clazz->interface)->initWithString = initWithString;
 	((StringReaderInterface *) clazz->interface)->next = next;
 	((StringReaderInterface *) clazz->interface)->peek = peek;
-	((StringReaderInterface *) clazz->interface)->read = read;
+	((StringReaderInterface *) clazz->interface)->read = stringReaderRead;
 	((StringReaderInterface *) clazz->interface)->readToken = readToken;
 	((StringReaderInterface *) clazz->interface)->reset = reset;
 }

@@ -26,7 +26,7 @@
 #include <time.h>
 
 #if defined(_MSC_VER)
- #include <winsock2.h>
+ #include <WinSock2.h>
 #else
  #include <sys/time.h>
 #endif

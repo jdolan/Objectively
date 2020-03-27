@@ -34,7 +34,7 @@
 
 #define MUTABLEDICTIONARY_DEFAULT_CAPACITY 64
 #define MUTABLEDICTIONARY_GROW_FACTOR 2.0
-#define MUTABLEDICTIONARY_MAX_LOAD 0.75
+#define MUTABLEDICTIONARY_MAX_LOAD 0.75f
 
 #pragma mark - Object
 
@@ -43,7 +43,7 @@
  */
 static Object *copy(const Object *self) {
 
-	Dictionary *this = (Dictionary *) self;
+	const Dictionary *this = (const Dictionary *) self;
 
 	MutableDictionary *copy = $(alloc(MutableDictionary), initWithCapacity, this->capacity);
 

@@ -88,7 +88,7 @@ static void cancelAllOperations(OperationQueue *self) {
 	release(operations);
 }
 
-__thread OperationQueue *_currentQueue;
+static __thread OperationQueue *_currentQueue;
 
 /**
  * @fn OperationQueue* OperationQueue::currentQueue(void)

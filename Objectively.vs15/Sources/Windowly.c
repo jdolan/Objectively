@@ -30,7 +30,7 @@
 
 #pragma region gettimeofday
 
-const int64_t DELTA_EPOCH_IN_MICROSECS = 11644473600000000;
+static const int64_t DELTA_EPOCH_IN_MICROSECS = 11644473600000000;
 
 long __sync_val_compare_and_swap_(long volatile *Destination, long Exchange, long Comparand) {
 	return InterlockedCompareExchange(Destination, Exchange, Comparand);

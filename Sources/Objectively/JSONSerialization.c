@@ -201,17 +201,17 @@ static void writeElement(JSONWriter *writer, const ident obj) {
 	const Object *object = cast(Object, obj);
 	if (object) {
 		if ($(object, isKindOfClass, _Dictionary())) {
-			writeObject(writer, (Dictionary *) object);
+			writeObject(writer, (const Dictionary *) object);
 		} else if ($(object, isKindOfClass, _Array())) {
-			writeArray(writer, (Array *) object);
+			writeArray(writer, (const Array *) object);
 		} else if ($(object, isKindOfClass, _String())) {
-			writeString(writer, (String *) object);
+			writeString(writer, (const String *) object);
 		} else if ($(object, isKindOfClass, _Number())) {
-			writeNumber(writer, (Number *) object);
+			writeNumber(writer, (const Number *) object);
 		} else if ($(object, isKindOfClass, _Boole())) {
-			writeBoole(writer, (Boole *) object);
+			writeBoole(writer, (const Boole *) object);
 		} else if ($(object, isKindOfClass, _Null())) {
-			writeNull(writer, (Null *) object);
+			writeNull(writer, (const Null *) object);
 		}
 	}
 }

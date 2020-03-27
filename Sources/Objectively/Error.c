@@ -171,7 +171,7 @@ Class *_Error(void) {
 		clazz = _initialize(&(const ClassDef) {
 			.name = "Error",
 			.superclass = _Object(),
-			.instanceSize = sizeof(_Error),
+			.instanceSize = sizeof(Error),
 			.interfaceOffset = offsetof(Error, interface),
 			.interfaceSize = sizeof(ErrorInterface),
 			.initialize = initialize,

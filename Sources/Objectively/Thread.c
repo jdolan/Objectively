@@ -71,7 +71,7 @@ static void cancel(Thread *self) {
 	self->isCancelled = true;
 }
 
-__thread Thread *_currentThread;
+static __thread Thread *_currentThread;
 
 /**
  * @fn Thread *Thread::currentThread(void)

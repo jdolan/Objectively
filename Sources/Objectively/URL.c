@@ -37,7 +37,7 @@
  */
 static Object *copy(const Object *self) {
 
-	URL *this = (URL *) self;
+	const URL *this = (URL *) self;
 
 	return (Object *) $(alloc(URL), initWithString, this->urlString);
 }

@@ -85,7 +85,7 @@ static URLRequest *initWithURL(URLRequest *self, URL *url) {
  * @fn void setValueForHTTPHeaderField(URLREquest *self, const char *value, const char *field)
  * @memberof URLRequest
  */
-void setValueForHTTPHeaderField(URLRequest *self, const char *value, const char *field) {
+static void setValueForHTTPHeaderField(URLRequest *self, const char *value, const char *field) {
 
 	if (self->httpHeaders == NULL) {
 		self->httpHeaders = (Dictionary *) $(alloc(MutableDictionary), init);

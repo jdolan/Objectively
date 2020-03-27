@@ -40,7 +40,7 @@
  */
 static Object *copy(const Object *self) {
 
-	String *this = (String *) self;
+	const String *this = (String *) self;
 
 	return (Object *) $(alloc(MutableString), initWithString, this);
 }

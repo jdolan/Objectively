@@ -151,7 +151,7 @@ OBJECTIVELY_EXPORT ident retain(ident obj);
 /**
  * @brief The page size, in bytes, of the target host.
  */
-OBJECTIVELY_EXPORT size_t _pageSize;
+OBJECTIVELY_EXPORT extern size_t _pageSize;
 
 /**
  * @brief Allocate and initialize and instance of `type`.
