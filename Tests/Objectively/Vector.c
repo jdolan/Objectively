@@ -76,7 +76,7 @@ START_TEST(enumerateElements) {
 } END_TEST
 
 static _Bool predicate(const ident obj, ident data) {
-	return ((Foo *) obj)->bar == (int) data;
+	return ((Foo *) obj)->bar == (intptr_t) data;
 }
 
 START_TEST(filterElements) {
@@ -187,7 +187,7 @@ START_TEST(reduce) {
 	$(vector, addElement, &two);
 	$(vector, addElement, &three);
 
-	ck_assert_int_eq(6, (int) $(vector, reduce, reducer, (ident) 0, NULL));
+	ck_assert_int_eq(6, (intptr_t) $(vector, reduce, reducer, (ident) 0, NULL));
 
 	release(vector);
 
