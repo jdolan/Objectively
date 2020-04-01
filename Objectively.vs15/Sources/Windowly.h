@@ -37,7 +37,7 @@
 #endif
 
 #ifdef BUILDING_OBJECTIVELY
- #define OBJECTIVELY_EXPORT __declspec(dllexport)
+ #define OBJECTIVELY_EXPORT extern __declspec(dllexport)
 #else
  #define OBJECTIVELY_EXPORT __declspec(dllimport)
 #endif
