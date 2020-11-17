@@ -132,7 +132,10 @@ typedef ident (*Reducer)(const ident obj, ident accumulator, ident data);
 #define clamp(val, min, max) \
 	({ \
 		typeof(val) _val = (val); typeof(min) _min = (min); typeof(max) _max = (max); \
-		_val < _min ? _min : _val > _max ? _max : _val; \
+		_max < _min ? \
+				_val < _max ? _max : _val > _min ? _min : _val \
+			: \
+				_val < _min ? _min : _val > _max ? _max : _val; \
 	})
 
 /**
