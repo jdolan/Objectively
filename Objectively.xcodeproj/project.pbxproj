@@ -174,6 +174,8 @@
 		CE84A8A91DA15BD5008BC685 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */; };
 		CE89D9BF1F24060F005BF96C /* Array.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9431C481E390096DD31 /* Array.c */; };
 		CE9305BF1D9B1C5D00D62770 /* Config.h in Headers */ = {isa = PBXBuildFile; fileRef = CE9305BE1D9B1C5D00D62770 /* Config.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		CEAAA3E325C6377300EE81B3 /* URLResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = CEAAA3E125C6377300EE81B3 /* URLResponse.h */; };
+		CEAAA3E425C6377300EE81B3 /* URLResponse.c in Sources */ = {isa = PBXBuildFile; fileRef = CEAAA3E225C6377300EE81B3 /* URLResponse.c */; };
 		CEB078B71D73B74800ABA6B3 /* Value.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB078B51D73B74800ABA6B3 /* Value.c */; };
 		CEB078B81D73B74800ABA6B3 /* Value.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB078B61D73B74800ABA6B3 /* Value.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CEB078C31D7605C200ABA6B3 /* IndexPath.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB078C11D7605C200ABA6B3 /* IndexPath.c */; };
@@ -1130,6 +1132,8 @@
 		CEA3B0831CBBD3420082EE04 /* TemplateIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TemplateIcon@2x.png"; sourceTree = "<group>"; };
 		CEA3B0841CBBD3420082EE04 /* TemplateInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
 		CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcheck.0.dylib; path = /opt/local/lib/libcheck.0.dylib; sourceTree = "<absolute>"; };
+		CEAAA3E125C6377300EE81B3 /* URLResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLResponse.h; sourceTree = "<group>"; };
+		CEAAA3E225C6377300EE81B3 /* URLResponse.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = URLResponse.c; sourceTree = "<group>"; };
 		CEB078B51D73B74800ABA6B3 /* Value.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Value.c; sourceTree = "<group>"; };
 		CEB078B61D73B74800ABA6B3 /* Value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Value.h; sourceTree = "<group>"; };
 		CEB078C11D7605C200ABA6B3 /* IndexPath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = IndexPath.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -1575,6 +1579,8 @@
 				CE76D8ED1C481C4E0096DD31 /* URL.h */,
 				CE76D8EE1C481C4E0096DD31 /* URLRequest.c */,
 				CE76D8EF1C481C4E0096DD31 /* URLRequest.h */,
+				CEAAA3E125C6377300EE81B3 /* URLResponse.h */,
+				CEAAA3E225C6377300EE81B3 /* URLResponse.c */,
 				CE76D8F01C481C4E0096DD31 /* URLSession.c */,
 				CE76D8F11C481C4E0096DD31 /* URLSession.h */,
 				CE76D8F21C481C4E0096DD31 /* URLSessionConfiguration.c */,
@@ -1786,6 +1792,7 @@
 				CE76DA0F1C4860120096DD31 /* JSONPath.h in Headers */,
 				CE76DA101C4860120096DD31 /* JSONSerialization.h in Headers */,
 				CE76DA121C4860120096DD31 /* Lock.h in Headers */,
+				CEAAA3E325C6377300EE81B3 /* URLResponse.h in Headers */,
 				CE76DA131C4860120096DD31 /* Log.h in Headers */,
 				CE76DA141C4860120096DD31 /* MutableArray.h in Headers */,
 				CE76DA151C4860120096DD31 /* MutableData.h in Headers */,
@@ -2591,6 +2598,7 @@
 				CE76D9761C4821CE0096DD31 /* Error.c in Sources */,
 				CE76D9771C4821CE0096DD31 /* Hash.c in Sources */,
 				CE6BC16C1D79960C0070FB2D /* Enum.c in Sources */,
+				CEAAA3E425C6377300EE81B3 /* URLResponse.c in Sources */,
 				CEB078C31D7605C200ABA6B3 /* IndexPath.c in Sources */,
 				CEB20D571D771B7A000EF6F3 /* IndexSet.c in Sources */,
 				CE76D9781C4821CE0096DD31 /* JSONPath.c in Sources */,

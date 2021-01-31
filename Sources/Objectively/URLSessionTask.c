@@ -22,10 +22,12 @@
  */
 
 #include <assert.h>
+#include <string.h>
 #include <stdlib.h>
 #include <curl/curl.h>
 
 #include "URLRequest.h"
+#include "URLResponse.h"
 #include "URLSession.h"
 #include "URLSessionTask.h"
 
@@ -54,6 +56,7 @@ static void dealloc(Object *self) {
 
 	release(this->request);
 	release(this->session);
+	release(this->response);
 
 	super(Object, self, dealloc);
 }
@@ -78,7 +81,6 @@ static void cancel(URLSessionTask *self) {
 	}
 }
 
-
 /**
  * @fn URLSessionTask *URLSessionTask::initWithRequestInSession(URLSessionTask *self, struct URLRequest *request, struct URLSession *session, URLSessionTaskCompletion completion)
  * @memberof URLSessionTask
@@ -97,6 +99,8 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
 
 		self->request = retain(request);
 		self->session = retain(session);
+
+		self->response = $(alloc(URLResponse), init);
 
 		self->completion = completion;
 
@@ -123,9 +127,9 @@ static void resume(URLSessionTask *self) {
 }
 
 /**
- * @brief A helper to populate the headers list for CURL.
+ * @brief A helper to populate the request headers list for CURL.
  */
-static void httpHeaders_enumerator(const Dictionary *dictionary, ident obj, ident key, ident data) {
+static void requestHeaders_enumerator(const Dictionary *dictionary, ident obj, ident key, ident data) {
 
 	String *header = $(alloc(String), initWithFormat, "%s: %s", ((String * ) key)->chars, ((String * ) obj)->chars);
 
@@ -136,8 +140,32 @@ static void httpHeaders_enumerator(const Dictionary *dictionary, ident obj, iden
 }
 
 /**
- * @brief The `CURLOPT_XFERINFOFUNCTION`, which updates internal state and
- * dispatches the task's progress function.
+ * @brief The `CURLOPT_HEADERFUNCTION` for parsing response headers.
+ */
+static size_t responseHeader(char *buffer, size_t size, size_t count, void *data) {
+
+	URLSessionTask *this = (URLSessionTask *) data;
+
+	char *header = calloc(count + 1, 1);
+	memcpy(header, buffer, count);
+
+	char *delim = strchr(header, ':');
+	if (delim) {
+		*delim = 0;
+
+		char *field = header;
+		char *value = strtrim(delim + 1);
+
+		$(this->response, setValueForHTTPHeaderField, value, field);
+	}
+
+	free(header);
+	return count;
+}
+
+/**
+ * @brief The `CURLOPT_XFERINFOFUNCTION`, which updates internal state and dispatches the task's
+ * progress function.
  * @remarks This is also the mechanism for resuming suspended tasks.
  */
 static int progress(ident self, curl_off_t bytesExpectedToReceive, curl_off_t bytesReceived,
@@ -145,8 +173,14 @@ static int progress(ident self, curl_off_t bytesExpectedToReceive, curl_off_t by
 
 	URLSessionTask *this = (URLSessionTask *) self;
 
+	curl_easy_getinfo(this->locals.handle, CURLINFO_RESPONSE_CODE, (long *) &this->response->httpStatusCode);
+
 	this->bytesExpectedToReceive = bytesExpectedToReceive;
 	this->bytesExpectedToSend = bytesExpectedToSend;
+
+	if (this->progress) {
+		this->progress(this);
+	}
 
 	return 0;
 }
@@ -163,6 +197,9 @@ static void setup(URLSessionTask *self) {
 	curl_easy_setopt(self->locals.handle, CURLOPT_ERRORBUFFER, self->error);
 	curl_easy_setopt(self->locals.handle, CURLOPT_FOLLOWLOCATION, true);
 
+	curl_easy_setopt(self->locals.handle, CURLOPT_HEADERFUNCTION, responseHeader);
+	curl_easy_setopt(self->locals.handle, CURLOPT_HEADERDATA, self);
+
 	curl_easy_setopt(self->locals.handle, CURLOPT_XFERINFOFUNCTION, progress);
 	curl_easy_setopt(self->locals.handle, CURLOPT_XFERINFODATA, self);
 
@@ -177,17 +214,17 @@ static void setup(URLSessionTask *self) {
 
 	headers = self->session->configuration->httpHeaders;
 	if (headers) {
-		$(headers, enumerateObjectsAndKeys, httpHeaders_enumerator, &httpHeaders);
+		$(headers, enumerateObjectsAndKeys, requestHeaders_enumerator, &httpHeaders);
 	}
 
 	headers = self->request->httpHeaders;
 	if (headers) {
-		$(headers, enumerateObjectsAndKeys, httpHeaders_enumerator, &httpHeaders);
+		$(headers, enumerateObjectsAndKeys, requestHeaders_enumerator, &httpHeaders);
 	}
 
 	curl_easy_setopt(self->locals.handle, CURLOPT_HTTPHEADER, httpHeaders);
 
-	self->locals.httpHeaders = httpHeaders;
+	self->locals.requestHeaders = httpHeaders;
 
 	switch (self->request->httpMethod) {
 		case HTTP_POST:
@@ -236,9 +273,9 @@ static void teardown(URLSessionTask *self) {
 		self->locals.handle = NULL;
 	}
 
-	if (self->locals.httpHeaders) {
-		curl_slist_free_all(self->locals.httpHeaders);
-		self->locals.httpHeaders = NULL;
+	if (self->locals.requestHeaders) {
+		curl_slist_free_all(self->locals.requestHeaders);
+		self->locals.requestHeaders = NULL;
 	}
 }
 

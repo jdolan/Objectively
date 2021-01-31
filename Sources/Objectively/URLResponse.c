@@ -24,9 +24,10 @@
 #include <assert.h>
 
 #include "MutableDictionary.h"
-#include "URLRequest.h"
+#include "String.h"
+#include "URLResponse.h"
 
-#define _Class _URLRequest
+#define _Class _URLResponse
 
 #pragma mark - Object
 
@@ -35,17 +36,15 @@
  */
 static Object *copy(const Object *self) {
 
-	URLRequest *this = (URLRequest *) self;
+	URLResponse *this = (URLResponse *) self;
 
-	URLRequest *that = $(alloc(URLRequest), initWithURL, this->url);
-
-	if (this->httpBody) {
-		that->httpBody = (Data *) $((Object *) this->httpBody, copy);
-	}
+	URLResponse *that = $(alloc(URLResponse), init);
 
 	if (this->httpHeaders) {
 		that->httpHeaders = (Dictionary *) $((Object *) this->httpHeaders, copy);
 	}
+
+	that->httpStatusCode = this->httpStatusCode;
 
 	return (Object *) that;
 }
@@ -55,38 +54,28 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	URLRequest *this = (URLRequest *) self;
+	URLResponse *this = (URLResponse *) self;
 
-	release(this->httpBody);
 	release(this->httpHeaders);
-	release(this->url);
 
 	super(Object, self, dealloc);
 }
 
-#pragma mark - URLRequest
+#pragma mark - URLResponse
 
 /**
- * @fn URLRequest *URLRequest::initWithURL(URLRequest *self, URL *url)
- * @memberof URLRequest
+ * @fn URLResponse *URLResponse::init(URLResponse *self)
+ * @memberof URLResponse
  */
-static URLRequest *initWithURL(URLRequest *self, URL *url) {
-
-	assert(url);
-
-	self = (URLRequest *) super(Object, self, init);
-	if (self) {
-		self->url = retain(url);
-	}
-
-	return self;
+static URLResponse *init(URLResponse *self) {
+	return (URLResponse *) super(Object, self, init);
 }
 
 /**
  * @fn void setValueForHTTPHeaderField(URLREquest *self, const char *value, const char *field)
- * @memberof URLRequest
+ * @memberof URLResponse
  */
-static void setValueForHTTPHeaderField(URLRequest *self, const char *value, const char *field) {
+static void setValueForHTTPHeaderField(URLResponse *self, const char *value, const char *field) {
 
 	if (self->httpHeaders == NULL) {
 		self->httpHeaders = (Dictionary *) $(alloc(MutableDictionary), init);
@@ -111,25 +100,25 @@ static void initialize(Class *clazz) {
 	((ObjectInterface *) clazz->interface)->copy = copy;
 	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((URLRequestInterface *) clazz->interface)->initWithURL = initWithURL;
-	((URLRequestInterface *) clazz->interface)->setValueForHTTPHeaderField = setValueForHTTPHeaderField;
+	((URLResponseInterface *) clazz->interface)->init = init;
+	((URLResponseInterface *) clazz->interface)->setValueForHTTPHeaderField = setValueForHTTPHeaderField;
 }
 
 /**
- * @fn Class *URLRequest::_URLRequest(void)
- * @memberof URLRequest
+ * @fn Class *URLResponse::_URLResponse(void)
+ * @memberof URLResponse
  */
-Class *_URLRequest(void) {
+Class *_URLResponse(void) {
 	static Class *clazz;
 	static Once once;
 
 	do_once(&once, {
 		clazz = _initialize(&(const ClassDef) {
-			.name = "URLRequest",
+			.name = "URLResponse",
 			.superclass = _Object(),
-			.instanceSize = sizeof(URLRequest),
-			.interfaceOffset = offsetof(URLRequest, interface),
-			.interfaceSize = sizeof(URLRequestInterface),
+			.instanceSize = sizeof(URLResponse),
+			.interfaceOffset = offsetof(URLResponse, interface),
+			.interfaceSize = sizeof(URLResponseInterface),
 			.initialize = initialize,
 		});
 	});

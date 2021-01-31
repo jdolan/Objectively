@@ -46,6 +46,7 @@ pkginclude_HEADERS = \
 	Types.h \
 	URL.h \
 	URLRequest.h \
+	URLResponse.h \
 	URLSession.h \
 	URLSessionConfiguration.h \
 	URLSessionDataTask.h \
@@ -96,6 +97,7 @@ libObjectively_la_SOURCES = \
 	Thread.c \
 	URL.c \
 	URLRequest.c \
+	URLResponse.c \
 	URLSession.c \
 	URLSessionConfiguration.c \
 	URLSessionDataTask.c \

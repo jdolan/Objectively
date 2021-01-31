@@ -67,6 +67,7 @@
 #include <Objectively/Types.h>
 #include <Objectively/URL.h>
 #include <Objectively/URLRequest.h>
+#include <Objectively/URLResponse.h>
 #include <Objectively/URLSession.h>
 #include <Objectively/URLSessionConfiguration.h>
 #include <Objectively/URLSessionDataTask.h>

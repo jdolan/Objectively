@@ -40,6 +40,7 @@ typedef struct URLSessionInterface URLSessionInterface;
 #include <Objectively/MutableArray.h>
 #include <Objectively/Object.h>
 #include <Objectively/URLRequest.h>
+#include <Objectively/URLResponse.h>
 #include <Objectively/URLSessionConfiguration.h>
 #include <Objectively/URLSessionDataTask.h>
 #include <Objectively/URLSessionDownloadTask.h>

@@ -23,37 +23,23 @@
 
 #pragma once
 
-#include <Objectively/Data.h>
 #include <Objectively/Dictionary.h>
 #include <Objectively/Object.h>
-#include <Objectively/URL.h>
 
 /**
  * @file
- * @brief A protocol-agnostic abstraction for requesting resources via URLs.
+ * @brief A protocol-agnostic abstraction for receiving resources via URLs.
  */
 
-typedef struct URLRequest URLRequest;
-typedef struct URLRequestInterface URLRequestInterface;
+typedef struct URLResponse URLResponse;
+typedef struct URLResponseInterface URLResponseInterface;
 
 /**
- * The HTTP method verbs.
- */
-typedef enum {
-	HTTP_NONE,
-	HTTP_GET,
-	HTTP_POST,
-	HTTP_PUT,
-	HTTP_DELETE,
-	HTTP_HEAD
-} HTTPMethod;
-
-/**
- * @brief A protocol-agnostic abstraction for requesting resources via URLs.
+ * @brief A protocol-agnostic abstraction for URLSessionTask responses.
  * @extends Object
  * @ingroup URLSession
  */
-struct URLRequest {
+struct URLResponse {
 
 	/**
 	 * @brief The superclass.
@@ -64,33 +50,23 @@ struct URLRequest {
 	 * @brief The interface.
 	 * @protected
 	 */
-	URLRequestInterface *interface;
+	URLResponseInterface *interface;
 
 	/**
-	 * @brief The HTTP request body, sent as `POST` or `PUT` data.
-	 */
-	Data *httpBody;
-
-	/**
-	 * @brief The HTTP request headers.
+	 * @brief The HTTP response headers.
 	 */
 	Dictionary *httpHeaders;
 
 	/**
-	 * @brief The HTTP request method.
+	 * @brief The HTTP response status code.
 	 */
-	HTTPMethod httpMethod;
-
-	/**
-	 * @brief The URL.
-	 */
-	URL *url;
+	int httpStatusCode;
 };
 
 /**
- * @brief The URLRequest interface.
+ * @brief The URLResponse interface.
  */
-struct URLRequestInterface {
+struct URLResponseInterface {
 
 	/**
 	 * @brief The superclass interface.
@@ -98,30 +74,29 @@ struct URLRequestInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @fn URLRequest *URLRequest::initWithURL(URLRequest *self, URL *url)
-	 * @brief Initializes this URLRequest with the specified URL.
-	 * @param self The URLRequest.
-	 * @param url The URL.
-	 * @return The initialized URLRequest, or `NULL` on error.
-	 * @memberof URLRequest
+	 * @fn URLResponse *URLResponse::init(URLResponse *self)
+	 * @brief Initializes this URLResponse.
+	 * @param self The URLResponse.
+	 * @return The initialized URLResponse, or `NULL` on error.
+	 * @memberof URLResponse
 	 */
-	URLRequest *(*initWithURL)(URLRequest *self, URL *url);
+	URLResponse *(*init)(URLResponse *self);
 
 	/**
-	 * @fn void setValueForHTTPHeaderField(URLRequest *self, const char *value, const char *field)
+	 * @fn void setValueForHTTPHeaderField(URLResponse *self, const char *value, const char *field)
 	 * @brief Sets a value for the specified HTTP header.
 	 * @param self The URLRequest.
 	 * @param value The HTTP header value.
 	 * @param field The HTTP header field.
-	 * @memberof URLRequest
+	 * @memberof URLResponse
 	 */
-	void (*setValueForHTTPHeaderField)(URLRequest *self, const char *value, const char *field);
+	void (*setValueForHTTPHeaderField)(URLResponse *self, const char *value, const char *field);
 };
 
 /**
- * @fn Class *URLRequest::_URLRequest(void)
- * @brief The URLRequest archetype.
- * @return The URLRequest Class.
- * @memberof URLRequest
+ * @fn Class *URLResponse::_URLResponse(void)
+ * @brief The URLResponse archetype.
+ * @return The URLResponse Class.
+ * @memberof URLResponse
  */
-OBJECTIVELY_EXPORT Class *_URLRequest(void);
+OBJECTIVELY_EXPORT Class *_URLResponse(void);

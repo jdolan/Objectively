@@ -83,7 +83,7 @@ START_TEST(array) {
 
 	ck_assert_int_eq(array->count, mapped->count);
 
-	int reduced = (intptr_t) $(mapped, reduce, reducer, (ident) 0, NULL);
+	int reduced = (int) (intptr_t) $(mapped, reduce, reducer, (ident) 0, NULL);
 
 	ck_assert_int_eq(3, reduced);
 

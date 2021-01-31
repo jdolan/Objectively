@@ -227,6 +227,8 @@ static ident run(Thread *thread) {
 
 				task->state = URLSESSIONTASK_COMPLETED;
 
+				curl_easy_getinfo(task->locals.handle, CURLINFO_RESPONSE_CODE, (long *) &task->response->httpStatusCode);
+
 				if (task->completion) {
 					task->completion(task, message->data.result == CURLE_OK);
 				}

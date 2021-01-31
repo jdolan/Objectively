@@ -35,9 +35,15 @@ typedef struct URLSessionTask URLSessionTask;
 typedef struct URLSessionTaskInterface URLSessionTaskInterface;
 
 /**
+ * @brief A function pointer for URLSessionTask progress.
+ * @param task The URLSessionTask.
+ */
+typedef void (*URLSessionTaskProgress)(URLSessionTask *task);
+
+/**
  * @brief A function pointer for URLSessionTask completion.
  * @param task The URLSessionTask.
- * @param success `true` if the task was successful, `false` otherwise.
+ * @param success `true` if the task completed successfully, `false` otherwise.
  */
 typedef void (*URLSessionTaskCompletion)(URLSessionTask *task, _Bool success);
 
@@ -76,7 +82,6 @@ struct URLSessionTask {
 	 * @private
 	 */
 	struct {
-
 		/**
 		 * @brief The backing libcurl handle.
 		 */
@@ -85,8 +90,7 @@ struct URLSessionTask {
 		/**
 		 * @brief HTTP headers, in libcurl list structure.
 		 */
-		ident httpHeaders;
-
+		ident requestHeaders;
 	} locals;
 
 	/**
@@ -110,6 +114,11 @@ struct URLSessionTask {
 	size_t bytesSent;
 
 	/**
+	 * @brief The progress function.
+	 */
+	URLSessionTaskProgress progress;
+
+	/**
 	 * @brief The completion function.
 	 */
 	URLSessionTaskCompletion completion;
@@ -123,6 +132,11 @@ struct URLSessionTask {
 	 * @brief The request.
 	 */
 	struct URLRequest *request;
+
+	/**
+	 * @brief The response.
+	 */
+	struct URLResponse *response;
 
 	/**
 	 * @brief The session.
