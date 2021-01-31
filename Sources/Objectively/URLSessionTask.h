@@ -114,19 +114,24 @@ struct URLSessionTask {
 	size_t bytesSent;
 
 	/**
-	 * @brief The progress function.
-	 */
-	URLSessionTaskProgress progress;
-
-	/**
 	 * @brief The completion function.
 	 */
 	URLSessionTaskCompletion completion;
 
 	/**
+	 * @brief User data.
+	 */
+	ident data;
+
+	/**
 	 * @brief The error buffer.
 	 */
 	char *error;
+
+	/**
+	 * @brief The progress function.
+	 */
+	URLSessionTaskProgress progress;
 
 	/**
 	 * @brief The request.
