@@ -37,16 +37,16 @@ void completion(URLSessionTask *task, _Bool success) {
 	$(condition, signal);
 }
 
-START_TEST(urlSession) {
+START_TEST(asynchronous) {
 
 	URLSession *session = $$(URLSession, sharedInstance);
-	ck_assert(session != NULL);
+	ck_assert_ptr_nonnull(session);
 
 	URL *url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/Objectively");
-	ck_assert(url != NULL);
+	ck_assert_ptr_nonnull(url);
 
 	URLSessionDataTask *dataTask = $(session, dataTaskWithURL, url, completion);
-	ck_assert(dataTask != NULL);
+	ck_assert_ptr_nonnull(dataTask);
 
 	condition = $(alloc(Condition), init);
 
@@ -54,20 +54,25 @@ START_TEST(urlSession) {
 
 	$(condition, wait);
 
+	ck_assert_int_eq(200, dataTask->urlSessionTask.response->httpStatusCode);
+	ck_assert_ptr_nonnull(dataTask->data);
+
 	release(dataTask);
 	release(url);
 
 	url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/Objectively/raw/master/README.md");
-	ck_assert(url != NULL);
+	ck_assert_ptr_nonnull(url);
 
 	URLSessionDownloadTask *downloadTask = $(session, downloadTaskWithURL, url, completion);
 
 	downloadTask->file = fopen("/tmp/README.md", "w");
-	ck_assert(downloadTask->file != NULL);
+	ck_assert_ptr_nonnull(downloadTask->file);
 
 	$((URLSessionTask *) downloadTask, resume);
 
 	$(condition, wait);
+
+	ck_assert_int_eq(200, downloadTask->urlSessionTask.response->httpStatusCode);
 
 	fclose(downloadTask->file);
 
@@ -78,10 +83,50 @@ START_TEST(urlSession) {
 
 } END_TEST
 
+START_TEST(synchronous) {
+
+	URLSession *session = $$(URLSession, sharedInstance);
+	ck_assert_ptr_nonnull(session);
+
+	URL *url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/Objectively");
+	ck_assert_ptr_nonnull(url);
+
+	URLSessionDataTask *dataTask = $(session, dataTaskWithURL, url, NULL);
+	ck_assert_ptr_nonnull(dataTask);
+
+	$((URLSessionTask *) dataTask, execute);
+
+	ck_assert_int_eq(200, dataTask->urlSessionTask.response->httpStatusCode);
+	ck_assert_ptr_nonnull(dataTask->data);
+
+	release(dataTask);
+	release(url);
+
+	url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/Objectively/raw/master/README.md");
+	ck_assert_ptr_nonnull(url);
+
+	URLSessionDownloadTask *downloadTask = $(session, downloadTaskWithURL, url, NULL);
+	ck_assert_ptr_nonnull(downloadTask);
+
+	downloadTask->file = fopen("/tmp/README.md", "w");
+	ck_assert_ptr_nonnull(downloadTask->file);
+
+	$((URLSessionTask *) downloadTask, execute);
+
+	ck_assert_int_eq(200, downloadTask->urlSessionTask.response->httpStatusCode);
+
+	fclose(downloadTask->file);
+
+	release(downloadTask);
+	release(url);
+
+} END_TEST
+
 int main(int argc, char **argv) {
 
 	TCase *tcase = tcase_create("URLSession");
-	tcase_add_test(tcase, urlSession);
+	tcase_add_test(tcase, asynchronous);
+	tcase_add_test(tcase, synchronous);
 
 	Suite *suite = suite_create("URLSession");
 	suite_add_tcase(suite, tcase);

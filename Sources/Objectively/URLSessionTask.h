@@ -173,6 +173,15 @@ struct URLSessionTaskInterface {
 	void (*cancel)(URLSessionTask *self);
 
 	/**
+	 * @fn void URLSessionTask::execute(URLSessionTask *self)
+	 * @brief Executes this task synchronously, on the calling thread.
+	 * @param self The URLSessionTask.
+	 * @memberof URLSessionTask
+	 * @remarks Do not mix calls to execute with calls to resume.
+	 */
+	void (*execute)(URLSessionTask *self);
+
+	/**
 	 * @fn URLSessionTask *URLSessionTask::initWithRequestInSession(URLSessionTask *self, struct URLRequest *request, struct URLSession *session, URLSessionTaskCompletion completion)
 	 * @brief Initializes this task with the given URLRequest.
 	 * @param self The URLSessionTask.

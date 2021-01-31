@@ -30,7 +30,7 @@
 
 /**
  * @defgroup URLSession URL Loading
- * @brief Asynchronous loading of resources via URLs.
+ * @brief Synchronous and asynchronous loading of resources via URLs.
  */
 
 typedef struct URLSession URLSession;
@@ -69,7 +69,6 @@ struct URLSession {
 	 * @private
 	 */
 	struct {
-
 		/**
 		 * @brief The libcurl handle.
 		 */
@@ -89,7 +88,6 @@ struct URLSession {
 		 * @brief The backing Thread.
 		 */
 		Thread *thread;
-
 	} locals;
 
 	/**

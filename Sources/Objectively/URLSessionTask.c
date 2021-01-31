@@ -64,7 +64,7 @@ static void dealloc(Object *self) {
 #pragma mark - URLSessionTask
 
 /**
- * @fn void URLSessionTask::cancel(URLSessionTask *self)
+ * @fn void URLSessionTask::cancel(URLSessionTask *)
  * @memberof URLSessionTask
  */
 static void cancel(URLSessionTask *self) {
@@ -82,7 +82,24 @@ static void cancel(URLSessionTask *self) {
 }
 
 /**
- * @fn URLSessionTask *URLSessionTask::initWithRequestInSession(URLSessionTask *self, struct URLRequest *request, struct URLSession *session, URLSessionTaskCompletion completion)
+ * @fn void URLSessionTask::execute(URLSessionTask *)
+ * @memberof URLSessionTask
+ */
+static void execute(URLSessionTask *self) {
+
+	$(self, setup);
+
+	curl_easy_perform(self->locals.handle);
+
+	curl_easy_getinfo(self->locals.handle, CURLINFO_RESPONSE_CODE, (long *) &self->response->httpStatusCode);
+
+	self->state = URLSESSIONTASK_COMPLETED;
+
+	$(self, teardown);
+}
+
+/**
+ * @fn URLSessionTask *URLSessionTask::initWithRequestInSession(URLSessionTask *, struct URLRequest *, struct URLSession *, URLSessionTaskCompletion)
  * @memberof URLSessionTask
  */
 static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URLRequest *request,
@@ -111,7 +128,7 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
 }
 
 /**
- * @fn void URLSessionTask::resume(URLSessionTask *self)
+ * @fn void URLSessionTask::resume(URLSessionTask *)
  * @memberof URLSessionTask
  */
 static void resume(URLSessionTask *self) {
@@ -186,7 +203,7 @@ static int progress(ident self, curl_off_t bytesExpectedToReceive, curl_off_t by
 }
 
 /**
- * @fn void URLSessionTask::setup(URLSessionTask *self)
+ * @fn void URLSessionTask::setup(URLSessionTask *)
  * @memberof URLSessionTask
  */
 static void setup(URLSessionTask *self) {
@@ -247,7 +264,7 @@ static void setup(URLSessionTask *self) {
 }
 
 /**
- * @fn void URLSessionTask::suspend(URLSessionTask *self)
+ * @fn void URLSessionTask::suspend(URLSessionTask *)
  * @memberof URLSessionTask
  */
 static void suspend(URLSessionTask *self) {
@@ -263,7 +280,7 @@ static void suspend(URLSessionTask *self) {
 }
 
 /**
- * @fn void URLSessionTask::teardown(URLSessionTask *self)
+ * @fn void URLSessionTask::teardown(URLSessionTask *)
  * @memberof URLSessionTask
  */
 static void teardown(URLSessionTask *self) {
@@ -290,6 +307,7 @@ static void initialize(Class *clazz) {
 	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
 	((URLSessionTaskInterface *) clazz->interface)->cancel = cancel;
+	((URLSessionTaskInterface *) clazz->interface)->execute = execute;
 	((URLSessionTaskInterface *) clazz->interface)->initWithRequestInSession = initWithRequestInSession;
 	((URLSessionTaskInterface *) clazz->interface)->resume = resume;
 	((URLSessionTaskInterface *) clazz->interface)->setup = setup;

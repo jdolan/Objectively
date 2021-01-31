@@ -196,6 +196,11 @@ static ident run(Thread *thread) {
 				synchronized(self->locals.lock, {
 					$(self->locals.tasks, removeObject, task);
 				});
+			} else if (task->state == URLSESSIONTASK_COMPLETED) {
+
+				synchronized(self->locals.lock, {
+					$(self->locals.tasks, removeObject, task);
+				});
 			}
 		}
 
