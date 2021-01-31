@@ -55,7 +55,7 @@ START_TEST(asynchronous) {
 	$(condition, wait);
 
 	ck_assert_int_eq(200, dataTask->urlSessionTask.response->httpStatusCode);
-	ck_assert_ptr_nonnull(dataTask->data);
+	ck_assert(dataTask->data != NULL);
 
 	release(dataTask);
 	release(url);
@@ -66,7 +66,7 @@ START_TEST(asynchronous) {
 	URLSessionDownloadTask *downloadTask = $(session, downloadTaskWithURL, url, completion);
 
 	downloadTask->file = fopen("/tmp/README.md", "w");
-	ck_assert_ptr_nonnull(downloadTask->file);
+	ck_assert(downloadTask->file != NULL);
 
 	$((URLSessionTask *) downloadTask, resume);
 
@@ -97,7 +97,7 @@ START_TEST(synchronous) {
 	$((URLSessionTask *) dataTask, execute);
 
 	ck_assert_int_eq(200, dataTask->urlSessionTask.response->httpStatusCode);
-	ck_assert_ptr_nonnull(dataTask->data);
+	ck_assert(dataTask->data != NULL);
 
 	release(dataTask);
 	release(url);
@@ -109,7 +109,7 @@ START_TEST(synchronous) {
 	ck_assert(downloadTask != NULL);
 
 	downloadTask->file = fopen("/tmp/README.md", "w");
-	ck_assert_ptr_nonnull(downloadTask->file);
+	ck_assert(downloadTask->file != NULL);
 
 	$((URLSessionTask *) downloadTask, execute);
 
