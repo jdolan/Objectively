@@ -40,13 +40,13 @@ void completion(URLSessionTask *task, _Bool success) {
 START_TEST(asynchronous) {
 
 	URLSession *session = $$(URLSession, sharedInstance);
-	ck_assert_ptr_nonnull(session);
+	ck_assert(session != NULL);
 
 	URL *url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/Objectively");
-	ck_assert_ptr_nonnull(url);
+	ck_assert(url != NULL);
 
 	URLSessionDataTask *dataTask = $(session, dataTaskWithURL, url, completion);
-	ck_assert_ptr_nonnull(dataTask);
+	ck_assert(dataTask != NULL);
 
 	condition = $(alloc(Condition), init);
 
@@ -61,7 +61,7 @@ START_TEST(asynchronous) {
 	release(url);
 
 	url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/Objectively/raw/master/README.md");
-	ck_assert_ptr_nonnull(url);
+	ck_assert(url != NULL);
 
 	URLSessionDownloadTask *downloadTask = $(session, downloadTaskWithURL, url, completion);
 
@@ -86,13 +86,13 @@ START_TEST(asynchronous) {
 START_TEST(synchronous) {
 
 	URLSession *session = $$(URLSession, sharedInstance);
-	ck_assert_ptr_nonnull(session);
+	ck_assert(session != NULL);
 
 	URL *url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/Objectively");
-	ck_assert_ptr_nonnull(url);
+	ck_assert(url != NULL);
 
 	URLSessionDataTask *dataTask = $(session, dataTaskWithURL, url, NULL);
-	ck_assert_ptr_nonnull(dataTask);
+	ck_assert(dataTask != NULL);
 
 	$((URLSessionTask *) dataTask, execute);
 
@@ -103,10 +103,10 @@ START_TEST(synchronous) {
 	release(url);
 
 	url = $(alloc(URL), initWithCharacters, "https://github.com/jdolan/Objectively/raw/master/README.md");
-	ck_assert_ptr_nonnull(url);
+	ck_assert(url != NULL);
 
 	URLSessionDownloadTask *downloadTask = $(session, downloadTaskWithURL, url, NULL);
-	ck_assert_ptr_nonnull(downloadTask);
+	ck_assert(downloadTask != NULL);
 
 	downloadTask->file = fopen("/tmp/README.md", "w");
 	ck_assert_ptr_nonnull(downloadTask->file);
