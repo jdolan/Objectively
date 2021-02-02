@@ -57,11 +57,11 @@ struct timezone
 
 typedef struct timeval _timeval;
 
-OBJECTIVELY_EXPORT int gettimeofday(_timeval *tv, struct timezone *tz);
+OBJECTIVELY_EXPORT int gettimeofday(struct timeval *tv, struct timezone *tz);
 
 // STRING STUFF
-OBJECTIVELY_EXPORT int vasprintf(char ** __restrict ret, const char * __restrict format, va_list ap);
-OBJECTIVELY_EXPORT char *asprintf(char ** __restrict ret, char * __restrict format, ...);
+OBJECTIVELY_EXPORT int asprintf(char **str, const char *fmt, ...);
+OBJECTIVELY_EXPORT int vasprintf(char **str, const char *fmt, va_list args);
 
 #define towupper_l _towupper_l
 #define towlower_l _towlower_l

@@ -60,7 +60,7 @@ int gettimeofday(struct timeval *tv, struct timezone *tz)
 		/*converting file time to unix epoch*/
 		tmpres /= 10;  /*convert into microseconds*/
 		tmpres -= DELTA_EPOCH_IN_MICROSECS;
-		tv->tv_sec = (int32_t)(tmpres * 0.000001);
+		tv->tv_sec = (int32_t)((double)tmpres * 0.000001);
 		tv->tv_usec = (tmpres % 1000000);
 	}
 
@@ -84,63 +84,53 @@ int gettimeofday(struct timeval *tv, struct timezone *tz)
 
 #pragma region asprintf
 
-int vasprintf(char ** __restrict ret, const char * __restrict format, va_list ap)
+int vasprintf(char **str, const char *fmt, va_list args)
 {
-	int len;
+  int size = 0;
+  va_list tmpa;
 
-	/* Get Length */
-	len = _vscprintf(format, ap);
+  // copy
+  va_copy(tmpa, args);
 
-	if (len < 0)
-		return -1;
+  // apply variadic arguments to
+  // sprintf with format to get size
+  size = vsnprintf(NULL, 0, fmt, tmpa);
 
-	/* +1 for \0 terminator. */
-	*ret = malloc(len + 1);
+  // toss args
+  va_end(tmpa);
 
-	/* Check malloc fail*/
-	if (!*ret)
-		return -1;
+  // return -1 to be compliant if
+  // size is less than 0
+  if (size < 0) { return -1; }
 
-	/* Write String */
-	_vsnprintf(*ret, len + 1, format, ap);
+  // alloc with size plus 1 for `\0'
+  *str = (char *) malloc(size + 1);
 
-	/* Terminate explicitly */
-	(*ret)[len] = '\0';
+  // return -1 to be compliant
+  // if pointer is `NULL'
+  if (NULL == *str) { return -1; }
 
-	return len;
+  // format string with original
+  // variadic arguments and set new size
+  size = vsprintf(*str, fmt, args);
+  return size;
 }
 
-char *asprintf(char ** __restrict ret, char * __restrict format, ...)
+int asprintf(char **str, const char *fmt, ...)
 {
-	va_list ap;
-	int len;
+  int size = 0;
+  va_list args;
 
-	if (!format)
-		return NULL;
+  // init variadic argumens
+  va_start(args, fmt);
 
-	va_start(ap, format);
+  // format and get size
+  size = vasprintf(str, fmt, args);
 
-	/* Get Length */
-	len = _vscprintf(format, ap);
+  // toss args
+  va_end(args);
 
-	if (len < 0)
-		return NULL;
-
-	/* +1 for \0 terminator. */
-	*ret = malloc(len + 1);
-
-	/* Check malloc fail*/
-	if (!*ret)
-		return NULL;
-
-	/* Write String */
-	_vsnprintf(*ret, len + 1, format, ap);
-
-	/* Terminate explicitly */
-	(*ret)[len] = '\0';
-
-	va_end(ap);
-	return *ret;
+  return size;
 }
 
 #pragma endregion asprintf

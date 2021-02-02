@@ -180,6 +180,9 @@
     <ClInclude Include="libs\dlfcn\dlfcn.h">
       <Filter>Sources\libs\dlfcn</Filter>
     </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\URLResponse.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\Windowly.c">
@@ -317,8 +320,8 @@
     <ClCompile Include="Sources\gnu\regex.c">
       <Filter>Sources\gnu</Filter>
     </ClCompile>
-    <ClCompile Include="libs\dlfcn\dlfcn.c">
-      <Filter>Sources\libs\dlfcn</Filter>
+    <ClCompile Include="..\Sources\Objectively\URLResponse.c">
+      <Filter>Sources\Objectively</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

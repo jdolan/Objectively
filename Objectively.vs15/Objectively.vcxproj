@@ -58,6 +58,7 @@
     <ClInclude Include="..\Sources\Objectively\Types.h" />
     <ClInclude Include="..\Sources\Objectively\URL.h" />
     <ClInclude Include="..\Sources\Objectively\URLRequest.h" />
+    <ClInclude Include="..\Sources\Objectively\URLResponse.h" />
     <ClInclude Include="..\Sources\Objectively\URLSession.h" />
     <ClInclude Include="..\Sources\Objectively\URLSessionConfiguration.h" />
     <ClInclude Include="..\Sources\Objectively\URLSessionDataTask.h" />
@@ -111,6 +112,7 @@
     <ClCompile Include="..\Sources\Objectively\Thread.c" />
     <ClCompile Include="..\Sources\Objectively\URL.c" />
     <ClCompile Include="..\Sources\Objectively\URLRequest.c" />
+    <ClCompile Include="..\Sources\Objectively\URLResponse.c" />
     <ClCompile Include="..\Sources\Objectively\URLSession.c" />
     <ClCompile Include="..\Sources\Objectively\URLSessionConfiguration.c" />
     <ClCompile Include="..\Sources\Objectively\URLSessionDataTask.c" />
@@ -129,8 +131,8 @@
   <Import Project="build_settings.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>
-	<ConfigurationType>DynamicLibrary</ConfigurationType>
-	<CharacterSet>MultiByte</CharacterSet>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
@@ -151,7 +153,7 @@
   <PropertyGroup>
     <OutDir>bin\$(Platform)$(Configuration)\</OutDir>
     <IntDir>tmp\$(ProjectName)\$(Platform)$(Configuration)\</IntDir>
-    <IncludePath>Sources\gnu\;..\Sources\;Sources\;libs\iconv\include\;libs\dlfcn\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
+    <IncludePath>Sources\gnu\;..\Sources\;Sources\;Sources\Objectively\;libs\iconv\include\;libs\dlfcn\;libs\curl\include\;libs\pthread\include\;$(IncludePath)</IncludePath>
     <UseMultiToolTask>true</UseMultiToolTask>
     <LibraryPath>libs\pthread\lib\$(Platform)\;libs\iconv\lib\$(Platform)\;libs\curl\lib\$(Platform)\;libs\dlfcn\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
