@@ -289,6 +289,10 @@ static URLSession *initWithConfiguration(URLSession *self, URLSessionConfigurati
  */
 static void invalidateAndCancel(URLSession *self) {
 
+	if (self->locals.thread->isCancelled) {
+		return;
+	}
+	
 	Array *tasks = $(self, tasks);
 
 	for (size_t i = 0; i < tasks->count; i++) {
