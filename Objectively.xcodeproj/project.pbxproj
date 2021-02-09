@@ -3307,7 +3307,7 @@
 					/usr/local/lib,
 					/opt/local/lib,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				USE_HEADERMAP = NO;
 			};
@@ -3343,7 +3343,7 @@
 					/usr/local/lib,
 					/opt/local/lib,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				USE_HEADERMAP = NO;
 			};
