@@ -302,7 +302,7 @@ static *URLSession sharedInstance(void) {
  * @see Class::destroy(Class *)
  */
 static void destroy(Class *clazz) {
-	release(_sharedInstance);
+	_sharedInstance = release(_sharedInstance);
 }
 
 // ...

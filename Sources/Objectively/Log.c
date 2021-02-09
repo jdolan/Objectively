@@ -275,7 +275,7 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	release(_sharedInstance);
+	_sharedInstance = release(_sharedInstance);
 }
 
 /**

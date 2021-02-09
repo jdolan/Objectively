@@ -292,7 +292,7 @@ static void invalidateAndCancel(URLSession *self) {
 	if (self->locals.thread->isCancelled) {
 		return;
 	}
-	
+
 	Array *tasks = $(self, tasks);
 
 	for (size_t i = 0; i < tasks->count; i++) {
@@ -377,7 +377,7 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	release(_sharedInstance);
+	_sharedInstance = release(_sharedInstance);
 
 	curl_global_cleanup();
 }
