@@ -170,7 +170,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>dlfcn.lib;Wldap32.lib;ws2_32.lib;pthread.lib;iconv.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dlfcn.lib;Wldap32.lib;ws2_32.lib;pthread.lib;iconv.lib;libcurl.lib;Crypt32.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
