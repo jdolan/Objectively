@@ -36,9 +36,11 @@
 typedef struct URLSession URLSession;
 typedef struct URLSessionInterface URLSessionInterface;
 
+#include <Objectively/Condition.h>
 #include <Objectively/Lock.h>
 #include <Objectively/MutableArray.h>
 #include <Objectively/Object.h>
+#include <Objectively/Thread.h>
 #include <Objectively/URLRequest.h>
 #include <Objectively/URLResponse.h>
 #include <Objectively/URLSessionConfiguration.h>
@@ -69,6 +71,11 @@ struct URLSession {
 	 * @private
 	 */
 	struct {
+		/**
+		 * @brief The condition
+		 */
+		Condition *condition;
+
 		/**
 		 * @brief The libcurl handle.
 		 */

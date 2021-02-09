@@ -41,8 +41,9 @@ static void dealloc(Object *self) {
 	$(this, invalidateAndCancel);
 
 	$(this->locals.thread, join, NULL);
-	release(this->locals.thread);
 
+	release(this->locals.condition);
+	release(this->locals.thread);
 	release(this->locals.tasks);
 
 	super(Object, self, dealloc);
@@ -51,28 +52,37 @@ static void dealloc(Object *self) {
 #pragma mark - URLSession
 
 /**
- * @fn URLSessionDataTask *URLSession::dataTaskWithRequest(URLSession *self, URLRequest *request, URLSessionTaskCompletion completion)
- * @memberof URLSession
+ * @brief URLSessionTask factory function.
  */
-static URLSessionDataTask *dataTaskWithRequest(URLSession *self, URLRequest *request,
-		URLSessionTaskCompletion completion) {
+static ident taskWithRequest(URLSession *self, ident task, URLRequest *request, URLSessionTaskCompletion completion) {
 
-	URLSessionTask *task = (URLSessionTask *) alloc(URLSessionDataTask);
-	task = $(task, initWithRequestInSession, request, self, completion);
+	task = $((URLSessionTask *) task, initWithRequestInSession, request, self, completion);
+	if (task) {
 
-	synchronized(self->locals.lock, {
-		$(self->locals.tasks, addObject, task);
-	});
+		synchronized(self->locals.lock, {
+			$(self->locals.tasks, addObject, task);
+		});
 
-	return (URLSessionDataTask *) task;
+		$(self->locals.condition, signal);
+	}
+
+	return task;
 }
 
 /**
- * @fn URLSessionDataTask *URLSession::dataTaskWithURL(URLSession *self, URL *url, URLSessionTaskCompletion completion)
+ * @fn URLSessionDataTask *URLSession::dataTaskWithRequest(URLSession *, URLRequest *, URLSessionTaskCompletion)
  * @memberof URLSession
  */
-static URLSessionDataTask *dataTaskWithURL(URLSession *self, URL *url,
-		URLSessionTaskCompletion completion) {
+static URLSessionDataTask *dataTaskWithRequest(URLSession *self, URLRequest *request, URLSessionTaskCompletion completion) {
+
+	return taskWithRequest(self, alloc(URLSessionDataTask), request, completion);
+}
+
+/**
+ * @fn URLSessionDataTask *URLSession::dataTaskWithURL(URLSession *, URL *, URLSessionTaskCompletion)
+ * @memberof URLSession
+ */
+static URLSessionDataTask *dataTaskWithURL(URLSession *self, URL *url, URLSessionTaskCompletion completion) {
 
 	URLRequest *request = $(alloc(URLRequest), initWithURL, url);
 
@@ -84,28 +94,19 @@ static URLSessionDataTask *dataTaskWithURL(URLSession *self, URL *url,
 }
 
 /**
- * @fn URLSessionDownloadTask *URLSession::downloadTaskWithRequest(URLSession *self, URLRequest *request, URLSessionTaskCompletion completion)
+ * @fn URLSessionDownloadTask *URLSession::downloadTaskWithRequest(URLSession *, URLRequest *, URLSessionTaskCompletion)
  * @memberof URLSession
  */
-static URLSessionDownloadTask *downloadTaskWithRequest(URLSession *self, URLRequest *request,
-		URLSessionTaskCompletion completion) {
+static URLSessionDownloadTask *downloadTaskWithRequest(URLSession *self, URLRequest *request, URLSessionTaskCompletion completion) {
 
-	URLSessionTask *task = (URLSessionTask *) alloc(URLSessionDownloadTask);
-	task = $(task, initWithRequestInSession, request, self, completion);
-
-	synchronized(self->locals.lock, {
-		$(self->locals.tasks, addObject, task);
-	})
-
-	return (URLSessionDownloadTask *) task;
+	return taskWithRequest(self, alloc(URLSessionDownloadTask), request, completion);
 }
 
 /**
- * @fn URLSessionDownloadTask *URLSession::downloadTaskWithURL(URLSession *self, URL *url, URLSessionTaskCompletion completion)
+ * @fn URLSessionDownloadTask *URLSession::downloadTaskWithURL(URLSession *, URL *, URLSessionTaskCompletion)
  * @memberof URLSession
  */
-static URLSessionDownloadTask *downloadTaskWithURL(URLSession *self, URL *url,
-		URLSessionTaskCompletion completion) {
+static URLSessionDownloadTask *downloadTaskWithURL(URLSession *self, URL *url, URLSessionTaskCompletion completion) {
 
 	URLRequest *request = $(alloc(URLRequest), initWithURL, url);
 
@@ -117,7 +118,7 @@ static URLSessionDownloadTask *downloadTaskWithURL(URLSession *self, URL *url,
 }
 
 /**
- * @fn URLSession *URLSession::init(URLSession *self)
+ * @fn URLSession *URLSession::init(URLSession *)
  * @memberof URLSession
  */
 static URLSession *init(URLSession *self) {
@@ -145,9 +146,14 @@ static ident run(Thread *thread) {
 		int ret;
 
 		Array *tasks = $(self, tasks);
+		if (tasks->count == 0) {
 
-		if (tasks->count == 0 && thread->isCancelled) {
-			break;
+			if (thread->isCancelled) {
+				break;
+			}
+
+			$(self->locals.condition, wait);
+			continue;
 		}
 
 		for (size_t i = 0; i < tasks->count; i++) {
@@ -255,7 +261,7 @@ static ident run(Thread *thread) {
 }
 
 /**
- * @fn URLSession *URLSession::initWithConfiguration(URLSession *self, URLSessionConfiguration *configuration)
+ * @fn URLSession *URLSession::initWithConfiguration(URLSession *, URLSessionConfiguration *)
  * @memberof URLSession
  */
 static URLSession *initWithConfiguration(URLSession *self, URLSessionConfiguration *configuration) {
@@ -266,6 +272,7 @@ static URLSession *initWithConfiguration(URLSession *self, URLSessionConfigurati
 	if (self) {
 		self->configuration = retain(configuration);
 
+		self->locals.condition = $(alloc(Condition), init);
 		self->locals.lock = $(alloc(Lock), init);
 		self->locals.tasks = $(alloc(MutableArray), init);
 		self->locals.thread = $(alloc(Thread), initWithFunction, run, self);
@@ -277,7 +284,7 @@ static URLSession *initWithConfiguration(URLSession *self, URLSessionConfigurati
 }
 
 /**
- * @fn void URLSession::invalidateAndCancel(URLSession *self)
+ * @fn void URLSession::invalidateAndCancel(URLSession *)
  * @memberof URLSession
  */
 static void invalidateAndCancel(URLSession *self) {
@@ -293,12 +300,13 @@ static void invalidateAndCancel(URLSession *self) {
 	release(tasks);
 
 	$(self->locals.thread, cancel);
+	$(self->locals.condition, signal);
 }
 
 static URLSession *_sharedInstance;
 
 /**
- * @fn URLSession *URLSession::sharedInstance(void)
+ * @fn URLSession *URLSession::sharedInstance()
  * @memberof URLSession
  */
 static URLSession *sharedInstance(void) {
@@ -313,7 +321,7 @@ static URLSession *sharedInstance(void) {
 }
 
 /**
- * @fn Array *URLSession::tasks(const URLSession *self)
+ * @fn Array *URLSession::tasks(const URLSession *)
  * @memberof URLSession
  */
 static Array *tasks(const URLSession *self) {
@@ -328,20 +336,12 @@ static Array *tasks(const URLSession *self) {
 }
 
 /**
- * @fn URLSessionUploadTask *URLSession::uploadTaskWithRequest(URLSession *self, URLRequest *request, URLSessionTaskCompletion completion)
+ * @fn URLSessionUploadTask *URLSession::uploadTaskWithRequest(URLSession *, URLRequest *, URLSessionTaskCompletion)
  * @memberof URLSession
  */
-static URLSessionUploadTask *uploadTaskWithRequest(URLSession *self, URLRequest *request,
-		URLSessionTaskCompletion completion) {
+static URLSessionUploadTask *uploadTaskWithRequest(URLSession *self, URLRequest *request, URLSessionTaskCompletion completion) {
 
-	URLSessionTask *task = (URLSessionTask *) alloc(URLSessionUploadTask);
-	task = $(task, initWithRequestInSession, request, self, completion);
-
-	synchronized(self->locals.lock, {
-		$(self->locals.tasks, addObject, task);
-	})
-
-	return (URLSessionUploadTask *) task;
+	return taskWithRequest(self, alloc(URLSessionUploadTask), request, completion);
 }
 
 #pragma mark - Class lifecycle
