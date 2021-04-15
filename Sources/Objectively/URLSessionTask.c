@@ -174,6 +174,8 @@ static size_t responseHeader(char *buffer, size_t size, size_t count, void *data
 		char *value = strtrim(delim + 1);
 
 		$(this->response, setValueForHTTPHeaderField, value, field);
+
+		free(value);
 	}
 
 	free(header);
