@@ -381,6 +381,10 @@ static MutableDictionary *mutableCopy(const Dictionary *self) {
  */
 static ident objectForKey(const Dictionary *self, const ident key) {
 
+	if (self->capacity == 0) {
+		return NULL;
+	}
+	
 	const size_t bin = HashForObject(HASH_SEED, key) % self->capacity;
 
 	Array *array = self->elements[bin];

@@ -154,11 +154,13 @@ static Array *allObjects(const Set *self) {
  */
 static _Bool containsObject(const Set *self, const ident obj) {
 
-	const size_t bin = HashForObject(HASH_SEED, obj) % self->capacity;
+	if (self->capacity) {
+		const size_t bin = HashForObject(HASH_SEED, obj) % self->capacity;
 
-	const Array *array = self->elements[bin];
-	if (array) {
-		return $(array, containsObject, obj);
+		const Array *array = self->elements[bin];
+		if (array) {
+			return $(array, containsObject, obj);
+		}
 	}
 
 	return false;

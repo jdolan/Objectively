@@ -172,6 +172,10 @@ static void removeAllObjectsWithEnumerator(MutableDictionary *self, DictionaryEn
  */
 static void removeObjectForKey(MutableDictionary *self, const ident key) {
 
+	if (self->dictionary.capacity == 0) {
+		return;
+	}
+	
 	const size_t bin = HashForObject(HASH_SEED, key) % self->dictionary.capacity;
 
 	MutableArray *array = self->dictionary.elements[bin];
