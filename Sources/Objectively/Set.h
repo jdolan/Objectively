@@ -113,6 +113,16 @@ struct SetInterface {
 	_Bool (*containsObject)(const Set *self, const ident obj);
 
 	/**
+	 * @fn _Bool Set::containsObjectMatching(const Set *self, Predicate predicate, ident data)
+	 * @param self The Set.
+	 * @param predicate The predicate function.
+	 * @param data User data.
+	 * @return `true` if this Set contains an Object matching `predicate`, `false` otherwise.
+	 * @memberof Set
+	 */
+	_Bool (*containsObjectMatching)(const Set *self, Predicate predicate, ident data);
+
+	/**
 	 * @fn void Set::enumerateObjects(const Set *self, SetEnumerator enumerator, ident data)
 	 * @brief Enumerate the elements of this Set with the given function.
 	 * @param self The Set.

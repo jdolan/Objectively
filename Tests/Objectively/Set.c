@@ -58,6 +58,8 @@ START_TEST(set) {
 	ck_assert($(set, containsObject, two));
 	ck_assert($(set, containsObject, three));
 
+	ck_assert($(set, containsObjectMatching, filter, one));
+
 	ck_assert_int_eq(2, one->referenceCount);
 	ck_assert_int_eq(2, two->referenceCount);
 	ck_assert_int_eq(2, three->referenceCount);
@@ -75,6 +77,10 @@ START_TEST(set) {
 
 	ck_assert_int_eq(1, filtered->count);
 	ck_assert($(filtered, containsObject, two));
+
+	ck_assert(!$(filtered, containsObjectMatching, filter, one));
+	ck_assert($(filtered, containsObjectMatching, filter, two));
+	ck_assert(!$(filtered, containsObjectMatching, filter, three));
 
 	Set *mapped = $(set, mappedSet, functor, NULL);
 

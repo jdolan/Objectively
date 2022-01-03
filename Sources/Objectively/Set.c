@@ -165,6 +165,30 @@ static _Bool containsObject(const Set *self, const ident obj) {
 }
 
 /**
+ * @fn _Bool Set::containsObjectMatching(const Set *self, Predicate predicate, ident data)
+ * @memberof Set
+ */
+static _Bool containsObjectMatching(const Set *self, Predicate predicate, ident data) {
+
+	assert(predicate);
+
+	for (size_t i = 0; i < self->capacity; i++) {
+
+		Array *array = self->elements[i];
+		if (array) {
+
+			for (size_t j = 0; j < array->count; j++) {
+				if (predicate($(array, objectAtIndex, j), data)) {
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+/**
  * @fn void Set::enumerateObjects(const Set *self, SetEnumerator enumerator, ident data)
  * @memberof Set
  */
@@ -407,6 +431,7 @@ static void initialize(Class *clazz) {
 
 	((SetInterface *) clazz->interface)->allObjects = allObjects;
 	((SetInterface *) clazz->interface)->containsObject = containsObject;
+	((SetInterface *) clazz->interface)->containsObjectMatching = containsObjectMatching;
 	((SetInterface *) clazz->interface)->enumerateObjects = enumerateObjects;
 	((SetInterface *) clazz->interface)->filteredSet = filteredSet;
 	((SetInterface *) clazz->interface)->initWithArray = initWithArray;
