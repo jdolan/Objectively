@@ -209,15 +209,19 @@ static void replaceCharactersInRange(MutableString *self, const Range range, con
 	assert(range.location >= 0);
 	assert(range.location + range.length <= self->string.length);
 
-	char *remainder = strdup(self->string.chars + range.location + range.length);
+	if (self->capacity == 0) {
+		$(self, appendCharacters, chars);
+	} else {
+		char *remainder = strdup(self->string.chars + range.location + range.length);
 
-	self->string.length = range.location;
-	self->string.chars[range.location + 1] = '\0';
+		self->string.length = range.location;
+		self->string.chars[range.location + 1] = '\0';
 
-	$(self, appendCharacters, chars);
-	$(self, appendCharacters, remainder);
+		$(self, appendCharacters, chars);
+		$(self, appendCharacters, remainder);
 
-	free(remainder);
+		free(remainder);
+	}
 }
 
 /**
