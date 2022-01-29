@@ -29,6 +29,47 @@
 
 #include "MutableArray.h"
 
+#if defined(__APPLE__)
+
+/**
+ * @brief BSD qsort_r.
+ */
+static int _quicksort(void *data, const void *a, const void *b) {
+	return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
+}
+
+void quicksort(ident base, size_t count, size_t size, Comparator comparator, ident data) {
+	qsort_r(base, count, size, comparator, _quicksort);
+}
+
+#elif defined(_WIN32)
+
+/**
+ * @brief WIN32 qsort_s.
+ */
+static int _quicksort(void *data, const void *a, const void *b) {
+	return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
+}
+
+void quicksort(ident base, size_t count, size_t size, Comparator comparator, ident data) {
+	qsort_s(base, count, size, _quicksort, comparator);
+}
+
+#else
+
+/**
+ * @brief GNU qsort_r.
+ */
+static int _quicksort(const void *a, const void *b, void *data) {
+	return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
+}
+
+void quicksort(ident base, size_t count, size_t size, Comparator comparator, ident data) {
+	qsort_r(base, count, size, _quicksort, comparator);
+}
+
+#endif
+
 #define _Class _MutableArray
 
 #define ARRAY_CHUNK_SIZE 64
@@ -266,59 +307,13 @@ static void setObjectAtIndex(MutableArray *self, const ident obj, size_t index) 
 	self->array.elements[index] = obj;
 }
 
-#if defined(__APPLE__)
-
-/**
- * @brief qsort_r comparator.
- */
-static int _sort(void *data, const void *a, const void *b) {
-	return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
-}
-
-/**
- * @fn void MutableArray::sort(MutableArray *self, Comparator comparator)
- *
- * @memberof MutableArray
- */
-static void sort(MutableArray *self, Comparator comparator) {
-	qsort_r(self->array.elements, self->array.count, sizeof(ident), comparator, _sort);
-}
-
-#elif defined(_WIN32)
-
-/**
- * @brief qsort_s comparator.
- */
-static int _sort(void *data, const void *a, const void *b) {
-	return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
-}
-
 /**
  * @fn void MutableArray::sort(MutableArray *self, Comparator comparator)
  * @memberof MutableArray
  */
 static void sort(MutableArray *self, Comparator comparator) {
-	qsort_s(self->array.elements, self->array.count, sizeof(ident), _sort, comparator);
+	quicksort(self->array.elements, self->array.count, sizeof(ident), comparator, NULL);
 }
-
-#else
-
-/**
- * @brief qsort_r comparator.
- */
-static int _sort(const void *a, const void *b, void *data) {
-	return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
-}
-
-/**
- * @fn void MutableArray::sort(MutableArray *self, Comparator comparator)
- * @memberof MutableArray
- */
-static void sort(MutableArray *self, Comparator comparator) {
-	qsort_r(self->array.elements, self->array.count, sizeof(ident), _sort, comparator);
-}
-
-#endif
 
 #pragma mark - Class lifecycle
 
