@@ -211,7 +211,7 @@ static void enumerateObjects(const Set *self, SetEnumerator enumerator, ident da
 }
 
 /**
- * @fn void Set::filteredSet(const Set *self, Predicate predicate, ident data)
+ * @fn Set *Set::filteredSet(const Set *self, Predicate predicate, ident data)
  * @memberof Set
  */
 static Set *filteredSet(const Set *self, Predicate predicate, ident data) {

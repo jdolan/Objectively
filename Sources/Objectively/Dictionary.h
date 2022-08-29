@@ -166,7 +166,7 @@ struct DictionaryInterface {
 	void (*enumerateObjectsAndKeys)(const Dictionary *self, DictionaryEnumerator enumerator, ident data);
 
 	/**
-	 * @fn void Dictionary::filterObjectsAndKeys(const Dictionary *self, DictionaryPredicate predicate, ident data)
+	 * @fn Dictionary *Dictionary::filterObjectsAndKeys(const Dictionary *self, DictionaryPredicate predicate, ident data)
 	 * @brief Creates a new Dictionary with pairs that pass the filter function.
 	 * @param self The Dictionary.
 	 * @param predicate The predicate function.

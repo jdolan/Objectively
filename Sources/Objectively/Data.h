@@ -108,7 +108,7 @@ struct DataInterface {
 	 * @return The new Data, or `NULL` on error.
 	 * @memberof Data
 	 */
-	Data *(*dataWithConstMemory)(ident mem, size_t length);
+	Data *(*dataWithConstMemory)(const ident mem, size_t length);
 
 	/**
 	 * @static

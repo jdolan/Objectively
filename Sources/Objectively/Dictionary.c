@@ -272,7 +272,7 @@ static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator
 }
 
 /**
- * @fn void Dictionary::filterObjectsAndKeys(const Dictionary *self, DictionaryPredicate predicate, ident data)
+ * @fn Dicionary *Dictionary::filterObjectsAndKeys(const Dictionary *self, DictionaryPredicate predicate, ident data)
  * @memberof Dictionary
  */
 static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryPredicate predicate, ident data) {

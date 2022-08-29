@@ -224,7 +224,7 @@ static void enumerateObjects(const Array *self, ArrayEnumerator enumerator, iden
 }
 
 /**
- * @fn void Array::filteredArray(const Array *self, Predicate predicate, ident data)
+ * @fn Array *Array::filteredArray(const Array *self, Predicate predicate, ident data)
  * @memberof Array
  */
 static Array *filteredArray(const Array *self, Predicate predicate, ident data) {
