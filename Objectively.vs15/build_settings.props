@@ -8,7 +8,7 @@
 	</PropertyGroup>
     <ItemDefinitionGroup>
         <ClCompile>
-			<AdditionalOptions>-Wno-documentation-unknown-command -Wno-dollar-in-identifier-extension -Wno-gnu-statement-expression -Wno-language-extension-token -Wno-reserved-id-macro -Wno-undef -Wno-unused-parameter -Wno-gnu-zero-variadic-macro-arguments -Wno-float-conversion -Wno-cast-qual -Wno-sign-conversion -Wno-extra-semi-stmt -Wno-shorten-64-to-32 -Wno-gnu-conditional-omitted-operand -Wno-cast-align -Wno-implicit-int-conversion -Wno-comma -Wno-redundant-parens -Wno-sign-compare -Wno-switch-enum -Wno-implicit-int-conversion -Wno-format-nonliteral -Wno-pointer-arith -Wno-unused-macros -Wno-newline-eof -Wno-unused-function -Wno-vla -Wno-float-equal %(AdditionalOptions)</AdditionalOptions>
+			<AdditionalOptions>-Wno-documentation-unknown-command -Wno-dollar-in-identifier-extension -Wno-gnu-statement-expression -Wno-language-extension-token -Wno-reserved-id-macro -Wno-undef -Wno-unused-parameter -Wno-gnu-zero-variadic-macro-arguments -Wno-float-conversion -Wno-cast-qual -Wno-sign-conversion -Wno-extra-semi-stmt -Wno-shorten-64-to-32 -Wno-gnu-conditional-omitted-operand -Wno-cast-align -Wno-implicit-int-conversion -Wno-comma -Wno-redundant-parens -Wno-sign-compare -Wno-switch-enum -Wno-implicit-int-conversion -Wno-format-nonliteral -Wno-pointer-arith -Wno-unused-macros -Wno-newline-eof -Wno-unused-function -Wno-vla -Wno-float-equal -Wno-reserved-identifier %(AdditionalOptions)</AdditionalOptions>
     	</ClCompile>
     </ItemDefinitionGroup>
   <PropertyGroup Label="Vcpkg">

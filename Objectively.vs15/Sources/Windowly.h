@@ -83,7 +83,7 @@ OBJECTIVELY_EXPORT int vasprintf(char **str, const char *fmt, va_list args);
 #define fileno _fileno
 #define tzset _tzset
 #define alloca _alloca
-#define stat _stat64
+//#define stat _stat64
 #define S_ISREG(m)	(((m) & _S_IFREG) == _S_IFREG)
 #endif
 
