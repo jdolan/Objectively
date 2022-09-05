@@ -224,3 +224,13 @@ struct MutableArrayInterface {
  * @memberof MutableArray
  */
 OBJECTIVELY_EXPORT Class *_MutableArray(void);
+
+/**
+ * @brief A portability wrapper around reentrant qsort.
+ * @param base The base of the array to sort.
+ * @param count The count of elements in the array
+ * @param size The size of each element in the array.
+ * @param comparator The Comparator to sort with.
+ * @param data User data.
+ */
+OBJECTIVELY_EXPORT void quicksort(ident base, size_t count, size_t size, Comparator comparator, ident data);

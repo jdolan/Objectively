@@ -110,6 +110,8 @@ static MutableData *initWithCapacity(MutableData *self, size_t capacity) {
 			self->data.bytes = calloc(capacity, sizeof(uint8_t));
 			assert(self->data.bytes);
 		}
+
+		self->data.destroy = free;
 	}
 
 	return self;

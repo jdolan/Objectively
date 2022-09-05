@@ -160,7 +160,7 @@ struct ArrayInterface {
 	void (*enumerateObjects)(const Array *self, ArrayEnumerator enumerator, ident data);
 
 	/**
-	 * @fn void Array::filteredArray(const Array *self, Predicate predicate, ident data)
+	 * @fn Array *Array::filteredArray(const Array *self, Predicate predicate, ident data)
 	 * @brief Creates a new Array with elements that pass `predicate`.
 	 * @param self The Array.
 	 * @param predicate The predicate function.

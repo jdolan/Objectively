@@ -272,7 +272,7 @@ static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator
 }
 
 /**
- * @fn void Dictionary::filterObjectsAndKeys(const Dictionary *self, DictionaryPredicate predicate, ident data)
+ * @fn Dicionary *Dictionary::filterObjectsAndKeys(const Dictionary *self, DictionaryPredicate predicate, ident data)
  * @memberof Dictionary
  */
 static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryPredicate predicate, ident data) {
@@ -381,6 +381,10 @@ static MutableDictionary *mutableCopy(const Dictionary *self) {
  */
 static ident objectForKey(const Dictionary *self, const ident key) {
 
+	if (self->capacity == 0) {
+		return NULL;
+	}
+	
 	const size_t bin = HashForObject(HASH_SEED, key) % self->capacity;
 
 	Array *array = self->elements[bin];

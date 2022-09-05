@@ -228,6 +228,10 @@ static void removeAllObjects(MutableSet *self) {
  */
 static void removeObject(MutableSet *self, const ident obj) {
 
+	if (self->set.capacity == 0) {
+		return;
+	}
+
 	const size_t bin = HashForObject(HASH_SEED, obj) % self->set.capacity;
 
 	MutableArray *array = self->set.elements[bin];

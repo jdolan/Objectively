@@ -154,11 +154,37 @@ static Array *allObjects(const Set *self) {
  */
 static _Bool containsObject(const Set *self, const ident obj) {
 
-	const size_t bin = HashForObject(HASH_SEED, obj) % self->capacity;
+	if (self->capacity) {
+		const size_t bin = HashForObject(HASH_SEED, obj) % self->capacity;
 
-	const Array *array = self->elements[bin];
-	if (array) {
-		return $(array, containsObject, obj);
+		const Array *array = self->elements[bin];
+		if (array) {
+			return $(array, containsObject, obj);
+		}
+	}
+
+	return false;
+}
+
+/**
+ * @fn _Bool Set::containsObjectMatching(const Set *self, Predicate predicate, ident data)
+ * @memberof Set
+ */
+static _Bool containsObjectMatching(const Set *self, Predicate predicate, ident data) {
+
+	assert(predicate);
+
+	for (size_t i = 0; i < self->capacity; i++) {
+
+		Array *array = self->elements[i];
+		if (array) {
+
+			for (size_t j = 0; j < array->count; j++) {
+				if (predicate($(array, objectAtIndex, j), data)) {
+					return true;
+				}
+			}
+		}
 	}
 
 	return false;
@@ -185,7 +211,7 @@ static void enumerateObjects(const Set *self, SetEnumerator enumerator, ident da
 }
 
 /**
- * @fn void Set::filteredSet(const Set *self, Predicate predicate, ident data)
+ * @fn Set *Set::filteredSet(const Set *self, Predicate predicate, ident data)
  * @memberof Set
  */
 static Set *filteredSet(const Set *self, Predicate predicate, ident data) {
@@ -407,6 +433,7 @@ static void initialize(Class *clazz) {
 
 	((SetInterface *) clazz->interface)->allObjects = allObjects;
 	((SetInterface *) clazz->interface)->containsObject = containsObject;
+	((SetInterface *) clazz->interface)->containsObjectMatching = containsObjectMatching;
 	((SetInterface *) clazz->interface)->enumerateObjects = enumerateObjects;
 	((SetInterface *) clazz->interface)->filteredSet = filteredSet;
 	((SetInterface *) clazz->interface)->initWithArray = initWithArray;
