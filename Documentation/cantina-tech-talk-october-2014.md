@@ -73,7 +73,7 @@ What's next?
 
 Quake
 ===
-![Penumbral Wake - Quetoo](https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xpf1/t31.0-8/861008_617224188323107_1551552667_o.jpg)
+![Gehenna - Quetoo](https://user-images.githubusercontent.com/643118/147579456-f045a7a3-38ed-4a51-88e3-d9ca6e4f132c.jpg)
 
 In a nut shell
 ---
