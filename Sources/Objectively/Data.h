@@ -183,14 +183,14 @@ struct DataInterface {
 	MutableData *(*mutableCopy)(const Data *self);
 
 	/**
-	 * @fn _Bool Data::writeToFile(const Data *self, const char *path)
+	 * @fn bool Data::writeToFile(const Data *self, const char *path)
 	 * @brief Writes this Data to `path`.
 	 * @param self The Data.
 	 * @param path The path of the file to write.
 	 * @return `true` on success, `false` on error.
 	 * @memberof Data
 	 */
-	_Bool (*writeToFile)(const Data *self, const char *path);
+	bool (*writeToFile)(const Data *self, const char *path);
 };
 
 /**

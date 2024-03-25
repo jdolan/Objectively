@@ -76,22 +76,22 @@ struct Thread {
 	/**
 	 * @brief `true` when this Thread has been cancelled, `false` otherwise.
 	 */
-	_Bool isCancelled;
+	bool isCancelled;
 
 	/**
 	 * @brief `true` when this Thread has been detached, `false` otherwise.
 	 */
-	_Bool isDetached;
+	bool isDetached;
 
 	/**
 	 * @brief `true` when this Thread is executing, `false` otherwise.
 	 */
-	_Bool isExecuting;
+	bool isExecuting;
 
 	/**
 	 * @brief `true` when this Thread is finished, `false` otherwise.
 	 */
-	_Bool isFinished;
+	bool isFinished;
 
 	/**
 	 * @brief The backing thread.

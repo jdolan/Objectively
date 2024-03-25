@@ -26,7 +26,7 @@
 #include "Boole.h"
 #include "String.h"
 
-#define _Class _Boole
+#define _Class boole
 
 #pragma mark - Object
 
@@ -87,10 +87,10 @@ static Boole *True(void) {
 }
 
 /**
- * @fn Boole *Boole::valueof(_Bool value)
+ * @fn Boole *Boole::valueof(bool value)
  * @memberof Boole
  */
-static Boole *valueof(_Bool value) {
+static Boole *valueof(bool value) {
 	return value ? $$(Boole, True) : $$(Boole, False);
 }
 
@@ -119,7 +119,7 @@ static void destroy(Class *clazz) {
 }
 
 /**
- * @fn Class *Boole::_Boole(void)
+ * @fn Class *Boole::boole(void)
  * @memberof Boole
  */
 Class *_Boole(void) {

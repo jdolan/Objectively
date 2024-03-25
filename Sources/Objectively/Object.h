@@ -113,24 +113,24 @@ struct ObjectInterface {
 	Object *(*init)(Object *self);
 
 	/**
-	 * @fn _Bool Object::isEqual(const Object *self, const Object *other)
+	 * @fn bool Object::isEqual(const Object *self, const Object *other)
 	 * @brief Tests equality of the other Object.
 	 * @param self The Object.
 	 * @param other The Object to test for equality.
 	 * @return True if other is deemed equal, false otherwise.
 	 * @memberof Object
 	 */
-	_Bool (*isEqual)(const Object *self, const Object *other);
+	bool (*isEqual)(const Object *self, const Object *other);
 
 	/**
-	 * @fn _Bool Object::isKindOfClass(const Object *self, const Class *clazz)
+	 * @fn bool Object::isKindOfClass(const Object *self, const Class *clazz)
 	 * @brief Tests for Class hierarchy membership.
 	 * @param self The Object.
 	 * @param clazz The Class to test for membership.
 	 * @return True if this instance belongs to Class' hierarchy, false otherwise.
 	 * @memberof Object
 	 */
-	_Bool (*isKindOfClass)(const Object *self, const Class *clazz);
+	bool (*isKindOfClass)(const Object *self, const Class *clazz);
 };
 
 /**

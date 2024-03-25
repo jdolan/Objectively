@@ -79,7 +79,7 @@ struct OperationQueue {
 	/**
 	 * @brief When `true`, the queue will not `start` any new Operations.
 	 */
-	_Bool isSuspended;
+	bool isSuspended;
 };
 
 /**

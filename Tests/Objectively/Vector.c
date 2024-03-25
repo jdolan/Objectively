@@ -75,7 +75,7 @@ START_TEST(enumerateElements) {
 
 } END_TEST
 
-static _Bool predicate(const ident obj, ident data) {
+static bool predicate(const ident obj, ident data) {
 	return ((Foo *) obj)->bar == (intptr_t) data;
 }
 

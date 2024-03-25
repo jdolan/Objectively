@@ -94,7 +94,7 @@ static int hash(const Object *self) {
 /**
  * @see Object::isEqual(const Object *, const Object *)
  */
-static _Bool isEqual(const Object *self, const Object *other) {
+static bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
 		return true;
@@ -149,10 +149,10 @@ static Array *allObjects(const Set *self) {
 }
 
 /**
- * @fn _Bool Set::containsObject(const Set *self, const ident obj)
+ * @fn bool Set::containsObject(const Set *self, const ident obj)
  * @memberof Set
  */
-static _Bool containsObject(const Set *self, const ident obj) {
+static bool containsObject(const Set *self, const ident obj) {
 
 	if (self->capacity) {
 		const size_t bin = HashForObject(HASH_SEED, obj) % self->capacity;
@@ -167,10 +167,10 @@ static _Bool containsObject(const Set *self, const ident obj) {
 }
 
 /**
- * @fn _Bool Set::containsObjectMatching(const Set *self, Predicate predicate, ident data)
+ * @fn bool Set::containsObjectMatching(const Set *self, Predicate predicate, ident data)
  * @memberof Set
  */
-static _Bool containsObjectMatching(const Set *self, Predicate predicate, ident data) {
+static bool containsObjectMatching(const Set *self, Predicate predicate, ident data) {
 
 	assert(predicate);
 

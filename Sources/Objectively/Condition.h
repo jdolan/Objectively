@@ -108,7 +108,7 @@ struct ConditionInterface {
 	void (*wait)(Condition *self);
 
 	/**
-	 * @fn _Bool Condition::waitUntilDate(Condition *self, const Date *date)
+	 * @fn bool Condition::waitUntilDate(Condition *self, const Date *date)
 	 * @brief Waits until the specified Date for this Condition to be signaled.
 	 * @param self The Condition.
 	 * @param date The Date until which to wait.
@@ -116,7 +116,7 @@ struct ConditionInterface {
 	 * @remarks This method should only be called when the Condition is locked.
 	 * @memberof Condition
 	 */
-	_Bool (*waitUntilDate)(Condition *self, const Date *date);
+	bool (*waitUntilDate)(Condition *self, const Date *date);
 };
 
 /**

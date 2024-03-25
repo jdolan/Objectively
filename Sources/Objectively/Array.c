@@ -93,7 +93,7 @@ static int hash(const Object *self) {
 /**
  * @see Object::isEqual(const Object *, const Object *)
  */
-static _Bool isEqual(const Object *self, const Object *other) {
+static bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
 		return true;
@@ -202,10 +202,10 @@ static String *componentsJoinedByString(const Array *self, const String *string)
 }
 
 /**
- * @fn _Bool Array::containsObject(const Array *self, const ident obj)
+ * @fn bool Array::containsObject(const Array *self, const ident obj)
  * @memberof Array
  */
-static _Bool containsObject(const Array *self, const ident obj) {
+static bool containsObject(const Array *self, const ident obj) {
 
 	return $(self, indexOfObject, obj) != -1;
 }

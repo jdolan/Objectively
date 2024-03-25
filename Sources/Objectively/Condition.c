@@ -100,10 +100,10 @@ static void _wait(Condition *self) {
 }
 
 /**
- * @fn _Bool Condition::waitUntilDate(Condition *self, const Date *date)
+ * @fn bool Condition::waitUntilDate(Condition *self, const Date *date)
  * @memberof Condition
  */
-static _Bool waitUntilDate(Condition *self, const Date *date) {
+static bool waitUntilDate(Condition *self, const Date *date) {
 
 	Lock *lock = (Lock *) self;
 

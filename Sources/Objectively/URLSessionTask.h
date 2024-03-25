@@ -45,7 +45,7 @@ typedef void (*URLSessionTaskProgress)(URLSessionTask *task);
  * @param task The URLSessionTask.
  * @param success `true` if the task completed successfully, `false` otherwise.
  */
-typedef void (*URLSessionTaskCompletion)(URLSessionTask *task, _Bool success);
+typedef void (*URLSessionTaskCompletion)(URLSessionTask *task, bool success);
 
 /**
  * @brief The various states a URLSessionTask may be in.

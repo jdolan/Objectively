@@ -50,7 +50,7 @@ typedef void (*DictionaryEnumerator)(const Dictionary *dictionary, ident obj, id
  * @param data User data.
  * @return True if the pair passes the filter, false otherwise.
  */
-typedef _Bool (*DictionaryPredicate)(ident obj, ident key, ident data);
+typedef bool (*DictionaryPredicate)(ident obj, ident key, ident data);
 
 /**
  * @brief Immutable key-value stores.
@@ -117,22 +117,22 @@ struct DictionaryInterface {
 	Array *(*allObjects)(const Dictionary *self);
 
 	/**
-	 * @fn _Bool Dictionary::containsKey(const Dictionary *self, const ident key)
+	 * @fn bool Dictionary::containsKey(const Dictionary *self, const ident key)
 	 * @param self The Dictionary.
 	 * @param key The key to test.
 	 * @return True if this Dictionary contains the specified key, false otherwise.
 	 * @memberof Dictionary
 	 */
-	_Bool (*containsKey)(const Dictionary *self, const ident key);
+	bool (*containsKey)(const Dictionary *self, const ident key);
 
 	/**
-	 * @fn _Bool Dictionary::containsKeyPath(const Dictionary *self, const char *path)
+	 * @fn bool Dictionary::containsKeyPath(const Dictionary *self, const char *path)
 	 * @param self The Dictionary.
 	 * @param path The key path to test.
 	 * @return True if this Dictionary contains the specified key path, false otherwise.
 	 * @memberof Dictionary
 	 */
-	_Bool (*containsKeyPath)(const Dictionary *self, const char *path);
+	bool (*containsKeyPath)(const Dictionary *self, const char *path);
 
 	/**
 	 * @static

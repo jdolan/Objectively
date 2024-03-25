@@ -68,12 +68,12 @@ struct NumberInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @fn _Bool Number::boolValue(const Number *self)
+	 * @fn bool Number::boolValue(const Number *self)
 	 * @param self The Number.
-	 * @return This Number's _Bool value.
+	 * @return This Number's bool value.
 	 * @memberof Number
 	 */
-	_Bool (*boolValue)(const Number *self);
+	bool (*boolValue)(const Number *self);
 
 	/**
 	 * @fn char Number::charValue(const Number *self)

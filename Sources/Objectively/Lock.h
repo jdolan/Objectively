@@ -87,13 +87,13 @@ struct LockInterface {
 	void (*lock)(Lock *self);
 
 	/**
-	 * @fn _Bool Lock::tryLock(Lock *self)
+	 * @fn bool Lock::tryLock(Lock *self)
 	 * @brief Attempt to acquire this lock immediately.
 	 * @param self The Lock.
 	 * @return `true` if the Lock was acquired, `false` otherwise.
 	 * @memberof Lock
 	 */
-	_Bool (*tryLock)(Lock *self);
+	bool (*tryLock)(Lock *self);
 
 	/**
 	 * @fn void Lock::unlock(Lock *self)
