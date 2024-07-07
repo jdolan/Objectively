@@ -85,7 +85,7 @@ START_TEST(cond)
 		condition = $(alloc(Condition), init);
 		ck_assert(condition != NULL);
 
-		const Time time = { .tv_usec = MSEC_PER_SEC * 0.5 };
+		const Time time = { .tv_usec = USEC_PER_SEC * 0.5 };
 		Date *date = $$(Date, dateWithTimeSinceNow, &time);
 		ck_assert(date != NULL);
 
