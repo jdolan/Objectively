@@ -154,10 +154,15 @@ OBJECTIVELY_EXPORT ident retain(ident obj);
 OBJECTIVELY_EXPORT size_t _pageSize;
 
 /**
+ * @brief The header value identifying Objectively types.
+ */
+#define OBJECTIVELY_MAGIC 0xdeadbeef
+
+/**
  * @brief Test if the given pointer is an Object.
  */
 #define isobject(obj) \
-	(obj && *((int *) obj) == OBJECTIVELY_MAGIC)
+	(obj && *((unsigned int *) obj) == OBJECTIVELY_MAGIC)
 
 /**
  * @brief Test if the given pointer is an instance of the specified type.
