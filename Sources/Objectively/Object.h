@@ -31,6 +31,8 @@
  * @brief Object is the _root Class_ of The Objectively Class hierarchy.
  */
 
+#define OBJECTIVELY_MAGIC 0xdeadbeef
+
 /**
  * @defgroup Core Core
  * @brief Objectively core.
@@ -44,6 +46,11 @@ typedef struct ObjectInterface ObjectInterface;
  * @ingroup Core
  */
 struct Object {
+
+	/**
+	 * @brief A header to allow introspection of Object types.
+	 */
+	int magic;
 
 	/**
 	 * @brief Every instance of Object begins with a pointer to its Class.

@@ -154,6 +154,18 @@ OBJECTIVELY_EXPORT ident retain(ident obj);
 OBJECTIVELY_EXPORT size_t _pageSize;
 
 /**
+ * @brief Test if the given pointer is an Object.
+ */
+#define isobject(obj) \
+	(obj && *((int *) obj) == OBJECTIVELY_MAGIC)
+
+/**
+ * @brief Test if the given pointer is an instance of the specified type.
+ */
+#define instanceof(type, obj) \
+	(isobject(obj) && $((Object *) obj, isKindOfClass, _##type()))
+
+/**
  * @brief Allocate and initialize and instance of `type`.
  */
 #define alloc(type) \
