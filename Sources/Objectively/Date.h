@@ -47,12 +47,16 @@
 /**
  * @brief Microseconds per second.
  */
-#define MSEC_PER_SEC 1000000
+#ifndef USEC_PER_SEC
+ #define USEC_PER_SEC 1000000
+#endif
 
 /**
  * @brief Seconds per day.
  */
-#define SEC_PER_DAY (60 * 60 * 24)
+#ifndef SEC_PER_DAY
+ #define SEC_PER_DAY (60 * 60 * 24)
+#endif
 
 /**
  * @brief Time (seconds and microseconds).

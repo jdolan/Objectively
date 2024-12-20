@@ -81,7 +81,7 @@ static int hash(const Object *self) {
 /**
  * @see Object::isEqual(const Object *, const Object *)
  */
-static _Bool isEqual(const Object *self, const Object *other) {
+static bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
 		return true;
@@ -226,10 +226,10 @@ static MutableData *mutableCopy(const Data *self) {
 }
 
 /**
- * @fn _Bool Data::writeToFile(const Data *self, const char *path)
+ * @fn bool Data::writeToFile(const Data *self, const char *path)
  * @memberof Data
  */
-static _Bool writeToFile(const Data *self, const char *path) {
+static bool writeToFile(const Data *self, const char *path) {
 
 	assert(path);
 

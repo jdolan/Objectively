@@ -127,7 +127,7 @@ static int hash(const Object *self) {
 /**
  * @see Object::isEqual(const Object *, const Object *)
  */
-static _Bool isEqual(const Object *self, const Object *other) {
+static bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
 		return true;
@@ -149,10 +149,10 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - IndexSet
 
 /**
- * @fn _Bool IndexSet::containsIndex(const IndexSet *self, size_t index)
+ * @fn bool IndexSet::containsIndex(const IndexSet *self, size_t index)
  * @memberof IndexSet
  */
-static _Bool containsIndex(const IndexSet *self, size_t index) {
+static bool containsIndex(const IndexSet *self, size_t index) {
 
 	for (size_t i = 0; i < self->count; i++) {
 		if (self->indexes[i] == index) {

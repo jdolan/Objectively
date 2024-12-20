@@ -86,19 +86,19 @@ static Object *init(Object *self) {
 }
 
 /**
- * @fn _Bool Object::isEqual(const Object *self, const Object *other)
+ * @fn bool Object::isEqual(const Object *self, const Object *other)
  * @memberof Object
  */
-static _Bool isEqual(const Object *self, const Object *other) {
+static bool isEqual(const Object *self, const Object *other) {
 
 	return self == other;
 }
 
 /**
- * @fn _Bool Object::isKindOfClass(const Object *self, const Class *clazz)
+ * @fn bool Object::isKindOfClass(const Object *self, const Class *clazz)
  * @memberof Object
  */
-static _Bool isKindOfClass(const Object *self, const Class *clazz) {
+static bool isKindOfClass(const Object *self, const Class *clazz) {
 
 	assert(clazz);
 	

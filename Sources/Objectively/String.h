@@ -144,24 +144,24 @@ struct StringInterface {
 	Data *(*getData)(const String *self, StringEncoding encoding);
 
 	/**
-	 * @fn _Bool String::hasPrefix(const String *self, const String *prefix)
+	 * @fn bool String::hasPrefix(const String *self, const String *prefix)
 	 * @brief Checks this String for the given prefix.
 	 * @param self The String.
 	 * @param prefix The Prefix to check.
 	 * @return True if this String starts with prefix, false otherwise.
 	 * @memberof String
 	 */
-	_Bool (*hasPrefix)(const String *self, const String *prefix);
+	bool (*hasPrefix)(const String *self, const String *prefix);
 
 	/**
-	 * @fn _Bool String::hasSuffix(const String *self, const String *suffix)
+	 * @fn bool String::hasSuffix(const String *self, const String *suffix)
 	 * @brief Checks this String for the given suffix.
 	 * @param self The String.
 	 * @param suffix The suffix to check.
 	 * @return True if this String ends with suffix, false otherwise.
 	 * @memberof String
 	 */
-	_Bool (*hasSuffix)(const String *self, const String *suffix);
+	bool (*hasSuffix)(const String *self, const String *suffix);
 
 	/**
 	 * @fn String *String::initWithBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding)
@@ -373,7 +373,7 @@ struct StringInterface {
 	String *(*uppercaseString)(const String *self);
 
 	/**
-	 * @fn _Bool String::writeToFile(const String *self, const char *path, StringEncoding encoding)
+	 * @fn bool String::writeToFile(const String *self, const char *path, StringEncoding encoding)
 	 * @brief Writes this String to `path`.
 	 * @param self The String.
 	 * @param path The path of the file to write.
@@ -381,7 +381,7 @@ struct StringInterface {
 	 * @return `true` on success, `false` on error.
 	 * @memberof String
 	 */
-	_Bool (*writeToFile)(const String *self, const char *path, StringEncoding encoding);
+	bool (*writeToFile)(const String *self, const char *path, StringEncoding encoding);
 };
 
 /**

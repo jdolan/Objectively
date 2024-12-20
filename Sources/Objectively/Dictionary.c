@@ -118,7 +118,7 @@ static int hash(const Object *self) {
 /**
  * @see Object::isEqual(const Object *, const Object *)
  */
-static _Bool isEqual(const Object *self, const Object *other) {
+static bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
 		return true;
@@ -196,18 +196,18 @@ static Array *allObjects(const Dictionary *self) {
 }
 
 /**
- * @fn _Bool Dictionary::containsKey(const Dictionary *self, const ident key)
+ * @fn bool Dictionary::containsKey(const Dictionary *self, const ident key)
  * @memberof Dictionary
  */
-static _Bool containsKey(const Dictionary *self, const ident key) {
+static bool containsKey(const Dictionary *self, const ident key) {
 	return $(self, objectForKey, key) != NULL;
 }
 
 /**
- * @fn _Bool Dictionary::containsKeyPath(const Dictionary *self, const char *path)
+ * @fn bool Dictionary::containsKeyPath(const Dictionary *self, const char *path)
  * @memberof Dictionary
  */
-static _Bool containsKeyPath(const Dictionary *self, const char *path) {
+static bool containsKeyPath(const Dictionary *self, const char *path) {
 	return $(self, objectForKeyPath, path) != NULL;
 }
 

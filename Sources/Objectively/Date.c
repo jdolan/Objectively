@@ -48,7 +48,7 @@ static int hash(const Object *self) {
 /**
  * @see Object::isEqual(const Object *, const Object *)
  */
-static _Bool isEqual(const Object *self, const Object *other) {
+static bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
 		return true;
@@ -111,12 +111,12 @@ static Date *dateWithTimeSinceNow(const Time *interval) {
 		if (interval) {
 			date->time.tv_sec += interval->tv_sec;
 			date->time.tv_usec += interval->tv_usec;
-			if (date->time.tv_usec >= MSEC_PER_SEC) {
+			if (date->time.tv_usec >= USEC_PER_SEC) {
 				date->time.tv_sec++;
-				date->time.tv_usec -= MSEC_PER_SEC;
+				date->time.tv_usec -= USEC_PER_SEC;
 			} else if (date->time.tv_usec < 0) {
 				date->time.tv_sec--;
-				date->time.tv_usec += MSEC_PER_SEC;
+				date->time.tv_usec += USEC_PER_SEC;
 			}
 		}
 	}
@@ -189,7 +189,7 @@ static Time timeSinceTime(const Date *self, const Time *time) {
 
 	if (delta.tv_usec < 0) {
 		delta.tv_sec--;
-		delta.tv_usec += MSEC_PER_SEC;
+		delta.tv_usec += USEC_PER_SEC;
 	}
 
 	return delta;

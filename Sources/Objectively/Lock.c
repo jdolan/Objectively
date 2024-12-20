@@ -85,10 +85,10 @@ static void lock(Lock *self) {
 }
 
 /**
- * @fn _Bool Lock::tryLock(Lock *self)
+ * @fn bool Lock::tryLock(Lock *self)
  * @memberof Lock
  */
-static _Bool tryLock(Lock *self) {
+static bool tryLock(Lock *self) {
 
 	int err = pthread_mutex_trylock(self->lock);
 	assert(err == 0 || err == EBUSY);

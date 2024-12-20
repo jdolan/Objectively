@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -2429,7 +2429,7 @@
 		CE76D7F31C481B530096DD31 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1240;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					CE4A532F1F40E0A600927421 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -2498,6 +2498,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		CE12DAC51C5E79ED00F6B689 /* Install Xcode Templates */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -3291,7 +3292,6 @@
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = NO;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -3301,13 +3301,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/Sources",
 					/usr/local/include,
-					/opt/local/include,
 				);
-				LIBRARY_SEARCH_PATHS = (
-					/usr/local/lib,
-					/opt/local/lib,
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				ONLY_ACTIVE_ARCH = YES;
 				USE_HEADERMAP = NO;
 			};
@@ -3328,7 +3324,6 @@
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = NO;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -3337,13 +3332,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/Sources",
 					/usr/local/include,
-					/opt/local/include,
 				);
-				LIBRARY_SEARCH_PATHS = (
-					/usr/local/lib,
-					/opt/local/lib,
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				ONLY_ACTIVE_ARCH = YES;
 				USE_HEADERMAP = NO;
 			};

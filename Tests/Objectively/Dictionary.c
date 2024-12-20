@@ -29,7 +29,7 @@ static void enumerator(const Dictionary *dictionary, ident obj, ident key, ident
 	(* (int *) data)++;
 }
 
-static _Bool predicate(ident obj, ident key, ident data) {
+static bool predicate(ident obj, ident key, ident data) {
 	return strcmp("two", ((String *) key)->chars) == 0;
 }
 

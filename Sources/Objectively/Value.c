@@ -61,7 +61,7 @@ static int hash(const Object *self) {
 /**
  * @see Object::isEqual(const Object *, const Object *)
  */
-static _Bool isEqual(const Object *self, const Object *other) {
+static bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
 		return true;

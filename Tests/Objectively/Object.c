@@ -40,6 +40,9 @@ START_TEST(object) {
 	ck_assert($(object, isEqual, object));
 	ck_assert($(object, isKindOfClass, classof(object)));
 
+	ck_assert(instanceof(Object, object));
+	ck_assert(instanceof(Object, NULL) == false);
+
 	Object *copy = $(object, copy);
 
 	ck_assert(copy != NULL);

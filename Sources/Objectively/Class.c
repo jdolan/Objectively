@@ -132,6 +132,7 @@ ident _alloc(Class *clazz) {
 
 	Object *object = (Object *) obj;
 
+	object->magic = OBJECTIVELY_MAGIC;
 	object->clazz = clazz;
 	object->referenceCount = 1;
 

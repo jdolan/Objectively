@@ -89,7 +89,7 @@ static int hash(const Object *self) {
 /**
  * @see Object::isEqual(const Object *, const Object *)
  */
-static _Bool isEqual(const Object *self, const Object *other) {
+static bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
 		return true;
@@ -245,10 +245,10 @@ static Data *getData(const String *self, StringEncoding encoding) {
 }
 
 /**
- * @fn _Bool String::hasPrefix(const String *self, const String *prefix)
+ * @fn bool String::hasPrefix(const String *self, const String *prefix)
  * @memberof String
  */
-static _Bool hasPrefix(const String *self, const String *prefix) {
+static bool hasPrefix(const String *self, const String *prefix) {
 
 	if (prefix->length > self->length) {
 		return false;
@@ -259,10 +259,10 @@ static _Bool hasPrefix(const String *self, const String *prefix) {
 }
 
 /**
- * @fn _Bool String::hasSuffix(const String *self, const String *suffix)
+ * @fn bool String::hasSuffix(const String *self, const String *suffix)
  * @memberof String
  */
-static _Bool hasSuffix(const String *self, const String *suffix) {
+static bool hasSuffix(const String *self, const String *suffix) {
 
 	if (suffix->length > self->length) {
 		return false;
@@ -591,15 +591,15 @@ static String *uppercaseString(const String *self) {
 }
 
 /**
- * @fn _Bool String::writeToFile(const String *self, const char *path, StringEncoding encoding)
+ * @fn bool String::writeToFile(const String *self, const char *path, StringEncoding encoding)
  * @memberof String
  */
-static _Bool writeToFile(const String *self, const char *path, StringEncoding encoding) {
+static bool writeToFile(const String *self, const char *path, StringEncoding encoding) {
 
 	Data *data = $(self, getData, encoding);
 	assert(data);
 
-	const _Bool success = $(data, writeToFile, path);
+	const bool success = $(data, writeToFile, path);
 
 	release(data);
 	return success;

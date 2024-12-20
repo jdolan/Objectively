@@ -52,9 +52,9 @@ struct Boole {
 	BooleInterface *interface;
 
 	/**
-	 * @brief The backing _Bool.
+	 * @brief The backing bool.
 	 */
-	_Bool value;
+	bool value;
 };
 
 /**
@@ -85,16 +85,16 @@ struct BooleInterface {
 
 	/**
 	 * @static
-	 * @fn Boole *Boole::valueof(_Bool value)
+	 * @fn Boole *Boole::valueof(bool value)
 	 * @param value The boolean.
 	 * @return The Boole representation of `value`.
 	 * @memberof Boole
 	 */
-	Boole *(*valueof)(_Bool value);
+	Boole *(*valueof)(bool value);
 };
 
 /**
- * @fn Class *Boole::_Boole(void)
+ * @fn Class *Boole::boole(void)
  * @brief The Boole archetype.
  * @return The Boole Class.
  * @memberof Boole

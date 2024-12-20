@@ -32,7 +32,7 @@ static Condition *condition;
 
 static ident increment(Thread *self) {
 
-	_Bool stop = false;
+	bool stop = false;
 
 	while (!stop) {
 
@@ -64,7 +64,7 @@ START_TEST(thread) {
 
 	ident ret;
 	$(thread, join, &ret);
-	ck_assert_int_eq(true, (_Bool ) ret);
+	ck_assert_int_eq(true, (bool ) ret);
 
 	release(thread);
 	release(condition);
@@ -85,7 +85,7 @@ START_TEST(cond)
 		condition = $(alloc(Condition), init);
 		ck_assert(condition != NULL);
 
-		const Time time = { .tv_usec = MSEC_PER_SEC * 0.5 };
+		const Time time = { .tv_usec = USEC_PER_SEC * 0.5 };
 		Date *date = $$(Date, dateWithTimeSinceNow, &time);
 		ck_assert(date != NULL);
 

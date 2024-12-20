@@ -141,13 +141,13 @@ struct ArrayInterface {
 	String *(*componentsJoinedByString)(const Array *self, const String *string);
 
 	/**
-	 * @fn _Bool Array::containsObject(const Array *self, const ident obj)
+	 * @fn bool Array::containsObject(const Array *self, const ident obj)
 	 * @param self The Array.
 	 * @param obj An Object.
 	 * @return `true` if this Array contains the given Object, `false` otherwise.
 	 * @memberof Array
 	 */
-	_Bool (*containsObject)(const Array *self, const ident obj);
+	bool (*containsObject)(const Array *self, const ident obj);
 
 	/**
 	 * @fn void Array::enumerateObjects(const Array *self, ArrayEnumerator enumerator, ident data)

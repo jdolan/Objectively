@@ -96,7 +96,7 @@ struct RegexpInterface {
 	Regexp *(*initWithPattern)(Regexp *self, const char *pattern, int options);
 
 	/**
-	 * @fn _Bool Regexp::matchesCharacters(const Regexp *self, const char *chars, int options, Range **matches)
+	 * @fn bool Regexp::matchesCharacters(const Regexp *self, const char *chars, int options, Range **matches)
 	 * @brief Matches this regular expression against the given characters.
 	 * @param self The Regexp.
 	 * @param chars The characters to match.
@@ -110,10 +110,10 @@ struct RegexpInterface {
 	 * @see regexec(3)
 	 * @memberof Regexp
 	 */
-	_Bool (*matchesCharacters)(const Regexp *self, const char *chars, int options, Range **matches);
+	bool (*matchesCharacters)(const Regexp *self, const char *chars, int options, Range **matches);
 
 	/**
-	 * @fn _Bool Regexp::matchesString(const Regexp *self, const String *string, int options, Range **matches)
+	 * @fn bool Regexp::matchesString(const Regexp *self, const String *string, int options, Range **matches)
 	 * @brief Matches this regular expression against the given String.
 	 * @param self The Regexp.
 	 * @param string The String to match.
@@ -126,7 +126,7 @@ struct RegexpInterface {
 	 * sub-expression. The caller must free `matches` when done with it.
 	 * @memberof Regexp
 	 */
-	_Bool (*matchesString)(const Regexp *self, const String *string, int options, Range **matches);
+	bool (*matchesString)(const Regexp *self, const String *string, int options, Range **matches);
 };
 
 /**

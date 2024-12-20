@@ -338,7 +338,7 @@ static Number *readNumber(JSONReader *reader) {
  * @param reader The JSONReader.
  * @return The Boole.
  */
-static _Bool *readBoole(JSONReader *reader) {
+static bool *readBoole(JSONReader *reader) {
 
 	Boole *boolean = NULL;
 

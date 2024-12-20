@@ -54,7 +54,7 @@ static int hash(const Object *self) {
 /**
  * @see Object::isEqual(const Object *, const Object *)
  */
-static _Bool isEqual(const Object *self, const Object *other) {
+static bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
 		return true;
@@ -74,10 +74,10 @@ static _Bool isEqual(const Object *self, const Object *other) {
 #pragma mark - Number
 
 /**
- * @fn _Bool Number::boolValue(const Number *self)
+ * @fn bool Number::boolValue(const Number *self)
  * @memberof Number
  */
-static _Bool boolValue(const Number *self) {
+static bool boolValue(const Number *self) {
 	return self->value ? true : false;
 }
 

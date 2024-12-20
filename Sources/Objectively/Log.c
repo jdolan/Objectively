@@ -176,7 +176,7 @@ static void _log(const Log *self, LogLevel level, const char *fmt, va_list args)
 	while (*c) {
 
 		if (*c == '%') {
-			_Bool token = true;
+			bool token = true;
 
 			if (*(c + 1) == 'n') {
 				fputs(self->name, self->file);

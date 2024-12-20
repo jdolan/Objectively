@@ -81,7 +81,7 @@ struct Operation {
 	 * @brief If `true`, this Operation will be expected to coordinate its own
 	 * concurrency and internal state management by overriding `start`.
 	 */
-	_Bool asynchronous;
+	bool asynchronous;
 
 	/**
 	 * @brief The user data.
@@ -96,17 +96,17 @@ struct Operation {
 	/**
 	 * @brief `true` when this Operation has been cancelled, `false` otherwise.
 	 */
-	_Bool isCancelled;
+	bool isCancelled;
 
 	/**
 	 * @brief `true` when this Operation is executing, `false` otherwise.
 	 */
-	_Bool isExecuting;
+	bool isExecuting;
 
 	/**
 	 * @brief `true` when this Operation is finished, `false` otherwise.
 	 */
-	_Bool isFinished;
+	bool isFinished;
 };
 
 /**
@@ -166,12 +166,12 @@ struct OperationInterface {
 	Operation *(*initWithFunction)(Operation *self, OperationFunction function, ident data);
 
 	/**
-	 * @fn _Bool Operation::isReady(const Operation *self)
+	 * @fn bool Operation::isReady(const Operation *self)
 	 * @param self The Operation.
 	 * @return `true` when all criteria for this Operation to `start` are met.
 	 * @memberof Operation
 	 */
-	_Bool (*isReady)(const Operation *self);
+	bool (*isReady)(const Operation *self);
 
 	/**
 	 * @fn void Operation::removeDependency(Operation *self, Operation *dependency)

@@ -108,7 +108,7 @@ typedef ident (*Functor)(const ident obj, ident data);
  * @param data User data.
  * @return True if `obj` satisfies the predicate, false otherwise.
  */
-typedef _Bool (*Predicate)(const ident obj, ident data);
+typedef bool (*Predicate)(const ident obj, ident data);
 
 /**
  * @brief The Producer function type.

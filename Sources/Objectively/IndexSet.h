@@ -73,13 +73,13 @@ struct IndexSetInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @fn _Bool IndexSet::containsIndex(const IndexSet *self, size_t index)
+	 * @fn bool IndexSet::containsIndex(const IndexSet *self, size_t index)
 	 * @param self The IndexSet.
 	 * @param index The index.
 	 * @return True if this IndexSet contains `index`, false otherwise.
 	 * @memberof IndexSet
 	 */
-	_Bool (*containsIndex)(const IndexSet *self, size_t index);
+	bool (*containsIndex)(const IndexSet *self, size_t index);
 
 	/**
 	 * @fn IndexSet *IndexSet::initWithIndex(IndexSet *self, size_t index)

@@ -84,7 +84,7 @@ static int hash(const Object *self) {
 /**
  * @see Object::isEqual(const Object *, const Object *)
  */
-static _Bool isEqual(const Object *self, const Object *other) {
+static bool isEqual(const Object *self, const Object *other) {
 
 	if (super(Object, self, isEqual, other)) {
 		return true;
@@ -128,10 +128,10 @@ static Regexp *initWithPattern(Regexp *self, const char *pattern, int options) {
 }
 
 /**
- * @fn _Bool Regexp::matchesCharacters(const Regexp *self, const char *chars, int options, Range **matches)
+ * @fn bool Regexp::matchesCharacters(const Regexp *self, const char *chars, int options, Range **matches)
  * @memberof Regexp
  */
-static _Bool matchesCharacters(const Regexp *self, const char *chars, int options, Range **ranges) {
+static bool matchesCharacters(const Regexp *self, const char *chars, int options, Range **ranges) {
 
 	if (ranges) {
 		const size_t numberOfMatches = self->numberOfSubExpressions + 1;
@@ -164,10 +164,10 @@ static _Bool matchesCharacters(const Regexp *self, const char *chars, int option
 }
 
 /**
- * @fn _Bool Regexp::matchesString(const Regexp *self, const String *string, int options, Range **matches)
+ * @fn bool Regexp::matchesString(const Regexp *self, const String *string, int options, Range **matches)
  * @memberof Regexp
  */
-static _Bool matchesString(const Regexp *self, const String *string, int options, Range **ranges) {
+static bool matchesString(const Regexp *self, const String *string, int options, Range **ranges) {
 
 	assert(string);
 

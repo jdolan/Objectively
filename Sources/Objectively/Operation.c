@@ -128,10 +128,10 @@ static Operation *initWithFunction(Operation *self, OperationFunction function, 
 }
 
 /**
- * @fn _Bool Operation::isReady(const Operation *self)
+ * @fn bool Operation::isReady(const Operation *self)
  * @memberof Operation
  */
-static _Bool isReady(const Operation *self) {
+static bool isReady(const Operation *self) {
 
 	if (self->isExecuting || self->isFinished) {
 		return false;

@@ -104,23 +104,23 @@ struct SetInterface {
 	Array *(*allObjects)(const Set *self);
 
 	/**
-	 * @fn _Bool Set::containsObject(const Set *self, const ident obj)
+	 * @fn bool Set::containsObject(const Set *self, const ident obj)
 	 * @param self The Set.
 	 * @param obj The Object to check.
 	 * @return `true` if this Set contains the given Object, `false` otherwise.
 	 * @memberof Set
 	 */
-	_Bool (*containsObject)(const Set *self, const ident obj);
+	bool (*containsObject)(const Set *self, const ident obj);
 
 	/**
-	 * @fn _Bool Set::containsObjectMatching(const Set *self, Predicate predicate, ident data)
+	 * @fn bool Set::containsObjectMatching(const Set *self, Predicate predicate, ident data)
 	 * @param self The Set.
 	 * @param predicate The predicate function.
 	 * @param data User data.
 	 * @return `true` if this Set contains an Object matching `predicate`, `false` otherwise.
 	 * @memberof Set
 	 */
-	_Bool (*containsObjectMatching)(const Set *self, Predicate predicate, ident data);
+	bool (*containsObjectMatching)(const Set *self, Predicate predicate, ident data);
 
 	/**
 	 * @fn void Set::enumerateObjects(const Set *self, SetEnumerator enumerator, ident data)

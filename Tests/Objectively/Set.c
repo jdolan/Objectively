@@ -29,7 +29,7 @@ static void enumerator(const Set *set, ident obj, ident data) {
 	(*(int *) data)++;
 }
 
-static _Bool filter(ident obj, ident data) {
+static bool filter(ident obj, ident data) {
 	return obj == data;
 }
 
