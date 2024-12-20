@@ -183,6 +183,9 @@
     <ClInclude Include="..\Sources\Objectively\URLResponse.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\Vector.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\Windowly.c">
@@ -321,6 +324,9 @@
       <Filter>Sources\gnu</Filter>
     </ClCompile>
     <ClCompile Include="..\Sources\Objectively\URLResponse.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\Vector.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
   </ItemGroup>

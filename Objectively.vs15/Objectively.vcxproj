@@ -66,6 +66,7 @@
     <ClInclude Include="..\Sources\Objectively\URLSessionTask.h" />
     <ClInclude Include="..\Sources\Objectively\URLSessionUploadTask.h" />
     <ClInclude Include="..\Sources\Objectively\Value.h" />
+    <ClInclude Include="..\Sources\Objectively\Vector.h" />
     <ClInclude Include="libs\dlfcn\dlfcn.h" />
     <ClInclude Include="Sources\gnu\config.h" />
     <ClInclude Include="Sources\gnu\intprops.h" />
@@ -120,6 +121,7 @@
     <ClCompile Include="..\Sources\Objectively\URLSessionTask.c" />
     <ClCompile Include="..\Sources\Objectively\URLSessionUploadTask.c" />
     <ClCompile Include="..\Sources\Objectively\Value.c" />
+    <ClCompile Include="..\Sources\Objectively\Vector.c" />
     <ClCompile Include="Sources\gnu\regex.c" />
     <ClCompile Include="Sources\Windowly.c" />
   </ItemGroup>
