@@ -35,8 +35,9 @@ case "$host" in
 		;;
 	*-*-mingw*)
 		HOST_NAME="MINGW"
+		HOST_CFLAGS="-fblocks"
 		HOST_LDFLAGS="-no-undefined"
-		HOST_LIBS="-ldl -liconv -lregex"
+		HOST_LIBS="-lBlocksRuntime -ldl -liconv -lregex"
 		AC_MSG_RESULT(mingw)
 		;;
 	*)

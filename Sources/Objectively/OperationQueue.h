@@ -102,6 +102,27 @@ struct OperationQueueInterface {
 	void (*addOperation)(OperationQueue *self, Operation *operation);
 
 	/**
+	 * @fn void OperationQueue::addOperationWithBlock(OperationQueue *self, OperationFunction *function)
+	 * @brief Adds an Operation to this queue.
+	 * @param self The OperationQueue.
+	 * @param block The OperationBlock to add.
+	 * @return The Operation, which should be released when no longer required.
+	 * @memberof OperationQueue
+	 */
+	Operation *(*addOperationWithBlock)(OperationQueue *self, OperationBlock block);
+
+	/**
+	 * @fn void OperationQueue::addOperationWithFunction(OperationQueue *self, OperationFunction *function)
+	 * @brief Adds an Operation to this queue.
+	 * @param self The OperationQueue.
+	 * @param function The OperationFunction to add.
+	 * @param data The user data.
+	 * @return The Operation, which should be released when no longer required.
+	 * @memberof OperationQueue
+	 */
+	Operation *(*addOperationWithFunction)(OperationQueue *self, OperationFunction function, ident data);
+
+	/**
 	 * @fn void OperationQueue::cancelAllOperations(OperationQueue *self)
 	 * @brief Cancels all pending Operations residing within this Queue.
 	 * @param self The OperationQueue.

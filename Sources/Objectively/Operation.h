@@ -36,6 +36,12 @@ typedef struct Operation Operation;
 typedef struct OperationInterface OperationInterface;
 
 /**
+ * @brief The block type for Operation execution.
+ * @param operation The executing Operation.
+ */
+typedef void (^OperationBlock)(void);
+
+/**
  * @brief The function type for Operation execution.
  * @param operation The executing Operation.
  */
@@ -155,10 +161,20 @@ struct OperationInterface {
 	Operation *(*init)(Operation *self);
 
 	/**
+	 * @fn Operation *Operation::initWithBlock(Operation *self, OperationBlock block)
+	 * @brief Initializes a *synchronous* Operation with the given `block`.
+	 * @param self The Operation.
+	 * @param block The OperationBlock.
+	 * @return The initialized Operation, or `NULL` on error.
+	 * @memberof Operation
+	 */
+	Operation *(*initWithBlock)(Operation *self, OperationBlock block);
+
+	/**
 	 * @fn Operation *Operation::initWithFunction(Operation *self, OperationFunction function, ident data)
 	 * @brief Initializes a *synchronous* Operation with the given `function`.
 	 * @param self The Operation.
-	 * @param function The OperationFunction to perform
+	 * @param function The OperationFunction.
 	 * @param data The user data.
 	 * @return The initialized Operation, or `NULL` on error.
 	 * @memberof Operation

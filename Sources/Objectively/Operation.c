@@ -113,6 +113,26 @@ static Operation *init(Operation *self) {
 }
 
 /**
+ * @brief An OperationFunction to wrap an OperationBlock.
+ */
+static void OperationBlockFunction(Operation *operation) {
+
+	OperationBlock block = operation->data;
+
+	assert(block);
+
+	block();
+}
+
+/**
+ * @fn Operation *Operation::initWithBlock(Operation *self, OperationBlock block)
+ * @memberof Operation
+ */
+static Operation *initWithBlock(Operation *self, OperationBlock block) {
+	return $(self, initWithFunction, OperationBlockFunction, block);
+}
+
+/**
  * @fn Operation *Operation::initWithFunction(Operation *self, OperationFunction function, ident data)
  * @memberof Operation
  */
@@ -219,6 +239,7 @@ static void initialize(Class *clazz) {
 	((OperationInterface *) clazz->interface)->cancel = cancel;
 	((OperationInterface *) clazz->interface)->dependencies = dependencies;
 	((OperationInterface *) clazz->interface)->init = init;
+	((OperationInterface *) clazz->interface)->initWithBlock = initWithBlock;
 	((OperationInterface *) clazz->interface)->initWithFunction = initWithFunction;
 	((OperationInterface *) clazz->interface)->isReady = isReady;
 	((OperationInterface *) clazz->interface)->removeDependency = removeDepdenency;

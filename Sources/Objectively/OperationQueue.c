@@ -74,6 +74,36 @@ static void addOperation(OperationQueue *self, Operation *operation) {
 }
 
 /**
+ * @fn void OperationQueue::addOperationWithBlock(OperationQueue *self, OperationBlock block)
+ * @memberof OperationQueue
+ */
+static Operation *addOperationWithBlock(OperationQueue *self, OperationBlock block) {
+
+	assert(block);
+
+	Operation *operation = $(alloc(Operation), initWithBlock, block);
+
+	$(self, addOperation, operation);
+
+	return operation;
+}
+
+/**
+ * @fn void OperationQueue::addOperationWithFunction(OperationQueue *self, OperationFunction function, ident data)
+ * @memberof OperationQueue
+ */
+static Operation *addOperationWithFunction(OperationQueue *self, OperationFunction function, ident data) {
+
+	assert(function);
+
+	Operation *operation = $(alloc(Operation), initWithFunction, function, data);
+
+	$(self, addOperation, operation);
+
+	return operation;
+}
+
+/**
  * @fn void OperationQueue::cancelAllOperations(OperationQueue *self)
  * @memberof OperationQueue
  */
@@ -236,6 +266,8 @@ static void initialize(Class *clazz) {
 	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
 	((OperationQueueInterface *) clazz->interface)->addOperation = addOperation;
+	((OperationQueueInterface *) clazz->interface)->addOperationWithBlock = addOperationWithBlock;
+	((OperationQueueInterface *) clazz->interface)->addOperationWithFunction = addOperationWithFunction;
 	((OperationQueueInterface *) clazz->interface)->cancelAllOperations = cancelAllOperations;
 	((OperationQueueInterface *) clazz->interface)->currentQueue = currentQueue;
 	((OperationQueueInterface *) clazz->interface)->init = init;
