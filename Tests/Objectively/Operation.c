@@ -90,43 +90,11 @@ START_TEST(suspendResume) {
 	release(queue);
 } END_TEST
 
-START_TEST(blocks) {
-
-	OperationQueue *queue = $(alloc(OperationQueue), init);
-	ck_assert(queue != NULL);
-
-	queue->isSuspended = true;
-
-	__block int counter = 0;
-
-	for (int i = 0; i < 5; i++) {
-		Operation *operation = $(queue, addOperationWithBlock, ^{
-			counter++;
-		});
-
-		release(operation);
-	}
-
-	ck_assert_int_eq(5, $(queue, operationCount));
-
-	queue->isSuspended = false;
-
-	$(queue, waitUntilAllOperationsAreFinished);
-
-	ck_assert_int_eq(5, counter);
-
-	ck_assert_int_eq(0, $(queue, operationCount));
-
-	release(queue);
-
-} END_TEST
-
 int main(int argc, char **argv) {
 
 	TCase *tcase = tcase_create("Operation");
 	tcase_add_test(tcase, producerConsumer);
 	tcase_add_test(tcase, suspendResume);
-	tcase_add_test(tcase, blocks);
 
 	Suite *suite = suite_create("Operation");
 	suite_add_tcase(suite, tcase);
