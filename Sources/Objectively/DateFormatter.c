@@ -40,20 +40,20 @@
 static Date *dateFromCharacters(const DateFormatter *self, const char *chars) {
 
 #if defined(_WIN32)
-	fprintf(stderr, "WARNING: %s: not implemented (Windows)\n", __func__);
+  fprintf(stderr, "WARNING: %s: not implemented (Windows)\n", __func__);
 #else
-	if (chars) {
-		struct tm time;
+  if (chars) {
+    struct tm time;
 
-		const char *res = strptime(chars, self->fmt, &time);
-		if (res) {
-			const Time t = { .tv_sec = mktime(&time) };
-			return $(alloc(Date), initWithTime, &t);
-		}
-	}
+    const char *res = strptime(chars, self->fmt, &time);
+    if (res) {
+      const Time t = { .tv_sec = mktime(&time) };
+      return $(alloc(Date), initWithTime, &t);
+    }
+  }
 #endif
 
-	return NULL;
+  return NULL;
 }
 
 /**
@@ -62,11 +62,11 @@ static Date *dateFromCharacters(const DateFormatter *self, const char *chars) {
  */
 static Date *dateFromString(const DateFormatter *self, const String *string) {
 
-	if (string) {
-		return $(self, dateFromCharacters, string->chars);
-	}
+  if (string) {
+    return $(self, dateFromCharacters, string->chars);
+  }
 
-	return NULL;
+  return NULL;
 }
 
 /**
@@ -75,12 +75,12 @@ static Date *dateFromString(const DateFormatter *self, const String *string) {
  */
 static DateFormatter *initWithFormat(DateFormatter *self, const char *fmt) {
 
-	self = (DateFormatter *) super(Object, self, init);
-	if (self) {
-		self->fmt = fmt ?: DATEFORMAT_ISO8601;
-	}
+  self = (DateFormatter *) super(Object, self, init);
+  if (self) {
+    self->fmt = fmt ?: DATEFORMAT_ISO8601;
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -89,25 +89,25 @@ static DateFormatter *initWithFormat(DateFormatter *self, const char *fmt) {
  */
 static String *stringFromDate(const DateFormatter *self, const Date *date) {
 
-	const time_t seconds = date->time.tv_sec;
-	struct tm time;
+  const time_t seconds = date->time.tv_sec;
+  struct tm time;
 
 #if defined(_WIN32)
-	int err = localtime_s(&time, &seconds);
-	assert(err == 0);
+  int err = localtime_s(&time, &seconds);
+  assert(err == 0);
 #else
-	ident res = localtime_r(&seconds, &time);
-	assert(res == &time);
+  ident res = localtime_r(&seconds, &time);
+  assert(res == &time);
 #endif
 
-	char *str = calloc(1024, sizeof(char));
-	assert(str);
+  char *str = calloc(1024, sizeof(char));
+  assert(str);
 
-	const size_t length = strftime(str, 1024, self->fmt, &time);
-	str = realloc(str, length + 1 * sizeof(char));
-	assert(str);
+  const size_t length = strftime(str, 1024, self->fmt, &time);
+  str = realloc(str, length + 1 * sizeof(char));
+  assert(str);
 
-	return $(alloc(String), initWithMemory, str, length);
+  return $(alloc(String), initWithMemory, str, length);
 }
 
 #pragma mark - Class lifecycle
@@ -117,12 +117,12 @@ static String *stringFromDate(const DateFormatter *self, const Date *date) {
  */
 static void initialize(Class *clazz) {
 
-	((DateFormatterInterface *) clazz->interface)->dateFromCharacters = dateFromCharacters;
-	((DateFormatterInterface *) clazz->interface)->dateFromString = dateFromString;
-	((DateFormatterInterface *) clazz->interface)->initWithFormat = initWithFormat;
-	((DateFormatterInterface *) clazz->interface)->stringFromDate = stringFromDate;
+  ((DateFormatterInterface *) clazz->interface)->dateFromCharacters = dateFromCharacters;
+  ((DateFormatterInterface *) clazz->interface)->dateFromString = dateFromString;
+  ((DateFormatterInterface *) clazz->interface)->initWithFormat = initWithFormat;
+  ((DateFormatterInterface *) clazz->interface)->stringFromDate = stringFromDate;
 
-	tzset();
+  tzset();
 }
 
 /**
@@ -130,21 +130,21 @@ static void initialize(Class *clazz) {
  * @memberof DateFormatter
  */
 Class *_DateFormatter(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "DateFormatter",
-			.superclass = _Object(),
-			.instanceSize = sizeof(DateFormatter),
-			.interfaceOffset = offsetof(DateFormatter, interface),
-			.interfaceSize = sizeof(DateFormatterInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "DateFormatter",
+      .superclass = _Object(),
+      .instanceSize = sizeof(DateFormatter),
+      .interfaceOffset = offsetof(DateFormatter, interface),
+      .interfaceSize = sizeof(DateFormatterInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

@@ -73,21 +73,21 @@ typedef struct DateInterface DateInterface;
  */
 struct Date {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	DateInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  DateInterface *interface;
 
-	/**
-	 * @brief The time.
-	 */
-	Time time;
+  /**
+   * @brief The time.
+   */
+  Time time;
 };
 
 /**
@@ -95,86 +95,86 @@ struct Date {
  */
 struct DateInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @fn Order Date::compareTo(const Date *self, const Date *other)
-	 * @brief Compares this Date to another.
-	 * @param self The Date.
-	 * @param other The Date to compare to.
-	 * @return The ordering of this Date compared to other.
-	 * @memberof Date
-	 */
-	Order (*compareTo)(const Date *self, const Date *other);
+  /**
+   * @fn Order Date::compareTo(const Date *self, const Date *other)
+   * @brief Compares this Date to another.
+   * @param self The Date.
+   * @param other The Date to compare to.
+   * @return The ordering of this Date compared to other.
+   * @memberof Date
+   */
+  Order (*compareTo)(const Date *self, const Date *other);
 
-	/**
-	 * @static
-	 * @fn Date *Date::date(void)
-	 * @brief Returns a new Date with the current Time.
-	 * @return The new Date, or `NULL` on error.
-	 * @memberof Date
-	 */
-	Date *(*date)(void);
+  /**
+   * @static
+   * @fn Date *Date::date(void)
+   * @brief Returns a new Date with the current Time.
+   * @return The new Date, or `NULL` on error.
+   * @memberof Date
+   */
+  Date *(*date)(void);
 
-	/**
-	 * @static
-	 * @fn Date *Date::dateWithTimeSinceNow(const Time interval)
-	 * @brief Returns a new Date with the given Time since now.
-	 * @return The new Date, or `NULL` on error.
-	 * @memberof Date
-	 */
-	Date *(*dateWithTimeSinceNow)(const Time *interval);
+  /**
+   * @static
+   * @fn Date *Date::dateWithTimeSinceNow(const Time interval)
+   * @brief Returns a new Date with the given Time since now.
+   * @return The new Date, or `NULL` on error.
+   * @memberof Date
+   */
+  Date *(*dateWithTimeSinceNow)(const Time *interval);
 
-	/**
-	 * @fn Date *Date::init(Date *self)
-	 * Initializes a Date with the current time.
-	 * @param self The Date.
-	 * @return The initialized Date, or `NULL` on error.
-	 * @memberof Date
-	 */
-	Date *(*init)(Date *self);
+  /**
+   * @fn Date *Date::init(Date *self)
+   * Initializes a Date with the current time.
+   * @param self The Date.
+   * @return The initialized Date, or `NULL` on error.
+   * @memberof Date
+   */
+  Date *(*init)(Date *self);
 
-	/**
-	 * @fn Date *Date::initWithTime(Date *self, const Time *time)
-	 * Initializes a Date with the specified time.
-	 * @param self The Date.
-	 * @param time The desired Time.
-	 * @return The initialized Date, or `NULL` on error.
-	 * @memberof Date
-	 */
-	Date *(*initWithTime)(Date *self, const Time *time);
+  /**
+   * @fn Date *Date::initWithTime(Date *self, const Time *time)
+   * Initializes a Date with the specified time.
+   * @param self The Date.
+   * @param time The desired Time.
+   * @return The initialized Date, or `NULL` on error.
+   * @memberof Date
+   */
+  Date *(*initWithTime)(Date *self, const Time *time);
 
-	/**
-	 * @fn Time Date::timeSinceDate(const Date *self, const Date *date)
-	 * @param self The Date.
-	 * @param date The Date from whence to return a Time delta.
-	 * @return The interval between this Date and `date`.
-	 * @remarks If `date` is earlier than this Date, the returned interval will be negative.
-	 * @memberof Date
-	 */
-	Time (*timeSinceDate)(const Date *self, const Date *date);
+  /**
+   * @fn Time Date::timeSinceDate(const Date *self, const Date *date)
+   * @param self The Date.
+   * @param date The Date from whence to return a Time delta.
+   * @return The interval between this Date and `date`.
+   * @remarks If `date` is earlier than this Date, the returned interval will be negative.
+   * @memberof Date
+   */
+  Time (*timeSinceDate)(const Date *self, const Date *date);
 
-	/**
-	 * @fn Time Date::timeSinceNow(const Date *self)
-	 * @param self The Date.
-	 * @return The interval between this Date and the current date.
-	 * @remarks If this Date is later than the current date, the returned interval will be negative.
-	 * @memberof Date
-	 */
-	Time (*timeSinceNow)(const Date *self);
+  /**
+   * @fn Time Date::timeSinceNow(const Date *self)
+   * @param self The Date.
+   * @return The interval between this Date and the current date.
+   * @remarks If this Date is later than the current date, the returned interval will be negative.
+   * @memberof Date
+   */
+  Time (*timeSinceNow)(const Date *self);
 
-	/**
-	 * @fn Time Date::timeSinceTime(const Date *self, const Time *time)
-	 * @param self The Date.
-	 * @param time A Time value.
-	 * @return The interval between this Date and `time`.
-	 * @remarks If `time` is earlier than this Date, the returned interval will be negative.
-	 * @memberof Date
-	 */
-	Time (*timeSinceTime)(const Date *self, const Time *time);
+  /**
+   * @fn Time Date::timeSinceTime(const Date *self, const Time *time)
+   * @param self The Date.
+   * @param time A Time value.
+   * @return The interval between this Date and `time`.
+   * @remarks If `time` is earlier than this Date, the returned interval will be negative.
+   * @memberof Date
+   */
+  Time (*timeSinceTime)(const Date *self, const Time *time);
 };
 
 /**

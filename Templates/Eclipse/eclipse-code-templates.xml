@@ -13,9 +13,9 @@
  */
 static void dealloc(Object *self) {
 
-	//..
+  //..
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 #pragma mark - ${file_base}
@@ -26,13 +26,13 @@ static void dealloc(Object *self) {
  */
 static ${file_base} *init(${file_base} *self) {
 
-	self = (${file_base} *) super(Object, self, init);
-	if (self) {
+  self = (${file_base} *) super(Object, self, init);
+  if (self) {
 
-		//..
-	}
+    //..
+  }
 
-	return self;
+  return self;
 }
 
 //..
@@ -44,11 +44,11 @@ static ${file_base} *init(${file_base} *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz-&gt;interface)-&gt;dealloc = dealloc;
+  ((ObjectInterface *) clazz-&gt;interface)-&gt;dealloc = dealloc;
 
-	((${file_base}Interface *) clazz-&gt;interface)-&gt;init = init;
+  ((${file_base}Interface *) clazz-&gt;interface)-&gt;init = init;
 
-	//..
+  //..
 }
 
 /**
@@ -56,21 +56,21 @@ static void initialize(Class *clazz) {
  * @memberof ${file_base}
  */
 Class *_${file_base}(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&amp;once, {
-		clazz = _initialize(&amp;(const ClassDef) {
-			.name = "${file_base}",
-			.superclass = _Object(),
-			.instanceSize = sizeof(${file_base}),
-			.interfaceOffset = offsetof(${file_base}, interface),
-			.interfaceSize = sizeof(${file_base}Interface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&amp;once, {
+    clazz = _initialize(&amp;(const ClassDef) {
+      .name = "${file_base}",
+      .superclass = _Object(),
+      .instanceSize = sizeof(${file_base}),
+      .interfaceOffset = offsetof(${file_base}, interface),
+      .interfaceSize = sizeof(${file_base}Interface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class
@@ -94,18 +94,18 @@ typedef struct ${file_base}Interface ${file_base}Interface;
  */
 struct ${file_base} {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	${file_base}Interface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  ${file_base}Interface *interface;
 
-	//.. 
+  //.. 
 };
 
 /**
@@ -113,21 +113,21 @@ struct ${file_base} {
  */
 struct ${file_base}Interface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @fn ${file_base} *${file_base}::init(${file_base} *self)
-	 * @brief Initializes this ${file_base}.
-	 * @param self The ${file_base}.
-	 * @return The initialized ${file_base}, or `NULL` on error.
-	 * @memberof ${file_base}
-	 */
-	${file_base} *(*init)(${file_base} *self);
+  /**
+   * @fn ${file_base} *${file_base}::init(${file_base} *self)
+   * @brief Initializes this ${file_base}.
+   * @param self The ${file_base}.
+   * @return The initialized ${file_base}, or `NULL` on error.
+   * @memberof ${file_base}
+   */
+  ${file_base} *(*init)(${file_base} *self);
 
-	// ..
+  // ..
 };
 
 /**

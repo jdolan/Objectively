@@ -37,12 +37,12 @@
  */
 static size_t readFunction(char *data, size_t size, size_t count, ident self) {
 
-	URLSessionUploadTask *this = (URLSessionUploadTask *) self;
+  URLSessionUploadTask *this = (URLSessionUploadTask *) self;
 
-	const size_t bytesRead = fread(data, size, count, this->file);
-	this->urlSessionTask.bytesSent += bytesRead;
+  const size_t bytesRead = fread(data, size, count, this->file);
+  this->urlSessionTask.bytesSent += bytesRead;
 
-	return bytesRead;
+  return bytesRead;
 }
 
 /**
@@ -50,24 +50,24 @@ static size_t readFunction(char *data, size_t size, size_t count, ident self) {
  */
 static void setup(URLSessionTask *self) {
 
-	super(URLSessionTask, self, setup);
+  super(URLSessionTask, self, setup);
 
-	URLSessionUploadTask *this = (URLSessionUploadTask *) self;
+  URLSessionUploadTask *this = (URLSessionUploadTask *) self;
 
-	assert(this->file);
+  assert(this->file);
 
-	int err = fseek(this->file, 0, SEEK_END);
-	assert(err == 0);
+  int err = fseek(this->file, 0, SEEK_END);
+  assert(err == 0);
 
-	self->bytesExpectedToSend = ftell(this->file);
+  self->bytesExpectedToSend = ftell(this->file);
 
-	err = fseek(this->file, 0, SEEK_SET);
-	assert(err == 0);
+  err = fseek(this->file, 0, SEEK_SET);
+  assert(err == 0);
 
-	curl_easy_setopt(self->locals.handle, CURLOPT_INFILESIZE_LARGE, self->bytesExpectedToSend);
+  curl_easy_setopt(self->locals.handle, CURLOPT_INFILESIZE_LARGE, self->bytesExpectedToSend);
 
-	curl_easy_setopt(self->locals.handle, CURLOPT_READFUNCTION, readFunction);
-	curl_easy_setopt(self->locals.handle, CURLOPT_READDATA, self);
+  curl_easy_setopt(self->locals.handle, CURLOPT_READFUNCTION, readFunction);
+  curl_easy_setopt(self->locals.handle, CURLOPT_READDATA, self);
 }
 
 #pragma mark - Class lifecycle
@@ -77,7 +77,7 @@ static void setup(URLSessionTask *self) {
  */
 static void initialize(Class *clazz) {
 
-	((URLSessionTaskInterface *) clazz->interface)->setup = setup;
+  ((URLSessionTaskInterface *) clazz->interface)->setup = setup;
 }
 
 /**
@@ -85,21 +85,21 @@ static void initialize(Class *clazz) {
  * @memberof URLSessionUploadTask
  */
 Class *_URLSessionUploadTask(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "URLSessionUploadTask",
-			.superclass = _URLSessionTask(),
-			.instanceSize = sizeof(URLSessionUploadTask),
-			.interfaceOffset = offsetof(URLSessionUploadTask, interface),
-			.interfaceSize = sizeof(URLSessionUploadTaskInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "URLSessionUploadTask",
+      .superclass = _URLSessionTask(),
+      .instanceSize = sizeof(URLSessionUploadTask),
+      .interfaceOffset = offsetof(URLSessionUploadTask, interface),
+      .interfaceSize = sizeof(URLSessionUploadTaskInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

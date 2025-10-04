@@ -8,12 +8,12 @@
 #if defined(_UNICODE)
  static const char *nl_langinfo(int c)
  {
-	 return "UTF-16";
+   return "UTF-16";
  }
 #elif defined(_MBCS)
  static const char *nl_langinfo(int c)
  {
-	 return "ASCII";
+   return "ASCII";
  }
 #else
  #error No charset?

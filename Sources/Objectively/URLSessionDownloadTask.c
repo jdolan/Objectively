@@ -37,12 +37,12 @@
  */
 static size_t writeFunction(char *data, size_t size, size_t count, ident self) {
 
-	URLSessionDownloadTask *this = (URLSessionDownloadTask *) self;
+  URLSessionDownloadTask *this = (URLSessionDownloadTask *) self;
 
-	const size_t bytesWritten = fwrite(data, size, count, this->file);
-	this->urlSessionTask.bytesReceived += bytesWritten;
+  const size_t bytesWritten = fwrite(data, size, count, this->file);
+  this->urlSessionTask.bytesReceived += bytesWritten;
 
-	return bytesWritten;
+  return bytesWritten;
 }
 
 /**
@@ -50,14 +50,14 @@ static size_t writeFunction(char *data, size_t size, size_t count, ident self) {
  */
 static void setup(URLSessionTask *self) {
 
-	super(URLSessionTask, self, setup);
+  super(URLSessionTask, self, setup);
 
-	URLSessionDownloadTask *this = (URLSessionDownloadTask *) self;
+  URLSessionDownloadTask *this = (URLSessionDownloadTask *) self;
 
-	assert(this->file);
+  assert(this->file);
 
-	curl_easy_setopt(self->locals.handle, CURLOPT_WRITEFUNCTION, writeFunction);
-	curl_easy_setopt(self->locals.handle, CURLOPT_WRITEDATA, self);
+  curl_easy_setopt(self->locals.handle, CURLOPT_WRITEFUNCTION, writeFunction);
+  curl_easy_setopt(self->locals.handle, CURLOPT_WRITEDATA, self);
 }
 
 #pragma mark - Class lifecycle
@@ -67,7 +67,7 @@ static void setup(URLSessionTask *self) {
  */
 static void initialize(Class *clazz) {
 
-	((URLSessionTaskInterface *) clazz->interface)->setup = setup;
+  ((URLSessionTaskInterface *) clazz->interface)->setup = setup;
 }
 
 /**
@@ -75,21 +75,21 @@ static void initialize(Class *clazz) {
  * @memberof URLSessionDownloadTask
  */
 Class *_URLSessionDownloadTask(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "URLSessionDownloadTask",
-			.superclass = _URLSessionTask(),
-			.instanceSize = sizeof(URLSessionDownloadTask),
-			.interfaceOffset = offsetof(URLSessionDownloadTask, interface),
-			.interfaceSize = sizeof(URLSessionDownloadTaskInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "URLSessionDownloadTask",
+      .superclass = _URLSessionTask(),
+      .instanceSize = sizeof(URLSessionDownloadTask),
+      .interfaceOffset = offsetof(URLSessionDownloadTask, interface),
+      .interfaceSize = sizeof(URLSessionDownloadTaskInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

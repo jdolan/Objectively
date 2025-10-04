@@ -35,11 +35,11 @@
  * @brief BSD qsort_r.
  */
 static int _quicksort(void *data, const void *a, const void *b) {
-	return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
+  return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
 }
 
 void quicksort(ident base, size_t count, size_t size, Comparator comparator, ident data) {
-	qsort_r(base, count, size, comparator, _quicksort);
+  qsort_r(base, count, size, comparator, _quicksort);
 }
 
 #elif defined(_WIN32)
@@ -48,11 +48,11 @@ void quicksort(ident base, size_t count, size_t size, Comparator comparator, ide
  * @brief WIN32 qsort_s.
  */
 static int _quicksort(void *data, const void *a, const void *b) {
-	return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
+  return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
 }
 
 void quicksort(ident base, size_t count, size_t size, Comparator comparator, ident data) {
-	qsort_s(base, count, size, _quicksort, comparator);
+  qsort_s(base, count, size, _quicksort, comparator);
 }
 
 #else
@@ -61,11 +61,11 @@ void quicksort(ident base, size_t count, size_t size, Comparator comparator, ide
  * @brief GNU qsort_r.
  */
 static int _quicksort(const void *a, const void *b, void *data) {
-	return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
+  return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
 }
 
 void quicksort(ident base, size_t count, size_t size, Comparator comparator, ident data) {
-	qsort_r(base, count, size, _quicksort, comparator);
+  qsort_r(base, count, size, _quicksort, comparator);
 }
 
 #endif
@@ -81,13 +81,13 @@ void quicksort(ident base, size_t count, size_t size, Comparator comparator, ide
  */
 static Object *copy(const Object *self) {
 
-	Array *this = (Array *)  self;
+  Array *this = (Array *)  self;
 
-	MutableArray *copy = $(alloc(MutableArray), initWithCapacity, this->count);
+  MutableArray *copy = $(alloc(MutableArray), initWithCapacity, this->count);
 
-	$(copy, addObjectsFromArray, this);
+  $(copy, addObjectsFromArray, this);
 
-	return (Object *) copy;
+  return (Object *) copy;
 }
 
 #pragma mark - MutableArray
@@ -98,21 +98,21 @@ static Object *copy(const Object *self) {
  */
 static void addObject(MutableArray *self, const ident obj) {
 
-	Array *array = (Array *) self;
-	if (array->count == self->capacity) {
+  Array *array = (Array *) self;
+  if (array->count == self->capacity) {
 
-		self->capacity += ARRAY_CHUNK_SIZE;
+    self->capacity += ARRAY_CHUNK_SIZE;
 
-		if (array->elements) {
-			array->elements = realloc(array->elements, self->capacity * sizeof(ident));
-		} else {
-			array->elements = calloc(self->capacity, sizeof(ident));
-		}
+    if (array->elements) {
+      array->elements = realloc(array->elements, self->capacity * sizeof(ident));
+    } else {
+      array->elements = calloc(self->capacity, sizeof(ident));
+    }
 
-		assert(array->elements);
-	}
+    assert(array->elements);
+  }
 
-	array->elements[array->count++] = retain(obj);
+  array->elements[array->count++] = retain(obj);
 }
 
 /**
@@ -121,16 +121,16 @@ static void addObject(MutableArray *self, const ident obj) {
  */
 static void addObjects(MutableArray *self, const ident obj, ...) {
 
-	va_list args;
-	va_start(args, obj);
+  va_list args;
+  va_start(args, obj);
 
-	ident object = obj;
-	while (object) {
-		$(self, addObject, object);
-		object = va_arg(args, ident);
-	}
+  ident object = obj;
+  while (object) {
+    $(self, addObject, object);
+    object = va_arg(args, ident);
+  }
 
-	va_end(args);
+  va_end(args);
 }
 
 /**
@@ -139,11 +139,11 @@ static void addObjects(MutableArray *self, const ident obj, ...) {
  */
 static void addObjectsFromArray(MutableArray *self, const Array *array) {
 
-	if (array) {
-		for (size_t i = 0; i < array->count; i++) {
-			$(self, addObject, array->elements[i]);
-		}
-	}
+  if (array) {
+    for (size_t i = 0; i < array->count; i++) {
+      $(self, addObject, array->elements[i]);
+    }
+  }
 }
 
 /**
@@ -152,7 +152,7 @@ static void addObjectsFromArray(MutableArray *self, const Array *array) {
  */
 static MutableArray *array(void) {
 
-	return $(alloc(MutableArray), init);
+  return $(alloc(MutableArray), init);
 }
 
 /**
@@ -161,7 +161,7 @@ static MutableArray *array(void) {
  */
 static MutableArray *arrayWithCapacity(size_t capacity) {
 
-	return $(alloc(MutableArray), initWithCapacity, capacity);
+  return $(alloc(MutableArray), initWithCapacity, capacity);
 }
 
 /**
@@ -170,13 +170,13 @@ static MutableArray *arrayWithCapacity(size_t capacity) {
  */
 static void filter(MutableArray *self, Predicate predicate, ident data) {
 
-	assert(predicate);
+  assert(predicate);
 
-	for (size_t i = 0; i < self->array.count; i++) {
-		if (predicate(self->array.elements[i], data) == false) {
-			$(self, removeObjectAtIndex, i--);
-		}
-	}
+  for (size_t i = 0; i < self->array.count; i++) {
+    if (predicate(self->array.elements[i], data) == false) {
+      $(self, removeObjectAtIndex, i--);
+    }
+  }
 }
 
 /**
@@ -185,7 +185,7 @@ static void filter(MutableArray *self, Predicate predicate, ident data) {
  */
 static MutableArray *init(MutableArray *self) {
 
-	return $(self, initWithCapacity, 0);
+  return $(self, initWithCapacity, 0);
 }
 
 /**
@@ -194,18 +194,18 @@ static MutableArray *init(MutableArray *self) {
  */
 static MutableArray *initWithCapacity(MutableArray *self, size_t capacity) {
 
-	self = (MutableArray *) super(Object, self, init);
-	if (self) {
+  self = (MutableArray *) super(Object, self, init);
+  if (self) {
 
-		self->capacity = capacity;
-		if (self->capacity) {
+    self->capacity = capacity;
+    if (self->capacity) {
 
-			self->array.elements = calloc(self->capacity, sizeof(ident));
-			assert(self->array.elements);
-		}
-	}
+      self->array.elements = calloc(self->capacity, sizeof(ident));
+      assert(self->array.elements);
+    }
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -214,15 +214,15 @@ static MutableArray *initWithCapacity(MutableArray *self, size_t capacity) {
  */
 static void insertObjectAtIndex(MutableArray *self, ident obj, size_t index) {
 
-	assert(index <= self->array.count);
+  assert(index <= self->array.count);
 
-	$(self, addObject, obj);
+  $(self, addObject, obj);
 
-	for (size_t i = self->array.count - 1; i > index; i--) {
-		self->array.elements[i] = self->array.elements[i - 1];
-	}
+  for (size_t i = self->array.count - 1; i > index; i--) {
+    self->array.elements[i] = self->array.elements[i - 1];
+  }
 
-	self->array.elements[index] = obj;
+  self->array.elements[index] = obj;
 }
 
 /**
@@ -231,9 +231,9 @@ static void insertObjectAtIndex(MutableArray *self, ident obj, size_t index) {
  */
 static void removeAllObjects(MutableArray *self) {
 
-	while (self->array.count) {
-		$(self, removeLastObject);
-	}
+  while (self->array.count) {
+    $(self, removeLastObject);
+  }
 }
 
 /**
@@ -242,14 +242,14 @@ static void removeAllObjects(MutableArray *self) {
  */
 static void removeAllObjectsWithEnumerator(MutableArray *self, ArrayEnumerator enumerator, ident data) {
 
-	assert(enumerator);
+  assert(enumerator);
 
-	while (self->array.count) {
+  while (self->array.count) {
 
-		enumerator((Array *) self, $((Array *) self, lastObject), data);
+    enumerator((Array *) self, $((Array *) self, lastObject), data);
 
-		$(self, removeLastObject);
-	}
+    $(self, removeLastObject);
+  }
 }
 
 /**
@@ -258,9 +258,9 @@ static void removeAllObjectsWithEnumerator(MutableArray *self, ArrayEnumerator e
  */
 static void removeLastObject(MutableArray *self) {
 
-	if (self->array.count) {
-		$(self, removeObjectAtIndex, self->array.count - 1);
-	}
+  if (self->array.count) {
+    $(self, removeObjectAtIndex, self->array.count - 1);
+  }
 }
 
 /**
@@ -269,10 +269,10 @@ static void removeLastObject(MutableArray *self) {
  */
 static void removeObject(MutableArray *self, const ident obj) {
 
-	const ssize_t index = $((Array *) self, indexOfObject, obj);
-	if (index > -1) {
-		$(self, removeObjectAtIndex, index);
-	}
+  const ssize_t index = $((Array *) self, indexOfObject, obj);
+  if (index > -1) {
+    $(self, removeObjectAtIndex, index);
+  }
 }
 
 /**
@@ -281,15 +281,15 @@ static void removeObject(MutableArray *self, const ident obj) {
  */
 static void removeObjectAtIndex(MutableArray *self, size_t index) {
 
-	assert(index < self->array.count);
+  assert(index < self->array.count);
 
-	release(self->array.elements[index]);
+  release(self->array.elements[index]);
 
-	for (size_t i = index; i < self->array.count - 1; i++) {
-		self->array.elements[i] = self->array.elements[i + 1];
-	}
+  for (size_t i = index; i < self->array.count - 1; i++) {
+    self->array.elements[i] = self->array.elements[i + 1];
+  }
 
-	self->array.count--;
+  self->array.count--;
 }
 
 /**
@@ -298,13 +298,13 @@ static void removeObjectAtIndex(MutableArray *self, size_t index) {
  */
 static void setObjectAtIndex(MutableArray *self, const ident obj, size_t index) {
 
-	assert(index < self->array.count);
+  assert(index < self->array.count);
 
-	retain(obj);
+  retain(obj);
 
-	release(self->array.elements[index]);
+  release(self->array.elements[index]);
 
-	self->array.elements[index] = obj;
+  self->array.elements[index] = obj;
 }
 
 /**
@@ -312,7 +312,7 @@ static void setObjectAtIndex(MutableArray *self, const ident obj, size_t index) 
  * @memberof MutableArray
  */
 static void sort(MutableArray *self, Comparator comparator) {
-	quicksort(self->array.elements, self->array.count, sizeof(ident), comparator, NULL);
+  quicksort(self->array.elements, self->array.count, sizeof(ident), comparator, NULL);
 }
 
 #pragma mark - Class lifecycle
@@ -322,24 +322,24 @@ static void sort(MutableArray *self, Comparator comparator) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
 
-	((MutableArrayInterface *) clazz->interface)->addObject = addObject;
-	((MutableArrayInterface *) clazz->interface)->addObjects = addObjects;
-	((MutableArrayInterface *) clazz->interface)->addObjectsFromArray = addObjectsFromArray;
-	((MutableArrayInterface *) clazz->interface)->array = array;
-	((MutableArrayInterface *) clazz->interface)->arrayWithCapacity = arrayWithCapacity;
-	((MutableArrayInterface *) clazz->interface)->filter = filter;
-	((MutableArrayInterface *) clazz->interface)->init = init;
-	((MutableArrayInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
-	((MutableArrayInterface *) clazz->interface)->insertObjectAtIndex = insertObjectAtIndex;
-	((MutableArrayInterface *) clazz->interface)->removeAllObjects = removeAllObjects;
-	((MutableArrayInterface *) clazz->interface)->removeAllObjectsWithEnumerator = removeAllObjectsWithEnumerator;
-	((MutableArrayInterface *) clazz->interface)->removeLastObject = removeLastObject;
-	((MutableArrayInterface *) clazz->interface)->removeObject = removeObject;
-	((MutableArrayInterface *) clazz->interface)->removeObjectAtIndex = removeObjectAtIndex;
-	((MutableArrayInterface *) clazz->interface)->setObjectAtIndex = setObjectAtIndex;
-	((MutableArrayInterface *) clazz->interface)->sort = sort;
+  ((MutableArrayInterface *) clazz->interface)->addObject = addObject;
+  ((MutableArrayInterface *) clazz->interface)->addObjects = addObjects;
+  ((MutableArrayInterface *) clazz->interface)->addObjectsFromArray = addObjectsFromArray;
+  ((MutableArrayInterface *) clazz->interface)->array = array;
+  ((MutableArrayInterface *) clazz->interface)->arrayWithCapacity = arrayWithCapacity;
+  ((MutableArrayInterface *) clazz->interface)->filter = filter;
+  ((MutableArrayInterface *) clazz->interface)->init = init;
+  ((MutableArrayInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
+  ((MutableArrayInterface *) clazz->interface)->insertObjectAtIndex = insertObjectAtIndex;
+  ((MutableArrayInterface *) clazz->interface)->removeAllObjects = removeAllObjects;
+  ((MutableArrayInterface *) clazz->interface)->removeAllObjectsWithEnumerator = removeAllObjectsWithEnumerator;
+  ((MutableArrayInterface *) clazz->interface)->removeLastObject = removeLastObject;
+  ((MutableArrayInterface *) clazz->interface)->removeObject = removeObject;
+  ((MutableArrayInterface *) clazz->interface)->removeObjectAtIndex = removeObjectAtIndex;
+  ((MutableArrayInterface *) clazz->interface)->setObjectAtIndex = setObjectAtIndex;
+  ((MutableArrayInterface *) clazz->interface)->sort = sort;
 }
 
 /**
@@ -347,21 +347,21 @@ static void initialize(Class *clazz) {
  * @memberof MutableArray
  */
 Class *_MutableArray(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "MutableArray",
-			.superclass = _Array(),
-			.instanceSize = sizeof(MutableArray),
-			.interfaceOffset = offsetof(MutableArray, interface),
-			.interfaceSize = sizeof(MutableArrayInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "MutableArray",
+      .superclass = _Array(),
+      .instanceSize = sizeof(MutableArray),
+      .interfaceOffset = offsetof(MutableArray, interface),
+      .interfaceSize = sizeof(MutableArrayInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

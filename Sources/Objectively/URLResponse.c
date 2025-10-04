@@ -36,17 +36,17 @@
  */
 static Object *copy(const Object *self) {
 
-	URLResponse *this = (URLResponse *) self;
+  URLResponse *this = (URLResponse *) self;
 
-	URLResponse *that = $(alloc(URLResponse), init);
+  URLResponse *that = $(alloc(URLResponse), init);
 
-	if (this->httpHeaders) {
-		that->httpHeaders = (Dictionary *) $((Object *) this->httpHeaders, copy);
-	}
+  if (this->httpHeaders) {
+    that->httpHeaders = (Dictionary *) $((Object *) this->httpHeaders, copy);
+  }
 
-	that->httpStatusCode = this->httpStatusCode;
+  that->httpStatusCode = this->httpStatusCode;
 
-	return (Object *) that;
+  return (Object *) that;
 }
 
 /**
@@ -54,11 +54,11 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	URLResponse *this = (URLResponse *) self;
+  URLResponse *this = (URLResponse *) self;
 
-	release(this->httpHeaders);
+  release(this->httpHeaders);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 #pragma mark - URLResponse
@@ -68,7 +68,7 @@ static void dealloc(Object *self) {
  * @memberof URLResponse
  */
 static URLResponse *init(URLResponse *self) {
-	return (URLResponse *) super(Object, self, init);
+  return (URLResponse *) super(Object, self, init);
 }
 
 /**
@@ -77,17 +77,17 @@ static URLResponse *init(URLResponse *self) {
  */
 static void setValueForHTTPHeaderField(URLResponse *self, const char *value, const char *field) {
 
-	if (self->httpHeaders == NULL) {
-		self->httpHeaders = (Dictionary *) $(alloc(MutableDictionary), init);
-	}
+  if (self->httpHeaders == NULL) {
+    self->httpHeaders = (Dictionary *) $(alloc(MutableDictionary), init);
+  }
 
-	String *object = str(value);
-	String *key = str(field);
+  String *object = str(value);
+  String *key = str(field);
 
-	$((MutableDictionary *) self->httpHeaders, setObjectForKey, object, key);
+  $((MutableDictionary *) self->httpHeaders, setObjectForKey, object, key);
 
-	release(object);
-	release(key);
+  release(object);
+  release(key);
 }
 
 #pragma mark - Class lifecycle
@@ -97,11 +97,11 @@ static void setValueForHTTPHeaderField(URLResponse *self, const char *value, con
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((URLResponseInterface *) clazz->interface)->init = init;
-	((URLResponseInterface *) clazz->interface)->setValueForHTTPHeaderField = setValueForHTTPHeaderField;
+  ((URLResponseInterface *) clazz->interface)->init = init;
+  ((URLResponseInterface *) clazz->interface)->setValueForHTTPHeaderField = setValueForHTTPHeaderField;
 }
 
 /**
@@ -109,21 +109,21 @@ static void initialize(Class *clazz) {
  * @memberof URLResponse
  */
 Class *_URLResponse(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "URLResponse",
-			.superclass = _Object(),
-			.instanceSize = sizeof(URLResponse),
-			.interfaceOffset = offsetof(URLResponse, interface),
-			.interfaceSize = sizeof(URLResponseInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "URLResponse",
+      .superclass = _Object(),
+      .instanceSize = sizeof(URLResponse),
+      .interfaceOffset = offsetof(URLResponse, interface),
+      .interfaceSize = sizeof(URLResponseInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

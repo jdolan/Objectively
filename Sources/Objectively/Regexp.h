@@ -42,36 +42,36 @@ typedef struct RegexpInterface RegexpInterface;
  */
 struct Regexp {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	RegexpInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  RegexpInterface *interface;
 
-	/**
-	 * @brief The pattern
-	 */
-	const char *pattern;
+  /**
+   * @brief The pattern
+   */
+  const char *pattern;
 
-	/**
-	 * @brief A bitwise-or of `REG_ICASE`, `REG_NEWLINE`.
-	 */
-	int options;
+  /**
+   * @brief A bitwise-or of `REG_ICASE`, `REG_NEWLINE`.
+   */
+  int options;
 
-	/**
-	 * @brief The number of parenthesized sub-expressions.
-	 */
-	size_t numberOfSubExpressions;
+  /**
+   * @brief The number of parenthesized sub-expressions.
+   */
+  size_t numberOfSubExpressions;
 
-	/**
-	 * @brief The backing regular expression.
-	 */
-	ident regex;
+  /**
+   * @brief The backing regular expression.
+   */
+  ident regex;
 };
 
 /**
@@ -79,54 +79,54 @@ struct Regexp {
  */
 struct RegexpInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @fn Regexp *Regexp::initWithPattern(Regexp *self, const char *pattern, int options)
-	 * @brief Initializes this regular expression.
-	 * @param self The Regexp.
-	 * @param pattern The POSIX regular expression pattern.
-	 * @param options A bitwise-or of `REG_ICASE`, `REG_NEWLINE`.
-	 * @return The initialized regular expression, or `NULL` on error.
-	 * @memberof Regexp
-	 */
-	Regexp *(*initWithPattern)(Regexp *self, const char *pattern, int options);
+  /**
+   * @fn Regexp *Regexp::initWithPattern(Regexp *self, const char *pattern, int options)
+   * @brief Initializes this regular expression.
+   * @param self The Regexp.
+   * @param pattern The POSIX regular expression pattern.
+   * @param options A bitwise-or of `REG_ICASE`, `REG_NEWLINE`.
+   * @return The initialized regular expression, or `NULL` on error.
+   * @memberof Regexp
+   */
+  Regexp *(*initWithPattern)(Regexp *self, const char *pattern, int options);
 
-	/**
-	 * @fn bool Regexp::matchesCharacters(const Regexp *self, const char *chars, int options, Range **matches)
-	 * @brief Matches this regular expression against the given characters.
-	 * @param self The Regexp.
-	 * @param chars The characters to match.
-	 * @param options A bitwise-or of `REG_NOTBOL`, `REG_NOTEOL`.
-	 * @param matches An optional pointer to return matched sub-expressions.
-	 * @return `true` if this Regexp matched `chars`, `false` otherwise.
-	 * @remarks If provided, `matches` will be dynamically allocated and contain
-	 * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the Range of `chars` that
-	 * matched the entire pattern. `matches[1..n]` will identify the Range of each corresponding
-	 * sub-expression. The caller must free `matches` when done with it.
-	 * @see regexec(3)
-	 * @memberof Regexp
-	 */
-	bool (*matchesCharacters)(const Regexp *self, const char *chars, int options, Range **matches);
+  /**
+   * @fn bool Regexp::matchesCharacters(const Regexp *self, const char *chars, int options, Range **matches)
+   * @brief Matches this regular expression against the given characters.
+   * @param self The Regexp.
+   * @param chars The characters to match.
+   * @param options A bitwise-or of `REG_NOTBOL`, `REG_NOTEOL`.
+   * @param matches An optional pointer to return matched sub-expressions.
+   * @return `true` if this Regexp matched `chars`, `false` otherwise.
+   * @remarks If provided, `matches` will be dynamically allocated and contain
+   * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the Range of `chars` that
+   * matched the entire pattern. `matches[1..n]` will identify the Range of each corresponding
+   * sub-expression. The caller must free `matches` when done with it.
+   * @see regexec(3)
+   * @memberof Regexp
+   */
+  bool (*matchesCharacters)(const Regexp *self, const char *chars, int options, Range **matches);
 
-	/**
-	 * @fn bool Regexp::matchesString(const Regexp *self, const String *string, int options, Range **matches)
-	 * @brief Matches this regular expression against the given String.
-	 * @param self The Regexp.
-	 * @param string The String to match.
-	 * @param options A bitwise-or of `REG_NOTBOL`, `REG_NOTEOL`.
-	 * @param matches An optional pointer to return matched sub-expressions.
-	 * @return `true` if this expression matches `string`, `false` otherwise.
-	 * @remarks If provided, `matches` will be dynamically allocated and contain
-	 * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the Range of `chars` that
-	 * matched the entire pattern. `matches[1..n]` will identify the Range of each corresponding
-	 * sub-expression. The caller must free `matches` when done with it.
-	 * @memberof Regexp
-	 */
-	bool (*matchesString)(const Regexp *self, const String *string, int options, Range **matches);
+  /**
+   * @fn bool Regexp::matchesString(const Regexp *self, const String *string, int options, Range **matches)
+   * @brief Matches this regular expression against the given String.
+   * @param self The Regexp.
+   * @param string The String to match.
+   * @param options A bitwise-or of `REG_NOTBOL`, `REG_NOTEOL`.
+   * @param matches An optional pointer to return matched sub-expressions.
+   * @return `true` if this expression matches `string`, `false` otherwise.
+   * @remarks If provided, `matches` will be dynamically allocated and contain
+   * `numberOfSubExpressions + 1` Ranges. `matches[0]` will identify the Range of `chars` that
+   * matched the entire pattern. `matches[1..n]` will identify the Range of each corresponding
+   * sub-expression. The caller must free `matches` when done with it.
+   * @memberof Regexp
+   */
+  bool (*matchesString)(const Regexp *self, const String *string, int options, Range **matches);
 };
 
 /**

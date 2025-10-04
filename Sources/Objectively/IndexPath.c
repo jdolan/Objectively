@@ -38,10 +38,10 @@
  */
 static Object *copy(const Object *self) {
 
-	IndexPath *this = (IndexPath *) self;
-	IndexPath *that = $(alloc(IndexPath), initWithIndexes, this->indexes, this->length);
+  IndexPath *this = (IndexPath *) self;
+  IndexPath *that = $(alloc(IndexPath), initWithIndexes, this->indexes, this->length);
 
-	return (Object *) that;
+  return (Object *) that;
 }
 
 /**
@@ -49,11 +49,11 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	IndexPath *this = (IndexPath *) self;
+  IndexPath *this = (IndexPath *) self;
 
-	free(this->indexes);
+  free(this->indexes);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 /**
@@ -61,18 +61,18 @@ static void dealloc(Object *self) {
  */
 static String *description(const Object *self) {
 
-	const IndexPath *this = (IndexPath *) self;
-	MutableString *desc = mstr("[");
+  const IndexPath *this = (IndexPath *) self;
+  MutableString *desc = mstr("[");
 
-	for (size_t i = 0; i < this->length; i++) {
-		$(desc, appendFormat, "%d", this->indexes[i]);
-		if (i < this->length - 1) {
-			$(desc, appendCharacters, ", ");
-		}
-	}
+  for (size_t i = 0; i < this->length; i++) {
+    $(desc, appendFormat, "%d", this->indexes[i]);
+    if (i < this->length - 1) {
+      $(desc, appendCharacters, ", ");
+    }
+  }
 
-	$(desc, appendCharacters, "]");
-	return (String *) desc;
+  $(desc, appendCharacters, "]");
+  return (String *) desc;
 }
 
 /**
@@ -80,15 +80,15 @@ static String *description(const Object *self) {
  */
 static int hash(const Object *self) {
 
-	int hash = HASH_SEED;
+  int hash = HASH_SEED;
 
-	const IndexPath *this = (IndexPath *) self;
+  const IndexPath *this = (IndexPath *) self;
 
-	for (size_t i = 0; i < this->length; i++) {
-		hash = HashForInteger(hash, this->indexes[i]);
-	}
+  for (size_t i = 0; i < this->length; i++) {
+    hash = HashForInteger(hash, this->indexes[i]);
+  }
 
-	return hash;
+  return hash;
 }
 
 /**
@@ -96,21 +96,21 @@ static int hash(const Object *self) {
  */
 static bool isEqual(const Object *self, const Object *other) {
 
-	if (super(Object, self, isEqual, other)) {
-		return true;
-	}
+  if (super(Object, self, isEqual, other)) {
+    return true;
+  }
 
-	if (other && $(other, isKindOfClass, _IndexPath())) {
+  if (other && $(other, isKindOfClass, _IndexPath())) {
 
-		const IndexPath *this = (IndexPath *) self;
-		const IndexPath *that = (IndexPath *) other;
+    const IndexPath *this = (IndexPath *) self;
+    const IndexPath *that = (IndexPath *) other;
 
-		if (this->length == that->length) {
-			return memcmp(this->indexes, that->indexes, this->length * sizeof(size_t)) == 0;
-		}
-	}
+    if (this->length == that->length) {
+      return memcmp(this->indexes, that->indexes, this->length * sizeof(size_t)) == 0;
+    }
+  }
 
-	return false;
+  return false;
 }
 
 #pragma mark - IndexPath
@@ -121,9 +121,9 @@ static bool isEqual(const Object *self, const Object *other) {
  */
 static size_t indexAtPosition(const IndexPath *self, size_t position) {
 
-	assert(position < self->length);
+  assert(position < self->length);
 
-	return self->indexes[position];
+  return self->indexes[position];
 }
 
 /**
@@ -131,7 +131,7 @@ static size_t indexAtPosition(const IndexPath *self, size_t position) {
  * @memberof IndexPath
  */
 static IndexPath *initWithIndex(IndexPath *self, size_t index) {
-	return $(self, initWithIndexes, &index, 1);
+  return $(self, initWithIndexes, &index, 1);
 }
 
 /**
@@ -140,19 +140,19 @@ static IndexPath *initWithIndex(IndexPath *self, size_t index) {
  */
 static IndexPath *initWithIndexes(IndexPath *self, size_t *indexes, size_t length) {
 
-	self = (IndexPath *) super(Object, self, init);
-	if (self) {
+  self = (IndexPath *) super(Object, self, init);
+  if (self) {
 
-		self->length = length;
-		assert(self->length);
+    self->length = length;
+    assert(self->length);
 
-		self->indexes = calloc(sizeof(size_t), length);
-		assert(self->indexes);
+    self->indexes = calloc(sizeof(size_t), length);
+    assert(self->indexes);
 
-		memcpy(self->indexes, indexes, sizeof(size_t) * length);
-	}
+    memcpy(self->indexes, indexes, sizeof(size_t) * length);
+  }
 
-	return self;
+  return self;
 }
 
 #pragma mark - Class lifecycle
@@ -162,15 +162,15 @@ static IndexPath *initWithIndexes(IndexPath *self, size_t *indexes, size_t lengt
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->interface)->description = description;
-	((ObjectInterface *) clazz->interface)->hash = hash;
-	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->description = description;
+  ((ObjectInterface *) clazz->interface)->hash = hash;
+  ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((IndexPathInterface *) clazz->interface)->indexAtPosition = indexAtPosition;
-	((IndexPathInterface *) clazz->interface)->initWithIndex = initWithIndex;
-	((IndexPathInterface *) clazz->interface)->initWithIndexes = initWithIndexes;
+  ((IndexPathInterface *) clazz->interface)->indexAtPosition = indexAtPosition;
+  ((IndexPathInterface *) clazz->interface)->initWithIndex = initWithIndex;
+  ((IndexPathInterface *) clazz->interface)->initWithIndexes = initWithIndexes;
 }
 
 /**
@@ -178,21 +178,21 @@ static void initialize(Class *clazz) {
  * @memberof IndexPath
  */
 Class *_IndexPath(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "IndexPath",
-			.superclass = _Object(),
-			.instanceSize = sizeof(IndexPath),
-			.interfaceOffset = offsetof(IndexPath, interface),
-			.interfaceSize = sizeof(IndexPathInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "IndexPath",
+      .superclass = _Object(),
+      .instanceSize = sizeof(IndexPath),
+      .interfaceOffset = offsetof(IndexPath, interface),
+      .interfaceSize = sizeof(IndexPathInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

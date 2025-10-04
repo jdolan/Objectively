@@ -40,12 +40,12 @@
  */
 static void dealloc(Object *self) {
 
-	Condition *this = (Condition *) self;
+  Condition *this = (Condition *) self;
 
-	pthread_cond_destroy(this->condition);
-	free(this->condition);
+  pthread_cond_destroy(this->condition);
+  free(this->condition);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 #pragma mark - Condition
@@ -56,8 +56,8 @@ static void dealloc(Object *self) {
  */
 static void broadcast(Condition *self) {
 
-	int err = pthread_cond_broadcast(self->condition);
-	assert(err == 0);
+  int err = pthread_cond_broadcast(self->condition);
+  assert(err == 0);
 }
 
 /**
@@ -66,17 +66,17 @@ static void broadcast(Condition *self) {
  */
 static Condition *init(Condition *self) {
 
-	self = (Condition *) super(Lock, self, init);
-	if (self) {
+  self = (Condition *) super(Lock, self, init);
+  if (self) {
 
-		self->condition = calloc(1, sizeof(pthread_cond_t));
-		assert(self->condition);
+    self->condition = calloc(1, sizeof(pthread_cond_t));
+    assert(self->condition);
 
-		const int err = pthread_cond_init(self->condition, NULL);
-		assert(err == 0);
-	}
+    const int err = pthread_cond_init(self->condition, NULL);
+    assert(err == 0);
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -85,8 +85,8 @@ static Condition *init(Condition *self) {
  */
 static void _signal(Condition *self) {
 
-	int err = pthread_cond_signal(self->condition);
-	assert(err == 0);
+  int err = pthread_cond_signal(self->condition);
+  assert(err == 0);
 }
 
 /**
@@ -95,8 +95,8 @@ static void _signal(Condition *self) {
  */
 static void _wait(Condition *self) {
 
-	int err = pthread_cond_wait(self->condition, self->lock.lock);
-	assert(err == 0);
+  int err = pthread_cond_wait(self->condition, self->lock.lock);
+  assert(err == 0);
 }
 
 /**
@@ -105,17 +105,17 @@ static void _wait(Condition *self) {
  */
 static bool waitUntilDate(Condition *self, const Date *date) {
 
-	Lock *lock = (Lock *) self;
+  Lock *lock = (Lock *) self;
 
-	const struct timespec time = {
-		.tv_sec = date->time.tv_sec,
-		.tv_nsec = date->time.tv_usec * 1000
-	};
+  const struct timespec time = {
+    .tv_sec = date->time.tv_sec,
+    .tv_nsec = date->time.tv_usec * 1000
+  };
 
-	int err = pthread_cond_timedwait(self->condition, lock->lock, &time);
-	assert(err == 0 || err == ETIMEDOUT);
+  int err = pthread_cond_timedwait(self->condition, lock->lock, &time);
+  assert(err == 0 || err == ETIMEDOUT);
 
-	return err == 0;
+  return err == 0;
 }
 
 #pragma mark - Class lifecycle
@@ -125,13 +125,13 @@ static bool waitUntilDate(Condition *self, const Date *date) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((ConditionInterface *) clazz->interface)->broadcast = broadcast;
-	((ConditionInterface *) clazz->interface)->init = init;
-	((ConditionInterface *) clazz->interface)->signal = _signal;
-	((ConditionInterface *) clazz->interface)->wait = _wait;
-	((ConditionInterface *) clazz->interface)->waitUntilDate = waitUntilDate;
+  ((ConditionInterface *) clazz->interface)->broadcast = broadcast;
+  ((ConditionInterface *) clazz->interface)->init = init;
+  ((ConditionInterface *) clazz->interface)->signal = _signal;
+  ((ConditionInterface *) clazz->interface)->wait = _wait;
+  ((ConditionInterface *) clazz->interface)->waitUntilDate = waitUntilDate;
 }
 
 /**
@@ -139,21 +139,21 @@ static void initialize(Class *clazz) {
  * @memberof Condition
  */
 Class *_Condition(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Condition",
-			.superclass = _Lock(),
-			.instanceSize = sizeof(Condition),
-			.interfaceOffset = offsetof(Condition, interface),
-			.interfaceSize = sizeof(ConditionInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Condition",
+      .superclass = _Lock(),
+      .instanceSize = sizeof(Condition),
+      .interfaceOffset = offsetof(Condition, interface),
+      .interfaceSize = sizeof(ConditionInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

@@ -41,9 +41,9 @@
  */
 static Object *copy(const Object *self) {
 
-	Data *this = (Data *) self;
+  Data *this = (Data *) self;
 
-	return (Object *) $(alloc(Data), initWithBytes, this->bytes, this->length);
+  return (Object *) $(alloc(Data), initWithBytes, this->bytes, this->length);
 }
 
 /**
@@ -51,15 +51,15 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	Data *this = (Data *) self;
+  Data *this = (Data *) self;
 
-	if (this->destroy) {
-		if (this->bytes) {
-			this->destroy(this->bytes);
-		}
-	}
+  if (this->destroy) {
+    if (this->bytes) {
+      this->destroy(this->bytes);
+    }
+  }
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 /**
@@ -67,15 +67,15 @@ static void dealloc(Object *self) {
  */
 static int hash(const Object *self) {
 
-	Data *this = (Data *) self;
+  Data *this = (Data *) self;
 
-	int hash = HASH_SEED;
-	hash = HashForInteger(hash, this->length);
+  int hash = HASH_SEED;
+  hash = HashForInteger(hash, this->length);
 
-	const Range range = { 0, this->length };
-	hash = HashForBytes(hash, this->bytes, range);
+  const Range range = { 0, this->length };
+  hash = HashForBytes(hash, this->bytes, range);
 
-	return hash;
+  return hash;
 }
 
 /**
@@ -83,21 +83,21 @@ static int hash(const Object *self) {
  */
 static bool isEqual(const Object *self, const Object *other) {
 
-	if (super(Object, self, isEqual, other)) {
-		return true;
-	}
+  if (super(Object, self, isEqual, other)) {
+    return true;
+  }
 
-	if (other && $(other, isKindOfClass, _Data())) {
+  if (other && $(other, isKindOfClass, _Data())) {
 
-		const Data *this = (Data *) self;
-		const Data *that = (Data *) other;
+    const Data *this = (Data *) self;
+    const Data *that = (Data *) other;
 
-		if (this->length == that->length) {
-			return memcmp(this->bytes, that->bytes, this->length) == 0;
-		}
-	}
+    if (this->length == that->length) {
+      return memcmp(this->bytes, that->bytes, this->length) == 0;
+    }
+  }
 
-	return false;
+  return false;
 }
 
 #pragma mark - Data
@@ -108,7 +108,7 @@ static bool isEqual(const Object *self, const Object *other) {
  */
 static Data *dataWithBytes(const uint8_t *bytes, size_t length) {
 
-	return $(alloc(Data), initWithBytes, bytes, length);
+  return $(alloc(Data), initWithBytes, bytes, length);
 }
 
 /**
@@ -117,7 +117,7 @@ static Data *dataWithBytes(const uint8_t *bytes, size_t length) {
  */
 static Data *dataWithConstMemory(const ident mem, size_t length) {
 
-	return $(alloc(Data), initWithConstMemory, mem, length);
+  return $(alloc(Data), initWithConstMemory, mem, length);
 }
 
 /**
@@ -126,7 +126,7 @@ static Data *dataWithConstMemory(const ident mem, size_t length) {
  */
 static Data *dataWithContentsOfFile(const char *path) {
 
-	return $(alloc(Data), initWithContentsOfFile, path);
+  return $(alloc(Data), initWithContentsOfFile, path);
 }
 
 /**
@@ -135,7 +135,7 @@ static Data *dataWithContentsOfFile(const char *path) {
  */
 static Data *dataWithMemory(ident mem, size_t length) {
 
-	return $(alloc(Data), initWithMemory, mem, length);
+  return $(alloc(Data), initWithMemory, mem, length);
 }
 
 /**
@@ -144,12 +144,12 @@ static Data *dataWithMemory(ident mem, size_t length) {
  */
 static Data *initWithBytes(Data *self, const uint8_t *bytes, size_t length) {
 
-	ident mem = malloc(length);
-	assert(mem);
+  ident mem = malloc(length);
+  assert(mem);
 
-	memcpy(mem, bytes, length);
+  memcpy(mem, bytes, length);
 
-	return $(self, initWithMemory, mem, length);
+  return $(self, initWithMemory, mem, length);
 }
 
 /**
@@ -158,13 +158,13 @@ static Data *initWithBytes(Data *self, const uint8_t *bytes, size_t length) {
  */
 static Data *initWithConstMemory(Data *self, const ident mem, size_t length) {
 
-	self = (Data *) super(Object, self, init);
-	if (self) {
-		self->bytes = mem;
-		self->length = length;
-	}
+  self = (Data *) super(Object, self, init);
+  if (self) {
+    self->bytes = mem;
+    self->length = length;
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -173,33 +173,33 @@ static Data *initWithConstMemory(Data *self, const ident mem, size_t length) {
  */
 static Data *initWithContentsOfFile(Data *self, const char *path) {
 
-	assert(path);
+  assert(path);
 
-	FILE *file = fopen(path, "rb");
-	if (file) {
-		ident mem = NULL;
+  FILE *file = fopen(path, "rb");
+  if (file) {
+    ident mem = NULL;
 
-		int err = fseek(file, 0, SEEK_END);
-		assert(err == 0);
+    int err = fseek(file, 0, SEEK_END);
+    assert(err == 0);
 
-		const size_t length = ftell(file);
-		if (length) {
+    const size_t length = ftell(file);
+    if (length) {
 
-			mem = malloc(length);
-			assert(mem);
+      mem = malloc(length);
+      assert(mem);
 
-			err = fseek(file, 0, SEEK_SET);
-			assert(err == 0);
+      err = fseek(file, 0, SEEK_SET);
+      assert(err == 0);
 
-			const size_t read = fread(mem, length, 1, file);
-			assert(read == 1);
-		}
+      const size_t read = fread(mem, length, 1, file);
+      assert(read == 1);
+    }
 
-		fclose(file);
-		return $(self, initWithMemory, mem, length);
-	}
+    fclose(file);
+    return $(self, initWithMemory, mem, length);
+  }
 
-	return release(self);
+  return release(self);
 }
 
 /**
@@ -208,12 +208,12 @@ static Data *initWithContentsOfFile(Data *self, const char *path) {
  */
 static Data *initWithMemory(Data *self, ident mem, size_t length) {
 
-	self = $(self, initWithConstMemory, mem, length);
-	if (self) {
-		self->destroy = free;
-	}
+  self = $(self, initWithConstMemory, mem, length);
+  if (self) {
+    self->destroy = free;
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -222,7 +222,7 @@ static Data *initWithMemory(Data *self, ident mem, size_t length) {
  */
 static MutableData *mutableCopy(const Data *self) {
 
-	return $(alloc(MutableData), initWithData, self);
+  return $(alloc(MutableData), initWithData, self);
 }
 
 /**
@@ -231,25 +231,25 @@ static MutableData *mutableCopy(const Data *self) {
  */
 static bool writeToFile(const Data *self, const char *path) {
 
-	assert(path);
+  assert(path);
 
-	FILE *file = fopen(path, "w");
-	if (file) {
+  FILE *file = fopen(path, "w");
+  if (file) {
 
-		size_t count = 1;
+    size_t count = 1;
 
-		if (self->length) {
-			count = fwrite(self->bytes, self->length, 1, file);
-		}
+    if (self->length) {
+      count = fwrite(self->bytes, self->length, 1, file);
+    }
 
-		fclose(file);
+    fclose(file);
 
-		if (count == 1) {
-			return true;
-		}
-	}
+    if (count == 1) {
+      return true;
+    }
+  }
 
-	return false;
+  return false;
 }
 
 #pragma mark - Class lifecycle
@@ -259,21 +259,21 @@ static bool writeToFile(const Data *self, const char *path) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->interface)->hash = hash;
-	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->hash = hash;
+  ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((DataInterface *) clazz->interface)->dataWithBytes = dataWithBytes;
-	((DataInterface *) clazz->interface)->dataWithConstMemory = dataWithConstMemory;
-	((DataInterface *) clazz->interface)->dataWithContentsOfFile = dataWithContentsOfFile;
-	((DataInterface *) clazz->interface)->dataWithMemory = dataWithMemory;
-	((DataInterface *) clazz->interface)->initWithBytes = initWithBytes;
-	((DataInterface *) clazz->interface)->initWithConstMemory = initWithConstMemory;
-	((DataInterface *) clazz->interface)->initWithContentsOfFile = initWithContentsOfFile;
-	((DataInterface *) clazz->interface)->initWithMemory = initWithMemory;
-	((DataInterface *) clazz->interface)->mutableCopy = mutableCopy;
-	((DataInterface *) clazz->interface)->writeToFile = writeToFile;
+  ((DataInterface *) clazz->interface)->dataWithBytes = dataWithBytes;
+  ((DataInterface *) clazz->interface)->dataWithConstMemory = dataWithConstMemory;
+  ((DataInterface *) clazz->interface)->dataWithContentsOfFile = dataWithContentsOfFile;
+  ((DataInterface *) clazz->interface)->dataWithMemory = dataWithMemory;
+  ((DataInterface *) clazz->interface)->initWithBytes = initWithBytes;
+  ((DataInterface *) clazz->interface)->initWithConstMemory = initWithConstMemory;
+  ((DataInterface *) clazz->interface)->initWithContentsOfFile = initWithContentsOfFile;
+  ((DataInterface *) clazz->interface)->initWithMemory = initWithMemory;
+  ((DataInterface *) clazz->interface)->mutableCopy = mutableCopy;
+  ((DataInterface *) clazz->interface)->writeToFile = writeToFile;
 }
 
 /**
@@ -281,21 +281,21 @@ static void initialize(Class *clazz) {
  * @memberof Data
  */
 Class *_Data(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Data",
-			.superclass = _Object(),
-			.instanceSize = sizeof(Data),
-			.interfaceOffset = offsetof(Data, interface),
-			.interfaceSize = sizeof(DataInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Data",
+      .superclass = _Object(),
+      .instanceSize = sizeof(Data),
+      .interfaceOffset = offsetof(Data, interface),
+      .interfaceSize = sizeof(DataInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

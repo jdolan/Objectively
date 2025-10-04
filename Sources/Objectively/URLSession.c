@@ -36,17 +36,17 @@
  */
 static void dealloc(Object *self) {
 
-	URLSession *this = (URLSession *) self;
+  URLSession *this = (URLSession *) self;
 
-	$(this, invalidateAndCancel);
+  $(this, invalidateAndCancel);
 
-	$(this->locals.thread, join, NULL);
+  $(this->locals.thread, join, NULL);
 
-	release(this->locals.condition);
-	release(this->locals.thread);
-	release(this->locals.tasks);
+  release(this->locals.condition);
+  release(this->locals.thread);
+  release(this->locals.tasks);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 #pragma mark - URLSession
@@ -56,17 +56,17 @@ static void dealloc(Object *self) {
  */
 static ident taskWithRequest(URLSession *self, ident task, URLRequest *request, URLSessionTaskCompletion completion) {
 
-	task = $((URLSessionTask *) task, initWithRequestInSession, request, self, completion);
-	if (task) {
+  task = $((URLSessionTask *) task, initWithRequestInSession, request, self, completion);
+  if (task) {
 
-		synchronized(self->locals.lock, {
-			$(self->locals.tasks, addObject, task);
-		});
+    synchronized(self->locals.lock, {
+      $(self->locals.tasks, addObject, task);
+    });
 
-		$(self->locals.condition, signal);
-	}
+    $(self->locals.condition, signal);
+  }
 
-	return task;
+  return task;
 }
 
 /**
@@ -75,7 +75,7 @@ static ident taskWithRequest(URLSession *self, ident task, URLRequest *request, 
  */
 static URLSessionDataTask *dataTaskWithRequest(URLSession *self, URLRequest *request, URLSessionTaskCompletion completion) {
 
-	return taskWithRequest(self, alloc(URLSessionDataTask), request, completion);
+  return taskWithRequest(self, alloc(URLSessionDataTask), request, completion);
 }
 
 /**
@@ -84,13 +84,13 @@ static URLSessionDataTask *dataTaskWithRequest(URLSession *self, URLRequest *req
  */
 static URLSessionDataTask *dataTaskWithURL(URLSession *self, URL *url, URLSessionTaskCompletion completion) {
 
-	URLRequest *request = $(alloc(URLRequest), initWithURL, url);
+  URLRequest *request = $(alloc(URLRequest), initWithURL, url);
 
-	URLSessionDataTask *task = $(self, dataTaskWithRequest, request, completion);
+  URLSessionDataTask *task = $(self, dataTaskWithRequest, request, completion);
 
-	release(request);
+  release(request);
 
-	return task;
+  return task;
 }
 
 /**
@@ -99,7 +99,7 @@ static URLSessionDataTask *dataTaskWithURL(URLSession *self, URL *url, URLSessio
  */
 static URLSessionDownloadTask *downloadTaskWithRequest(URLSession *self, URLRequest *request, URLSessionTaskCompletion completion) {
 
-	return taskWithRequest(self, alloc(URLSessionDownloadTask), request, completion);
+  return taskWithRequest(self, alloc(URLSessionDownloadTask), request, completion);
 }
 
 /**
@@ -108,13 +108,13 @@ static URLSessionDownloadTask *downloadTaskWithRequest(URLSession *self, URLRequ
  */
 static URLSessionDownloadTask *downloadTaskWithURL(URLSession *self, URL *url, URLSessionTaskCompletion completion) {
 
-	URLRequest *request = $(alloc(URLRequest), initWithURL, url);
+  URLRequest *request = $(alloc(URLRequest), initWithURL, url);
 
-	URLSessionDownloadTask *task = $(self, downloadTaskWithRequest, request, completion);
+  URLSessionDownloadTask *task = $(self, downloadTaskWithRequest, request, completion);
 
-	release(request);
+  release(request);
 
-	return task;
+  return task;
 }
 
 /**
@@ -123,13 +123,13 @@ static URLSessionDownloadTask *downloadTaskWithURL(URLSession *self, URL *url, U
  */
 static URLSession *init(URLSession *self) {
 
-	URLSessionConfiguration *configuration = $(alloc(URLSessionConfiguration), init);
+  URLSessionConfiguration *configuration = $(alloc(URLSessionConfiguration), init);
 
-	self = $(self, initWithConfiguration, configuration);
+  self = $(self, initWithConfiguration, configuration);
 
-	release(configuration);
+  release(configuration);
 
-	return self;
+  return self;
 }
 
 /**
@@ -137,127 +137,127 @@ static URLSession *init(URLSession *self) {
  */
 static ident run(Thread *thread) {
 
-	URLSession *self = thread->data;
+  URLSession *self = thread->data;
 
-	self->locals.handle = curl_multi_init();
-	assert(self->locals.handle);
+  self->locals.handle = curl_multi_init();
+  assert(self->locals.handle);
 
-	while (true) {
-		int ret;
+  while (true) {
+    int ret;
 
-		Array *tasks = $(self, tasks);
-		if (tasks->count == 0) {
+    Array *tasks = $(self, tasks);
+    if (tasks->count == 0) {
 
-			if (thread->isCancelled) {
-				break;
-			}
+      if (thread->isCancelled) {
+        break;
+      }
 
-			$(self->locals.condition, wait);
-			continue;
-		}
+      $(self->locals.condition, wait);
+      continue;
+    }
 
-		for (size_t i = 0; i < tasks->count; i++) {
+    for (size_t i = 0; i < tasks->count; i++) {
 
-			URLSessionTask *task = $(tasks, objectAtIndex, i);
-			if (task->state == URLSESSIONTASK_SUSPENDING) {
+      URLSessionTask *task = $(tasks, objectAtIndex, i);
+      if (task->state == URLSESSIONTASK_SUSPENDING) {
 
-				if (task->locals.handle) {
-					const CURLcode err = curl_easy_pause(task->locals.handle, CURLPAUSE_ALL);
-					assert(err == CURLE_OK);
-				}
+        if (task->locals.handle) {
+          const CURLcode err = curl_easy_pause(task->locals.handle, CURLPAUSE_ALL);
+          assert(err == CURLE_OK);
+        }
 
-				task->state = URLSESSIONTASK_SUSPENDED;
+        task->state = URLSESSIONTASK_SUSPENDED;
 
-			} else if (task->state == URLSESSIONTASK_RESUMING) {
+      } else if (task->state == URLSESSIONTASK_RESUMING) {
 
-				if (task->locals.handle == NULL) {
+        if (task->locals.handle == NULL) {
 
-					$(task, setup);
-					assert(task->locals.handle);
+          $(task, setup);
+          assert(task->locals.handle);
 
-					const CURLMcode merr = curl_multi_add_handle(self->locals.handle, task->locals.handle);
-					assert(merr == CURLM_OK);
-				} else {
-					const CURLcode err = curl_easy_pause(task->locals.handle, CURLPAUSE_CONT);
-					assert(err == CURLE_OK);
-				}
+          const CURLMcode merr = curl_multi_add_handle(self->locals.handle, task->locals.handle);
+          assert(merr == CURLM_OK);
+        } else {
+          const CURLcode err = curl_easy_pause(task->locals.handle, CURLPAUSE_CONT);
+          assert(err == CURLE_OK);
+        }
 
-				task->state = URLSESSIONTASK_RESUMED;
+        task->state = URLSESSIONTASK_RESUMED;
 
-			} else if (task->state == URLSESSIONTASK_CANCELING) {
+      } else if (task->state == URLSESSIONTASK_CANCELING) {
 
-				if (task->locals.handle) {
-					const CURLMcode merr = curl_multi_remove_handle(self->locals.handle, task->locals.handle);
-					assert(merr == CURLM_OK);
-				}
+        if (task->locals.handle) {
+          const CURLMcode merr = curl_multi_remove_handle(self->locals.handle, task->locals.handle);
+          assert(merr == CURLM_OK);
+        }
 
-				task->state = URLSESSIONTASK_CANCELED;
+        task->state = URLSESSIONTASK_CANCELED;
 
-				if (task->completion) {
-					task->completion(task, false);
-				}
+        if (task->completion) {
+          task->completion(task, false);
+        }
 
-				$(task, teardown);
+        $(task, teardown);
 
-				synchronized(self->locals.lock, {
-					$(self->locals.tasks, removeObject, task);
-				});
-			} else if (task->state == URLSESSIONTASK_COMPLETED) {
+        synchronized(self->locals.lock, {
+          $(self->locals.tasks, removeObject, task);
+        });
+      } else if (task->state == URLSESSIONTASK_COMPLETED) {
 
-				synchronized(self->locals.lock, {
-					$(self->locals.tasks, removeObject, task);
-				});
-			}
-		}
+        synchronized(self->locals.lock, {
+          $(self->locals.tasks, removeObject, task);
+        });
+      }
+    }
 
-		CURLMcode merr = curl_multi_wait(self->locals.handle, NULL, 0, 0, NULL);
-		assert(merr == CURLM_OK);
+    CURLMcode merr = curl_multi_wait(self->locals.handle, NULL, 0, 0, NULL);
+    assert(merr == CURLM_OK);
 
-		merr = curl_multi_perform(self->locals.handle, &ret);
-		assert(merr == CURLM_OK);
+    merr = curl_multi_perform(self->locals.handle, &ret);
+    assert(merr == CURLM_OK);
 
-		CURLMsg *message;
-		while ((message = curl_multi_info_read(self->locals.handle, &ret))) {
+    CURLMsg *message;
+    while ((message = curl_multi_info_read(self->locals.handle, &ret))) {
 
-			URLSessionTask *task = NULL;
-			for (size_t i = 0; i < tasks->count; i++) {
+      URLSessionTask *task = NULL;
+      for (size_t i = 0; i < tasks->count; i++) {
 
-				URLSessionTask *t = $(tasks, objectAtIndex, i);
-				if (t->locals.handle == message->easy_handle) {
-					task = t;
-					break;
-				}
-			}
+        URLSessionTask *t = $(tasks, objectAtIndex, i);
+        if (t->locals.handle == message->easy_handle) {
+          task = t;
+          break;
+        }
+      }
 
-			assert(task);
+      assert(task);
 
-			if (message->msg == CURLMSG_DONE) {
+      if (message->msg == CURLMSG_DONE) {
 
-				merr = curl_multi_remove_handle(self->locals.handle, task->locals.handle);
-				assert(merr == CURLM_OK);
+        merr = curl_multi_remove_handle(self->locals.handle, task->locals.handle);
+        assert(merr == CURLM_OK);
 
-				task->state = URLSESSIONTASK_COMPLETED;
+        task->state = URLSESSIONTASK_COMPLETED;
 
-				curl_easy_getinfo(task->locals.handle, CURLINFO_RESPONSE_CODE, (long *) &task->response->httpStatusCode);
+        curl_easy_getinfo(task->locals.handle, CURLINFO_RESPONSE_CODE, (long *) &task->response->httpStatusCode);
 
-				if (task->completion) {
-					task->completion(task, message->data.result == CURLE_OK);
-				}
+        if (task->completion) {
+          task->completion(task, message->data.result == CURLE_OK);
+        }
 
-				$(task, teardown);
+        $(task, teardown);
 
-				synchronized(self->locals.lock, {
-					$(self->locals.tasks, removeObject, task);
-				});
-			}
-		}
+        synchronized(self->locals.lock, {
+          $(self->locals.tasks, removeObject, task);
+        });
+      }
+    }
 
-		release(tasks);
-	}
+    release(tasks);
+  }
 
-	curl_multi_cleanup(self->locals.handle);
+  curl_multi_cleanup(self->locals.handle);
 
-	return NULL;
+  return NULL;
 }
 
 /**
@@ -266,21 +266,21 @@ static ident run(Thread *thread) {
  */
 static URLSession *initWithConfiguration(URLSession *self, URLSessionConfiguration *configuration) {
 
-	assert(configuration);
+  assert(configuration);
 
-	self = (URLSession *) super(Object, self, init);
-	if (self) {
-		self->configuration = retain(configuration);
+  self = (URLSession *) super(Object, self, init);
+  if (self) {
+    self->configuration = retain(configuration);
 
-		self->locals.condition = $(alloc(Condition), init);
-		self->locals.lock = $(alloc(Lock), init);
-		self->locals.tasks = $(alloc(MutableArray), init);
-		self->locals.thread = $(alloc(Thread), initWithFunction, run, self);
+    self->locals.condition = $(alloc(Condition), init);
+    self->locals.lock = $(alloc(Lock), init);
+    self->locals.tasks = $(alloc(MutableArray), init);
+    self->locals.thread = $(alloc(Thread), initWithFunction, run, self);
 
-		$(self->locals.thread, start);
-	}
+    $(self->locals.thread, start);
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -289,22 +289,22 @@ static URLSession *initWithConfiguration(URLSession *self, URLSessionConfigurati
  */
 static void invalidateAndCancel(URLSession *self) {
 
-	if (self->locals.thread->isCancelled) {
-		return;
-	}
+  if (self->locals.thread->isCancelled) {
+    return;
+  }
 
-	Array *tasks = $(self, tasks);
+  Array *tasks = $(self, tasks);
 
-	for (size_t i = 0; i < tasks->count; i++) {
+  for (size_t i = 0; i < tasks->count; i++) {
 
-		URLSessionTask *task = $(tasks, objectAtIndex, i);
-		$(task, cancel);
-	}
+    URLSessionTask *task = $(tasks, objectAtIndex, i);
+    $(task, cancel);
+  }
 
-	release(tasks);
+  release(tasks);
 
-	$(self->locals.thread, cancel);
-	$(self->locals.condition, signal);
+  $(self->locals.thread, cancel);
+  $(self->locals.condition, signal);
 }
 
 static URLSession *_sharedInstance;
@@ -315,13 +315,13 @@ static URLSession *_sharedInstance;
  */
 static URLSession *sharedInstance(void) {
 
-	static Once once;
+  static Once once;
 
-	do_once(&once, {
-		_sharedInstance = $(alloc(URLSession), init);
-	});
+  do_once(&once, {
+    _sharedInstance = $(alloc(URLSession), init);
+  });
 
-	return _sharedInstance;
+  return _sharedInstance;
 }
 
 /**
@@ -330,13 +330,13 @@ static URLSession *sharedInstance(void) {
  */
 static Array *tasks(const URLSession *self) {
 
-	Array *array;
+  Array *array;
 
-	synchronized(self->locals.lock, {
-		array = $$(Array, arrayWithArray, (Array *) self->locals.tasks);
-	});
+  synchronized(self->locals.lock, {
+    array = $$(Array, arrayWithArray, (Array *) self->locals.tasks);
+  });
 
-	return array;
+  return array;
 }
 
 /**
@@ -345,7 +345,7 @@ static Array *tasks(const URLSession *self) {
  */
 static URLSessionUploadTask *uploadTaskWithRequest(URLSession *self, URLRequest *request, URLSessionTaskCompletion completion) {
 
-	return taskWithRequest(self, alloc(URLSessionUploadTask), request, completion);
+  return taskWithRequest(self, alloc(URLSessionUploadTask), request, completion);
 }
 
 #pragma mark - Class lifecycle
@@ -355,21 +355,21 @@ static URLSessionUploadTask *uploadTaskWithRequest(URLSession *self, URLRequest 
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((URLSessionInterface *) clazz->interface)->dataTaskWithRequest = dataTaskWithRequest;
-	((URLSessionInterface *) clazz->interface)->dataTaskWithURL = dataTaskWithURL;
-	((URLSessionInterface *) clazz->interface)->downloadTaskWithRequest = downloadTaskWithRequest;
-	((URLSessionInterface *) clazz->interface)->downloadTaskWithURL = downloadTaskWithURL;
-	((URLSessionInterface *) clazz->interface)->init = init;
-	((URLSessionInterface *) clazz->interface)->initWithConfiguration = initWithConfiguration;
-	((URLSessionInterface *) clazz->interface)->invalidateAndCancel = invalidateAndCancel;
-	((URLSessionInterface *) clazz->interface)->sharedInstance = sharedInstance;
-	((URLSessionInterface *) clazz->interface)->tasks = tasks;
-	((URLSessionInterface *) clazz->interface)->uploadTaskWithRequest = uploadTaskWithRequest;
+  ((URLSessionInterface *) clazz->interface)->dataTaskWithRequest = dataTaskWithRequest;
+  ((URLSessionInterface *) clazz->interface)->dataTaskWithURL = dataTaskWithURL;
+  ((URLSessionInterface *) clazz->interface)->downloadTaskWithRequest = downloadTaskWithRequest;
+  ((URLSessionInterface *) clazz->interface)->downloadTaskWithURL = downloadTaskWithURL;
+  ((URLSessionInterface *) clazz->interface)->init = init;
+  ((URLSessionInterface *) clazz->interface)->initWithConfiguration = initWithConfiguration;
+  ((URLSessionInterface *) clazz->interface)->invalidateAndCancel = invalidateAndCancel;
+  ((URLSessionInterface *) clazz->interface)->sharedInstance = sharedInstance;
+  ((URLSessionInterface *) clazz->interface)->tasks = tasks;
+  ((URLSessionInterface *) clazz->interface)->uploadTaskWithRequest = uploadTaskWithRequest;
 
-	const CURLcode code = curl_global_init(CURL_GLOBAL_ALL);
-	assert(code == CURLE_OK);
+  const CURLcode code = curl_global_init(CURL_GLOBAL_ALL);
+  assert(code == CURLE_OK);
 }
 
 /**
@@ -377,9 +377,9 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	_sharedInstance = release(_sharedInstance);
+  _sharedInstance = release(_sharedInstance);
 
-	curl_global_cleanup();
+  curl_global_cleanup();
 }
 
 /**
@@ -387,22 +387,22 @@ static void destroy(Class *clazz) {
  * @memberof URLSession
  */
 Class *_URLSession(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "URLSession",
-			.superclass = _Object(),
-			.instanceSize = sizeof(URLSession),
-			.interfaceOffset = offsetof(URLSession, interface),
-			.interfaceSize = sizeof(URLSessionInterface),
-			.initialize = initialize,
-			.destroy = destroy,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "URLSession",
+      .superclass = _Object(),
+      .instanceSize = sizeof(URLSession),
+      .interfaceOffset = offsetof(URLSession, interface),
+      .interfaceSize = sizeof(URLSessionInterface),
+      .initialize = initialize,
+      .destroy = destroy,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

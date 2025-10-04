@@ -35,19 +35,19 @@
  */
 static Object *copy(const Object *self) {
 
-	URLRequest *this = (URLRequest *) self;
+  URLRequest *this = (URLRequest *) self;
 
-	URLRequest *that = $(alloc(URLRequest), initWithURL, this->url);
+  URLRequest *that = $(alloc(URLRequest), initWithURL, this->url);
 
-	if (this->httpBody) {
-		that->httpBody = (Data *) $((Object *) this->httpBody, copy);
-	}
+  if (this->httpBody) {
+    that->httpBody = (Data *) $((Object *) this->httpBody, copy);
+  }
 
-	if (this->httpHeaders) {
-		that->httpHeaders = (Dictionary *) $((Object *) this->httpHeaders, copy);
-	}
+  if (this->httpHeaders) {
+    that->httpHeaders = (Dictionary *) $((Object *) this->httpHeaders, copy);
+  }
 
-	return (Object *) that;
+  return (Object *) that;
 }
 
 /**
@@ -55,13 +55,13 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	URLRequest *this = (URLRequest *) self;
+  URLRequest *this = (URLRequest *) self;
 
-	release(this->httpBody);
-	release(this->httpHeaders);
-	release(this->url);
+  release(this->httpBody);
+  release(this->httpHeaders);
+  release(this->url);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 #pragma mark - URLRequest
@@ -72,14 +72,14 @@ static void dealloc(Object *self) {
  */
 static URLRequest *initWithURL(URLRequest *self, URL *url) {
 
-	assert(url);
+  assert(url);
 
-	self = (URLRequest *) super(Object, self, init);
-	if (self) {
-		self->url = retain(url);
-	}
+  self = (URLRequest *) super(Object, self, init);
+  if (self) {
+    self->url = retain(url);
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -88,17 +88,17 @@ static URLRequest *initWithURL(URLRequest *self, URL *url) {
  */
 static void setValueForHTTPHeaderField(URLRequest *self, const char *value, const char *field) {
 
-	if (self->httpHeaders == NULL) {
-		self->httpHeaders = (Dictionary *) $(alloc(MutableDictionary), init);
-	}
+  if (self->httpHeaders == NULL) {
+    self->httpHeaders = (Dictionary *) $(alloc(MutableDictionary), init);
+  }
 
-	String *object = str(value);
-	String *key = str(field);
+  String *object = str(value);
+  String *key = str(field);
 
-	$((MutableDictionary *) self->httpHeaders, setObjectForKey, object, key);
+  $((MutableDictionary *) self->httpHeaders, setObjectForKey, object, key);
 
-	release(object);
-	release(key);
+  release(object);
+  release(key);
 }
 
 #pragma mark - Class lifecycle
@@ -108,11 +108,11 @@ static void setValueForHTTPHeaderField(URLRequest *self, const char *value, cons
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((URLRequestInterface *) clazz->interface)->initWithURL = initWithURL;
-	((URLRequestInterface *) clazz->interface)->setValueForHTTPHeaderField = setValueForHTTPHeaderField;
+  ((URLRequestInterface *) clazz->interface)->initWithURL = initWithURL;
+  ((URLRequestInterface *) clazz->interface)->setValueForHTTPHeaderField = setValueForHTTPHeaderField;
 }
 
 /**
@@ -120,21 +120,21 @@ static void initialize(Class *clazz) {
  * @memberof URLRequest
  */
 Class *_URLRequest(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "URLRequest",
-			.superclass = _Object(),
-			.instanceSize = sizeof(URLRequest),
-			.interfaceOffset = offsetof(URLRequest, interface),
-			.interfaceSize = sizeof(URLRequestInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "URLRequest",
+      .superclass = _Object(),
+      .instanceSize = sizeof(URLRequest),
+      .interfaceOffset = offsetof(URLRequest, interface),
+      .interfaceSize = sizeof(URLRequestInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

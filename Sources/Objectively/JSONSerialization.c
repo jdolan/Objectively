@@ -42,9 +42,9 @@
  * @brief A writer for generating JSON Data.
  */
 typedef struct {
-	MutableData *data;
-	int options;
-	size_t depth;
+  MutableData *data;
+  int options;
+  size_t depth;
 } JSONWriter;
 
 static void writeElement(JSONWriter *writer, const ident obj);
@@ -56,7 +56,7 @@ static void writeElement(JSONWriter *writer, const ident obj);
  */
 static void writeNull(JSONWriter *writer, const Null *null) {
 
-	$(writer->data, appendBytes, (uint8_t *) "null", 4);
+  $(writer->data, appendBytes, (uint8_t *) "null", 4);
 }
 
 /**
@@ -66,11 +66,11 @@ static void writeNull(JSONWriter *writer, const Null *null) {
  */
 static void writeBoole(JSONWriter *writer, const Boole *boolean) {
 
-	if (boolean->value) {
-		$(writer->data, appendBytes, (uint8_t *) "true", 4);
-	} else {
-		$(writer->data, appendBytes, (uint8_t *) "false", 5);
-	}
+  if (boolean->value) {
+    $(writer->data, appendBytes, (uint8_t *) "true", 4);
+  } else {
+    $(writer->data, appendBytes, (uint8_t *) "false", 5);
+  }
 }
 
 /**
@@ -80,9 +80,9 @@ static void writeBoole(JSONWriter *writer, const Boole *boolean) {
  */
 static void writeString(JSONWriter *writer, const String *string) {
 
-	$(writer->data, appendBytes, (uint8_t *) "\"", 1);
-	$(writer->data, appendBytes, (uint8_t *) string->chars, string->length);
-	$(writer->data, appendBytes, (uint8_t *) "\"", 1);
+  $(writer->data, appendBytes, (uint8_t *) "\"", 1);
+  $(writer->data, appendBytes, (uint8_t *) string->chars, string->length);
+  $(writer->data, appendBytes, (uint8_t *) "\"", 1);
 }
 
 /**
@@ -92,11 +92,11 @@ static void writeString(JSONWriter *writer, const String *string) {
  */
 static void writeNumber(JSONWriter *writer, const Number *number) {
 
-	String *string = $(alloc(String), initWithFormat, "%g", number->value);
+  String *string = $(alloc(String), initWithFormat, "%g", number->value);
 
-	$(writer->data, appendBytes, (uint8_t *) string->chars, string->length);
+  $(writer->data, appendBytes, (uint8_t *) string->chars, string->length);
 
-	release(string);
+  release(string);
 }
 
 /**
@@ -106,8 +106,8 @@ static void writeNumber(JSONWriter *writer, const Number *number) {
  */
 static void writeLabel(JSONWriter *writer, const String *label) {
 
-	writeString(writer, label);
-	$(writer->data, appendBytes, (uint8_t *) ": ", 2);
+  writeString(writer, label);
+  $(writer->data, appendBytes, (uint8_t *) ": ", 2);
 }
 
 /**
@@ -116,12 +116,12 @@ static void writeLabel(JSONWriter *writer, const String *label) {
  */
 static void writePretty(JSONWriter *writer) {
 
-	if (writer->options & JSON_WRITE_PRETTY) {
-		$(writer->data, appendBytes, (uint8_t *) "\n", 1);
-		for (size_t i = 0; i < writer->depth; i++) {
-			$(writer->data, appendBytes, (uint8_t *) "  ", 2);
-		}
-	}
+  if (writer->options & JSON_WRITE_PRETTY) {
+    $(writer->data, appendBytes, (uint8_t *) "\n", 1);
+    for (size_t i = 0; i < writer->depth; i++) {
+      $(writer->data, appendBytes, (uint8_t *) "  ", 2);
+    }
+  }
 }
 
 /**
@@ -131,37 +131,37 @@ static void writePretty(JSONWriter *writer) {
  */
 static void writeObject(JSONWriter *writer, const Dictionary *object) {
 
-	$(writer->data, appendBytes, (uint8_t * ) "{", 1);
-	writer->depth++;
+  $(writer->data, appendBytes, (uint8_t * ) "{", 1);
+  writer->depth++;
 
-	Array *keys = $(object, allKeys);
-	if (writer->options & JSON_WRITE_SORTED) {
-		Array *sorted = $(keys, sortedArray, StringCompare);
-		release(keys);
-		keys = sorted;
-	}
+  Array *keys = $(object, allKeys);
+  if (writer->options & JSON_WRITE_SORTED) {
+    Array *sorted = $(keys, sortedArray, StringCompare);
+    release(keys);
+    keys = sorted;
+  }
 
-	for (size_t i = 0; i < keys->count; i++) {
+  for (size_t i = 0; i < keys->count; i++) {
 
-		writePretty(writer);
+    writePretty(writer);
 
-		const ident key = $(keys, objectAtIndex, i);
-		writeLabel(writer, (String *) key);
+    const ident key = $(keys, objectAtIndex, i);
+    writeLabel(writer, (String *) key);
 
-		const ident obj = $(object, objectForKey, key);
-		writeElement(writer, obj);
+    const ident obj = $(object, objectForKey, key);
+    writeElement(writer, obj);
 
-		if (i < keys->count - 1) {
-			$(writer->data, appendBytes, (uint8_t *) ",", 1);
-		}
-	}
+    if (i < keys->count - 1) {
+      $(writer->data, appendBytes, (uint8_t *) ",", 1);
+    }
+  }
 
-	release(keys);
+  release(keys);
 
-	writer->depth--;
-	writePretty(writer);
+  writer->depth--;
+  writePretty(writer);
 
-	$(writer->data, appendBytes, (uint8_t * ) "}", 1);
+  $(writer->data, appendBytes, (uint8_t * ) "}", 1);
 }
 
 /**
@@ -171,24 +171,24 @@ static void writeObject(JSONWriter *writer, const Dictionary *object) {
  */
 static void writeArray(JSONWriter *writer, const Array *array) {
 
-	$(writer->data, appendBytes, (uint8_t * ) "[", 1);
-	writer->depth++;
+  $(writer->data, appendBytes, (uint8_t * ) "[", 1);
+  writer->depth++;
 
-	for (size_t i = 0; i < array->count; i++) {
+  for (size_t i = 0; i < array->count; i++) {
 
-		writePretty(writer);
-		
-		writeElement(writer, $(array, objectAtIndex, i));
+    writePretty(writer);
+    
+    writeElement(writer, $(array, objectAtIndex, i));
 
-		if (i < array->count - 1) {
-			$(writer->data, appendBytes, (uint8_t *) ",", 1);
-		}
-	}
+    if (i < array->count - 1) {
+      $(writer->data, appendBytes, (uint8_t *) ",", 1);
+    }
+  }
 
-	writer->depth--;
-	writePretty(writer);
+  writer->depth--;
+  writePretty(writer);
 
-	$(writer->data, appendBytes, (uint8_t * ) "]", 1);
+  $(writer->data, appendBytes, (uint8_t * ) "]", 1);
 }
 
 /**
@@ -198,22 +198,22 @@ static void writeArray(JSONWriter *writer, const Array *array) {
  */
 static void writeElement(JSONWriter *writer, const ident obj) {
 
-	const Object *object = cast(Object, obj);
-	if (object) {
-		if ($(object, isKindOfClass, _Dictionary())) {
-			writeObject(writer, (const Dictionary *) object);
-		} else if ($(object, isKindOfClass, _Array())) {
-			writeArray(writer, (const Array *) object);
-		} else if ($(object, isKindOfClass, _String())) {
-			writeString(writer, (const String *) object);
-		} else if ($(object, isKindOfClass, _Number())) {
-			writeNumber(writer, (const Number *) object);
-		} else if ($(object, isKindOfClass, _Boole())) {
-			writeBoole(writer, (const Boole *) object);
-		} else if ($(object, isKindOfClass, _Null())) {
-			writeNull(writer, (const Null *) object);
-		}
-	}
+  const Object *object = cast(Object, obj);
+  if (object) {
+    if ($(object, isKindOfClass, _Dictionary())) {
+      writeObject(writer, (const Dictionary *) object);
+    } else if ($(object, isKindOfClass, _Array())) {
+      writeArray(writer, (const Array *) object);
+    } else if ($(object, isKindOfClass, _String())) {
+      writeString(writer, (const String *) object);
+    } else if ($(object, isKindOfClass, _Number())) {
+      writeNumber(writer, (const Number *) object);
+    } else if ($(object, isKindOfClass, _Boole())) {
+      writeBoole(writer, (const Boole *) object);
+    } else if ($(object, isKindOfClass, _Null())) {
+      writeNull(writer, (const Null *) object);
+    }
+  }
 }
 
 /**
@@ -222,27 +222,27 @@ static void writeElement(JSONWriter *writer, const ident obj) {
  */
 static Data *dataFromObject(const ident obj, int options) {
 
-	if (obj) {
-		JSONWriter writer = {
-			.data = $(alloc(MutableData), init),
-			.options = options
-		};
+  if (obj) {
+    JSONWriter writer = {
+      .data = $(alloc(MutableData), init),
+      .options = options
+    };
 
-		writeObject(&writer, obj);
+    writeObject(&writer, obj);
 
-		return (Data *) writer.data;
-	}
+    return (Data *) writer.data;
+  }
 
-	return NULL;
+  return NULL;
 }
 
 /**
  * @brief A reader for parsing JSON Data.
  */
 typedef struct {
-	const Data *data;
-	int options;
-	uint8_t *b;
+  const Data *data;
+  int options;
+  uint8_t *b;
 } JSONReader;
 
 static ident readElement(JSONReader *reader);
@@ -253,17 +253,17 @@ static ident readElement(JSONReader *reader);
  */
 static int readByte(JSONReader *reader) {
 
-	if (reader->b) {
-		if (reader->b - reader->data->bytes < reader->data->length) {
-			return (int) *(++(reader->b));
-		}
-	} else {
-		if (reader->data->bytes) {
-			return (int) *(reader->b = reader->data->bytes);
-		}
-	}
+  if (reader->b) {
+    if (reader->b - reader->data->bytes < reader->data->length) {
+      return (int) *(++(reader->b));
+    }
+  } else {
+    if (reader->data->bytes) {
+      return (int) *(reader->b = reader->data->bytes);
+    }
+  }
 
-	return -1;
+  return -1;
 }
 
 /**
@@ -274,16 +274,16 @@ static int readByte(JSONReader *reader) {
  */
 static int readByteUntil(JSONReader *reader, const char *stop) {
 
-	int b;
+  int b;
 
-	while (true) {
-		b = readByte(reader);
-		if (b == -1 || strchr(stop, b)) {
-			break;
-		}
-	}
+  while (true) {
+    b = readByte(reader);
+    if (b == -1 || strchr(stop, b)) {
+      break;
+    }
+  }
 
-	return b;
+  return b;
 }
 
 /**
@@ -293,10 +293,10 @@ static int readByteUntil(JSONReader *reader, const char *stop) {
  */
 static void consumeBytes(JSONReader *reader, const char *bytes) {
 
-	for (size_t i = 1; i < strlen(bytes); i++) {
-		int b = readByte(reader);
-		assert(b == bytes[i]);
-	}
+  for (size_t i = 1; i < strlen(bytes); i++) {
+    int b = readByte(reader);
+    assert(b == bytes[i]);
+  }
 }
 
 /**
@@ -306,13 +306,13 @@ static void consumeBytes(JSONReader *reader, const char *bytes) {
  */
 static String *readString(JSONReader *reader) {
 
-	uint8_t *bytes = reader->b;
+  uint8_t *bytes = reader->b;
 
-	const int b = readByteUntil(reader, "\"");
-	assert(b == '"');
+  const int b = readByteUntil(reader, "\"");
+  assert(b == '"');
 
-	const size_t length = reader->b - bytes - 1;
-	return $$(String, stringWithBytes, bytes + 1, length, STRING_ENCODING_UTF8);
+  const size_t length = reader->b - bytes - 1;
+  return $$(String, stringWithBytes, bytes + 1, length, STRING_ENCODING_UTF8);
 }
 
 /**
@@ -322,15 +322,15 @@ static String *readString(JSONReader *reader) {
  */
 static Number *readNumber(JSONReader *reader) {
 
-	uint8_t *bytes = reader->b;
+  uint8_t *bytes = reader->b;
 
-	uint8_t *end;
-	double d = strtod((char *) bytes, (char **) &end);
+  uint8_t *end;
+  double d = strtod((char *) bytes, (char **) &end);
 
-	assert(end > bytes);
-	reader->b = end - 1;
+  assert(end > bytes);
+  reader->b = end - 1;
 
-	return $$(Number, numberWithValue, d);
+  return $$(Number, numberWithValue, d);
 }
 
 /**
@@ -340,22 +340,22 @@ static Number *readNumber(JSONReader *reader) {
  */
 static bool *readBoole(JSONReader *reader) {
 
-	Boole *boolean = NULL;
+  Boole *boolean = NULL;
 
-	switch (*reader->b) {
-		case 't':
-			consumeBytes(reader, "true");
-			boolean = $$(Boole, True);
-			break;
-		case 'f':
-			consumeBytes(reader, "false");
-			boolean = $$(Boole, False);
-			break;
-		default:
-			assert(false);
-	}
+  switch (*reader->b) {
+    case 't':
+      consumeBytes(reader, "true");
+      boolean = $$(Boole, True);
+      break;
+    case 'f':
+      consumeBytes(reader, "false");
+      boolean = $$(Boole, False);
+      break;
+    default:
+      assert(false);
+  }
 
-	return retain(boolean);
+  return retain(boolean);
 }
 
 /**
@@ -365,11 +365,11 @@ static bool *readBoole(JSONReader *reader) {
  */
 static Null *readNull(JSONReader *reader) {
 
-	consumeBytes(reader, "null");
+  consumeBytes(reader, "null");
 
-	Null *null = $$(Null, null);
+  Null *null = $$(Null, null);
 
-	return retain(null);
+  return retain(null);
 }
 
 /**
@@ -379,14 +379,14 @@ static Null *readNull(JSONReader *reader) {
  */
 static String *readLabel(JSONReader *reader) {
 
-	const int b = readByteUntil(reader, "\"}");
-	if (b == '"') {
-		return readString(reader);
-	} if (b == '}') {
-		reader->b--;
-	}
+  const int b = readByteUntil(reader, "\"}");
+  if (b == '"') {
+    return readString(reader);
+  } if (b == '}') {
+    reader->b--;
+  }
 
-	return NULL;
+  return NULL;
 }
 
 /**
@@ -396,30 +396,30 @@ static String *readLabel(JSONReader *reader) {
  */
 static Dictionary *readObject(JSONReader *reader) {
 
-	MutableDictionary *object = $(alloc(MutableDictionary), init);
+  MutableDictionary *object = $(alloc(MutableDictionary), init);
 
-	while (true) {
+  while (true) {
 
-		String *key = readLabel(reader);
-		if (key == NULL) {
-			const int b = readByteUntil(reader, "}");
-			assert(b == '}');
-			break;
-		}
+    String *key = readLabel(reader);
+    if (key == NULL) {
+      const int b = readByteUntil(reader, "}");
+      assert(b == '}');
+      break;
+    }
 
-		const int b = readByteUntil(reader, ":");
-		assert(b == ':');
+    const int b = readByteUntil(reader, ":");
+    assert(b == ':');
 
-		ident obj = readElement(reader);
-		assert(obj);
+    ident obj = readElement(reader);
+    assert(obj);
 
-		$(object, setObjectForKey, obj, key);
+    $(object, setObjectForKey, obj, key);
 
-		release(key);
-		release(obj);
-	}
+    release(key);
+    release(obj);
+  }
 
-	return (Dictionary *) object;
+  return (Dictionary *) object;
 }
 
 /**
@@ -429,23 +429,23 @@ static Dictionary *readObject(JSONReader *reader) {
  */
 static Array *readArray(JSONReader *reader) {
 
-	MutableArray *array = $(alloc(MutableArray), init);
+  MutableArray *array = $(alloc(MutableArray), init);
 
-	while (true) {
+  while (true) {
 
-		Object *obj = readElement(reader);
-		if (obj == NULL) {
-			const int b = readByteUntil(reader, "]");
-			assert(b == ']');
-			break;
-		}
+    Object *obj = readElement(reader);
+    if (obj == NULL) {
+      const int b = readByteUntil(reader, "]");
+      assert(b == ']');
+      break;
+    }
 
-		$(array, addObject, obj);
+    $(array, addObject, obj);
 
-		release(obj);
-	}
+    release(obj);
+  }
 
-	return (Array *) array;
+  return (Array *) array;
 }
 
 /**
@@ -455,24 +455,24 @@ static Array *readArray(JSONReader *reader) {
  */
 static ident readElement(JSONReader *reader) {
 
-	const int b = readByteUntil(reader, "{[\"tfn0123456789.-]}");
-	if (b == '{') {
-		return readObject(reader);
-	} else if (b == '[') {
-		return readArray(reader);
-	} else if (b == '\"') {
-		return readString(reader);
-	} else if (b == 't' || b == 'f') {
-		return readBoole(reader);
-	} else if (b == 'n') {
-		return readNull(reader);
-	} else if (b == '.' || b == '-' || isdigit(b)) {
-		return readNumber(reader);
-	} else if (b == ']' || b == '}') {
-		reader->b--;
-	}
+  const int b = readByteUntil(reader, "{[\"tfn0123456789.-]}");
+  if (b == '{') {
+    return readObject(reader);
+  } else if (b == '[') {
+    return readArray(reader);
+  } else if (b == '\"') {
+    return readString(reader);
+  } else if (b == 't' || b == 'f') {
+    return readBoole(reader);
+  } else if (b == 'n') {
+    return readNull(reader);
+  } else if (b == '.' || b == '-' || isdigit(b)) {
+    return readNumber(reader);
+  } else if (b == ']' || b == '}') {
+    reader->b--;
+  }
 
-	return NULL;
+  return NULL;
 }
 
 /**
@@ -481,16 +481,16 @@ static ident readElement(JSONReader *reader) {
  */
 static ident objectFromData(const Data *data, int options) {
 
-	if (data && data->length) {
-		JSONReader reader = {
-			.data = data,
-			.options = options
-		};
+  if (data && data->length) {
+    JSONReader reader = {
+      .data = data,
+      .options = options
+    };
 
-		return readElement(&reader);
-	}
+    return readElement(&reader);
+  }
 
-	return NULL;
+  return NULL;
 }
 
 #pragma mark - Class lifecycle
@@ -500,8 +500,8 @@ static ident objectFromData(const Data *data, int options) {
  */
 static void initialize(Class *clazz) {
 
-	((JSONSerializationInterface *) clazz->interface)->dataFromObject = dataFromObject;
-	((JSONSerializationInterface *) clazz->interface)->objectFromData = objectFromData;
+  ((JSONSerializationInterface *) clazz->interface)->dataFromObject = dataFromObject;
+  ((JSONSerializationInterface *) clazz->interface)->objectFromData = objectFromData;
 }
 
 /**
@@ -509,21 +509,21 @@ static void initialize(Class *clazz) {
  * @memberof JSONSerialization
  */
 Class *_JSONSerialization(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "JSONSerialization",
-			.superclass = _Object(),
-			.instanceSize = sizeof(JSONSerialization),
-			.interfaceOffset = offsetof(JSONSerialization, interface),
-			.interfaceSize = sizeof(JSONSerializationInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "JSONSerialization",
+      .superclass = _Object(),
+      .instanceSize = sizeof(JSONSerialization),
+      .interfaceOffset = offsetof(JSONSerialization, interface),
+      .interfaceSize = sizeof(JSONSerializationInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

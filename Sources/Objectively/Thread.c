@@ -38,7 +38,7 @@
  * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
-	return NULL;
+  return NULL;
 }
 
 /**
@@ -46,13 +46,13 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	Thread *this = (Thread *) self;
+  Thread *this = (Thread *) self;
 
-	assert(this->isExecuting == false);
+  assert(this->isExecuting == false);
 
-	free(this->thread);
+  free(this->thread);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 #pragma mark - Thread
@@ -63,12 +63,12 @@ static void dealloc(Object *self) {
  */
 static void cancel(Thread *self) {
 
-	assert(self->isCancelled == false);
+  assert(self->isCancelled == false);
 
-	// int err = pthread_cancel(*((pthread_t *) self->thread));
-	// assert(err == 0);
+  // int err = pthread_cancel(*((pthread_t *) self->thread));
+  // assert(err == 0);
 
-	self->isCancelled = true;
+  self->isCancelled = true;
 }
 
 static __thread Thread *_currentThread;
@@ -79,7 +79,7 @@ static __thread Thread *_currentThread;
  */
 static Thread *currentThread(void) {
 
-	return _currentThread;
+  return _currentThread;
 }
 
 /**
@@ -88,12 +88,12 @@ static Thread *currentThread(void) {
  */
 static void detach(Thread *self) {
 
-	assert(self->isDetached == false);
+  assert(self->isDetached == false);
 
-	int err = pthread_detach(*((pthread_t *) self->thread));
-	assert(err == 0);
+  int err = pthread_detach(*((pthread_t *) self->thread));
+  assert(err == 0);
 
-	self->isDetached = true;
+  self->isDetached = true;
 }
 
 /**
@@ -102,7 +102,7 @@ static void detach(Thread *self) {
  */
 static Thread *init(Thread *self) {
 
-	return $(self, initWithFunction, NULL, NULL);
+  return $(self, initWithFunction, NULL, NULL);
 }
 
 /**
@@ -111,16 +111,16 @@ static Thread *init(Thread *self) {
  */
 static Thread *initWithFunction(Thread *self, ThreadFunction function, ident data) {
 
-	self = (Thread *) super(Object, self, init);
-	if (self) {
-		self->function = function;
-		self->data = data;
+  self = (Thread *) super(Object, self, init);
+  if (self) {
+    self->function = function;
+    self->data = data;
 
-		self->thread = calloc(1, sizeof(pthread_t));
-		assert(self->thread);
-	}
+    self->thread = calloc(1, sizeof(pthread_t));
+    assert(self->thread);
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -129,8 +129,8 @@ static Thread *initWithFunction(Thread *self, ThreadFunction function, ident dat
  */
 static void join(Thread *self, ident *status) {
 
-	int err = pthread_join(*((pthread_t *) self->thread), status);
-	assert(err == 0);
+  int err = pthread_join(*((pthread_t *) self->thread), status);
+  assert(err == 0);
 }
 
 /**
@@ -139,8 +139,8 @@ static void join(Thread *self, ident *status) {
  */
 static void _kill(Thread *self, int signal) {
 
-	int err = pthread_kill(*((pthread_t *) self->thread), signal);
-	assert(err == 0);
+  int err = pthread_kill(*((pthread_t *) self->thread), signal);
+  assert(err == 0);
 }
 
 /**
@@ -148,17 +148,17 @@ static void _kill(Thread *self, int signal) {
  */
 static ident run(ident obj) {
 
-	Thread *self = _currentThread = (Thread *) obj;
+  Thread *self = _currentThread = (Thread *) obj;
 
-	self->isExecuting = true;
+  self->isExecuting = true;
 
-	ident ret = self->function(self);
+  ident ret = self->function(self);
 
-	self->isFinished = true;
+  self->isFinished = true;
 
-	self->isExecuting = false;
+  self->isExecuting = false;
 
-	return ret;
+  return ret;
 }
 
 /**
@@ -167,15 +167,15 @@ static ident run(ident obj) {
  */
 static void start(Thread *self) {
 
-	assert(self->function);
+  assert(self->function);
 
-	assert(self->isCancelled == false);
-	assert(self->isDetached == false);
-	assert(self->isExecuting == false);
-	assert(self->isFinished == false);
+  assert(self->isCancelled == false);
+  assert(self->isDetached == false);
+  assert(self->isExecuting == false);
+  assert(self->isFinished == false);
 
-	int err = pthread_create(self->thread, NULL, run, self);
-	assert(err == 0);
+  int err = pthread_create(self->thread, NULL, run, self);
+  assert(err == 0);
 }
 
 #pragma mark - Class lifecycle
@@ -185,17 +185,17 @@ static void start(Thread *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((ThreadInterface *) clazz->interface)->cancel = cancel;
-	((ThreadInterface *) clazz->interface)->currentThread = currentThread;
-	((ThreadInterface *) clazz->interface)->detach = detach;
-	((ThreadInterface *) clazz->interface)->init = init;
-	((ThreadInterface *) clazz->interface)->initWithFunction = initWithFunction;
-	((ThreadInterface *) clazz->interface)->join = join;
-	((ThreadInterface *) clazz->interface)->kill = _kill;
-	((ThreadInterface *) clazz->interface)->start = start;
+  ((ThreadInterface *) clazz->interface)->cancel = cancel;
+  ((ThreadInterface *) clazz->interface)->currentThread = currentThread;
+  ((ThreadInterface *) clazz->interface)->detach = detach;
+  ((ThreadInterface *) clazz->interface)->init = init;
+  ((ThreadInterface *) clazz->interface)->initWithFunction = initWithFunction;
+  ((ThreadInterface *) clazz->interface)->join = join;
+  ((ThreadInterface *) clazz->interface)->kill = _kill;
+  ((ThreadInterface *) clazz->interface)->start = start;
 }
 
 /**
@@ -203,21 +203,21 @@ static void initialize(Class *clazz) {
  * @memberof Thread
  */
 Class *_Thread(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Thread",
-			.superclass = _Object(),
-			.instanceSize = sizeof(Thread),
-			.interfaceOffset = offsetof(Thread, interface),
-			.interfaceSize = sizeof(ThreadInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Thread",
+      .superclass = _Object(),
+      .instanceSize = sizeof(Thread),
+      .interfaceOffset = offsetof(Thread, interface),
+      .interfaceSize = sizeof(ThreadInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

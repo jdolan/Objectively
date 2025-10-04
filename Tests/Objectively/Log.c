@@ -27,46 +27,46 @@
 #include "Objectively.h"
 
 START_TEST(_log) {
-	
-	Log *log = $(alloc(Log), initWithName, "test");
-	ck_assert(log != NULL);
+  
+  Log *log = $(alloc(Log), initWithName, "test");
+  ck_assert(log != NULL);
 
-	ck_assert_str_eq("test", log->name);
+  ck_assert_str_eq("test", log->name);
 
-	log->file = fopen("/tmp/objectively-test.log", "w");
-	ck_assert(log->file != NULL);
-	ck_assert_int_eq(0, ftell(log->file));
+  log->file = fopen("/tmp/objectively-test.log", "w");
+  ck_assert(log->file != NULL);
+  ck_assert_int_eq(0, ftell(log->file));
 
-	$(log, info, "hello %s", "world!");
-	$(log, flush);
+  $(log, info, "hello %s", "world!");
+  $(log, flush);
 
-	long int len = ftell(log->file);
-	ck_assert_int_gt(len, 0);
+  long int len = ftell(log->file);
+  ck_assert_int_gt(len, 0);
 
-	$(log, debug, "hello again");
-	$(log, flush);
+  $(log, debug, "hello again");
+  $(log, flush);
 
-	long int len2 = ftell(log->file);
-	ck_assert_int_eq(len, len2);
+  long int len2 = ftell(log->file);
+  ck_assert_int_eq(len, len2);
 
-	release(log);
+  release(log);
 
 } END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("Log");
-	tcase_add_test(tcase, _log);
+  TCase *tcase = tcase_create("Log");
+  tcase_add_test(tcase, _log);
 
-	Suite *suite = suite_create("Log");
-	suite_add_tcase(suite, tcase);
+  Suite *suite = suite_create("Log");
+  suite_add_tcase(suite, tcase);
 
-	SRunner *runner = srunner_create(suite);
+  SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_VERBOSE);
-	int failed = srunner_ntests_failed(runner);
+  srunner_run_all(runner, CK_VERBOSE);
+  int failed = srunner_ntests_failed(runner);
 
-	srunner_free(runner);
+  srunner_free(runner);
 
-	return failed;
+  return failed;
 }

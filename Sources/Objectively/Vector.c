@@ -41,14 +41,14 @@
  */
 static Object *copy(const Object *self) {
 
-	const Vector *this = (Vector *) self;
+  const Vector *this = (Vector *) self;
 
-	Vector *copy = (Vector *) $(self, copy);
+  Vector *copy = (Vector *) $(self, copy);
 
-	copy->elements = malloc(this->capacity * this->size);
-	memcpy(copy->elements, this->elements, this->count * this->size);
+  copy->elements = malloc(this->capacity * this->size);
+  memcpy(copy->elements, this->elements, this->count * this->size);
 
-	return (Object *) copy;
+  return (Object *) copy;
 }
 
 /**
@@ -56,11 +56,11 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	Vector *this = (Vector *) self;
+  Vector *this = (Vector *) self;
 
-	free(this->elements);
+  free(this->elements);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 /**
@@ -68,14 +68,14 @@ static void dealloc(Object *self) {
  */
 static int hash(const Object *self) {
 
-	Vector *this = (Vector *) self;
+  Vector *this = (Vector *) self;
 
-	const Range range = {
-		.location = 0,
-		.length = this->count * this->size
-	};
+  const Range range = {
+    .location = 0,
+    .length = this->count * this->size
+  };
 
-	return HashForBytes(HASH_SEED, this->elements, range);
+  return HashForBytes(HASH_SEED, this->elements, range);
 }
 
 /**
@@ -83,21 +83,21 @@ static int hash(const Object *self) {
  */
 static bool isEqual(const Object *self, const Object *other) {
 
-	if (super(Object, self, isEqual, other)) {
-		return true;
-	}
+  if (super(Object, self, isEqual, other)) {
+    return true;
+  }
 
-	if (other && $(other, isKindOfClass, _Vector())) {
+  if (other && $(other, isKindOfClass, _Vector())) {
 
-		const Vector *this = (Vector *) self;
-		const Vector *that = (Vector *) other;
+    const Vector *this = (Vector *) self;
+    const Vector *that = (Vector *) other;
 
-		if (this->count == that->count) {
-			return memcmp(this->elements, that->elements, this->count * this->size) == 0;
-		}
-	}
+    if (this->count == that->count) {
+      return memcmp(this->elements, that->elements, this->count * this->size) == 0;
+    }
+  }
 
-	return false;
+  return false;
 }
 
 #pragma mark - Vector
@@ -108,21 +108,21 @@ static bool isEqual(const Object *self, const Object *other) {
  */
 static void addElement(Vector *self, const ident element) {
 
-	if (self->count == self->capacity) {
+  if (self->count == self->capacity) {
 
-		self->capacity += VECTOR_CHUNK_SIZE;
+    self->capacity += VECTOR_CHUNK_SIZE;
 
-		if (self->elements) {
-			self->elements = realloc(self->elements, self->capacity * self->size);
-		} else {
-			self->elements = calloc(self->capacity, self->size);
-		}
+    if (self->elements) {
+      self->elements = realloc(self->elements, self->capacity * self->size);
+    } else {
+      self->elements = calloc(self->capacity, self->size);
+    }
 
-		assert(self->elements);
-	}
+    assert(self->elements);
+  }
 
-	memcpy(self->elements + self->count * self->size, element, self->size);
-	self->count++;
+  memcpy(self->elements + self->count * self->size, element, self->size);
+  self->count++;
 }
 
 /**
@@ -131,11 +131,11 @@ static void addElement(Vector *self, const ident element) {
  */
 static void enumerateElements(const Vector *self, VectorEnumerator enumerator, ident data) {
 
-	assert(enumerator);
+  assert(enumerator);
 
-	for (size_t i = 0; i < self->count; i++) {
-		enumerator(self, self->elements + i * self->size, data);
-	}
+  for (size_t i = 0; i < self->count; i++) {
+    enumerator(self, self->elements + i * self->size, data);
+  }
 }
 
 /**
@@ -144,13 +144,13 @@ static void enumerateElements(const Vector *self, VectorEnumerator enumerator, i
  */
 static void filterElements(Vector *self, Predicate predicate, ident data) {
 
-	assert(predicate);
+  assert(predicate);
 
-	for (size_t i = 0; i < self->count; i++) {
-		if (!predicate(self->elements + i * self->size, data)) {
-			$(self, removeElementAtIndex, i);
-		}
-	}
+  for (size_t i = 0; i < self->count; i++) {
+    if (!predicate(self->elements + i * self->size, data)) {
+      $(self, removeElementAtIndex, i);
+    }
+  }
 }
 
 /**
@@ -159,15 +159,15 @@ static void filterElements(Vector *self, Predicate predicate, ident data) {
  */
 static ident findElement(const Vector *self, Predicate predicate, ident data) {
 
-	assert(predicate);
+  assert(predicate);
 
-	for (size_t i = 0; i < self->count; i++) {
-		if (predicate(self->elements + i * self->size, data)) {
-			return self->elements + i * self->size;
-		}
-	}
+  for (size_t i = 0; i < self->count; i++) {
+    if (predicate(self->elements + i * self->size, data)) {
+      return self->elements + i * self->size;
+    }
+  }
 
-	return NULL;
+  return NULL;
 }
 
 /**
@@ -176,13 +176,13 @@ static ident findElement(const Vector *self, Predicate predicate, ident data) {
  */
 static ssize_t indexOfElement(const Vector *self, const ident element) {
 
-	for (size_t i = 0; i < self->count; i++) {
-		if (memcmp(self->elements + i * self->size, element, self->size) == 0) {
-			return i;
-		}
-	}
+  for (size_t i = 0; i < self->count; i++) {
+    if (memcmp(self->elements + i * self->size, element, self->size) == 0) {
+      return i;
+    }
+  }
 
-	return -1;
+  return -1;
 }
 
 /**
@@ -191,13 +191,13 @@ static ssize_t indexOfElement(const Vector *self, const ident element) {
  */
 static Vector *initWithElements(Vector *self, size_t size, size_t count, ident elements) {
 
-	self = $(self, initWithSize, size);
-	if (self) {
-		self->count = count;
-		self->elements = elements;
-	}
+  self = $(self, initWithSize, size);
+  if (self) {
+    self->count = count;
+    self->elements = elements;
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -206,12 +206,12 @@ static Vector *initWithElements(Vector *self, size_t size, size_t count, ident e
  */
 static Vector *initWithSize(Vector *self, size_t size) {
 
-	self = (Vector *) super(Object, self, init);
-	if (self) {
-		self->size = size;
-		assert(self->size);
-	}
-	return self;
+  self = (Vector *) super(Object, self, init);
+  if (self) {
+    self->size = size;
+    assert(self->size);
+  }
+  return self;
 }
 
 /**
@@ -220,15 +220,15 @@ static Vector *initWithSize(Vector *self, size_t size) {
  */
 static void insertElementAtIndex(Vector *self, const ident element, size_t index) {
 
-	assert(index <= self->count);
+  assert(index <= self->count);
 
-	$(self, addElement, element);
+  $(self, addElement, element);
 
-	for (size_t i = self->count - 1; i > index; i--) {
-		memcpy(self->elements + i * self->size, self->elements + (i - 1) * self->size, self->size);
-	}
+  for (size_t i = self->count - 1; i > index; i--) {
+    memcpy(self->elements + i * self->size, self->elements + (i - 1) * self->size, self->size);
+  }
 
-	memcpy(self->elements + index * self->size, element, self->size);
+  memcpy(self->elements + index * self->size, element, self->size);
 }
 
 /**
@@ -237,13 +237,13 @@ static void insertElementAtIndex(Vector *self, const ident element, size_t index
  */
 static ident reduce(const Vector *self, Reducer reducer, ident accumulator, ident data) {
 
-	assert(reducer);
+  assert(reducer);
 
-	for (size_t i = 0; i < self->count; i++) {
-		accumulator = reducer(self->elements + i * self->size, accumulator, data);
-	}
+  for (size_t i = 0; i < self->count; i++) {
+    accumulator = reducer(self->elements + i * self->size, accumulator, data);
+  }
 
-	return accumulator;
+  return accumulator;
 }
 
 /**
@@ -251,7 +251,7 @@ static ident reduce(const Vector *self, Reducer reducer, ident accumulator, iden
  * @memberof Vector
  */
 static void removeAllElements(Vector *self) {
-	self->count = 0;
+  self->count = 0;
 }
 
 /**
@@ -260,13 +260,13 @@ static void removeAllElements(Vector *self) {
  */
 static void removeElementAtIndex(Vector *self, size_t index) {
 
-	assert(index < self->count);
+  assert(index < self->count);
 
-	const size_t size = (self->count - index) * self->size;
+  const size_t size = (self->count - index) * self->size;
 
-	memcpy(self->elements + index * self->size, self->elements + (index + 1) * self->size, size);
+  memcpy(self->elements + index * self->size, self->elements + (index + 1) * self->size, size);
 
-	self->count--;
+  self->count--;
 }
 
 /**
@@ -275,11 +275,11 @@ static void removeElementAtIndex(Vector *self, size_t index) {
  */
 static void resize(Vector *self, size_t capacity) {
 
-	self->elements = realloc(self->elements, capacity * self->size);
-	assert(self->elements);
+  self->elements = realloc(self->elements, capacity * self->size);
+  assert(self->elements);
 
-	self->capacity = capacity;
-	self->count = min(self->count, self->capacity);
+  self->capacity = capacity;
+  self->count = min(self->count, self->capacity);
 }
 
 #if defined(__APPLE__)
@@ -288,7 +288,7 @@ static void resize(Vector *self, size_t capacity) {
  * @brief qsort_r comparator.
  */
 static int _sort(void *data, const void *a, const void *b) {
-	return ((Comparator) data)((const ident) a, (const ident) b);
+  return ((Comparator) data)((const ident) a, (const ident) b);
 }
 
 /**
@@ -296,7 +296,7 @@ static int _sort(void *data, const void *a, const void *b) {
  * @memberof Vector
  */
 static void sort(Vector *self, Comparator comparator) {
-	qsort_r(self->elements, self->count, self->size, comparator, _sort);
+  qsort_r(self->elements, self->count, self->size, comparator, _sort);
 }
 
 #elif defined(_WIN32)
@@ -305,7 +305,7 @@ static void sort(Vector *self, Comparator comparator) {
  * @brief qsort_s comparator.
  */
 static int _sort(void *data, const void *a, const void *b) {
-	return ((Comparator) data)(((const ident) a), ((const ident) b));
+  return ((Comparator) data)(((const ident) a), ((const ident) b));
 }
 
 /**
@@ -313,7 +313,7 @@ static int _sort(void *data, const void *a, const void *b) {
  * @memberof Vector
  */
 static void sort(Vector *self, Comparator comparator) {
-	qsort_s(self->elements, self->count, self->size, _sort, comparator);
+  qsort_s(self->elements, self->count, self->size, _sort, comparator);
 }
 
 #else
@@ -322,7 +322,7 @@ static void sort(Vector *self, Comparator comparator) {
  * @brief qsort_r comparator.
  */
 static int _sort(const void *a, const void *b, void *data) {
-	return ((Comparator) data)(((const ident) a), ((const ident) b));
+  return ((Comparator) data)(((const ident) a), ((const ident) b));
 }
 
 /**
@@ -330,7 +330,7 @@ static int _sort(const void *a, const void *b, void *data) {
  * @memberof Vector
  */
 static void sort(Vector *self, Comparator comparator) {
-	qsort_r(self->elements, self->count, self->size, _sort, comparator);
+  qsort_r(self->elements, self->count, self->size, _sort, comparator);
 }
 
 #endif
@@ -340,7 +340,7 @@ static void sort(Vector *self, Comparator comparator) {
  * @memberof Vector
  */
 static Vector *vectorWithSize(size_t size) {
-	return $(alloc(Vector), initWithSize, size);
+  return $(alloc(Vector), initWithSize, size);
 }
 
 /**
@@ -348,7 +348,7 @@ static Vector *vectorWithSize(size_t size) {
  * @memberof Vector
  */
 static Vector *vectorWithElements(size_t size, size_t count, ident elements) {
-	return $(alloc(Vector), initWithElements, size, count, elements);
+  return $(alloc(Vector), initWithElements, size, count, elements);
 }
 
 #pragma mark - Class lifecycle
@@ -358,26 +358,26 @@ static Vector *vectorWithElements(size_t size, size_t count, ident elements) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->interface)->hash = hash;
-	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->hash = hash;
+  ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((VectorInterface *) clazz->interface)->addElement = addElement;
-	((VectorInterface *) clazz->interface)->enumerateElements = enumerateElements;
-	((VectorInterface *) clazz->interface)->filterElements = filterElements;
-	((VectorInterface *) clazz->interface)->findElement = findElement;
-	((VectorInterface *) clazz->interface)->indexOfElement = indexOfElement;
-	((VectorInterface *) clazz->interface)->initWithElements = initWithElements;
-	((VectorInterface *) clazz->interface)->initWithSize = initWithSize;
-	((VectorInterface *) clazz->interface)->insertElementAtIndex = insertElementAtIndex;
-	((VectorInterface *) clazz->interface)->reduce = reduce;
-	((VectorInterface *) clazz->interface)->removeAllElements = removeAllElements;
-	((VectorInterface *) clazz->interface)->removeElementAtIndex = removeElementAtIndex;
-	((VectorInterface *) clazz->interface)->resize = resize;
-	((VectorInterface *) clazz->interface)->sort = sort;
-	((VectorInterface *) clazz->interface)->vectorWithSize = vectorWithSize;
-	((VectorInterface *) clazz->interface)->vectorWithElements = vectorWithElements;
+  ((VectorInterface *) clazz->interface)->addElement = addElement;
+  ((VectorInterface *) clazz->interface)->enumerateElements = enumerateElements;
+  ((VectorInterface *) clazz->interface)->filterElements = filterElements;
+  ((VectorInterface *) clazz->interface)->findElement = findElement;
+  ((VectorInterface *) clazz->interface)->indexOfElement = indexOfElement;
+  ((VectorInterface *) clazz->interface)->initWithElements = initWithElements;
+  ((VectorInterface *) clazz->interface)->initWithSize = initWithSize;
+  ((VectorInterface *) clazz->interface)->insertElementAtIndex = insertElementAtIndex;
+  ((VectorInterface *) clazz->interface)->reduce = reduce;
+  ((VectorInterface *) clazz->interface)->removeAllElements = removeAllElements;
+  ((VectorInterface *) clazz->interface)->removeElementAtIndex = removeElementAtIndex;
+  ((VectorInterface *) clazz->interface)->resize = resize;
+  ((VectorInterface *) clazz->interface)->sort = sort;
+  ((VectorInterface *) clazz->interface)->vectorWithSize = vectorWithSize;
+  ((VectorInterface *) clazz->interface)->vectorWithElements = vectorWithElements;
 }
 
 /**
@@ -385,21 +385,21 @@ static void initialize(Class *clazz) {
  * @memberof Vector
  */
 Class *_Vector(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Vector",
-			.superclass = _Object(),
-			.instanceSize = sizeof(Vector),
-			.interfaceOffset = offsetof(Vector, interface),
-			.interfaceSize = sizeof(VectorInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Vector",
+      .superclass = _Object(),
+      .instanceSize = sizeof(Vector),
+      .interfaceOffset = offsetof(Vector, interface),
+      .interfaceSize = sizeof(VectorInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

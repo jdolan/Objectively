@@ -37,9 +37,9 @@
  */
 static void dealloc(Object *self) {
 
-	//..
+  //..
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 #pragma mark - MutableIndexSet
@@ -50,31 +50,31 @@ static void dealloc(Object *self) {
  */
 static void addIndex(MutableIndexSet *self, size_t index) {
 
-	IndexSet *this = &self->indexSet;
+  IndexSet *this = &self->indexSet;
 
-	size_t i;
-	for (i = 0; i < this->count; i++) {
-		if (this->indexes[i] == index) {
-			return;
-		}
-		if (this->indexes[i] > index) {
-			break;
-		}
-	}
+  size_t i;
+  for (i = 0; i < this->count; i++) {
+    if (this->indexes[i] == index) {
+      return;
+    }
+    if (this->indexes[i] > index) {
+      break;
+    }
+  }
 
-	if (this->count == self->capacity) {
-		self->capacity += INDEX_SET_CHUNK_SIZE;
+  if (this->count == self->capacity) {
+    self->capacity += INDEX_SET_CHUNK_SIZE;
 
-		this->indexes = realloc(this->indexes, self->capacity * sizeof(size_t));
-		assert(this->indexes);
-	}
+    this->indexes = realloc(this->indexes, self->capacity * sizeof(size_t));
+    assert(this->indexes);
+  }
 
-	for (size_t j = this->count; j > i; j--) {
-		this->indexes[j] = this->indexes[j - 1];
-	}
+  for (size_t j = this->count; j > i; j--) {
+    this->indexes[j] = this->indexes[j - 1];
+  }
 
-	this->indexes[i] = index;
-	this->count++;
+  this->indexes[i] = index;
+  this->count++;
 }
 
 /**
@@ -83,9 +83,9 @@ static void addIndex(MutableIndexSet *self, size_t index) {
  */
 static void addIndexes(MutableIndexSet *self, size_t *indexes, size_t count) {
 
-	for (size_t i = 0; i < count; i++) {
-		$(self, addIndex, indexes[i]);
-	}
+  for (size_t i = 0; i < count; i++) {
+    $(self, addIndex, indexes[i]);
+  }
 }
 
 /**
@@ -97,9 +97,9 @@ static void addIndexes(MutableIndexSet *self, size_t *indexes, size_t count) {
  */
 static void addIndexesInRange(MutableIndexSet *self, const Range range) {
 
-	for (size_t i = range.location; i < range.length; i++) {
-		$(self, addIndex, i);
-	}
+  for (size_t i = range.location; i < range.length; i++) {
+    $(self, addIndex, i);
+  }
 }
 
 /**
@@ -107,7 +107,7 @@ static void addIndexesInRange(MutableIndexSet *self, const Range range) {
  * @memberof MutableIndexSet
  */
 static MutableIndexSet *init(MutableIndexSet *self) {
-	return $(self, initWithCapacity, INDEX_SET_CHUNK_SIZE);
+  return $(self, initWithCapacity, INDEX_SET_CHUNK_SIZE);
 }
 
 /**
@@ -116,17 +116,17 @@ static MutableIndexSet *init(MutableIndexSet *self) {
  */
 static MutableIndexSet *initWithCapacity(MutableIndexSet *self, size_t capacity) {
 
-	self = (MutableIndexSet *) super(Object, self, init);
-	if (self) {
-		self->capacity = capacity;
+  self = (MutableIndexSet *) super(Object, self, init);
+  if (self) {
+    self->capacity = capacity;
 
-		IndexSet *this = & self->indexSet;
+    IndexSet *this = & self->indexSet;
 
-		this->indexes = malloc(self->capacity * sizeof(size_t));
-		assert(this->indexes);
-	}
+    this->indexes = malloc(self->capacity * sizeof(size_t));
+    assert(this->indexes);
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -135,13 +135,13 @@ static MutableIndexSet *initWithCapacity(MutableIndexSet *self, size_t capacity)
  */
 static void removeAllIndexes(MutableIndexSet *self) {
 
-	IndexSet *this = &self->indexSet;
+  IndexSet *this = &self->indexSet;
 
-	free(this->indexes);
-	this->indexes = NULL;
+  free(this->indexes);
+  this->indexes = NULL;
 
-	this->count = 0;
-	self->capacity = 0;
+  this->count = 0;
+  self->capacity = 0;
 }
 
 /**
@@ -150,16 +150,16 @@ static void removeAllIndexes(MutableIndexSet *self) {
  */
 static void removeIndex(MutableIndexSet *self, size_t index) {
 
-	IndexSet *this = &self->indexSet;
-	for (size_t i = 0; i < this->count; i++) {
-		if (this->indexes[i] == index) {
-			this->count--;
-			for (size_t j = i; j < this->count; j++) {
-				this->indexes[j] = this->indexes[j + 1];
-			}
-			return;
-		}
-	}
+  IndexSet *this = &self->indexSet;
+  for (size_t i = 0; i < this->count; i++) {
+    if (this->indexes[i] == index) {
+      this->count--;
+      for (size_t j = i; j < this->count; j++) {
+        this->indexes[j] = this->indexes[j + 1];
+      }
+      return;
+    }
+  }
 }
 
 /**
@@ -168,9 +168,9 @@ static void removeIndex(MutableIndexSet *self, size_t index) {
  */
 static void removeIndexes(MutableIndexSet *self, size_t *indexes, size_t count) {
 
-	for (size_t i = 0; i < count; i++) {
-		$(self, removeIndex, indexes[i]);
-	}
+  for (size_t i = 0; i < count; i++) {
+    $(self, removeIndex, indexes[i]);
+  }
 }
 
 /**
@@ -179,9 +179,9 @@ static void removeIndexes(MutableIndexSet *self, size_t *indexes, size_t count) 
 */
 static void removeIndexesInRange(MutableIndexSet *self, const Range range) {
 
-	for (size_t i = range.location; i < range.length; i++) {
-		$(self, removeIndex, i);
-	}
+  for (size_t i = range.location; i < range.length; i++) {
+    $(self, removeIndex, i);
+  }
 }
 
 #pragma mark - Class lifecycle
@@ -191,17 +191,17 @@ static void removeIndexesInRange(MutableIndexSet *self, const Range range) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((MutableIndexSetInterface *) clazz->interface)->addIndex = addIndex;
-	((MutableIndexSetInterface *) clazz->interface)->addIndexes = addIndexes;
-	((MutableIndexSetInterface *) clazz->interface)->addIndexesInRange = addIndexesInRange;
-	((MutableIndexSetInterface *) clazz->interface)->init = init;
-	((MutableIndexSetInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
-	((MutableIndexSetInterface *) clazz->interface)->removeAllIndexes = removeAllIndexes;
-	((MutableIndexSetInterface *) clazz->interface)->removeIndex = removeIndex;
-	((MutableIndexSetInterface *) clazz->interface)->removeIndexes = removeIndexes;
-	((MutableIndexSetInterface *) clazz->interface)->removeIndexesInRange = removeIndexesInRange;
+  ((MutableIndexSetInterface *) clazz->interface)->addIndex = addIndex;
+  ((MutableIndexSetInterface *) clazz->interface)->addIndexes = addIndexes;
+  ((MutableIndexSetInterface *) clazz->interface)->addIndexesInRange = addIndexesInRange;
+  ((MutableIndexSetInterface *) clazz->interface)->init = init;
+  ((MutableIndexSetInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
+  ((MutableIndexSetInterface *) clazz->interface)->removeAllIndexes = removeAllIndexes;
+  ((MutableIndexSetInterface *) clazz->interface)->removeIndex = removeIndex;
+  ((MutableIndexSetInterface *) clazz->interface)->removeIndexes = removeIndexes;
+  ((MutableIndexSetInterface *) clazz->interface)->removeIndexesInRange = removeIndexesInRange;
 }
 
 /**
@@ -209,21 +209,21 @@ static void initialize(Class *clazz) {
  * @memberof MutableIndexSet
  */
 Class *_MutableIndexSet(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "MutableIndexSet",
-			.superclass = _IndexSet(),
-			.instanceSize = sizeof(MutableIndexSet),
-			.interfaceOffset = offsetof(MutableIndexSet, interface),
-			.interfaceSize = sizeof(MutableIndexSetInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "MutableIndexSet",
+      .superclass = _IndexSet(),
+      .instanceSize = sizeof(MutableIndexSet),
+      .interfaceOffset = offsetof(MutableIndexSet, interface),
+      .interfaceSize = sizeof(MutableIndexSetInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

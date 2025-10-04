@@ -27,44 +27,44 @@
 
 START_TEST(indexPath) {
 
-	size_t indexes[] = { 1, 2, 3 };
-	IndexPath *indexPath = $(alloc(IndexPath), initWithIndexes, indexes, lengthof(indexes));
+  size_t indexes[] = { 1, 2, 3 };
+  IndexPath *indexPath = $(alloc(IndexPath), initWithIndexes, indexes, lengthof(indexes));
 
-	ck_assert(indexPath != NULL);
-	ck_assert_int_eq(1, $(indexPath, indexAtPosition, 0));
-	ck_assert_int_eq(2, $(indexPath, indexAtPosition, 1));
-	ck_assert_int_eq(3, $(indexPath, indexAtPosition, 2));
+  ck_assert(indexPath != NULL);
+  ck_assert_int_eq(1, $(indexPath, indexAtPosition, 0));
+  ck_assert_int_eq(2, $(indexPath, indexAtPosition, 1));
+  ck_assert_int_eq(3, $(indexPath, indexAtPosition, 2));
 
-	String *description = $((Object *) indexPath, description);
-	ck_assert_str_eq("[1, 2, 3]", description->chars);
+  String *description = $((Object *) indexPath, description);
+  ck_assert_str_eq("[1, 2, 3]", description->chars);
 
-	Object *object = (Object *) indexPath;
-	Object *copy = $(object, copy);
+  Object *object = (Object *) indexPath;
+  Object *copy = $(object, copy);
 
-	ck_assert(copy != NULL);
-	ck_assert_int_eq($(object, hash), $(copy, hash));
-	ck_assert($(object, isEqual, copy));
+  ck_assert(copy != NULL);
+  ck_assert_int_eq($(object, hash), $(copy, hash));
+  ck_assert($(object, isEqual, copy));
 
-	release(description);
-	release(copy);
-	release(indexPath);
+  release(description);
+  release(copy);
+  release(indexPath);
 
 } END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("IndexPath");
-	tcase_add_test(tcase, indexPath);
+  TCase *tcase = tcase_create("IndexPath");
+  tcase_add_test(tcase, indexPath);
 
-	Suite *suite = suite_create("IndexPath");
-	suite_add_tcase(suite, tcase);
+  Suite *suite = suite_create("IndexPath");
+  suite_add_tcase(suite, tcase);
 
-	SRunner *runner = srunner_create(suite);
+  SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_VERBOSE);
-	int failed = srunner_ntests_failed(runner);
+  srunner_run_all(runner, CK_VERBOSE);
+  int failed = srunner_ntests_failed(runner);
 
-	srunner_free(runner);
+  srunner_free(runner);
 
-	return failed;
+  return failed;
 }

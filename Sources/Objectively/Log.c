@@ -45,16 +45,16 @@
  */
 static void dealloc(Object *self) {
 
-	Log *this = (Log *) self;
+  Log *this = (Log *) self;
 
-	if (!isatty(fileno(this->file))) {
-		const int err = fclose(this->file);
-		assert(err == 0);
-	}
+  if (!isatty(fileno(this->file))) {
+    const int err = fclose(this->file);
+    assert(err == 0);
+  }
 
-	free(this->name);
+  free(this->name);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 #pragma mark - Log
@@ -65,12 +65,12 @@ static void dealloc(Object *self) {
  */
 static void debug(const Log *self, const char *fmt, ...) {
 
-	va_list args;
-	va_start(args, fmt);
+  va_list args;
+  va_start(args, fmt);
 
-	$(self, log, LogLevelDebug, fmt, args);
+  $(self, log, LogLevelDebug, fmt, args);
 
-	va_end(args);
+  va_end(args);
 }
 
 /**
@@ -79,12 +79,12 @@ static void debug(const Log *self, const char *fmt, ...) {
  */
 static void error(const Log *self, const char *fmt, ...) {
 
-	va_list args;
-	va_start(args, fmt);
+  va_list args;
+  va_start(args, fmt);
 
-	$(self, log, LogLevelError, fmt, args);
+  $(self, log, LogLevelError, fmt, args);
 
-	va_end(args);
+  va_end(args);
 }
 
 /**
@@ -93,12 +93,12 @@ static void error(const Log *self, const char *fmt, ...) {
  */
 static void fatal(const Log *self, const char *fmt, ...) {
 
-	va_list args;
-	va_start(args, fmt);
+  va_list args;
+  va_start(args, fmt);
 
-	$(self, log, LogLevelFatal, fmt, args);
+  $(self, log, LogLevelFatal, fmt, args);
 
-	va_end(args);
+  va_end(args);
 }
 
 /**
@@ -107,8 +107,8 @@ static void fatal(const Log *self, const char *fmt, ...) {
  */
 static void flush(const Log *self) {
 
-	assert(self->file);
-	fflush(self->file);
+  assert(self->file);
+  fflush(self->file);
 }
 
 /**
@@ -117,12 +117,12 @@ static void flush(const Log *self) {
  */
 static void info(const Log *self, const char *fmt, ...) {
 
-	va_list args;
-	va_start(args, fmt);
+  va_list args;
+  va_start(args, fmt);
 
-	$(self, log, LogLevelInfo, fmt, args);
+  $(self, log, LogLevelInfo, fmt, args);
 
-	va_end(args);
+  va_end(args);
 }
 
 /**
@@ -131,7 +131,7 @@ static void info(const Log *self, const char *fmt, ...) {
  */
 static Log *init(Log *self) {
 
-	return $(self, initWithName, NULL);
+  return $(self, initWithName, NULL);
 }
 
 /**
@@ -140,15 +140,15 @@ static Log *init(Log *self) {
  */
 static Log *initWithName(Log *self, const char *name) {
 
-	self = (Log *) super(Object, self, init);
-	if (self) {
-		self->name = strdup(name ?: "default");
-		self->level = LogLevelInfo;
-		self->format = LOG_FORMAT_DEFAULT;
-		self->file = stdout;
-	}
+  self = (Log *) super(Object, self, init);
+  if (self) {
+    self->name = strdup(name ?: "default");
+    self->level = LogLevelInfo;
+    self->format = LOG_FORMAT_DEFAULT;
+    self->file = stdout;
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -157,50 +157,50 @@ static Log *initWithName(Log *self, const char *name) {
  */
 static void _log(const Log *self, LogLevel level, const char *fmt, va_list args) {
 
-	const char *levels[] = { "TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL" };
-	assert(level < lengthof(levels));
+  const char *levels[] = { "TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL" };
+  assert(level < lengthof(levels));
 
-	if (level < self->level) {
-		return;
-	}
+  if (level < self->level) {
+    return;
+  }
 
-	assert(self->file);
+  assert(self->file);
 
-	const time_t date = time(NULL);
-	const struct tm *localDate = localtime(&date);
+  const time_t date = time(NULL);
+  const struct tm *localDate = localtime(&date);
 
-	char buffer[128];
-	strftime(buffer, sizeof(buffer), self->format, localDate);
+  char buffer[128];
+  strftime(buffer, sizeof(buffer), self->format, localDate);
 
-	char *c = buffer;
-	while (*c) {
+  char *c = buffer;
+  while (*c) {
 
-		if (*c == '%') {
-			bool token = true;
+    if (*c == '%') {
+      bool token = true;
 
-			if (*(c + 1) == 'n') {
-				fputs(self->name, self->file);
-			} else if (*(c + 1) == 'l') {
-				fputs(levels[level], self->file);
-			} else if (*(c + 1) == 'm') {
-				vfprintf(self->file, fmt, args);
-			} else {
-				token = false;
-			}
+      if (*(c + 1) == 'n') {
+        fputs(self->name, self->file);
+      } else if (*(c + 1) == 'l') {
+        fputs(levels[level], self->file);
+      } else if (*(c + 1) == 'm') {
+        vfprintf(self->file, fmt, args);
+      } else {
+        token = false;
+      }
 
-			if (token) {
-				c++;
-				c++;
-				continue;
-			}
-		}
+      if (token) {
+        c++;
+        c++;
+        continue;
+      }
+    }
 
-		fputc(*c, self->file);
-		c++;
-	}
+    fputc(*c, self->file);
+    c++;
+  }
 
-	fputc('\n', self->file);
-	fflush(self->file);
+  fputc('\n', self->file);
+  fflush(self->file);
 }
 
 static Log *_sharedInstance;
@@ -211,13 +211,13 @@ static Log *_sharedInstance;
  */
 static Log *sharedInstance(void) {
 
-	static Once once;
+  static Once once;
 
-	do_once(&once, {
-		_sharedInstance = $(alloc(Log), init);
-	});
+  do_once(&once, {
+    _sharedInstance = $(alloc(Log), init);
+  });
 
-	return _sharedInstance;
+  return _sharedInstance;
 }
 
 /**
@@ -226,12 +226,12 @@ static Log *sharedInstance(void) {
  */
 static void trace(const Log *self, const char *fmt, ...) {
 
-	va_list args;
-	va_start(args, fmt);
+  va_list args;
+  va_start(args, fmt);
 
-	$(self, log, LogLevelTrace, fmt, args);
+  $(self, log, LogLevelTrace, fmt, args);
 
-	va_end(args);
+  va_end(args);
 }
 
 /**
@@ -240,12 +240,12 @@ static void trace(const Log *self, const char *fmt, ...) {
  */
 static void warn(const Log *self, const char *fmt, ...) {
 
-	va_list args;
-	va_start(args, fmt);
+  va_list args;
+  va_start(args, fmt);
 
-	$(self, log, LogLevelWarn, fmt, args);
+  $(self, log, LogLevelWarn, fmt, args);
 
-	va_end(args);
+  va_end(args);
 }
 
 #pragma mark - Class lifecycle
@@ -255,19 +255,19 @@ static void warn(const Log *self, const char *fmt, ...) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((LogInterface *) clazz->interface)->debug = debug;
-	((LogInterface *) clazz->interface)->error = error;
-	((LogInterface *) clazz->interface)->fatal = fatal;
-	((LogInterface *) clazz->interface)->flush = flush;
-	((LogInterface *) clazz->interface)->info = info;
-	((LogInterface *) clazz->interface)->init = init;
-	((LogInterface *) clazz->interface)->initWithName = initWithName;
-	((LogInterface *) clazz->interface)->log = _log;
-	((LogInterface *) clazz->interface)->trace = trace;
-	((LogInterface *) clazz->interface)->sharedInstance = sharedInstance;
-	((LogInterface *) clazz->interface)->warn = warn;
+  ((LogInterface *) clazz->interface)->debug = debug;
+  ((LogInterface *) clazz->interface)->error = error;
+  ((LogInterface *) clazz->interface)->fatal = fatal;
+  ((LogInterface *) clazz->interface)->flush = flush;
+  ((LogInterface *) clazz->interface)->info = info;
+  ((LogInterface *) clazz->interface)->init = init;
+  ((LogInterface *) clazz->interface)->initWithName = initWithName;
+  ((LogInterface *) clazz->interface)->log = _log;
+  ((LogInterface *) clazz->interface)->trace = trace;
+  ((LogInterface *) clazz->interface)->sharedInstance = sharedInstance;
+  ((LogInterface *) clazz->interface)->warn = warn;
 }
 
 /**
@@ -275,7 +275,7 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	_sharedInstance = release(_sharedInstance);
+  _sharedInstance = release(_sharedInstance);
 }
 
 /**
@@ -283,22 +283,22 @@ static void destroy(Class *clazz) {
  * @memberof Log
  */
 Class *_Log(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Log",
-			.superclass = _Object(),
-			.instanceSize = sizeof(Log),
-			.interfaceOffset = offsetof(Log, interface),
-			.interfaceSize = sizeof(LogInterface),
-			.initialize = initialize,
-			.destroy = destroy,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Log",
+      .superclass = _Object(),
+      .instanceSize = sizeof(Log),
+      .interfaceOffset = offsetof(Log, interface),
+      .interfaceSize = sizeof(LogInterface),
+      .initialize = initialize,
+      .destroy = destroy,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

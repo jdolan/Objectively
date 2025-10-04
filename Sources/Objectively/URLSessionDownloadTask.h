@@ -42,21 +42,21 @@ typedef struct URLSessionDownloadTaskInterface URLSessionDownloadTaskInterface;
  */
 struct URLSessionDownloadTask {
 
-	/**
-	 * @brief The superclass.
-	 */
-	URLSessionTask urlSessionTask;
+  /**
+   * @brief The superclass.
+   */
+  URLSessionTask urlSessionTask;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	URLSessionDownloadTaskInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  URLSessionDownloadTaskInterface *interface;
 
-	/**
-	 * @brief The target FILE.
-	 */
-	FILE *file;
+  /**
+   * @brief The target FILE.
+   */
+  FILE *file;
 };
 
 /**
@@ -64,10 +64,10 @@ struct URLSessionDownloadTask {
  */
 struct URLSessionDownloadTaskInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	URLSessionTaskInterface urlSessionTaskInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  URLSessionTaskInterface urlSessionTaskInterface;
 };
 
 /**

@@ -52,52 +52,52 @@ typedef ident (*ThreadFunction)(Thread *thread);
  */
 struct Thread {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	ThreadInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  ThreadInterface *interface;
 
-	/**
-	 * @brief The user data.
-	 */
-	ident data;
+  /**
+   * @brief The user data.
+   */
+  ident data;
 
-	/**
-	 * @brief The Thread function.
-	 */
-	ThreadFunction function;
+  /**
+   * @brief The Thread function.
+   */
+  ThreadFunction function;
 
-	/**
-	 * @brief `true` when this Thread has been cancelled, `false` otherwise.
-	 */
-	bool isCancelled;
+  /**
+   * @brief `true` when this Thread has been cancelled, `false` otherwise.
+   */
+  bool isCancelled;
 
-	/**
-	 * @brief `true` when this Thread has been detached, `false` otherwise.
-	 */
-	bool isDetached;
+  /**
+   * @brief `true` when this Thread has been detached, `false` otherwise.
+   */
+  bool isDetached;
 
-	/**
-	 * @brief `true` when this Thread is executing, `false` otherwise.
-	 */
-	bool isExecuting;
+  /**
+   * @brief `true` when this Thread is executing, `false` otherwise.
+   */
+  bool isExecuting;
 
-	/**
-	 * @brief `true` when this Thread is finished, `false` otherwise.
-	 */
-	bool isFinished;
+  /**
+   * @brief `true` when this Thread is finished, `false` otherwise.
+   */
+  bool isFinished;
 
-	/**
-	 * @brief The backing thread.
-	 * @private
-	 */
-	ident thread;
+  /**
+   * @brief The backing thread.
+   * @private
+   */
+  ident thread;
 };
 
 /**
@@ -105,82 +105,82 @@ struct Thread {
  */
 struct ThreadInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @fn void Thread::cancel(Thread *self)
-	 * @brief Cancel this Thread from another Thread.
-	 * @param self The Thread.
-	 * @memberof Thread
-	 */
-	void (*cancel)(Thread *self);
+  /**
+   * @fn void Thread::cancel(Thread *self)
+   * @brief Cancel this Thread from another Thread.
+   * @param self The Thread.
+   * @memberof Thread
+   */
+  void (*cancel)(Thread *self);
 
-	/**
-	 * @static
-	 * @fn Thread *Thread::currentThread(void)
-	 * @brief Returns the currently executing Thread.
-	 * @return The currently executing Thread.
-	 * @memberof Thread
-	 */
-	Thread *(*currentThread)(void);
+  /**
+   * @static
+   * @fn Thread *Thread::currentThread(void)
+   * @brief Returns the currently executing Thread.
+   * @return The currently executing Thread.
+   * @memberof Thread
+   */
+  Thread *(*currentThread)(void);
 
-	/**
-	 * @fn void Thread::detach(Thread *self)
-	 * @brief Daemonize this Thread.
-	 * @param self The Thread.
-	 * @memberof Thread
-	 */
-	void (*detach)(Thread *self);
+  /**
+   * @fn void Thread::detach(Thread *self)
+   * @brief Daemonize this Thread.
+   * @param self The Thread.
+   * @memberof Thread
+   */
+  void (*detach)(Thread *self);
 
-	/**
-	 * @fn Thread *Thread::init(Thread *self)
-	 * @brief Initializes this Thread.
-	 * @param self The Thread.
-	 * @return The initialized Thread, or `NULL` on error.
-	 * @memberof Thread
-	 */
-	Thread *(*init)(Thread *self);
+  /**
+   * @fn Thread *Thread::init(Thread *self)
+   * @brief Initializes this Thread.
+   * @param self The Thread.
+   * @return The initialized Thread, or `NULL` on error.
+   * @memberof Thread
+   */
+  Thread *(*init)(Thread *self);
 
-	/**
-	 * @fn Thread *Thread::initWithFunction(Thread *self, ThreadFunction function, ident data)
-	 * @brief Initializes this Thread with the specified ThreadFunction and data.
-	 * @param self The Thread.
-	 * @param function The ThreadFunction to run.
-	 * @param data The user data.
-	 * @return The initialized Thread, or `NULL` on error.
-	 * @memberof Thread
-	 */
-	Thread *(*initWithFunction)(Thread *self, ThreadFunction function, ident data);
+  /**
+   * @fn Thread *Thread::initWithFunction(Thread *self, ThreadFunction function, ident data)
+   * @brief Initializes this Thread with the specified ThreadFunction and data.
+   * @param self The Thread.
+   * @param function The ThreadFunction to run.
+   * @param data The user data.
+   * @return The initialized Thread, or `NULL` on error.
+   * @memberof Thread
+   */
+  Thread *(*initWithFunction)(Thread *self, ThreadFunction function, ident data);
 
-	/**
-	 * @fn void Thread::join(Thread *self, ident *status)
-	 * @brief Wait for the specified Thread to terminate.
-	 * @param self The Thread.
-	 * @param status If not `NULL`, the return value of this Thread's
-	 * ThreadFunction is returned here.
-	 * @memberof Thread
-	 */
-	void (*join)(Thread *self, ident *status);
+  /**
+   * @fn void Thread::join(Thread *self, ident *status)
+   * @brief Wait for the specified Thread to terminate.
+   * @param self The Thread.
+   * @param status If not `NULL`, the return value of this Thread's
+   * ThreadFunction is returned here.
+   * @memberof Thread
+   */
+  void (*join)(Thread *self, ident *status);
 
-	/**
-	 * @fn void Thread::kill(Thread *self, int signal)
-	 * @brief Sends the given signal to this Thread.
-	 * @param self The Thread.
-	 * @param signal The signal to send.
-	 * @memberof Thread
-	 */
-	void (*kill)(Thread *self, int signal);
+  /**
+   * @fn void Thread::kill(Thread *self, int signal)
+   * @brief Sends the given signal to this Thread.
+   * @param self The Thread.
+   * @param signal The signal to send.
+   * @memberof Thread
+   */
+  void (*kill)(Thread *self, int signal);
 
-	/**
-	 * @fn void Thread::start(Thread *self)
-	 * @brief Start this Thread.
-	 * @param self The Thread.
-	 * @memberof Thread
-	 */
-	void (*start)(Thread *self);
+  /**
+   * @fn void Thread::start(Thread *self)
+   * @brief Start this Thread.
+   * @param self The Thread.
+   * @memberof Thread
+   */
+  void (*start)(Thread *self);
 };
 
 /**

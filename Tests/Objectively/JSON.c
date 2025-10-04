@@ -28,58 +28,58 @@
 static char *path;
 
 START_TEST(json) {
-	
-	Data *data0 = $(alloc(Data), initWithContentsOfFile, path);
-	ck_assert_ptr_ne(NULL, data0);
+  
+  Data *data0 = $(alloc(Data), initWithContentsOfFile, path);
+  ck_assert_ptr_ne(NULL, data0);
 
-	Dictionary *dict0 = $$(JSONSerialization, objectFromData, data0, 0);
-	ck_assert(dict0->count);
+  Dictionary *dict0 = $$(JSONSerialization, objectFromData, data0, 0);
+  ck_assert(dict0->count);
 
-	Data *data1 = $$(JSONSerialization, dataFromObject, dict0, JSON_WRITE_PRETTY | JSON_WRITE_SORTED);
-	ck_assert_ptr_ne(NULL, data1);
-	ck_assert($((Object *) data0, isEqual, (Object *) data1));
+  Data *data1 = $$(JSONSerialization, dataFromObject, dict0, JSON_WRITE_PRETTY | JSON_WRITE_SORTED);
+  ck_assert_ptr_ne(NULL, data1);
+  ck_assert($((Object *) data0, isEqual, (Object *) data1));
 
-	Dictionary *dict1 = $$(JSONSerialization, objectFromData, data1, 0);
-	ck_assert_int_eq(dict0->count, dict1->count);
-	ck_assert($((Object *) dict0, isEqual, (Object *) dict1));
+  Dictionary *dict1 = $$(JSONSerialization, objectFromData, data1, 0);
+  ck_assert_int_eq(dict0->count, dict1->count);
+  ck_assert($((Object *) dict0, isEqual, (Object *) dict1));
 
-	Object *notFound = $$(JSONPath, objectForKeyPath, dict0, "$.notFound");
-	ck_assert_ptr_eq(NULL, notFound);
+  Object *notFound = $$(JSONPath, objectForKeyPath, dict0, "$.notFound");
+  ck_assert_ptr_eq(NULL, notFound);
 
-	Object *root = $$(JSONPath, objectForKeyPath, dict0, "$");
-	ck_assert_ptr_eq(dict0, root);
+  Object *root = $$(JSONPath, objectForKeyPath, dict0, "$");
+  ck_assert_ptr_eq(dict0, root);
 
-	Number *dataStoreInitConns = $$(JSONPath, objectForKeyPath, dict0, "$.web-app.servlet[0].init-param.dataStoreInitConns");
-	ck_assert(dataStoreInitConns != NULL);
-	ck_assert_int_eq(10, (int) dataStoreInitConns->value);
+  Number *dataStoreInitConns = $$(JSONPath, objectForKeyPath, dict0, "$.web-app.servlet[0].init-param.dataStoreInitConns");
+  ck_assert(dataStoreInitConns != NULL);
+  ck_assert_int_eq(10, (int) dataStoreInitConns->value);
 
-	release(data0);
-	release(data1);
-	release(dict0);
-	release(dict1);
+  release(data0);
+  release(data1);
+  release(dict0);
+  release(dict1);
 
 } END_TEST
 
 int main(int argc, char **argv) {
 
-	if (argc == 2) {
-		path = argv[1];
-	} else {
-		path = "Fixtures/test.json";
-	}
+  if (argc == 2) {
+    path = argv[1];
+  } else {
+    path = "Fixtures/test.json";
+  }
 
-	TCase *tcase = tcase_create("Json");
-	tcase_add_test(tcase, json);
+  TCase *tcase = tcase_create("Json");
+  tcase_add_test(tcase, json);
 
-	Suite *suite = suite_create("Json");
-	suite_add_tcase(suite, tcase);
+  Suite *suite = suite_create("Json");
+  suite_add_tcase(suite, tcase);
 
-	SRunner *runner = srunner_create(suite);
+  SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_VERBOSE);
-	int failed = srunner_ntests_failed(runner);
+  srunner_run_all(runner, CK_VERBOSE);
+  int failed = srunner_ntests_failed(runner);
 
-	srunner_free(runner);
+  srunner_free(runner);
 
-	return failed;
+  return failed;
 }

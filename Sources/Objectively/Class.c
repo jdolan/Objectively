@@ -45,31 +45,31 @@ static ident _handle;
  * @brief Called `atexit` to teardown Objectively.
  */
 static void teardown(void) {
-	Class *c;
+  Class *c;
 
-	c = _classes;
-	while (c) {
-		if (c->def.destroy) {
-			c->def.destroy(c);
-		}
+  c = _classes;
+  while (c) {
+    if (c->def.destroy) {
+      c->def.destroy(c);
+    }
 
-		c = c->next;
-	}
+    c = c->next;
+  }
 
-	c = _classes;
-	while (c) {
+  c = _classes;
+  while (c) {
 
-		Class *next = c->next;
+    Class *next = c->next;
 
-		free(c->interface);
-		free(c);
+    free(c->interface);
+    free(c);
 
-		c = next;
-	}
+    c = next;
+  }
 
-	if (_handle) {
-		dlclose(_handle);
-	}
+  if (_handle) {
+    dlclose(_handle);
+  }
 }
 
 /**
@@ -77,145 +77,145 @@ static void teardown(void) {
  */
 static void setup(void) {
 
-	_classes = NULL;
+  _classes = NULL;
 
 #if !defined(_SC_PAGESIZE)
-	_pageSize = 4096;
+  _pageSize = 4096;
 #else
-	_pageSize = sysconf(_SC_PAGESIZE);
+  _pageSize = sysconf(_SC_PAGESIZE);
 #endif
 
-	atexit(teardown);
+  atexit(teardown);
 }
 
 Class *_initialize(const ClassDef *def) {
 
-	static Once once;
-	do_once(&once, setup());
+  static Once once;
+  do_once(&once, setup());
 
-	assert(def);
-	assert(def->name);
-	assert(def->instanceSize);
-	assert(def->interfaceSize);
-	assert(def->interfaceOffset);
+  assert(def);
+  assert(def->name);
+  assert(def->instanceSize);
+  assert(def->interfaceSize);
+  assert(def->interfaceOffset);
 
-	Class *clazz = calloc(1, sizeof(Class));
-	assert(clazz);
+  Class *clazz = calloc(1, sizeof(Class));
+  assert(clazz);
 
-	clazz->def = *def;
+  clazz->def = *def;
 
-	clazz->interface = calloc(1, def->interfaceSize);
-	assert(clazz->interface);
+  clazz->interface = calloc(1, def->interfaceSize);
+  assert(clazz->interface);
 
-	Class *superclass = clazz->def.superclass;
-	if (superclass) {
+  Class *superclass = clazz->def.superclass;
+  if (superclass) {
 
-		assert(superclass->def.instanceSize <= def->instanceSize);
-		assert(superclass->def.interfaceSize <= def->interfaceSize);
+    assert(superclass->def.instanceSize <= def->instanceSize);
+    assert(superclass->def.interfaceSize <= def->interfaceSize);
 
-		memcpy(clazz->interface, superclass->interface, superclass->def.interfaceSize);
-	}
+    memcpy(clazz->interface, superclass->interface, superclass->def.interfaceSize);
+  }
 
-	if (clazz->def.initialize) {
-		clazz->def.initialize(clazz);
-	}
+  if (clazz->def.initialize) {
+    clazz->def.initialize(clazz);
+  }
 
-	clazz->next = __sync_lock_test_and_set(&_classes, clazz);
+  clazz->next = __sync_lock_test_and_set(&_classes, clazz);
 
-	return clazz;
+  return clazz;
 }
 
 ident _alloc(Class *clazz) {
 
-	ident obj = calloc(1, clazz->def.instanceSize);
-	assert(obj);
+  ident obj = calloc(1, clazz->def.instanceSize);
+  assert(obj);
 
-	Object *object = (Object *) obj;
+  Object *object = (Object *) obj;
 
-	object->magic = OBJECTIVELY_MAGIC;
-	object->clazz = clazz;
-	object->referenceCount = 1;
+  object->magic = OBJECTIVELY_MAGIC;
+  object->clazz = clazz;
+  object->referenceCount = 1;
 
-	ident interface = clazz->interface;
-	do {
-		*(ident *) (obj + clazz->def.interfaceOffset) = interface;
-	} while ((clazz = clazz->def.superclass));
+  ident interface = clazz->interface;
+  do {
+    *(ident *) (obj + clazz->def.interfaceOffset) = interface;
+  } while ((clazz = clazz->def.superclass));
 
-	return obj;
+  return obj;
 }
 
 ident _cast(Class *clazz, const ident obj) {
 
-	if (obj) {
-		const Class *c = ((Object *) obj)->clazz;
-		while (c) {
+  if (obj) {
+    const Class *c = ((Object *) obj)->clazz;
+    while (c) {
 
-			// as a special case, we optimize for _Object
-			if (c == clazz || clazz == _Object()) {
-				break;
-			}
+      // as a special case, we optimize for _Object
+      if (c == clazz || clazz == _Object()) {
+        break;
+      }
 
-			c = c->def.superclass;
-		}
-		assert(c);
-	}
+      c = c->def.superclass;
+    }
+    assert(c);
+  }
 
-	return (ident) obj;
+  return (ident) obj;
 }
 
 Class *classForName(const char *name) {
 
-	if (name) {
-		Class *c = _classes;
-		while (c) {
-			if (strcmp(name, c->def.name) == 0) {
-				return c;
-			}
-			c = c->next;
-		}
+  if (name) {
+    Class *c = _classes;
+    while (c) {
+      if (strcmp(name, c->def.name) == 0) {
+        return c;
+      }
+      c = c->next;
+    }
 
-		char *s;
-		if (asprintf(&s, "_%s", name) > 0) {
-			static Once once;
+    char *s;
+    if (asprintf(&s, "_%s", name) > 0) {
+      static Once once;
 
-			do_once(&once, _handle = dlopen(NULL, 0));
+      do_once(&once, _handle = dlopen(NULL, 0));
 
-			Class *clazz = NULL;
-			Class *(*archetype)(void) = dlsym(_handle, s);
-			if (archetype) {
-				clazz = archetype();
-			}
+      Class *clazz = NULL;
+      Class *(*archetype)(void) = dlsym(_handle, s);
+      if (archetype) {
+        clazz = archetype();
+      }
 
-			free(s);
-			return clazz;
-		}
-	}
+      free(s);
+      return clazz;
+    }
+  }
 
-	return NULL;
+  return NULL;
 }
 
 ident release(ident obj) {
 
-	if (obj) {
-		Object *object = cast(Object, obj);
+  if (obj) {
+    Object *object = cast(Object, obj);
 
-		assert(object);
+    assert(object);
 
-		if (__sync_add_and_fetch(&object->referenceCount, -1) == 0) {
-			$(object, dealloc);
-		}
-	}
+    if (__sync_add_and_fetch(&object->referenceCount, -1) == 0) {
+      $(object, dealloc);
+    }
+  }
 
-	return NULL;
+  return NULL;
 }
 
 ident retain(ident obj) {
 
-	Object *object = cast(Object, obj);
+  Object *object = cast(Object, obj);
 
-	assert(object);
+  assert(object);
 
-	__sync_add_and_fetch(&object->referenceCount, 1);
+  __sync_add_and_fetch(&object->referenceCount, 1);
 
-	return obj;
+  return obj;
 }

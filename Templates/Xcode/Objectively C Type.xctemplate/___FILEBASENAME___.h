@@ -24,18 +24,18 @@ typedef struct ___FILEBASENAMEASIDENTIFIER___Interface ___FILEBASENAMEASIDENTIFI
  */
 struct ___FILEBASENAMEASIDENTIFIER___ {
 
-	/**
-	 * @brief The superclass.
-	 */
-	___VARIABLE_superclass:identifier___ ___VARIABLE_superclassMember:identifier___;
+  /**
+   * @brief The superclass.
+   */
+  ___VARIABLE_superclass:identifier___ ___VARIABLE_superclassMember:identifier___;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	___FILEBASENAMEASIDENTIFIER___Interface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  ___FILEBASENAMEASIDENTIFIER___Interface *interface;
 
-	//..
+  //..
 };
 
 /**
@@ -43,21 +43,21 @@ struct ___FILEBASENAMEASIDENTIFIER___ {
  */
 struct ___FILEBASENAMEASIDENTIFIER___Interface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	___VARIABLE_superclass:identifier___Interface ___VARIABLE_superclassMember:identifier___Interface;
+  /**
+   * @brief The superclass interface.
+   */
+  ___VARIABLE_superclass:identifier___Interface ___VARIABLE_superclassMember:identifier___Interface;
 
-	/**
-	 * @fn ___FILEBASENAMEASIDENTIFIER___ *___FILEBASENAMEASIDENTIFIER___::init(___FILEBASENAMEASIDENTIFIER___ *self)
-	 * @brief Initializes this ___FILEBASENAMEASIDENTIFIER___.
-	 * @param self The ___FILEBASENAMEASIDENTIFIER___.
-	 * @return The initialized ___FILEBASENAMEASIDENTIFIER___, or `NULL` on error.
-	 * @memberof ___FILEBASENAMEASIDENTIFIER___
-	 */
-	___FILEBASENAMEASIDENTIFIER___ *(*init)(___FILEBASENAMEASIDENTIFIER___ *self);
+  /**
+   * @fn ___FILEBASENAMEASIDENTIFIER___ *___FILEBASENAMEASIDENTIFIER___::init(___FILEBASENAMEASIDENTIFIER___ *self)
+   * @brief Initializes this ___FILEBASENAMEASIDENTIFIER___.
+   * @param self The ___FILEBASENAMEASIDENTIFIER___.
+   * @return The initialized ___FILEBASENAMEASIDENTIFIER___, or `NULL` on error.
+   * @memberof ___FILEBASENAMEASIDENTIFIER___
+   */
+  ___FILEBASENAMEASIDENTIFIER___ *(*init)(___FILEBASENAMEASIDENTIFIER___ *self);
 
-	// ..
+  // ..
 };
 
 /**

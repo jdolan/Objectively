@@ -42,21 +42,21 @@ typedef struct URLSessionDataTaskInterface URLSessionDataTaskInterface;
  */
 struct URLSessionDataTask {
 
-	/**
-	 * @brief The superclass.
-	 */
-	URLSessionTask urlSessionTask;
+  /**
+   * @brief The superclass.
+   */
+  URLSessionTask urlSessionTask;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	URLSessionDataTaskInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  URLSessionDataTaskInterface *interface;
 
-	/**
-	 * @brief The data received.
-	 */
-	Data *data;
+  /**
+   * @brief The data received.
+   */
+  Data *data;
 };
 
 /**
@@ -64,10 +64,10 @@ struct URLSessionDataTask {
  */
 struct URLSessionDataTaskInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	URLSessionTaskInterface urlSessionTaskInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  URLSessionTaskInterface urlSessionTaskInterface;
 };
 
 /**

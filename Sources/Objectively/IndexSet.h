@@ -40,26 +40,26 @@ typedef struct IndexSetInterface IndexSetInterface;
  */
 struct IndexSet {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	IndexSetInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  IndexSetInterface *interface;
 
-	/**
-	 * @brief The indexes.
-	 */
-	size_t *indexes;
+  /**
+   * @brief The indexes.
+   */
+  size_t *indexes;
 
-	/**
-	 * @brief The count of `indexes`.
-	 */
-	size_t count;
+  /**
+   * @brief The count of `indexes`.
+   */
+  size_t count;
 };
 
 /**
@@ -67,40 +67,40 @@ struct IndexSet {
  */
 struct IndexSetInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @fn bool IndexSet::containsIndex(const IndexSet *self, size_t index)
-	 * @param self The IndexSet.
-	 * @param index The index.
-	 * @return True if this IndexSet contains `index`, false otherwise.
-	 * @memberof IndexSet
-	 */
-	bool (*containsIndex)(const IndexSet *self, size_t index);
+  /**
+   * @fn bool IndexSet::containsIndex(const IndexSet *self, size_t index)
+   * @param self The IndexSet.
+   * @param index The index.
+   * @return True if this IndexSet contains `index`, false otherwise.
+   * @memberof IndexSet
+   */
+  bool (*containsIndex)(const IndexSet *self, size_t index);
 
-	/**
-	 * @fn IndexSet *IndexSet::initWithIndex(IndexSet *self, size_t index)
-	 * @brief Initializes this IndexSet with the specified index.
-	 * @param self The IndexSet.
-	 * @param index The index.
-	 * @return The intialized IndexSet, or `NULL` on error.
-	 * @memberof IndexSet
-	 */
-	IndexSet *(*initWithIndex)(IndexSet *self, size_t index);
+  /**
+   * @fn IndexSet *IndexSet::initWithIndex(IndexSet *self, size_t index)
+   * @brief Initializes this IndexSet with the specified index.
+   * @param self The IndexSet.
+   * @param index The index.
+   * @return The intialized IndexSet, or `NULL` on error.
+   * @memberof IndexSet
+   */
+  IndexSet *(*initWithIndex)(IndexSet *self, size_t index);
 
-	/**
-	 * @fn IndexSet *IndexSet::initWithIndexes(IndexSet *self, size_t *indexes, size_t count)
-	 * @brief Initializes this IndexSet with the specified indexes and count.
-	 * @param self The IndexSet.
-	 * @param indexes The indexes.
-	 * @param count The count of `indexes`.
-	 * @return The intialized IndexSet, or `NULL` on error.
-	 * @memberof IndexSet
-	 */
-	IndexSet *(*initWithIndexes)(IndexSet *self, size_t *indexes, size_t count);
+  /**
+   * @fn IndexSet *IndexSet::initWithIndexes(IndexSet *self, size_t *indexes, size_t count)
+   * @brief Initializes this IndexSet with the specified indexes and count.
+   * @param self The IndexSet.
+   * @param indexes The indexes.
+   * @param count The count of `indexes`.
+   * @return The intialized IndexSet, or `NULL` on error.
+   * @memberof IndexSet
+   */
+  IndexSet *(*initWithIndexes)(IndexSet *self, size_t *indexes, size_t count);
 };
 
 /**

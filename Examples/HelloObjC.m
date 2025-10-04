@@ -25,17 +25,16 @@
 
 #include <Objectively.h>
 
-int main(int argc, char **argv)
-{
-	Object *object = $(alloc(Object), init);
+int main(int argc, char **argv) {
+  Object *object = $(alloc(Object), init);
 
-    release(object);
+  release(object);
 
-    String *string = str("Hello World!");
-    
-    NSLog(@"%@", [NSString stringWithUTF8String:string->chars]);
-	
-	release(string);
-    
-    return 0;
+  String *string = str("Hello World!");
+
+  NSLog(@"%@", [NSString stringWithUTF8String:string->chars]);
+
+  release(string);
+
+  return 0;
 }

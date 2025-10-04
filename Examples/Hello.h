@@ -31,20 +31,20 @@ typedef struct HelloInterface HelloInterface;
  */
 struct Hello {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 */
-	HelloInterface *interface;
+  /**
+   * @brief The interface.
+   */
+  HelloInterface *interface;
 
-	/**
-	 * @brief The greeting.
-	 */
-	const char *greeting;
+  /**
+   * @brief The greeting.
+   */
+  const char *greeting;
 };
 
 /**
@@ -52,35 +52,35 @@ struct Hello {
  */
 struct HelloInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @static
-	 * @brief A factory method for instantiating Hello.
-	 * @return A new Hello with the given `greeting`.
-	 * @param greeting The greeting.
-	 * @memberof Hello
-	 */
-	Hello *(*helloWithGreeting)(const char *greeting);
+  /**
+   * @static
+   * @brief A factory method for instantiating Hello.
+   * @return A new Hello with the given `greeting`.
+   * @param greeting The greeting.
+   * @memberof Hello
+   */
+  Hello *(*helloWithGreeting)(const char *greeting);
 
-	/**
-	 * @brief Initializes this Hello with the given `greeting`.
-	 * @return The initialized Hello, or `NULL` on error.
-	 * @param self The Hello.
-	 * @param greeting The greeting.
-	 * @memberof Hello
-	 */
-	Hello *(*initWithGreeting)(Hello *self, const char *greeting);
+  /**
+   * @brief Initializes this Hello with the given `greeting`.
+   * @return The initialized Hello, or `NULL` on error.
+   * @param self The Hello.
+   * @param greeting The greeting.
+   * @memberof Hello
+   */
+  Hello *(*initWithGreeting)(Hello *self, const char *greeting);
 
-	/**
-	 * @brief Prints this Hello's greeting to the console.
-	 * @param self The Hello.
-	 * @memberof Hello
-	 */
-	void (*sayHello)(const Hello *self);
+  /**
+   * @brief Prints this Hello's greeting to the console.
+   * @param self The Hello.
+   * @memberof Hello
+   */
+  void (*sayHello)(const Hello *self);
 };
 
 /**

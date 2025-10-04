@@ -26,31 +26,31 @@
 #include "Objectively.h"
 
 START_TEST(date) {
-	
-	Null *null1 = $$(Null, null);
-	ck_assert(null1 != NULL);
+  
+  Null *null1 = $$(Null, null);
+  ck_assert(null1 != NULL);
 
-	Null *null2 = $$(Null, null);
-	ck_assert(null2 != NULL);
+  Null *null2 = $$(Null, null);
+  ck_assert(null2 != NULL);
 
-	ck_assert($((Object *) null1, isEqual, (Object *) null2));
+  ck_assert($((Object *) null1, isEqual, (Object *) null2));
 
 } END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("Date");
-	tcase_add_test(tcase, date);
+  TCase *tcase = tcase_create("Date");
+  tcase_add_test(tcase, date);
 
-	Suite *suite = suite_create("Date");
-	suite_add_tcase(suite, tcase);
+  Suite *suite = suite_create("Date");
+  suite_add_tcase(suite, tcase);
 
-	SRunner *runner = srunner_create(suite);
+  SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_VERBOSE);
-	int failed = srunner_ntests_failed(runner);
+  srunner_run_all(runner, CK_VERBOSE);
+  int failed = srunner_ntests_failed(runner);
 
-	srunner_free(runner);
+  srunner_free(runner);
 
-	return failed;
+  return failed;
 }

@@ -36,9 +36,9 @@
  */
 static String *description(const Object *self) {
 
-	Number *this = (Number *) self;
+  Number *this = (Number *) self;
 
-	return $(alloc(String), initWithFormat, "%.2f", this->value);
+  return $(alloc(String), initWithFormat, "%.2f", this->value);
 }
 
 /**
@@ -46,9 +46,9 @@ static String *description(const Object *self) {
  */
 static int hash(const Object *self) {
 
-	Number *this = (Number *) self;
+  Number *this = (Number *) self;
 
-	return HashForDecimal(HASH_SEED, this->value);
+  return HashForDecimal(HASH_SEED, this->value);
 }
 
 /**
@@ -56,19 +56,19 @@ static int hash(const Object *self) {
  */
 static bool isEqual(const Object *self, const Object *other) {
 
-	if (super(Object, self, isEqual, other)) {
-		return true;
-	}
+  if (super(Object, self, isEqual, other)) {
+    return true;
+  }
 
-	if (other && self->clazz == other->clazz) {
+  if (other && self->clazz == other->clazz) {
 
-		const Number *this = (Number *) self;
-		const Number *that = (Number *) other;
+    const Number *this = (Number *) self;
+    const Number *that = (Number *) other;
 
-		return $(this, compareTo, that) == OrderSame;
-	}
+    return $(this, compareTo, that) == OrderSame;
+  }
 
-	return false;
+  return false;
 }
 
 #pragma mark - Number
@@ -78,7 +78,7 @@ static bool isEqual(const Object *self, const Object *other) {
  * @memberof Number
  */
 static bool boolValue(const Number *self) {
-	return self->value ? true : false;
+  return self->value ? true : false;
 }
 
 /**
@@ -86,7 +86,7 @@ static bool boolValue(const Number *self) {
  * @memberof Number
  */
 static char charValue(const Number *self) {
-	return (char) self->value;
+  return (char) self->value;
 }
 
 /**
@@ -95,15 +95,15 @@ static char charValue(const Number *self) {
  */
 static Order compareTo(const Number *self, const Number *other) {
 
-	if (other) {
-		if (self->value == other->value) {
-			return OrderSame;
-		}
+  if (other) {
+    if (self->value == other->value) {
+      return OrderSame;
+    }
 
-		return self->value < other->value ? OrderAscending : OrderDescending;
-	}
+    return self->value < other->value ? OrderAscending : OrderDescending;
+  }
 
-	return OrderAscending;
+  return OrderAscending;
 }
 
 /**
@@ -111,7 +111,7 @@ static Order compareTo(const Number *self, const Number *other) {
  * @memberof Number
  */
 static double doubleValue(const Number *self) {
-	return self->value;
+  return self->value;
 }
 
 /**
@@ -119,7 +119,7 @@ static double doubleValue(const Number *self) {
  * @memberof Number
  */
 static float floatValue(const Number *self) {
-	return (float) self->value;
+  return (float) self->value;
 }
 
 /**
@@ -127,7 +127,7 @@ static float floatValue(const Number *self) {
  * @memberof Number
  */
 static long longValue(const Number *self) {
-	return (long) self->value;
+  return (long) self->value;
 }
 
 /**
@@ -136,12 +136,12 @@ static long longValue(const Number *self) {
  */
 static Number *initWithValue(Number *self, const double value) {
 
-	self = (Number *) super(Object, self, init);
-	if (self) {
-		self->value = value;
-	}
+  self = (Number *) super(Object, self, init);
+  if (self) {
+    self->value = value;
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -149,7 +149,7 @@ static Number *initWithValue(Number *self, const double value) {
  * @memberof Number
  */
 static int intValue(const Number *self) {
-	return (int) self->value;
+  return (int) self->value;
 }
 
 /**
@@ -157,7 +157,7 @@ static int intValue(const Number *self) {
  * @memberof Number
  */
 static Number *numberWithValue(double value) {
-	return $(alloc(Number), initWithValue, value);
+  return $(alloc(Number), initWithValue, value);
 }
 
 /**
@@ -165,7 +165,7 @@ static Number *numberWithValue(double value) {
  * @memberof Number
  */
 static short shortValue(const Number *self) {
-	return (short) self->value;
+  return (short) self->value;
 }
 
 #pragma mark - Class lifecycle
@@ -175,20 +175,20 @@ static short shortValue(const Number *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->description = description;
-	((ObjectInterface *) clazz->interface)->hash = hash;
-	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+  ((ObjectInterface *) clazz->interface)->description = description;
+  ((ObjectInterface *) clazz->interface)->hash = hash;
+  ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((NumberInterface *) clazz->interface)->boolValue = boolValue;
-	((NumberInterface *) clazz->interface)->charValue = charValue;
-	((NumberInterface *) clazz->interface)->compareTo = compareTo;
-	((NumberInterface *) clazz->interface)->doubleValue = doubleValue;
-	((NumberInterface *) clazz->interface)->floatValue = floatValue;
-	((NumberInterface *) clazz->interface)->longValue = longValue;
-	((NumberInterface *) clazz->interface)->initWithValue = initWithValue;
-	((NumberInterface *) clazz->interface)->intValue = intValue;
-	((NumberInterface *) clazz->interface)->numberWithValue = numberWithValue;
-	((NumberInterface *) clazz->interface)->shortValue = shortValue;
+  ((NumberInterface *) clazz->interface)->boolValue = boolValue;
+  ((NumberInterface *) clazz->interface)->charValue = charValue;
+  ((NumberInterface *) clazz->interface)->compareTo = compareTo;
+  ((NumberInterface *) clazz->interface)->doubleValue = doubleValue;
+  ((NumberInterface *) clazz->interface)->floatValue = floatValue;
+  ((NumberInterface *) clazz->interface)->longValue = longValue;
+  ((NumberInterface *) clazz->interface)->initWithValue = initWithValue;
+  ((NumberInterface *) clazz->interface)->intValue = intValue;
+  ((NumberInterface *) clazz->interface)->numberWithValue = numberWithValue;
+  ((NumberInterface *) clazz->interface)->shortValue = shortValue;
 }
 
 /**
@@ -196,21 +196,21 @@ static void initialize(Class *clazz) {
  * @memberof Number
  */
 Class *_Number(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Number",
-			.superclass = _Object(),
-			.instanceSize = sizeof(Number),
-			.interfaceOffset = offsetof(Number, interface),
-			.interfaceSize = sizeof(NumberInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Number",
+      .superclass = _Object(),
+      .instanceSize = sizeof(Number),
+      .interfaceOffset = offsetof(Number, interface),
+      .interfaceSize = sizeof(NumberInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

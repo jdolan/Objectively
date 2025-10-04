@@ -18,13 +18,13 @@
  */
 static void dealloc(Object *self) {
 
-	URLSessionConfiguration *this = (URLSessionConfiguration *) self;
+  URLSessionConfiguration *this = (URLSessionConfiguration *) self;
 
-	release(this->credentials.username);
-	release(this->credentials.password);
-	release(this->httpHeaders);
+  release(this->credentials.username);
+  release(this->credentials.password);
+  release(this->httpHeaders);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 #pragma mark - URLSessionConfiguration
@@ -35,12 +35,12 @@ static void dealloc(Object *self) {
  */
 static URLSessionConfiguration *init(URLSessionConfiguration *self) {
 
-	self = (URLSessionConfiguration *) super(Object, self, init);
-	if (self) {
-		// wut
-	}
+  self = (URLSessionConfiguration *) super(Object, self, init);
+  if (self) {
+    // wut
+  }
 
-	return self;
+  return self;
 }
 
 #pragma mark - Class lifecycle
@@ -50,9 +50,9 @@ static URLSessionConfiguration *init(URLSessionConfiguration *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((URLSessionConfigurationInterface *) clazz->interface)->init = init;
+  ((URLSessionConfigurationInterface *) clazz->interface)->init = init;
 }
 
 /**
@@ -60,21 +60,21 @@ static void initialize(Class *clazz) {
  * @memberof URLSessionConfiguration
  */
 Class *_URLSessionConfiguration(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "URLSessionConfiguration",
-			.superclass = _Object(),
-			.instanceSize = sizeof(URLSessionConfiguration),
-			.interfaceOffset = offsetof(URLSessionConfiguration, interface),
-			.interfaceSize = sizeof(URLSessionConfigurationInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "URLSessionConfiguration",
+      .superclass = _Object(),
+      .instanceSize = sizeof(URLSessionConfiguration),
+      .interfaceOffset = offsetof(URLSessionConfiguration, interface),
+      .interfaceSize = sizeof(URLSessionConfigurationInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

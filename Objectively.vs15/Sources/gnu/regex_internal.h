@@ -349,20 +349,20 @@ typedef struct
 {
   union
   {
-    unsigned char c;		/* for CHARACTER */
-    re_bitset_ptr_t sbcset;	/* for SIMPLE_BRACKET */
+    unsigned char c;    /* for CHARACTER */
+    re_bitset_ptr_t sbcset;  /* for SIMPLE_BRACKET */
 #ifdef RE_ENABLE_I18N
-    re_charset_t *mbcset;	/* for COMPLEX_BRACKET */
+    re_charset_t *mbcset;  /* for COMPLEX_BRACKET */
 #endif /* RE_ENABLE_I18N */
-    Idx idx;			/* for BACK_REF */
-    re_context_type ctx_type;	/* for ANCHOR */
+    Idx idx;      /* for BACK_REF */
+    re_context_type ctx_type;  /* for ANCHOR */
   } opr;
 #if __GNUC__ >= 2 && !defined __STRICT_ANSI__
   re_token_type_t type : 8;
 #else
   re_token_type_t type;
 #endif
-  unsigned int constraint : 10;	/* context constraint */
+  unsigned int constraint : 10;  /* context constraint */
   unsigned int duplicated : 1;
   unsigned int opt_subexp : 1;
 #ifdef RE_ENABLE_I18N
@@ -443,7 +443,7 @@ typedef struct re_dfa_t re_dfa_t;
 #endif
 
 static reg_errcode_t re_string_realloc_buffers (re_string_t *pstr,
-						Idx new_buf_len)
+            Idx new_buf_len)
      internal_function;
 #ifdef RE_ENABLE_I18N
 static void build_wcs_buffer (re_string_t *pstr) internal_function;
@@ -453,7 +453,7 @@ static reg_errcode_t build_wcs_upper_buffer (re_string_t *pstr)
 static void build_upper_buffer (re_string_t *pstr) internal_function;
 static void re_string_translate_buffer (re_string_t *pstr) internal_function;
 static unsigned int re_string_context_at (const re_string_t *input, Idx idx,
-					  int eflags)
+            int eflags)
      internal_function __attribute__ ((pure));
 
 #define re_string_peek_byte(pstr, offset) \
@@ -464,7 +464,7 @@ static unsigned int re_string_context_at (const re_string_t *input, Idx idx,
   ((idx) == (pstr)->valid_len || (pstr)->wcs[idx] != WEOF)
 #define re_string_is_single_byte_char(pstr, idx) \
   ((pstr)->wcs[idx] != WEOF && ((pstr)->valid_len == (idx) + 1 \
-				|| (pstr)->wcs[(idx) + 1] != WEOF))
+        || (pstr)->wcs[(idx) + 1] != WEOF))
 #define re_string_eoi(pstr) ((pstr)->stop <= (pstr)->cur_idx)
 #define re_string_cur_idx(pstr) ((pstr)->cur_idx)
 #define re_string_get_buffer(pstr) ((pstr)->mbs)
@@ -869,9 +869,9 @@ re_string_elem_size_at (const re_string_t *pstr, Idx idx)
     {
       table = (const int32_t *) _NL_CURRENT (LC_COLLATE, _NL_COLLATE_TABLEMB);
       extra = (const unsigned char *)
-	_NL_CURRENT (LC_COLLATE, _NL_COLLATE_EXTRAMB);
+  _NL_CURRENT (LC_COLLATE, _NL_COLLATE_EXTRAMB);
       indirect = (const int32_t *) _NL_CURRENT (LC_COLLATE,
-						_NL_COLLATE_INDIRECTMB);
+            _NL_COLLATE_INDIRECTMB);
       p = pstr->mbs + idx;
       findidx (table, indirect, extra, &p, pstr->len - idx);
       return p - pstr->mbs - idx;

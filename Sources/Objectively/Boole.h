@@ -40,21 +40,21 @@ typedef struct BooleInterface BooleInterface;
  */
 struct Boole {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	BooleInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  BooleInterface *interface;
 
-	/**
-	 * @brief The backing bool.
-	 */
-	bool value;
+  /**
+   * @brief The backing bool.
+   */
+  bool value;
 };
 
 /**
@@ -62,35 +62,35 @@ struct Boole {
  */
 struct BooleInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @static
-	 * @fn Boole *Boole::False(void)
-	 * @return The `false` Boole.
-	 * @memberof Boole
-	 */
-	Boole *(*False)(void);
+  /**
+   * @static
+   * @fn Boole *Boole::False(void)
+   * @return The `false` Boole.
+   * @memberof Boole
+   */
+  Boole *(*False)(void);
 
-	/**
-	 * @static
-	 * @fn Boole *Boole::True(void)
-	 * @return The `true` Boole.
-	 * @memberof Boole
-	 */
-	Boole *(*True)(void);
+  /**
+   * @static
+   * @fn Boole *Boole::True(void)
+   * @return The `true` Boole.
+   * @memberof Boole
+   */
+  Boole *(*True)(void);
 
-	/**
-	 * @static
-	 * @fn Boole *Boole::valueof(bool value)
-	 * @param value The boolean.
-	 * @return The Boole representation of `value`.
-	 * @memberof Boole
-	 */
-	Boole *(*valueof)(bool value);
+  /**
+   * @static
+   * @fn Boole *Boole::valueof(bool value)
+   * @param value The boolean.
+   * @return The Boole representation of `value`.
+   * @memberof Boole
+   */
+  Boole *(*valueof)(bool value);
 };
 
 /**

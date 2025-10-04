@@ -40,53 +40,53 @@ typedef struct Class Class;
  */
 struct ClassDef {
 
-	/**
-	 * @brief The Class destructor (optional).
-	 * This method is run for initialized Classes when your application exits.
-	 */
-	void (*destroy)(Class *clazz);
+  /**
+   * @brief The Class destructor (optional).
+   * This method is run for initialized Classes when your application exits.
+   */
+  void (*destroy)(Class *clazz);
 
-	/**
-	 * @brief The Class initializer (optional).
-	 * @details Objectively invokes your Class initializer the first time your Class is required;
-	 * either via `_alloc`, or via static method invocation. The Class initializer is responsible
-	 * for populating the Class' `interface` with valid method implementations:
-	 * ```
-	 * static void initialize(Class *clazz) {
-	 *     ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
-	 *     ((FooInterface *) clazz->interface)->bar = bar;
-	 * }
-	 * ```
-	 * @remarks Each Class' `interface` is copied from its superclass before this initializer is
-	 * called. Therefore, only overridden methods, and methods unique to the Class itself, must be
-	 * set via `initialize`.
-	 */
-	void (*initialize)(Class *clazz);
+  /**
+   * @brief The Class initializer (optional).
+   * @details Objectively invokes your Class initializer the first time your Class is required;
+   * either via `_alloc`, or via static method invocation. The Class initializer is responsible
+   * for populating the Class' `interface` with valid method implementations:
+   * ```
+   * static void initialize(Class *clazz) {
+   *     ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+   *     ((FooInterface *) clazz->interface)->bar = bar;
+   * }
+   * ```
+   * @remarks Each Class' `interface` is copied from its superclass before this initializer is
+   * called. Therefore, only overridden methods, and methods unique to the Class itself, must be
+   * set via `initialize`.
+   */
+  void (*initialize)(Class *clazz);
 
-	/**
-	 * @brief The instance size (required).
-	 */
-	size_t instanceSize;
+  /**
+   * @brief The instance size (required).
+   */
+  size_t instanceSize;
 
-	/**
-	 * @brief The interface offset (required).
-	 */
-	ptrdiff_t interfaceOffset;
+  /**
+   * @brief The interface offset (required).
+   */
+  ptrdiff_t interfaceOffset;
 
-	/**
-	 * @brief The interface size (required).
-	 */
-	size_t interfaceSize;
+  /**
+   * @brief The interface size (required).
+   */
+  size_t interfaceSize;
 
-	/**
-	 * @brief The Class name (required).
-	 */
-	const char *name;
+  /**
+   * @brief The Class name (required).
+   */
+  const char *name;
 
-	/**
-	 * @brief The superclass (required). e.g. `_Object()`.
-	 */
-	Class *superclass;
+  /**
+   * @brief The superclass (required). e.g. `_Object()`.
+   */
+  Class *superclass;
 };
 
 /**
@@ -94,20 +94,20 @@ struct ClassDef {
  */
 struct Class {
 
-	/**
-	 * @brief The Class definition.
-	 */
-	ClassDef def;
+  /**
+   * @brief The Class definition.
+   */
+  ClassDef def;
 
-	/**
-	 * @brief The interface of the Class.
-	 */
-	ident interface;
+  /**
+   * @brief The interface of the Class.
+   */
+  ident interface;
 
-	/**
-	 * @brief Provides chaining of initialized Classes.
-	 */
-	Class *next;
+  /**
+   * @brief Provides chaining of initialized Classes.
+   */
+  Class *next;
 };
 
 /**
@@ -162,63 +162,63 @@ OBJECTIVELY_EXPORT size_t _pageSize;
  * @brief Test if the given pointer is an Object.
  */
 #define isobject(obj) \
-	(obj && *((unsigned int *) obj) == OBJECTIVELY_MAGIC)
+  (obj && *((unsigned int *) obj) == OBJECTIVELY_MAGIC)
 
 /**
  * @brief Test if the given pointer is an instance of the specified type.
  */
 #define instanceof(type, obj) \
-	(isobject(obj) && $((Object *) obj, isKindOfClass, _##type()))
+  (isobject(obj) && $((Object *) obj, isKindOfClass, _##type()))
 
 /**
  * @brief Allocate and initialize and instance of `type`.
  */
 #define alloc(type) \
-	((type *) _alloc(_##type()))
+  ((type *) _alloc(_##type()))
 
 /**
  * @brief Safely cast `obj` to `type`.
  */
 #define cast(type, obj) \
-	((type *) _cast(_##type(), (const ident) obj))
+  ((type *) _cast(_##type(), (const ident) obj))
 
 /**
  * @brief Resolve the Class of an Object instance.
  */
 #define classof(obj) \
-	((Object *) obj)->clazz
+  ((Object *) obj)->clazz
 
 /**
  * @brief Resolve the Class name of the given Object instance.
  */
 #define classnameof(obj) \
-	classof(obj)->def.name
+  classof(obj)->def.name
 
 /**
  * @brief Resolve the typed interface of a Class.
  */
 #define interfaceof(type, clazz) \
-	((type##Interface *) (clazz)->interface)
+  ((type##Interface *) (clazz)->interface)
 
 /**
  * @brief Invoke an instance method.
  */
 #define $(obj, method, ...) \
-	({ \
-		typeof(obj) _obj = obj; \
-		_obj->interface->method(_obj, ## __VA_ARGS__); \
-	})
+  ({ \
+    typeof(obj) _obj = obj; \
+    _obj->interface->method(_obj, ## __VA_ARGS__); \
+  })
 
 /**
  * @brief Invoke a Class method.
  */
 #define $$(type, method, ...) \
-	({ \
-		interfaceof(type, _##type())->method(__VA_ARGS__); \
-	})
+  ({ \
+    interfaceof(type, _##type())->method(__VA_ARGS__); \
+  })
 
 /**
  * @brief Invoke a Superclass instance method.
  */
 #define super(type, obj, method, ...) \
-	interfaceof(type, _Class()->def.superclass)->method(cast(type, obj), ## __VA_ARGS__)
+  interfaceof(type, _Class()->def.superclass)->method(cast(type, obj), ## __VA_ARGS__)

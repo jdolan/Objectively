@@ -26,85 +26,85 @@
 #include "Objectively.h"
 
 static void produce(Operation *operation) {
-	*((Object **) operation->data) = $(alloc(Object), init);
+  *((Object **) operation->data) = $(alloc(Object), init);
 }
 
 static void consume(Operation *operation) {
-	ck_assert(cast(Object, *((Object **) operation->data)) != NULL);
+  ck_assert(cast(Object, *((Object **) operation->data)) != NULL);
 }
 
 START_TEST(producerConsumer) {
 
-	OperationQueue *queue = $(alloc(OperationQueue), init);
-	ck_assert(queue != NULL);
+  OperationQueue *queue = $(alloc(OperationQueue), init);
+  ck_assert(queue != NULL);
 
-	Object *object;
+  Object *object;
 
-	Operation *producer = $(alloc(Operation), initWithFunction, produce, &object);
-	Operation *consumer = $(alloc(Operation), initWithFunction, consume, &object);
+  Operation *producer = $(alloc(Operation), initWithFunction, produce, &object);
+  Operation *consumer = $(alloc(Operation), initWithFunction, consume, &object);
 
-	$(consumer, addDependency, producer);
+  $(consumer, addDependency, producer);
 
-	$(queue, addOperation, consumer);
-	$(queue, addOperation, producer);
+  $(queue, addOperation, consumer);
+  $(queue, addOperation, producer);
 
-	$(consumer, waitUntilFinished);
-	ck_assert(object != NULL);
+  $(consumer, waitUntilFinished);
+  ck_assert(object != NULL);
 
-	release(object);
-	release(producer);
-	release(consumer);
-	release(queue);
+  release(object);
+  release(producer);
+  release(consumer);
+  release(queue);
 
 } END_TEST
 
 static void suspendResume_func(Operation *operation) {
-	(*(int *) operation->data)++;
+  (*(int *) operation->data)++;
 }
 
 START_TEST(suspendResume) {
-	
-	OperationQueue *queue = $(alloc(OperationQueue), init);
-	ck_assert(queue != NULL);
+  
+  OperationQueue *queue = $(alloc(OperationQueue), init);
+  ck_assert(queue != NULL);
 
-	queue->isSuspended = true;
-	int counter = 0;
+  queue->isSuspended = true;
+  int counter = 0;
 
-	Operation *operation;
-	for (int i = 0; i < 5; i++) {
-		operation = $(alloc(Operation), initWithFunction, suspendResume_func, &counter);
+  Operation *operation;
+  for (int i = 0; i < 5; i++) {
+    operation = $(alloc(Operation), initWithFunction, suspendResume_func, &counter);
 
-		$(queue, addOperation, operation);
+    $(queue, addOperation, operation);
 
-		release(operation);
-	}
+    release(operation);
+  }
 
-	ck_assert_int_eq(5, $(queue, operationCount));
+  ck_assert_int_eq(5, $(queue, operationCount));
 
-	queue->isSuspended = false;
+  queue->isSuspended = false;
 
-	$(queue, waitUntilAllOperationsAreFinished);
+  $(queue, waitUntilAllOperationsAreFinished);
 
-	ck_assert_int_eq(0, $(queue, operationCount));
+  ck_assert_int_eq(0, $(queue, operationCount));
 
-	release(queue);
+  release(queue);
 } END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("Operation");
-	tcase_add_test(tcase, producerConsumer);
-	tcase_add_test(tcase, suspendResume);
+  TCase *tcase = tcase_create("Operation");
+  tcase_add_test(tcase, producerConsumer);
+  tcase_add_test(tcase, suspendResume);
 
-	Suite *suite = suite_create("Operation");
-	suite_add_tcase(suite, tcase);
+  Suite *suite = suite_create("Operation");
+  suite_add_tcase(suite, tcase);
 
-	SRunner *runner = srunner_create(suite);
+  SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_VERBOSE);
-	int failed = srunner_ntests_failed(runner);
+  srunner_run_all(runner, CK_VERBOSE);
+  int failed = srunner_ntests_failed(runner);
 
-	srunner_free(runner);
+  srunner_free(runner);
 
-	return failed;
+  return failed;
 }

@@ -30,48 +30,48 @@
 
 START_TEST(mutableData) {
 
-	MutableData *data = $(alloc(MutableData), init);
-	$(data, appendBytes, (uint8_t *) "123", 3);
+  MutableData *data = $(alloc(MutableData), init);
+  $(data, appendBytes, (uint8_t *) "123", 3);
 
-	ck_assert_int_eq(3, data->data.length);
-	ck_assert(strncmp("123", (char *) data->data.bytes, 3) == 0);
+  ck_assert_int_eq(3, data->data.length);
+  ck_assert(strncmp("123", (char *) data->data.bytes, 3) == 0);
 
-	$(data, setLength, 128);
-	ck_assert_int_eq(128, data->data.length);
-	ck_assert_int_eq(0, data->data.bytes[data->data.length - 1]);
+  $(data, setLength, 128);
+  ck_assert_int_eq(128, data->data.length);
+  ck_assert_int_eq(0, data->data.bytes[data->data.length - 1]);
 
-	ident mem = malloc(8192 * sizeof(uint8_t));
-	ck_assert(mem != NULL);
+  ident mem = malloc(8192 * sizeof(uint8_t));
+  ck_assert(mem != NULL);
 
-	memset(mem, 1, 8192 * sizeof(uint8_t));
+  memset(mem, 1, 8192 * sizeof(uint8_t));
 
-	Data *append = $(alloc(Data), initWithMemory, mem, 8192);
-	ck_assert(append != NULL);
+  Data *append = $(alloc(Data), initWithMemory, mem, 8192);
+  ck_assert(append != NULL);
 
-	$(data, appendData, append);
-	release(append);
+  $(data, appendData, append);
+  release(append);
 
-	ck_assert_int_eq(8192 + 128, data->data.length);
-	ck_assert_int_eq(1, data->data.bytes[data->data.length - 1]);
+  ck_assert_int_eq(8192 + 128, data->data.length);
+  ck_assert_int_eq(1, data->data.bytes[data->data.length - 1]);
 
-	release(data);
+  release(data);
 
 } END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("MutableData");
-	tcase_add_test(tcase, mutableData);
+  TCase *tcase = tcase_create("MutableData");
+  tcase_add_test(tcase, mutableData);
 
-	Suite *suite = suite_create("MutableData");
-	suite_add_tcase(suite, tcase);
+  Suite *suite = suite_create("MutableData");
+  suite_add_tcase(suite, tcase);
 
-	SRunner *runner = srunner_create(suite);
+  SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_VERBOSE);
-	int failed = srunner_ntests_failed(runner);
+  srunner_run_all(runner, CK_VERBOSE);
+  int failed = srunner_ntests_failed(runner);
 
-	srunner_free(runner);
+  srunner_free(runner);
 
-	return failed;
+  return failed;
 }

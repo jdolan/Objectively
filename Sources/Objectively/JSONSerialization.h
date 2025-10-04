@@ -41,15 +41,15 @@
  */
 typedef enum {
 
-	/**
-	 * @brief Enables pretty (indented) formatting of JSON output.
-	 */
-	JSON_WRITE_PRETTY = 0x1,
+  /**
+   * @brief Enables pretty (indented) formatting of JSON output.
+   */
+  JSON_WRITE_PRETTY = 0x1,
 
-	/**
-	 * @brief Enables lexicographic sorting of JSON output.
-	 */
-	JSON_WRITE_SORTED = 0x2
+  /**
+   * @brief Enables lexicographic sorting of JSON output.
+   */
+  JSON_WRITE_SORTED = 0x2
 }  JSONWriteOptions;
 
 typedef struct JSONSerialization JSONSerialization;
@@ -62,16 +62,16 @@ typedef struct JSONSerializationInterface JSONSerializationInterface;
  */
 struct JSONSerialization {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	JSONSerializationInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  JSONSerializationInterface *interface;
 };
 
 /**
@@ -79,32 +79,32 @@ struct JSONSerialization {
  */
 struct JSONSerializationInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @static
-	 * @fn Data *JSONSerialization::dataFromObject(const ident obj, int options)
-	 * @brief Serializes the given Object to JSON Data.
-	 * @param obj The Object to serialize.
-	 * @param options A bitwise-or of `JSON_WRITE_*`.
-	 * @return The resulting JSON Data.
-	 * @memberof JSONSerialization
-	 */
-	Data *(*dataFromObject)(const ident obj, int options);
+  /**
+   * @static
+   * @fn Data *JSONSerialization::dataFromObject(const ident obj, int options)
+   * @brief Serializes the given Object to JSON Data.
+   * @param obj The Object to serialize.
+   * @param options A bitwise-or of `JSON_WRITE_*`.
+   * @return The resulting JSON Data.
+   * @memberof JSONSerialization
+   */
+  Data *(*dataFromObject)(const ident obj, int options);
 
-	/**
-	 * @static
-	 * @fn ident JSONSerialization::objectFromData(const Data *data, int options)
-	 * @brief Parses an Object from the specified Data.
-	 * @param data The JSON Data.
-	 * @param options A bitwise-or of `JSON_READ_*`.
-	 * @return The Object, or `NULL` on error.
-	 * @memberof JSONSerialization
-	 */
-	ident (*objectFromData)(const Data *data, int options);
+  /**
+   * @static
+   * @fn ident JSONSerialization::objectFromData(const Data *data, int options)
+   * @brief Parses an Object from the specified Data.
+   * @param data The JSON Data.
+   * @param options A bitwise-or of `JSON_READ_*`.
+   * @return The Object, or `NULL` on error.
+   * @memberof JSONSerialization
+   */
+  ident (*objectFromData)(const Data *data, int options);
 };
 
 /**

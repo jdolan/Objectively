@@ -34,10 +34,10 @@
  */
 static int compare(const void *a, const void *b) {
 
-	const size_t sa = *(size_t *) a;
-	const size_t sb = *(size_t *) b;
+  const size_t sa = *(size_t *) a;
+  const size_t sb = *(size_t *) b;
 
-	return sa < sb ? -1 : sa > sb ? 1 : 0;
+  return sa < sb ? -1 : sa > sb ? 1 : 0;
 }
 
 /**
@@ -45,21 +45,21 @@ static int compare(const void *a, const void *b) {
  */
 static size_t compact(size_t *indexes, size_t count) {
 
-	size_t size = 0;
+  size_t size = 0;
 
-	if (count) {
-		qsort(indexes, count, sizeof(size_t), compare);
+  if (count) {
+    qsort(indexes, count, sizeof(size_t), compare);
 
-		for (size_t i = 1; i < count; i++) {
-			if (indexes[i] != indexes[size]) {
-				indexes[++size] = indexes[i];
-			}
-		}
+    for (size_t i = 1; i < count; i++) {
+      if (indexes[i] != indexes[size]) {
+        indexes[++size] = indexes[i];
+      }
+    }
 
-		size++;
-	}
+    size++;
+  }
 
-	return size;
+  return size;
 }
 
 #define _Class _IndexSet
@@ -71,10 +71,10 @@ static size_t compact(size_t *indexes, size_t count) {
  */
 static Object *copy(const Object *self) {
 
-	IndexSet *this = (IndexSet *) self;
-	IndexSet *that = $(alloc(IndexSet), initWithIndexes, this->indexes, this->count);
+  IndexSet *this = (IndexSet *) self;
+  IndexSet *that = $(alloc(IndexSet), initWithIndexes, this->indexes, this->count);
 
-	return (Object *) that;
+  return (Object *) that;
 }
 
 /**
@@ -82,11 +82,11 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	IndexSet *this = (IndexSet *) self;
+  IndexSet *this = (IndexSet *) self;
 
-	free(this->indexes);
+  free(this->indexes);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 /**
@@ -94,18 +94,18 @@ static void dealloc(Object *self) {
  */
 static String *description(const Object *self) {
 
-	const IndexSet *this = (IndexSet *) self;
-	MutableString *desc = mstr("[");
+  const IndexSet *this = (IndexSet *) self;
+  MutableString *desc = mstr("[");
 
-	for (size_t i = 0; i < this->count; i++) {
-		$(desc, appendFormat, "%d", this->indexes[i]);
-		if (i < this->count - 1) {
-			$(desc, appendCharacters, ", ");
-		}
-	}
+  for (size_t i = 0; i < this->count; i++) {
+    $(desc, appendFormat, "%d", this->indexes[i]);
+    if (i < this->count - 1) {
+      $(desc, appendCharacters, ", ");
+    }
+  }
 
-	$(desc, appendCharacters, "]");
-	return (String *) desc;
+  $(desc, appendCharacters, "]");
+  return (String *) desc;
 }
 
 /**
@@ -113,15 +113,15 @@ static String *description(const Object *self) {
  */
 static int hash(const Object *self) {
 
-	int hash = HASH_SEED;
+  int hash = HASH_SEED;
 
-	const IndexSet *this = (IndexSet *) self;
+  const IndexSet *this = (IndexSet *) self;
 
-	for (size_t i = 0; i < this->count; i++) {
-		hash = HashForInteger(hash, this->indexes[i]);
-	}
+  for (size_t i = 0; i < this->count; i++) {
+    hash = HashForInteger(hash, this->indexes[i]);
+  }
 
-	return hash;
+  return hash;
 }
 
 /**
@@ -129,21 +129,21 @@ static int hash(const Object *self) {
  */
 static bool isEqual(const Object *self, const Object *other) {
 
-	if (super(Object, self, isEqual, other)) {
-		return true;
-	}
+  if (super(Object, self, isEqual, other)) {
+    return true;
+  }
 
-	if (other && $(other, isKindOfClass, _IndexSet())) {
+  if (other && $(other, isKindOfClass, _IndexSet())) {
 
-		const IndexSet *this = (IndexSet *) self;
-		const IndexSet *that = (IndexSet *) other;
+    const IndexSet *this = (IndexSet *) self;
+    const IndexSet *that = (IndexSet *) other;
 
-		if (this->count == that->count) {
-			return memcmp(this->indexes, that->indexes, this->count * sizeof(size_t)) == 0;
-		}
-	}
+    if (this->count == that->count) {
+      return memcmp(this->indexes, that->indexes, this->count * sizeof(size_t)) == 0;
+    }
+  }
 
-	return false;
+  return false;
 }
 
 #pragma mark - IndexSet
@@ -154,13 +154,13 @@ static bool isEqual(const Object *self, const Object *other) {
  */
 static bool containsIndex(const IndexSet *self, size_t index) {
 
-	for (size_t i = 0; i < self->count; i++) {
-		if (self->indexes[i] == index) {
-			return true;
-		}
-	}
+  for (size_t i = 0; i < self->count; i++) {
+    if (self->indexes[i] == index) {
+      return true;
+    }
+  }
 
-	return false;
+  return false;
 }
 
 /**
@@ -168,7 +168,7 @@ static bool containsIndex(const IndexSet *self, size_t index) {
  * @memberof IndexSet
  */
 static IndexSet *initWithIndex(IndexSet *self, size_t index) {
-	return $(self, initWithIndexes, &index, 1);
+  return $(self, initWithIndexes, &index, 1);
 }
 
 /**
@@ -177,20 +177,20 @@ static IndexSet *initWithIndex(IndexSet *self, size_t index) {
  */
 static IndexSet *initWithIndexes(IndexSet *self, size_t *indexes, size_t count) {
 
-	self = (IndexSet *) super(Object, self, init);
-	if (self) {
+  self = (IndexSet *) super(Object, self, init);
+  if (self) {
 
-		self->count = compact(indexes, count);
-		if (self->count) {
+    self->count = compact(indexes, count);
+    if (self->count) {
 
-			self->indexes = calloc(sizeof(size_t), self->count);
-			assert(self->indexes);
+      self->indexes = calloc(sizeof(size_t), self->count);
+      assert(self->indexes);
 
-			memcpy(self->indexes, indexes, sizeof(size_t) * self->count);
-		}
-	}
+      memcpy(self->indexes, indexes, sizeof(size_t) * self->count);
+    }
+  }
 
-	return self;
+  return self;
 }
 
 #pragma mark - Class lifecycle
@@ -200,15 +200,15 @@ static IndexSet *initWithIndexes(IndexSet *self, size_t *indexes, size_t count) 
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->interface)->description = description;
-	((ObjectInterface *) clazz->interface)->hash = hash;
-	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->description = description;
+  ((ObjectInterface *) clazz->interface)->hash = hash;
+  ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((IndexSetInterface *) clazz->interface)->containsIndex = containsIndex;
-	((IndexSetInterface *) clazz->interface)->initWithIndex = initWithIndex;
-	((IndexSetInterface *) clazz->interface)->initWithIndexes = initWithIndexes;
+  ((IndexSetInterface *) clazz->interface)->containsIndex = containsIndex;
+  ((IndexSetInterface *) clazz->interface)->initWithIndex = initWithIndex;
+  ((IndexSetInterface *) clazz->interface)->initWithIndexes = initWithIndexes;
 }
 
 /**
@@ -216,21 +216,21 @@ static void initialize(Class *clazz) {
  * @memberof IndexSet
  */
 Class *_IndexSet(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "IndexSet",
-			.superclass = _Object(),
-			.instanceSize = sizeof(IndexSet),
-			.interfaceOffset = offsetof(IndexSet, interface),
-			.interfaceSize = sizeof(IndexSetInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "IndexSet",
+      .superclass = _Object(),
+      .instanceSize = sizeof(IndexSet),
+      .interfaceOffset = offsetof(IndexSet, interface),
+      .interfaceSize = sizeof(IndexSetInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

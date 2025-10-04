@@ -36,12 +36,12 @@
  */
 static Object *copy(const Object *self) {
 
-	Data *this = (Data *) self;
+  Data *this = (Data *) self;
 
-	MutableData *that = $(alloc(MutableData), init);
-	$(that, appendBytes, this->bytes, this->length);
+  MutableData *that = $(alloc(MutableData), init);
+  $(that, appendBytes, this->bytes, this->length);
 
-	return (Object *) that;
+  return (Object *) that;
 }
 
 #pragma mark - MutableData
@@ -52,11 +52,11 @@ static Object *copy(const Object *self) {
  */
 static void appendBytes(MutableData *self, const uint8_t *bytes, size_t length) {
 
-	const size_t oldLength = self->data.length;
+  const size_t oldLength = self->data.length;
 
-	$(self, setLength, self->data.length + length);
+  $(self, setLength, self->data.length + length);
 
-	memcpy(self->data.bytes + oldLength, bytes, length);
+  memcpy(self->data.bytes + oldLength, bytes, length);
 }
 
 /**
@@ -65,7 +65,7 @@ static void appendBytes(MutableData *self, const uint8_t *bytes, size_t length) 
  */
 static void appendData(MutableData *self, const Data *data) {
 
-	$(self, appendBytes, data->bytes, data->length);
+  $(self, appendBytes, data->bytes, data->length);
 }
 
 /**
@@ -74,7 +74,7 @@ static void appendData(MutableData *self, const Data *data) {
  */
 static MutableData *data(void) {
 
-	return $(alloc(MutableData), init);
+  return $(alloc(MutableData), init);
 }
 
 /**
@@ -83,7 +83,7 @@ static MutableData *data(void) {
  */
 static MutableData *dataWithCapacity(size_t capacity) {
 
-	return $(alloc(MutableData), initWithCapacity, capacity);
+  return $(alloc(MutableData), initWithCapacity, capacity);
 }
 
 /**
@@ -92,7 +92,7 @@ static MutableData *dataWithCapacity(size_t capacity) {
  */
 static MutableData *init(MutableData *self) {
 
-	return $(self, initWithCapacity, 0);
+  return $(self, initWithCapacity, 0);
 }
 
 /**
@@ -101,20 +101,20 @@ static MutableData *init(MutableData *self) {
  */
 static MutableData *initWithCapacity(MutableData *self, size_t capacity) {
 
-	self = (MutableData *) super(Object, self, init);
-	if (self) {
+  self = (MutableData *) super(Object, self, init);
+  if (self) {
 
-		self->capacity = capacity;
-		if (self->capacity) {
+    self->capacity = capacity;
+    if (self->capacity) {
 
-			self->data.bytes = calloc(capacity, sizeof(uint8_t));
-			assert(self->data.bytes);
-		}
+      self->data.bytes = calloc(capacity, sizeof(uint8_t));
+      assert(self->data.bytes);
+    }
 
-		self->data.destroy = free;
-	}
+    self->data.destroy = free;
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -123,12 +123,12 @@ static MutableData *initWithCapacity(MutableData *self, size_t capacity) {
  */
 static MutableData *initWithData(MutableData *self, const Data *data) {
 
-	self = $(self, initWithCapacity, data->length);
-	if (self) {
-		$(self, appendData, data);
-	}
+  self = $(self, initWithCapacity, data->length);
+  if (self) {
+    $(self, appendData, data);
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -137,23 +137,23 @@ static MutableData *initWithData(MutableData *self, const Data *data) {
  */
 static void setLength(MutableData *self, size_t length) {
 
-	const size_t newCapacity = (length / _pageSize + 1) * _pageSize;
-	if (newCapacity > self->capacity) {
+  const size_t newCapacity = (length / _pageSize + 1) * _pageSize;
+  if (newCapacity > self->capacity) {
 
-		if (self->data.bytes == NULL) {
-			self->data.bytes = calloc(newCapacity, sizeof(uint8_t));
-			assert(self->data.bytes);
-		} else {
-			self->data.bytes = realloc(self->data.bytes, newCapacity);
-			assert(self->data.bytes);
+    if (self->data.bytes == NULL) {
+      self->data.bytes = calloc(newCapacity, sizeof(uint8_t));
+      assert(self->data.bytes);
+    } else {
+      self->data.bytes = realloc(self->data.bytes, newCapacity);
+      assert(self->data.bytes);
 
-			memset(self->data.bytes + self->data.length, 0, length - self->data.length);
-		}
+      memset(self->data.bytes + self->data.length, 0, length - self->data.length);
+    }
 
-		self->capacity = newCapacity;
-	}
+    self->capacity = newCapacity;
+  }
 
-	self->data.length = length;
+  self->data.length = length;
 }
 
 #pragma mark - Class lifecycle
@@ -163,16 +163,16 @@ static void setLength(MutableData *self, size_t length) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
 
-	((MutableDataInterface *) clazz->interface)->appendBytes = appendBytes;
-	((MutableDataInterface *) clazz->interface)->appendData = appendData;
-	((MutableDataInterface *) clazz->interface)->data = data;
-	((MutableDataInterface *) clazz->interface)->dataWithCapacity = dataWithCapacity;
-	((MutableDataInterface *) clazz->interface)->init = init;
-	((MutableDataInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
-	((MutableDataInterface *) clazz->interface)->initWithData = initWithData;
-	((MutableDataInterface *) clazz->interface)->setLength = setLength;
+  ((MutableDataInterface *) clazz->interface)->appendBytes = appendBytes;
+  ((MutableDataInterface *) clazz->interface)->appendData = appendData;
+  ((MutableDataInterface *) clazz->interface)->data = data;
+  ((MutableDataInterface *) clazz->interface)->dataWithCapacity = dataWithCapacity;
+  ((MutableDataInterface *) clazz->interface)->init = init;
+  ((MutableDataInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
+  ((MutableDataInterface *) clazz->interface)->initWithData = initWithData;
+  ((MutableDataInterface *) clazz->interface)->setLength = setLength;
 }
 
 /**
@@ -180,21 +180,21 @@ static void initialize(Class *clazz) {
  * @memberof MutableData
  */
 Class *_MutableData(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "MutableData",
-			.superclass = _Data(),
-			.instanceSize = sizeof(MutableData),
-			.interfaceOffset = offsetof(MutableData, interface),
-			.interfaceSize = sizeof(MutableDataInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "MutableData",
+      .superclass = _Data(),
+      .instanceSize = sizeof(MutableData),
+      .interfaceOffset = offsetof(MutableData, interface),
+      .interfaceSize = sizeof(MutableDataInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

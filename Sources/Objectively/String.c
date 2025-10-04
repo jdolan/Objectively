@@ -50,10 +50,10 @@
  */
 static Object *copy(const Object *self) {
 
-	String *this = (String *) self;
-	String *that = $$(String, stringWithCharacters, this->chars);
+  String *this = (String *) self;
+  String *that = $$(String, stringWithCharacters, this->chars);
 
-	return (Object *) that;
+  return (Object *) that;
 }
 
 /**
@@ -61,11 +61,11 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	String *this = (String *) self;
+  String *this = (String *) self;
 
-	free(this->chars);
+  free(this->chars);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 /**
@@ -73,7 +73,7 @@ static void dealloc(Object *self) {
  */
 static String *description(const Object *self) {
 
-	return (String *) $(self, copy);
+  return (String *) $(self, copy);
 }
 
 /**
@@ -81,9 +81,9 @@ static String *description(const Object *self) {
  */
 static int hash(const Object *self) {
 
-	String *this = (String *) self;
+  String *this = (String *) self;
 
-	return HashForCString(HASH_SEED, this->chars);
+  return HashForCString(HASH_SEED, this->chars);
 }
 
 /**
@@ -91,23 +91,23 @@ static int hash(const Object *self) {
  */
 static bool isEqual(const Object *self, const Object *other) {
 
-	if (super(Object, self, isEqual, other)) {
-		return true;
-	}
+  if (super(Object, self, isEqual, other)) {
+    return true;
+  }
 
-	if (other && $(other, isKindOfClass, _String())) {
+  if (other && $(other, isKindOfClass, _String())) {
 
-		const String *this = (String *) self;
-		const String *that = (String *) other;
+    const String *this = (String *) self;
+    const String *that = (String *) other;
 
-		if (this->length == that->length) {
+    if (this->length == that->length) {
 
-			const Range range = { 0, this->length };
-			return $(this, compareTo, that, range) == OrderSame;
-		}
-	}
+      const Range range = { 0, this->length };
+      return $(this, compareTo, that, range) == OrderSame;
+    }
+  }
 
-	return false;
+  return false;
 }
 
 #pragma mark - String
@@ -117,12 +117,12 @@ static bool isEqual(const Object *self, const Object *other) {
  * @see iconv(3)
  */
 typedef struct {
-	StringEncoding to;
-	StringEncoding from;
-	char *in;
-	size_t length;
-	char *out;
-	size_t size;
+  StringEncoding to;
+  StringEncoding from;
+  char *in;
+  size_t length;
+  char *out;
+  size_t size;
 } Transcode;
 
 /**
@@ -132,28 +132,28 @@ typedef struct {
  */
 static size_t transcode(Transcode *trans) {
 
-	assert(trans);
-	assert(trans->to);
-	assert(trans->from);
-	assert(trans->out);
-	assert(trans->size);
+  assert(trans);
+  assert(trans->to);
+  assert(trans->from);
+  assert(trans->out);
+  assert(trans->size);
 
-	iconv_t cd = iconv_open(NameForStringEncoding(trans->to), NameForStringEncoding(trans->from));
-	assert(cd != (iconv_t ) -1);
+  iconv_t cd = iconv_open(NameForStringEncoding(trans->to), NameForStringEncoding(trans->from));
+  assert(cd != (iconv_t ) -1);
 
-	char *in = trans->in;
-	char *out = trans->out;
+  char *in = trans->in;
+  char *out = trans->out;
 
-	size_t inBytesRemaining = trans->length;
-	size_t outBytesRemaining = trans->size;
+  size_t inBytesRemaining = trans->length;
+  size_t outBytesRemaining = trans->size;
 
-	const size_t ret = iconv(cd, &in, &inBytesRemaining, &out, &outBytesRemaining);
-	assert(ret != (size_t ) -1);
+  const size_t ret = iconv(cd, &in, &inBytesRemaining, &out, &outBytesRemaining);
+  assert(ret != (size_t ) -1);
 
-	int err = iconv_close(cd);
-	assert(err == 0);
+  int err = iconv_close(cd);
+  assert(err == 0);
 
-	return trans->size - outBytesRemaining;
+  return trans->size - outBytesRemaining;
 }
 
 /**
@@ -162,19 +162,19 @@ static size_t transcode(Transcode *trans) {
  */
 static Order compareTo(const String *self, const String *other, const Range range) {
 
-	assert(range.location + range.length <= self->length);
+  assert(range.location + range.length <= self->length);
 
-	if (other) {
-		const int i = strncmp(self->chars + range.location, other->chars, range.length);
-		if (i == 0) {
-			return OrderSame;
-		}
-		if (i > 0) {
-			return OrderDescending;
-		}
-	}
+  if (other) {
+    const int i = strncmp(self->chars + range.location, other->chars, range.length);
+    if (i == 0) {
+      return OrderSame;
+    }
+    if (i > 0) {
+      return OrderDescending;
+    }
+  }
 
-	return OrderAscending;
+  return OrderAscending;
 }
 
 /**
@@ -183,31 +183,31 @@ static Order compareTo(const String *self, const String *other, const Range rang
  */
 static Array *componentsSeparatedByCharacters(const String *self, const char *chars) {
 
-	assert(chars);
+  assert(chars);
 
-	MutableArray *components = $(alloc(MutableArray), init);
+  MutableArray *components = $(alloc(MutableArray), init);
 
-	Range search = { 0, self->length };
-	Range result = $(self, rangeOfCharacters, chars, search);
+  Range search = { 0, self->length };
+  Range result = $(self, rangeOfCharacters, chars, search);
 
-	while (result.length) {
-		search.length = result.location - search.location;
+  while (result.length) {
+    search.length = result.location - search.location;
 
-		String *component = $(self, substring, search);
-		$(components, addObject, component);
-		release(component);
+    String *component = $(self, substring, search);
+    $(components, addObject, component);
+    release(component);
 
-		search.location = result.location + result.length;
-		search.length = self->length - search.location;
+    search.location = result.location + result.length;
+    search.length = self->length - search.location;
 
-		result = $(self, rangeOfCharacters, chars, search);
-	}
+    result = $(self, rangeOfCharacters, chars, search);
+  }
 
-	String *component = $(self, substring, search);
-	$(components, addObject, component);
-	release(component);
+  String *component = $(self, substring, search);
+  $(components, addObject, component);
+  release(component);
 
-	return (Array *) components;
+  return (Array *) components;
 }
 
 /**
@@ -216,9 +216,9 @@ static Array *componentsSeparatedByCharacters(const String *self, const char *ch
  */
 static Array *componentsSeparatedByString(const String *self, const String *string) {
 
-	assert(string);
+  assert(string);
 
-	return $(self, componentsSeparatedByCharacters, string->chars);
+  return $(self, componentsSeparatedByCharacters, string->chars);
 }
 
 /**
@@ -227,21 +227,21 @@ static Array *componentsSeparatedByString(const String *self, const String *stri
  */
 static Data *getData(const String *self, StringEncoding encoding) {
 
-	Transcode trans = {
-		.to = encoding,
-		.from = STRING_ENCODING_UTF8,
-		.in = self->chars,
-		.length = self->length,
-		.out = calloc(self->length, sizeof(Unicode) / sizeof(char)),
-		.size = self->length * sizeof(Unicode)
-	};
+  Transcode trans = {
+    .to = encoding,
+    .from = STRING_ENCODING_UTF8,
+    .in = self->chars,
+    .length = self->length,
+    .out = calloc(self->length, sizeof(Unicode) / sizeof(char)),
+    .size = self->length * sizeof(Unicode)
+  };
 
-	assert(trans.out);
+  assert(trans.out);
 
-	const size_t size = transcode(&trans);
-	assert(size <= trans.size);
+  const size_t size = transcode(&trans);
+  assert(size <= trans.size);
 
-	return $$(Data, dataWithMemory, trans.out, size);
+  return $$(Data, dataWithMemory, trans.out, size);
 }
 
 /**
@@ -250,12 +250,12 @@ static Data *getData(const String *self, StringEncoding encoding) {
  */
 static bool hasPrefix(const String *self, const String *prefix) {
 
-	if (prefix->length > self->length) {
-		return false;
-	}
+  if (prefix->length > self->length) {
+    return false;
+  }
 
-	Range range = { 0, prefix->length };
-	return $(self, compareTo, prefix, range) == OrderSame;
+  Range range = { 0, prefix->length };
+  return $(self, compareTo, prefix, range) == OrderSame;
 }
 
 /**
@@ -264,12 +264,12 @@ static bool hasPrefix(const String *self, const String *prefix) {
  */
 static bool hasSuffix(const String *self, const String *suffix) {
 
-	if (suffix->length > self->length) {
-		return false;
-	}
+  if (suffix->length > self->length) {
+    return false;
+  }
 
-	Range range = { self->length - suffix->length, suffix->length };
-	return $(self, compareTo, suffix, range) == OrderSame;
+  Range range = { self->length - suffix->length, suffix->length };
+  return $(self, compareTo, suffix, range) == OrderSame;
 }
 
 /**
@@ -278,29 +278,29 @@ static bool hasSuffix(const String *self, const String *suffix) {
  */
 static String *initWithBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding) {
 
-	if (bytes) {
+  if (bytes) {
 
-		Transcode trans = {
-			.to = STRING_ENCODING_UTF8,
-			.from = encoding,
-			.in = (char *) bytes,
-			.length = length,
-			.out = calloc(length * sizeof(Unicode) + 1, sizeof(char)),
-			.size = length * sizeof(Unicode) + 1
-		};
+    Transcode trans = {
+      .to = STRING_ENCODING_UTF8,
+      .from = encoding,
+      .in = (char *) bytes,
+      .length = length,
+      .out = calloc(length * sizeof(Unicode) + 1, sizeof(char)),
+      .size = length * sizeof(Unicode) + 1
+    };
 
-		assert(trans.out);
+    assert(trans.out);
 
-		const size_t size = transcode(&trans);
-		assert(size < trans.size);
+    const size_t size = transcode(&trans);
+    assert(size < trans.size);
 
-		ident mem = realloc(trans.out, size + 1);
-		assert(mem);
+    ident mem = realloc(trans.out, size + 1);
+    assert(mem);
 
-		return $(self, initWithMemory, mem, size);
-	}
+    return $(self, initWithMemory, mem, size);
+  }
 
-	return $(self, initWithMemory, NULL, 0);
+  return $(self, initWithMemory, NULL, 0);
 }
 
 /**
@@ -309,16 +309,16 @@ static String *initWithBytes(String *self, const uint8_t *bytes, size_t length, 
  */
 static String *initWithCharacters(String *self, const char *chars) {
 
-	if (chars) {
+  if (chars) {
 
-		ident mem = strdup(chars);
-		assert(mem);
+    ident mem = strdup(chars);
+    assert(mem);
 
-		const size_t length = strlen(chars);
-		return $(self, initWithMemory, mem, length);
-	}
+    const size_t length = strlen(chars);
+    return $(self, initWithMemory, mem, length);
+  }
 
-	return $(self, initWithMemory, NULL, 0);
+  return $(self, initWithMemory, NULL, 0);
 }
 
 /**
@@ -327,15 +327,15 @@ static String *initWithCharacters(String *self, const char *chars) {
  */
 static String *initWithContentsOfFile(String *self, const char *path, StringEncoding encoding) {
 
-	Data *data = $$(Data, dataWithContentsOfFile, path);
-	if (data) {
-		self = $(self, initWithData, data, encoding);
-	} else {
-		self = $(self, initWithMemory, NULL, 0);
-	}
-	release(data);
+  Data *data = $$(Data, dataWithContentsOfFile, path);
+  if (data) {
+    self = $(self, initWithData, data, encoding);
+  } else {
+    self = $(self, initWithMemory, NULL, 0);
+  }
+  release(data);
 
-	return self;
+  return self;
 }
 
 /**
@@ -344,9 +344,9 @@ static String *initWithContentsOfFile(String *self, const char *path, StringEnco
  */
 static String *initWithData(String *self, const Data *data, StringEncoding encoding) {
 
-	assert(data);
+  assert(data);
 
-	return $(self, initWithBytes, data->bytes, data->length, encoding);
+  return $(self, initWithBytes, data->bytes, data->length, encoding);
 }
 
 /**
@@ -355,14 +355,14 @@ static String *initWithData(String *self, const Data *data, StringEncoding encod
  */
 static String *initWithFormat(String *self, const char *fmt, ...) {
 
-	va_list args;
-	va_start(args, fmt);
+  va_list args;
+  va_start(args, fmt);
 
-	self = $(self, initWithVaList, fmt, args);
+  self = $(self, initWithVaList, fmt, args);
 
-	va_end(args);
+  va_end(args);
 
-	return self;
+  return self;
 }
 
 /**
@@ -371,16 +371,16 @@ static String *initWithFormat(String *self, const char *fmt, ...) {
  */
 static String *initWithMemory(String *self, const ident mem, size_t length) {
 
-	self = (String *) super(Object, self, init);
-	if (self) {
+  self = (String *) super(Object, self, init);
+  if (self) {
 
-		if (mem) {
-			self->chars = (char *) mem;
-			self->length = length;
-		}
-	}
+    if (mem) {
+      self->chars = (char *) mem;
+      self->length = length;
+    }
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -389,18 +389,18 @@ static String *initWithMemory(String *self, const ident mem, size_t length) {
  */
 static String *initWithVaList(String *self, const char *fmt, va_list args) {
 
-	self = (String *) super(Object, self, init);
-	if (self) {
+  self = (String *) super(Object, self, init);
+  if (self) {
 
-		if (fmt) {
-			const int len = vasprintf(&self->chars, fmt, args);
-			assert(len >= 0);
+    if (fmt) {
+      const int len = vasprintf(&self->chars, fmt, args);
+      assert(len >= 0);
 
-			self->length = len;
-		}
-	}
+      self->length = len;
+    }
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -409,20 +409,20 @@ static String *initWithVaList(String *self, const char *fmt, va_list args) {
  */
 static String *lowercaseString(const String *self) {
 
-	Data *data = $(self, getData, STRING_ENCODING_WCHAR);
-	assert(data);
+  Data *data = $(self, getData, STRING_ENCODING_WCHAR);
+  assert(data);
 
-	const size_t codepoints = data->length / sizeof(Unicode);
-	Unicode *unicode = (Unicode *) data->bytes;
+  const size_t codepoints = data->length / sizeof(Unicode);
+  Unicode *unicode = (Unicode *) data->bytes;
 
-	for (size_t i = 0; i < codepoints; i++, unicode++) {
-		*unicode = towlower(*unicode);
-	}
+  for (size_t i = 0; i < codepoints; i++, unicode++) {
+    *unicode = towlower(*unicode);
+  }
 
-	String *lowercase = $$(String, stringWithData, data, STRING_ENCODING_WCHAR);
+  String *lowercase = $$(String, stringWithData, data, STRING_ENCODING_WCHAR);
 
-	release(data);
-	return lowercase;
+  release(data);
+  return lowercase;
 }
 
 /**
@@ -431,7 +431,7 @@ static String *lowercaseString(const String *self) {
  */
 static MutableString *mutableCopy(const String *self) {
 
-	return $(alloc(MutableString), initWithString, self);
+  return $(alloc(MutableString), initWithString, self);
 }
 
 /**
@@ -440,24 +440,24 @@ static MutableString *mutableCopy(const String *self) {
  */
 static Range rangeOfCharacters(const String *self, const char *chars, const Range range) {
 
-	assert(chars);
-	assert(range.location > -1);
-	assert(range.length > 0);
-	assert(range.location + range.length <= self->length);
+  assert(chars);
+  assert(range.location > -1);
+  assert(range.length > 0);
+  assert(range.location + range.length <= self->length);
 
-	Range match = { -1, 0 };
-	const size_t len = strlen(chars);
+  Range match = { -1, 0 };
+  const size_t len = strlen(chars);
 
-	const char *str = self->chars + range.location;
-	for (size_t i = 0; i < range.length; i++, str++) {
-		if (strncmp(str, chars, len) == 0) {
-			match.location = range.location + i;
-			match.length = len;
-			break;
-		}
-	}
+  const char *str = self->chars + range.location;
+  for (size_t i = 0; i < range.length; i++, str++) {
+    if (strncmp(str, chars, len) == 0) {
+      match.location = range.location + i;
+      match.length = len;
+      break;
+    }
+  }
 
-	return match;
+  return match;
 }
 
 /**
@@ -466,9 +466,9 @@ static Range rangeOfCharacters(const String *self, const char *chars, const Rang
  */
 static Range rangeOfString(const String *self, const String *string, const Range range) {
 
-	assert(string);
+  assert(string);
 
-	return $(self, rangeOfCharacters, string->chars, range);
+  return $(self, rangeOfCharacters, string->chars, range);
 }
 
 /**
@@ -477,7 +477,7 @@ static Range rangeOfString(const String *self, const String *string, const Range
  */
 static String *stringWithBytes(const uint8_t *bytes, size_t length, StringEncoding encoding) {
 
-	return $(alloc(String), initWithBytes, bytes, length, encoding);
+  return $(alloc(String), initWithBytes, bytes, length, encoding);
 }
 
 /**
@@ -486,7 +486,7 @@ static String *stringWithBytes(const uint8_t *bytes, size_t length, StringEncodi
  */
 static String *stringWithCharacters(const char *chars) {
 
-	return $(alloc(String), initWithCharacters, chars);
+  return $(alloc(String), initWithCharacters, chars);
 }
 
 /**
@@ -495,7 +495,7 @@ static String *stringWithCharacters(const char *chars) {
  */
 static String *stringWithContentsOfFile(const char *path, StringEncoding encoding) {
 
-	return $(alloc(String), initWithContentsOfFile, path, encoding);
+  return $(alloc(String), initWithContentsOfFile, path, encoding);
 }
 
 /**
@@ -504,7 +504,7 @@ static String *stringWithContentsOfFile(const char *path, StringEncoding encodin
  */
 static String *stringWithData(const Data *data, StringEncoding encoding) {
 
-	return $(alloc(String), initWithData, data, encoding);
+  return $(alloc(String), initWithData, data, encoding);
 }
 
 /**
@@ -513,14 +513,14 @@ static String *stringWithData(const Data *data, StringEncoding encoding) {
  */
 static String *stringWithFormat(const char *fmt, ...) {
 
-	va_list args;
-	va_start(args, fmt);
+  va_list args;
+  va_start(args, fmt);
 
-	String *string = $(alloc(String), initWithVaList, fmt, args);
+  String *string = $(alloc(String), initWithVaList, fmt, args);
 
-	va_end(args);
+  va_end(args);
 
-	return string;
+  return string;
 }
 
 /**
@@ -529,7 +529,7 @@ static String *stringWithFormat(const char *fmt, ...) {
  */
 static String *stringWithMemory(const ident mem, size_t length) {
 
-	return $(alloc(String), initWithMemory, mem, length);
+  return $(alloc(String), initWithMemory, mem, length);
 }
 
 /**
@@ -538,14 +538,14 @@ static String *stringWithMemory(const ident mem, size_t length) {
  */
 static String *substring(const String *self, const Range range) {
 
-	assert(range.location + range.length <= self->length);
+  assert(range.location + range.length <= self->length);
 
-	ident mem = calloc(range.length + 1, sizeof(char));
-	assert(mem);
+  ident mem = calloc(range.length + 1, sizeof(char));
+  assert(mem);
 
-	strncpy(mem, self->chars + range.location, range.length);
+  strncpy(mem, self->chars + range.location, range.length);
 
-	return $(alloc(String), initWithMemory, mem, range.length);
+  return $(alloc(String), initWithMemory, mem, range.length);
 }
 
 /**
@@ -554,18 +554,18 @@ static String *substring(const String *self, const Range range) {
  */
 static String *trimmedString(const String *self) {
 
-	Range range = { .location = 0, .length = self->length };
+  Range range = { .location = 0, .length = self->length };
 
-	while (isspace(self->chars[range.location])) {
-		range.location++;
-		range.length--;
-	}
+  while (isspace(self->chars[range.location])) {
+    range.location++;
+    range.length--;
+  }
 
-	while (isspace(self->chars[range.length])) {
-		range.length--;
-	}
+  while (isspace(self->chars[range.length])) {
+    range.length--;
+  }
 
-	return $(self, substring, range);
+  return $(self, substring, range);
 }
 
 /**
@@ -574,20 +574,20 @@ static String *trimmedString(const String *self) {
  */
 static String *uppercaseString(const String *self) {
 
-	Data *data = $(self, getData, STRING_ENCODING_WCHAR);
-	assert(data);
+  Data *data = $(self, getData, STRING_ENCODING_WCHAR);
+  assert(data);
 
-	const size_t codepoints = data->length / sizeof(Unicode);
-	Unicode *unicode = (Unicode *) data->bytes;
+  const size_t codepoints = data->length / sizeof(Unicode);
+  Unicode *unicode = (Unicode *) data->bytes;
 
-	for (size_t i = 0; i < codepoints; i++, unicode++) {
-		*unicode = towupper(*unicode);
-	}
+  for (size_t i = 0; i < codepoints; i++, unicode++) {
+    *unicode = towupper(*unicode);
+  }
 
-	String *uppercase = $$(String, stringWithData, data, STRING_ENCODING_WCHAR);
+  String *uppercase = $$(String, stringWithData, data, STRING_ENCODING_WCHAR);
 
-	release(data);
-	return uppercase;
+  release(data);
+  return uppercase;
 }
 
 /**
@@ -596,13 +596,13 @@ static String *uppercaseString(const String *self) {
  */
 static bool writeToFile(const String *self, const char *path, StringEncoding encoding) {
 
-	Data *data = $(self, getData, encoding);
-	assert(data);
+  Data *data = $(self, getData, encoding);
+  assert(data);
 
-	const bool success = $(data, writeToFile, path);
+  const bool success = $(data, writeToFile, path);
 
-	release(data);
-	return success;
+  release(data);
+  return success;
 }
 
 #pragma mark - Class lifecycle
@@ -612,39 +612,39 @@ static bool writeToFile(const String *self, const char *path, StringEncoding enc
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->interface)->description = description;
-	((ObjectInterface *) clazz->interface)->hash = hash;
-	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->description = description;
+  ((ObjectInterface *) clazz->interface)->hash = hash;
+  ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((StringInterface *) clazz->interface)->compareTo = compareTo;
-	((StringInterface *) clazz->interface)->componentsSeparatedByCharacters = componentsSeparatedByCharacters;
-	((StringInterface *) clazz->interface)->componentsSeparatedByString = componentsSeparatedByString;
-	((StringInterface *) clazz->interface)->getData = getData;
-	((StringInterface *) clazz->interface)->hasPrefix = hasPrefix;
-	((StringInterface *) clazz->interface)->hasSuffix = hasSuffix;
-	((StringInterface *) clazz->interface)->initWithBytes = initWithBytes;
-	((StringInterface *) clazz->interface)->initWithCharacters = initWithCharacters;
-	((StringInterface *) clazz->interface)->initWithContentsOfFile = initWithContentsOfFile;
-	((StringInterface *) clazz->interface)->initWithData = initWithData;
-	((StringInterface *) clazz->interface)->initWithFormat = initWithFormat;
-	((StringInterface *) clazz->interface)->initWithMemory = initWithMemory;
-	((StringInterface *) clazz->interface)->initWithVaList = initWithVaList;
-	((StringInterface *) clazz->interface)->lowercaseString = lowercaseString;
-	((StringInterface *) clazz->interface)->mutableCopy = mutableCopy;
-	((StringInterface *) clazz->interface)->rangeOfCharacters = rangeOfCharacters;
-	((StringInterface *) clazz->interface)->rangeOfString = rangeOfString;
-	((StringInterface *) clazz->interface)->stringWithBytes = stringWithBytes;
-	((StringInterface *) clazz->interface)->stringWithCharacters = stringWithCharacters;
-	((StringInterface *) clazz->interface)->stringWithContentsOfFile = stringWithContentsOfFile;
-	((StringInterface *) clazz->interface)->stringWithData = stringWithData;
-	((StringInterface *) clazz->interface)->stringWithFormat = stringWithFormat;
-	((StringInterface *) clazz->interface)->stringWithMemory = stringWithMemory;
-	((StringInterface *) clazz->interface)->substring = substring;
-	((StringInterface *) clazz->interface)->trimmedString = trimmedString;
-	((StringInterface *) clazz->interface)->uppercaseString = uppercaseString;
-	((StringInterface *) clazz->interface)->writeToFile = writeToFile;
+  ((StringInterface *) clazz->interface)->compareTo = compareTo;
+  ((StringInterface *) clazz->interface)->componentsSeparatedByCharacters = componentsSeparatedByCharacters;
+  ((StringInterface *) clazz->interface)->componentsSeparatedByString = componentsSeparatedByString;
+  ((StringInterface *) clazz->interface)->getData = getData;
+  ((StringInterface *) clazz->interface)->hasPrefix = hasPrefix;
+  ((StringInterface *) clazz->interface)->hasSuffix = hasSuffix;
+  ((StringInterface *) clazz->interface)->initWithBytes = initWithBytes;
+  ((StringInterface *) clazz->interface)->initWithCharacters = initWithCharacters;
+  ((StringInterface *) clazz->interface)->initWithContentsOfFile = initWithContentsOfFile;
+  ((StringInterface *) clazz->interface)->initWithData = initWithData;
+  ((StringInterface *) clazz->interface)->initWithFormat = initWithFormat;
+  ((StringInterface *) clazz->interface)->initWithMemory = initWithMemory;
+  ((StringInterface *) clazz->interface)->initWithVaList = initWithVaList;
+  ((StringInterface *) clazz->interface)->lowercaseString = lowercaseString;
+  ((StringInterface *) clazz->interface)->mutableCopy = mutableCopy;
+  ((StringInterface *) clazz->interface)->rangeOfCharacters = rangeOfCharacters;
+  ((StringInterface *) clazz->interface)->rangeOfString = rangeOfString;
+  ((StringInterface *) clazz->interface)->stringWithBytes = stringWithBytes;
+  ((StringInterface *) clazz->interface)->stringWithCharacters = stringWithCharacters;
+  ((StringInterface *) clazz->interface)->stringWithContentsOfFile = stringWithContentsOfFile;
+  ((StringInterface *) clazz->interface)->stringWithData = stringWithData;
+  ((StringInterface *) clazz->interface)->stringWithFormat = stringWithFormat;
+  ((StringInterface *) clazz->interface)->stringWithMemory = stringWithMemory;
+  ((StringInterface *) clazz->interface)->substring = substring;
+  ((StringInterface *) clazz->interface)->trimmedString = trimmedString;
+  ((StringInterface *) clazz->interface)->uppercaseString = uppercaseString;
+  ((StringInterface *) clazz->interface)->writeToFile = writeToFile;
 }
 
 /**
@@ -652,119 +652,119 @@ static void initialize(Class *clazz) {
  * @memberof String
  */
 Class *_String(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "String",
-			.superclass = _Object(),
-			.instanceSize = sizeof(String),
-			.interfaceOffset = offsetof(String, interface),
-			.interfaceSize = sizeof(StringInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "String",
+      .superclass = _Object(),
+      .instanceSize = sizeof(String),
+      .interfaceOffset = offsetof(String, interface),
+      .interfaceSize = sizeof(StringInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class
 
 const char *NameForStringEncoding(StringEncoding encoding) {
 
-	switch (encoding) {
-		case STRING_ENCODING_ASCII:
-			return "ASCII";
-		case STRING_ENCODING_LATIN1:
-			return "ISO-8859-1";
-		case STRING_ENCODING_LATIN2:
-			return "ISO-8859-2";
-		case STRING_ENCODING_MACROMAN:
-			return "MacRoman";
-		case STRING_ENCODING_UTF16:
-			return "UTF-16";
-		case STRING_ENCODING_UTF32:
-			return "UTF-32";
-		case STRING_ENCODING_UTF8:
-			return "UTF-8";
-		case STRING_ENCODING_WCHAR:
-			return "WCHAR_T";
-	}
+  switch (encoding) {
+    case STRING_ENCODING_ASCII:
+      return "ASCII";
+    case STRING_ENCODING_LATIN1:
+      return "ISO-8859-1";
+    case STRING_ENCODING_LATIN2:
+      return "ISO-8859-2";
+    case STRING_ENCODING_MACROMAN:
+      return "MacRoman";
+    case STRING_ENCODING_UTF16:
+      return "UTF-16";
+    case STRING_ENCODING_UTF32:
+      return "UTF-32";
+    case STRING_ENCODING_UTF8:
+      return "UTF-8";
+    case STRING_ENCODING_WCHAR:
+      return "WCHAR_T";
+  }
 
-	return "ASCII";
+  return "ASCII";
 }
 
 StringEncoding StringEncodingForName(const char *name) {
 
-	if (strcasecmp("ASCII", name) == 0) {
-		return STRING_ENCODING_ASCII;
-	} else if (strcasecmp("ISO-8859-1", name) == 0) {
-		return STRING_ENCODING_LATIN1;
-	} else if (strcasecmp("ISO-8859-2", name) == 0) {
-		return STRING_ENCODING_LATIN2;
-	} else if (strcasecmp("MacRoman", name) == 0) {
-		return STRING_ENCODING_MACROMAN;
-	} else if (strcasecmp("UTF-16", name) == 0) {
-		return STRING_ENCODING_UTF16;
-	} else if (strcasecmp("UTF-32", name) == 0) {
-		return STRING_ENCODING_UTF32;
-	} else if (strcasecmp("UTF-8", name) == 0) {
-		return STRING_ENCODING_UTF8;
-	} else if (strcasecmp("WCHAR", name) == 0) {
-		return STRING_ENCODING_WCHAR;
-	}
+  if (strcasecmp("ASCII", name) == 0) {
+    return STRING_ENCODING_ASCII;
+  } else if (strcasecmp("ISO-8859-1", name) == 0) {
+    return STRING_ENCODING_LATIN1;
+  } else if (strcasecmp("ISO-8859-2", name) == 0) {
+    return STRING_ENCODING_LATIN2;
+  } else if (strcasecmp("MacRoman", name) == 0) {
+    return STRING_ENCODING_MACROMAN;
+  } else if (strcasecmp("UTF-16", name) == 0) {
+    return STRING_ENCODING_UTF16;
+  } else if (strcasecmp("UTF-32", name) == 0) {
+    return STRING_ENCODING_UTF32;
+  } else if (strcasecmp("UTF-8", name) == 0) {
+    return STRING_ENCODING_UTF8;
+  } else if (strcasecmp("WCHAR", name) == 0) {
+    return STRING_ENCODING_WCHAR;
+  }
 
-	return STRING_ENCODING_ASCII;
+  return STRING_ENCODING_ASCII;
 }
 
 Order StringCompare(const ident a, const ident b) {
 
-	if (a) {
-		if (b) {
-			const int i = strcmp(((String *) a)->chars, ((String *) b)->chars);
-			if (i == 0) {
-				return OrderSame;
-			}
-			if (i > 0) {
-				return OrderDescending;
-			}
-		} else {
-			return OrderDescending;
-		}
-	}
-	return OrderAscending;
+  if (a) {
+    if (b) {
+      const int i = strcmp(((String *) a)->chars, ((String *) b)->chars);
+      if (i == 0) {
+        return OrderSame;
+      }
+      if (i > 0) {
+        return OrderDescending;
+      }
+    } else {
+      return OrderDescending;
+    }
+  }
+  return OrderAscending;
 }
 
 String *str(const char *fmt, ...) {
 
-	va_list args;
-	va_start(args, fmt);
+  va_list args;
+  va_start(args, fmt);
 
-	String *string = $(alloc(String), initWithVaList, fmt, args);
-	assert(string);
+  String *string = $(alloc(String), initWithVaList, fmt, args);
+  assert(string);
 
-	va_end(args);
+  va_end(args);
 
-	return string;
+  return string;
 }
 
 char *strtrim(const char *s) {
 
-	assert(s);
-	while (isspace(*s)) {
-		s++;
-	}
+  assert(s);
+  while (isspace(*s)) {
+    s++;
+  }
 
-	char *trimmed = strdup(s);
-	assert(trimmed);
+  char *trimmed = strdup(s);
+  assert(trimmed);
 
-	char *end = trimmed + strlen(trimmed);
-	if (end > trimmed) {
-		while (isspace(*(--end))) {
-			*end = '\0';
-		}
-	}
+  char *end = trimmed + strlen(trimmed);
+  if (end > trimmed) {
+    while (isspace(*(--end))) {
+      *end = '\0';
+    }
+  }
 
-	return trimmed;
+  return trimmed;
 }

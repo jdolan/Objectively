@@ -34,7 +34,7 @@
  */
 static Object *copy(const Object *self) {
 
-	return (Object *) self;
+  return (Object *) self;
 }
 
 #pragma mark - Null
@@ -47,13 +47,13 @@ static Null *_null;
  */
 static Null *null(void) {
 
-	static Once once;
+  static Once once;
 
-	do_once(&once, {
-		_null = (Null *) $((Object *) alloc(Null), init);
-	});
+  do_once(&once, {
+    _null = (Null *) $((Object *) alloc(Null), init);
+  });
 
-	return _null;
+  return _null;
 }
 
 #pragma mark - Class lifecycle
@@ -63,9 +63,9 @@ static Null *null(void) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
 
-	((NullInterface *) clazz->interface)->null = null;
+  ((NullInterface *) clazz->interface)->null = null;
 }
 
 /**
@@ -73,7 +73,7 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	release(_null);
+  release(_null);
 }
 
 /**
@@ -81,22 +81,22 @@ static void destroy(Class *clazz) {
  * @memberof Null
  */
 Class *_Null(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Null",
-			.superclass = _Object(),
-			.instanceSize = sizeof(Null),
-			.interfaceOffset = offsetof(Null, interface),
-			.interfaceSize = sizeof(NullInterface),
-			.initialize = initialize,
-			.destroy = destroy,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Null",
+      .superclass = _Object(),
+      .instanceSize = sizeof(Null),
+      .interfaceOffset = offsetof(Null, interface),
+      .interfaceSize = sizeof(NullInterface),
+      .initialize = initialize,
+      .destroy = destroy,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

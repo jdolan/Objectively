@@ -35,7 +35,7 @@
  */
 static Object *copy(const Object *self) {
 
-	return NULL;
+  return NULL;
 }
 
 /**
@@ -43,12 +43,12 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	Operation *this = (Operation *) self;
+  Operation *this = (Operation *) self;
 
-	release(this->locals.condition);
-	release(this->locals.dependencies);
+  release(this->locals.condition);
+  release(this->locals.dependencies);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 #pragma mark - Operation
@@ -59,12 +59,12 @@ static void dealloc(Object *self) {
  */
 static void addDependency(Operation *self, Operation *dependency) {
 
-	assert(dependency);
-	assert(dependency != self);
+  assert(dependency);
+  assert(dependency != self);
 
-	assert($((Array *) self->locals.dependencies, indexOfObject, dependency) == -1);
+  assert($((Array *) self->locals.dependencies, indexOfObject, dependency) == -1);
 
-	$(self->locals.dependencies, addObject, dependency);
+  $(self->locals.dependencies, addObject, dependency);
 }
 
 /**
@@ -73,13 +73,13 @@ static void addDependency(Operation *self, Operation *dependency) {
  */
 static void cancel(Operation *self) {
 
-	if (self->isCancelled == false) {
-		if (self->isFinished == false) {
-			if (self->isExecuting == false) {
-				self->isCancelled = true;
-			}
-		}
-	}
+  if (self->isCancelled == false) {
+    if (self->isFinished == false) {
+      if (self->isExecuting == false) {
+        self->isCancelled = true;
+      }
+    }
+  }
 }
 
 /**
@@ -88,9 +88,9 @@ static void cancel(Operation *self) {
  */
 static Array *dependencies(const Operation *self) {
 
-	ident dependencies = $((Object *) self->locals.dependencies, copy);
+  ident dependencies = $((Object *) self->locals.dependencies, copy);
 
-	return (Array *) dependencies;
+  return (Array *) dependencies;
 }
 
 /**
@@ -99,17 +99,17 @@ static Array *dependencies(const Operation *self) {
  */
 static Operation *init(Operation *self) {
 
-	self = (Operation *) super(Object, self, init);
-	if (self) {
+  self = (Operation *) super(Object, self, init);
+  if (self) {
 
-		self->locals.condition = $(alloc(Condition), init);
-		assert(self->locals.condition);
+    self->locals.condition = $(alloc(Condition), init);
+    assert(self->locals.condition);
 
-		self->locals.dependencies = $(alloc(MutableArray), init);
-		assert(self->locals.dependencies);
-	}
+    self->locals.dependencies = $(alloc(MutableArray), init);
+    assert(self->locals.dependencies);
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -118,13 +118,13 @@ static Operation *init(Operation *self) {
  */
 static Operation *initWithFunction(Operation *self, OperationFunction function, ident data) {
 
-	self = $(self, init);
-	if (self) {
-		self->function = function;
-		self->data = data;
-	}
+  self = $(self, init);
+  if (self) {
+    self->function = function;
+    self->data = data;
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -133,24 +133,24 @@ static Operation *initWithFunction(Operation *self, OperationFunction function, 
  */
 static bool isReady(const Operation *self) {
 
-	if (self->isExecuting || self->isFinished) {
-		return false;
-	}
+  if (self->isExecuting || self->isFinished) {
+    return false;
+  }
 
-	if (self->isCancelled) {
-		return true;
-	}
+  if (self->isCancelled) {
+    return true;
+  }
 
-	const Array *dependencies = (Array *) self->locals.dependencies;
-	for (size_t i = 0; i < dependencies->count; i++) {
+  const Array *dependencies = (Array *) self->locals.dependencies;
+  for (size_t i = 0; i < dependencies->count; i++) {
 
-		Operation *dependency = $(dependencies, objectAtIndex, i);
-		if (dependency->isFinished == false) {
-			return false;
-		}
-	}
+    Operation *dependency = $(dependencies, objectAtIndex, i);
+    if (dependency->isFinished == false) {
+      return false;
+    }
+  }
 
-	return true;
+  return true;
 }
 
 /**
@@ -159,9 +159,9 @@ static bool isReady(const Operation *self) {
  */
 static void removeDepdenency(Operation *self, Operation *dependency) {
 
-	assert(dependency);
+  assert(dependency);
 
-	$(self->locals.dependencies, removeObject, dependency);
+  $(self->locals.dependencies, removeObject, dependency);
 }
 
 /**
@@ -170,26 +170,26 @@ static void removeDepdenency(Operation *self, Operation *dependency) {
  */
 static void start(Operation *self) {
 
-	if (self->isFinished || self->isExecuting) {
-		return;
-	}
+  if (self->isFinished || self->isExecuting) {
+    return;
+  }
 
-	if (self->isCancelled == false) {
-		self->isExecuting = true;
-		self->function(self);
-		self->isExecuting = false;
-	}
+  if (self->isCancelled == false) {
+    self->isExecuting = true;
+    self->function(self);
+    self->isExecuting = false;
+  }
 
-	self->isFinished = true;
+  self->isFinished = true;
 
-	synchronized(self->locals.condition, {
-		$(self->locals.condition, broadcast);
-	});
+  synchronized(self->locals.condition, {
+    $(self->locals.condition, broadcast);
+  });
 
-	OperationQueue *currentQueue = $$(OperationQueue, currentQueue);
-	if (currentQueue) {
-		$(currentQueue, removeOperation, self);
-	}
+  OperationQueue *currentQueue = $$(OperationQueue, currentQueue);
+  if (currentQueue) {
+    $(currentQueue, removeOperation, self);
+  }
 }
 
 /**
@@ -198,11 +198,11 @@ static void start(Operation *self) {
  */
 static void waitUntilFinished(const Operation *self) {
 
-	synchronized(self->locals.condition, {
-		while (self->isFinished == false) {
-			$(self->locals.condition, wait);
-		}
-	});
+  synchronized(self->locals.condition, {
+    while (self->isFinished == false) {
+      $(self->locals.condition, wait);
+    }
+  });
 }
 
 #pragma mark - Class lifecycle
@@ -212,18 +212,18 @@ static void waitUntilFinished(const Operation *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((OperationInterface *) clazz->interface)->addDependency = addDependency;
-	((OperationInterface *) clazz->interface)->cancel = cancel;
-	((OperationInterface *) clazz->interface)->dependencies = dependencies;
-	((OperationInterface *) clazz->interface)->init = init;
-	((OperationInterface *) clazz->interface)->initWithFunction = initWithFunction;
-	((OperationInterface *) clazz->interface)->isReady = isReady;
-	((OperationInterface *) clazz->interface)->removeDependency = removeDepdenency;
-	((OperationInterface *) clazz->interface)->start = start;
-	((OperationInterface *) clazz->interface)->waitUntilFinished = waitUntilFinished;
+  ((OperationInterface *) clazz->interface)->addDependency = addDependency;
+  ((OperationInterface *) clazz->interface)->cancel = cancel;
+  ((OperationInterface *) clazz->interface)->dependencies = dependencies;
+  ((OperationInterface *) clazz->interface)->init = init;
+  ((OperationInterface *) clazz->interface)->initWithFunction = initWithFunction;
+  ((OperationInterface *) clazz->interface)->isReady = isReady;
+  ((OperationInterface *) clazz->interface)->removeDependency = removeDepdenency;
+  ((OperationInterface *) clazz->interface)->start = start;
+  ((OperationInterface *) clazz->interface)->waitUntilFinished = waitUntilFinished;
 }
 
 /**
@@ -231,21 +231,21 @@ static void initialize(Class *clazz) {
  * @memberof Operation
  */
 Class *_Operation(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Operation",
-			.superclass = _Object(),
-			.instanceSize = sizeof(Operation),
-			.interfaceOffset = offsetof(Operation, interface),
-			.interfaceSize = sizeof(OperationInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Operation",
+      .superclass = _Object(),
+      .instanceSize = sizeof(Operation),
+      .interfaceOffset = offsetof(Operation, interface),
+      .interfaceSize = sizeof(OperationInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

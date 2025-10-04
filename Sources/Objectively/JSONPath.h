@@ -41,16 +41,16 @@ typedef struct JSONPathInterface JSONPathInterface;
  */
 struct JSONPath {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	JSONPathInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  JSONPathInterface *interface;
 };
 
 /**
@@ -58,25 +58,25 @@ struct JSONPath {
  */
 struct JSONPathInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @static
-	 * @fn ident JSONPATH::objectForKeyPath(const ident root, const char *path)
-	 * @brief Access a nested property from JSON Data.
-	 * @param root The root element.
-	 * @param path The JSONPath expression.
-	 * @return The nested property, or `NULL` if not found.
-	 * Accessing a nested boolean from JSON Data:
-	 *     id obj = $$(JSONSerialization, objectFromData, data, 0);
-	 *     Boole *boole = $$(JSONPath, objectForKeyPath, obj, "$.foo.bar[1].baz");
-	 * Use dot-notation (`.`) for accessing Dictionaries, and square braces (`[0]`) for Arrays.
-	 * @memberof JSONPath
-	 */
-	ident (*objectForKeyPath)(const ident root, const char *path);
+  /**
+   * @static
+   * @fn ident JSONPATH::objectForKeyPath(const ident root, const char *path)
+   * @brief Access a nested property from JSON Data.
+   * @param root The root element.
+   * @param path The JSONPath expression.
+   * @return The nested property, or `NULL` if not found.
+   * Accessing a nested boolean from JSON Data:
+   *     id obj = $$(JSONSerialization, objectFromData, data, 0);
+   *     Boole *boole = $$(JSONPath, objectForKeyPath, obj, "$.foo.bar[1].baz");
+   * Use dot-notation (`.`) for accessing Dictionaries, and square braces (`[0]`) for Arrays.
+   * @memberof JSONPath
+   */
+  ident (*objectForKeyPath)(const ident root, const char *path);
 };
 
 /**

@@ -44,27 +44,27 @@ typedef struct ObjectInterface ObjectInterface;
  * @ingroup Core
  */
 struct Object {
-	/**
-	 * @brief A header to allow introspection of Object types.
-	 */
-	unsigned int magic;
+  /**
+   * @brief A header to allow introspection of Object types.
+   */
+  unsigned int magic;
 
-	/**
-	 * @brief Every instance of Object begins with a pointer to its Class.
-	 */
-	Class *clazz;
+  /**
+   * @brief Every instance of Object begins with a pointer to its Class.
+   */
+  Class *clazz;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	ObjectInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  ObjectInterface *interface;
 
-	/**
-	 * @brief The reference count of this Object.
-	 * @private
-	 */
-	unsigned int referenceCount;
+  /**
+   * @brief The reference count of this Object.
+   * @private
+   */
+  unsigned int referenceCount;
 };
 
 typedef struct String String;
@@ -74,67 +74,67 @@ typedef struct String String;
  */
 struct ObjectInterface {
 
-	/**
-	 * @fn Object *Object::copy(const Object *self)
-	 * @brief Creates a shallow copy of this Object.
-	 * @param self The Object.
-	 * @return The copy.
-	 * @memberof Object
-	 */
-	Object *(*copy)(const Object *self);
+  /**
+   * @fn Object *Object::copy(const Object *self)
+   * @brief Creates a shallow copy of this Object.
+   * @param self The Object.
+   * @return The copy.
+   * @memberof Object
+   */
+  Object *(*copy)(const Object *self);
 
-	/**
-	 * @fn void Object::dealloc(Object *self)
-	 * @brief Frees all resources held by this Object.
-	 * @param self The Object.
-	 * @memberof Object
-	 */
-	void (*dealloc)(Object *self);
+  /**
+   * @fn void Object::dealloc(Object *self)
+   * @brief Frees all resources held by this Object.
+   * @param self The Object.
+   * @memberof Object
+   */
+  void (*dealloc)(Object *self);
 
-	/**
-	 * @fn String *Object::description(const Object *self)
-	 * @param self The Object.
-	 * @return A brief description of this Object.
-	 * @memberof Object
-	 */
-	String *(*description)(const Object *self);
+  /**
+   * @fn String *Object::description(const Object *self)
+   * @param self The Object.
+   * @return A brief description of this Object.
+   * @memberof Object
+   */
+  String *(*description)(const Object *self);
 
-	/**
-	 * @fn int Object::hash(const Object *self)
-	 * @param self The Object.
-	 * @return An integer hash for use in hash tables, etc.
-	 * @memberof Object
-	 */
-	int (*hash)(const Object *self);
+  /**
+   * @fn int Object::hash(const Object *self)
+   * @param self The Object.
+   * @return An integer hash for use in hash tables, etc.
+   * @memberof Object
+   */
+  int (*hash)(const Object *self);
 
-	/**
-	 * @fn Object *Object::init(Object *self)
-	 * @brief Initializes this Object.
-	 * @param self The Object.
-	 * @return The initialized Object, or the unmodified pointer on error.
-	 * @memberof Object
-	 */
-	Object *(*init)(Object *self);
+  /**
+   * @fn Object *Object::init(Object *self)
+   * @brief Initializes this Object.
+   * @param self The Object.
+   * @return The initialized Object, or the unmodified pointer on error.
+   * @memberof Object
+   */
+  Object *(*init)(Object *self);
 
-	/**
-	 * @fn bool Object::isEqual(const Object *self, const Object *other)
-	 * @brief Tests equality of the other Object.
-	 * @param self The Object.
-	 * @param other The Object to test for equality.
-	 * @return True if other is deemed equal, false otherwise.
-	 * @memberof Object
-	 */
-	bool (*isEqual)(const Object *self, const Object *other);
+  /**
+   * @fn bool Object::isEqual(const Object *self, const Object *other)
+   * @brief Tests equality of the other Object.
+   * @param self The Object.
+   * @param other The Object to test for equality.
+   * @return True if other is deemed equal, false otherwise.
+   * @memberof Object
+   */
+  bool (*isEqual)(const Object *self, const Object *other);
 
-	/**
-	 * @fn bool Object::isKindOfClass(const Object *self, const Class *clazz)
-	 * @brief Tests for Class hierarchy membership.
-	 * @param self The Object.
-	 * @param clazz The Class to test for membership.
-	 * @return True if this instance belongs to Class' hierarchy, false otherwise.
-	 * @memberof Object
-	 */
-	bool (*isKindOfClass)(const Object *self, const Class *clazz);
+  /**
+   * @fn bool Object::isKindOfClass(const Object *self, const Class *clazz)
+   * @brief Tests for Class hierarchy membership.
+   * @param self The Object.
+   * @param clazz The Class to test for membership.
+   * @return True if this instance belongs to Class' hierarchy, false otherwise.
+   * @memberof Object
+   */
+  bool (*isKindOfClass)(const Object *self, const Class *clazz);
 };
 
 /**

@@ -40,9 +40,9 @@
  */
 static Object *copy(const Object *self) {
 
-	const String *this = (String *) self;
+  const String *this = (String *) self;
 
-	return (Object *) $(alloc(MutableString), initWithString, this);
+  return (Object *) $(alloc(MutableString), initWithString, this);
 }
 
 #pragma mark - MutableString
@@ -53,33 +53,33 @@ static Object *copy(const Object *self) {
  */
 static void appendCharacters(MutableString *self, const char *chars) {
 
-	if (chars) {
+  if (chars) {
 
-		const size_t len = strlen(chars);
-		if (len) {
+    const size_t len = strlen(chars);
+    if (len) {
 
-			const size_t newSize = self->string.length + strlen(chars) + 1;
-			const size_t newCapacity = (newSize / _pageSize + 1) * _pageSize;
+      const size_t newSize = self->string.length + strlen(chars) + 1;
+      const size_t newCapacity = (newSize / _pageSize + 1) * _pageSize;
 
-			if (newCapacity > self->capacity) {
+      if (newCapacity > self->capacity) {
 
-				if (self->string.length) {
-					self->string.chars = realloc(self->string.chars, newCapacity);
-				} else {
-					self->string.chars = malloc(newCapacity);
-				}
+        if (self->string.length) {
+          self->string.chars = realloc(self->string.chars, newCapacity);
+        } else {
+          self->string.chars = malloc(newCapacity);
+        }
 
-				assert(self->string.chars);
-				self->capacity = newCapacity;
-			}
+        assert(self->string.chars);
+        self->capacity = newCapacity;
+      }
 
-			ident ptr = self->string.chars + self->string.length;
-			memmove(ptr, chars, len);
+      ident ptr = self->string.chars + self->string.length;
+      memmove(ptr, chars, len);
 
-			self->string.chars[newSize - 1] = '\0';
-			self->string.length += len;
-		}
-	}
+      self->string.chars[newSize - 1] = '\0';
+      self->string.length += len;
+    }
+  }
 }
 
 /**
@@ -88,12 +88,12 @@ static void appendCharacters(MutableString *self, const char *chars) {
  */
 static void appendFormat(MutableString *self, const char *fmt, ...) {
 
-	va_list args;
-	va_start(args, fmt);
+  va_list args;
+  va_start(args, fmt);
 
-	$(self, appendVaList, fmt, args);
+  $(self, appendVaList, fmt, args);
 
-	va_end(args);
+  va_end(args);
 }
 
 /**
@@ -102,9 +102,9 @@ static void appendFormat(MutableString *self, const char *fmt, ...) {
  */
 static void appendString(MutableString *self, const String *string) {
 
-	if (string) {
-		$(self, appendCharacters, string->chars);
-	}
+  if (string) {
+    $(self, appendCharacters, string->chars);
+  }
 }
 
 /**
@@ -112,14 +112,14 @@ static void appendString(MutableString *self, const String *string) {
  * @memberof MutableString
  */
 static void appendVaList(MutableString *self, const char *fmt, va_list args) {
-	char *chars;
+  char *chars;
 
-	const int len = vasprintf(&chars, fmt, args);
-	if (len > 0) {
-		$(self, appendCharacters, chars);
-	}
+  const int len = vasprintf(&chars, fmt, args);
+  if (len > 0) {
+    $(self, appendCharacters, chars);
+  }
 
-	free(chars);
+  free(chars);
 }
 
 /**
@@ -128,15 +128,15 @@ static void appendVaList(MutableString *self, const char *fmt, va_list args) {
  */
 static void deleteCharactersInRange(MutableString *self, const Range range) {
 
-	assert(range.location >= 0);
-	assert(range.length <= self->string.length);
+  assert(range.location >= 0);
+  assert(range.length <= self->string.length);
 
-	ident ptr = self->string.chars + range.location;
-	const size_t length = self->string.length - range.location - range.length + 1;
+  ident ptr = self->string.chars + range.location;
+  const size_t length = self->string.length - range.location - range.length + 1;
 
-	memmove(ptr, ptr + range.length, length);
+  memmove(ptr, ptr + range.length, length);
 
-	self->string.length -= range.length;
+  self->string.length -= range.length;
 }
 
 /**
@@ -144,7 +144,7 @@ static void deleteCharactersInRange(MutableString *self, const Range range) {
  * @memberof MutableString
  */
 static MutableString *init(MutableString *self) {
-	return $(self, initWithCapacity, 0);
+  return $(self, initWithCapacity, 0);
 }
 
 /**
@@ -153,17 +153,17 @@ static MutableString *init(MutableString *self) {
  */
 static MutableString *initWithCapacity(MutableString *self, size_t capacity) {
 
-	self = (MutableString *) super(String, self, initWithMemory, NULL, 0);
-	if (self) {
-		if (capacity) {
-			self->string.chars = calloc(capacity, sizeof(char));
-			assert(self->string.chars);
+  self = (MutableString *) super(String, self, initWithMemory, NULL, 0);
+  if (self) {
+    if (capacity) {
+      self->string.chars = calloc(capacity, sizeof(char));
+      assert(self->string.chars);
 
-			self->capacity = capacity;
-		}
-	}
+      self->capacity = capacity;
+    }
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -172,12 +172,12 @@ static MutableString *initWithCapacity(MutableString *self, size_t capacity) {
  */
 static MutableString *initWithString(MutableString *self, const String *string) {
 
-	self = $(self, init);
-	if (self) {
-		$(self, appendString, string);
-	}
+  self = $(self, init);
+  if (self) {
+    $(self, appendString, string);
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -186,9 +186,9 @@ static MutableString *initWithString(MutableString *self, const String *string) 
  */
 static void insertCharactersAtIndex(MutableString *self, const char *chars, size_t index) {
 
-	const Range range = { .location = index };
+  const Range range = { .location = index };
 
-	$(self, replaceCharactersInRange, range, chars);
+  $(self, replaceCharactersInRange, range, chars);
 }
 
 /**
@@ -197,7 +197,7 @@ static void insertCharactersAtIndex(MutableString *self, const char *chars, size
  */
 static void insertStringAtIndex(MutableString *self, const String *string, size_t index) {
 
-	$(self, insertCharactersAtIndex, string->chars, index);
+  $(self, insertCharactersAtIndex, string->chars, index);
 }
 
 /**
@@ -206,22 +206,22 @@ static void insertStringAtIndex(MutableString *self, const String *string, size_
  */
 static void replaceCharactersInRange(MutableString *self, const Range range, const char *chars) {
 
-	assert(range.location >= 0);
-	assert(range.location + range.length <= self->string.length);
+  assert(range.location >= 0);
+  assert(range.location + range.length <= self->string.length);
 
-	if (self->capacity == 0) {
-		$(self, appendCharacters, chars);
-	} else {
-		char *remainder = strdup(self->string.chars + range.location + range.length);
+  if (self->capacity == 0) {
+    $(self, appendCharacters, chars);
+  } else {
+    char *remainder = strdup(self->string.chars + range.location + range.length);
 
-		self->string.length = range.location;
-		self->string.chars[range.location + 1] = '\0';
+    self->string.length = range.location;
+    self->string.chars[range.location + 1] = '\0';
 
-		$(self, appendCharacters, chars);
-		$(self, appendCharacters, remainder);
+    $(self, appendCharacters, chars);
+    $(self, appendCharacters, remainder);
 
-		free(remainder);
-	}
+    free(remainder);
+  }
 }
 
 /**
@@ -229,7 +229,7 @@ static void replaceCharactersInRange(MutableString *self, const Range range, con
  * @memberof MutableString
  */
 static void replaceOccurrencesOfCharacters(MutableString *self, const char *chars, const char *replacement) {
-	$(self, replaceOccurrencesOfCharactersInRange, chars, (Range) { .length = self->string.length }, replacement);
+  $(self, replaceOccurrencesOfCharactersInRange, chars, (Range) { .length = self->string.length }, replacement);
 }
 
 /**
@@ -238,28 +238,28 @@ static void replaceOccurrencesOfCharacters(MutableString *self, const char *char
  */
 static void replaceOccurrencesOfCharactersInRange(MutableString *self, const char *chars, const Range range, const char *replacement) {
 
-	assert(chars);
-	assert(replacement);
+  assert(chars);
+  assert(replacement);
 
-	assert(range.location >= 0);
-	assert(range.location + range.length <= self->string.length);
+  assert(range.location >= 0);
+  assert(range.location + range.length <= self->string.length);
 
-	Range search = range;
-	while (true) {
+  Range search = range;
+  while (true) {
 
-		const Range result = $((String *) self, rangeOfCharacters, chars, search);
-		if (result.location == -1) {
-			break;
-		}
+    const Range result = $((String *) self, rangeOfCharacters, chars, search);
+    if (result.location == -1) {
+      break;
+    }
 
-		$(self, replaceCharactersInRange, result, replacement);
+    $(self, replaceCharactersInRange, result, replacement);
 
-		search.length -= (result.location - search.location);
-		search.length -= strlen(replacement);
-		search.length += ((int) strlen(replacement) - (int) strlen(chars));
+    search.length -= (result.location - search.location);
+    search.length -= strlen(replacement);
+    search.length += ((int) strlen(replacement) - (int) strlen(chars));
 
-		search.location = result.location + strlen(replacement);
-	}
+    search.location = result.location + strlen(replacement);
+  }
 }
 
 /**
@@ -267,7 +267,7 @@ static void replaceOccurrencesOfCharactersInRange(MutableString *self, const cha
  * @memberof MutableString
  */
 static void replaceOccurrencesOfString(MutableString *self, const String *string, const String *replacement) {
-	$(self, replaceOccurrencesOfStringInRange, string, (Range) { .length = self->string.length }, replacement);
+  $(self, replaceOccurrencesOfStringInRange, string, (Range) { .length = self->string.length }, replacement);
 }
 
 /**
@@ -276,10 +276,10 @@ static void replaceOccurrencesOfString(MutableString *self, const String *string
  */
 static void replaceOccurrencesOfStringInRange(MutableString *self, const String *string, const Range range, const String *replacement) {
 
-	assert(string);
-	assert(replacement);
+  assert(string);
+  assert(replacement);
 
-	$(self, replaceOccurrencesOfCharactersInRange, string->chars, range, replacement->chars);
+  $(self, replaceOccurrencesOfCharactersInRange, string->chars, range, replacement->chars);
 }
 
 /**
@@ -288,7 +288,7 @@ static void replaceOccurrencesOfStringInRange(MutableString *self, const String 
  */
 static void replaceStringInRange(MutableString *self, const Range range, const String *string) {
 
-	$(self, replaceCharactersInRange, range, string->chars);
+  $(self, replaceCharactersInRange, range, string->chars);
 }
 
 /**
@@ -297,7 +297,7 @@ static void replaceStringInRange(MutableString *self, const Range range, const S
  */
 static MutableString *string(void) {
 
-	return $(alloc(MutableString), init);
+  return $(alloc(MutableString), init);
 }
 
 /**
@@ -306,7 +306,7 @@ static MutableString *string(void) {
  */
 static MutableString *stringWithCapacity(size_t capacity) {
 
-	return $(alloc(MutableString), initWithCapacity, capacity);
+  return $(alloc(MutableString), initWithCapacity, capacity);
 }
 
 /**
@@ -315,11 +315,11 @@ static MutableString *stringWithCapacity(size_t capacity) {
  */
 static void trim(MutableString *self) {
 
-	String *trimmed = $((String *) self, trimmedString);
+  String *trimmed = $((String *) self, trimmedString);
 
-	$(self, replaceStringInRange, (const Range) { .length = self->string.length }, trimmed);
+  $(self, replaceStringInRange, (const Range) { .length = self->string.length }, trimmed);
 
-	release(trimmed);
+  release(trimmed);
 }
 
 #pragma mark - Class lifecycle
@@ -329,27 +329,27 @@ static void trim(MutableString *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
 
-	((MutableStringInterface *) clazz->interface)->appendCharacters = appendCharacters;
-	((MutableStringInterface *) clazz->interface)->appendFormat = appendFormat;
-	((MutableStringInterface *) clazz->interface)->appendString = appendString;
-	((MutableStringInterface *) clazz->interface)->appendVaList = appendVaList;
-	((MutableStringInterface *) clazz->interface)->deleteCharactersInRange = deleteCharactersInRange;
-	((MutableStringInterface *) clazz->interface)->init = init;
-	((MutableStringInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
-	((MutableStringInterface *) clazz->interface)->initWithString = initWithString;
-	((MutableStringInterface *) clazz->interface)->insertCharactersAtIndex = insertCharactersAtIndex;
-	((MutableStringInterface *) clazz->interface)->insertStringAtIndex = insertStringAtIndex;
-	((MutableStringInterface *) clazz->interface)->replaceCharactersInRange = replaceCharactersInRange;
-	((MutableStringInterface *) clazz->interface)->replaceOccurrencesOfCharacters = replaceOccurrencesOfCharacters;
-	((MutableStringInterface *) clazz->interface)->replaceOccurrencesOfCharactersInRange = replaceOccurrencesOfCharactersInRange;
-	((MutableStringInterface *) clazz->interface)->replaceOccurrencesOfString = replaceOccurrencesOfString;
-	((MutableStringInterface *) clazz->interface)->replaceOccurrencesOfStringInRange = replaceOccurrencesOfStringInRange;
-	((MutableStringInterface *) clazz->interface)->replaceStringInRange = replaceStringInRange;
-	((MutableStringInterface *) clazz->interface)->string = string;
-	((MutableStringInterface *) clazz->interface)->stringWithCapacity = stringWithCapacity;
-	((MutableStringInterface *) clazz->interface)->trim = trim;
+  ((MutableStringInterface *) clazz->interface)->appendCharacters = appendCharacters;
+  ((MutableStringInterface *) clazz->interface)->appendFormat = appendFormat;
+  ((MutableStringInterface *) clazz->interface)->appendString = appendString;
+  ((MutableStringInterface *) clazz->interface)->appendVaList = appendVaList;
+  ((MutableStringInterface *) clazz->interface)->deleteCharactersInRange = deleteCharactersInRange;
+  ((MutableStringInterface *) clazz->interface)->init = init;
+  ((MutableStringInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
+  ((MutableStringInterface *) clazz->interface)->initWithString = initWithString;
+  ((MutableStringInterface *) clazz->interface)->insertCharactersAtIndex = insertCharactersAtIndex;
+  ((MutableStringInterface *) clazz->interface)->insertStringAtIndex = insertStringAtIndex;
+  ((MutableStringInterface *) clazz->interface)->replaceCharactersInRange = replaceCharactersInRange;
+  ((MutableStringInterface *) clazz->interface)->replaceOccurrencesOfCharacters = replaceOccurrencesOfCharacters;
+  ((MutableStringInterface *) clazz->interface)->replaceOccurrencesOfCharactersInRange = replaceOccurrencesOfCharactersInRange;
+  ((MutableStringInterface *) clazz->interface)->replaceOccurrencesOfString = replaceOccurrencesOfString;
+  ((MutableStringInterface *) clazz->interface)->replaceOccurrencesOfStringInRange = replaceOccurrencesOfStringInRange;
+  ((MutableStringInterface *) clazz->interface)->replaceStringInRange = replaceStringInRange;
+  ((MutableStringInterface *) clazz->interface)->string = string;
+  ((MutableStringInterface *) clazz->interface)->stringWithCapacity = stringWithCapacity;
+  ((MutableStringInterface *) clazz->interface)->trim = trim;
 }
 
 /**
@@ -357,34 +357,34 @@ static void initialize(Class *clazz) {
  * @memberof MutableString
  */
 Class *_MutableString(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "MutableString",
-			.superclass = _String(),
-			.instanceSize = sizeof(MutableString),
-			.interfaceOffset = offsetof(MutableString, interface),
-			.interfaceSize = sizeof(MutableStringInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "MutableString",
+      .superclass = _String(),
+      .instanceSize = sizeof(MutableString),
+      .interfaceOffset = offsetof(MutableString, interface),
+      .interfaceSize = sizeof(MutableStringInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class
 
 MutableString *mstr(const char *fmt, ...) {
 
-	MutableString *string = $$(MutableString, string);
+  MutableString *string = $$(MutableString, string);
 
-	va_list args;
-	va_start(args, fmt);
+  va_list args;
+  va_start(args, fmt);
 
-	$(string, appendVaList, fmt, args);
+  $(string, appendVaList, fmt, args);
 
-	va_end(args);
-	return string;
+  va_end(args);
+  return string;
 }

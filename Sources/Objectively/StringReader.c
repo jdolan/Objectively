@@ -38,9 +38,9 @@
  */
 static Object *copy(const Object *self) {
 
-	StringReader *this = (StringReader *) self;
+  StringReader *this = (StringReader *) self;
 
-	return (Object *) $(alloc(StringReader), initWithString, this->string);
+  return (Object *) $(alloc(StringReader), initWithString, this->string);
 }
 
 /**
@@ -48,11 +48,11 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	StringReader *this = (StringReader *) self;
+  StringReader *this = (StringReader *) self;
 
-	release(this->string);
+  release(this->string);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 #pragma mark - StringReader
@@ -63,13 +63,13 @@ static void dealloc(Object *self) {
  */
 static StringReader *initWithCharacters(StringReader *self, const char *chars) {
 
-	String *string = str(chars);
+  String *string = str(chars);
 
-	self = $(self, initWithString, string);
+  self = $(self, initWithString, string);
 
-	release(string);
+  release(string);
 
-	return self;
+  return self;
 }
 
 /**
@@ -78,12 +78,12 @@ static StringReader *initWithCharacters(StringReader *self, const char *chars) {
  */
 static StringReader *initWithString(StringReader *self, String *string) {
 
-	self = (StringReader *) super(Object, self, init);
-	if (self) {
-		self->string = retain(string);
-		$(self, reset);
-	}
-	return self;
+  self = (StringReader *) super(Object, self, init);
+  if (self) {
+    self->string = retain(string);
+    $(self, reset);
+  }
+  return self;
 }
 
 /**
@@ -91,17 +91,17 @@ static StringReader *initWithString(StringReader *self, String *string) {
  * @memberof StringReader
  */
 static Unicode next(StringReader *self, StringReaderMode mode) {
-	Unicode c;
+  Unicode c;
 
-	const int bytes = mbtowc(&c, self->head, MB_CUR_MAX);
-	if (bytes > 0) {
-		if (mode == StringReaderRead) {
-			self->head += bytes;
-		}
-		return c;
-	}
+  const int bytes = mbtowc(&c, self->head, MB_CUR_MAX);
+  if (bytes > 0) {
+    if (mode == StringReaderRead) {
+      self->head += bytes;
+    }
+    return c;
+  }
 
-	return READER_EOF;
+  return READER_EOF;
 }
 
 /**
@@ -109,7 +109,7 @@ static Unicode next(StringReader *self, StringReaderMode mode) {
  * @memberof StringReader
  */
 static Unicode peek(StringReader *self) {
-	return $(self, next, StringReaderPeek);
+  return $(self, next, StringReaderPeek);
 }
 
 /**
@@ -117,7 +117,7 @@ static Unicode peek(StringReader *self) {
  * @memberof StringReader
  */
 static Unicode stringReaderRead(StringReader *self) {
-	return $(self, next, StringReaderRead);
+  return $(self, next, StringReaderRead);
 }
 
 /**
@@ -126,36 +126,36 @@ static Unicode stringReaderRead(StringReader *self) {
  */
 static String *readToken(StringReader *self, const Unicode *charset, Unicode *stop) {
 
-	while (true) {
-		const Unicode c = $(self, peek);
-		if (c == READER_EOF || wcschr(charset, c) == NULL) {
-			break;
-		}
-		$(self, read);
-	}
+  while (true) {
+    const Unicode c = $(self, peek);
+    if (c == READER_EOF || wcschr(charset, c) == NULL) {
+      break;
+    }
+    $(self, read);
+  }
 
-	const char *start = self->head;
+  const char *start = self->head;
 
-	while (true) {
-		const Unicode c = $(self, peek);
-		if (c == READER_EOF || wcschr(charset, c)) {
-			if (stop) {
-				*stop = c;
-			}
-			break;
-		}
-		$(self, read);
-	}
+  while (true) {
+    const Unicode c = $(self, peek);
+    if (c == READER_EOF || wcschr(charset, c)) {
+      if (stop) {
+        *stop = c;
+      }
+      break;
+    }
+    $(self, read);
+  }
 
-	if (self->head - start > 0) {
-		const Range range = {
-			.location = start - self->string->chars,
-			.length = self->head - start
-		};
-		return $(self->string, substring, range);
-	}
+  if (self->head - start > 0) {
+    const Range range = {
+      .location = start - self->string->chars,
+      .length = self->head - start
+    };
+    return $(self->string, substring, range);
+  }
 
-	return NULL;
+  return NULL;
 }
 
 /**
@@ -163,7 +163,7 @@ static String *readToken(StringReader *self, const Unicode *charset, Unicode *st
  * @memberof StringReader
  */
 static void reset(StringReader *self) {
-	self->head = self->string->chars;
+  self->head = self->string->chars;
 }
 
 #pragma mark - Class lifecycle
@@ -173,16 +173,16 @@ static void reset(StringReader *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((StringReaderInterface *) clazz->interface)->initWithCharacters = initWithCharacters;
-	((StringReaderInterface *) clazz->interface)->initWithString = initWithString;
-	((StringReaderInterface *) clazz->interface)->next = next;
-	((StringReaderInterface *) clazz->interface)->peek = peek;
-	((StringReaderInterface *) clazz->interface)->read = stringReaderRead;
-	((StringReaderInterface *) clazz->interface)->readToken = readToken;
-	((StringReaderInterface *) clazz->interface)->reset = reset;
+  ((StringReaderInterface *) clazz->interface)->initWithCharacters = initWithCharacters;
+  ((StringReaderInterface *) clazz->interface)->initWithString = initWithString;
+  ((StringReaderInterface *) clazz->interface)->next = next;
+  ((StringReaderInterface *) clazz->interface)->peek = peek;
+  ((StringReaderInterface *) clazz->interface)->read = stringReaderRead;
+  ((StringReaderInterface *) clazz->interface)->readToken = readToken;
+  ((StringReaderInterface *) clazz->interface)->reset = reset;
 }
 
 /**
@@ -190,21 +190,21 @@ static void initialize(Class *clazz) {
  * @memberof StringReader
  */
 Class *_StringReader(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "StringReader",
-			.superclass = _Object(),
-			.instanceSize = sizeof(StringReader),
-			.interfaceOffset = offsetof(StringReader, interface),
-			.interfaceSize = sizeof(StringReaderInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "StringReader",
+      .superclass = _Object(),
+      .instanceSize = sizeof(StringReader),
+      .interfaceOffset = offsetof(StringReader, interface),
+      .interfaceSize = sizeof(StringReaderInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

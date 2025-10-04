@@ -53,24 +53,24 @@ typedef void *ident;
  */
 typedef struct {
 
-	/**
-	 * @brief The location.
-	 */
-	ssize_t location;
+  /**
+   * @brief The location.
+   */
+  ssize_t location;
 
-	/**
-	 * @brief The length.
-	 */
-	size_t length;
+  /**
+   * @brief The length.
+   */
+  size_t length;
 } Range;
 
 /**
  * @brief Comparison constants.
  */
 typedef enum {
-	OrderAscending = -1,
-	OrderSame = 0,
-	OrderDescending = 1,
+  OrderAscending = -1,
+  OrderSame = 0,
+  OrderDescending = 1,
 } Order;
 
 /**
@@ -130,13 +130,13 @@ typedef ident (*Reducer)(const ident obj, ident accumulator, ident data);
  * @return The value, clamped to the bounds.
  */
 #define clamp(val, min, max) \
-	({ \
-		typeof(val) _val = (val); typeof(min) _min = (min); typeof(max) _max = (max); \
-		_max < _min ? \
-				_val < _max ? _max : _val > _min ? _min : _val \
-			: \
-				_val < _min ? _min : _val > _max ? _max : _val; \
-	})
+  ({ \
+    typeof(val) _val = (val); typeof(min) _min = (min); typeof(max) _max = (max); \
+    _max < _min ? \
+        _val < _max ? _max : _val > _min ? _min : _val \
+      : \
+        _val < _min ? _min : _val > _max ? _max : _val; \
+  })
 
 /**
  * @return The length of an array.

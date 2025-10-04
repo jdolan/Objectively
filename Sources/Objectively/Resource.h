@@ -52,26 +52,26 @@ typedef Data *(*ResourceProvider)(const char *name);
  */
 struct Resource {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	ResourceInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  ResourceInterface *interface;
 
-	/**
-	 * @brief The resource data.
-	 */
-	Data *data;
+  /**
+   * @brief The resource data.
+   */
+  Data *data;
 
-	/**
-	 * @brief The resource name.
-	 */
-	char *name;
+  /**
+   * @brief The resource name.
+   */
+  char *name;
 };
 
 /**
@@ -79,91 +79,91 @@ struct Resource {
  */
 struct ResourceInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @static
-	 * @fn void Resource::addResourcePath(const char *path)
-	 * @brief Adds the specified Resource path.
-	 * @param path The resource path to add.
-	 * @remarks Resource paths may be relative to the working directory, or absolute.
-	 * @memberof Resource
-	 */
-	void (*addResourcePath)(const char *path);
+  /**
+   * @static
+   * @fn void Resource::addResourcePath(const char *path)
+   * @brief Adds the specified Resource path.
+   * @param path The resource path to add.
+   * @remarks Resource paths may be relative to the working directory, or absolute.
+   * @memberof Resource
+   */
+  void (*addResourcePath)(const char *path);
 
-	/**
-	 * @static
-	 * @fn void Resource::addResourceProvider(ResourceProvider provider)
-	 * @brief Adds the specified ResourceProvider.
-	 * @param provider The ResoureProvider to add.
-	 * @memberof Resource
-	 */
-	void (*addResourceProvider)(ResourceProvider provider);
+  /**
+   * @static
+   * @fn void Resource::addResourceProvider(ResourceProvider provider)
+   * @brief Adds the specified ResourceProvider.
+   * @param provider The ResoureProvider to add.
+   * @memberof Resource
+   */
+  void (*addResourceProvider)(ResourceProvider provider);
 
-	/**
-	 * @fn Resource *Resource::initWithBytes(Resource *self, const uint8_t *bytes, size_t length, const char *name)
-	* @brief Initializes this Resource with the specified bytes.
-	 * @param self The Resource.
-	 * @param bytes The bytes.
-	 * @param length The length of bytes.
-	 * @param name The resource name.
-	 * @return The initialized Resource, or `NULL` on error.
-	 * @memberof Resource
-	 */
-	Resource *(*initWithBytes)(Resource *self, const uint8_t *bytes, size_t length, const char *name);
+  /**
+   * @fn Resource *Resource::initWithBytes(Resource *self, const uint8_t *bytes, size_t length, const char *name)
+  * @brief Initializes this Resource with the specified bytes.
+   * @param self The Resource.
+   * @param bytes The bytes.
+   * @param length The length of bytes.
+   * @param name The resource name.
+   * @return The initialized Resource, or `NULL` on error.
+   * @memberof Resource
+   */
+  Resource *(*initWithBytes)(Resource *self, const uint8_t *bytes, size_t length, const char *name);
 
-	/**
-	 * @fn Resource *Resource::initWithData(Resource *self, Data *data, const char *name)
-	 * @brief Initializes this Resource with the specified Data.
-	 * @param self The Resource.
-	 * @param data The Data.
-	 * @param name The resource name.
-	 * @return The initialized Resource, or `NULL` on error.
-	 * @memberof Resource
-	 */
-	Resource *(*initWithData)(Resource *self, Data *data, const char *name);
+  /**
+   * @fn Resource *Resource::initWithData(Resource *self, Data *data, const char *name)
+   * @brief Initializes this Resource with the specified Data.
+   * @param self The Resource.
+   * @param data The Data.
+   * @param name The resource name.
+   * @return The initialized Resource, or `NULL` on error.
+   * @memberof Resource
+   */
+  Resource *(*initWithData)(Resource *self, Data *data, const char *name);
 
-	/**
-	 * @fn Resource *Resource::initWithName(Resource *self, const char *name)
-	 * @brief Initializes this Resource with the specified `name`.
-	 * @param self The Resource.
-	 * @param name The resource name.
-	 * @return The initialized Resource, or `NULL` on error.
-	 * @details The configured resource paths are searched, in order, for a file by the given name.
-	 * @memberof Resource
-	 */
-	Resource *(*initWithName)(Resource *self, const char *name);
+  /**
+   * @fn Resource *Resource::initWithName(Resource *self, const char *name)
+   * @brief Initializes this Resource with the specified `name`.
+   * @param self The Resource.
+   * @param name The resource name.
+   * @return The initialized Resource, or `NULL` on error.
+   * @details The configured resource paths are searched, in order, for a file by the given name.
+   * @memberof Resource
+   */
+  Resource *(*initWithName)(Resource *self, const char *name);
 
-	/**
-	 * @static
-	 * @fn void Resource::removeResourcePath(const char *path)
-	 * @brief Removes the specified Resource path.
-	 * @param path The resource path to remove.
-	 * @memberof Resource
-	 */
-	void (*removeResourcePath)(const char *path);
+  /**
+   * @static
+   * @fn void Resource::removeResourcePath(const char *path)
+   * @brief Removes the specified Resource path.
+   * @param path The resource path to remove.
+   * @memberof Resource
+   */
+  void (*removeResourcePath)(const char *path);
 
-	/**
-	 * @static
-	 * @fn void Resource::removeResourceProvider(ResourceProvider provider)
-	 * @brief Removes the specified ResourceProvider.
-	 * @param provider The ResourceProvider to remove.
-	 * @memberof Resource
-	 */
-	void (*removeResourceProvider)(ResourceProvider provider);
+  /**
+   * @static
+   * @fn void Resource::removeResourceProvider(ResourceProvider provider)
+   * @brief Removes the specified ResourceProvider.
+   * @param provider The ResourceProvider to remove.
+   * @memberof Resource
+   */
+  void (*removeResourceProvider)(ResourceProvider provider);
 
-	/**
-	 * @static
-	 * @fn Resource *Resource::resourceWithName(const char *name)
-	 * @brief Returns a new Resource with the specified `name`.
-	 * @param name The resource name.
-	 * @return The new Resource, or `NULL` on error.
-	 * @memberof Resource
-	 */
-	Resource *(*resourceWithName)(const char *name);
+  /**
+   * @static
+   * @fn Resource *Resource::resourceWithName(const char *name)
+   * @brief Returns a new Resource with the specified `name`.
+   * @param name The resource name.
+   * @return The new Resource, or `NULL` on error.
+   * @memberof Resource
+   */
+  Resource *(*resourceWithName)(const char *name);
 };
 
 /**

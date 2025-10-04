@@ -38,11 +38,11 @@
  */
 static void dealloc(Object *self) {
 
-	URLSessionDataTask *this = (URLSessionDataTask *) self;
+  URLSessionDataTask *this = (URLSessionDataTask *) self;
 
-	release(this->data);
+  release(this->data);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 #pragma mark - URLSessionTask
@@ -54,19 +54,19 @@ static void dealloc(Object *self) {
  */
 static size_t writeFunction(char *data, size_t size, size_t count, ident self) {
 
-	URLSessionDataTask *this = (URLSessionDataTask *) self;
+  URLSessionDataTask *this = (URLSessionDataTask *) self;
 
-	const uint8_t *bytes = (uint8_t *) data;
-	const size_t bytesReceived = size * count;
+  const uint8_t *bytes = (uint8_t *) data;
+  const size_t bytesReceived = size * count;
 
-	if (this->data == NULL) {
-		this->data = (Data *) $(alloc(MutableData), init);
-	}
+  if (this->data == NULL) {
+    this->data = (Data *) $(alloc(MutableData), init);
+  }
 
-	$((MutableData *) this->data, appendBytes, bytes, bytesReceived);
+  $((MutableData *) this->data, appendBytes, bytes, bytesReceived);
 
-	this->urlSessionTask.bytesReceived += bytesReceived;
-	return bytesReceived;
+  this->urlSessionTask.bytesReceived += bytesReceived;
+  return bytesReceived;
 }
 
 /**
@@ -74,10 +74,10 @@ static size_t writeFunction(char *data, size_t size, size_t count, ident self) {
  */
 static void setup(URLSessionTask *self) {
 
-	super(URLSessionTask, self, setup);
+  super(URLSessionTask, self, setup);
 
-	curl_easy_setopt(self->locals.handle, CURLOPT_WRITEFUNCTION, writeFunction);
-	curl_easy_setopt(self->locals.handle, CURLOPT_WRITEDATA, self);
+  curl_easy_setopt(self->locals.handle, CURLOPT_WRITEFUNCTION, writeFunction);
+  curl_easy_setopt(self->locals.handle, CURLOPT_WRITEDATA, self);
 }
 
 #pragma mark - Class lifecycle
@@ -87,9 +87,9 @@ static void setup(URLSessionTask *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((URLSessionTaskInterface *) clazz->interface)->setup = setup;
+  ((URLSessionTaskInterface *) clazz->interface)->setup = setup;
 }
 
 /**
@@ -97,21 +97,21 @@ static void initialize(Class *clazz) {
  * @memberof URLSessionDataTask
  */
 Class *_URLSessionDataTask(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "URLSessionDataTask",
-			.superclass = _URLSessionTask(),
-			.instanceSize = sizeof(URLSessionDataTask),
-			.interfaceOffset = offsetof(URLSessionDataTask, interface),
-			.interfaceSize = sizeof(URLSessionDataTaskInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "URLSessionDataTask",
+      .superclass = _URLSessionTask(),
+      .instanceSize = sizeof(URLSessionDataTask),
+      .interfaceOffset = offsetof(URLSessionDataTask, interface),
+      .interfaceSize = sizeof(URLSessionDataTaskInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

@@ -27,47 +27,47 @@
 
 int HashForBytes(int hash, const uint8_t *bytes, const Range range) {
 
-	for (size_t i = range.location; i < range.length; i++) {
+  for (size_t i = range.location; i < range.length; i++) {
 
-		int shift;
-		if (i & 1) {
-			shift = 16 + (i % 16);
-		} else {
-			shift = (i % 16);
-		}
+    int shift;
+    if (i & 1) {
+      shift = 16 + (i % 16);
+    } else {
+      shift = (i % 16);
+    }
 
-		hash += 31 * ((int) bytes[i]) << shift;
-	}
+    hash += 31 * ((int) bytes[i]) << shift;
+  }
 
-	return hash;
+  return hash;
 }
 
 int HashForCharacters(int hash, const char *chars, const Range range) {
-	return HashForBytes(hash, (const uint8_t *) chars, range);
+  return HashForBytes(hash, (const uint8_t *) chars, range);
 }
 
 int HashForCString(int hash, const char *string) {
 
-	if (string) {
-		return HashForCharacters(hash, string, (Range) { 0, strlen(string) });
-	}
+  if (string) {
+    return HashForCharacters(hash, string, (Range) { 0, strlen(string) });
+  }
 
-	return 0;
+  return 0;
 }
 
 int HashForDecimal(int hash, const double decimal) {
-	return hash + 31 * (int) decimal;
+  return hash + 31 * (int) decimal;
 }
 
 int HashForInteger(int hash, const long integer) {
-	return hash + 31 * (int) integer;
+  return hash + 31 * (int) integer;
 }
 
 int HashForObject(int hash, const ident obj) {
 
-	if (obj) {
-		return hash + 31 * $(cast(Object, obj), hash);
-	}
+  if (obj) {
+    return hash + 31 * $(cast(Object, obj), hash);
+  }
 
-	return 0;
+  return 0;
 }

@@ -51,13 +51,13 @@ typedef void (*URLSessionTaskCompletion)(URLSessionTask *task, bool success);
  * @brief The various states a URLSessionTask may be in.
  */
 typedef enum {
-	URLSESSIONTASK_RESUMING,
-	URLSESSIONTASK_RESUMED,
-	URLSESSIONTASK_SUSPENDING,
-	URLSESSIONTASK_SUSPENDED,
-	URLSESSIONTASK_CANCELING,
-	URLSESSIONTASK_CANCELED,
-	URLSESSIONTASK_COMPLETED
+  URLSESSIONTASK_RESUMING,
+  URLSESSIONTASK_RESUMED,
+  URLSESSIONTASK_SUSPENDING,
+  URLSESSIONTASK_SUSPENDED,
+  URLSESSIONTASK_CANCELING,
+  URLSESSIONTASK_CANCELED,
+  URLSESSIONTASK_COMPLETED
 } URLSessionTaskState;
 
 /**
@@ -67,91 +67,91 @@ typedef enum {
  */
 struct URLSessionTask {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	URLSessionTaskInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  URLSessionTaskInterface *interface;
 
-	/**
-	 * @private
-	 */
-	struct {
-		/**
-		 * @brief The backing libcurl handle.
-		 */
-		ident handle;
+  /**
+   * @private
+   */
+  struct {
+    /**
+     * @brief The backing libcurl handle.
+     */
+    ident handle;
 
-		/**
-		 * @brief HTTP headers, in libcurl list structure.
-		 */
-		ident requestHeaders;
-	} locals;
+    /**
+     * @brief HTTP headers, in libcurl list structure.
+     */
+    ident requestHeaders;
+  } locals;
 
-	/**
-	 * @brief The count of bytes this task expects to receive.
-	 */
-	size_t bytesExpectedToReceive;
+  /**
+   * @brief The count of bytes this task expects to receive.
+   */
+  size_t bytesExpectedToReceive;
 
-	/**
-	 * @brief The count of bytes this task expects to send.
-	 */
-	size_t bytesExpectedToSend;
+  /**
+   * @brief The count of bytes this task expects to send.
+   */
+  size_t bytesExpectedToSend;
 
-	/**
-	 * @brief The count of bytes received.
-	 */
-	size_t bytesReceived;
+  /**
+   * @brief The count of bytes received.
+   */
+  size_t bytesReceived;
 
-	/**
-	 * @brief The count of bytes sent.
-	 */
-	size_t bytesSent;
+  /**
+   * @brief The count of bytes sent.
+   */
+  size_t bytesSent;
 
-	/**
-	 * @brief The completion function.
-	 */
-	URLSessionTaskCompletion completion;
+  /**
+   * @brief The completion function.
+   */
+  URLSessionTaskCompletion completion;
 
-	/**
-	 * @brief User data.
-	 */
-	ident data;
+  /**
+   * @brief User data.
+   */
+  ident data;
 
-	/**
-	 * @brief The error buffer.
-	 */
-	char *error;
+  /**
+   * @brief The error buffer.
+   */
+  char *error;
 
-	/**
-	 * @brief The progress function.
-	 */
-	URLSessionTaskProgress progress;
+  /**
+   * @brief The progress function.
+   */
+  URLSessionTaskProgress progress;
 
-	/**
-	 * @brief The request.
-	 */
-	struct URLRequest *request;
+  /**
+   * @brief The request.
+   */
+  struct URLRequest *request;
 
-	/**
-	 * @brief The response.
-	 */
-	struct URLResponse *response;
+  /**
+   * @brief The response.
+   */
+  struct URLResponse *response;
 
-	/**
-	 * @brief The session.
-	 */
-	struct URLSession *session;
+  /**
+   * @brief The session.
+   */
+  struct URLSession *session;
 
-	/**
-	 * @brief The state.
-	 */
-	URLSessionTaskState state;
+  /**
+   * @brief The state.
+   */
+  URLSessionTaskState state;
 };
 
 /**
@@ -159,74 +159,74 @@ struct URLSessionTask {
  */
 struct URLSessionTaskInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @fn void URLSessionTask::cancel(URLSessionTask *self)
-	 * @brief Cancels this task.
-	 * @param self The URLSessionTask.
-	 * @memberof URLSessionTask
-	 */
-	void (*cancel)(URLSessionTask *self);
+  /**
+   * @fn void URLSessionTask::cancel(URLSessionTask *self)
+   * @brief Cancels this task.
+   * @param self The URLSessionTask.
+   * @memberof URLSessionTask
+   */
+  void (*cancel)(URLSessionTask *self);
 
-	/**
-	 * @fn void URLSessionTask::execute(URLSessionTask *self)
-	 * @brief Executes this task synchronously, on the calling thread.
-	 * @param self The URLSessionTask.
-	 * @memberof URLSessionTask
-	 * @remarks Do not mix calls to execute with calls to resume.
-	 */
-	void (*execute)(URLSessionTask *self);
+  /**
+   * @fn void URLSessionTask::execute(URLSessionTask *self)
+   * @brief Executes this task synchronously, on the calling thread.
+   * @param self The URLSessionTask.
+   * @memberof URLSessionTask
+   * @remarks Do not mix calls to execute with calls to resume.
+   */
+  void (*execute)(URLSessionTask *self);
 
-	/**
-	 * @fn URLSessionTask *URLSessionTask::initWithRequestInSession(URLSessionTask *self, struct URLRequest *request, struct URLSession *session, URLSessionTaskCompletion completion)
-	 * @brief Initializes this task with the given URLRequest.
-	 * @param self The URLSessionTask.
-	 * @param request The request.
-	 * @param session The session.
-	 * @param completion The completion handler.
-	 * @return The initialized task, or `NULL` on error.
-	 * @memberof URLSessionTask
-	 */
-	URLSessionTask *(*initWithRequestInSession)(URLSessionTask *self, struct URLRequest *request,
-			struct URLSession *session, URLSessionTaskCompletion completion);
+  /**
+   * @fn URLSessionTask *URLSessionTask::initWithRequestInSession(URLSessionTask *self, struct URLRequest *request, struct URLSession *session, URLSessionTaskCompletion completion)
+   * @brief Initializes this task with the given URLRequest.
+   * @param self The URLSessionTask.
+   * @param request The request.
+   * @param session The session.
+   * @param completion The completion handler.
+   * @return The initialized task, or `NULL` on error.
+   * @memberof URLSessionTask
+   */
+  URLSessionTask *(*initWithRequestInSession)(URLSessionTask *self, struct URLRequest *request,
+      struct URLSession *session, URLSessionTaskCompletion completion);
 
-	/**
-	 * @fn void URLSessionTask::resume(URLSessionTask *self)
-	 * @brief Starts or resumes this task.
-	 * @param self The URLSessionTask.
-	 * @memberof URLSessionTask
-	 */
-	void (*resume)(URLSessionTask *self);
+  /**
+   * @fn void URLSessionTask::resume(URLSessionTask *self)
+   * @brief Starts or resumes this task.
+   * @param self The URLSessionTask.
+   * @memberof URLSessionTask
+   */
+  void (*resume)(URLSessionTask *self);
 
-	/**
-	 * @protected
-	 * @fn void URLSessionTask::setup(URLSessionTask *self)
-	 * @brief Sets up this task.
-	 * @param self The URLSessionTask.
-	 * @memberof URLSessionTask
-	 */
-	void (*setup)(URLSessionTask *self);
+  /**
+   * @protected
+   * @fn void URLSessionTask::setup(URLSessionTask *self)
+   * @brief Sets up this task.
+   * @param self The URLSessionTask.
+   * @memberof URLSessionTask
+   */
+  void (*setup)(URLSessionTask *self);
 
-	/**
-	 * @fn void URLSessionTask::suspend(URLSessionTask *self)
-	 * @brief Suspends this task.
-	 * @param self The URLSessionTask.
-	 * @memberof URLSessionTask
-	 */
-	void (*suspend)(URLSessionTask *self);
+  /**
+   * @fn void URLSessionTask::suspend(URLSessionTask *self)
+   * @brief Suspends this task.
+   * @param self The URLSessionTask.
+   * @memberof URLSessionTask
+   */
+  void (*suspend)(URLSessionTask *self);
 
-	/**
-	 * @protected
-	 * @fn void URLSessionTask::teardown(URLSessionTask *self)
-	 * @brief Tears down this task.
-	 * @param self The URLSessionTask.
-	 * @memberof URLSessionTask
-	 */
-	void (*teardown)(URLSessionTask *self);
+  /**
+   * @protected
+   * @fn void URLSessionTask::teardown(URLSessionTask *self)
+   * @brief Tears down this task.
+   * @param self The URLSessionTask.
+   * @memberof URLSessionTask
+   */
+  void (*teardown)(URLSessionTask *self);
 };
 
 /**

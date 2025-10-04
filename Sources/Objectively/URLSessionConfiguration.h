@@ -42,42 +42,42 @@ typedef struct URLSessionConfigurationInterface URLSessionConfigurationInterface
  */
 struct URLSessionConfiguration {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	URLSessionConfigurationInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  URLSessionConfigurationInterface *interface;
 
-	/**
-	 * @brief Credentials for URLRequests requiring authentication.
-	 */
-	struct {
-		/**
-		 * @brief The username.
-		 */
-		String *username;
+  /**
+   * @brief Credentials for URLRequests requiring authentication.
+   */
+  struct {
+    /**
+     * @brief The username.
+     */
+    String *username;
 
-		/**
-		 * @brief The password.
-		 */
-		String *password;
+    /**
+     * @brief The password.
+     */
+    String *password;
 
-	} credentials;
+  } credentials;
 
-	/**
-	 * @brief The HTTP headers added to every HTTP URLRequest.
-	 */
-	Dictionary *httpHeaders;
+  /**
+   * @brief The HTTP headers added to every HTTP URLRequest.
+   */
+  Dictionary *httpHeaders;
 
-	/**
-	 * @brief The maximum number of HTTP connections to open per host.
-	 */
-	int httpMaximumConnectionsPerHost;
+  /**
+   * @brief The maximum number of HTTP connections to open per host.
+   */
+  int httpMaximumConnectionsPerHost;
 };
 
 /**
@@ -85,19 +85,19 @@ struct URLSessionConfiguration {
  */
 struct URLSessionConfigurationInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @fn URLSessionConfiguration *URLSessionConfiguration::init(URLSessionConfiguration *self)
-	 * @brief Initializes this URLSessionConfiguration.
-	 * @param self The URLSessionConfiguration.
-	 * @return The initialized configuration, or `NULL` on error.
-	 * @memberof URLSessionConfiguration
-	 */
-	URLSessionConfiguration *(*init)(URLSessionConfiguration *self);
+  /**
+   * @fn URLSessionConfiguration *URLSessionConfiguration::init(URLSessionConfiguration *self)
+   * @brief Initializes this URLSessionConfiguration.
+   * @param self The URLSessionConfiguration.
+   * @return The initialized configuration, or `NULL` on error.
+   * @memberof URLSessionConfiguration
+   */
+  URLSessionConfiguration *(*init)(URLSessionConfiguration *self);
 };
 
 /**

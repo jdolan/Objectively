@@ -27,41 +27,41 @@
 #include "Objectively.h"
 
 static Data *resourceProvider(const char *path) {
-	return $$(Data, dataWithBytes, (uint8_t *) path, strlen(path) + 1);
+  return $$(Data, dataWithBytes, (uint8_t *) path, strlen(path) + 1);
 }
 
 START_TEST(resource) {
-	Resource *resource;
+  Resource *resource;
 
-	resource = $$(Resource, resourceWithName, "not found");
-	ck_assert(resource == NULL);
+  resource = $$(Resource, resourceWithName, "not found");
+  ck_assert(resource == NULL);
 
-	$$(Resource, addResourceProvider, resourceProvider);
+  $$(Resource, addResourceProvider, resourceProvider);
 
-	resource = $$(Resource, resourceWithName, "Hello World!");
-	ck_assert(resource != NULL);
+  resource = $$(Resource, resourceWithName, "Hello World!");
+  ck_assert(resource != NULL);
 
-	ck_assert_str_eq("Hello World!", resource->name);
-	ck_assert_str_eq("Hello World!", (char *) resource->data->bytes);
+  ck_assert_str_eq("Hello World!", resource->name);
+  ck_assert_str_eq("Hello World!", (char *) resource->data->bytes);
 
-	release(resource);
+  release(resource);
 
 } END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("Resource");
-	tcase_add_test(tcase, resource);
+  TCase *tcase = tcase_create("Resource");
+  tcase_add_test(tcase, resource);
 
-	Suite *suite = suite_create("Resource");
-	suite_add_tcase(suite, tcase);
+  Suite *suite = suite_create("Resource");
+  suite_add_tcase(suite, tcase);
 
-	SRunner *runner = srunner_create(suite);
+  SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_VERBOSE);
-	int failed = srunner_ntests_failed(runner);
+  srunner_run_all(runner, CK_VERBOSE);
+  int failed = srunner_ntests_failed(runner);
 
-	srunner_free(runner);
+  srunner_free(runner);
 
-	return failed;
+  return failed;
 }

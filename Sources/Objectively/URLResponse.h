@@ -41,26 +41,26 @@ typedef struct URLResponseInterface URLResponseInterface;
  */
 struct URLResponse {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	URLResponseInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  URLResponseInterface *interface;
 
-	/**
-	 * @brief The HTTP response headers.
-	 */
-	Dictionary *httpHeaders;
+  /**
+   * @brief The HTTP response headers.
+   */
+  Dictionary *httpHeaders;
 
-	/**
-	 * @brief The HTTP response status code.
-	 */
-	int httpStatusCode;
+  /**
+   * @brief The HTTP response status code.
+   */
+  int httpStatusCode;
 };
 
 /**
@@ -68,29 +68,29 @@ struct URLResponse {
  */
 struct URLResponseInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @fn URLResponse *URLResponse::init(URLResponse *self)
-	 * @brief Initializes this URLResponse.
-	 * @param self The URLResponse.
-	 * @return The initialized URLResponse, or `NULL` on error.
-	 * @memberof URLResponse
-	 */
-	URLResponse *(*init)(URLResponse *self);
+  /**
+   * @fn URLResponse *URLResponse::init(URLResponse *self)
+   * @brief Initializes this URLResponse.
+   * @param self The URLResponse.
+   * @return The initialized URLResponse, or `NULL` on error.
+   * @memberof URLResponse
+   */
+  URLResponse *(*init)(URLResponse *self);
 
-	/**
-	 * @fn void setValueForHTTPHeaderField(URLResponse *self, const char *value, const char *field)
-	 * @brief Sets a value for the specified HTTP header.
-	 * @param self The URLRequest.
-	 * @param value The HTTP header value.
-	 * @param field The HTTP header field.
-	 * @memberof URLResponse
-	 */
-	void (*setValueForHTTPHeaderField)(URLResponse *self, const char *value, const char *field);
+  /**
+   * @fn void setValueForHTTPHeaderField(URLResponse *self, const char *value, const char *field)
+   * @brief Sets a value for the specified HTTP header.
+   * @param self The URLRequest.
+   * @param value The HTTP header value.
+   * @param field The HTTP header field.
+   * @memberof URLResponse
+   */
+  void (*setValueForHTTPHeaderField)(URLResponse *self, const char *value, const char *field);
 };
 
 /**

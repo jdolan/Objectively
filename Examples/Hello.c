@@ -33,7 +33,7 @@
  * @fn Hello::helloWithGreeting(const char *)
  */
 static Hello *helloWithGreeting(const char *greeting) {
-	return $(alloc(Hello), initWithGreeting, greeting);
+  return $(alloc(Hello), initWithGreeting, greeting);
 }
 
 /**
@@ -41,18 +41,18 @@ static Hello *helloWithGreeting(const char *greeting) {
  */
 static Hello *initWithGreeting(Hello *self, const char *greeting) {
 
-	self = (Hello *) super(Object, self, init);
-	if (self) {
-		self->greeting = greeting ? : "Hello World!";
-	}
-	return self;
+  self = (Hello *) super(Object, self, init);
+  if (self) {
+    self->greeting = greeting ? : "Hello World!";
+  }
+  return self;
 }
 
 /**
  * @fn Hello::sayHello(const Hello *)
  */
 static void sayHello(const Hello *self) {
-	printf("%s\n", self->greeting);
+  printf("%s\n", self->greeting);
 }
 
 #pragma mark - Class lifecycle
@@ -62,11 +62,11 @@ static void sayHello(const Hello *self) {
  */
 static void initialize(Class *clazz) {
 
-	HelloInterface *hello = (HelloInterface *) clazz->interface;
+  HelloInterface *hello = (HelloInterface *) clazz->interface;
 
-	hello->helloWithGreeting = helloWithGreeting;
-	hello->initWithGreeting = initWithGreeting;
-	hello->sayHello = sayHello;
+  hello->helloWithGreeting = helloWithGreeting;
+  hello->initWithGreeting = initWithGreeting;
+  hello->sayHello = sayHello;
 }
 
 /**
@@ -74,21 +74,21 @@ static void initialize(Class *clazz) {
  * @memberof Hello
  */
 Class *_Hello(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Hello",
-			.superclass = _Object(),
-			.instanceSize = sizeof(Hello),
-			.interfaceOffset = offsetof(Hello, interface),
-			.interfaceSize = sizeof(HelloInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Hello",
+      .superclass = _Object(),
+      .instanceSize = sizeof(Hello),
+      .interfaceOffset = offsetof(Hello, interface),
+      .interfaceSize = sizeof(HelloInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class
@@ -97,9 +97,9 @@ Class *_Hello(void) {
 
 int main(int argc, char **argv) {
 
-	Hello *hello = $$(Hello, helloWithGreeting, NULL);
+  Hello *hello = $$(Hello, helloWithGreeting, NULL);
 
-	$(hello, sayHello);
+  $(hello, sayHello);
 
-	release(hello);
+  release(hello);
 }

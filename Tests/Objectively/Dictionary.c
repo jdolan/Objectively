@@ -26,77 +26,77 @@
 #include "Objectively.h"
 
 static void enumerator(const Dictionary *dictionary, ident obj, ident key, ident data) {
-	(* (int *) data)++;
+  (* (int *) data)++;
 }
 
 static bool predicate(ident obj, ident key, ident data) {
-	return strcmp("two", ((String *) key)->chars) == 0;
+  return strcmp("two", ((String *) key)->chars) == 0;
 }
 
 START_TEST(dictionary) {
 
-	Object *objectOne = $(alloc(Object), init);
-	Object *objectTwo = $(alloc(Object), init);
-	Object *objectThree = $(alloc(Object), init);
+  Object *objectOne = $(alloc(Object), init);
+  Object *objectTwo = $(alloc(Object), init);
+  Object *objectThree = $(alloc(Object), init);
 
-	String *keyOne = $(alloc(String), initWithFormat, "one");
-	String *keyTwo = $(alloc(String), initWithFormat, "two");
-	String *keyThree = $(alloc(String), initWithFormat, "three");
+  String *keyOne = $(alloc(String), initWithFormat, "one");
+  String *keyTwo = $(alloc(String), initWithFormat, "two");
+  String *keyThree = $(alloc(String), initWithFormat, "three");
 
-	Dictionary *dict = $$(Dictionary, dictionaryWithObjectsAndKeys,
-			objectOne, keyOne, objectTwo, keyTwo, objectThree, keyThree, NULL);
+  Dictionary *dict = $$(Dictionary, dictionaryWithObjectsAndKeys,
+      objectOne, keyOne, objectTwo, keyTwo, objectThree, keyThree, NULL);
 
-	ck_assert(dict != NULL);
-	ck_assert_ptr_eq(_Dictionary(), classof(dict));
+  ck_assert(dict != NULL);
+  ck_assert_ptr_eq(_Dictionary(), classof(dict));
 
-	ck_assert_int_eq(3, dict->count);
+  ck_assert_int_eq(3, dict->count);
 
-	ck_assert_ptr_eq(objectOne, $(dict, objectForKey, keyOne));
-	ck_assert_ptr_eq(objectTwo, $(dict, objectForKey, keyTwo));
-	ck_assert_ptr_eq(objectThree, $(dict, objectForKey, keyThree));
+  ck_assert_ptr_eq(objectOne, $(dict, objectForKey, keyOne));
+  ck_assert_ptr_eq(objectTwo, $(dict, objectForKey, keyTwo));
+  ck_assert_ptr_eq(objectThree, $(dict, objectForKey, keyThree));
 
-	ck_assert_int_eq(2, objectOne->referenceCount);
-	ck_assert_int_eq(2, objectTwo->referenceCount);
-	ck_assert_int_eq(2, objectThree->referenceCount);
+  ck_assert_int_eq(2, objectOne->referenceCount);
+  ck_assert_int_eq(2, objectTwo->referenceCount);
+  ck_assert_int_eq(2, objectThree->referenceCount);
 
-	release(objectOne);
-	release(objectTwo);
-	release(objectThree);
+  release(objectOne);
+  release(objectTwo);
+  release(objectThree);
 
-	release(keyOne);
-	release(keyTwo);
-	release(keyThree);
+  release(keyOne);
+  release(keyTwo);
+  release(keyThree);
 
-	int counter = 0;
+  int counter = 0;
 
-	$(dict, enumerateObjectsAndKeys, enumerator, &counter);
+  $(dict, enumerateObjectsAndKeys, enumerator, &counter);
 
-	ck_assert_int_eq(dict->count, counter);
+  ck_assert_int_eq(dict->count, counter);
 
-	Dictionary *filtered = $(dict, filterObjectsAndKeys, predicate, NULL);
+  Dictionary *filtered = $(dict, filterObjectsAndKeys, predicate, NULL);
 
-	ck_assert_int_eq(1, filtered->count);
-	ck_assert($(filtered, objectForKey, keyTwo) == objectTwo);
+  ck_assert_int_eq(1, filtered->count);
+  ck_assert($(filtered, objectForKey, keyTwo) == objectTwo);
 
-	release(dict);
-	release(filtered);
+  release(dict);
+  release(filtered);
 
 } END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("Dictionary");
-	tcase_add_test(tcase, dictionary);
+  TCase *tcase = tcase_create("Dictionary");
+  tcase_add_test(tcase, dictionary);
 
-	Suite *suite = suite_create("Dictionary");
-	suite_add_tcase(suite, tcase);
+  Suite *suite = suite_create("Dictionary");
+  suite_add_tcase(suite, tcase);
 
-	SRunner *runner = srunner_create(suite);
+  SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_VERBOSE);
-	int failed = srunner_ntests_failed(runner);
+  srunner_run_all(runner, CK_VERBOSE);
+  int failed = srunner_ntests_failed(runner);
 
-	srunner_free(runner);
+  srunner_free(runner);
 
-	return failed;
+  return failed;
 }

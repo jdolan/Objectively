@@ -26,96 +26,96 @@
 #include "Objectively.h"
 
 static void enumerator(const Set *set, ident obj, ident data) {
-	(*(int *) data)++;
+  (*(int *) data)++;
 }
 
 START_TEST(mutableSet) {
-	
-	MutableSet *set = $$(MutableSet, setWithCapacity, 5);
+  
+  MutableSet *set = $$(MutableSet, setWithCapacity, 5);
 
-	ck_assert(set != NULL);
-	ck_assert_ptr_eq(_MutableSet(), classof(set));
+  ck_assert(set != NULL);
+  ck_assert_ptr_eq(_MutableSet(), classof(set));
 
-	ck_assert_int_eq(0, ((Set *) set)->count);
+  ck_assert_int_eq(0, ((Set *) set)->count);
 
-	Object *one = $(alloc(Object), init);
-	Object *two = $(alloc(Object), init);
-	Object *three = $(alloc(Object), init);
+  Object *one = $(alloc(Object), init);
+  Object *two = $(alloc(Object), init);
+  Object *three = $(alloc(Object), init);
 
-	$(set, addObject, one);
-	$(set, addObject, two);
-	$(set, addObject, three);
+  $(set, addObject, one);
+  $(set, addObject, two);
+  $(set, addObject, three);
 
-	ck_assert_int_eq(3, ((Set *) set)->count);
+  ck_assert_int_eq(3, ((Set *) set)->count);
 
-	ck_assert($((Set *) set, containsObject, one));
-	ck_assert($((Set *) set, containsObject, two));
-	ck_assert($((Set *) set, containsObject, three));
+  ck_assert($((Set *) set, containsObject, one));
+  ck_assert($((Set *) set, containsObject, two));
+  ck_assert($((Set *) set, containsObject, three));
 
-	ck_assert_int_eq(2, one->referenceCount);
-	ck_assert_int_eq(2, two->referenceCount);
-	ck_assert_int_eq(2, three->referenceCount);
+  ck_assert_int_eq(2, one->referenceCount);
+  ck_assert_int_eq(2, two->referenceCount);
+  ck_assert_int_eq(2, three->referenceCount);
 
-	$(set, removeObject, one);
+  $(set, removeObject, one);
 
-	ck_assert(!$((Set *) set, containsObject, one));
-	ck_assert_int_eq(1, one->referenceCount);
-	ck_assert_int_eq(2, ((Set *) set)->count);
+  ck_assert(!$((Set *) set, containsObject, one));
+  ck_assert_int_eq(1, one->referenceCount);
+  ck_assert_int_eq(2, ((Set *) set)->count);
 
-	$(set, removeAllObjects);
+  $(set, removeAllObjects);
 
-	ck_assert_int_eq(0, ((Set *) set)->count);
+  ck_assert_int_eq(0, ((Set *) set)->count);
 
-	ck_assert(!$((Set *) set, containsObject, two));
-	ck_assert_int_eq(1, two->referenceCount);
+  ck_assert(!$((Set *) set, containsObject, two));
+  ck_assert_int_eq(1, two->referenceCount);
 
-	ck_assert(!$((Set *) set, containsObject, three));
-	ck_assert_int_eq(1, three->referenceCount);
+  ck_assert(!$((Set *) set, containsObject, three));
+  ck_assert_int_eq(1, three->referenceCount);
 
-	release(one);
-	release(two);
-	release(three);
+  release(one);
+  release(two);
+  release(three);
 
-	for (int i = 0; i < 1024; i++) {
+  for (int i = 0; i < 1024; i++) {
 
-		ident obj = $(alloc(Object), init);
-		ck_assert(obj != NULL);
+    ident obj = $(alloc(Object), init);
+    ck_assert(obj != NULL);
 
-		$(set, addObject, obj);
+    $(set, addObject, obj);
 
-		release(obj);
-	}
+    release(obj);
+  }
 
-	ck_assert_int_eq(1024, ((Set *) set)->count);
+  ck_assert_int_eq(1024, ((Set *) set)->count);
 
-	int count = 0;
+  int count = 0;
 
-	$((Set *) set, enumerateObjects, enumerator, &count);
+  $((Set *) set, enumerateObjects, enumerator, &count);
 
-	ck_assert_int_eq(((Set *) set)->count, count);
+  ck_assert_int_eq(((Set *) set)->count, count);
 
-	$(set, removeAllObjects);
+  $(set, removeAllObjects);
 
-	ck_assert_int_eq(((Set *) set)->count, 0);
+  ck_assert_int_eq(((Set *) set)->count, 0);
 
-	release(set);
+  release(set);
 
 } END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("MutableSet");
-	tcase_add_test(tcase, mutableSet);
+  TCase *tcase = tcase_create("MutableSet");
+  tcase_add_test(tcase, mutableSet);
 
-	Suite *suite = suite_create("MutableSet");
-	suite_add_tcase(suite, tcase);
+  Suite *suite = suite_create("MutableSet");
+  suite_add_tcase(suite, tcase);
 
-	SRunner *runner = srunner_create(suite);
+  SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_VERBOSE);
-	int failed = srunner_ntests_failed(runner);
+  srunner_run_all(runner, CK_VERBOSE);
+  int failed = srunner_ntests_failed(runner);
 
-	srunner_free(runner);
+  srunner_free(runner);
 
-	return failed;
+  return failed;
 }

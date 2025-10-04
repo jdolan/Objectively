@@ -42,21 +42,21 @@ typedef struct URLSessionUploadTaskInterface URLSessionUploadTaskInterface;
  */
 struct URLSessionUploadTask {
 
-	/**
-	 * @brief The superclass.
-	 */
-	URLSessionTask urlSessionTask;
+  /**
+   * @brief The superclass.
+   */
+  URLSessionTask urlSessionTask;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	URLSessionUploadTaskInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  URLSessionUploadTaskInterface *interface;
 
-	/**
-	 * @brief The FILE to upload.
-	 */
-	FILE *file;
+  /**
+   * @brief The FILE to upload.
+   */
+  FILE *file;
 };
 
 /**
@@ -64,10 +64,10 @@ struct URLSessionUploadTask {
  */
 struct URLSessionUploadTaskInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	URLSessionTaskInterface urlSessionTaskInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  URLSessionTaskInterface urlSessionTaskInterface;
 };
 
 /**

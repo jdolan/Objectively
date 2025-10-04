@@ -39,26 +39,26 @@ typedef struct IndexPathInterface IndexPathInterface;
  */
 struct IndexPath {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	IndexPathInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  IndexPathInterface *interface;
 
-	/**
-	 * @brief The indexes.
-	 */
-	size_t *indexes;
+  /**
+   * @brief The indexes.
+   */
+  size_t *indexes;
 
-	/**
-	 * @brief The length of `indexes`.
-	 */
-	size_t length;
+  /**
+   * @brief The length of `indexes`.
+   */
+  size_t length;
 };
 
 /**
@@ -66,40 +66,40 @@ struct IndexPath {
  */
 struct IndexPathInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @fn size_t IndexPath::indexAtPosition(const IndexPath *self, size_t position)
-	 * @param self The IndexPath.
-	 * @param position The index position.
-	 * @return The index at the given position.
-	 * @memberof IndexPath
-	 */
-	size_t (*indexAtPosition)(const IndexPath *self, size_t position);
+  /**
+   * @fn size_t IndexPath::indexAtPosition(const IndexPath *self, size_t position)
+   * @param self The IndexPath.
+   * @param position The index position.
+   * @return The index at the given position.
+   * @memberof IndexPath
+   */
+  size_t (*indexAtPosition)(const IndexPath *self, size_t position);
 
-	/**
-	 * @fn IndexPath *IndexPath::initWithIndex(IndexPath *self, size_t index)
-	 * @brief Initializes this IndexPath with the specified index.
-	 * @param self The IndexPath.
-	 * @param index The index.
-	 * @return The intialized IndexPath, or `NULL` on error.
-	 * @memberof IndexPath
-	 */
-	IndexPath *(*initWithIndex)(IndexPath *self, size_t index);
+  /**
+   * @fn IndexPath *IndexPath::initWithIndex(IndexPath *self, size_t index)
+   * @brief Initializes this IndexPath with the specified index.
+   * @param self The IndexPath.
+   * @param index The index.
+   * @return The intialized IndexPath, or `NULL` on error.
+   * @memberof IndexPath
+   */
+  IndexPath *(*initWithIndex)(IndexPath *self, size_t index);
 
-	/**
-	 * @fn IndexPath *IndexPath::initWithIndexes(IndexPath *self, size_t *indexes, size_t length)
-	 * @brief Initializes this IndexPath with the specified indexes and length.
-	 * @param self The IndexPath.
-	 * @param indexes The indexes.
-	 * @param length The length of `indexes`.
-	 * @return The intialized IndexPath, or `NULL` on error.
-	 * @memberof IndexPath
-	 */
-	IndexPath *(*initWithIndexes)(IndexPath *self, size_t *indexes, size_t length);
+  /**
+   * @fn IndexPath *IndexPath::initWithIndexes(IndexPath *self, size_t *indexes, size_t length)
+   * @brief Initializes this IndexPath with the specified indexes and length.
+   * @param self The IndexPath.
+   * @param indexes The indexes.
+   * @param length The length of `indexes`.
+   * @return The intialized IndexPath, or `NULL` on error.
+   * @memberof IndexPath
+   */
+  IndexPath *(*initWithIndexes)(IndexPath *self, size_t *indexes, size_t length);
 };
 
 /**

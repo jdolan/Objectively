@@ -39,23 +39,23 @@ typedef struct MutableStringInterface MutableStringInterface;
  */
 struct MutableString {
 
-	/**
-	 * @brief The superclass.
-	 */
-	String string;
+  /**
+   * @brief The superclass.
+   */
+  String string;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	MutableStringInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  MutableStringInterface *interface;
 
-	/**
-	 * @brief The capacity of the String, in bytes.
-	 * @remarks The capacity is always `>= self->string.length`.
-	 * @private
-	 */
-	size_t capacity;
+  /**
+   * @brief The capacity of the String, in bytes.
+   * @remarks The capacity is always `>= self->string.length`.
+   * @private
+   */
+  size_t capacity;
 };
 
 /**
@@ -63,194 +63,194 @@ struct MutableString {
  */
 struct MutableStringInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	StringInterface stringInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  StringInterface stringInterface;
 
-	/**
-	 * @fn void MutableString::appendCharacters(MutableString *self, const char *chars)
-	 * @brief Appends the specified UTF-8 encoded C string.
-	 * @param self The MutableString.
-	 * @param chars A UTF-encoded C string.
-	 * @memberof MutableString
-	 */
-	void (*appendCharacters)(MutableString *self, const char *chars);
+  /**
+   * @fn void MutableString::appendCharacters(MutableString *self, const char *chars)
+   * @brief Appends the specified UTF-8 encoded C string.
+   * @param self The MutableString.
+   * @param chars A UTF-encoded C string.
+   * @memberof MutableString
+   */
+  void (*appendCharacters)(MutableString *self, const char *chars);
 
-	/**
-	 * @fn void MutableString::appendFormat(MutableString *self, const char *fmt, ...)
-	 * @brief Appends the specified formatted string.
-	 * @param self The MutableString.
-	 * @param fmt The format string.
-	 * @memberof MutableString
-	 */
-	void (*appendFormat)(MutableString *self, const char *fmt, ...);
+  /**
+   * @fn void MutableString::appendFormat(MutableString *self, const char *fmt, ...)
+   * @brief Appends the specified formatted string.
+   * @param self The MutableString.
+   * @param fmt The format string.
+   * @memberof MutableString
+   */
+  void (*appendFormat)(MutableString *self, const char *fmt, ...);
 
-	/**
-	 * @fn void MutableString::appendString(MutableString *self, const String *string)
-	 * @brief Appends the specified String to this MutableString.
-	 * @param self The MutableString.
-	 * @param string The String to append.
-	 * @memberof MutableString
-	 */
-	void (*appendString)(MutableString *self, const String *string);
+  /**
+   * @fn void MutableString::appendString(MutableString *self, const String *string)
+   * @brief Appends the specified String to this MutableString.
+   * @param self The MutableString.
+   * @param string The String to append.
+   * @memberof MutableString
+   */
+  void (*appendString)(MutableString *self, const String *string);
 
-	/**
-	 * @fn void MutableString::appendVaList(MutableString *self, const char *fmt, va_list args)
-	 * @brief Appends the specified format string.
-	 * @param self The MutableString.
-	 * @param fmt The format string.
-	 * @param args The format arguments.
-	 * @memberof MutableString
-	 */
-	void (*appendVaList)(MutableString *self, const char *fmt, va_list args);
+  /**
+   * @fn void MutableString::appendVaList(MutableString *self, const char *fmt, va_list args)
+   * @brief Appends the specified format string.
+   * @param self The MutableString.
+   * @param fmt The format string.
+   * @param args The format arguments.
+   * @memberof MutableString
+   */
+  void (*appendVaList)(MutableString *self, const char *fmt, va_list args);
 
-	/**
-	 * @fn void MutableString::deleteCharactersInRange(MutableString *self, const Range range)
-	 * @brief Deletes the characters within `range` from this MutableString.
-	 * @param self The MutableString.
-	 * @param range The Range of characters to delete.
-	 * @memberof MutableString
-	 */
-	void (*deleteCharactersInRange)(MutableString *self, const Range range);
+  /**
+   * @fn void MutableString::deleteCharactersInRange(MutableString *self, const Range range)
+   * @brief Deletes the characters within `range` from this MutableString.
+   * @param self The MutableString.
+   * @param range The Range of characters to delete.
+   * @memberof MutableString
+   */
+  void (*deleteCharactersInRange)(MutableString *self, const Range range);
 
-	/**
-	 * @fn MutableString *MutableString::init(MutableString *self)
-	 * @brief Initializes this MutableString.
-	 * @param self The MutableString.
-	 * @return The initialized MutableString, or `NULL` on error.
-	 * @memberof MutableString
-	 */
-	MutableString *(*init)(MutableString *self);
+  /**
+   * @fn MutableString *MutableString::init(MutableString *self)
+   * @brief Initializes this MutableString.
+   * @param self The MutableString.
+   * @return The initialized MutableString, or `NULL` on error.
+   * @memberof MutableString
+   */
+  MutableString *(*init)(MutableString *self);
 
-	/**
-	 * @fn MutableString *MutableString::initWithCapacity(MutableString *self, size_t capacity)
-	 * @brief Initializes this MutableString with the given `capacity`.
-	 * @param self The MutableString.
-	 * @param capacity The capacity, in bytes.
-	 * @return The initialized MutableString, or `NULL` on error.
-	 * @memberof MutableString
-	 */
-	MutableString *(*initWithCapacity)(MutableString *self, size_t capacity);
+  /**
+   * @fn MutableString *MutableString::initWithCapacity(MutableString *self, size_t capacity)
+   * @brief Initializes this MutableString with the given `capacity`.
+   * @param self The MutableString.
+   * @param capacity The capacity, in bytes.
+   * @return The initialized MutableString, or `NULL` on error.
+   * @memberof MutableString
+   */
+  MutableString *(*initWithCapacity)(MutableString *self, size_t capacity);
 
-	/**
-	 * @fn MutableString *MutableString::initWithString(MutableString *self, const String *string)
-	 * @brief Initializes this MutableString with the contents of `string`.
-	 * @param self The MutableString.
-	 * @param string A String.
-	 * @return The initialized MutableString, or `NULL` on error.
-	 * @memberof MutableString
-	 */
-	MutableString *(*initWithString)(MutableString *self, const String *string);
+  /**
+   * @fn MutableString *MutableString::initWithString(MutableString *self, const String *string)
+   * @brief Initializes this MutableString with the contents of `string`.
+   * @param self The MutableString.
+   * @param string A String.
+   * @return The initialized MutableString, or `NULL` on error.
+   * @memberof MutableString
+   */
+  MutableString *(*initWithString)(MutableString *self, const String *string);
 
-	/**
-	 * @fn void MutableString::insertCharactersAtIndex(MutableString *self, const char *chars, size_t index)
-	 * @brief Inserts the specified String at the given index.
-	 * @param self The MutableString.
-	 * @param chars The null-terminated UTF-8 encoded C string to insert.
-	 * @param index The index.
-	 * @memberof MutableString
-	 */
-	void (*insertCharactersAtIndex)(MutableString *self, const char *chars, size_t index);
+  /**
+   * @fn void MutableString::insertCharactersAtIndex(MutableString *self, const char *chars, size_t index)
+   * @brief Inserts the specified String at the given index.
+   * @param self The MutableString.
+   * @param chars The null-terminated UTF-8 encoded C string to insert.
+   * @param index The index.
+   * @memberof MutableString
+   */
+  void (*insertCharactersAtIndex)(MutableString *self, const char *chars, size_t index);
 
-	/**
-	 * @fn void MutableString::insertStringAtIndex(MutableString *self, const String *string, size_t index)
-	 * @brief Inserts the specified String at the given index.
-	 * @param self The MutableString.
-	 * @param string The String to insert.
-	 * @param index The index.
-	 * @memberof MutableString
-	 */
-	void (*insertStringAtIndex)(MutableString *self, const String *string, size_t index);
+  /**
+   * @fn void MutableString::insertStringAtIndex(MutableString *self, const String *string, size_t index)
+   * @brief Inserts the specified String at the given index.
+   * @param self The MutableString.
+   * @param string The String to insert.
+   * @param index The index.
+   * @memberof MutableString
+   */
+  void (*insertStringAtIndex)(MutableString *self, const String *string, size_t index);
 
-	/**
-	 * @fn void MutableString::replaceCharactersInRange(MutableString *self, const Range range, const char *chars)
-	 * @brief Replaces the characters in `range` with the given characters.
-	 * @param self The MutableString.
-	 * @param range The Range of characters to replace.
-	 * @param chars The null-terminated UTF-8 encoded C string to substitute.
-	 * @memberof MutableString
-	 */
-	void (*replaceCharactersInRange)(MutableString *self, const Range range, const char *chars);
+  /**
+   * @fn void MutableString::replaceCharactersInRange(MutableString *self, const Range range, const char *chars)
+   * @brief Replaces the characters in `range` with the given characters.
+   * @param self The MutableString.
+   * @param range The Range of characters to replace.
+   * @param chars The null-terminated UTF-8 encoded C string to substitute.
+   * @memberof MutableString
+   */
+  void (*replaceCharactersInRange)(MutableString *self, const Range range, const char *chars);
 
-	/**
-	 * @fn void MutableString::replaceOccurrencesOfCharacters(MutableString *self, const char *chars, const char *replacement)
-	 * @brief Replaces all occurrences of `chars` with the given `replacement`.
-	 * @param self The MutableString.
-	 * @param chars The null-terminated UTF-8 encoded C string to replace.
-	 * @param replacement The null-terminated UTF-8 encoded C string replacement.
-	 * @memberof MutableString
-	 */
-	void (*replaceOccurrencesOfCharacters)(MutableString *self, const char *chars, const char *replacement);
+  /**
+   * @fn void MutableString::replaceOccurrencesOfCharacters(MutableString *self, const char *chars, const char *replacement)
+   * @brief Replaces all occurrences of `chars` with the given `replacement`.
+   * @param self The MutableString.
+   * @param chars The null-terminated UTF-8 encoded C string to replace.
+   * @param replacement The null-terminated UTF-8 encoded C string replacement.
+   * @memberof MutableString
+   */
+  void (*replaceOccurrencesOfCharacters)(MutableString *self, const char *chars, const char *replacement);
 
-	/**
-	 * @fn void MutableString::replaceOccurrencesOfCharactersInRange(MutableString *self, const char *chars, const Range range, const char *replacement)
-	 * @brief Replaces occurrences of `chars` in `range` with the given `replacement`.
-	 * @param self The MutableString.
-	 * @param chars The null-terminated UTF-8 encoded C string to replace.
-	 * @param range The Range in which to replace.
-	 * @param replacement The null-terminated UTF-8 encoded C string replacement.
-	 * @memberof MutableString
-	 */
-	void (*replaceOccurrencesOfCharactersInRange)(MutableString *self, const char *chars, const Range range, const char *replacement);
+  /**
+   * @fn void MutableString::replaceOccurrencesOfCharactersInRange(MutableString *self, const char *chars, const Range range, const char *replacement)
+   * @brief Replaces occurrences of `chars` in `range` with the given `replacement`.
+   * @param self The MutableString.
+   * @param chars The null-terminated UTF-8 encoded C string to replace.
+   * @param range The Range in which to replace.
+   * @param replacement The null-terminated UTF-8 encoded C string replacement.
+   * @memberof MutableString
+   */
+  void (*replaceOccurrencesOfCharactersInRange)(MutableString *self, const char *chars, const Range range, const char *replacement);
 
-	/**
-	 * @fn void MutableString::replaceOccurrencesOfString(MutableString *self, const String *string, const String *replacement)
-	 * @brief Replaces all occurrences of `string` with the given `replacement`.
-	 * @param self The MutableString.
-	 * @param string The String to replace.
-	 * @param replacement The String replacement.
-	 * @memberof MutableString
-	 */
-	void (*replaceOccurrencesOfString)(MutableString *self, const String *string, const String *replacement);
+  /**
+   * @fn void MutableString::replaceOccurrencesOfString(MutableString *self, const String *string, const String *replacement)
+   * @brief Replaces all occurrences of `string` with the given `replacement`.
+   * @param self The MutableString.
+   * @param string The String to replace.
+   * @param replacement The String replacement.
+   * @memberof MutableString
+   */
+  void (*replaceOccurrencesOfString)(MutableString *self, const String *string, const String *replacement);
 
-	/**
-	 * @fn void MutableString::replaceOccurrencesOfStringInRange(MutableString *self, const String *string, const Range range, const String *replacement)
-	 * @brief Replaces occurrences of `string` in `range` with the given `replacement`.
-	 * @param self The MutableString.
-	 * @param string The String to replace.
-	 * @param range The Range in which to replace.
-	 * @param replacement The String replacement.
-	 * @memberof MutableString
-	 */
-	void (*replaceOccurrencesOfStringInRange)(MutableString *self, const String *string, const Range range, const String *replacement);
+  /**
+   * @fn void MutableString::replaceOccurrencesOfStringInRange(MutableString *self, const String *string, const Range range, const String *replacement)
+   * @brief Replaces occurrences of `string` in `range` with the given `replacement`.
+   * @param self The MutableString.
+   * @param string The String to replace.
+   * @param range The Range in which to replace.
+   * @param replacement The String replacement.
+   * @memberof MutableString
+   */
+  void (*replaceOccurrencesOfStringInRange)(MutableString *self, const String *string, const Range range, const String *replacement);
 
-	/**
-	 * @fn void MutableString::replaceStringInRange(MutableString *self, const Range range, const String *string)
-	 * @brief Replaces the characters in `range` with the contents of `string`.
-	 * @param self The MutableString.
-	 * @param range The Range of characters to replace.
-	 * @param string The String to substitute.
-	 * @memberof MutableString
-	 */
-	void (*replaceStringInRange)(MutableString *self, const Range range, const String *string);
+  /**
+   * @fn void MutableString::replaceStringInRange(MutableString *self, const Range range, const String *string)
+   * @brief Replaces the characters in `range` with the contents of `string`.
+   * @param self The MutableString.
+   * @param range The Range of characters to replace.
+   * @param string The String to substitute.
+   * @memberof MutableString
+   */
+  void (*replaceStringInRange)(MutableString *self, const Range range, const String *string);
 
-	/**
-	 * @static
-	 * @fn MutableString *MutableString::string(void)
-	 * @brief Returns a new MutableString.
-	 * @return The new MutableString, or `NULL` on error.
-	 * @memberof MutableString
-	 */
-	MutableString *(*string)(void);
+  /**
+   * @static
+   * @fn MutableString *MutableString::string(void)
+   * @brief Returns a new MutableString.
+   * @return The new MutableString, or `NULL` on error.
+   * @memberof MutableString
+   */
+  MutableString *(*string)(void);
 
-	/**
-	 * @static
-	 * @fn MutableString *MutableString::stringWithCapacity(size_t capacity)
-	 * @brief Returns a new MutableString with the given `capacity`.
-	 * @param capacity The desired capacity, in bytes.
-	 * @return The new MutableString, or `NULL` on error.
-	 * @memberof MutableString
-	 */
-	MutableString *(*stringWithCapacity)(size_t capacity);
+  /**
+   * @static
+   * @fn MutableString *MutableString::stringWithCapacity(size_t capacity)
+   * @brief Returns a new MutableString with the given `capacity`.
+   * @param capacity The desired capacity, in bytes.
+   * @return The new MutableString, or `NULL` on error.
+   * @memberof MutableString
+   */
+  MutableString *(*stringWithCapacity)(size_t capacity);
 
-	/**
-	 * @fn void MutableString::trim(MutableString *self)
-	 * @brief Trims leading and trailing whitespace from this MutableString.
-	 * @param self The MutableString.
-	 * @memberof MutableString
-	 */
-	void (*trim)(MutableString *self);
+  /**
+   * @fn void MutableString::trim(MutableString *self)
+   * @brief Trims leading and trailing whitespace from this MutableString.
+   * @param self The MutableString.
+   * @memberof MutableString
+   */
+  void (*trim)(MutableString *self);
 };
 
 /**

@@ -30,56 +30,56 @@
 
 String *nameof(const EnumName *names, int value) {
 
-	for (const EnumName *name = names; name->name; name++) {
-		if (name->value == value) {
-			return $$(String, stringWithCharacters, name->name);
-		}
-	}
+  for (const EnumName *name = names; name->name; name++) {
+    if (name->value == value) {
+      return $$(String, stringWithCharacters, name->name);
+    }
+  }
 
-	MutableString *string = NULL;
+  MutableString *string = NULL;
 
-	for (const EnumName *name = names; name->name; name++) {
-		if (name->value) {
-			if ((name->value & value) == name->value) {
-				if (string == NULL) {
-					string = $$(MutableString, string);
-				} else {
-					$(string, appendCharacters, " | ");
-				}
-				$(string, appendCharacters, name->name);
-			}
-		}
-	}
+  for (const EnumName *name = names; name->name; name++) {
+    if (name->value) {
+      if ((name->value & value) == name->value) {
+        if (string == NULL) {
+          string = $$(MutableString, string);
+        } else {
+          $(string, appendCharacters, " | ");
+        }
+        $(string, appendCharacters, name->name);
+      }
+    }
+  }
 
-	return (String *) string;
+  return (String *) string;
 }
 
 int valueof(const EnumName *names, const char *chars) {
 
-	int value = 0;
+  int value = 0;
 
-	const char *c = chars;
-	while (*c) {
-		const size_t size = strcspn(c, " |");
-		if (size) {
-			const EnumName *en;
-			for (en = names; en->name; en++) {
-				if (strncmp(en->name, c, size) == 0) {
-					value |= en->value;
-					break;
-				}
-				if (en->alias && strncmp(en->alias, c, size) == 0) {
-					value |= en->value;
-					break;
-				}
-			}
-			if (en->name == NULL) {
-				fprintf(stderr, "%s: Unknown character sequence: %s\n", __func__, c);
-			}
-		}
-		c += size;
-		c += strspn(c, " |");
-	}
+  const char *c = chars;
+  while (*c) {
+    const size_t size = strcspn(c, " |");
+    if (size) {
+      const EnumName *en;
+      for (en = names; en->name; en++) {
+        if (strncmp(en->name, c, size) == 0) {
+          value |= en->value;
+          break;
+        }
+        if (en->alias && strncmp(en->alias, c, size) == 0) {
+          value |= en->value;
+          break;
+        }
+      }
+      if (en->name == NULL) {
+        fprintf(stderr, "%s: Unknown character sequence: %s\n", __func__, c);
+      }
+    }
+    c += size;
+    c += strspn(c, " |");
+  }
 
-	return value;
+  return value;
 }

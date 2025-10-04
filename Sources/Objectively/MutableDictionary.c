@@ -43,13 +43,13 @@
  */
 static Object *copy(const Object *self) {
 
-	const Dictionary *this = (const Dictionary *) self;
+  const Dictionary *this = (const Dictionary *) self;
 
-	MutableDictionary *copy = $(alloc(MutableDictionary), initWithCapacity, this->capacity);
+  MutableDictionary *copy = $(alloc(MutableDictionary), initWithCapacity, this->capacity);
 
-	$(copy, addEntriesFromDictionary, this);
+  $(copy, addEntriesFromDictionary, this);
 
-	return (Object *) copy;
+  return (Object *) copy;
 }
 
 #pragma mark - MutableDictionary
@@ -58,7 +58,7 @@ static Object *copy(const Object *self) {
  * @brief DictionaryEnumerator for addEntriesFromDictionary.
  */
 static void addEntriesFromDictionary_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
-	$((MutableDictionary *) data, setObjectForKey, obj, key);
+  $((MutableDictionary *) data, setObjectForKey, obj, key);
 }
 
 /**
@@ -67,9 +67,9 @@ static void addEntriesFromDictionary_enumerator(const Dictionary *dict, ident ob
  */
 static void addEntriesFromDictionary(MutableDictionary *self, const Dictionary *dictionary) {
 
-	assert(dictionary);
+  assert(dictionary);
 
-	$(dictionary, enumerateObjectsAndKeys, addEntriesFromDictionary_enumerator, self);
+  $(dictionary, enumerateObjectsAndKeys, addEntriesFromDictionary_enumerator, self);
 }
 
 /**
@@ -78,7 +78,7 @@ static void addEntriesFromDictionary(MutableDictionary *self, const Dictionary *
  */
 static MutableDictionary *dictionary(void) {
 
-	return $(alloc(MutableDictionary), init);
+  return $(alloc(MutableDictionary), init);
 }
 
 /**
@@ -87,7 +87,7 @@ static MutableDictionary *dictionary(void) {
  */
 static MutableDictionary *dictionaryWithCapacity(size_t capacity) {
 
-	return $(alloc(MutableDictionary), initWithCapacity, capacity);
+  return $(alloc(MutableDictionary), initWithCapacity, capacity);
 }
 
 /**
@@ -96,7 +96,7 @@ static MutableDictionary *dictionaryWithCapacity(size_t capacity) {
  */
 static MutableDictionary *init(MutableDictionary *self) {
 
-	return $(self, initWithCapacity, MUTABLEDICTIONARY_DEFAULT_CAPACITY);
+  return $(self, initWithCapacity, MUTABLEDICTIONARY_DEFAULT_CAPACITY);
 }
 
 /**
@@ -105,18 +105,18 @@ static MutableDictionary *init(MutableDictionary *self) {
  */
 static MutableDictionary *initWithCapacity(MutableDictionary *self, size_t capacity) {
 
-	self = (MutableDictionary *) super(Object, self, init);
-	if (self) {
+  self = (MutableDictionary *) super(Object, self, init);
+  if (self) {
 
-		self->dictionary.capacity = capacity;
-		if (self->dictionary.capacity) {
+    self->dictionary.capacity = capacity;
+    if (self->dictionary.capacity) {
 
-			self->dictionary.elements = calloc(self->dictionary.capacity, sizeof(ident));
-			assert(self->dictionary.elements);
-		}
-	}
+      self->dictionary.elements = calloc(self->dictionary.capacity, sizeof(ident));
+      assert(self->dictionary.elements);
+    }
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -125,15 +125,15 @@ static MutableDictionary *initWithCapacity(MutableDictionary *self, size_t capac
  */
 static void removeAllObjects(MutableDictionary *self) {
 
-	for (size_t i = 0; i < self->dictionary.capacity; i++) {
+  for (size_t i = 0; i < self->dictionary.capacity; i++) {
 
-		Array *array = self->dictionary.elements[i];
-		if (array) {
-			self->dictionary.elements[i] = release(array);
-		}
-	}
+    Array *array = self->dictionary.elements[i];
+    if (array) {
+      self->dictionary.elements[i] = release(array);
+    }
+  }
 
-	self->dictionary.count = 0;
+  self->dictionary.count = 0;
 }
 
 /**
@@ -142,28 +142,28 @@ static void removeAllObjects(MutableDictionary *self) {
  */
 static void removeAllObjectsWithEnumerator(MutableDictionary *self, DictionaryEnumerator enumerator, ident data) {
 
-	assert(enumerator);
+  assert(enumerator);
 
-	for (size_t i = 0; i < self->dictionary.capacity; i++) {
+  for (size_t i = 0; i < self->dictionary.capacity; i++) {
 
-		Array *array = self->dictionary.elements[i];
-		if (array) {
-			for (size_t j = array->count; j > 0; j -= 2) {
+    Array *array = self->dictionary.elements[i];
+    if (array) {
+      for (size_t j = array->count; j > 0; j -= 2) {
 
-				ident obj = array->elements[j - 1];
-				ident key = array->elements[j - 2];
+        ident obj = array->elements[j - 1];
+        ident key = array->elements[j - 2];
 
-				enumerator((Dictionary *) self, obj, key, data);
+        enumerator((Dictionary *) self, obj, key, data);
 
-				$((MutableArray *) array, removeObjectAtIndex, j - 1);
-				$((MutableArray *) array, removeObjectAtIndex, j - 2);
-			}
+        $((MutableArray *) array, removeObjectAtIndex, j - 1);
+        $((MutableArray *) array, removeObjectAtIndex, j - 2);
+      }
 
-			self->dictionary.elements[i] = release(array);
-		}
-	}
+      self->dictionary.elements[i] = release(array);
+    }
+  }
 
-	self->dictionary.count = 0;
+  self->dictionary.count = 0;
 }
 
 /**
@@ -172,28 +172,28 @@ static void removeAllObjectsWithEnumerator(MutableDictionary *self, DictionaryEn
  */
 static void removeObjectForKey(MutableDictionary *self, const ident key) {
 
-	if (self->dictionary.capacity == 0) {
-		return;
-	}
-	
-	const size_t bin = HashForObject(HASH_SEED, key) % self->dictionary.capacity;
+  if (self->dictionary.capacity == 0) {
+    return;
+  }
+  
+  const size_t bin = HashForObject(HASH_SEED, key) % self->dictionary.capacity;
 
-	MutableArray *array = self->dictionary.elements[bin];
-	if (array) {
+  MutableArray *array = self->dictionary.elements[bin];
+  if (array) {
 
-		const ssize_t index = $((Array *) array, indexOfObject, key);
-		if (index > -1) {
+    const ssize_t index = $((Array *) array, indexOfObject, key);
+    if (index > -1) {
 
-			$(array, removeObjectAtIndex, index);
-			$(array, removeObjectAtIndex, index);
+      $(array, removeObjectAtIndex, index);
+      $(array, removeObjectAtIndex, index);
 
-			if (((Array *) array)->count == 0) {
-				self->dictionary.elements[bin] = release(array);
-			}
+      if (((Array *) array)->count == 0) {
+        self->dictionary.elements[bin] = release(array);
+      }
 
-			self->dictionary.count--;
-		}
-	}
+      self->dictionary.count--;
+    }
+  }
 }
 
 /**
@@ -202,11 +202,11 @@ static void removeObjectForKey(MutableDictionary *self, const ident key) {
  */
 static void removeObjectForKeyPath(MutableDictionary *self, const char *path) {
 
-	String *key = $$(String, stringWithCharacters, path);
+  String *key = $$(String, stringWithCharacters, path);
 
-	$(self, removeObjectForKey, key);
+  $(self, removeObjectForKey, key);
 
-	release(key);
+  release(key);
 }
 
 /**
@@ -215,42 +215,42 @@ static void removeObjectForKeyPath(MutableDictionary *self, const char *path) {
  */
 static void setObjectForKey_resize(Dictionary *dict) {
 
-	if (dict->capacity) {
+  if (dict->capacity) {
 
-		const float load = dict->count / (float) dict->capacity;
-		if (load >= MUTABLEDICTIONARY_MAX_LOAD) {
+    const float load = dict->count / (float) dict->capacity;
+    if (load >= MUTABLEDICTIONARY_MAX_LOAD) {
 
-			size_t capacity = dict->capacity;
-			ident *elements = dict->elements;
+      size_t capacity = dict->capacity;
+      ident *elements = dict->elements;
 
-			dict->capacity = dict->capacity * MUTABLEDICTIONARY_GROW_FACTOR;
-			dict->count = 0;
+      dict->capacity = dict->capacity * MUTABLEDICTIONARY_GROW_FACTOR;
+      dict->count = 0;
 
-			dict->elements = calloc(dict->capacity, sizeof(ident));
-			assert(dict->elements);
+      dict->elements = calloc(dict->capacity, sizeof(ident));
+      assert(dict->elements);
 
-			for (size_t i = 0; i < capacity; i++) {
+      for (size_t i = 0; i < capacity; i++) {
 
-				Array *array = elements[i];
-				if (array) {
+        Array *array = elements[i];
+        if (array) {
 
-					for (size_t j = 0; j < array->count; j += 2) {
+          for (size_t j = 0; j < array->count; j += 2) {
 
-						ident key = $(array, objectAtIndex, j);
-						ident obj = $(array, objectAtIndex, j + 1);
+            ident key = $(array, objectAtIndex, j);
+            ident obj = $(array, objectAtIndex, j + 1);
 
-						$$(MutableDictionary, setObjectForKey, (MutableDictionary *) dict, obj, key);
-					}
+            $$(MutableDictionary, setObjectForKey, (MutableDictionary *) dict, obj, key);
+          }
 
-					release(array);
-				}
-			}
+          release(array);
+        }
+      }
 
-			free(elements);
-		}
-	} else {
-		$$(MutableDictionary, initWithCapacity, (MutableDictionary *) dict, MUTABLEDICTIONARY_DEFAULT_CAPACITY);
-	}
+      free(elements);
+    }
+  } else {
+    $$(MutableDictionary, initWithCapacity, (MutableDictionary *) dict, MUTABLEDICTIONARY_DEFAULT_CAPACITY);
+  }
 }
 
 /**
@@ -259,26 +259,26 @@ static void setObjectForKey_resize(Dictionary *dict) {
  */
 static void setObjectForKey(MutableDictionary *self, const ident obj, const ident key) {
 
-	Dictionary *dict = (Dictionary *) self;
+  Dictionary *dict = (Dictionary *) self;
 
-	setObjectForKey_resize(dict);
+  setObjectForKey_resize(dict);
 
-	const size_t bin = HashForObject(HASH_SEED, key) % dict->capacity;
+  const size_t bin = HashForObject(HASH_SEED, key) % dict->capacity;
 
-	MutableArray *array = dict->elements[bin];
-	if (array == NULL) {
-		array = dict->elements[bin] = $$(MutableArray, arrayWithCapacity, (dict->capacity >> 2) + 1);
-	}
+  MutableArray *array = dict->elements[bin];
+  if (array == NULL) {
+    array = dict->elements[bin] = $$(MutableArray, arrayWithCapacity, (dict->capacity >> 2) + 1);
+  }
 
-	const ssize_t index = $((Array *) array, indexOfObject, key);
-	if (index > -1) {
-		$(array, setObjectAtIndex, obj, index + 1);
-	} else {
-		$(array, addObject, key);
-		$(array, addObject, obj);
+  const ssize_t index = $((Array *) array, indexOfObject, key);
+  if (index > -1) {
+    $(array, setObjectAtIndex, obj, index + 1);
+  } else {
+    $(array, addObject, key);
+    $(array, addObject, obj);
 
-		dict->count++;
-	}
+    dict->count++;
+  }
 }
 
 /**
@@ -287,11 +287,11 @@ static void setObjectForKey(MutableDictionary *self, const ident obj, const iden
  */
 static void setObjectForKeyPath(MutableDictionary *self, const ident obj, const char *path) {
 
-	String *key = $$(String, stringWithCharacters, path);
+  String *key = $$(String, stringWithCharacters, path);
 
-	$(self, setObjectForKey, obj, key);
+  $(self, setObjectForKey, obj, key);
 
-	release(key);
+  release(key);
 }
 
 /**
@@ -300,21 +300,21 @@ static void setObjectForKeyPath(MutableDictionary *self, const ident obj, const 
  */
 static void setObjectsForKeyPaths(MutableDictionary *self, ...) {
 
-	va_list args;
-	va_start(args, self);
+  va_list args;
+  va_start(args, self);
 
-	while (true) {
+  while (true) {
 
-		ident obj = va_arg(args, ident);
-		if (obj) {
-			const char *path = va_arg(args, const char *);
-			$(self, setObjectForKeyPath, obj, path);
-		} else {
-			break;
-		}
-	}
+    ident obj = va_arg(args, ident);
+    if (obj) {
+      const char *path = va_arg(args, const char *);
+      $(self, setObjectForKeyPath, obj, path);
+    } else {
+      break;
+    }
+  }
 
-	va_end(args);
+  va_end(args);
 }
 
 /**
@@ -323,21 +323,21 @@ static void setObjectsForKeyPaths(MutableDictionary *self, ...) {
  */
 static void setObjectsForKeys(MutableDictionary *self, ...) {
 
-	va_list args;
-	va_start(args, self);
+  va_list args;
+  va_start(args, self);
 
-	while (true) {
+  while (true) {
 
-		ident obj = va_arg(args, ident);
-		if (obj) {
-			ident key = va_arg(args, ident);
-			$(self, setObjectForKey, obj, key);
-		} else {
-			break;
-		}
-	}
+    ident obj = va_arg(args, ident);
+    if (obj) {
+      ident key = va_arg(args, ident);
+      $(self, setObjectForKey, obj, key);
+    } else {
+      break;
+    }
+  }
 
-	va_end(args);
+  va_end(args);
 }
 
 #pragma mark - Class lifecycle
@@ -347,21 +347,21 @@ static void setObjectsForKeys(MutableDictionary *self, ...) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
 
-	((MutableDictionaryInterface *) clazz->interface)->addEntriesFromDictionary = addEntriesFromDictionary;
-	((MutableDictionaryInterface *) clazz->interface)->dictionary = dictionary;
-	((MutableDictionaryInterface *) clazz->interface)->dictionaryWithCapacity = dictionaryWithCapacity;
-	((MutableDictionaryInterface *) clazz->interface)->init = init;
-	((MutableDictionaryInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
-	((MutableDictionaryInterface *) clazz->interface)->removeAllObjects = removeAllObjects;
-	((MutableDictionaryInterface *) clazz->interface)->removeAllObjectsWithEnumerator = removeAllObjectsWithEnumerator;
-	((MutableDictionaryInterface *) clazz->interface)->removeObjectForKey = removeObjectForKey;
-	((MutableDictionaryInterface *) clazz->interface)->removeObjectForKeyPath = removeObjectForKeyPath;
-	((MutableDictionaryInterface *) clazz->interface)->setObjectForKey = setObjectForKey;
-	((MutableDictionaryInterface *) clazz->interface)->setObjectForKeyPath = setObjectForKeyPath;
-	((MutableDictionaryInterface *) clazz->interface)->setObjectsForKeyPaths = setObjectsForKeyPaths;
-	((MutableDictionaryInterface *) clazz->interface)->setObjectsForKeys = setObjectsForKeys;
+  ((MutableDictionaryInterface *) clazz->interface)->addEntriesFromDictionary = addEntriesFromDictionary;
+  ((MutableDictionaryInterface *) clazz->interface)->dictionary = dictionary;
+  ((MutableDictionaryInterface *) clazz->interface)->dictionaryWithCapacity = dictionaryWithCapacity;
+  ((MutableDictionaryInterface *) clazz->interface)->init = init;
+  ((MutableDictionaryInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
+  ((MutableDictionaryInterface *) clazz->interface)->removeAllObjects = removeAllObjects;
+  ((MutableDictionaryInterface *) clazz->interface)->removeAllObjectsWithEnumerator = removeAllObjectsWithEnumerator;
+  ((MutableDictionaryInterface *) clazz->interface)->removeObjectForKey = removeObjectForKey;
+  ((MutableDictionaryInterface *) clazz->interface)->removeObjectForKeyPath = removeObjectForKeyPath;
+  ((MutableDictionaryInterface *) clazz->interface)->setObjectForKey = setObjectForKey;
+  ((MutableDictionaryInterface *) clazz->interface)->setObjectForKeyPath = setObjectForKeyPath;
+  ((MutableDictionaryInterface *) clazz->interface)->setObjectsForKeyPaths = setObjectsForKeyPaths;
+  ((MutableDictionaryInterface *) clazz->interface)->setObjectsForKeys = setObjectsForKeys;
 }
 
 /**
@@ -369,21 +369,21 @@ static void initialize(Class *clazz) {
  * @memberof MutableDictionary
  */
 Class *_MutableDictionary(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "MutableDictionary",
-			.superclass = _Dictionary(),
-			.instanceSize = sizeof(MutableDictionary),
-			.interfaceOffset = offsetof(MutableDictionary, interface),
-			.interfaceSize = sizeof(MutableDictionaryInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "MutableDictionary",
+      .superclass = _Dictionary(),
+      .instanceSize = sizeof(MutableDictionary),
+      .interfaceOffset = offsetof(MutableDictionary, interface),
+      .interfaceSize = sizeof(MutableDictionaryInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

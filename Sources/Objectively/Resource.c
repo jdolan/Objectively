@@ -43,13 +43,13 @@ static MutableArray *_resourceProviders;
  */
 static void dealloc(Object *self) {
 
-	Resource *this = (Resource *) self;
+  Resource *this = (Resource *) self;
 
-	release(this->data);
+  release(this->data);
 
-	free(this->name);
+  free(this->name);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 #pragma mark - Resource
@@ -60,11 +60,11 @@ static void dealloc(Object *self) {
  */
 static void addResourcePath(const char *path) {
 
-	assert(path);
-	String *string = str(path);
+  assert(path);
+  String *string = str(path);
 
-	$(_resourcePaths, addObject, string);
-	release(string);
+  $(_resourcePaths, addObject, string);
+  release(string);
 }
 
 /**
@@ -73,11 +73,11 @@ static void addResourcePath(const char *path) {
  */
 static void addResourceProvider(ResourceProvider provider) {
 
-	assert(provider);
-	Value *value = $(alloc(Value), initWithValue, provider);
-	
-	$(_resourceProviders, addObject, value);
-	release(value);
+  assert(provider);
+  Value *value = $(alloc(Value), initWithValue, provider);
+  
+  $(_resourceProviders, addObject, value);
+  release(value);
 }
 
 /**
@@ -86,11 +86,11 @@ static void addResourceProvider(ResourceProvider provider) {
  */
 static Resource *initWithBytes(Resource *self, const uint8_t *bytes, size_t length, const char *name) {
 
-	Data *data = $$(Data, dataWithBytes, bytes, length);
-	self = $(self, initWithData, data, name);
+  Data *data = $$(Data, dataWithBytes, bytes, length);
+  self = $(self, initWithData, data, name);
 
-	release(data);
-	return self;
+  release(data);
+  return self;
 }
 
 /**
@@ -99,16 +99,16 @@ static Resource *initWithBytes(Resource *self, const uint8_t *bytes, size_t leng
  */
 static Resource *initWithData(Resource *self, Data *data, const char *name) {
 
-	self = (Resource *) super(Object, self, init);
-	if (self) {
-		assert(data);
-		self->data = retain(data);
+  self = (Resource *) super(Object, self, init);
+  if (self) {
+    assert(data);
+    self->data = retain(data);
 
-		assert(name);
-		self->name = strdup(name);
-	}
+    assert(name);
+    self->name = strdup(name);
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -117,38 +117,38 @@ static Resource *initWithData(Resource *self, Data *data, const char *name) {
  */
 static Resource *initWithName(Resource *self, const char *name) {
 
-	Data *data = NULL;
+  Data *data = NULL;
 
-	const Array *resourceProviders = (Array *) _resourceProviders;
-	for (size_t i = 0; i < resourceProviders->count && data == NULL; i++) {
+  const Array *resourceProviders = (Array *) _resourceProviders;
+  for (size_t i = 0; i < resourceProviders->count && data == NULL; i++) {
 
-		const Value *value = $(resourceProviders, objectAtIndex, i);
-		data = ((ResourceProvider) (value->value))(name);
-	}
+    const Value *value = $(resourceProviders, objectAtIndex, i);
+    data = ((ResourceProvider) (value->value))(name);
+  }
 
-	const Array *resourcePaths = (Array *) _resourcePaths;
-	for (size_t i = 0; i < resourcePaths->count && data == NULL; i++) {
+  const Array *resourcePaths = (Array *) _resourcePaths;
+  for (size_t i = 0; i < resourcePaths->count && data == NULL; i++) {
 
-		const String *resourcePath = $(resourcePaths, objectAtIndex, i);
-		String *path = str("%s%s%s", resourcePath->chars, PATH_SEPAR, name);
+    const String *resourcePath = $(resourcePaths, objectAtIndex, i);
+    String *path = str("%s%s%s", resourcePath->chars, PATH_SEPAR, name);
 
-		struct stat s;
-		if (stat(path->chars, &s) == 0 && S_ISREG(s.st_mode)) {
-			data = $$(Data, dataWithContentsOfFile, path->chars);
-		}
+    struct stat s;
+    if (stat(path->chars, &s) == 0 && S_ISREG(s.st_mode)) {
+      data = $$(Data, dataWithContentsOfFile, path->chars);
+    }
 
-		release(path);
-	}
+    release(path);
+  }
 
-	if (data) {
-		self = $(self, initWithData, data, name);
-	} else {
-		self = release(self);
-	}
+  if (data) {
+    self = $(self, initWithData, data, name);
+  } else {
+    self = release(self);
+  }
 
-	release(data);
+  release(data);
 
-	return self;
+  return self;
 }
 
 /**
@@ -157,11 +157,11 @@ static Resource *initWithName(Resource *self, const char *name) {
  */
 static void removeResourcePath(const char *path) {
 
-	String *string = $$(String, stringWithCharacters, path);
+  String *string = $$(String, stringWithCharacters, path);
 
-	$(_resourcePaths, removeObject, string);
+  $(_resourcePaths, removeObject, string);
 
-	release(string);
+  release(string);
 }
 
 /**
@@ -170,11 +170,11 @@ static void removeResourcePath(const char *path) {
  */
 static void removeResourceProvider(ResourceProvider provider) {
 
-	Value *value = $(alloc(Value), initWithValue, provider);
+  Value *value = $(alloc(Value), initWithValue, provider);
 
-	$(_resourceProviders, removeObject, value);
+  $(_resourceProviders, removeObject, value);
 
-	release(value);
+  release(value);
 }
 
 /**
@@ -182,7 +182,7 @@ static void removeResourceProvider(ResourceProvider provider) {
  * @memberof Resource
  */
 static Resource *resourceWithName(const char *name) {
-	return $(alloc(Resource), initWithName, name);
+  return $(alloc(Resource), initWithName, name);
 }
 
 #pragma mark - Class lifecycle
@@ -192,46 +192,46 @@ static Resource *resourceWithName(const char *name) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((ResourceInterface *) clazz->interface)->addResourcePath = addResourcePath;
-	((ResourceInterface *) clazz->interface)->addResourceProvider = addResourceProvider;
-	((ResourceInterface *) clazz->interface)->initWithBytes = initWithBytes;
-	((ResourceInterface *) clazz->interface)->initWithData = initWithData;
-	((ResourceInterface *) clazz->interface)->initWithName = initWithName;
-	((ResourceInterface *) clazz->interface)->removeResourcePath = removeResourcePath;
-	((ResourceInterface *) clazz->interface)->removeResourceProvider = removeResourceProvider;
-	((ResourceInterface *) clazz->interface)->resourceWithName = resourceWithName;
+  ((ResourceInterface *) clazz->interface)->addResourcePath = addResourcePath;
+  ((ResourceInterface *) clazz->interface)->addResourceProvider = addResourceProvider;
+  ((ResourceInterface *) clazz->interface)->initWithBytes = initWithBytes;
+  ((ResourceInterface *) clazz->interface)->initWithData = initWithData;
+  ((ResourceInterface *) clazz->interface)->initWithName = initWithName;
+  ((ResourceInterface *) clazz->interface)->removeResourcePath = removeResourcePath;
+  ((ResourceInterface *) clazz->interface)->removeResourceProvider = removeResourceProvider;
+  ((ResourceInterface *) clazz->interface)->resourceWithName = resourceWithName;
 
-	_resourcePaths = $(alloc(MutableArray), init);
-	assert(_resourcePaths);
+  _resourcePaths = $(alloc(MutableArray), init);
+  assert(_resourcePaths);
 
-	const char *env = getenv("OBJECTIVELY_RESOURCE_PATH");
-	if (env) {
+  const char *env = getenv("OBJECTIVELY_RESOURCE_PATH");
+  if (env) {
 
-		String *string = $$(String, stringWithCharacters, env);
-		Array *paths = $(string, componentsSeparatedByCharacters, PATH_DELIM);
+    String *string = $$(String, stringWithCharacters, env);
+    Array *paths = $(string, componentsSeparatedByCharacters, PATH_DELIM);
 
-		for (size_t i = 0; i < paths->count; i++) {
-			addResourcePath(((String *) $(paths, objectAtIndex, i))->chars);
-		}
+    for (size_t i = 0; i < paths->count; i++) {
+      addResourcePath(((String *) $(paths, objectAtIndex, i))->chars);
+    }
 
-		release(paths);
-		release(string);
-	}
+    release(paths);
+    release(string);
+  }
 
-	addResourcePath(".");
+  addResourcePath(".");
 
-	_resourceProviders = $(alloc(MutableArray), init);
-	assert(_resourceProviders);
+  _resourceProviders = $(alloc(MutableArray), init);
+  assert(_resourceProviders);
 }
 
 /**
  * @see Class::destroy(Class *)
  */
 static void destroy(Class *clazz) {
-	release(_resourcePaths);
-	release(_resourceProviders);
+  release(_resourcePaths);
+  release(_resourceProviders);
 }
 
 /**
@@ -239,22 +239,22 @@ static void destroy(Class *clazz) {
  * @memberof Resource
  */
 Class *_Resource(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Resource",
-			.superclass = _Object(),
-			.instanceSize = sizeof(Resource),
-			.interfaceOffset = offsetof(Resource, interface),
-			.interfaceSize = sizeof(ResourceInterface),
-			.initialize = initialize,
-			.destroy = destroy,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Resource",
+      .superclass = _Object(),
+      .instanceSize = sizeof(Resource),
+      .interfaceOffset = offsetof(Resource, interface),
+      .interfaceSize = sizeof(ResourceInterface),
+      .initialize = initialize,
+      .destroy = destroy,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

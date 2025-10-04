@@ -42,13 +42,13 @@
  */
 static Object *copy(const Object *self) {
 
-	const Set *this = (Set *) self;
+  const Set *this = (Set *) self;
 
-	MutableSet *copy = $(alloc(MutableSet), initWithCapacity, this->capacity);
+  MutableSet *copy = $(alloc(MutableSet), initWithCapacity, this->capacity);
 
-	$(copy, addObjectsFromSet, this);
+  $(copy, addObjectsFromSet, this);
 
-	return (Object *) copy;
+  return (Object *) copy;
 }
 
 #pragma mark - MutableSet
@@ -59,34 +59,34 @@ static Object *copy(const Object *self) {
  */
 static void addObject_resize(Set *set) {
 
-	if (set->capacity) {
+  if (set->capacity) {
 
-		const float load = set->count / (float) set->capacity;
-		if (load >= MUTABLESET_MAX_LOAD) {
+    const float load = set->count / (float) set->capacity;
+    if (load >= MUTABLESET_MAX_LOAD) {
 
-			size_t capacity = set->capacity;
-			ident *elements = set->elements;
+      size_t capacity = set->capacity;
+      ident *elements = set->elements;
 
-			set->capacity = set->capacity * MUTABLESET_GROW_FACTOR;
-			set->count = 0;
+      set->capacity = set->capacity * MUTABLESET_GROW_FACTOR;
+      set->count = 0;
 
-			set->elements = calloc(set->capacity, sizeof(ident));
-			assert(set->elements);
+      set->elements = calloc(set->capacity, sizeof(ident));
+      assert(set->elements);
 
-			for (size_t i = 0; i < capacity; i++) {
+      for (size_t i = 0; i < capacity; i++) {
 
-				Array *array = elements[i];
-				if (array) {
-					$$(MutableSet, addObjectsFromArray, (MutableSet *) set, array);
-					release(array);
-				}
-			}
+        Array *array = elements[i];
+        if (array) {
+          $$(MutableSet, addObjectsFromArray, (MutableSet *) set, array);
+          release(array);
+        }
+      }
 
-			free(elements);
-		}
-	} else {
-		$$(MutableSet, initWithCapacity, (MutableSet *) set, MUTABLESET_DEFAULT_CAPACITY);
-	}
+      free(elements);
+    }
+  } else {
+    $$(MutableSet, initWithCapacity, (MutableSet *) set, MUTABLESET_DEFAULT_CAPACITY);
+  }
 }
 
 /**
@@ -95,28 +95,28 @@ static void addObject_resize(Set *set) {
  */
 static void addObject(MutableSet *self, const ident obj) {
 
-	Set *set = (Set *) self;
+  Set *set = (Set *) self;
 
-	addObject_resize(set);
+  addObject_resize(set);
 
-	const size_t bin = HashForObject(HASH_SEED, obj) % set->capacity;
+  const size_t bin = HashForObject(HASH_SEED, obj) % set->capacity;
 
-	MutableArray *array = set->elements[bin];
-	if (array == NULL) {
-		array = set->elements[bin] = $(alloc(MutableArray), init);
-	}
+  MutableArray *array = set->elements[bin];
+  if (array == NULL) {
+    array = set->elements[bin] = $(alloc(MutableArray), init);
+  }
 
-	if ($((Array *) array, containsObject, obj) == false) {
-		$(array, addObject, obj);
-		set->count++;
-	}
+  if ($((Array *) array, containsObject, obj) == false) {
+    $(array, addObject, obj);
+    set->count++;
+  }
 }
 
 /**
  * @brief ArrayEnumerator for addObjectsFromArray.
  */
 static void addObjectsFromArray_enumerator(const Array *array, ident obj, ident data) {
-	$((MutableSet *) data, addObject, obj);
+  $((MutableSet *) data, addObject, obj);
 }
 
 /**
@@ -125,16 +125,16 @@ static void addObjectsFromArray_enumerator(const Array *array, ident obj, ident 
  */
 static void addObjectsFromArray(MutableSet *self, const Array *array) {
 
-	if (array) {
-		$(array, enumerateObjects, addObjectsFromArray_enumerator, self);
-	}
+  if (array) {
+    $(array, enumerateObjects, addObjectsFromArray_enumerator, self);
+  }
 }
 
 /**
  * @brief SetEnumerator for addObjectsFromSet.
  */
 static void addObjectsFromSet_enumerator(const Set *set, ident obj, ident data) {
-	$((MutableSet *) data, addObject, obj);
+  $((MutableSet *) data, addObject, obj);
 }
 
 /**
@@ -143,9 +143,9 @@ static void addObjectsFromSet_enumerator(const Set *set, ident obj, ident data) 
  */
 static void addObjectsFromSet(MutableSet *self, const Set *set) {
 
-	if (set) {
-		$(set, enumerateObjects, addObjectsFromSet_enumerator, self);
-	}
+  if (set) {
+    $(set, enumerateObjects, addObjectsFromSet_enumerator, self);
+  }
 }
 
 /**
@@ -154,25 +154,25 @@ static void addObjectsFromSet(MutableSet *self, const Set *set) {
  */
 static void filter(MutableSet *self, Predicate predicate, ident data) {
 
-	assert(predicate);
+  assert(predicate);
 
-	self->set.count = 0;
+  self->set.count = 0;
 
-	for (size_t i = 0; i < self->set.capacity; i++) {
+  for (size_t i = 0; i < self->set.capacity; i++) {
 
-		MutableArray *array = self->set.elements[i];
-		if (array) {
+    MutableArray *array = self->set.elements[i];
+    if (array) {
 
-			$(array, filter, predicate, data);
+      $(array, filter, predicate, data);
 
-			if (array->array.count == 0) {
-				release(array);
-				self->set.elements[i] = NULL;
-			} else {
-				self->set.count += array->array.count;
-			}
-		}
-	}
+      if (array->array.count == 0) {
+        release(array);
+        self->set.elements[i] = NULL;
+      } else {
+        self->set.count += array->array.count;
+      }
+    }
+  }
 }
 
 /**
@@ -181,7 +181,7 @@ static void filter(MutableSet *self, Predicate predicate, ident data) {
  */
 static MutableSet *init(MutableSet *self) {
 
-	return $(self, initWithCapacity, MUTABLESET_DEFAULT_CAPACITY);
+  return $(self, initWithCapacity, MUTABLESET_DEFAULT_CAPACITY);
 }
 
 /**
@@ -190,18 +190,18 @@ static MutableSet *init(MutableSet *self) {
  */
 static MutableSet *initWithCapacity(MutableSet *self, size_t capacity) {
 
-	self = (MutableSet *) super(Object, self, init);
-	if (self) {
+  self = (MutableSet *) super(Object, self, init);
+  if (self) {
 
-		self->set.capacity = capacity;
-		if (self->set.capacity) {
+    self->set.capacity = capacity;
+    if (self->set.capacity) {
 
-			self->set.elements = calloc(self->set.capacity, sizeof(ident));
-			assert(self->set.elements);
-		}
-	}
+      self->set.elements = calloc(self->set.capacity, sizeof(ident));
+      assert(self->set.elements);
+    }
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -210,16 +210,16 @@ static MutableSet *initWithCapacity(MutableSet *self, size_t capacity) {
  */
 static void removeAllObjects(MutableSet *self) {
 
-	for (size_t i = 0; i < self->set.capacity; i++) {
+  for (size_t i = 0; i < self->set.capacity; i++) {
 
-		Array *array = self->set.elements[i];
-		if (array) {
-			release(array);
-			self->set.elements[i] = NULL;
-		}
-	}
+    Array *array = self->set.elements[i];
+    if (array) {
+      release(array);
+      self->set.elements[i] = NULL;
+    }
+  }
 
-	self->set.count = 0;
+  self->set.count = 0;
 }
 
 /**
@@ -228,28 +228,28 @@ static void removeAllObjects(MutableSet *self) {
  */
 static void removeObject(MutableSet *self, const ident obj) {
 
-	if (self->set.capacity == 0) {
-		return;
-	}
+  if (self->set.capacity == 0) {
+    return;
+  }
 
-	const size_t bin = HashForObject(HASH_SEED, obj) % self->set.capacity;
+  const size_t bin = HashForObject(HASH_SEED, obj) % self->set.capacity;
 
-	MutableArray *array = self->set.elements[bin];
-	if (array) {
+  MutableArray *array = self->set.elements[bin];
+  if (array) {
 
-		const ssize_t index = $((Array *) array, indexOfObject, obj);
-		if (index > -1) {
+    const ssize_t index = $((Array *) array, indexOfObject, obj);
+    if (index > -1) {
 
-			$(array, removeObjectAtIndex, index);
+      $(array, removeObjectAtIndex, index);
 
-			if (((Array *) array)->count == 0) {
-				release(array);
-				self->set.elements[bin] = NULL;
-			}
+      if (((Array *) array)->count == 0) {
+        release(array);
+        self->set.elements[bin] = NULL;
+      }
 
-			self->set.count--;
-		}
-	}
+      self->set.count--;
+    }
+  }
 }
 
 /**
@@ -258,7 +258,7 @@ static void removeObject(MutableSet *self, const ident obj) {
  */
 static MutableSet *set(void) {
 
-	return $(alloc(MutableSet), init);
+  return $(alloc(MutableSet), init);
 }
 
 /**
@@ -267,7 +267,7 @@ static MutableSet *set(void) {
  */
 static MutableSet *setWithCapacity(size_t capacity) {
 
-	return $(alloc(MutableSet), initWithCapacity, capacity);
+  return $(alloc(MutableSet), initWithCapacity, capacity);
 }
 
 #pragma mark - Class lifecycle
@@ -277,18 +277,18 @@ static MutableSet *setWithCapacity(size_t capacity) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
 
-	((MutableSetInterface *) clazz->interface)->addObject = addObject;
-	((MutableSetInterface *) clazz->interface)->addObjectsFromArray = addObjectsFromArray;
-	((MutableSetInterface *) clazz->interface)->addObjectsFromSet = addObjectsFromSet;
-	((MutableSetInterface *) clazz->interface)->filter = filter;
-	((MutableSetInterface *) clazz->interface)->init = init;
-	((MutableSetInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
-	((MutableSetInterface *) clazz->interface)->removeAllObjects = removeAllObjects;
-	((MutableSetInterface *) clazz->interface)->removeObject = removeObject;
-	((MutableSetInterface *) clazz->interface)->set = set;
-	((MutableSetInterface *) clazz->interface)->setWithCapacity = setWithCapacity;
+  ((MutableSetInterface *) clazz->interface)->addObject = addObject;
+  ((MutableSetInterface *) clazz->interface)->addObjectsFromArray = addObjectsFromArray;
+  ((MutableSetInterface *) clazz->interface)->addObjectsFromSet = addObjectsFromSet;
+  ((MutableSetInterface *) clazz->interface)->filter = filter;
+  ((MutableSetInterface *) clazz->interface)->init = init;
+  ((MutableSetInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
+  ((MutableSetInterface *) clazz->interface)->removeAllObjects = removeAllObjects;
+  ((MutableSetInterface *) clazz->interface)->removeObject = removeObject;
+  ((MutableSetInterface *) clazz->interface)->set = set;
+  ((MutableSetInterface *) clazz->interface)->setWithCapacity = setWithCapacity;
 }
 
 /**
@@ -296,21 +296,21 @@ static void initialize(Class *clazz) {
  * @memberof MutableSet
  */
 Class *_MutableSet(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "MutableSet",
-			.superclass = _Set(),
-			.instanceSize = sizeof(MutableSet),
-			.interfaceOffset = offsetof(MutableSet, interface),
-			.interfaceSize = sizeof(MutableSetInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "MutableSet",
+      .superclass = _Set(),
+      .instanceSize = sizeof(MutableSet),
+      .interfaceOffset = offsetof(MutableSet, interface),
+      .interfaceSize = sizeof(MutableSetInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

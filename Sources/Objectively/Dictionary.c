@@ -40,11 +40,11 @@
  */
 static Object *copy(const Object *self) {
 
-	const Dictionary *this = (Dictionary *) self;
+  const Dictionary *this = (Dictionary *) self;
 
-	Dictionary *that = $(alloc(Dictionary), initWithDictionary, this);
+  Dictionary *that = $(alloc(Dictionary), initWithDictionary, this);
 
-	return (Object *) that;
+  return (Object *) that;
 }
 
 /**
@@ -52,15 +52,15 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	Dictionary *this = (Dictionary *) self;
+  Dictionary *this = (Dictionary *) self;
 
-	for (size_t i = 0; i < this->capacity; i++) {
-		release(this->elements[i]);
-	}
+  for (size_t i = 0; i < this->capacity; i++) {
+    release(this->elements[i]);
+  }
 
-	free(this->elements);
+  free(this->elements);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 /**
@@ -68,15 +68,15 @@ static void dealloc(Object *self) {
  */
 static void description_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
 
-	MutableString *desc = (MutableString *) data;
+  MutableString *desc = (MutableString *) data;
 
-	String *objDesc = $((Object *) obj, description);
-	String *keyDesc = $((Object *) key, description);
+  String *objDesc = $((Object *) obj, description);
+  String *keyDesc = $((Object *) key, description);
 
-	$(desc, appendFormat, "%s: %s, ", keyDesc->chars, objDesc->chars);
+  $(desc, appendFormat, "%s: %s, ", keyDesc->chars, objDesc->chars);
 
-	release(objDesc);
-	release(keyDesc);
+  release(objDesc);
+  release(keyDesc);
 }
 
 /**
@@ -84,17 +84,17 @@ static void description_enumerator(const Dictionary *dict, ident obj, ident key,
  */
 static String *description(const Object *self) {
 
-	const Dictionary *this = (Dictionary *) self;
+  const Dictionary *this = (Dictionary *) self;
 
-	MutableString *desc = $(alloc(MutableString), init);
+  MutableString *desc = $(alloc(MutableString), init);
 
-	$(desc, appendCharacters, "{");
+  $(desc, appendCharacters, "{");
 
-	$(this, enumerateObjectsAndKeys, description_enumerator, desc);
+  $(this, enumerateObjectsAndKeys, description_enumerator, desc);
 
-	$(desc, appendCharacters, "}");
+  $(desc, appendCharacters, "}");
 
-	return (String *) desc;
+  return (String *) desc;
 }
 
 /**
@@ -102,17 +102,17 @@ static String *description(const Object *self) {
  */
 static int hash(const Object *self) {
 
-	const Dictionary *this = (Dictionary *) self;
+  const Dictionary *this = (Dictionary *) self;
 
-	int hash = HashForInteger(HASH_SEED, this->count);
+  int hash = HashForInteger(HASH_SEED, this->count);
 
-	for (size_t i = 0; i < this->capacity; i++) {
-		if (this->elements[i]) {
-			hash = HashForObject(hash, this->elements[i]);
-		}
-	}
+  for (size_t i = 0; i < this->capacity; i++) {
+    if (this->elements[i]) {
+      hash = HashForObject(hash, this->elements[i]);
+    }
+  }
 
-	return hash;
+  return hash;
 }
 
 /**
@@ -120,37 +120,37 @@ static int hash(const Object *self) {
  */
 static bool isEqual(const Object *self, const Object *other) {
 
-	if (super(Object, self, isEqual, other)) {
-		return true;
-	}
+  if (super(Object, self, isEqual, other)) {
+    return true;
+  }
 
-	if (other && $(other, isKindOfClass, _Dictionary())) {
+  if (other && $(other, isKindOfClass, _Dictionary())) {
 
-		const Dictionary *this = (Dictionary *) self;
-		const Dictionary *that = (Dictionary *) other;
+    const Dictionary *this = (Dictionary *) self;
+    const Dictionary *that = (Dictionary *) other;
 
-		if (this->count == that->count) {
+    if (this->count == that->count) {
 
-			Array *keys = $(this, allKeys);
+      Array *keys = $(this, allKeys);
 
-			for (size_t i = 0; i < keys->count; i++) {
-				const ident key = $(keys, objectAtIndex, i);
+      for (size_t i = 0; i < keys->count; i++) {
+        const ident key = $(keys, objectAtIndex, i);
 
-				const Object *thisObject = $(this, objectForKey, key);
-				const Object *thatObject = $(that, objectForKey, key);
+        const Object *thisObject = $(this, objectForKey, key);
+        const Object *thatObject = $(that, objectForKey, key);
 
-				if ($(thisObject, isEqual, thatObject) == false) {
-					release(keys);
-					return false;
-				}
-			}
+        if ($(thisObject, isEqual, thatObject) == false) {
+          release(keys);
+          return false;
+        }
+      }
 
-			release(keys);
-			return true;
-		}
-	}
+      release(keys);
+      return true;
+    }
+  }
 
-	return false;
+  return false;
 }
 
 #pragma mark - Dictionary
@@ -159,7 +159,7 @@ static bool isEqual(const Object *self, const Object *other) {
  * @brief DictionaryEnumerator for allKeys.
  */
 static void allKeys_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
-	$((MutableArray *) data, addObject, key);
+  $((MutableArray *) data, addObject, key);
 }
 
 /**
@@ -168,18 +168,18 @@ static void allKeys_enumerator(const Dictionary *dict, ident obj, ident key, ide
  */
 static Array *allKeys(const Dictionary *self) {
 
-	MutableArray *keys = $(alloc(MutableArray), initWithCapacity, self->count);
+  MutableArray *keys = $(alloc(MutableArray), initWithCapacity, self->count);
 
-	$(self, enumerateObjectsAndKeys, allKeys_enumerator, keys);
+  $(self, enumerateObjectsAndKeys, allKeys_enumerator, keys);
 
-	return (Array *) keys;
+  return (Array *) keys;
 }
 
 /**
  * @brief DictionaryEnumerator for allObjects.
  */
 static void allObjects_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
-	$((MutableArray *) data, addObject, obj);
+  $((MutableArray *) data, addObject, obj);
 }
 
 /**
@@ -188,11 +188,11 @@ static void allObjects_enumerator(const Dictionary *dict, ident obj, ident key, 
  */
 static Array *allObjects(const Dictionary *self) {
 
-	MutableArray *objects = $(alloc(MutableArray), initWithCapacity, self->count);
+  MutableArray *objects = $(alloc(MutableArray), initWithCapacity, self->count);
 
-	$(self, enumerateObjectsAndKeys, allObjects_enumerator, objects);
+  $(self, enumerateObjectsAndKeys, allObjects_enumerator, objects);
 
-	return (Array *) objects;
+  return (Array *) objects;
 }
 
 /**
@@ -200,7 +200,7 @@ static Array *allObjects(const Dictionary *self) {
  * @memberof Dictionary
  */
 static bool containsKey(const Dictionary *self, const ident key) {
-	return $(self, objectForKey, key) != NULL;
+  return $(self, objectForKey, key) != NULL;
 }
 
 /**
@@ -208,7 +208,7 @@ static bool containsKey(const Dictionary *self, const ident key) {
  * @memberof Dictionary
  */
 static bool containsKeyPath(const Dictionary *self, const char *path) {
-	return $(self, objectForKeyPath, path) != NULL;
+  return $(self, objectForKeyPath, path) != NULL;
 }
 
 /**
@@ -217,7 +217,7 @@ static bool containsKeyPath(const Dictionary *self, const char *path) {
  */
 static Dictionary *dictionaryWithDictionary(const Dictionary *dictionary) {
 
-	return $(alloc(Dictionary), initWithDictionary, dictionary);
+  return $(alloc(Dictionary), initWithDictionary, dictionary);
 }
 
 /**
@@ -226,24 +226,24 @@ static Dictionary *dictionaryWithDictionary(const Dictionary *dictionary) {
  */
 static Dictionary *dictionaryWithObjectsAndKeys(ident obj, ...) {
 
-	Dictionary *dict = (Dictionary *) $((Object *) alloc(Dictionary), init);
-	if (dict) {
+  Dictionary *dict = (Dictionary *) $((Object *) alloc(Dictionary), init);
+  if (dict) {
 
-		va_list args;
-		va_start(args, obj);
+    va_list args;
+    va_start(args, obj);
 
-		while (obj) {
-			ident key = va_arg(args, ident);
+    while (obj) {
+      ident key = va_arg(args, ident);
 
-			$$(MutableDictionary, setObjectForKey, (MutableDictionary *) dict, obj, key);
+      $$(MutableDictionary, setObjectForKey, (MutableDictionary *) dict, obj, key);
 
-			obj = va_arg(args, ident);
-		}
+      obj = va_arg(args, ident);
+    }
 
-		va_end(args);
-	}
+    va_end(args);
+  }
 
-	return dict;
+  return dict;
 }
 
 /**
@@ -251,24 +251,24 @@ static Dictionary *dictionaryWithObjectsAndKeys(ident obj, ...) {
  * @memberof Dictionary
  */
 static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator enumerator,
-		ident data) {
+    ident data) {
 
-	assert(enumerator);
+  assert(enumerator);
 
-	for (size_t i = 0; i < self->capacity; i++) {
+  for (size_t i = 0; i < self->capacity; i++) {
 
-		Array *array = self->elements[i];
-		if (array) {
+    Array *array = self->elements[i];
+    if (array) {
 
-			for (size_t j = 0; j < array->count; j += 2) {
+      for (size_t j = 0; j < array->count; j += 2) {
 
-				ident key = $(array, objectAtIndex, j);
-				ident obj = $(array, objectAtIndex, j + 1);
+        ident key = $(array, objectAtIndex, j);
+        ident obj = $(array, objectAtIndex, j + 1);
 
-				enumerator(self, obj, key, data);
-			}
-		}
-	}
+        enumerator(self, obj, key, data);
+      }
+    }
+  }
 }
 
 /**
@@ -277,28 +277,28 @@ static void enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator
  */
 static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryPredicate predicate, ident data) {
 
-	assert(predicate);
+  assert(predicate);
 
-	MutableDictionary *dictionary = $(alloc(MutableDictionary), init);
+  MutableDictionary *dictionary = $(alloc(MutableDictionary), init);
 
-	for (size_t i = 0; i < self->capacity; i++) {
+  for (size_t i = 0; i < self->capacity; i++) {
 
-		Array *array = self->elements[i];
-		if (array) {
+    Array *array = self->elements[i];
+    if (array) {
 
-			for (size_t j = 0; j < array->count; j += 2) {
+      for (size_t j = 0; j < array->count; j += 2) {
 
-				ident key = $(array, objectAtIndex, j);
-				ident obj = $(array, objectAtIndex, j + 1);
+        ident key = $(array, objectAtIndex, j);
+        ident obj = $(array, objectAtIndex, j + 1);
 
-				if (predicate(obj, key, data)) {
-					$(dictionary, setObjectForKey, obj, key);
-				}
-			}
-		}
-	}
+        if (predicate(obj, key, data)) {
+          $(dictionary, setObjectForKey, obj, key);
+        }
+      }
+    }
+  }
 
-	return (Dictionary *) dictionary;
+  return (Dictionary *) dictionary;
 }
 
 /**
@@ -307,28 +307,28 @@ static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryPredic
  */
 static Dictionary *initWithDictionary(Dictionary *self, const Dictionary *dictionary) {
 
-	self = (Dictionary *) super(Object, self, init);
-	if (self) {
-		if (dictionary) {
+  self = (Dictionary *) super(Object, self, init);
+  if (self) {
+    if (dictionary) {
 
-			self->capacity = dictionary->capacity;
+      self->capacity = dictionary->capacity;
 
-			self->elements = calloc(self->capacity, sizeof(ident));
-			assert(self->elements);
+      self->elements = calloc(self->capacity, sizeof(ident));
+      assert(self->elements);
 
-			for (size_t i = 0; i < dictionary->capacity; i++) {
+      for (size_t i = 0; i < dictionary->capacity; i++) {
 
-				Array *array = dictionary->elements[i];
-				if (array) {
-					self->elements[i] = $((Object *) array, copy);
-				}
-			}
+        Array *array = dictionary->elements[i];
+        if (array) {
+          self->elements[i] = $((Object *) array, copy);
+        }
+      }
 
-			self->count = dictionary->count;
-		}
-	}
+      self->count = dictionary->count;
+    }
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -337,28 +337,28 @@ static Dictionary *initWithDictionary(Dictionary *self, const Dictionary *dictio
  */
 static Dictionary *initWithObjectsAndKeys(Dictionary *self, ...) {
 
-	self = (Dictionary *) super(Object, self, init);
-	if (self) {
+  self = (Dictionary *) super(Object, self, init);
+  if (self) {
 
-		va_list args;
-		va_start(args, self);
+    va_list args;
+    va_start(args, self);
 
-		while (true) {
+    while (true) {
 
-			ident obj = va_arg(args, ident);
-			if (obj) {
+      ident obj = va_arg(args, ident);
+      if (obj) {
 
-				ident key = va_arg(args, ident);
-				$$(MutableDictionary, setObjectForKey, (MutableDictionary *) self, obj, key);
-			} else {
-				break;
-			}
-		}
+        ident key = va_arg(args, ident);
+        $$(MutableDictionary, setObjectForKey, (MutableDictionary *) self, obj, key);
+      } else {
+        break;
+      }
+    }
 
-		va_end(args);
-	}
+    va_end(args);
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -367,12 +367,12 @@ static Dictionary *initWithObjectsAndKeys(Dictionary *self, ...) {
  */
 static MutableDictionary *mutableCopy(const Dictionary *self) {
 
-	MutableDictionary *copy = $(alloc(MutableDictionary), initWithCapacity, self->count);
-	if (copy) {
-		$(copy, addEntriesFromDictionary, self);
-	}
+  MutableDictionary *copy = $(alloc(MutableDictionary), initWithCapacity, self->count);
+  if (copy) {
+    $(copy, addEntriesFromDictionary, self);
+  }
 
-	return copy;
+  return copy;
 }
 
 /**
@@ -381,22 +381,22 @@ static MutableDictionary *mutableCopy(const Dictionary *self) {
  */
 static ident objectForKey(const Dictionary *self, const ident key) {
 
-	if (self->capacity == 0) {
-		return NULL;
-	}
-	
-	const size_t bin = HashForObject(HASH_SEED, key) % self->capacity;
+  if (self->capacity == 0) {
+    return NULL;
+  }
+  
+  const size_t bin = HashForObject(HASH_SEED, key) % self->capacity;
 
-	Array *array = self->elements[bin];
-	if (array) {
+  Array *array = self->elements[bin];
+  if (array) {
 
-		const ssize_t index = $(array, indexOfObject, key);
-		if (index > -1 && (index & 1) == 0) {
-			return $(array, objectAtIndex, index + 1);
-		}
-	}
+    const ssize_t index = $(array, indexOfObject, key);
+    if (index > -1 && (index & 1) == 0) {
+      return $(array, objectAtIndex, index + 1);
+    }
+  }
 
-	return NULL;
+  return NULL;
 }
 
 /**
@@ -405,15 +405,15 @@ static ident objectForKey(const Dictionary *self, const ident key) {
  */
 static ident objectForKeyPath(const Dictionary *self, const char *path) {
 
-	assert(path);
+  assert(path);
 
-	String *key = str(path);
+  String *key = str(path);
 
-	ident obj = $(self, objectForKey, key);
+  ident obj = $(self, objectForKey, key);
 
-	release(key);
+  release(key);
 
-	return obj;
+  return obj;
 }
 
 #pragma mark - Class lifecycle
@@ -423,25 +423,25 @@ static ident objectForKeyPath(const Dictionary *self, const char *path) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->interface)->description = description;
-	((ObjectInterface *) clazz->interface)->hash = hash;
-	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->description = description;
+  ((ObjectInterface *) clazz->interface)->hash = hash;
+  ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((DictionaryInterface *) clazz->interface)->allKeys = allKeys;
-	((DictionaryInterface *) clazz->interface)->allObjects = allObjects;
-	((DictionaryInterface *) clazz->interface)->containsKey = containsKey;
-	((DictionaryInterface *) clazz->interface)->containsKeyPath = containsKeyPath;
-	((DictionaryInterface *) clazz->interface)->dictionaryWithDictionary = dictionaryWithDictionary;
-	((DictionaryInterface *) clazz->interface)->dictionaryWithObjectsAndKeys = dictionaryWithObjectsAndKeys;
-	((DictionaryInterface *) clazz->interface)->enumerateObjectsAndKeys = enumerateObjectsAndKeys;
-	((DictionaryInterface *) clazz->interface)->filterObjectsAndKeys = filterObjectsAndKeys;
-	((DictionaryInterface *) clazz->interface)->initWithDictionary = initWithDictionary;
-	((DictionaryInterface *) clazz->interface)->initWithObjectsAndKeys = initWithObjectsAndKeys;
-	((DictionaryInterface *) clazz->interface)->mutableCopy = mutableCopy;
-	((DictionaryInterface *) clazz->interface)->objectForKey = objectForKey;
-	((DictionaryInterface *) clazz->interface)->objectForKeyPath = objectForKeyPath;
+  ((DictionaryInterface *) clazz->interface)->allKeys = allKeys;
+  ((DictionaryInterface *) clazz->interface)->allObjects = allObjects;
+  ((DictionaryInterface *) clazz->interface)->containsKey = containsKey;
+  ((DictionaryInterface *) clazz->interface)->containsKeyPath = containsKeyPath;
+  ((DictionaryInterface *) clazz->interface)->dictionaryWithDictionary = dictionaryWithDictionary;
+  ((DictionaryInterface *) clazz->interface)->dictionaryWithObjectsAndKeys = dictionaryWithObjectsAndKeys;
+  ((DictionaryInterface *) clazz->interface)->enumerateObjectsAndKeys = enumerateObjectsAndKeys;
+  ((DictionaryInterface *) clazz->interface)->filterObjectsAndKeys = filterObjectsAndKeys;
+  ((DictionaryInterface *) clazz->interface)->initWithDictionary = initWithDictionary;
+  ((DictionaryInterface *) clazz->interface)->initWithObjectsAndKeys = initWithObjectsAndKeys;
+  ((DictionaryInterface *) clazz->interface)->mutableCopy = mutableCopy;
+  ((DictionaryInterface *) clazz->interface)->objectForKey = objectForKey;
+  ((DictionaryInterface *) clazz->interface)->objectForKeyPath = objectForKeyPath;
 }
 
 /**
@@ -449,21 +449,21 @@ static void initialize(Class *clazz) {
  * @memberof Dictionary
  */
 Class *_Dictionary(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Dictionary",
-			.superclass = _Object(),
-			.instanceSize = sizeof(Dictionary),
-			.interfaceOffset = offsetof(Dictionary, interface),
-			.interfaceSize = sizeof(DictionaryInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Dictionary",
+      .superclass = _Object(),
+      .instanceSize = sizeof(Dictionary),
+      .interfaceOffset = offsetof(Dictionary, interface),
+      .interfaceSize = sizeof(DictionaryInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

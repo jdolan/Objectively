@@ -51,8 +51,8 @@
 // TIME STUFF
 struct timezone
 {
-	int32_t		tz_minuteswest; /* minutes W of Greenwich */
-	_Bool		tz_dsttime;     /* type of dst correction */
+  int32_t    tz_minuteswest; /* minutes W of Greenwich */
+  _Bool    tz_dsttime;     /* type of dst correction */
 };
 
 typedef struct timeval _timeval;
@@ -84,7 +84,7 @@ OBJECTIVELY_EXPORT int vasprintf(char **str, const char *fmt, va_list args);
 #define tzset _tzset
 #define alloca _alloca
 //#define stat _stat64
-#define S_ISREG(m)	(((m) & _S_IFREG) == _S_IFREG)
+#define S_ISREG(m)  (((m) & _S_IFREG) == _S_IFREG)
 #endif
 
 #define iconv(c0, c1, c2, c3, c4) libiconv(c0, (const char **)c1, c2, c3, c4)

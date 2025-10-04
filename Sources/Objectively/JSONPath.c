@@ -44,51 +44,51 @@ static Regexp *_re;
  */
 static ident objectForKeyPath(const ident root, const char *path) {
 
-	assert(root);
-	assert(path);
+  assert(root);
+  assert(path);
 
-	assert(*path == '$');
-	const char *c = path;
+  assert(*path == '$');
+  const char *c = path;
 
-	ident obj = root;
-	while (obj) {
+  ident obj = root;
+  while (obj) {
 
-		Range *matches;
-		if ($(_re, matchesCharacters, c, 0, &matches) == false) {
-			break;
-		}
+    Range *matches;
+    if ($(_re, matchesCharacters, c, 0, &matches) == false) {
+      break;
+    }
 
-		const uint8_t *bytes = (uint8_t *) c + matches[1].location;
-		const size_t length = matches[1].length;
+    const uint8_t *bytes = (uint8_t *) c + matches[1].location;
+    const size_t length = matches[1].length;
 
-		String *segment = $$(String, stringWithBytes, bytes, length, STRING_ENCODING_UTF8);
-		if (*segment->chars == '.') {
+    String *segment = $$(String, stringWithBytes, bytes, length, STRING_ENCODING_UTF8);
+    if (*segment->chars == '.') {
 
-			const Dictionary *dictionary = cast(Dictionary, obj);
-			const Range range = { .location = 1, .length = segment->length - 1 };
+      const Dictionary *dictionary = cast(Dictionary, obj);
+      const Range range = { .location = 1, .length = segment->length - 1 };
 
-			String *key = $(segment, substring, range);
+      String *key = $(segment, substring, range);
 
-			obj = $(dictionary, objectForKey, key);
+      obj = $(dictionary, objectForKey, key);
 
-			release(key);
+      release(key);
 
-		} else if (*segment->chars == '[') {
+    } else if (*segment->chars == '[') {
 
-			const Array *array = cast(Array, obj);
-			const unsigned long index = strtoul(segment->chars + 1, NULL, 10);
-			if (index < array->count) {
-				obj = $(array, objectAtIndex, index);
-			} else {
-				obj = NULL;
-			}
-		}
-		release(segment);
+      const Array *array = cast(Array, obj);
+      const unsigned long index = strtoul(segment->chars + 1, NULL, 10);
+      if (index < array->count) {
+        obj = $(array, objectAtIndex, index);
+      } else {
+        obj = NULL;
+      }
+    }
+    release(segment);
 
-		c += length;
-	}
+    c += length;
+  }
 
-	return obj;
+  return obj;
 }
 
 #pragma mark - Class lifecycle
@@ -98,9 +98,9 @@ static ident objectForKeyPath(const ident root, const char *path) {
  */
 static void initialize(Class *clazz) {
 
-	((JSONPathInterface *) clazz->interface)->objectForKeyPath = objectForKeyPath;
+  ((JSONPathInterface *) clazz->interface)->objectForKeyPath = objectForKeyPath;
 
-	_re = re("(.[^.\\[]+|\\[[0-9]+\\])", 0);
+  _re = re("(.[^.\\[]+|\\[[0-9]+\\])", 0);
 }
 
 /**
@@ -108,7 +108,7 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	release(_re);
+  release(_re);
 }
 
 /**
@@ -116,22 +116,22 @@ static void destroy(Class *clazz) {
  * @memberof JSONPath
  */
 Class *_JSONPath(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "JSONPath",
-			.superclass = _Object(),
-			.instanceSize = sizeof(JSONPath),
-			.interfaceOffset = offsetof(JSONPath, interface),
-			.interfaceSize = sizeof(JSONPathInterface),
-			.initialize = initialize,
-			.destroy = destroy,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "JSONPath",
+      .superclass = _Object(),
+      .instanceSize = sizeof(JSONPath),
+      .interfaceOffset = offsetof(JSONPath, interface),
+      .interfaceSize = sizeof(JSONPathInterface),
+      .initialize = initialize,
+      .destroy = destroy,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

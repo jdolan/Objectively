@@ -31,8 +31,8 @@
  */
 
 typedef enum {
-	StringReaderPeek,
-	StringReaderRead
+  StringReaderPeek,
+  StringReaderRead
 } StringReaderMode;
 
 #define READER_EOF ((Unicode) -1)
@@ -46,26 +46,26 @@ typedef struct StringReaderInterface StringReaderInterface;
  */
 struct StringReader {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	StringReaderInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  StringReaderInterface *interface;
 
-	/**
-	 * @brief The StringReader head.
-	 */
-	char *head;
+  /**
+   * @brief The StringReader head.
+   */
+  char *head;
 
-	/**
-	 * @brief The String to read.
-	 */
-	String *string;
+  /**
+   * @brief The String to read.
+   */
+  String *string;
 };
 
 /**
@@ -73,79 +73,79 @@ struct StringReader {
  */
 struct StringReaderInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @fn StringReader *StringReader::initWithCharacters(StringReader *self, const char *chars)
-	 * @brief Initializes this StringReader with the specified C string.
-	 * @param self The StringReader.
-	 * @param chars The null-terminated C string to read.
-	 * @return The initialized StringReader, or `NULL` on error.
-	 * @memberof StringReader
-	 */
-	StringReader *(*initWithCharacters)(StringReader *self, const char *chars);
+  /**
+   * @fn StringReader *StringReader::initWithCharacters(StringReader *self, const char *chars)
+   * @brief Initializes this StringReader with the specified C string.
+   * @param self The StringReader.
+   * @param chars The null-terminated C string to read.
+   * @return The initialized StringReader, or `NULL` on error.
+   * @memberof StringReader
+   */
+  StringReader *(*initWithCharacters)(StringReader *self, const char *chars);
 
-	/**
-	 * @fn StringReader *StringReader::initWithString(StringReader *self, String *string)
-	 * @brief Initializes this StringReader with the specified String.
-	 * @param self The StringReader.
-	 * @param string The String to read.
-	 * @return The initialized StringReader, or `NULL` on error.
-	 * @memberof StringReader
-	 */
-	StringReader *(*initWithString)(StringReader *self, String *string);
+  /**
+   * @fn StringReader *StringReader::initWithString(StringReader *self, String *string)
+   * @brief Initializes this StringReader with the specified String.
+   * @param self The StringReader.
+   * @param string The String to read.
+   * @return The initialized StringReader, or `NULL` on error.
+   * @memberof StringReader
+   */
+  StringReader *(*initWithString)(StringReader *self, String *string);
 
-	/**
-	 * @fn Unicode StringReader::next(StringReader *self, StringReaderMode mode)
-	 * @brief Consumes the next Unicode code point in this StringReader using the given mode.
-	 * @param self The StringReader.
-	 * @param mode The StringReaderMode.
-	 * @return The next Unicode code point, or `-1` if the StringReader is exhausted.
-	 * @memberof StringReader
-	 */
-	Unicode (*next)(StringReader *self, StringReaderMode mode);
+  /**
+   * @fn Unicode StringReader::next(StringReader *self, StringReaderMode mode)
+   * @brief Consumes the next Unicode code point in this StringReader using the given mode.
+   * @param self The StringReader.
+   * @param mode The StringReaderMode.
+   * @return The next Unicode code point, or `-1` if the StringReader is exhausted.
+   * @memberof StringReader
+   */
+  Unicode (*next)(StringReader *self, StringReaderMode mode);
 
-	/**
-	 * @fn Unicode StringReader::peek(StringReader *self)
-	 * @brief Peeks at the next Unicode code point from this StringReader without advancing `head`.
-	 * @param self The StringReader.
-	 * @return The next Unicode code point, or `-1` if the StringReader is exhausted.
-	 * @remarks This method is shorthand for `$(reader, next, StringReaderPeek)`.
-	 * @memberof StringReader
-	 */
-	Unicode (*peek)(StringReader *self);
+  /**
+   * @fn Unicode StringReader::peek(StringReader *self)
+   * @brief Peeks at the next Unicode code point from this StringReader without advancing `head`.
+   * @param self The StringReader.
+   * @return The next Unicode code point, or `-1` if the StringReader is exhausted.
+   * @remarks This method is shorthand for `$(reader, next, StringReaderPeek)`.
+   * @memberof StringReader
+   */
+  Unicode (*peek)(StringReader *self);
 
-	/**
-	 * @fn Unicode StringReader::read(StringReader *self)
-	 * @brief Reads a single Unicode code point from this StringReader.
-	 * @param self The StringReader.
-	 * @return The Unicode code point, or `-1` if the StringReader is exhausted.
-	 * @remarks This method is shorthand for `$(reader, next, StringReaderRead)`.
-	 * @memberof StringReader
-	 */
-	Unicode (*read)(StringReader *self);
+  /**
+   * @fn Unicode StringReader::read(StringReader *self)
+   * @brief Reads a single Unicode code point from this StringReader.
+   * @param self The StringReader.
+   * @return The Unicode code point, or `-1` if the StringReader is exhausted.
+   * @remarks This method is shorthand for `$(reader, next, StringReaderRead)`.
+   * @memberof StringReader
+   */
+  Unicode (*read)(StringReader *self);
 
-	/**
-	 * @fn String *StringReader::readToken(StringReader *self, const Unicode *charset, Unocide *stop)
-	 * @brief Reads characters from this StringReader until a character in `charset` is encountered.
-	 * @param self The StringReader.
-	 * @param charset The array of potential `stop` characters.
-	 * @param stop Optionally returns the stop character from `charset`.
-	 * @return The token accumulated before `stop`, or `NULL` if the StringReader is exhausted.
-	 * @memberof StringReader
-	 */
-	String *(*readToken)(StringReader *self, const Unicode *charset, Unicode *stop);
+  /**
+   * @fn String *StringReader::readToken(StringReader *self, const Unicode *charset, Unocide *stop)
+   * @brief Reads characters from this StringReader until a character in `charset` is encountered.
+   * @param self The StringReader.
+   * @param charset The array of potential `stop` characters.
+   * @param stop Optionally returns the stop character from `charset`.
+   * @return The token accumulated before `stop`, or `NULL` if the StringReader is exhausted.
+   * @memberof StringReader
+   */
+  String *(*readToken)(StringReader *self, const Unicode *charset, Unicode *stop);
 
-	/**
-	 * @fn void StringReader::reset(StringReader *self)
-	 * @brief Resets this StringReader, placing the `head` before the beginning of the String.
-	 * @param self The StringReader.
-	 * @memberof StringReader
-	 */
-	void (*reset)(StringReader *self);
+  /**
+   * @fn void StringReader::reset(StringReader *self)
+   * @brief Resets this StringReader, placing the `head` before the beginning of the String.
+   * @param self The StringReader.
+   * @memberof StringReader
+   */
+  void (*reset)(StringReader *self);
 };
 
 /**

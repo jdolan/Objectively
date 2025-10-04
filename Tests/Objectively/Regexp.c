@@ -28,44 +28,44 @@
 
 START_TEST(regexp) {
 
-	Regexp *regexp = re("([a-z]*)://(.*)", 0);
-	ck_assert(regexp != NULL);
+  Regexp *regexp = re("([a-z]*)://(.*)", 0);
+  ck_assert(regexp != NULL);
 
-	ck_assert_int_eq(2, regexp->numberOfSubExpressions);
+  ck_assert_int_eq(2, regexp->numberOfSubExpressions);
 
-	String *url = str("http://github.com");
+  String *url = str("http://github.com");
 
-	Range *matches;
-	ck_assert($(regexp, matchesString, url, 0, &matches));
+  Range *matches;
+  ck_assert($(regexp, matchesString, url, 0, &matches));
 
-	String *scheme = $(url, substring, matches[1]);
-	ck_assert_str_eq("http", scheme->chars);
+  String *scheme = $(url, substring, matches[1]);
+  ck_assert_str_eq("http", scheme->chars);
 
-	String *host = $(url, substring, matches[2]);
-	ck_assert_str_eq("github.com", host->chars);
+  String *host = $(url, substring, matches[2]);
+  ck_assert_str_eq("github.com", host->chars);
 
-	free(matches);
-	release(scheme);
-	release(host);
-	release(url);
-	release(regexp);
+  free(matches);
+  release(scheme);
+  release(host);
+  release(url);
+  release(regexp);
 
 } END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("Regexp");
-	tcase_add_test(tcase, regexp);
+  TCase *tcase = tcase_create("Regexp");
+  tcase_add_test(tcase, regexp);
 
-	Suite *suite = suite_create("Regexp");
-	suite_add_tcase(suite, tcase);
+  Suite *suite = suite_create("Regexp");
+  suite_add_tcase(suite, tcase);
 
-	SRunner *runner = srunner_create(suite);
+  SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_VERBOSE);
-	int failed = srunner_ntests_failed(runner);
+  srunner_run_all(runner, CK_VERBOSE);
+  int failed = srunner_ntests_failed(runner);
 
-	srunner_free(runner);
+  srunner_free(runner);
 
-	return failed;
+  return failed;
 }

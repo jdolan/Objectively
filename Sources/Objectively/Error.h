@@ -40,31 +40,31 @@ typedef struct ErrorInterface ErrorInterface;
  */
 struct Error {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	ErrorInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  ErrorInterface *interface;
 
-	/**
-	 * @brief The error code.
-	 */
-	int code;
+  /**
+   * @brief The error code.
+   */
+  int code;
 
-	/**
-	 * @brief The error domain.
-	 */
-	String *domain;
+  /**
+   * @brief The error domain.
+   */
+  String *domain;
 
-	/**
-	 * @brief The error message.
-	 */
-	String *message;
+  /**
+   * @brief The error message.
+   */
+  String *message;
 };
 
 /**
@@ -72,22 +72,22 @@ struct Error {
  */
 struct ErrorInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @fn Error *Error::initWithDomain(Error *self, String *domain, int code, String *message)
-	 * @brief Initializes an Error with the given details.
-	 * @param self The Error.
-	 * @param domain The Error domain (required).
-	 * @param code The error code.
-	 * @param message The error message.
-	 * @return The initialized Error, or `NULL` on error.
-	 * @memberof Error
-	 */
-	Error *(*initWithDomain)(Error *self, String *domain, int code, String *message);
+  /**
+   * @fn Error *Error::initWithDomain(Error *self, String *domain, int code, String *message)
+   * @brief Initializes an Error with the given details.
+   * @param self The Error.
+   * @param domain The Error domain (required).
+   * @param code The error code.
+   * @param message The error message.
+   * @return The initialized Error, or `NULL` on error.
+   * @memberof Error
+   */
+  Error *(*initWithDomain)(Error *self, String *domain, int code, String *message);
 };
 
 /**

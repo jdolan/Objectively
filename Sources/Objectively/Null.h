@@ -41,16 +41,16 @@ typedef struct NullInterface NullInterface;
  */
 struct Null {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	NullInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  NullInterface *interface;
 };
 
 /**
@@ -58,18 +58,18 @@ struct Null {
  */
 struct NullInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @static
-	 * @fn Null *Null::null(void)
-	 * @return The Null singleton.
-	 * @memberof Null
-	 */
-	Null *(*null)(void);
+  /**
+   * @static
+   * @fn Null *Null::null(void)
+   * @return The Null singleton.
+   * @memberof Null
+   */
+  Null *(*null)(void);
 };
 
 /**

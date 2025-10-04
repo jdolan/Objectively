@@ -26,87 +26,87 @@
 #include "Objectively.h"
 
 static void enumerator(const Array *array, ident obj, ident data) {
-	(*(int *) data)++;
+  (*(int *) data)++;
 }
 
 static bool predicate(const ident obj, ident data) {
-	return obj == data;
+  return obj == data;
 }
 
 static ident functor(const ident obj, ident data) {
-	return $((Object *) obj, copy);
+  return $((Object *) obj, copy);
 }
 
 static ident reducer(const ident obj, ident accumulator, ident data) {
-	return (ident) (intptr_t) accumulator + 1;
+  return (ident) (intptr_t) accumulator + 1;
 }
 
 START_TEST(array) {
-	Object *one = $(alloc(Object), init);
-	Object *two = $(alloc(Object), init);
-	Object *three = $(alloc(Object), init);
+  Object *one = $(alloc(Object), init);
+  Object *two = $(alloc(Object), init);
+  Object *three = $(alloc(Object), init);
 
-	Array *array = $$(Array, arrayWithObjects, one, two, three, NULL);
+  Array *array = $$(Array, arrayWithObjects, one, two, three, NULL);
 
-	ck_assert(array != NULL);
-	ck_assert_ptr_eq(_Array(), classof(array));
+  ck_assert(array != NULL);
+  ck_assert_ptr_eq(_Array(), classof(array));
 
-	ck_assert_int_eq(3, array->count);
+  ck_assert_int_eq(3, array->count);
 
-	ck_assert($(array, containsObject, one));
-	ck_assert($(array, containsObject, two));
-	ck_assert($(array, containsObject, three));
+  ck_assert($(array, containsObject, one));
+  ck_assert($(array, containsObject, two));
+  ck_assert($(array, containsObject, three));
 
-	ck_assert_int_eq(0, $(array, indexOfObject, one));
-	ck_assert_int_eq(1, $(array, indexOfObject, two));
-	ck_assert_int_eq(2, $(array, indexOfObject, three));
+  ck_assert_int_eq(0, $(array, indexOfObject, one));
+  ck_assert_int_eq(1, $(array, indexOfObject, two));
+  ck_assert_int_eq(2, $(array, indexOfObject, three));
 
-	ck_assert_int_eq(2, one->referenceCount);
-	ck_assert_int_eq(2, two->referenceCount);
-	ck_assert_int_eq(2, three->referenceCount);
+  ck_assert_int_eq(2, one->referenceCount);
+  ck_assert_int_eq(2, two->referenceCount);
+  ck_assert_int_eq(2, three->referenceCount);
 
-	release(one);
-	release(two);
-	release(three);
+  release(one);
+  release(two);
+  release(three);
 
-	int count = 0;
-	$(array, enumerateObjects, enumerator, &count);
+  int count = 0;
+  $(array, enumerateObjects, enumerator, &count);
 
-	ck_assert_int_eq(array->count, count);
+  ck_assert_int_eq(array->count, count);
 
-	Array *filtered = $(array, filteredArray, predicate, two);
+  Array *filtered = $(array, filteredArray, predicate, two);
 
-	ck_assert_int_eq(1, filtered->count);
-	ck_assert($(filtered, containsObject, two));
+  ck_assert_int_eq(1, filtered->count);
+  ck_assert($(filtered, containsObject, two));
 
-	Array *mapped = $(array, mappedArray, functor, NULL);
+  Array *mapped = $(array, mappedArray, functor, NULL);
 
-	ck_assert_int_eq(array->count, mapped->count);
+  ck_assert_int_eq(array->count, mapped->count);
 
-	int reduced = (int) (intptr_t) $(mapped, reduce, reducer, (ident) 0, NULL);
+  int reduced = (int) (intptr_t) $(mapped, reduce, reducer, (ident) 0, NULL);
 
-	ck_assert_int_eq(3, reduced);
+  ck_assert_int_eq(3, reduced);
 
-	release(mapped);
-	release(filtered);
-	release(array);
+  release(mapped);
+  release(filtered);
+  release(array);
 
 } END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("Array");
-	tcase_add_test(tcase, array);
+  TCase *tcase = tcase_create("Array");
+  tcase_add_test(tcase, array);
 
-	Suite *suite = suite_create("Array");
-	suite_add_tcase(suite, tcase);
+  Suite *suite = suite_create("Array");
+  suite_add_tcase(suite, tcase);
 
-	SRunner *runner = srunner_create(suite);
+  SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_VERBOSE);
-	int failed = srunner_ntests_failed(runner);
+  srunner_run_all(runner, CK_VERBOSE);
+  int failed = srunner_ntests_failed(runner);
 
-	srunner_free(runner);
+  srunner_free(runner);
 
-	return failed;
+  return failed;
 }

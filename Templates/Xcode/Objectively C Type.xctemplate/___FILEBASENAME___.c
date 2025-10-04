@@ -19,9 +19,9 @@
  */
 static void dealloc(Object *self) {
 
-	//..
+  //..
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 #pragma mark - ___FILEBASENAMEASIDENTIFIER___
@@ -32,13 +32,13 @@ static void dealloc(Object *self) {
  */
 static ___FILEBASENAMEASIDENTIFIER___ *init(___FILEBASENAMEASIDENTIFIER___ *self) {
 
-	self = (___FILEBASENAMEASIDENTIFIER___ *) super(___VARIABLE_superclass:identifier___, self, init);
-	if (self) {
+  self = (___FILEBASENAMEASIDENTIFIER___ *) super(___VARIABLE_superclass:identifier___, self, init);
+  if (self) {
 
-		//..
-	}
+    //..
+  }
 
-	return self;
+  return self;
 }
 
 //..
@@ -50,11 +50,11 @@ static ___FILEBASENAMEASIDENTIFIER___ *init(___FILEBASENAMEASIDENTIFIER___ *self
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((___FILEBASENAMEASIDENTIFIER___Interface *) clazz->interface)->init = init;
+  ((___FILEBASENAMEASIDENTIFIER___Interface *) clazz->interface)->init = init;
 
-	//..
+  //..
 }
 
 /**
@@ -62,21 +62,21 @@ static void initialize(Class *clazz) {
  * @memberof ___FILEBASENAMEASIDENTIFIER___
  */
 Class *____FILEBASENAMEASIDENTIFIER___(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "___FILEBASENAMEASIDENTIFIER___",
-			.superclass = ____VARIABLE_superclass:identifier___(),
-			.instanceSize = sizeof(___FILEBASENAMEASIDENTIFIER___),
-			.interfaceOffset = offsetof(___FILEBASENAMEASIDENTIFIER___, interface),
-			.interfaceSize = sizeof(___FILEBASENAMEASIDENTIFIER___Interface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "___FILEBASENAMEASIDENTIFIER___",
+      .superclass = ____VARIABLE_superclass:identifier___(),
+      .instanceSize = sizeof(___FILEBASENAMEASIDENTIFIER___),
+      .interfaceOffset = offsetof(___FILEBASENAMEASIDENTIFIER___, interface),
+      .interfaceSize = sizeof(___FILEBASENAMEASIDENTIFIER___Interface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

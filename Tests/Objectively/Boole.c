@@ -26,28 +26,28 @@
 #include "Objectively.h"
 
 START_TEST(boole) {
-	Boole *True = $$(Boole, True);
-	ck_assert(True->value == true);
+  Boole *True = $$(Boole, True);
+  ck_assert(True->value == true);
 
-	Boole *False = $$(Boole, False);
-	ck_assert(False->value == false);
+  Boole *False = $$(Boole, False);
+  ck_assert(False->value == false);
 
 } END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("Boole");
-	tcase_add_test(tcase, boole);
+  TCase *tcase = tcase_create("Boole");
+  tcase_add_test(tcase, boole);
 
-	Suite *suite = suite_create("Boole");
-	suite_add_tcase(suite, tcase);
+  Suite *suite = suite_create("Boole");
+  suite_add_tcase(suite, tcase);
 
-	SRunner *runner = srunner_create(suite);
+  SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_VERBOSE);
-	int failed = srunner_ntests_failed(runner);
+  srunner_run_all(runner, CK_VERBOSE);
+  int failed = srunner_ntests_failed(runner);
 
-	srunner_free(runner);
-	
-	return failed;
+  srunner_free(runner);
+  
+  return failed;
 }

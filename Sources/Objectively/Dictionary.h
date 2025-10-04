@@ -59,33 +59,33 @@ typedef bool (*DictionaryPredicate)(ident obj, ident key, ident data);
  */
 struct Dictionary {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	DictionaryInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  DictionaryInterface *interface;
 
-	/**
-	 * @brief The internal size (number of bins).
-	 * @private
-	 */
-	size_t capacity;
+  /**
+   * @brief The internal size (number of bins).
+   * @private
+   */
+  size_t capacity;
 
-	/**
-	 * @brief The count of elements.
-	 */
-	size_t count;
+  /**
+   * @brief The count of elements.
+   */
+  size_t count;
 
-	/**
-	 * @brief The elements.
-	 * @private
-	 */
-	ident *elements;
+  /**
+   * @brief The elements.
+   * @private
+   */
+  ident *elements;
 };
 
 typedef struct MutableDictionary MutableDictionary;
@@ -95,131 +95,131 @@ typedef struct MutableDictionary MutableDictionary;
  */
 struct DictionaryInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @fn Array *Dictionary::allKeys(const Dictionary *self)
-	 * @param self The Dictionary.
-	 * @return An Array containing all keys in this Dictionary.
-	 * @memberof Dictionary
-	 */
-	Array *(*allKeys)(const Dictionary *self);
+  /**
+   * @fn Array *Dictionary::allKeys(const Dictionary *self)
+   * @param self The Dictionary.
+   * @return An Array containing all keys in this Dictionary.
+   * @memberof Dictionary
+   */
+  Array *(*allKeys)(const Dictionary *self);
 
-	/**
-	 * @fn Array *Dictionary::allObjects(const Dictionary *self)
-	 * @param self The Dictionary.
-	 * @return An Array containing all Objects in this Dictionary.
-	 * @memberof Dictionary
-	 */
-	Array *(*allObjects)(const Dictionary *self);
+  /**
+   * @fn Array *Dictionary::allObjects(const Dictionary *self)
+   * @param self The Dictionary.
+   * @return An Array containing all Objects in this Dictionary.
+   * @memberof Dictionary
+   */
+  Array *(*allObjects)(const Dictionary *self);
 
-	/**
-	 * @fn bool Dictionary::containsKey(const Dictionary *self, const ident key)
-	 * @param self The Dictionary.
-	 * @param key The key to test.
-	 * @return True if this Dictionary contains the specified key, false otherwise.
-	 * @memberof Dictionary
-	 */
-	bool (*containsKey)(const Dictionary *self, const ident key);
+  /**
+   * @fn bool Dictionary::containsKey(const Dictionary *self, const ident key)
+   * @param self The Dictionary.
+   * @param key The key to test.
+   * @return True if this Dictionary contains the specified key, false otherwise.
+   * @memberof Dictionary
+   */
+  bool (*containsKey)(const Dictionary *self, const ident key);
 
-	/**
-	 * @fn bool Dictionary::containsKeyPath(const Dictionary *self, const char *path)
-	 * @param self The Dictionary.
-	 * @param path The key path to test.
-	 * @return True if this Dictionary contains the specified key path, false otherwise.
-	 * @memberof Dictionary
-	 */
-	bool (*containsKeyPath)(const Dictionary *self, const char *path);
+  /**
+   * @fn bool Dictionary::containsKeyPath(const Dictionary *self, const char *path)
+   * @param self The Dictionary.
+   * @param path The key path to test.
+   * @return True if this Dictionary contains the specified key path, false otherwise.
+   * @memberof Dictionary
+   */
+  bool (*containsKeyPath)(const Dictionary *self, const char *path);
 
-	/**
-	 * @static
-	 * @fn Dictionary *Dictionary::dictionaryWithDictionary(const Dictionary *dictionary)
-	 * @brief Returns a new Dictionary containing all pairs from `dictionary`.
-	 * @param dictionary A Dictionary.
-	 * @return The new Dictionary, or `NULL` on error.
-	 * @memberof Dictionary
-	 */
-	Dictionary *(*dictionaryWithDictionary)(const Dictionary *dictionary);
+  /**
+   * @static
+   * @fn Dictionary *Dictionary::dictionaryWithDictionary(const Dictionary *dictionary)
+   * @brief Returns a new Dictionary containing all pairs from `dictionary`.
+   * @param dictionary A Dictionary.
+   * @return The new Dictionary, or `NULL` on error.
+   * @memberof Dictionary
+   */
+  Dictionary *(*dictionaryWithDictionary)(const Dictionary *dictionary);
 
-	/**
-	 * @static
-	 * @fn Dictionary *Dictionary::dictionaryWithObjectsAndKeys(ident obj, ...)
-	 * @brief Returns a new Dictionary containing pairs from the given arguments.
-	 * @param obj The first in a `NULL`-terminated list of Objects and keys.
-	 * @return The new Dictionary, or `NULL` on error.
-	 * @memberof Dictionary
-	 */
-	Dictionary *(*dictionaryWithObjectsAndKeys)(ident obj, ...);
+  /**
+   * @static
+   * @fn Dictionary *Dictionary::dictionaryWithObjectsAndKeys(ident obj, ...)
+   * @brief Returns a new Dictionary containing pairs from the given arguments.
+   * @param obj The first in a `NULL`-terminated list of Objects and keys.
+   * @return The new Dictionary, or `NULL` on error.
+   * @memberof Dictionary
+   */
+  Dictionary *(*dictionaryWithObjectsAndKeys)(ident obj, ...);
 
-	/**
-	 * @fn void Dictionary::enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator enumerator, ident data)
-	 * @brief Enumerate the pairs of this Dictionary with the given function.
-	 * @param self The Dictionary.
-	 * @param enumerator The enumerator function.
-	 * @param data User data.
-	 * @remarks The enumerator should return `true` to break the iteration.
-	 * @memberof Dictionary
-	 */
-	void (*enumerateObjectsAndKeys)(const Dictionary *self, DictionaryEnumerator enumerator, ident data);
+  /**
+   * @fn void Dictionary::enumerateObjectsAndKeys(const Dictionary *self, DictionaryEnumerator enumerator, ident data)
+   * @brief Enumerate the pairs of this Dictionary with the given function.
+   * @param self The Dictionary.
+   * @param enumerator The enumerator function.
+   * @param data User data.
+   * @remarks The enumerator should return `true` to break the iteration.
+   * @memberof Dictionary
+   */
+  void (*enumerateObjectsAndKeys)(const Dictionary *self, DictionaryEnumerator enumerator, ident data);
 
-	/**
-	 * @fn Dictionary *Dictionary::filterObjectsAndKeys(const Dictionary *self, DictionaryPredicate predicate, ident data)
-	 * @brief Creates a new Dictionary with pairs that pass the filter function.
-	 * @param self The Dictionary.
-	 * @param predicate The predicate function.
-	 * @param data User data.
-	 * @return The new, filtered Dictionary.
-	 * @memberof Dictionary
-	 */
-	Dictionary *(*filterObjectsAndKeys)(const Dictionary *self, DictionaryPredicate predicate, ident data);
+  /**
+   * @fn Dictionary *Dictionary::filterObjectsAndKeys(const Dictionary *self, DictionaryPredicate predicate, ident data)
+   * @brief Creates a new Dictionary with pairs that pass the filter function.
+   * @param self The Dictionary.
+   * @param predicate The predicate function.
+   * @param data User data.
+   * @return The new, filtered Dictionary.
+   * @memberof Dictionary
+   */
+  Dictionary *(*filterObjectsAndKeys)(const Dictionary *self, DictionaryPredicate predicate, ident data);
 
-	/**
-	 * @fn Dictionary *Dictionary::initWithDictionary(Dictionary *self, const Dictionary *dictionary)
-	 * @brief Initializes this Dictionary to contain elements of `dictionary`.
-	 * @param self The Dictionary.
-	 * @param dictionary A Dictionary.
-	 * @return The initialized Dictionary, or `NULL` on error.
-	 * @memberof Dictionary
-	 */
-	Dictionary *(*initWithDictionary)(Dictionary *self, const Dictionary *dictionary);
+  /**
+   * @fn Dictionary *Dictionary::initWithDictionary(Dictionary *self, const Dictionary *dictionary)
+   * @brief Initializes this Dictionary to contain elements of `dictionary`.
+   * @param self The Dictionary.
+   * @param dictionary A Dictionary.
+   * @return The initialized Dictionary, or `NULL` on error.
+   * @memberof Dictionary
+   */
+  Dictionary *(*initWithDictionary)(Dictionary *self, const Dictionary *dictionary);
 
-	/**
-	 * @fn Dictionary *Dictionary::initWithObjectsAndKeys(Dictionary *self, ...)
-	 * @brief Initializes this Dictionary with the `NULL`-terminated list of Objects and keys.
-	 * @param self The Dictionary.
-	 * @return The initialized Dictionary, or `NULL` on error.
-	 * @memberof Dictionary
-	 */
-	Dictionary *(*initWithObjectsAndKeys)(Dictionary *self, ...);
+  /**
+   * @fn Dictionary *Dictionary::initWithObjectsAndKeys(Dictionary *self, ...)
+   * @brief Initializes this Dictionary with the `NULL`-terminated list of Objects and keys.
+   * @param self The Dictionary.
+   * @return The initialized Dictionary, or `NULL` on error.
+   * @memberof Dictionary
+   */
+  Dictionary *(*initWithObjectsAndKeys)(Dictionary *self, ...);
 
-	/**
-	 * @fn MutableDictionary *Dictionary::mutableCopy(const Dictionary *self)
-	 * @param self The Dictionary.
-	 * @return A MutableDictionary with the contents of this Dictionary.
-	 * @memberof Dictionary
-	 */
-	MutableDictionary *(*mutableCopy)(const Dictionary *self);
+  /**
+   * @fn MutableDictionary *Dictionary::mutableCopy(const Dictionary *self)
+   * @param self The Dictionary.
+   * @return A MutableDictionary with the contents of this Dictionary.
+   * @memberof Dictionary
+   */
+  MutableDictionary *(*mutableCopy)(const Dictionary *self);
 
-	/**
-	 * @fn ident Dictionary::objectForKey(const Dictionary *self, const ident key)
-	 * @param self The Dictionary.
-	 * @param key The key.
-	 * @return The Object stored at the specified key in this Dictionary.
-	 * @memberof Dictionary
-	 */
-	ident (*objectForKey)(const Dictionary *self, const ident key);
+  /**
+   * @fn ident Dictionary::objectForKey(const Dictionary *self, const ident key)
+   * @param self The Dictionary.
+   * @param key The key.
+   * @return The Object stored at the specified key in this Dictionary.
+   * @memberof Dictionary
+   */
+  ident (*objectForKey)(const Dictionary *self, const ident key);
 
-	/**
-	 * @fn ident Dictionary::objectForKeyPath(const Dictionary *self, const char *path)
-	 * @param self The Dictionary.
-	 * @param path The key path.
-	 * @return The Object stored at the specified key path in this Dictionary.
-	 * @memberof Dictionary
-	 */
-	ident (*objectForKeyPath)(const Dictionary *self, const char *path);
+  /**
+   * @fn ident Dictionary::objectForKeyPath(const Dictionary *self, const char *path)
+   * @param self The Dictionary.
+   * @param path The key path.
+   * @return The Object stored at the specified key path in this Dictionary.
+   * @memberof Dictionary
+   */
+  ident (*objectForKeyPath)(const Dictionary *self, const char *path);
 };
 
 /**

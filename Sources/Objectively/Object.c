@@ -38,13 +38,13 @@
  */
 static Object *copy(const Object *self) {
 
-	ident obj = calloc(1, self->clazz->def.instanceSize);
-	assert(obj);
+  ident obj = calloc(1, self->clazz->def.instanceSize);
+  assert(obj);
 
-	Object *object = memcpy(obj, self, self->clazz->def.instanceSize);
-	object->referenceCount = 1;
+  Object *object = memcpy(obj, self, self->clazz->def.instanceSize);
+  object->referenceCount = 1;
 
-	return object;
+  return object;
 }
 
 /**
@@ -53,7 +53,7 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	free(self);
+  free(self);
 }
 
 /**
@@ -62,7 +62,7 @@ static void dealloc(Object *self) {
  */
 static String *description(const Object *self) {
 
-	return $(alloc(String), initWithFormat, "%s@%p", self->clazz->def.name, self);
+  return $(alloc(String), initWithFormat, "%s@%p", self->clazz->def.name, self);
 }
 
 /**
@@ -71,9 +71,9 @@ static String *description(const Object *self) {
  */
 static int hash(const Object *self) {
 
-	uintptr_t addr = (uintptr_t) self;
+  uintptr_t addr = (uintptr_t) self;
 
-	return (int) ((13 * addr) ^ (addr >> 15));
+  return (int) ((13 * addr) ^ (addr >> 15));
 }
 
 /**
@@ -82,7 +82,7 @@ static int hash(const Object *self) {
  */
 static Object *init(Object *self) {
 
-	return self;
+  return self;
 }
 
 /**
@@ -91,7 +91,7 @@ static Object *init(Object *self) {
  */
 static bool isEqual(const Object *self, const Object *other) {
 
-	return self == other;
+  return self == other;
 }
 
 /**
@@ -100,17 +100,17 @@ static bool isEqual(const Object *self, const Object *other) {
  */
 static bool isKindOfClass(const Object *self, const Class *clazz) {
 
-	assert(clazz);
-	
-	const Class *c = self->clazz;
-	while (c) {
-		if (memcmp(c, clazz, sizeof(*c)) == 0) {
-			return true;
-		}
-		c = c->def.superclass;
-	}
+  assert(clazz);
+  
+  const Class *c = self->clazz;
+  while (c) {
+    if (memcmp(c, clazz, sizeof(*c)) == 0) {
+      return true;
+    }
+    c = c->def.superclass;
+  }
 
-	return false;
+  return false;
 }
 
 #pragma mark - Class lifecycle
@@ -120,13 +120,13 @@ static bool isKindOfClass(const Object *self, const Class *clazz) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->interface)->description = description;
-	((ObjectInterface *) clazz->interface)->hash = hash;
-	((ObjectInterface *) clazz->interface)->init = init;
-	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
-	((ObjectInterface *) clazz->interface)->isKindOfClass = isKindOfClass;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->description = description;
+  ((ObjectInterface *) clazz->interface)->hash = hash;
+  ((ObjectInterface *) clazz->interface)->init = init;
+  ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+  ((ObjectInterface *) clazz->interface)->isKindOfClass = isKindOfClass;
 }
 
 /**
@@ -134,20 +134,20 @@ static void initialize(Class *clazz) {
  * @memberof Object
  */
 Class *_Object(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Object",
-			.instanceSize = sizeof(Object),
-			.interfaceOffset = offsetof(Object, interface),
-			.interfaceSize = sizeof(ObjectInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Object",
+      .instanceSize = sizeof(Object),
+      .interfaceOffset = offsetof(Object, interface),
+      .interfaceSize = sizeof(ObjectInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

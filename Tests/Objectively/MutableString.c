@@ -27,55 +27,55 @@
 
 START_TEST(string) {
 
-	MutableString *string = $$(MutableString, string);
+  MutableString *string = $$(MutableString, string);
 
-	ck_assert(string != NULL);
-	ck_assert_ptr_eq(_MutableString(), classof(string));
+  ck_assert(string != NULL);
+  ck_assert_ptr_eq(_MutableString(), classof(string));
 
-	String *hello = str("hello");
+  String *hello = str("hello");
 
-	$(string, appendString, hello);
-	ck_assert_str_eq("hello", string->string.chars);
+  $(string, appendString, hello);
+  ck_assert_str_eq("hello", string->string.chars);
 
-	$(string, appendFormat, " %s", "world!");
-	ck_assert_str_eq("hello world!", string->string.chars);
+  $(string, appendFormat, " %s", "world!");
+  ck_assert_str_eq("hello world!", string->string.chars);
 
-	String *goodbye = str("goodbye cruel");
+  String *goodbye = str("goodbye cruel");
 
-	$(string, replaceStringInRange, (Range) { 0, 5 }, goodbye);
-	ck_assert_str_eq("goodbye cruel world!", string->string.chars);
+  $(string, replaceStringInRange, (Range) { 0, 5 }, goodbye);
+  ck_assert_str_eq("goodbye cruel world!", string->string.chars);
 
-	$(string, replaceOccurrencesOfCharactersInRange, " ", (Range) { 0, 20 }, "  ");
-	ck_assert_str_eq("goodbye  cruel  world!", string->string.chars);
+  $(string, replaceOccurrencesOfCharactersInRange, " ", (Range) { 0, 20 }, "  ");
+  ck_assert_str_eq("goodbye  cruel  world!", string->string.chars);
 
-	$(string, replaceOccurrencesOfCharacters, " ", "");
-	ck_assert_str_eq("goodbyecruelworld!", string->string.chars);
+  $(string, replaceOccurrencesOfCharacters, " ", "");
+  ck_assert_str_eq("goodbyecruelworld!", string->string.chars);
 
-	String *copy = (String *) $((Object * ) string, copy);
-	ck_assert_ptr_eq(_MutableString(), classof(copy));
-	ck_assert($((Object *) string, isEqual, (Object *) copy));
+  String *copy = (String *) $((Object * ) string, copy);
+  ck_assert_ptr_eq(_MutableString(), classof(copy));
+  ck_assert($((Object *) string, isEqual, (Object *) copy));
 
-	release(hello);
-	release(goodbye);
-	release(string);
-	release(copy);
+  release(hello);
+  release(goodbye);
+  release(string);
+  release(copy);
 
 } END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("String");
-	tcase_add_test(tcase, string);
+  TCase *tcase = tcase_create("String");
+  tcase_add_test(tcase, string);
 
-	Suite *suite = suite_create("String");
-	suite_add_tcase(suite, tcase);
+  Suite *suite = suite_create("String");
+  suite_add_tcase(suite, tcase);
 
-	SRunner *runner = srunner_create(suite);
+  SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_VERBOSE);
-	int failed = srunner_ntests_failed(runner);
+  srunner_run_all(runner, CK_VERBOSE);
+  int failed = srunner_ntests_failed(runner);
 
-	srunner_free(runner);
+  srunner_free(runner);
 
-	return failed;
+  return failed;
 }

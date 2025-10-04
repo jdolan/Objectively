@@ -56,21 +56,21 @@ typedef struct NumberFormatterInterface NumberFormatterInterface;
  */
 struct NumberFormatter {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	NumberFormatterInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  NumberFormatterInterface *interface;
 
-	/**
-	 * @brief The format string.
-	 */
-	const char *fmt;
+  /**
+   * @brief The format string.
+   */
+  const char *fmt;
 };
 
 /**
@@ -78,41 +78,41 @@ struct NumberFormatter {
  */
 struct NumberFormatterInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @fn NumberFormatter *NumberFormatter::initWithFormat(NumberFormatter *self, const char *fmt)
-	 * @brief Initializes a NumberFormatter with the specified format string.
-	 * @param self The NumberFormatter.
-	 * @param fmt The format string.
-	 * @return The initialized NumberFormatter, or `NULL` on error.
-	 * @see strftime(3)
-	 * @memberof NumberFormatter
-	 */
-	NumberFormatter *(*initWithFormat)(NumberFormatter *self, const char *fmt);
+  /**
+   * @fn NumberFormatter *NumberFormatter::initWithFormat(NumberFormatter *self, const char *fmt)
+   * @brief Initializes a NumberFormatter with the specified format string.
+   * @param self The NumberFormatter.
+   * @param fmt The format string.
+   * @return The initialized NumberFormatter, or `NULL` on error.
+   * @see strftime(3)
+   * @memberof NumberFormatter
+   */
+  NumberFormatter *(*initWithFormat)(NumberFormatter *self, const char *fmt);
 
-	/**
-	 * @fn Number *NumberFormatter::numberFromString(const NumberFormatter *self, const String *string)
-	 * @brief Parses a Number from the specified String.
-	 * @param self The NumberFormatter.
-	 * @param string The String to parse.
-	 * @return A Number instance, or `NULL` on error.
-	 * @memberof NumberFormatter
-	 */
-	Number *(*numberFromString)(const NumberFormatter *self, const String *string);
+  /**
+   * @fn Number *NumberFormatter::numberFromString(const NumberFormatter *self, const String *string)
+   * @brief Parses a Number from the specified String.
+   * @param self The NumberFormatter.
+   * @param string The String to parse.
+   * @return A Number instance, or `NULL` on error.
+   * @memberof NumberFormatter
+   */
+  Number *(*numberFromString)(const NumberFormatter *self, const String *string);
 
-	/**
-	 * @fn String *NumberFormatter::stringFromNumber(const NumberFormatter *self, const Number *number)
-	 * @brief Yields a String representation of the specified Number instance.
-	 * @param self The NumberFormatter.
-	 * @param number The Number to format.
-	 * @return The String representation of the Number, or `NULL` on error.
-	 * @memberof NumberFormatter
-	 */
-	String *(*stringFromNumber)(const NumberFormatter *self, const Number *number);
+  /**
+   * @fn String *NumberFormatter::stringFromNumber(const NumberFormatter *self, const Number *number)
+   * @brief Yields a String representation of the specified Number instance.
+   * @param self The NumberFormatter.
+   * @param number The Number to format.
+   * @return The String representation of the Number, or `NULL` on error.
+   * @memberof NumberFormatter
+   */
+  String *(*stringFromNumber)(const NumberFormatter *self, const Number *number);
 };
 
 /**

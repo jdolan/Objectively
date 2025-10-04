@@ -33,51 +33,51 @@
 static const int64_t DELTA_EPOCH_IN_MICROSECS = 11644473600000000;
 
 long __sync_val_compare_and_swap_(long volatile *Destination, long Exchange, long Comparand) {
-	return InterlockedCompareExchange(Destination, Exchange, Comparand);
+  return InterlockedCompareExchange(Destination, Exchange, Comparand);
 }
 long __sync_add_and_fetch_(long volatile *Append, long Value) {
-	return InterlockedAdd(Append, Value);
+  return InterlockedAdd(Append, Value);
 }
 void *__sync_lock_test_and_set_(void *volatile *Target, void *Value) {
-	return InterlockedExchangePointer(Target, Value);
+  return InterlockedExchangePointer(Target, Value);
 }
 
 int gettimeofday(struct timeval *tv, struct timezone *tz)
 {
-	if (tv)
-	{
-		FILETIME ft;
-		int64_t tmpres;
+  if (tv)
+  {
+    FILETIME ft;
+    int64_t tmpres;
 
-		ZeroMemory(&ft, sizeof(ft));
+    ZeroMemory(&ft, sizeof(ft));
 
-		GetSystemTimeAsFileTime(&ft);
+    GetSystemTimeAsFileTime(&ft);
 
-		tmpres = ft.dwHighDateTime;
-		tmpres <<= 32;
-		tmpres |= ft.dwLowDateTime;
+    tmpres = ft.dwHighDateTime;
+    tmpres <<= 32;
+    tmpres |= ft.dwLowDateTime;
 
-		/*converting file time to unix epoch*/
-		tmpres /= 10;  /*convert into microseconds*/
-		tmpres -= DELTA_EPOCH_IN_MICROSECS;
-		tv->tv_sec = (int32_t)((double)tmpres * 0.000001);
-		tv->tv_usec = (tmpres % 1000000);
-	}
+    /*converting file time to unix epoch*/
+    tmpres /= 10;  /*convert into microseconds*/
+    tmpres -= DELTA_EPOCH_IN_MICROSECS;
+    tv->tv_sec = (int32_t)((double)tmpres * 0.000001);
+    tv->tv_usec = (tmpres % 1000000);
+  }
 
-	//_tzset(),don't work properly, so we use GetTimeZoneInformation
-	if (tz)
-	{
-		TIME_ZONE_INFORMATION tz_winapi;
-		DWORD rez;
+  //_tzset(),don't work properly, so we use GetTimeZoneInformation
+  if (tz)
+  {
+    TIME_ZONE_INFORMATION tz_winapi;
+    DWORD rez;
 
-		ZeroMemory(&tz_winapi, sizeof(tz_winapi));
+    ZeroMemory(&tz_winapi, sizeof(tz_winapi));
 
-		rez = GetTimeZoneInformation(&tz_winapi);
-		tz->tz_dsttime = (rez == 2) ? true : false;
-		tz->tz_minuteswest = tz_winapi.Bias + ((rez == 2) ? tz_winapi.DaylightBias : 0);
-	}
+    rez = GetTimeZoneInformation(&tz_winapi);
+    tz->tz_dsttime = (rez == 2) ? true : false;
+    tz->tz_minuteswest = tz_winapi.Bias + ((rez == 2) ? tz_winapi.DaylightBias : 0);
+  }
 
-	return 0;
+  return 0;
 }
 
 #pragma endregion gettimeofday

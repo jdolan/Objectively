@@ -37,13 +37,13 @@
  */
 static void dealloc(Object *self) {
 
-	Value *this = (Value *) self;
+  Value *this = (Value *) self;
 
-	if (this->destructor) {
-		this->destructor(this->value);
-	}
+  if (this->destructor) {
+    this->destructor(this->value);
+  }
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 /**
@@ -51,11 +51,11 @@ static void dealloc(Object *self) {
  */
 static int hash(const Object *self) {
 
-	const Value *this = (Value *) self;
+  const Value *this = (Value *) self;
 
-	uintptr_t addr = (uintptr_t) this->value;
+  uintptr_t addr = (uintptr_t) this->value;
 
-	return (int) ((13 * addr) ^ (addr >> 15));
+  return (int) ((13 * addr) ^ (addr >> 15));
 }
 
 /**
@@ -63,19 +63,19 @@ static int hash(const Object *self) {
  */
 static bool isEqual(const Object *self, const Object *other) {
 
-	if (super(Object, self, isEqual, other)) {
-		return true;
-	}
+  if (super(Object, self, isEqual, other)) {
+    return true;
+  }
 
-	if (other && $(other, isKindOfClass, _Value())) {
+  if (other && $(other, isKindOfClass, _Value())) {
 
-		const Value *this = (Value *) self;
-		const Value *that = (Value *) other;
+    const Value *this = (Value *) self;
+    const Value *that = (Value *) other;
 
-		return this->value == that->value;
-	}
+    return this->value == that->value;
+  }
 
-	return false;
+  return false;
 }
 
 #pragma mark - Value
@@ -86,18 +86,18 @@ static bool isEqual(const Object *self, const Object *other) {
  */
 static Value *initWithBytes(Value *self, const uint8_t *bytes, size_t length) {
 
-	self = (Value *) super(Object, self, init);
-	if (self) {
-		if (bytes) {
-			self->value = calloc(1, length);
-			assert(self->value);
+  self = (Value *) super(Object, self, init);
+  if (self) {
+    if (bytes) {
+      self->value = calloc(1, length);
+      assert(self->value);
 
-			memcpy(self->value, bytes, length);
-			self->destructor = free;
-		}
-	}
+      memcpy(self->value, bytes, length);
+      self->destructor = free;
+    }
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -106,12 +106,12 @@ static Value *initWithBytes(Value *self, const uint8_t *bytes, size_t length) {
  */
 static Value *initWithValue(Value *self, ident value) {
 
-	self = (Value *) super(Object, self, init);
-	if (self) {
-		self->value = value;
-	}
+  self = (Value *) super(Object, self, init);
+  if (self) {
+    self->value = value;
+  }
 
-	return self;
+  return self;
 }
 
 #pragma mark - Class lifecycle
@@ -121,12 +121,12 @@ static Value *initWithValue(Value *self, ident value) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->interface)->hash = hash;
-	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->hash = hash;
+  ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((ValueInterface *) clazz->interface)->initWithBytes = initWithBytes;
-	((ValueInterface *) clazz->interface)->initWithValue = initWithValue;
+  ((ValueInterface *) clazz->interface)->initWithBytes = initWithBytes;
+  ((ValueInterface *) clazz->interface)->initWithValue = initWithValue;
 }
 
 /**
@@ -134,21 +134,21 @@ static void initialize(Class *clazz) {
  * @memberof Value
  */
 Class *_Value(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Value",
-			.superclass = _Object(),
-			.instanceSize = sizeof(Value),
-			.interfaceOffset = offsetof(Value, interface),
-			.interfaceSize = sizeof(ValueInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Value",
+      .superclass = _Object(),
+      .instanceSize = sizeof(Value),
+      .interfaceOffset = offsetof(Value, interface),
+      .interfaceSize = sizeof(ValueInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

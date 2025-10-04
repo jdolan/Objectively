@@ -36,10 +36,10 @@
  */
 static Object *copy(const Object *self) {
 
-	Error *this = (Error *) self;
-	Error *that = $(alloc(Error), initWithDomain, this->domain, this->code, this->message);
+  Error *this = (Error *) self;
+  Error *that = $(alloc(Error), initWithDomain, this->domain, this->code, this->message);
 
-	return (Object *) that;
+  return (Object *) that;
 }
 
 /**
@@ -47,12 +47,12 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	Error *this = (Error *) self;
+  Error *this = (Error *) self;
 
-	release(this->domain);
-	release(this->message);
+  release(this->domain);
+  release(this->message);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 /**
@@ -60,17 +60,17 @@ static void dealloc(Object *self) {
  */
 static String *description(const Object *self) {
 
-	Error *this = (Error *) self;
+  Error *this = (Error *) self;
 
-	MutableString *desc = $(alloc(MutableString), init);
+  MutableString *desc = $(alloc(MutableString), init);
 
-	$(desc, appendFormat, "%ls: %d", this->domain->chars, this->code);
+  $(desc, appendFormat, "%ls: %d", this->domain->chars, this->code);
 
-	if (this->message) {
-		$(desc, appendFormat, ": %ls", this->message->chars);
-	}
+  if (this->message) {
+    $(desc, appendFormat, ": %ls", this->message->chars);
+  }
 
-	return (String *) desc;
+  return (String *) desc;
 }
 
 /**
@@ -78,15 +78,15 @@ static String *description(const Object *self) {
  */
 static int hash(const Object *self) {
 
-	Error *this = (Error *) self;
+  Error *this = (Error *) self;
 
-	int hash = HASH_SEED;
+  int hash = HASH_SEED;
 
-	hash = HashForInteger(hash, this->code);
-	hash = HashForObject(hash, this->domain);
-	hash = HashForObject(hash, this->message);
+  hash = HashForInteger(hash, this->code);
+  hash = HashForObject(hash, this->domain);
+  hash = HashForObject(hash, this->message);
 
-	return hash;
+  return hash;
 }
 
 /**
@@ -94,29 +94,29 @@ static int hash(const Object *self) {
  */
 static bool isEqual(const Object *self, const Object *other) {
 
-	if (super(Object, self, isEqual, other)) {
-		return true;
-	}
+  if (super(Object, self, isEqual, other)) {
+    return true;
+  }
 
-	if (other && (self->clazz == other->clazz)) {
+  if (other && (self->clazz == other->clazz)) {
 
-		const Error *this = (Error *) self;
-		const Error *that = (Error *) other;
+    const Error *this = (Error *) self;
+    const Error *that = (Error *) other;
 
-		if (this->code == that->code) {
+    if (this->code == that->code) {
 
-			if ($((Object * ) this->domain, isEqual, (Object * ) that->domain)) {
+      if ($((Object * ) this->domain, isEqual, (Object * ) that->domain)) {
 
-				if (this->message) {
-					return $((Object * ) this->message, isEqual, (Object * ) that->message);
-				}
+        if (this->message) {
+          return $((Object * ) this->message, isEqual, (Object * ) that->message);
+        }
 
-				return that->message == NULL;
-			}
-		}
-	}
+        return that->message == NULL;
+      }
+    }
+  }
 
-	return false;
+  return false;
 }
 
 #pragma mark - Error
@@ -127,20 +127,20 @@ static bool isEqual(const Object *self, const Object *other) {
  */
 static Error *initWithDomain(Error *self, String *domain, int code, String *message) {
 
-	assert(domain);
+  assert(domain);
 
-	self = (Error *) super(Object, self, init);
-	if (self) {
+  self = (Error *) super(Object, self, init);
+  if (self) {
 
-		self->domain = retain(domain);
-		self->code = code;
+    self->domain = retain(domain);
+    self->code = code;
 
-		if (message) {
-			self->message = retain(message);
-		}
-	}
+    if (message) {
+      self->message = retain(message);
+    }
+  }
 
-	return self;
+  return self;
 }
 
 #pragma mark - Class lifecycle
@@ -150,13 +150,13 @@ static Error *initWithDomain(Error *self, String *domain, int code, String *mess
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->interface)->description = description;
-	((ObjectInterface *) clazz->interface)->hash = hash;
-	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->description = description;
+  ((ObjectInterface *) clazz->interface)->hash = hash;
+  ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((ErrorInterface *) clazz->interface)->initWithDomain = initWithDomain;
+  ((ErrorInterface *) clazz->interface)->initWithDomain = initWithDomain;
 }
 
 /**
@@ -164,21 +164,21 @@ static void initialize(Class *clazz) {
  * @memberof Error
  */
 Class *_Error(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Error",
-			.superclass = _Object(),
-			.instanceSize = sizeof(Error),
-			.interfaceOffset = offsetof(Error, interface),
-			.interfaceSize = sizeof(ErrorInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Error",
+      .superclass = _Object(),
+      .instanceSize = sizeof(Error),
+      .interfaceOffset = offsetof(Error, interface),
+      .interfaceSize = sizeof(ErrorInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

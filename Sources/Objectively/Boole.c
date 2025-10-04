@@ -35,7 +35,7 @@
  */
 static Object *copy(const Object *self) {
 
-	return (Object *) self;
+  return (Object *) self;
 }
 
 /**
@@ -43,9 +43,9 @@ static Object *copy(const Object *self) {
  */
 static String *description(const Object *self) {
 
-	const Boole *this = (Boole *) self;
+  const Boole *this = (Boole *) self;
 
-	return $(alloc(String), initWithCharacters, this->value ? "true" : "false");
+  return $(alloc(String), initWithCharacters, this->value ? "true" : "false");
 }
 
 #pragma mark - Boole
@@ -58,14 +58,14 @@ static Boole *_False;
  */
 static Boole *False(void) {
 
-	static Once once;
+  static Once once;
 
-	do_once(&once, {
-		_False = (Boole *) $((Object *) alloc(Boole), init);
-		_False->value = false;
-	});
+  do_once(&once, {
+    _False = (Boole *) $((Object *) alloc(Boole), init);
+    _False->value = false;
+  });
 
-	return _False;
+  return _False;
 }
 
 static Boole *_True;
@@ -76,14 +76,14 @@ static Boole *_True;
  */
 static Boole *True(void) {
 
-	static Once once;
+  static Once once;
 
-	do_once(&once, {
-		_True = (Boole *) $((Object *) alloc(Boole), init);
-		_True->value = true;
-	});
+  do_once(&once, {
+    _True = (Boole *) $((Object *) alloc(Boole), init);
+    _True->value = true;
+  });
 
-	return _True;
+  return _True;
 }
 
 /**
@@ -91,7 +91,7 @@ static Boole *True(void) {
  * @memberof Boole
  */
 static Boole *valueof(bool value) {
-	return value ? $$(Boole, True) : $$(Boole, False);
+  return value ? $$(Boole, True) : $$(Boole, False);
 }
 
 #pragma mark - Class lifecycle
@@ -101,12 +101,12 @@ static Boole *valueof(bool value) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->description = description;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->description = description;
 
-	((BooleInterface *) clazz->interface)->False = False;
-	((BooleInterface *) clazz->interface)->True = True;
-	((BooleInterface *) clazz->interface)->valueof = valueof;
+  ((BooleInterface *) clazz->interface)->False = False;
+  ((BooleInterface *) clazz->interface)->True = True;
+  ((BooleInterface *) clazz->interface)->valueof = valueof;
 }
 
 /**
@@ -114,8 +114,8 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	release(_False);
-	release(_True);
+  release(_False);
+  release(_True);
 }
 
 /**
@@ -123,22 +123,22 @@ static void destroy(Class *clazz) {
  * @memberof Boole
  */
 Class *_Boole(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Boole",
-			.superclass = _Object(),
-			.instanceSize = sizeof(Boole),
-			.interfaceOffset = offsetof(Boole, interface),
-			.interfaceSize = sizeof(BooleInterface),
-			.initialize = initialize,
-			.destroy = destroy,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Boole",
+      .superclass = _Object(),
+      .instanceSize = sizeof(Boole),
+      .interfaceOffset = offsetof(Boole, interface),
+      .interfaceSize = sizeof(BooleInterface),
+      .initialize = initialize,
+      .destroy = destroy,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

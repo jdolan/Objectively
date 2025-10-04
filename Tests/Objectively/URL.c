@@ -27,81 +27,81 @@
 
 START_TEST(url) {
 
-	URL *url = $(alloc(URL), initWithCharacters, "http://example.com");
-	ck_assert(url != NULL);
+  URL *url = $(alloc(URL), initWithCharacters, "http://example.com");
+  ck_assert(url != NULL);
 
-	ck_assert_str_eq("http", url->scheme->chars);
-	ck_assert_str_eq("example.com", url->host->chars);
+  ck_assert_str_eq("http", url->scheme->chars);
+  ck_assert_str_eq("example.com", url->host->chars);
 
-	release(url);
+  release(url);
 
-	url = $(alloc(URL), initWithCharacters, "http://example.com:80/path?query#fragment");
-	ck_assert(url != NULL);
+  url = $(alloc(URL), initWithCharacters, "http://example.com:80/path?query#fragment");
+  ck_assert(url != NULL);
 
-	ck_assert_str_eq("http", url->scheme->chars);
-	ck_assert_str_eq("example.com", url->host->chars);
-	ck_assert_int_eq(80, url->port);
-	ck_assert_str_eq("/path", url->path->chars);
-	ck_assert_str_eq("query", url->query->chars);
-	ck_assert_str_eq("fragment", url->fragment->chars);
+  ck_assert_str_eq("http", url->scheme->chars);
+  ck_assert_str_eq("example.com", url->host->chars);
+  ck_assert_int_eq(80, url->port);
+  ck_assert_str_eq("/path", url->path->chars);
+  ck_assert_str_eq("query", url->query->chars);
+  ck_assert_str_eq("fragment", url->fragment->chars);
 
-	release(url);
+  release(url);
 
-	url = $(alloc(URL), initWithCharacters, "http://example.com:80/path#fragment");
-	ck_assert(url != NULL);
+  url = $(alloc(URL), initWithCharacters, "http://example.com:80/path#fragment");
+  ck_assert(url != NULL);
 
-	ck_assert_str_eq("http", url->scheme->chars);
-	ck_assert_str_eq("example.com", url->host->chars);
-	ck_assert_int_eq(80, url->port);
-	ck_assert_str_eq("/path", url->path->chars);
-	ck_assert(url->query == NULL);
-	ck_assert_str_eq("fragment", url->fragment->chars);
+  ck_assert_str_eq("http", url->scheme->chars);
+  ck_assert_str_eq("example.com", url->host->chars);
+  ck_assert_int_eq(80, url->port);
+  ck_assert_str_eq("/path", url->path->chars);
+  ck_assert(url->query == NULL);
+  ck_assert_str_eq("fragment", url->fragment->chars);
 
-	release(url);
+  release(url);
 
-	url = $(alloc(URL), initWithCharacters, "http://example.com?query");
-	ck_assert(url != NULL);
+  url = $(alloc(URL), initWithCharacters, "http://example.com?query");
+  ck_assert(url != NULL);
 
-	ck_assert_str_eq("http", url->scheme->chars);
-	ck_assert_str_eq("example.com", url->host->chars);
-	ck_assert_int_eq(0, url->port);
-	ck_assert(url->path == NULL);
-	ck_assert_str_eq("query", url->query->chars);
-	ck_assert(url->fragment == NULL);
+  ck_assert_str_eq("http", url->scheme->chars);
+  ck_assert_str_eq("example.com", url->host->chars);
+  ck_assert_int_eq(0, url->port);
+  ck_assert(url->path == NULL);
+  ck_assert_str_eq("query", url->query->chars);
+  ck_assert(url->fragment == NULL);
 
-	release(url);
+  release(url);
 
-	url = $(alloc(URL), initWithCharacters, "file:///path");
-	ck_assert(url != NULL);
+  url = $(alloc(URL), initWithCharacters, "file:///path");
+  ck_assert(url != NULL);
 
-	ck_assert_str_eq("file", url->scheme->chars);
-	ck_assert(NULL == url->host);
-	ck_assert_int_eq(0, url->port);
-	ck_assert_str_eq("/path", url->path->chars);
-	ck_assert(url->query == NULL);
-	ck_assert(url->fragment == NULL);
+  ck_assert_str_eq("file", url->scheme->chars);
+  ck_assert(NULL == url->host);
+  ck_assert_int_eq(0, url->port);
+  ck_assert_str_eq("/path", url->path->chars);
+  ck_assert(url->query == NULL);
+  ck_assert(url->fragment == NULL);
 
-	release(url);
+  release(url);
 
-	url = $(alloc(URL), initWithCharacters, "malformed");
-	ck_assert(url == NULL);
+  url = $(alloc(URL), initWithCharacters, "malformed");
+  ck_assert(url == NULL);
 
 } END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("URL");
-	tcase_add_test(tcase, url);
+  TCase *tcase = tcase_create("URL");
+  tcase_add_test(tcase, url);
 
-	Suite *suite = suite_create("URL");
-	suite_add_tcase(suite, tcase);
+  Suite *suite = suite_create("URL");
+  suite_add_tcase(suite, tcase);
 
-	SRunner *runner = srunner_create(suite);
+  SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_VERBOSE);
-	int failed = srunner_ntests_failed(runner);
+  srunner_run_all(runner, CK_VERBOSE);
+  int failed = srunner_ntests_failed(runner);
 
-	srunner_free(runner);
+  srunner_free(runner);
 
-	return failed;
+  return failed;
 }

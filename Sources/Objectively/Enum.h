@@ -35,9 +35,9 @@
  * @brief The EnumName type.
  */
 typedef struct {
-	const char *name;
-	const char *alias;
-	int value;
+  const char *name;
+  const char *alias;
+  int value;
 } EnumName;
 
 /**
@@ -45,34 +45,34 @@ typedef struct {
  * @see valueof(const EnumName *, const char *, int)
  */
 #define MakeEnumName(en) \
-	{ \
-		.name = #en, \
-		.alias = NULL, \
-		.value = en, \
-	}
+  { \
+    .name = #en, \
+    .alias = NULL, \
+    .value = en, \
+  }
 
 /**
  * @brief Creates an EnumName alias for `en` for use with `valueof`.
  * @see valueof(constEnumName *, const char *, int)
  */
 #define MakeEnumAlias(en, al) \
-	{ \
-		.name = #en, \
-		.alias = #al, \
-		.value = en, \
-	}
+  { \
+    .name = #en, \
+    .alias = #al, \
+    .value = en, \
+  }
 
 /**
  * @brief Creates a null-terminated array of EnumNames.
  */
 #define MakeEnumNames(...) \
-	{ \
-		__VA_ARGS__, \
-		{ \
-			.name = NULL, \
-			.value = 0 \
-		} \
-	}
+  { \
+    __VA_ARGS__, \
+    { \
+      .name = NULL, \
+      .value = 0 \
+    } \
+  }
 
 /**
  * @brief Marshal `value`, returning a String of `OR`'ed EnumNames for the given enum value.

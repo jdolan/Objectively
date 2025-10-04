@@ -24,21 +24,21 @@
 #include <cstdio>
 
 extern "C" {
-	#include <Objectively.h>
+  #include <Objectively.h>
 }
 
 int main(int argc, const char **argv) {
 
-	Object *object = $(alloc(Object), init);
+  Object *object = $(alloc(Object), init);
 
-	release(object);
+  release(object);
 
-	String *string = str("Hello World!");
+  String *string = str("Hello World!");
 
-	std::printf("%s\n", string->chars);
+  std::printf("%s\n", string->chars);
 
-	release(string);
+  release(string);
 
-	return 0;
+  return 0;
 }
 

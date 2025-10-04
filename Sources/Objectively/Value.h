@@ -44,26 +44,26 @@ typedef void (*ValueDestructor)(ident value);
  */
 struct Value {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	ValueInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  ValueInterface *interface;
 
-	/**
-	 * @brief The backing value.
-	 */
-	ident value;
+  /**
+   * @brief The backing value.
+   */
+  ident value;
 
-	/**
-	 * @brief An optional destructor that, if set, is called on `dealloc`.
-	 */
-	ValueDestructor destructor;
+  /**
+   * @brief An optional destructor that, if set, is called on `dealloc`.
+   */
+  ValueDestructor destructor;
 };
 
 /**
@@ -71,32 +71,32 @@ struct Value {
  */
 struct ValueInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @fn Value *Value::initWithBytes(Value *self, const uint8_t *bytes, size_t length)
-	 * @brief Initializes this Value by copying `length` of `bytes`.
-	 * @param self The Value.
-	 * @param bytes The bytes to copy.
-	 * @param length The count of `bytes` to copy.
-	 * @return The initialized Value, or `NULL` on error.
-	 * @remarks The copied bytes will be freed on `dealloc`.
-	 * @memberof Value
-	 */
-	Value *(*initWithBytes)(Value *self, const uint8_t *bytes, size_t length);
+  /**
+   * @fn Value *Value::initWithBytes(Value *self, const uint8_t *bytes, size_t length)
+   * @brief Initializes this Value by copying `length` of `bytes`.
+   * @param self The Value.
+   * @param bytes The bytes to copy.
+   * @param length The count of `bytes` to copy.
+   * @return The initialized Value, or `NULL` on error.
+   * @remarks The copied bytes will be freed on `dealloc`.
+   * @memberof Value
+   */
+  Value *(*initWithBytes)(Value *self, const uint8_t *bytes, size_t length);
 
-	/**
-	 * @fn Value *Value::initWithValue(Value *self, ident value)
-	 * @brief Initializes this Value.
-	 * @param self The Value.
-	 * @param value The backing value.
-	 * @return The initialized Value, or `NULL` on error.
-	 * @memberof Value
-	 */
-	Value *(*initWithValue)(Value *self, ident value);
+  /**
+   * @fn Value *Value::initWithValue(Value *self, ident value)
+   * @brief Initializes this Value.
+   * @param self The Value.
+   * @param value The backing value.
+   * @return The initialized Value, or `NULL` on error.
+   * @memberof Value
+   */
+  Value *(*initWithValue)(Value *self, ident value);
 };
 
 /**

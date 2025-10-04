@@ -37,12 +37,12 @@
  */
 static NumberFormatter *initWithFormat(NumberFormatter *self, const char *fmt) {
 
-	self = (NumberFormatter *) super(Object, self, init);
-	if (self) {
-		self->fmt = fmt ?: NUMBERFORMAT_DECIMAL;
-	}
+  self = (NumberFormatter *) super(Object, self, init);
+  if (self) {
+    self->fmt = fmt ?: NUMBERFORMAT_DECIMAL;
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -51,16 +51,16 @@ static NumberFormatter *initWithFormat(NumberFormatter *self, const char *fmt) {
  */
 static Number *numberFromString(const NumberFormatter *self, const String *string) {
 
-	if (string) {
-		double value;
+  if (string) {
+    double value;
 
-		const int res = sscanf(string->chars, self->fmt, &value);
-		if (res == 1) {
-			return $(alloc(Number), initWithValue, value);
-		}
-	}
+    const int res = sscanf(string->chars, self->fmt, &value);
+    if (res == 1) {
+      return $(alloc(Number), initWithValue, value);
+    }
+  }
 
-	return NULL;
+  return NULL;
 }
 
 /**
@@ -69,7 +69,7 @@ static Number *numberFromString(const NumberFormatter *self, const String *strin
  */
 static String *stringFromNumber(const NumberFormatter *self, const Number *number) {
 
-	return $(alloc(String), initWithFormat, self->fmt, number->value);
+  return $(alloc(String), initWithFormat, self->fmt, number->value);
 }
 
 #pragma mark - Class lifecycle
@@ -79,9 +79,9 @@ static String *stringFromNumber(const NumberFormatter *self, const Number *numbe
  */
 static void initialize(Class *clazz) {
 
-	((NumberFormatterInterface *) clazz->interface)->numberFromString = numberFromString;
-	((NumberFormatterInterface *) clazz->interface)->initWithFormat = initWithFormat;
-	((NumberFormatterInterface *) clazz->interface)->stringFromNumber = stringFromNumber;
+  ((NumberFormatterInterface *) clazz->interface)->numberFromString = numberFromString;
+  ((NumberFormatterInterface *) clazz->interface)->initWithFormat = initWithFormat;
+  ((NumberFormatterInterface *) clazz->interface)->stringFromNumber = stringFromNumber;
 }
 
 /**
@@ -89,21 +89,21 @@ static void initialize(Class *clazz) {
  * @memberof NumberFormatter
  */
 Class *_NumberFormatter(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "NumberFormatter",
-			.superclass = _Object(),
-			.instanceSize = sizeof(NumberFormatter),
-			.interfaceOffset = offsetof(NumberFormatter, interface),
-			.interfaceSize = sizeof(NumberFormatterInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "NumberFormatter",
+      .superclass = _Object(),
+      .instanceSize = sizeof(NumberFormatter),
+      .interfaceOffset = offsetof(NumberFormatter, interface),
+      .interfaceSize = sizeof(NumberFormatterInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

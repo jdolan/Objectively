@@ -37,9 +37,9 @@
  */
 static Object *copy(const Object *self) {
 
-	const URL *this = (URL *) self;
+  const URL *this = (URL *) self;
 
-	return (Object *) $(alloc(URL), initWithString, this->urlString);
+  return (Object *) $(alloc(URL), initWithString, this->urlString);
 }
 
 /**
@@ -47,16 +47,16 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	URL *this = (URL *) self;
+  URL *this = (URL *) self;
 
-	release(this->fragment);
-	release(this->host);
-	release(this->path);
-	release(this->query);
-	release(this->scheme);
-	release(this->urlString);
+  release(this->fragment);
+  release(this->host);
+  release(this->path);
+  release(this->query);
+  release(this->scheme);
+  release(this->urlString);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 /**
@@ -64,9 +64,9 @@ static void dealloc(Object *self) {
  */
 static String *description(const Object *self) {
 
-	const URL *this = (URL *) self;
+  const URL *this = (URL *) self;
 
-	return $((Object *) this->urlString, description);
+  return $((Object *) this->urlString, description);
 }
 
 /**
@@ -74,9 +74,9 @@ static String *description(const Object *self) {
  */
 static int hash(const Object *self) {
 
-	const URL *this = (URL *) self;
+  const URL *this = (URL *) self;
 
-	return $((Object *) this->urlString, hash);
+  return $((Object *) this->urlString, hash);
 }
 
 /**
@@ -84,19 +84,19 @@ static int hash(const Object *self) {
  */
 static bool isEqual(const Object *self, const Object *other) {
 
-	if (super(Object, self, isEqual, other)) {
-		return true;
-	}
+  if (super(Object, self, isEqual, other)) {
+    return true;
+  }
 
-	if (other && self->clazz == other->clazz) {
+  if (other && self->clazz == other->clazz) {
 
-		const URL *this = (URL *) self;
-		const URL *that = (URL *) other;
+    const URL *this = (URL *) self;
+    const URL *that = (URL *) other;
 
-		return $((Object *) this->urlString, isEqual, (Object *) that->urlString);
-	}
+    return $((Object *) this->urlString, isEqual, (Object *) that->urlString);
+  }
 
-	return false;
+  return false;
 }
 
 #pragma mark - URL
@@ -107,24 +107,24 @@ static bool isEqual(const Object *self, const Object *other) {
  */
 static URL *baseURL(const URL *self) {
 
-	MutableString *string = $(alloc(MutableString), init);
+  MutableString *string = $(alloc(MutableString), init);
 
-	$(string, appendString, self->scheme);
-	$(string, appendFormat, "://");
+  $(string, appendString, self->scheme);
+  $(string, appendFormat, "://");
 
-	if (self->host) {
-		$(string, appendString, self->host);
-	}
+  if (self->host) {
+    $(string, appendString, self->host);
+  }
 
-	if (self->port) {
-		$(string, appendFormat, ":%u", self->port);
-	}
+  if (self->port) {
+    $(string, appendFormat, ":%u", self->port);
+  }
 
-	URL *baseURL = $(alloc(URL), initWithString, (String *) string);
+  URL *baseURL = $(alloc(URL), initWithString, (String *) string);
 
-	release(string);
+  release(string);
 
-	return baseURL;
+  return baseURL;
 }
 
 static Regexp *_re;
@@ -135,61 +135,61 @@ static Regexp *_re;
  */
 static URL *initWithCharacters(URL *self, const char *chars) {
 
-	assert(chars);
+  assert(chars);
 
-	self = (URL *) super(Object, self, init);
-	if (self) {
+  self = (URL *) super(Object, self, init);
+  if (self) {
 
-		Range *ranges;
-		if ($(_re, matchesCharacters, chars, 0, &ranges)) {
+    Range *ranges;
+    if ($(_re, matchesCharacters, chars, 0, &ranges)) {
 
-			self->urlString = $(alloc(String), initWithCharacters, chars);
+      self->urlString = $(alloc(String), initWithCharacters, chars);
 
-			Range *scheme = &ranges[1];
-			Range *host = &ranges[2];
-			Range *port = &ranges[3];
-			Range *path = &ranges[4];
-			Range *query = &ranges[5];
-			Range *fragment = &ranges[6];
+      Range *scheme = &ranges[1];
+      Range *host = &ranges[2];
+      Range *port = &ranges[3];
+      Range *path = &ranges[4];
+      Range *query = &ranges[5];
+      Range *fragment = &ranges[6];
 
-			self->scheme = $(self->urlString, substring, *scheme);
+      self->scheme = $(self->urlString, substring, *scheme);
 
-			if (host->location > -1) {
-				self->host = $(self->urlString, substring, *host);
+      if (host->location > -1) {
+        self->host = $(self->urlString, substring, *host);
 
-				if (port->location > -1) {
-					const char *s = self->urlString->chars + port->location + 1;
-					self->port = strtoul(s, NULL, 10);
-				}
-			}
+        if (port->location > -1) {
+          const char *s = self->urlString->chars + port->location + 1;
+          self->port = strtoul(s, NULL, 10);
+        }
+      }
 
-			if (path->location > -1) {
-				self->path = $(self->urlString, substring, *path);
-			}
+      if (path->location > -1) {
+        self->path = $(self->urlString, substring, *path);
+      }
 
-			if (query->location > -1) {
+      if (query->location > -1) {
 
-				query->location++;
-				query->length--;
+        query->location++;
+        query->length--;
 
-				self->query = $(self->urlString, substring, *query);
-			}
+        self->query = $(self->urlString, substring, *query);
+      }
 
-			if (fragment->location > -1) {
+      if (fragment->location > -1) {
 
-				fragment->location++;
-				fragment->length--;
+        fragment->location++;
+        fragment->length--;
 
-				self->fragment = $(self->urlString, substring, *fragment);
-			}
+        self->fragment = $(self->urlString, substring, *fragment);
+      }
 
-			free(ranges);
-		} else {
-			self = release(self);
-		}
-	}
+      free(ranges);
+    } else {
+      self = release(self);
+    }
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -198,9 +198,9 @@ static URL *initWithCharacters(URL *self, const char *chars) {
  */
 static URL *initWithString(URL *self, const String *string) {
 
-	assert(string);
+  assert(string);
 
-	return $(self, initWithCharacters, string->chars);
+  return $(self, initWithCharacters, string->chars);
 }
 
 /**
@@ -209,7 +209,7 @@ static URL *initWithString(URL *self, const String *string) {
  */
 static Array *pathComponents(const URL *self) {
 
-	return $(self->path, componentsSeparatedByCharacters, "/");
+  return $(self->path, componentsSeparatedByCharacters, "/");
 }
 
 #pragma mark - Class lifecycle
@@ -219,18 +219,18 @@ static Array *pathComponents(const URL *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->interface)->description = description;
-	((ObjectInterface *) clazz->interface)->hash = hash;
-	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->description = description;
+  ((ObjectInterface *) clazz->interface)->hash = hash;
+  ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((URLInterface *) clazz->interface)->baseURL = baseURL;
-	((URLInterface *) clazz->interface)->initWithCharacters = initWithCharacters;
-	((URLInterface *) clazz->interface)->initWithString = initWithString;
-	((URLInterface *) clazz->interface)->pathComponents = pathComponents;
+  ((URLInterface *) clazz->interface)->baseURL = baseURL;
+  ((URLInterface *) clazz->interface)->initWithCharacters = initWithCharacters;
+  ((URLInterface *) clazz->interface)->initWithString = initWithString;
+  ((URLInterface *) clazz->interface)->pathComponents = pathComponents;
 
-	_re = re("([a-z]+)://([^:/\?]+)?(:[0-9]+)?(/[^\?#]+)?([^#]+)?(#.*)?", 0);
+  _re = re("([a-z]+)://([^:/\?]+)?(:[0-9]+)?(/[^\?#]+)?([^#]+)?(#.*)?", 0);
 }
 
 /**
@@ -238,7 +238,7 @@ static void initialize(Class *clazz) {
  */
 static void destroy(Class *clazz) {
 
-	release(_re);
+  release(_re);
 }
 
 /**
@@ -246,22 +246,22 @@ static void destroy(Class *clazz) {
  * @memberof URL
  */
 Class *_URL(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "URL",
-			.superclass = _Object(),
-			.instanceSize = sizeof(URL),
-			.interfaceOffset = offsetof(URL, interface),
-			.interfaceSize = sizeof(URLInterface),
-			.initialize = initialize,
-			.destroy = destroy,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "URL",
+      .superclass = _Object(),
+      .instanceSize = sizeof(URL),
+      .interfaceOffset = offsetof(URL, interface),
+      .interfaceSize = sizeof(URLInterface),
+      .initialize = initialize,
+      .destroy = destroy,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

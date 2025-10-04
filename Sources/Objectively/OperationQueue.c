@@ -34,7 +34,7 @@
  */
 static Object *copy(const Object *self) {
 
-	return NULL;
+  return NULL;
 }
 
 /**
@@ -42,16 +42,16 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	OperationQueue *this = (OperationQueue *) self;
+  OperationQueue *this = (OperationQueue *) self;
 
-	$(this->locals.thread, cancel);
-	$(this->locals.thread, join, NULL);
+  $(this->locals.thread, cancel);
+  $(this->locals.thread, join, NULL);
 
-	release(this->locals.thread);
-	release(this->locals.condition);
-	release(this->locals.operations);
+  release(this->locals.thread);
+  release(this->locals.condition);
+  release(this->locals.operations);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 #pragma mark - OperationQueue
@@ -62,15 +62,15 @@ static void dealloc(Object *self) {
  */
 static void addOperation(OperationQueue *self, Operation *operation) {
 
-	assert(operation);
-	assert(operation->isCancelled == false);
-	assert(operation->isExecuting == false);
-	assert(operation->isFinished == false);
+  assert(operation);
+  assert(operation->isCancelled == false);
+  assert(operation->isExecuting == false);
+  assert(operation->isFinished == false);
 
-	synchronized(self->locals.condition, {
-		$(self->locals.operations, addObject, operation);
-		$(self->locals.condition, broadcast);
-	});
+  synchronized(self->locals.condition, {
+    $(self->locals.operations, addObject, operation);
+    $(self->locals.condition, broadcast);
+  });
 }
 
 /**
@@ -79,13 +79,13 @@ static void addOperation(OperationQueue *self, Operation *operation) {
  */
 static Operation *addOperationWithFunction(OperationQueue *self, OperationFunction function, ident data) {
 
-	assert(function);
+  assert(function);
 
-	Operation *operation = $(alloc(Operation), initWithFunction, function, data);
+  Operation *operation = $(alloc(Operation), initWithFunction, function, data);
 
-	$(self, addOperation, operation);
+  $(self, addOperation, operation);
 
-	return operation;
+  return operation;
 }
 
 /**
@@ -94,13 +94,13 @@ static Operation *addOperationWithFunction(OperationQueue *self, OperationFuncti
  */
 static void cancelAllOperations(OperationQueue *self) {
 
-	Array *operations = $(self, operations);
+  Array *operations = $(self, operations);
 
-	for (size_t i = 0; i < operations->count; i++) {
-		$((Operation *) $(operations, objectAtIndex, i), cancel);
-	}
+  for (size_t i = 0; i < operations->count; i++) {
+    $((Operation *) $(operations, objectAtIndex, i), cancel);
+  }
 
-	release(operations);
+  release(operations);
 }
 
 static __thread OperationQueue *_currentQueue;
@@ -111,7 +111,7 @@ static __thread OperationQueue *_currentQueue;
  */
 static OperationQueue *currentQueue(void) {
 
-	return _currentQueue;
+  return _currentQueue;
 }
 
 /**
@@ -119,41 +119,41 @@ static OperationQueue *currentQueue(void) {
  */
 static ident run(Thread *thread) {
 
-	OperationQueue *self = _currentQueue = thread->data;
+  OperationQueue *self = _currentQueue = thread->data;
 
-	while (thread->isCancelled == false) {
+  while (thread->isCancelled == false) {
 
-		if (self->isSuspended == false) {
-			Array *operations = NULL;
+    if (self->isSuspended == false) {
+      Array *operations = NULL;
 
-			retry:
+      retry:
 
-			release(operations);
-			operations = $(self, operations);
+      release(operations);
+      operations = $(self, operations);
 
-			for (size_t i = 0; i < operations->count; i++) {
+      for (size_t i = 0; i < operations->count; i++) {
 
-				Operation *operation = $(operations, objectAtIndex, i);
-				if ($(operation, isReady)) {
-					$(operation, start);
-					goto retry;
-				}
-			}
+        Operation *operation = $(operations, objectAtIndex, i);
+        if ($(operation, isReady)) {
+          $(operation, start);
+          goto retry;
+        }
+      }
 
-			release(operations);
-		}
+      release(operations);
+    }
 
-		const Time interval = { .tv_usec = 10 };
-		Date *date = $$(Date, dateWithTimeSinceNow, &interval);
+    const Time interval = { .tv_usec = 10 };
+    Date *date = $$(Date, dateWithTimeSinceNow, &interval);
 
-		synchronized(self->locals.condition, {
-			$(self->locals.condition, waitUntilDate, date);
-		});
+    synchronized(self->locals.condition, {
+      $(self->locals.condition, waitUntilDate, date);
+    });
 
-		release(date);
-	}
+    release(date);
+  }
 
-	return NULL;
+  return NULL;
 }
 
 /**
@@ -162,22 +162,22 @@ static ident run(Thread *thread) {
  */
 static OperationQueue *init(OperationQueue *self) {
 
-	self = (OperationQueue *) super(Object, self, init);
-	if (self) {
+  self = (OperationQueue *) super(Object, self, init);
+  if (self) {
 
-		self->locals.condition = $(alloc(Condition), init);
-		assert(self->locals.condition);
+    self->locals.condition = $(alloc(Condition), init);
+    assert(self->locals.condition);
 
-		self->locals.operations = $(alloc(MutableArray), init);
-		assert(self->locals.operations);
+    self->locals.operations = $(alloc(MutableArray), init);
+    assert(self->locals.operations);
 
-		self->locals.thread = $(alloc(Thread), initWithFunction, run, self);
-		assert(self->locals.thread);
+    self->locals.thread = $(alloc(Thread), initWithFunction, run, self);
+    assert(self->locals.thread);
 
-		$(self->locals.thread, start);
-	}
+    $(self->locals.thread, start);
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -186,13 +186,13 @@ static OperationQueue *init(OperationQueue *self) {
  */
 static size_t operationCount(const OperationQueue *self) {
 
-	size_t count;
+  size_t count;
 
-	synchronized(self->locals.condition, {
-		count = ((Array *) self->locals.operations)->count;
-	});
+  synchronized(self->locals.condition, {
+    count = ((Array *) self->locals.operations)->count;
+  });
 
-	return count;
+  return count;
 }
 
 /**
@@ -201,13 +201,13 @@ static size_t operationCount(const OperationQueue *self) {
  */
 static Array *operations(const OperationQueue *self) {
 
-	ident operations;
+  ident operations;
 
-	synchronized(self->locals.condition, {
-		operations = $((Object * ) self->locals.operations, copy);
-	});
+  synchronized(self->locals.condition, {
+    operations = $((Object * ) self->locals.operations, copy);
+  });
 
-	return (Array *) operations;
+  return (Array *) operations;
 }
 
 /**
@@ -216,13 +216,13 @@ static Array *operations(const OperationQueue *self) {
  */
 static void removeOperation(OperationQueue *self, Operation *operation) {
 
-	assert(operation);
-	assert(operation->isExecuting == false);
+  assert(operation);
+  assert(operation->isExecuting == false);
 
-	synchronized(self->locals.condition, {
-		$(self->locals.operations, removeObject, operation);
-		$(self->locals.condition, broadcast);
-	});
+  synchronized(self->locals.condition, {
+    $(self->locals.operations, removeObject, operation);
+    $(self->locals.condition, broadcast);
+  });
 }
 
 /**
@@ -231,13 +231,13 @@ static void removeOperation(OperationQueue *self, Operation *operation) {
  */
 static void waitUntilAllOperationsAreFinished(OperationQueue *self) {
 
-	Array *operations = (Array *) self->locals.operations;
-	while (operations->count > 0) {
+  Array *operations = (Array *) self->locals.operations;
+  while (operations->count > 0) {
 
-		synchronized(self->locals.condition, {
-			$(self->locals.condition, wait);
-		});
-	}
+    synchronized(self->locals.condition, {
+      $(self->locals.condition, wait);
+    });
+  }
 }
 
 #pragma mark - Class lifecycle
@@ -247,18 +247,18 @@ static void waitUntilAllOperationsAreFinished(OperationQueue *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((OperationQueueInterface *) clazz->interface)->addOperation = addOperation;
-	((OperationQueueInterface *) clazz->interface)->addOperationWithFunction = addOperationWithFunction;
-	((OperationQueueInterface *) clazz->interface)->cancelAllOperations = cancelAllOperations;
-	((OperationQueueInterface *) clazz->interface)->currentQueue = currentQueue;
-	((OperationQueueInterface *) clazz->interface)->init = init;
-	((OperationQueueInterface *) clazz->interface)->operationCount = operationCount;
-	((OperationQueueInterface *) clazz->interface)->operations = operations;
-	((OperationQueueInterface *) clazz->interface)->removeOperation = removeOperation;
-	((OperationQueueInterface *) clazz->interface)->waitUntilAllOperationsAreFinished = waitUntilAllOperationsAreFinished;
+  ((OperationQueueInterface *) clazz->interface)->addOperation = addOperation;
+  ((OperationQueueInterface *) clazz->interface)->addOperationWithFunction = addOperationWithFunction;
+  ((OperationQueueInterface *) clazz->interface)->cancelAllOperations = cancelAllOperations;
+  ((OperationQueueInterface *) clazz->interface)->currentQueue = currentQueue;
+  ((OperationQueueInterface *) clazz->interface)->init = init;
+  ((OperationQueueInterface *) clazz->interface)->operationCount = operationCount;
+  ((OperationQueueInterface *) clazz->interface)->operations = operations;
+  ((OperationQueueInterface *) clazz->interface)->removeOperation = removeOperation;
+  ((OperationQueueInterface *) clazz->interface)->waitUntilAllOperationsAreFinished = waitUntilAllOperationsAreFinished;
 }
 
 /**
@@ -266,21 +266,21 @@ static void initialize(Class *clazz) {
  * @memberof OperationQueue
  */
 Class *_OperationQueue(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "OperationQueue",
-			.superclass = _Object(),
-			.instanceSize = sizeof(OperationQueue),
-			.interfaceOffset = offsetof(OperationQueue, interface),
-			.interfaceSize = sizeof(OperationQueueInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "OperationQueue",
+      .superclass = _Object(),
+      .instanceSize = sizeof(OperationQueue),
+      .interfaceOffset = offsetof(OperationQueue, interface),
+      .interfaceSize = sizeof(OperationQueueInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

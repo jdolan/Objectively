@@ -40,11 +40,11 @@
  */
 static Object *copy(const Object *self) {
 
-	const Set *this = (Set *) self;
+  const Set *this = (Set *) self;
 
-	Set *that = $(alloc(Set), initWithSet, this);
+  Set *that = $(alloc(Set), initWithSet, this);
 
-	return (Object *) that;
+  return (Object *) that;
 }
 
 /**
@@ -52,15 +52,15 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	Set *this = (Set *) self;
+  Set *this = (Set *) self;
 
-	for (size_t i = 0; i < this->capacity; i++) {
-		release(this->elements[i]);
-	}
+  for (size_t i = 0; i < this->capacity; i++) {
+    release(this->elements[i]);
+  }
 
-	free(this->elements);
+  free(this->elements);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 /**
@@ -68,9 +68,9 @@ static void dealloc(Object *self) {
  */
 static String *description(const Object *self) {
 
-	const Array *array = $((Set *) self, allObjects);
+  const Array *array = $((Set *) self, allObjects);
 
-	return $((Object *) array, description);
+  return $((Object *) array, description);
 }
 
 /**
@@ -78,17 +78,17 @@ static String *description(const Object *self) {
  */
 static int hash(const Object *self) {
 
-	const Set *this = (Set *) self;
+  const Set *this = (Set *) self;
 
-	int hash = HashForInteger(HASH_SEED, this->count);
+  int hash = HashForInteger(HASH_SEED, this->count);
 
-	for (size_t i = 0; i < this->capacity; i++) {
-		if (this->elements[i]) {
-			hash = HashForObject(hash, this->elements[i]);
-		}
-	}
+  for (size_t i = 0; i < this->capacity; i++) {
+    if (this->elements[i]) {
+      hash = HashForObject(hash, this->elements[i]);
+    }
+  }
 
-	return hash;
+  return hash;
 }
 
 /**
@@ -96,34 +96,34 @@ static int hash(const Object *self) {
  */
 static bool isEqual(const Object *self, const Object *other) {
 
-	if (super(Object, self, isEqual, other)) {
-		return true;
-	}
+  if (super(Object, self, isEqual, other)) {
+    return true;
+  }
 
-	if (other && (self->clazz == other->clazz)) {
+  if (other && (self->clazz == other->clazz)) {
 
-		const Set *this = (Set *) self;
-		const Set *that = (Set *) other;
+    const Set *this = (Set *) self;
+    const Set *that = (Set *) other;
 
-		if (this->count == that->count) {
+    if (this->count == that->count) {
 
-			Array *objects = $(this, allObjects);
+      Array *objects = $(this, allObjects);
 
-			for (size_t i = 0; i < objects->count; i++) {
-				const ident obj = $(objects, objectAtIndex, i);
+      for (size_t i = 0; i < objects->count; i++) {
+        const ident obj = $(objects, objectAtIndex, i);
 
-				if ($(that, containsObject, obj) == false) {
-					release(objects);
-					return false;
-				}
-			}
+        if ($(that, containsObject, obj) == false) {
+          release(objects);
+          return false;
+        }
+      }
 
-			release(objects);
-			return true;
-		}
-	}
+      release(objects);
+      return true;
+    }
+  }
 
-	return false;
+  return false;
 }
 
 #pragma mark - Set
@@ -132,7 +132,7 @@ static bool isEqual(const Object *self, const Object *other) {
  * @brief SetEnumerator for allObjects.
  */
 static void allObjects_enumerator(const Set *set, ident obj, ident data) {
-	$((MutableArray *) data, addObject, obj);
+  $((MutableArray *) data, addObject, obj);
 }
 
 /**
@@ -141,11 +141,11 @@ static void allObjects_enumerator(const Set *set, ident obj, ident data) {
  */
 static Array *allObjects(const Set *self) {
 
-	MutableArray *objects = $(alloc(MutableArray), initWithCapacity, self->count);
+  MutableArray *objects = $(alloc(MutableArray), initWithCapacity, self->count);
 
-	$(self, enumerateObjects, allObjects_enumerator, objects);
+  $(self, enumerateObjects, allObjects_enumerator, objects);
 
-	return (Array *) objects;
+  return (Array *) objects;
 }
 
 /**
@@ -154,16 +154,16 @@ static Array *allObjects(const Set *self) {
  */
 static bool containsObject(const Set *self, const ident obj) {
 
-	if (self->capacity) {
-		const size_t bin = HashForObject(HASH_SEED, obj) % self->capacity;
+  if (self->capacity) {
+    const size_t bin = HashForObject(HASH_SEED, obj) % self->capacity;
 
-		const Array *array = self->elements[bin];
-		if (array) {
-			return $(array, containsObject, obj);
-		}
-	}
+    const Array *array = self->elements[bin];
+    if (array) {
+      return $(array, containsObject, obj);
+    }
+  }
 
-	return false;
+  return false;
 }
 
 /**
@@ -172,22 +172,22 @@ static bool containsObject(const Set *self, const ident obj) {
  */
 static bool containsObjectMatching(const Set *self, Predicate predicate, ident data) {
 
-	assert(predicate);
+  assert(predicate);
 
-	for (size_t i = 0; i < self->capacity; i++) {
+  for (size_t i = 0; i < self->capacity; i++) {
 
-		Array *array = self->elements[i];
-		if (array) {
+    Array *array = self->elements[i];
+    if (array) {
 
-			for (size_t j = 0; j < array->count; j++) {
-				if (predicate($(array, objectAtIndex, j), data)) {
-					return true;
-				}
-			}
-		}
-	}
+      for (size_t j = 0; j < array->count; j++) {
+        if (predicate($(array, objectAtIndex, j), data)) {
+          return true;
+        }
+      }
+    }
+  }
 
-	return false;
+  return false;
 }
 
 /**
@@ -196,18 +196,18 @@ static bool containsObjectMatching(const Set *self, Predicate predicate, ident d
  */
 static void enumerateObjects(const Set *self, SetEnumerator enumerator, ident data) {
 
-	assert(enumerator);
+  assert(enumerator);
 
-	for (size_t i = 0; i < self->capacity; i++) {
+  for (size_t i = 0; i < self->capacity; i++) {
 
-		Array *array = self->elements[i];
-		if (array) {
+    Array *array = self->elements[i];
+    if (array) {
 
-			for (size_t j = 0; j < array->count; j++) {
-				enumerator(self, $(array, objectAtIndex, j), data);
-			}
-		}
-	}
+      for (size_t j = 0; j < array->count; j++) {
+        enumerator(self, $(array, objectAtIndex, j), data);
+      }
+    }
+  }
 }
 
 /**
@@ -216,33 +216,33 @@ static void enumerateObjects(const Set *self, SetEnumerator enumerator, ident da
  */
 static Set *filteredSet(const Set *self, Predicate predicate, ident data) {
 
-	assert(predicate);
+  assert(predicate);
 
-	MutableSet *set = $(alloc(MutableSet), init);
+  MutableSet *set = $(alloc(MutableSet), init);
 
-	for (size_t i = 0; i < self->capacity; i++) {
+  for (size_t i = 0; i < self->capacity; i++) {
 
-		Array *array = self->elements[i];
-		if (array) {
+    Array *array = self->elements[i];
+    if (array) {
 
-			for (size_t j = 0; j < array->count; j++) {
-				ident obj = $(array, objectAtIndex, j);
+      for (size_t j = 0; j < array->count; j++) {
+        ident obj = $(array, objectAtIndex, j);
 
-				if (predicate(obj, data)) {
-					$(set, addObject, obj);
-				}
-			}
-		}
-	}
+        if (predicate(obj, data)) {
+          $(set, addObject, obj);
+        }
+      }
+    }
+  }
 
-	return (Set *) set;
+  return (Set *) set;
 }
 
 /**
  * @brief ArrayEnumerator for initWithArray.
  */
 static void initWithArray_enumerator(const Array *array, ident obj, ident data) {
-	$$(MutableSet, addObject, (MutableSet *) data, obj);
+  $$(MutableSet, addObject, (MutableSet *) data, obj);
 }
 
 /**
@@ -251,14 +251,14 @@ static void initWithArray_enumerator(const Array *array, ident obj, ident data) 
  */
 static Set *initWithArray(Set *self, const Array *array) {
 
-	self = (Set *) super(Object, self, init);
-	if (self) {
-		if (array) {
-			$(array, enumerateObjects, initWithArray_enumerator, self);
-		}
-	}
+  self = (Set *) super(Object, self, init);
+  if (self) {
+    if (array) {
+      $(array, enumerateObjects, initWithArray_enumerator, self);
+    }
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -267,33 +267,33 @@ static Set *initWithArray(Set *self, const Array *array) {
  */
 static Set *initWithObjects(Set *self, ...) {
 
-	self = (Set *) super(Object, self, init);
-	if (self) {
+  self = (Set *) super(Object, self, init);
+  if (self) {
 
-		va_list args;
-		va_start(args, self);
+    va_list args;
+    va_start(args, self);
 
-		while (true) {
+    while (true) {
 
-			ident obj = va_arg(args, ident);
-			if (obj) {
-				$$(MutableSet, addObject, (MutableSet *) self, obj);
-			} else {
-				break;
-			}
-		}
+      ident obj = va_arg(args, ident);
+      if (obj) {
+        $$(MutableSet, addObject, (MutableSet *) self, obj);
+      } else {
+        break;
+      }
+    }
 
-		va_end(args);
-	}
+    va_end(args);
+  }
 
-	return self;
+  return self;
 }
 
 /**
  * @brief SetEnumerator for initWithSet.
  */
 static void initWithSet_enumerator(const Set *set, ident obj, ident data) {
-	$$(MutableSet, addObject, (MutableSet *) data, obj);
+  $$(MutableSet, addObject, (MutableSet *) data, obj);
 }
 
 /**
@@ -302,14 +302,14 @@ static void initWithSet_enumerator(const Set *set, ident obj, ident data) {
  */
 static Set *initWithSet(Set *self, const Set *set) {
 
-	self = (Set *) super(Object, self, init);
-	if (self) {
-		if (set) {
-			$(set, enumerateObjects, initWithSet_enumerator, self);
-		}
-	}
+  self = (Set *) super(Object, self, init);
+  if (self) {
+    if (set) {
+      $(set, enumerateObjects, initWithSet_enumerator, self);
+    }
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -318,28 +318,28 @@ static Set *initWithSet(Set *self, const Set *set) {
  */
 static Set *mappedSet(const Set *self, Functor functor, ident data) {
 
-	assert(functor);
+  assert(functor);
 
-	MutableSet *set = $(alloc(MutableSet), initWithCapacity, self->count);
-	assert(set);
+  MutableSet *set = $(alloc(MutableSet), initWithCapacity, self->count);
+  assert(set);
 
-	for (size_t i = 0; i < self->capacity; i++) {
+  for (size_t i = 0; i < self->capacity; i++) {
 
-		const Array *array = self->elements[i];
-		if (array) {
+    const Array *array = self->elements[i];
+    if (array) {
 
-			for (size_t j = 0; j < array->count; j++) {
+      for (size_t j = 0; j < array->count; j++) {
 
-				ident obj = functor(array->elements[j], data);
+        ident obj = functor(array->elements[j], data);
 
-				$(set, addObject, obj);
+        $(set, addObject, obj);
 
-				release(obj);
-			}
-		}
-	}
+        release(obj);
+      }
+    }
+  }
 
-	return (Set *) set;
+  return (Set *) set;
 }
 
 /**
@@ -348,11 +348,11 @@ static Set *mappedSet(const Set *self, Functor functor, ident data) {
  */
 static MutableSet *mutableCopy(const Set *self) {
 
-	MutableSet *copy = $(alloc(MutableSet), initWithCapacity, self->count);
-	assert(copy);
+  MutableSet *copy = $(alloc(MutableSet), initWithCapacity, self->count);
+  assert(copy);
 
-	$(copy, addObjectsFromSet, self);
-	return copy;
+  $(copy, addObjectsFromSet, self);
+  return copy;
 }
 
 /**
@@ -361,20 +361,20 @@ static MutableSet *mutableCopy(const Set *self) {
  */
 static ident reduce(const Set *self, Reducer reducer, ident accumulator, ident data) {
 
-	assert(reducer);
+  assert(reducer);
 
-	for (size_t i = 0; i < self->capacity; i++) {
+  for (size_t i = 0; i < self->capacity; i++) {
 
-		const Array *array = self->elements[i];
-		if (array) {
+    const Array *array = self->elements[i];
+    if (array) {
 
-			for (size_t j = 0; j < array->count; j++) {
-				accumulator = reducer(array->elements[j], accumulator, data);
-			}
-		}
-	}
+      for (size_t j = 0; j < array->count; j++) {
+        accumulator = reducer(array->elements[j], accumulator, data);
+      }
+    }
+  }
 
-	return accumulator;
+  return accumulator;
 }
 
 /**
@@ -383,7 +383,7 @@ static ident reduce(const Set *self, Reducer reducer, ident accumulator, ident d
  */
 static Set *setWithArray(const Array *array) {
 
-	return $(alloc(Set), initWithArray, array);
+  return $(alloc(Set), initWithArray, array);
 }
 
 /**
@@ -392,21 +392,21 @@ static Set *setWithArray(const Array *array) {
  */
 static Set *setWithObjects(ident obj, ...) {
 
-	Set *set = (Set *) $((Object *) alloc(Set), init);
-	if (set) {
+  Set *set = (Set *) $((Object *) alloc(Set), init);
+  if (set) {
 
-		va_list args;
-		va_start(args, obj);
+    va_list args;
+    va_start(args, obj);
 
-		while (obj) {
-			$$(MutableSet, addObject, (MutableSet * ) set, obj);
-			obj = va_arg(args, ident);
-		}
+    while (obj) {
+      $$(MutableSet, addObject, (MutableSet * ) set, obj);
+      obj = va_arg(args, ident);
+    }
 
-		va_end(args);
-	}
+    va_end(args);
+  }
 
-	return set;
+  return set;
 }
 
 /**
@@ -415,7 +415,7 @@ static Set *setWithObjects(ident obj, ...) {
  */
 static Set *setWithSet(const Set *set) {
 
-	return $(alloc(Set), initWithSet, set);
+  return $(alloc(Set), initWithSet, set);
 }
 
 #pragma mark - Class lifecycle
@@ -425,26 +425,26 @@ static Set *setWithSet(const Set *set) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
-	((ObjectInterface *) clazz->interface)->description = description;
-	((ObjectInterface *) clazz->interface)->hash = hash;
-	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->description = description;
+  ((ObjectInterface *) clazz->interface)->hash = hash;
+  ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((SetInterface *) clazz->interface)->allObjects = allObjects;
-	((SetInterface *) clazz->interface)->containsObject = containsObject;
-	((SetInterface *) clazz->interface)->containsObjectMatching = containsObjectMatching;
-	((SetInterface *) clazz->interface)->enumerateObjects = enumerateObjects;
-	((SetInterface *) clazz->interface)->filteredSet = filteredSet;
-	((SetInterface *) clazz->interface)->initWithArray = initWithArray;
-	((SetInterface *) clazz->interface)->initWithSet = initWithSet;
-	((SetInterface *) clazz->interface)->initWithObjects = initWithObjects;
-	((SetInterface *) clazz->interface)->mappedSet = mappedSet;
-	((SetInterface *) clazz->interface)->mutableCopy = mutableCopy;
-	((SetInterface *) clazz->interface)->reduce = reduce;
-	((SetInterface *) clazz->interface)->setWithArray = setWithArray;
-	((SetInterface *) clazz->interface)->setWithObjects = setWithObjects;
-	((SetInterface *) clazz->interface)->setWithSet = setWithSet;
+  ((SetInterface *) clazz->interface)->allObjects = allObjects;
+  ((SetInterface *) clazz->interface)->containsObject = containsObject;
+  ((SetInterface *) clazz->interface)->containsObjectMatching = containsObjectMatching;
+  ((SetInterface *) clazz->interface)->enumerateObjects = enumerateObjects;
+  ((SetInterface *) clazz->interface)->filteredSet = filteredSet;
+  ((SetInterface *) clazz->interface)->initWithArray = initWithArray;
+  ((SetInterface *) clazz->interface)->initWithSet = initWithSet;
+  ((SetInterface *) clazz->interface)->initWithObjects = initWithObjects;
+  ((SetInterface *) clazz->interface)->mappedSet = mappedSet;
+  ((SetInterface *) clazz->interface)->mutableCopy = mutableCopy;
+  ((SetInterface *) clazz->interface)->reduce = reduce;
+  ((SetInterface *) clazz->interface)->setWithArray = setWithArray;
+  ((SetInterface *) clazz->interface)->setWithObjects = setWithObjects;
+  ((SetInterface *) clazz->interface)->setWithSet = setWithSet;
 }
 
 /**
@@ -452,21 +452,21 @@ static void initialize(Class *clazz) {
  * @memberof Set
  */
 Class *_Set(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Set",
-			.superclass = _Object(),
-			.instanceSize = sizeof(Set),
-			.interfaceOffset = offsetof(Set, interface),
-			.interfaceSize = sizeof(SetInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Set",
+      .superclass = _Object(),
+      .instanceSize = sizeof(Set),
+      .interfaceOffset = offsetof(Set, interface),
+      .interfaceSize = sizeof(SetInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

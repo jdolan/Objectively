@@ -29,121 +29,121 @@
 
 START_TEST(string) {
 
-	String *string = str("hello %s!", "world");
+  String *string = str("hello %s!", "world");
 
-	ck_assert(string != NULL);
-	ck_assert_ptr_eq(_String(), classof(string));
+  ck_assert(string != NULL);
+  ck_assert_ptr_eq(_String(), classof(string));
 
-	String *copy = (String *) $((Object * ) string, copy);
-	ck_assert_str_eq("hello world!", copy->chars);
+  String *copy = (String *) $((Object * ) string, copy);
+  ck_assert_str_eq("hello world!", copy->chars);
 
-	ck_assert($((Object *) string, isEqual, (Object *) copy));
-	ck_assert_int_eq($((Object *) string, hash), $((Object *) copy, hash));
+  ck_assert($((Object *) string, isEqual, (Object *) copy));
+  ck_assert_int_eq($((Object *) string, hash), $((Object *) copy, hash));
 
-	String *prefix = str("hello");
-	ck_assert($(string, hasPrefix, prefix));
+  String *prefix = str("hello");
+  ck_assert($(string, hasPrefix, prefix));
 
-	String *suffix = str("world!");
-	ck_assert($(string, hasSuffix, suffix));
+  String *suffix = str("world!");
+  ck_assert($(string, hasSuffix, suffix));
 
-	Range range = { 6, 5 };
-	String *substring = $(string, substring, range);
-	ck_assert_str_eq("world", substring->chars);
+  Range range = { 6, 5 };
+  String *substring = $(string, substring, range);
+  ck_assert_str_eq("world", substring->chars);
 
-	Range match = $(string, rangeOfString, substring, range);
-	ck_assert_int_eq(range.location, match.location);
-	ck_assert_int_eq(range.length, match.length);
+  Range match = $(string, rangeOfString, substring, range);
+  ck_assert_int_eq(range.location, match.location);
+  ck_assert_int_eq(range.length, match.length);
 
-	String *sep = str(" ");
-	Array *components = $(string, componentsSeparatedByString, sep);
-	ck_assert_int_eq(2, components->count);
+  String *sep = str(" ");
+  Array *components = $(string, componentsSeparatedByString, sep);
+  ck_assert_int_eq(2, components->count);
 
-	for (int i = 0; i < components->count; i++) {
-		String *component = $(components, objectAtIndex, i);
+  for (int i = 0; i < components->count; i++) {
+    String *component = $(components, objectAtIndex, i);
 
-		switch (i) {
-			case 0:
-				ck_assert_str_eq("hello", component->chars);
-				break;
-			case 1:
-				ck_assert_str_eq("world!", component->chars);
-				break;
-			default:
-				break;
-		}
-	}
+    switch (i) {
+      case 0:
+        ck_assert_str_eq("hello", component->chars);
+        break;
+      case 1:
+        ck_assert_str_eq("world!", component->chars);
+        break;
+      default:
+        break;
+    }
+  }
 
-	String *upper = $(string, uppercaseString);
-	ck_assert_str_eq("HELLO WORLD!", upper->chars);
+  String *upper = $(string, uppercaseString);
+  ck_assert_str_eq("HELLO WORLD!", upper->chars);
 
-	String *lower = $(upper, lowercaseString);
-	ck_assert_str_eq("hello world!", lower->chars);
+  String *lower = $(upper, lowercaseString);
+  ck_assert_str_eq("hello world!", lower->chars);
 
-	String *whitespace = str(" hello ");
-	String *trimmed = $(whitespace, trimmedString);
-	ck_assert_str_eq("hello", trimmed->chars);
+  String *whitespace = str(" hello ");
+  String *trimmed = $(whitespace, trimmedString);
+  ck_assert_str_eq("hello", trimmed->chars);
 
-	const char *path = "/tmp/Objectively_String.test";
-	ck_assert($(string, writeToFile, path, STRING_ENCODING_UTF8));
+  const char *path = "/tmp/Objectively_String.test";
+  ck_assert($(string, writeToFile, path, STRING_ENCODING_UTF8));
 
-	String *fromFile = $$(String, stringWithContentsOfFile, path, STRING_ENCODING_UTF8);
-	ck_assert_str_eq("hello world!", fromFile->chars);
+  String *fromFile = $$(String, stringWithContentsOfFile, path, STRING_ENCODING_UTF8);
+  ck_assert_str_eq("hello world!", fromFile->chars);
 
-	unlink(path);
+  unlink(path);
 
-	release(fromFile);
-	release(upper);
-	release(lower);
-	release(whitespace);
-	release(trimmed);
-	release(sep);
-	release(components);
-	release(substring);
-	release(prefix);
-	release(suffix);
-	release(copy);
-	release(string);
+  release(fromFile);
+  release(upper);
+  release(lower);
+  release(whitespace);
+  release(trimmed);
+  release(sep);
+  release(components);
+  release(substring);
+  release(prefix);
+  release(suffix);
+  release(copy);
+  release(string);
 
 } END_TEST
 
 START_TEST(_strtrim) {
 
-	char *trimmed = strtrim("hello world");
-	ck_assert_str_eq("hello world", trimmed);
+  char *trimmed = strtrim("hello world");
+  ck_assert_str_eq("hello world", trimmed);
 
-	free(trimmed);
+  free(trimmed);
 
-	trimmed = strtrim("\t hello world");
-	ck_assert_str_eq("hello world", trimmed);
+  trimmed = strtrim("\t hello world");
+  ck_assert_str_eq("hello world", trimmed);
 
-	free(trimmed);
+  free(trimmed);
 
-	trimmed = strtrim("hello world\t ");
-	ck_assert_str_eq("hello world", trimmed);
+  trimmed = strtrim("hello world\t ");
+  ck_assert_str_eq("hello world", trimmed);
 
-	free(trimmed);
+  free(trimmed);
 
-	trimmed = strtrim("\n hello world \n\t");
-	ck_assert_str_eq("hello world", trimmed);
+  trimmed = strtrim("\n hello world \n\t");
+  ck_assert_str_eq("hello world", trimmed);
 
-	free(trimmed);
+  free(trimmed);
 } END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("String");
-	tcase_add_test(tcase, string);
-	tcase_add_test(tcase, _strtrim);
+  TCase *tcase = tcase_create("String");
+  tcase_add_test(tcase, string);
+  tcase_add_test(tcase, _strtrim);
 
-	Suite *suite = suite_create("String");
-	suite_add_tcase(suite, tcase);
+  Suite *suite = suite_create("String");
+  suite_add_tcase(suite, tcase);
 
-	SRunner *runner = srunner_create(suite);
+  SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_VERBOSE);
-	int failed = srunner_ntests_failed(runner);
+  srunner_run_all(runner, CK_VERBOSE);
+  int failed = srunner_ntests_failed(runner);
 
-	srunner_free(runner);
+  srunner_free(runner);
 
-	return failed;
+  return failed;
 }

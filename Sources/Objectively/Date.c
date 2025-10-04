@@ -35,14 +35,14 @@
  */
 static int hash(const Object *self) {
 
-	Date *this = (Date *) self;
+  Date *this = (Date *) self;
 
-	int hash = HASH_SEED;
+  int hash = HASH_SEED;
 
-	hash = HashForInteger(hash, this->time.tv_sec);
-	hash = HashForInteger(hash, this->time.tv_usec);
+  hash = HashForInteger(hash, this->time.tv_sec);
+  hash = HashForInteger(hash, this->time.tv_usec);
 
-	return hash;
+  return hash;
 }
 
 /**
@@ -50,19 +50,19 @@ static int hash(const Object *self) {
  */
 static bool isEqual(const Object *self, const Object *other) {
 
-	if (super(Object, self, isEqual, other)) {
-		return true;
-	}
+  if (super(Object, self, isEqual, other)) {
+    return true;
+  }
 
-	if (other && $(other, isKindOfClass, _Date())) {
+  if (other && $(other, isKindOfClass, _Date())) {
 
-		const Date *this = (Date *) self;
-		const Date *that = (Date *) other;
+    const Date *this = (Date *) self;
+    const Date *that = (Date *) other;
 
-		return $(this, compareTo, that) == OrderSame;
-	}
+    return $(this, compareTo, that) == OrderSame;
+  }
 
-	return false;
+  return false;
 }
 
 #pragma mark - Date
@@ -73,22 +73,22 @@ static bool isEqual(const Object *self, const Object *other) {
  */
 static Order compareTo(const Date *self, const Date *other) {
 
-	if (other) {
-		const long seconds = self->time.tv_sec - other->time.tv_sec;
-		if (seconds == 0) {
+  if (other) {
+    const long seconds = self->time.tv_sec - other->time.tv_sec;
+    if (seconds == 0) {
 
-			const long microseconds = self->time.tv_usec - other->time.tv_usec;
-			if (microseconds == 0) {
-				return OrderSame;
-			}
+      const long microseconds = self->time.tv_usec - other->time.tv_usec;
+      if (microseconds == 0) {
+        return OrderSame;
+      }
 
-			return microseconds < 0 ? OrderAscending : OrderDescending;
-		}
+      return microseconds < 0 ? OrderAscending : OrderDescending;
+    }
 
-		return seconds < 0 ? OrderAscending : OrderDescending;
-	}
+    return seconds < 0 ? OrderAscending : OrderDescending;
+  }
 
-	return OrderAscending;
+  return OrderAscending;
 }
 
 /**
@@ -97,7 +97,7 @@ static Order compareTo(const Date *self, const Date *other) {
  */
 static Date *date(void) {
 
-	return $$(Date, dateWithTimeSinceNow, NULL);
+  return $$(Date, dateWithTimeSinceNow, NULL);
 }
 
 /**
@@ -106,22 +106,22 @@ static Date *date(void) {
  */
 static Date *dateWithTimeSinceNow(const Time *interval) {
 
-	Date *date = $(alloc(Date), init);
-	if (date) {
-		if (interval) {
-			date->time.tv_sec += interval->tv_sec;
-			date->time.tv_usec += interval->tv_usec;
-			if (date->time.tv_usec >= USEC_PER_SEC) {
-				date->time.tv_sec++;
-				date->time.tv_usec -= USEC_PER_SEC;
-			} else if (date->time.tv_usec < 0) {
-				date->time.tv_sec--;
-				date->time.tv_usec += USEC_PER_SEC;
-			}
-		}
-	}
+  Date *date = $(alloc(Date), init);
+  if (date) {
+    if (interval) {
+      date->time.tv_sec += interval->tv_sec;
+      date->time.tv_usec += interval->tv_usec;
+      if (date->time.tv_usec >= USEC_PER_SEC) {
+        date->time.tv_sec++;
+        date->time.tv_usec -= USEC_PER_SEC;
+      } else if (date->time.tv_usec < 0) {
+        date->time.tv_sec--;
+        date->time.tv_usec += USEC_PER_SEC;
+      }
+    }
+  }
 
-	return date;
+  return date;
 }
 
 /**
@@ -129,7 +129,7 @@ static Date *dateWithTimeSinceNow(const Time *interval) {
  * @memberof Date
  */
 static Date *init(Date *self) {
-	return $(self, initWithTime, NULL);
+  return $(self, initWithTime, NULL);
 }
 
 /**
@@ -138,16 +138,16 @@ static Date *init(Date *self) {
  */
 static Date *initWithTime(Date *self, const Time *time) {
 
-	self = (Date *) super(Object, self, init);
-	if (self) {
-		if (time) {
-			self->time = *time;
-		} else {
-			gettimeofday(&self->time, NULL);
-		}
-	}
+  self = (Date *) super(Object, self, init);
+  if (self) {
+    if (time) {
+      self->time = *time;
+    } else {
+      gettimeofday(&self->time, NULL);
+    }
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -156,9 +156,9 @@ static Date *initWithTime(Date *self, const Time *time) {
  */
 static Time timeSinceDate(const Date *self, const Date *date) {
 
-	assert(date);
+  assert(date);
 
-	return $(self, timeSinceTime, &date->time);
+  return $(self, timeSinceTime, &date->time);
 }
 
 /**
@@ -167,13 +167,13 @@ static Time timeSinceDate(const Date *self, const Date *date) {
  */
 static Time timeSinceNow(const Date *self) {
 
-	Date *date = $$(Date, date);
+  Date *date = $$(Date, date);
 
-	Time time = $(self, timeSinceDate, date);
+  Time time = $(self, timeSinceDate, date);
 
-	release(date);
+  release(date);
 
-	return time;
+  return time;
 }
 
 /**
@@ -182,17 +182,17 @@ static Time timeSinceNow(const Date *self) {
  */
 static Time timeSinceTime(const Date *self, const Time *time) {
 
-	Time delta = {
-		.tv_sec = self->time.tv_sec - time->tv_sec,
-		.tv_usec = self->time.tv_usec - time->tv_usec
-	};
+  Time delta = {
+    .tv_sec = self->time.tv_sec - time->tv_sec,
+    .tv_usec = self->time.tv_usec - time->tv_usec
+  };
 
-	if (delta.tv_usec < 0) {
-		delta.tv_sec--;
-		delta.tv_usec += USEC_PER_SEC;
-	}
+  if (delta.tv_usec < 0) {
+    delta.tv_sec--;
+    delta.tv_usec += USEC_PER_SEC;
+  }
 
-	return delta;
+  return delta;
 }
 
 #pragma mark - Class lifecycle
@@ -202,17 +202,17 @@ static Time timeSinceTime(const Date *self, const Time *time) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->hash = hash;
-	((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+  ((ObjectInterface *) clazz->interface)->hash = hash;
+  ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-	((DateInterface *) clazz->interface)->compareTo = compareTo;
-	((DateInterface *) clazz->interface)->date = date;
-	((DateInterface *) clazz->interface)->dateWithTimeSinceNow = dateWithTimeSinceNow;
-	((DateInterface *) clazz->interface)->init = init;
-	((DateInterface *) clazz->interface)->initWithTime = initWithTime;
-	((DateInterface *) clazz->interface)->timeSinceDate = timeSinceDate;
-	((DateInterface *) clazz->interface)->timeSinceNow = timeSinceNow;
-	((DateInterface *) clazz->interface)->timeSinceTime = timeSinceTime;
+  ((DateInterface *) clazz->interface)->compareTo = compareTo;
+  ((DateInterface *) clazz->interface)->date = date;
+  ((DateInterface *) clazz->interface)->dateWithTimeSinceNow = dateWithTimeSinceNow;
+  ((DateInterface *) clazz->interface)->init = init;
+  ((DateInterface *) clazz->interface)->initWithTime = initWithTime;
+  ((DateInterface *) clazz->interface)->timeSinceDate = timeSinceDate;
+  ((DateInterface *) clazz->interface)->timeSinceNow = timeSinceNow;
+  ((DateInterface *) clazz->interface)->timeSinceTime = timeSinceTime;
 }
 
 /**
@@ -220,21 +220,21 @@ static void initialize(Class *clazz) {
  * @memberof Date
  */
 Class *_Date(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Date",
-			.superclass = _Object(),
-			.instanceSize = sizeof(Date),
-			.interfaceOffset = offsetof(Date, interface),
-			.interfaceSize = sizeof(DateInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Date",
+      .superclass = _Object(),
+      .instanceSize = sizeof(Date),
+      .interfaceOffset = offsetof(Date, interface),
+      .interfaceSize = sizeof(DateInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

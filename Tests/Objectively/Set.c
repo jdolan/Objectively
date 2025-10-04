@@ -26,89 +26,89 @@
 #include "Objectively.h"
 
 static void enumerator(const Set *set, ident obj, ident data) {
-	(*(int *) data)++;
+  (*(int *) data)++;
 }
 
 static bool filter(ident obj, ident data) {
-	return obj == data;
+  return obj == data;
 }
 
 static ident functor(const ident obj, ident data) {
-	return $((Object *) obj, copy);
+  return $((Object *) obj, copy);
 }
 
 static ident reducer(const ident obj, ident accumulator, ident data) {
-	return (ident) (intptr_t) accumulator + 1;
+  return (ident) (intptr_t) accumulator + 1;
 }
 
 START_TEST(set) {
 
-	Object *one = $(alloc(Object), init);
-	Object *two = $(alloc(Object), init);
-	Object *three = $(alloc(Object), init);
+  Object *one = $(alloc(Object), init);
+  Object *two = $(alloc(Object), init);
+  Object *three = $(alloc(Object), init);
 
-	Set *set = $$(Set, setWithObjects, one, one, two, two, three, three, NULL);
+  Set *set = $$(Set, setWithObjects, one, one, two, two, three, three, NULL);
 
-	ck_assert(set != NULL);
-	ck_assert_ptr_eq(_Set(), classof(set));
+  ck_assert(set != NULL);
+  ck_assert_ptr_eq(_Set(), classof(set));
 
-	ck_assert_int_eq(3, set->count);
+  ck_assert_int_eq(3, set->count);
 
-	ck_assert($(set, containsObject, one));
-	ck_assert($(set, containsObject, two));
-	ck_assert($(set, containsObject, three));
+  ck_assert($(set, containsObject, one));
+  ck_assert($(set, containsObject, two));
+  ck_assert($(set, containsObject, three));
 
-	ck_assert($(set, containsObjectMatching, filter, one));
+  ck_assert($(set, containsObjectMatching, filter, one));
 
-	ck_assert_int_eq(2, one->referenceCount);
-	ck_assert_int_eq(2, two->referenceCount);
-	ck_assert_int_eq(2, three->referenceCount);
+  ck_assert_int_eq(2, one->referenceCount);
+  ck_assert_int_eq(2, two->referenceCount);
+  ck_assert_int_eq(2, three->referenceCount);
 
-	release(one);
-	release(two);
-	release(three);
+  release(one);
+  release(two);
+  release(three);
 
-	int count = 0;
-	$(set, enumerateObjects, enumerator, &count);
+  int count = 0;
+  $(set, enumerateObjects, enumerator, &count);
 
-	ck_assert_int_eq(set->count, count);
+  ck_assert_int_eq(set->count, count);
 
-	Set *filtered = $(set, filteredSet, filter, two);
+  Set *filtered = $(set, filteredSet, filter, two);
 
-	ck_assert_int_eq(1, filtered->count);
-	ck_assert($(filtered, containsObject, two));
+  ck_assert_int_eq(1, filtered->count);
+  ck_assert($(filtered, containsObject, two));
 
-	ck_assert(!$(filtered, containsObjectMatching, filter, one));
-	ck_assert($(filtered, containsObjectMatching, filter, two));
-	ck_assert(!$(filtered, containsObjectMatching, filter, three));
+  ck_assert(!$(filtered, containsObjectMatching, filter, one));
+  ck_assert($(filtered, containsObjectMatching, filter, two));
+  ck_assert(!$(filtered, containsObjectMatching, filter, three));
 
-	Set *mapped = $(set, mappedSet, functor, NULL);
+  Set *mapped = $(set, mappedSet, functor, NULL);
 
-	ck_assert_int_eq(set->count, mapped->count);
+  ck_assert_int_eq(set->count, mapped->count);
 
-	int reduced = (int) (intptr_t) $(set, reduce, reducer, (ident) 0, NULL);
-	ck_assert_int_eq(3, reduced);
+  int reduced = (int) (intptr_t) $(set, reduce, reducer, (ident) 0, NULL);
+  ck_assert_int_eq(3, reduced);
 
-	release(mapped);
-	release(filtered);
-	release(set);
+  release(mapped);
+  release(filtered);
+  release(set);
 
 } END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("Set");
-	tcase_add_test(tcase, set);
+  TCase *tcase = tcase_create("Set");
+  tcase_add_test(tcase, set);
 
-	Suite *suite = suite_create("Set");
-	suite_add_tcase(suite, tcase);
+  Suite *suite = suite_create("Set");
+  suite_add_tcase(suite, tcase);
 
-	SRunner *runner = srunner_create(suite);
+  SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_VERBOSE);
-	int failed = srunner_ntests_failed(runner);
+  srunner_run_all(runner, CK_VERBOSE);
+  int failed = srunner_ntests_failed(runner);
 
-	srunner_free(runner);
+  srunner_free(runner);
 
-	return failed;
+  return failed;
 }

@@ -37,7 +37,7 @@
  * @see Object::copy(const Object *)
  */
 static Object *copy(const Object *self) {
-	return NULL;
+  return NULL;
 }
 
 /**
@@ -45,12 +45,12 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-	Lock *this = (Lock *) self;
+  Lock *this = (Lock *) self;
 
-	pthread_mutex_destroy(this->lock);
-	free(this->lock);
+  pthread_mutex_destroy(this->lock);
+  free(this->lock);
 
-	super(Object, self, dealloc);
+  super(Object, self, dealloc);
 }
 
 #pragma mark - Lock
@@ -61,17 +61,17 @@ static void dealloc(Object *self) {
  */
 static Lock *init(Lock *self) {
 
-	self = (Lock *) super(Object, self, init);
-	if (self) {
+  self = (Lock *) super(Object, self, init);
+  if (self) {
 
-		self->lock = calloc(1, sizeof(pthread_mutex_t));
-		assert(self->lock);
+    self->lock = calloc(1, sizeof(pthread_mutex_t));
+    assert(self->lock);
 
-		const int err = pthread_mutex_init(self->lock, NULL);
-		assert(err == 0);
-	}
+    const int err = pthread_mutex_init(self->lock, NULL);
+    assert(err == 0);
+  }
 
-	return self;
+  return self;
 }
 
 /**
@@ -80,8 +80,8 @@ static Lock *init(Lock *self) {
  */
 static void lock(Lock *self) {
 
-	int err = pthread_mutex_lock(self->lock);
-	assert(err == 0);
+  int err = pthread_mutex_lock(self->lock);
+  assert(err == 0);
 }
 
 /**
@@ -90,10 +90,10 @@ static void lock(Lock *self) {
  */
 static bool tryLock(Lock *self) {
 
-	int err = pthread_mutex_trylock(self->lock);
-	assert(err == 0 || err == EBUSY);
+  int err = pthread_mutex_trylock(self->lock);
+  assert(err == 0 || err == EBUSY);
 
-	return err == 0;
+  return err == 0;
 }
 
 /**
@@ -102,8 +102,8 @@ static bool tryLock(Lock *self) {
  */
 static void unlock(Lock *self) {
 
-	int err = pthread_mutex_unlock(self->lock);
-	assert(err == 0);
+  int err = pthread_mutex_unlock(self->lock);
+  assert(err == 0);
 }
 
 #pragma mark - Class lifecycle
@@ -113,13 +113,13 @@ static void unlock(Lock *self) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->copy = copy;
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((LockInterface *) clazz->interface)->init = init;
-	((LockInterface *) clazz->interface)->lock = lock;
-	((LockInterface *) clazz->interface)->tryLock = tryLock;
-	((LockInterface *) clazz->interface)->unlock = unlock;
+  ((LockInterface *) clazz->interface)->init = init;
+  ((LockInterface *) clazz->interface)->lock = lock;
+  ((LockInterface *) clazz->interface)->tryLock = tryLock;
+  ((LockInterface *) clazz->interface)->unlock = unlock;
 }
 
 /**
@@ -127,21 +127,21 @@ static void initialize(Class *clazz) {
  * @memberof Lock
  */
 Class *_Lock(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Lock",
-			.superclass = _Object(),
-			.instanceSize = sizeof(Lock),
-			.interfaceOffset = offsetof(Lock, interface),
-			.interfaceSize = sizeof(LockInterface),
-			.initialize = initialize,
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Lock",
+      .superclass = _Object(),
+      .instanceSize = sizeof(Lock),
+      .interfaceOffset = offsetof(Lock, interface),
+      .interfaceSize = sizeof(LockInterface),
+      .initialize = initialize,
+    });
+  });
 
-	return clazz;
+  return clazz;
 }
 
 #undef _Class

@@ -40,12 +40,12 @@ typedef struct URLRequestInterface URLRequestInterface;
  * The HTTP method verbs.
  */
 typedef enum {
-	HTTP_NONE,
-	HTTP_GET,
-	HTTP_POST,
-	HTTP_PUT,
-	HTTP_DELETE,
-	HTTP_HEAD
+  HTTP_NONE,
+  HTTP_GET,
+  HTTP_POST,
+  HTTP_PUT,
+  HTTP_DELETE,
+  HTTP_HEAD
 } HTTPMethod;
 
 /**
@@ -55,36 +55,36 @@ typedef enum {
  */
 struct URLRequest {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Object object;
+  /**
+   * @brief The superclass.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	URLRequestInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  URLRequestInterface *interface;
 
-	/**
-	 * @brief The HTTP request body, sent as `POST` or `PUT` data.
-	 */
-	Data *httpBody;
+  /**
+   * @brief The HTTP request body, sent as `POST` or `PUT` data.
+   */
+  Data *httpBody;
 
-	/**
-	 * @brief The HTTP request headers.
-	 */
-	Dictionary *httpHeaders;
+  /**
+   * @brief The HTTP request headers.
+   */
+  Dictionary *httpHeaders;
 
-	/**
-	 * @brief The HTTP request method.
-	 */
-	HTTPMethod httpMethod;
+  /**
+   * @brief The HTTP request method.
+   */
+  HTTPMethod httpMethod;
 
-	/**
-	 * @brief The URL.
-	 */
-	URL *url;
+  /**
+   * @brief The URL.
+   */
+  URL *url;
 };
 
 /**
@@ -92,30 +92,30 @@ struct URLRequest {
  */
 struct URLRequestInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @fn URLRequest *URLRequest::initWithURL(URLRequest *self, URL *url)
-	 * @brief Initializes this URLRequest with the specified URL.
-	 * @param self The URLRequest.
-	 * @param url The URL.
-	 * @return The initialized URLRequest, or `NULL` on error.
-	 * @memberof URLRequest
-	 */
-	URLRequest *(*initWithURL)(URLRequest *self, URL *url);
+  /**
+   * @fn URLRequest *URLRequest::initWithURL(URLRequest *self, URL *url)
+   * @brief Initializes this URLRequest with the specified URL.
+   * @param self The URLRequest.
+   * @param url The URL.
+   * @return The initialized URLRequest, or `NULL` on error.
+   * @memberof URLRequest
+   */
+  URLRequest *(*initWithURL)(URLRequest *self, URL *url);
 
-	/**
-	 * @fn void setValueForHTTPHeaderField(URLRequest *self, const char *value, const char *field)
-	 * @brief Sets a value for the specified HTTP header.
-	 * @param self The URLRequest.
-	 * @param value The HTTP header value.
-	 * @param field The HTTP header field.
-	 * @memberof URLRequest
-	 */
-	void (*setValueForHTTPHeaderField)(URLRequest *self, const char *value, const char *field);
+  /**
+   * @fn void setValueForHTTPHeaderField(URLRequest *self, const char *value, const char *field)
+   * @brief Sets a value for the specified HTTP header.
+   * @param self The URLRequest.
+   * @param value The HTTP header value.
+   * @param field The HTTP header field.
+   * @memberof URLRequest
+   */
+  void (*setValueForHTTPHeaderField)(URLRequest *self, const char *value, const char *field);
 };
 
 /**

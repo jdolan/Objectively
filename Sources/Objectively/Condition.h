@@ -43,22 +43,22 @@ typedef struct ConditionInterface ConditionInterface;
  */
 struct Condition {
 
-	/**
-	 * @brief The superclass.
-	 */
-	Lock lock;
+  /**
+   * @brief The superclass.
+   */
+  Lock lock;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	ConditionInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  ConditionInterface *interface;
 
-	/**
-	 * @brief The backing condition.
-	 * @private
-	 */
-	ident condition;
+  /**
+   * @brief The backing condition.
+   * @private
+   */
+  ident condition;
 };
 
 /**
@@ -66,57 +66,57 @@ struct Condition {
  */
 struct ConditionInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	LockInterface lockInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  LockInterface lockInterface;
 
-	/**
-	 * @fn void Condition::broadcast(Condition *self)
-	 * @brief Signals all Threads waiting on this Condition.
-	 * @param self The Condition.
-	 * @remarks This method should only be called when the Condition is locked.
-	 * @memberof Condition
-	 */
-	void (*broadcast)(Condition *self);
+  /**
+   * @fn void Condition::broadcast(Condition *self)
+   * @brief Signals all Threads waiting on this Condition.
+   * @param self The Condition.
+   * @remarks This method should only be called when the Condition is locked.
+   * @memberof Condition
+   */
+  void (*broadcast)(Condition *self);
 
-	/**
-	 * @fn Condition *Condition::init(Condition *self)
-	 * @brief Initializes this Condition.
-	 * @param self The Condition.
-	 * @return The initialized Condition, or `NULL` on error.
-	 * @memberof Condition
-	 */
-	Condition *(*init)(Condition *self);
+  /**
+   * @fn Condition *Condition::init(Condition *self)
+   * @brief Initializes this Condition.
+   * @param self The Condition.
+   * @return The initialized Condition, or `NULL` on error.
+   * @memberof Condition
+   */
+  Condition *(*init)(Condition *self);
 
-	/**
-	 * @fn void Condition::signal(Condition *self)
-	 * @brief Signals a single Thread waiting on this Condition.
-	 * @param self The Condition.
-	 * @remarks This method should only be called when the Condition is locked.
-	 * @memberof Condition
-	 */
-	void (*signal)(Condition *self);
+  /**
+   * @fn void Condition::signal(Condition *self)
+   * @brief Signals a single Thread waiting on this Condition.
+   * @param self The Condition.
+   * @remarks This method should only be called when the Condition is locked.
+   * @memberof Condition
+   */
+  void (*signal)(Condition *self);
 
-	/**
-	 * @fn void Condition::wait(Condition *self)
-	 * @brief Waits indefinitely for this Condition to be signaled.
-	 * @param self The Condition.
-	 * @remarks This method should only be called when the Condition is locked.
-	 * @memberof Condition
-	 */
-	void (*wait)(Condition *self);
+  /**
+   * @fn void Condition::wait(Condition *self)
+   * @brief Waits indefinitely for this Condition to be signaled.
+   * @param self The Condition.
+   * @remarks This method should only be called when the Condition is locked.
+   * @memberof Condition
+   */
+  void (*wait)(Condition *self);
 
-	/**
-	 * @fn bool Condition::waitUntilDate(Condition *self, const Date *date)
-	 * @brief Waits until the specified Date for this Condition to be signaled.
-	 * @param self The Condition.
-	 * @param date The Date until which to wait.
-	 * @return `true` if this Condition was signaled before `date`, `false` otherwise.
-	 * @remarks This method should only be called when the Condition is locked.
-	 * @memberof Condition
-	 */
-	bool (*waitUntilDate)(Condition *self, const Date *date);
+  /**
+   * @fn bool Condition::waitUntilDate(Condition *self, const Date *date)
+   * @brief Waits until the specified Date for this Condition to be signaled.
+   * @param self The Condition.
+   * @param date The Date until which to wait.
+   * @return `true` if this Condition was signaled before `date`, `false` otherwise.
+   * @remarks This method should only be called when the Condition is locked.
+   * @memberof Condition
+   */
+  bool (*waitUntilDate)(Condition *self, const Date *date);
 };
 
 /**

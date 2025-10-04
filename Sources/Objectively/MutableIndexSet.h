@@ -40,21 +40,21 @@ typedef struct MutableIndexSetInterface MutableIndexSetInterface;
  */
 struct MutableIndexSet {
 
-	/**
-	 * @brief The superclass.
-	 */
-	IndexSet indexSet;
+  /**
+   * @brief The superclass.
+   */
+  IndexSet indexSet;
 
-	/**
-	 * @brief The interface.
-	 * @protected
-	 */
-	MutableIndexSetInterface *interface;
+  /**
+   * @brief The interface.
+   * @protected
+   */
+  MutableIndexSetInterface *interface;
 
-	/**
-	 * @brief The capacity.
-	 */
-	size_t capacity;
+  /**
+   * @brief The capacity.
+   */
+  size_t capacity;
 };
 
 /**
@@ -62,93 +62,93 @@ struct MutableIndexSet {
  */
 struct MutableIndexSetInterface {
 
-	/**
-	 * @brief The superclass interface.
-	 */
-	IndexSetInterface indexSetInterface;
+  /**
+   * @brief The superclass interface.
+   */
+  IndexSetInterface indexSetInterface;
 
-	/**
-	 * @fn void MutableIndexSet::addIndex(MutableIndexSet *self, size_t index)
-	 * @brief Adds the specified index to this MutableIndexSet.
-	 * @param self The MutableIndexSet.
-	 * @param index The index to add.
-	 * @memberof MutableIndexSet
-	 */
-	void (*addIndex)(MutableIndexSet *self, size_t index);
+  /**
+   * @fn void MutableIndexSet::addIndex(MutableIndexSet *self, size_t index)
+   * @brief Adds the specified index to this MutableIndexSet.
+   * @param self The MutableIndexSet.
+   * @param index The index to add.
+   * @memberof MutableIndexSet
+   */
+  void (*addIndex)(MutableIndexSet *self, size_t index);
 
-	/**
-	 * @fn void MutableIndexSet::addIndexes(MutableIndexSet *self, size_t *indexes, size_t count)
-	 * @brief Adds the specified indexes to this MutableIndexSet.
-	 * @param self The MutableIndexSet.
-	 * @param indexes The indexes to add.
-	 * @param count The count of indexes.
-	 * @memberof MutableIndexSet
-	 */
-	void (*addIndexes)(MutableIndexSet *self, size_t *indexes, size_t count);
+  /**
+   * @fn void MutableIndexSet::addIndexes(MutableIndexSet *self, size_t *indexes, size_t count)
+   * @brief Adds the specified indexes to this MutableIndexSet.
+   * @param self The MutableIndexSet.
+   * @param indexes The indexes to add.
+   * @param count The count of indexes.
+   * @memberof MutableIndexSet
+   */
+  void (*addIndexes)(MutableIndexSet *self, size_t *indexes, size_t count);
 
-	/**
-	 * @fn void MutableIndexSet::addIndexesInRange(MutableIndexSet *self, const Range range)
-	 * @brief Adds indexes in the specified Range to this MutableIndexSet.
-	 * @param self The MutableIndexSet.
-	 * @param range The Range of indexes to add.
-	 * @memberof MutableIndexSet
-	 */
-	void (*addIndexesInRange)(MutableIndexSet *self, const Range range);
+  /**
+   * @fn void MutableIndexSet::addIndexesInRange(MutableIndexSet *self, const Range range)
+   * @brief Adds indexes in the specified Range to this MutableIndexSet.
+   * @param self The MutableIndexSet.
+   * @param range The Range of indexes to add.
+   * @memberof MutableIndexSet
+   */
+  void (*addIndexesInRange)(MutableIndexSet *self, const Range range);
 
-	/**
-	 * @fn MutableIndexSet *MutableIndexSet::init(MutableIndexSet *self)
-	 * @brief Initializes this MutableIndexSet.
-	 * @param self The MutableIndexSet.
-	 * @return The initialized MutableIndexSet, or `NULL` on error.
-	 * @memberof MutableIndexSet
-	 */
-	MutableIndexSet *(*init)(MutableIndexSet *self);
+  /**
+   * @fn MutableIndexSet *MutableIndexSet::init(MutableIndexSet *self)
+   * @brief Initializes this MutableIndexSet.
+   * @param self The MutableIndexSet.
+   * @return The initialized MutableIndexSet, or `NULL` on error.
+   * @memberof MutableIndexSet
+   */
+  MutableIndexSet *(*init)(MutableIndexSet *self);
 
-	/**
-	 * @fn MutableIndexSet *MutableIndexSet::initWithCapacity(MutableIndexSet *self, size_t capacity)
-	 * @brief Initializes this MutableIndexSet with the specified capacity.
-	 * @param self The MutableIndexSet.
-	 * @param capacity The capacity.
-	 * @return The initialized MutableIndexSet, or `NULL` on error.
-	 * @memberof MutableIndexSet
-	 */
-	MutableIndexSet *(*initWithCapacity)(MutableIndexSet *self, size_t capacity);
+  /**
+   * @fn MutableIndexSet *MutableIndexSet::initWithCapacity(MutableIndexSet *self, size_t capacity)
+   * @brief Initializes this MutableIndexSet with the specified capacity.
+   * @param self The MutableIndexSet.
+   * @param capacity The capacity.
+   * @return The initialized MutableIndexSet, or `NULL` on error.
+   * @memberof MutableIndexSet
+   */
+  MutableIndexSet *(*initWithCapacity)(MutableIndexSet *self, size_t capacity);
 
-	/**
-	 * @fn void MutableIndexSet::removeAllIndexes(MutableIndexSet *self)
-	 * @brief Removes all indexes from this MutableIndexSet.
-	 * @param self The MutableIndexSet.
-	 * @memberof MutableIndexSet
-	 */
-	void (*removeAllIndexes)(MutableIndexSet *self);
+  /**
+   * @fn void MutableIndexSet::removeAllIndexes(MutableIndexSet *self)
+   * @brief Removes all indexes from this MutableIndexSet.
+   * @param self The MutableIndexSet.
+   * @memberof MutableIndexSet
+   */
+  void (*removeAllIndexes)(MutableIndexSet *self);
 
-	/**
-	 * @fn void MutableIndexSet::removeIndex(MutableIndexSet *self, size_t index)
-	 * @brief Removes the specified index from this MutableIndexSet.
-	 * @param self The MutableIndexSet.
-	 * @param index The index to remove.
-	 * @memberof MutableIndexSet
-	 */
-	void (*removeIndex)(MutableIndexSet *self, size_t index);
+  /**
+   * @fn void MutableIndexSet::removeIndex(MutableIndexSet *self, size_t index)
+   * @brief Removes the specified index from this MutableIndexSet.
+   * @param self The MutableIndexSet.
+   * @param index The index to remove.
+   * @memberof MutableIndexSet
+   */
+  void (*removeIndex)(MutableIndexSet *self, size_t index);
 
-	/**
-	 * @fn void MutableIndexSet::removeIndexes(MutableIndexSet *self, size_t *indexes, size_t count)
-	 * @brief Removes the specified indexes from this MutableIndexSet.
-	 * @param self The MutableIndexSet.
-	 * @param indexes The indexes to remove.
-	 * @param count The count of indexes.
-	 * @memberof MutableIndexSet
-	 */
-	void (*removeIndexes)(MutableIndexSet *self, size_t *indexes, size_t count);
+  /**
+   * @fn void MutableIndexSet::removeIndexes(MutableIndexSet *self, size_t *indexes, size_t count)
+   * @brief Removes the specified indexes from this MutableIndexSet.
+   * @param self The MutableIndexSet.
+   * @param indexes The indexes to remove.
+   * @param count The count of indexes.
+   * @memberof MutableIndexSet
+   */
+  void (*removeIndexes)(MutableIndexSet *self, size_t *indexes, size_t count);
 
-	/**
-	* @fn void MutableIndexSet::removeIndexesInRange(MutableIndexSet *self, const Range range)
-	* @brief Removes indexes in the specified Range from this MutableIndexSet.
-	* @param self The MutableIndexSet.
-	* @param range The Range of indexes to remove.
-	* @memberof MutableIndexSet
-	*/
-	void (*removeIndexesInRange)(MutableIndexSet *self, const Range range);
+  /**
+  * @fn void MutableIndexSet::removeIndexesInRange(MutableIndexSet *self, const Range range)
+  * @brief Removes indexes in the specified Range from this MutableIndexSet.
+  * @param self The MutableIndexSet.
+  * @param range The Range of indexes to remove.
+  * @memberof MutableIndexSet
+  */
+  void (*removeIndexesInRange)(MutableIndexSet *self, const Range range);
 };
 
 /**

@@ -27,48 +27,48 @@
 
 START_TEST(object) {
 
-	Class *clazz = classForName("Object");
-	ck_assert_ptr_ne(NULL, clazz);
+  Class *clazz = classForName("Object");
+  ck_assert_ptr_ne(NULL, clazz);
 
-	ck_assert_ptr_eq(_Object(), clazz);
+  ck_assert_ptr_eq(_Object(), clazz);
 
-	Object *object = $(alloc(Object), init);
+  Object *object = $(alloc(Object), init);
 
-	ck_assert(object != NULL);
-	ck_assert_ptr_eq(_Object(), classof(object));
+  ck_assert(object != NULL);
+  ck_assert_ptr_eq(_Object(), classof(object));
 
-	ck_assert($(object, isEqual, object));
-	ck_assert($(object, isKindOfClass, classof(object)));
+  ck_assert($(object, isEqual, object));
+  ck_assert($(object, isKindOfClass, classof(object)));
 
-	ck_assert(instanceof(Object, object));
-	ck_assert(instanceof(Object, NULL) == false);
+  ck_assert(instanceof(Object, object));
+  ck_assert(instanceof(Object, NULL) == false);
 
-	Object *copy = $(object, copy);
+  Object *copy = $(object, copy);
 
-	ck_assert(copy != NULL);
+  ck_assert(copy != NULL);
 
-	ck_assert(!$(copy, isEqual, object));
-	ck_assert($(copy, isKindOfClass, classof(object)));
+  ck_assert(!$(copy, isEqual, object));
+  ck_assert($(copy, isKindOfClass, classof(object)));
 
-	release(copy);
-	release(object);
+  release(copy);
+  release(object);
 
 } END_TEST
 
 int main(int argc, char **argv) {
 
-	TCase *tcase = tcase_create("Object");
-	tcase_add_test(tcase, object);
+  TCase *tcase = tcase_create("Object");
+  tcase_add_test(tcase, object);
 
-	Suite *suite = suite_create("Object");
-	suite_add_tcase(suite, tcase);
+  Suite *suite = suite_create("Object");
+  suite_add_tcase(suite, tcase);
 
-	SRunner *runner = srunner_create(suite);
+  SRunner *runner = srunner_create(suite);
 
-	srunner_run_all(runner, CK_VERBOSE);
-	int failed = srunner_ntests_failed(runner);
+  srunner_run_all(runner, CK_VERBOSE);
+  int failed = srunner_ntests_failed(runner);
 
-	srunner_free(runner);
+  srunner_free(runner);
 
-	return failed;
+  return failed;
 }
