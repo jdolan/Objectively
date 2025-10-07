@@ -254,7 +254,7 @@ struct ArrayInterface {
   MutableArray *(*mutableCopy)(const Array *self);
 
   /**
-   * @fn ident Array::objectAtIndex(const Array *self, int index)
+   * @fn ident Array::objectAtIndex(const Array *self, size_t index)
    * @param self The Array.
    * @param index The index of the desired Object.
    * @return The Object at the specified index.

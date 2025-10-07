@@ -387,7 +387,7 @@ static MutableArray *mutableCopy(const Array *self) {
 }
 
 /**
- * @fn ident Array::objectAtIndex(const Array *self, int index)
+ * @fn ident Array::objectAtIndex(const Array *self, size_t index)
  * @memberof Array
  */
 static ident objectAtIndex(const Array *self, size_t index) {
