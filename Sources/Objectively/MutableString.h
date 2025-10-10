@@ -134,6 +134,16 @@ struct MutableStringInterface {
   MutableString *(*initWithCapacity)(MutableString *self, size_t capacity);
 
   /**
+   * @fn MutableString *MutableString::initWithCharacters(MutableString *self, const char *chars)
+   * @brief Initializes this MutableString by copying `chars`.
+   * @param self The MutableString.
+   * @param chars The null-terminated, UTF-8 encoded C string.
+   * @return The initialized MutableString, or `NULL` on error.
+   * @memberof MutableString
+   */
+  MutableString *(*initWithCharacters)(MutableString *self, const char *chars);
+
+  /**
    * @fn MutableString *MutableString::initWithString(MutableString *self, const String *string)
    * @brief Initializes this MutableString with the contents of `string`.
    * @param self The MutableString.
@@ -142,6 +152,27 @@ struct MutableStringInterface {
    * @memberof MutableString
    */
   MutableString *(*initWithString)(MutableString *self, const String *string);
+
+  /**
+   * @fn MutableString *MutableString::initWithString(MutableString *self, const char *fmt, ...)
+   * @brief Initializes this MutableString with the specified format string.
+   * @param self The MutableString.
+   * @param fmt The format string.
+   * @return The initialized MutableString, or `NULL` on error.
+   * @memberof MutableString
+   */
+  MutableString *(*initWithFormat)(MutableString *self, const char *fmt, ...);
+
+  /**
+   * @fn MutableString *MutableString::initWithVaList(MutableString *self, const char *fmt, va_list args)
+   * @brief Initializes this MutableString with the specified arguments list.
+   * @param self The MutableString.
+   * @param fmt The format string.
+   * @param args The format arguments.
+   * @return The initialized MutableString, or `NULL` on error.
+   * @memberof MutableString
+   */
+  MutableString *(*initWithVaList)(MutableString *self, const char *fmt, va_list args);
 
   /**
    * @fn void MutableString::insertCharactersAtIndex(MutableString *self, const char *chars, size_t index)
@@ -224,6 +255,33 @@ struct MutableStringInterface {
    * @memberof MutableString
    */
   void (*replaceStringInRange)(MutableString *self, const Range range, const String *string);
+
+  /**
+   * @fn void MutableString::setCharacters(MutableString *self, const char *chars)
+   * @brief Sets the contents of this MutableString to `chars`.
+   * @param self The MutableString.
+   * @param chars The characters to set, or NULL.
+   * @memberof MutableString
+   */
+  void (*setCharacters)(MutableString *self, const char *chars);
+
+  /**
+   * @fn void MutableString::setFormat(MutableString *self, const char *chars)
+   * @brief Sets the contents of this MutableString to the formatted string.
+   * @param self The MutableString.
+   * @param fmt The format string.
+   * @memberof MutableString
+   */
+  void (*setFormat)(MutableString *self, const char *fmt, ...);
+
+  /**
+   * @fn void MutableString::setString(MutableString *self, const String *string)
+   * @brief Sets the contents of this MutableString to that of `string`.
+   * @param self The MutableString.
+   * @param chars The String to set the contents from, or NULL.
+   * @memberof MutableString
+   */
+  void (*setString)(MutableString *self, const String *string);
 
   /**
    * @static

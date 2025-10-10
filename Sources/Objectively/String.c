@@ -373,11 +373,8 @@ static String *initWithMemory(String *self, const ident mem, size_t length) {
 
   self = (String *) super(Object, self, init);
   if (self) {
-
-    if (mem) {
-      self->chars = (char *) mem;
-      self->length = length;
-    }
+    self->chars = (char *) mem;
+    self->length = length;
   }
 
   return self;

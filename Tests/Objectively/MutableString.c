@@ -51,6 +51,12 @@ START_TEST(string) {
   $(string, replaceOccurrencesOfCharacters, " ", "");
   ck_assert_str_eq("goodbyecruelworld!", string->string.chars);
 
+  $(string, setString, NULL);
+  ck_assert_ptr_null(string->string.chars);
+
+  $(string, setString, hello);
+  ck_assert_str_eq("hello", string->string.chars);
+
   String *copy = (String *) $((Object * ) string, copy);
   ck_assert_ptr_eq(_MutableString(), classof(copy));
   ck_assert($((Object *) string, isEqual, (Object *) copy));

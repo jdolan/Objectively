@@ -155,12 +155,25 @@ static MutableString *initWithCapacity(MutableString *self, size_t capacity) {
 
   self = (MutableString *) super(String, self, initWithMemory, NULL, 0);
   if (self) {
-    if (capacity) {
-      self->string.chars = calloc(capacity, sizeof(char));
+    self->capacity = capacity;
+    if (self->capacity) {
+      self->string.chars = calloc(self->capacity, sizeof(char));
       assert(self->string.chars);
-
-      self->capacity = capacity;
     }
+  }
+
+  return self;
+}
+
+/**
+ * @fn MutableString *MutableString::initWithCharacters(MutableString *self, const char *chars)
+ * @memberof MutableString
+ */
+static MutableString *initWithCharacters(MutableString *self, const char *chars) {
+
+  self = $(self, init);
+  if (self) {
+    $(self, appendCharacters, chars);
   }
 
   return self;
@@ -175,6 +188,40 @@ static MutableString *initWithString(MutableString *self, const String *string) 
   self = $(self, init);
   if (self) {
     $(self, appendString, string);
+  }
+
+  return self;
+}
+
+/**
+ * @fn MutableString *MutableString::initWithFormat(MutableString *self, const char *fmt, ...)
+ * @memberof MutableString
+ */
+static MutableString *initWithFormat(MutableString *self, const char *fmt, ...) {
+
+  self = $(self, init);
+  if (self) {
+
+    va_list args;
+    va_start(args, fmt);
+
+    $(self, appendVaList, fmt, args);
+
+    va_end(args);
+  }
+
+  return self;
+}
+
+/**
+ * @fn MutableString *MutableString::initWithVaList(MutableString *self, const char *fmt, va_list args)
+ * @memberof MutableString
+ */
+static MutableString *initWithVaList(MutableString *self, const char *fmt, va_list args) {
+
+  self = $(self, init);
+  if (self) {
+    $(self, appendVaList, fmt, args);
   }
 
   return self;
@@ -292,11 +339,51 @@ static void replaceStringInRange(MutableString *self, const Range range, const S
 }
 
 /**
+ * @fn void MutableString::setCharacters(MutableString *self, const char *chars)
+ * @memberof MutableString
+ */
+static void setCharacters(MutableString *self, const char *chars) {
+
+  free(self->string.chars);
+
+  self = $(self, initWithCharacters, chars);
+  assert(self);
+}
+
+/**
+ * @fn void MutableString::setFormat(MutableString *self, const char *fmt, ...)
+ * @memberof MutableString
+ */
+static void setFormat(MutableString *self, const char *fmt, ...) {
+
+  free(self->string.chars);
+
+  va_list args;
+  va_start(args, fmt);
+
+  self = $(self, initWithVaList, fmt, args);
+  assert(self);
+
+  va_end(args);
+}
+
+/**
+ * @fn void MutableString::setString(MutableString *self, const String *string)
+ * @memberof MutableString
+ */
+static void setString(MutableString *self, const String *string) {
+
+  free(self->string.chars);
+
+  self = $(self, initWithString, string);
+  assert(self);
+}
+
+/**
  * @fn MutableString *MutableString::string(void)
  * @memberof MutableString
  */
 static MutableString *string(void) {
-
   return $(alloc(MutableString), init);
 }
 
@@ -305,7 +392,6 @@ static MutableString *string(void) {
  * @memberof MutableString
  */
 static MutableString *stringWithCapacity(size_t capacity) {
-
   return $(alloc(MutableString), initWithCapacity, capacity);
 }
 
@@ -338,6 +424,9 @@ static void initialize(Class *clazz) {
   ((MutableStringInterface *) clazz->interface)->deleteCharactersInRange = deleteCharactersInRange;
   ((MutableStringInterface *) clazz->interface)->init = init;
   ((MutableStringInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
+  ((MutableStringInterface *) clazz->interface)->initWithCharacters = initWithCharacters;
+  ((MutableStringInterface *) clazz->interface)->initWithFormat = initWithFormat;
+  ((MutableStringInterface *) clazz->interface)->initWithVaList = initWithVaList;
   ((MutableStringInterface *) clazz->interface)->initWithString = initWithString;
   ((MutableStringInterface *) clazz->interface)->insertCharactersAtIndex = insertCharactersAtIndex;
   ((MutableStringInterface *) clazz->interface)->insertStringAtIndex = insertStringAtIndex;
@@ -347,6 +436,9 @@ static void initialize(Class *clazz) {
   ((MutableStringInterface *) clazz->interface)->replaceOccurrencesOfString = replaceOccurrencesOfString;
   ((MutableStringInterface *) clazz->interface)->replaceOccurrencesOfStringInRange = replaceOccurrencesOfStringInRange;
   ((MutableStringInterface *) clazz->interface)->replaceStringInRange = replaceStringInRange;
+  ((MutableStringInterface *) clazz->interface)->setCharacters = setCharacters;
+  ((MutableStringInterface *) clazz->interface)->setFormat = setFormat;
+  ((MutableStringInterface *) clazz->interface)->setString = setString;
   ((MutableStringInterface *) clazz->interface)->string = string;
   ((MutableStringInterface *) clazz->interface)->stringWithCapacity = stringWithCapacity;
   ((MutableStringInterface *) clazz->interface)->trim = trim;
