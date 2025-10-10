@@ -344,10 +344,9 @@ static void replaceStringInRange(MutableString *self, const Range range, const S
  */
 static void setCharacters(MutableString *self, const char *chars) {
 
-  free(self->string.chars);
+  self->string.length = 0;
 
-  self = $(self, initWithCharacters, chars);
-  assert(self);
+  $(self, appendCharacters, chars);
 }
 
 /**
@@ -356,13 +355,12 @@ static void setCharacters(MutableString *self, const char *chars) {
  */
 static void setFormat(MutableString *self, const char *fmt, ...) {
 
-  free(self->string.chars);
+  self->string.length = 0;
 
   va_list args;
   va_start(args, fmt);
 
-  self = $(self, initWithVaList, fmt, args);
-  assert(self);
+  $(self, appendVaList, fmt, args);
 
   va_end(args);
 }
@@ -373,10 +371,9 @@ static void setFormat(MutableString *self, const char *fmt, ...) {
  */
 static void setString(MutableString *self, const String *string) {
 
-  free(self->string.chars);
+  self->string.length = 0;
 
-  self = $(self, initWithString, string);
-  assert(self);
+  $(self, appendString, string);
 }
 
 /**
