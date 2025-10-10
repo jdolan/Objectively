@@ -275,6 +275,15 @@ struct MutableStringInterface {
   void (*setFormat)(MutableString *self, const char *fmt, ...);
 
   /**
+   * @fn void MutableString::setLength(MutableString *self, size_t length)
+   * @brief Sets the length of this MutableString to `length`.
+   * @param self The MutableString.
+   * @param length The length, which must be less than or equal to `capacity`.
+   * @memberof MutableString
+   */
+  void (*setLength)(MutableString *self, size_t length);
+
+  /**
    * @fn void MutableString::setString(MutableString *self, const String *string)
    * @brief Sets the contents of this MutableString to that of `string`.
    * @param self The MutableString.

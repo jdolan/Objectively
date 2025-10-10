@@ -344,7 +344,7 @@ static void replaceStringInRange(MutableString *self, const Range range, const S
  */
 static void setCharacters(MutableString *self, const char *chars) {
 
-  self->string.length = 0;
+  $(self, setLength, 0);
 
   $(self, appendCharacters, chars);
 }
@@ -355,7 +355,7 @@ static void setCharacters(MutableString *self, const char *chars) {
  */
 static void setFormat(MutableString *self, const char *fmt, ...) {
 
-  self->string.length = 0;
+  $(self, setLength, 0);
 
   va_list args;
   va_start(args, fmt);
@@ -366,12 +366,24 @@ static void setFormat(MutableString *self, const char *fmt, ...) {
 }
 
 /**
+ * @fn void MutableString::setLength(MutableString *self, size_t length)
+ * @memberof MutableString
+ */
+static void setLength(MutableString *self, size_t length) {
+
+  if (length < self->string.length) {
+    self->string.length = length;
+    self->string.chars[length] = '\0';
+  }
+}
+
+/**
  * @fn void MutableString::setString(MutableString *self, const String *string)
  * @memberof MutableString
  */
 static void setString(MutableString *self, const String *string) {
 
-  self->string.length = 0;
+  $(self, setLength, 0);
 
   $(self, appendString, string);
 }
@@ -435,6 +447,7 @@ static void initialize(Class *clazz) {
   ((MutableStringInterface *) clazz->interface)->replaceStringInRange = replaceStringInRange;
   ((MutableStringInterface *) clazz->interface)->setCharacters = setCharacters;
   ((MutableStringInterface *) clazz->interface)->setFormat = setFormat;
+  ((MutableStringInterface *) clazz->interface)->setLength = setLength;
   ((MutableStringInterface *) clazz->interface)->setString = setString;
   ((MutableStringInterface *) clazz->interface)->string = string;
   ((MutableStringInterface *) clazz->interface)->stringWithCapacity = stringWithCapacity;
