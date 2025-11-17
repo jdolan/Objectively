@@ -2430,7 +2430,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1630;
+				LastUpgradeCheck = 2610;
 				TargetAttributes = {
 					CE4A532F1F40E0A600927421 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -3281,7 +3281,6 @@
 		CE76D7F71C481B530096DD31 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -3304,7 +3303,6 @@
 					"$(HOMEBREW_PREFIX)/include",
 				);
 				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
-				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				ONLY_ACTIVE_ARCH = YES;
 				USE_HEADERMAP = NO;
 			};
@@ -3313,7 +3311,6 @@
 		CE76D7F81C481B530096DD31 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -3335,7 +3332,6 @@
 					"$(HOMEBREW_PREFIX)/include",
 				);
 				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
-				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				ONLY_ACTIVE_ARCH = YES;
 				USE_HEADERMAP = NO;
 			};

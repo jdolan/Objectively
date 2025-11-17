@@ -66,7 +66,7 @@ What's next?
 ---
  * More robust collections framework
  * Networking framework
- * MVC framework using libSDL2
+ * MVC framework using libSDL3
  * Take advantage of C11 (e.g. anonymous structs, native threads, ..)
  
 ***
