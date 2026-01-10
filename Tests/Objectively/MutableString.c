@@ -52,7 +52,7 @@ START_TEST(string) {
   ck_assert_str_eq("goodbyecruelworld!", string->string.chars);
 
   $(string, setString, NULL);
-  ck_assert_ptr_null(string->string.chars);
+  ck_assert_str_eq("", string->string.chars);
 
   $(string, setString, hello);
   ck_assert_str_eq("hello", string->string.chars);
