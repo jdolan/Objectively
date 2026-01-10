@@ -2430,7 +2430,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2610;
+				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					CE4A532F1F40E0A600927421 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -3303,8 +3303,9 @@
 					"$(HOMEBREW_PREFIX)/include",
 				);
 				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
-				MACOSX_DEPLOYMENT_TARGET = 15.6;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				ONLY_ACTIVE_ARCH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				USE_HEADERMAP = NO;
 			};
 			name = Debug;
@@ -3333,8 +3334,9 @@
 					"$(HOMEBREW_PREFIX)/include",
 				);
 				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
-				MACOSX_DEPLOYMENT_TARGET = 15.6;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				ONLY_ACTIVE_ARCH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				USE_HEADERMAP = NO;
 			};
 			name = Release;
