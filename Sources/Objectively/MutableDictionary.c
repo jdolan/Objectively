@@ -271,7 +271,7 @@ static void setObjectForKey(MutableDictionary *self, const ident obj, const iden
   }
 
   const ssize_t index = $((Array *) array, indexOfObject, key);
-  if (index > -1) {
+  if (index > -1 && (index & 1) == 0) {
     $(array, setObjectAtIndex, obj, index + 1);
   } else {
     $(array, addObject, key);
