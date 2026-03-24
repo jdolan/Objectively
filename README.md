@@ -1,4 +1,4 @@
-[![Build Status](http://ci.quetoo.org/buildStatus/icon?job=Objectively-Linux-x86_64)](http://ci.quetoo.org/job/Objectively-Linux-x86_64/)
+[![Build](https://github.com/jdolan/Objectively/actions/workflows/build.yml/badge.svg)](https://github.com/jdolan/Objectively/actions/workflows/build.yml)
 [![Zlib License](https://img.shields.io/badge/license-Zlib-brightgreen.svg)](https://opensource.org/licenses/Zlib)
 ![This software is ALPHA](https://img.shields.io/badge/development_stage-BETA-green.svg)
 
