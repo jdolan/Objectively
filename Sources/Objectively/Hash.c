@@ -27,7 +27,9 @@
 
 int HashForBytes(int hash, const uint8_t *bytes, const Range range) {
 
-  for (size_t i = range.location; i < range.length; i++) {
+  unsigned int uhash = (unsigned int) hash;
+
+  for (size_t i = range.location; i < range.location + range.length; i++) {
 
     int shift;
     if (i & 1) {
@@ -36,10 +38,10 @@ int HashForBytes(int hash, const uint8_t *bytes, const Range range) {
       shift = (i % 16);
     }
 
-    hash += 31 * ((int) bytes[i]) << shift;
+    uhash += 31U * ((unsigned int) bytes[i]) << shift;
   }
 
-  return hash;
+  return (int) uhash;
 }
 
 int HashForCharacters(int hash, const char *chars, const Range range) {
@@ -56,17 +58,23 @@ int HashForCString(int hash, const char *string) {
 }
 
 int HashForDecimal(int hash, const double decimal) {
-  return hash + 31 * (int) decimal;
+  unsigned int uhash = (unsigned int) hash;
+  uhash += 31U * (unsigned int) decimal;
+  return (int) uhash;
 }
 
 int HashForInteger(int hash, const long integer) {
-  return hash + 31 * (int) integer;
+  unsigned int uhash = (unsigned int) hash;
+  uhash += 31U * (unsigned int) integer;
+  return (int) uhash;
 }
 
 int HashForObject(int hash, const ident obj) {
 
   if (obj) {
-    return hash + 31 * $(cast(Object, obj), hash);
+    unsigned int uhash = (unsigned int) hash;
+    uhash += 31U * (unsigned int) $(cast(Object, obj), hash);
+    return (int) uhash;
   }
 
   return 0;
