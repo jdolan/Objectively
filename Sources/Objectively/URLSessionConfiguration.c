@@ -37,7 +37,7 @@ static URLSessionConfiguration *init(URLSessionConfiguration *self) {
 
   self = (URLSessionConfiguration *) super(Object, self, init);
   if (self) {
-    // wut
+    self->connectTimeout = 5;
   }
 
   return self;

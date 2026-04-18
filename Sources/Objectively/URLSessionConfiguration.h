@@ -78,6 +78,22 @@ struct URLSessionConfiguration {
    * @brief The maximum number of HTTP connections to open per host.
    */
   int httpMaximumConnectionsPerHost;
+
+  /**
+   * @brief The timeout interval for establishing a connection, in seconds. 0 means no limit.
+   */
+  long connectTimeout;
+
+  /**
+   * @brief The timeout for the entire transfer, in seconds. 0 means no limit.
+   */
+  long timeout;
+
+  /**
+   * @brief If true, disables stall detection (LOW_SPEED_LIMIT / LOW_SPEED_TIME).
+   * Use for requests that legitimately expect long periods of silence.
+   */
+  bool longPolling;
 };
 
 /**

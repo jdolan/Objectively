@@ -216,6 +216,18 @@ static void setup(URLSessionTask *self) {
   curl_easy_setopt(self->locals.handle, CURLOPT_ERRORBUFFER, self->error);
   curl_easy_setopt(self->locals.handle, CURLOPT_FOLLOWLOCATION, true);
 
+  const URLSessionConfiguration *config = self->session->configuration;
+  if (config->connectTimeout) {
+    curl_easy_setopt(self->locals.handle, CURLOPT_CONNECTTIMEOUT, config->connectTimeout);
+  }
+  if (config->timeout) {
+    curl_easy_setopt(self->locals.handle, CURLOPT_TIMEOUT, config->timeout);
+  }
+  if (!config->longPolling) {
+    curl_easy_setopt(self->locals.handle, CURLOPT_LOW_SPEED_LIMIT, 1L);
+    curl_easy_setopt(self->locals.handle, CURLOPT_LOW_SPEED_TIME, 10L);
+  }
+
   curl_easy_setopt(self->locals.handle, CURLOPT_HEADERFUNCTION, responseHeader);
   curl_easy_setopt(self->locals.handle, CURLOPT_HEADERDATA, self);
 
