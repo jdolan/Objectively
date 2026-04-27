@@ -59,11 +59,10 @@ static ident taskWithRequest(URLSession *self, ident task, URLRequest *request, 
   task = $((URLSessionTask *) task, initWithRequestInSession, request, self, completion);
   if (task) {
 
-    synchronized(self->locals.lock, {
+    synchronized(self->locals.condition, {
       $(self->locals.tasks, addObject, task);
+      $(self->locals.condition, signal);
     });
-
-    $(self->locals.condition, signal);
   }
 
   return task;
@@ -145,16 +144,19 @@ static ident run(Thread *thread) {
   while (true) {
     int ret;
 
-    Array *tasks = $(self, tasks);
-    if (tasks->count == 0) {
-
-      if (thread->isCancelled) {
-        break;
+    bool idle;
+    synchronized(self->locals.condition, {
+      while (!thread->isCancelled && self->locals.tasks->array.count == 0) {
+        $(self->locals.condition, wait);
       }
+      idle = thread->isCancelled && self->locals.tasks->array.count == 0;
+    });
 
-      $(self->locals.condition, wait);
-      continue;
+    if (idle) {
+      break;
     }
+
+    Array *tasks = $(self, tasks);
 
     for (size_t i = 0; i < tasks->count; i++) {
 
@@ -199,12 +201,12 @@ static ident run(Thread *thread) {
 
         $(task, teardown);
 
-        synchronized(self->locals.lock, {
+        synchronized(self->locals.condition, {
           $(self->locals.tasks, removeObject, task);
         });
       } else if (task->state == URLSESSIONTASK_COMPLETED) {
 
-        synchronized(self->locals.lock, {
+        synchronized(self->locals.condition, {
           $(self->locals.tasks, removeObject, task);
         });
       }
@@ -246,7 +248,7 @@ static ident run(Thread *thread) {
 
         $(task, teardown);
 
-        synchronized(self->locals.lock, {
+        synchronized(self->locals.condition, {
           $(self->locals.tasks, removeObject, task);
         });
       }
@@ -273,7 +275,6 @@ static URLSession *initWithConfiguration(URLSession *self, URLSessionConfigurati
     self->configuration = retain(configuration);
 
     self->locals.condition = $(alloc(Condition), init);
-    self->locals.lock = $(alloc(Lock), init);
     self->locals.tasks = $(alloc(MutableArray), init);
     self->locals.thread = $(alloc(Thread), initWithFunction, run, self);
 
@@ -304,7 +305,7 @@ static void invalidateAndCancel(URLSession *self) {
   release(tasks);
 
   $(self->locals.thread, cancel);
-  $(self->locals.condition, signal);
+  synchronized(self->locals.condition, $(self->locals.condition, signal));
 }
 
 static URLSession *_sharedInstance;
@@ -332,7 +333,7 @@ static Array *tasks(const URLSession *self) {
 
   Array *array;
 
-  synchronized(self->locals.lock, {
+  synchronized(self->locals.condition, {
     array = $$(Array, arrayWithArray, (Array *) self->locals.tasks);
   });
 

@@ -72,7 +72,7 @@ struct URLSession {
    */
   struct {
     /**
-     * @brief The condition
+     * @brief The condition, and the Lock guarding access to `tasks`.
      */
     Condition *condition;
 
@@ -80,11 +80,6 @@ struct URLSession {
      * @brief The libcurl handle.
      */
     ident handle;
-
-    /**
-     * @brief The Lock guarding access to `tasks`.
-     */
-    Lock *lock;
 
     /**
      * @brief The URLSessionTasks.
