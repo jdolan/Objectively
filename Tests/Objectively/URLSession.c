@@ -26,15 +26,19 @@
 #include "Objectively.h"
 
 static Condition *condition;
+static bool taskDone;
+static bool taskSuccess;
 
 /**
  * @brief The completion handler.
  */
 void completion(URLSessionTask *task, bool success) {
 
-  ck_assert(success);
-
-  $(condition, signal);
+  synchronized(condition, {
+    taskDone = true;
+    taskSuccess = success;
+    $(condition, signal);
+  });
 }
 
 START_TEST(asynchronous) {
@@ -50,9 +54,20 @@ START_TEST(asynchronous) {
 
   condition = $(alloc(Condition), init);
 
+  const Time timeout = { .tv_sec = 30 };
+  Date *deadline = $$(Date, dateWithTimeSinceNow, &timeout);
+
+  taskDone = false;
   $((URLSessionTask *) dataTask, resume);
 
-  $(condition, wait);
+  synchronized(condition, {
+    while (!taskDone) {
+      ck_assert($(condition, waitUntilDate, deadline));
+    }
+  });
+  ck_assert(taskSuccess);
+
+  release(deadline);
 
   ck_assert_int_eq(200, dataTask->urlSessionTask.response->httpStatusCode);
   ck_assert(dataTask->data != NULL);
@@ -64,9 +79,19 @@ START_TEST(asynchronous) {
   downloadTask->file = fopen("/tmp/README.md", "w");
   ck_assert(downloadTask->file != NULL);
 
+  deadline = $$(Date, dateWithTimeSinceNow, &timeout);
+
+  taskDone = false;
   $((URLSessionTask *) downloadTask, resume);
 
-  $(condition, wait);
+  synchronized(condition, {
+    while (!taskDone) {
+      ck_assert($(condition, waitUntilDate, deadline));
+    }
+  });
+  ck_assert(taskSuccess);
+
+  release(deadline);
 
   ck_assert_int_eq(200, downloadTask->urlSessionTask.response->httpStatusCode);
 

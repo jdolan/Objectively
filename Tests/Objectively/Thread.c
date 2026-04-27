@@ -29,6 +29,7 @@
 #include <Objectively/Thread.h>
 
 static Condition *condition;
+static bool signaled;
 
 static ident increment(Thread *self) {
 
@@ -59,7 +60,11 @@ START_TEST(thread) {
 
   $(thread, start);
 
-  synchronized(condition, $(condition, wait));
+  synchronized(condition, {
+    while (criticalSection != 0xbeaf) {
+      $(condition, wait);
+    }
+  });
   ck_assert_int_eq(0xbeaf, criticalSection);
 
   ident ret;
@@ -75,13 +80,16 @@ static ident signalBeforeDate(Thread *self) {
 
   usleep(((Date *) self->data)->time.tv_usec / 2);
 
-  synchronized(condition, $(condition, signal));
+  synchronized(condition, {
+    signaled = true;
+    $(condition, signal);
+  });
 
   return NULL;
 }
 
-START_TEST(cond)
-  {
+START_TEST(cond) {
+
     condition = $(alloc(Condition), init);
     ck_assert(condition != NULL);
 
@@ -101,10 +109,13 @@ START_TEST(cond)
     Thread *thread = $(alloc(Thread), initWithFunction, signalBeforeDate, date);
     ck_assert(thread != NULL);
 
+    signaled = false;
     $(thread, start);
 
     synchronized(condition, {
-      ck_assert($(condition, waitUntilDate, date));
+      while (!signaled) {
+        ck_assert($(condition, waitUntilDate, date));
+      }
     });
 
     $(thread, join, NULL);
@@ -112,7 +123,8 @@ START_TEST(cond)
     release(date);
     release(thread);
     release(condition);
-  }END_TEST
+
+} END_TEST
 
 int main(int argc, char **argv) {
 
