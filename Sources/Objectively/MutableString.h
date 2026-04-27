@@ -69,6 +69,17 @@ struct MutableStringInterface {
   StringInterface stringInterface;
 
   /**
+   * @fn void MutableString::appendBytes(MutableString *self, const uint8_t *bytes, size_t length, StringEncoding encoding)
+   * @brief Appends the decoded contents of `bytes`.
+   * @param self The MutableString.
+   * @param bytes The bytes.
+   * @param length The length of `bytes` to decode.
+   * @param encoding The character encoding.
+   * @memberof MutableString
+   */
+  void (*appendBytes)(MutableString *self, const uint8_t *bytes, size_t length, StringEncoding encoding);
+
+  /**
    * @fn void MutableString::appendCharacters(MutableString *self, const char *chars)
    * @brief Appends the specified UTF-8 encoded C string.
    * @param self The MutableString.
@@ -124,6 +135,18 @@ struct MutableStringInterface {
   MutableString *(*init)(MutableString *self);
 
   /**
+   * @fn MutableString *MutableString::initWithBytes(MutableString *self, const uint8_t *bytes, size_t length, StringEncoding encoding)
+   * @brief Initializes this MutableString by decoding `length` of `bytes`.
+   * @param self The MutableString.
+   * @param bytes The bytes.
+   * @param length The length of `bytes` to decode.
+   * @param encoding The character encoding.
+   * @return The initialized MutableString, or `NULL` on error.
+   * @memberof MutableString
+   */
+  MutableString *(*initWithBytes)(MutableString *self, const uint8_t *bytes, size_t length, StringEncoding encoding);
+
+  /**
    * @fn MutableString *MutableString::initWithCapacity(MutableString *self, size_t capacity)
    * @brief Initializes this MutableString with the given `capacity`.
    * @param self The MutableString.
@@ -144,14 +167,26 @@ struct MutableStringInterface {
   MutableString *(*initWithCharacters)(MutableString *self, const char *chars);
 
   /**
-   * @fn MutableString *MutableString::initWithString(MutableString *self, const String *string)
-   * @brief Initializes this MutableString with the contents of `string`.
+   * @fn MutableString *MutableString::initWithContentsOfFile(MutableString *self, const char *path, StringEncoding encoding)
+   * @brief Initializes this MutableString with the contents of the FILE at `path`.
    * @param self The MutableString.
-   * @param string A String.
+   * @param path The path of the file to load.
+   * @param encoding The character encoding.
    * @return The initialized MutableString, or `NULL` on error.
    * @memberof MutableString
    */
-  MutableString *(*initWithString)(MutableString *self, const String *string);
+  MutableString *(*initWithContentsOfFile)(MutableString *self, const char *path, StringEncoding encoding);
+
+  /**
+   * @fn MutableString *MutableString::initWithData(MutableString *self, const Data *data, StringEncoding encoding)
+   * @brief Initializes this MutableString with the given Data.
+   * @param self The MutableString.
+   * @param data The Data object.
+   * @param encoding The character encoding.
+   * @return The initialized MutableString, or `NULL` on error.
+   * @memberof MutableString
+   */
+  MutableString *(*initWithData)(MutableString *self, const Data *data, StringEncoding encoding);
 
   /**
    * @fn MutableString *MutableString::initWithString(MutableString *self, const char *fmt, ...)
@@ -162,6 +197,16 @@ struct MutableStringInterface {
    * @memberof MutableString
    */
   MutableString *(*initWithFormat)(MutableString *self, const char *fmt, ...);
+
+  /**
+   * @fn MutableString *MutableString::initWithString(MutableString *self, const String *string)
+   * @brief Initializes this MutableString with the contents of `string`.
+   * @param self The MutableString.
+   * @param string A String.
+   * @return The initialized MutableString, or `NULL` on error.
+   * @memberof MutableString
+   */
+  MutableString *(*initWithString)(MutableString *self, const String *string);
 
   /**
    * @fn MutableString *MutableString::initWithVaList(MutableString *self, const char *fmt, va_list args)

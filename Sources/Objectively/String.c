@@ -139,7 +139,7 @@ static size_t transcode(Transcode *trans) {
   assert(trans->size);
 
   iconv_t cd = iconv_open(NameForStringEncoding(trans->to), NameForStringEncoding(trans->from));
-  assert(cd != (iconv_t ) -1);
+  assert(cd != (iconv_t) -1);
 
   char *in = trans->in;
   char *out = trans->out;
@@ -148,7 +148,7 @@ static size_t transcode(Transcode *trans) {
   size_t outBytesRemaining = trans->size;
 
   const size_t ret = iconv(cd, &in, &inBytesRemaining, &out, &outBytesRemaining);
-  assert(ret != (size_t ) -1);
+  assert(ret != (size_t) -1);
 
   int err = iconv_close(cd);
   assert(err == 0);

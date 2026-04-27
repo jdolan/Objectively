@@ -21,6 +21,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+#include <stdlib.h>
+#include <unistd.h>
 #include <check.h>
 
 #include "Objectively.h"
@@ -68,10 +70,75 @@ START_TEST(string) {
 
 } END_TEST
 
+START_TEST(appendBytes) {
+
+  MutableString *string = $$(MutableString, string);
+
+  const uint8_t hello[] = "hello";
+  $(string, appendBytes, hello, sizeof(hello) - 1, STRING_ENCODING_ASCII);
+  ck_assert_str_eq("hello", string->string.chars);
+
+  const uint8_t world[] = " world";
+  $(string, appendBytes, world, sizeof(world) - 1, STRING_ENCODING_ASCII);
+  ck_assert_str_eq("hello world", string->string.chars);
+
+  release(string);
+
+} END_TEST
+
+START_TEST(initWithBytes) {
+
+  const uint8_t bytes[] = "hello world";
+  MutableString *string = $(alloc(MutableString), initWithBytes, bytes, sizeof(bytes) - 1, STRING_ENCODING_ASCII);
+
+  ck_assert(string != NULL);
+  ck_assert_str_eq("hello world", string->string.chars);
+
+  release(string);
+
+} END_TEST
+
+START_TEST(initWithData) {
+
+  const uint8_t bytes[] = "hello world";
+  Data *data = $$(Data, dataWithBytes, bytes, sizeof(bytes) - 1);
+
+  MutableString *string = $(alloc(MutableString), initWithData, data, STRING_ENCODING_ASCII);
+
+  ck_assert(string != NULL);
+  ck_assert_str_eq("hello world", string->string.chars);
+
+  release(data);
+  release(string);
+
+} END_TEST
+
+START_TEST(initWithContentsOfFile) {
+
+  const char *path = "/tmp/Objectively_MutableString.test";
+
+  MutableString *written = $(alloc(MutableString), initWithCharacters, "hello world");
+  ck_assert($((String *) written, writeToFile, path, STRING_ENCODING_UTF8));
+  release(written);
+
+  MutableString *string = $(alloc(MutableString), initWithContentsOfFile, path, STRING_ENCODING_UTF8);
+
+  ck_assert(string != NULL);
+  ck_assert_str_eq("hello world", string->string.chars);
+
+  release(string);
+  unlink(path);
+
+} END_TEST
+
 int main(int argc, char **argv) {
 
   TCase *tcase = tcase_create("String");
   tcase_add_test(tcase, string);
+  tcase_add_test(tcase, appendBytes);
+  tcase_add_test(tcase, initWithBytes);
+  tcase_add_test(tcase, initWithData);
+  tcase_add_test(tcase, initWithContentsOfFile);
 
   Suite *suite = suite_create("String");
   suite_add_tcase(suite, tcase);

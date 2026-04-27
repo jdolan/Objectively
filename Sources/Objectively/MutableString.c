@@ -48,6 +48,19 @@ static Object *copy(const Object *self) {
 #pragma mark - MutableString
 
 /**
+ * @fn void MutableString::appendBytes(MutableString *self, const uint8_t *bytes, size_t length, StringEncoding encoding)
+ * @memberof MutableString
+ */
+static void appendBytes(MutableString *self, const uint8_t *bytes, size_t length, StringEncoding encoding) {
+
+  String *string = $(alloc(String), initWithBytes, bytes, length, encoding);
+  if (string) {
+    $(self, appendCharacters, string->chars);
+    release(string);
+  }
+}
+
+/**
  * @fn void MutableString::appendCharacters(MutableString *self, const char *chars)
  * @memberof MutableString
  */
@@ -148,6 +161,20 @@ static MutableString *init(MutableString *self) {
 }
 
 /**
+ * @fn MutableString *MutableString::initWithBytes(MutableString *self, const uint8_t *bytes, size_t length, StringEncoding encoding)
+ * @memberof MutableString
+ */
+static MutableString *initWithBytes(MutableString *self, const uint8_t *bytes, size_t length, StringEncoding encoding) {
+
+  self = $(self, init);
+  if (self) {
+    $(self, appendBytes, bytes, length, encoding);
+  }
+
+  return self;
+}
+
+/**
  * @fn MutableString *MutableString::initWithCapacity(MutableString *self, size_t capacity)
  * @memberof MutableString
  */
@@ -180,17 +207,31 @@ static MutableString *initWithCharacters(MutableString *self, const char *chars)
 }
 
 /**
- * @fn MutableString *MutableString::initWithString(MutableString *self, const String *string)
+ * @fn MutableString *MutableString::initWithContentsOfFile(MutableString *self, const char *path, StringEncoding encoding)
  * @memberof MutableString
  */
-static MutableString *initWithString(MutableString *self, const String *string) {
+static MutableString *initWithContentsOfFile(MutableString *self, const char *path, StringEncoding encoding) {
 
-  self = $(self, init);
-  if (self) {
-    $(self, appendString, string);
+  Data *data = $$(Data, dataWithContentsOfFile, path);
+  if (data) {
+    self = $(self, initWithData, data, encoding);
+  } else {
+    self = $(self, init);
   }
 
+  release(data);
   return self;
+}
+
+/**
+ * @fn MutableString *MutableString::initWithData(MutableString *self, const Data *data, StringEncoding encoding)
+ * @memberof MutableString
+ */
+static MutableString *initWithData(MutableString *self, const Data *data, StringEncoding encoding) {
+
+  assert(data);
+
+  return $(self, initWithBytes, data->bytes, data->length, encoding);
 }
 
 /**
@@ -208,6 +249,20 @@ static MutableString *initWithFormat(MutableString *self, const char *fmt, ...) 
     $(self, appendVaList, fmt, args);
 
     va_end(args);
+  }
+
+  return self;
+}
+
+/**
+ * @fn MutableString *MutableString::initWithString(MutableString *self, const String *string)
+ * @memberof MutableString
+ */
+static MutableString *initWithString(MutableString *self, const String *string) {
+
+  self = $(self, init);
+  if (self) {
+    $(self, appendString, string);
   }
 
   return self;
@@ -426,12 +481,16 @@ static void initialize(Class *clazz) {
 
   ((ObjectInterface *) clazz->interface)->copy = copy;
 
+  ((MutableStringInterface *) clazz->interface)->appendBytes = appendBytes;
   ((MutableStringInterface *) clazz->interface)->appendCharacters = appendCharacters;
   ((MutableStringInterface *) clazz->interface)->appendFormat = appendFormat;
   ((MutableStringInterface *) clazz->interface)->appendString = appendString;
   ((MutableStringInterface *) clazz->interface)->appendVaList = appendVaList;
   ((MutableStringInterface *) clazz->interface)->deleteCharactersInRange = deleteCharactersInRange;
   ((MutableStringInterface *) clazz->interface)->init = init;
+  ((MutableStringInterface *) clazz->interface)->initWithBytes = initWithBytes;
+  ((MutableStringInterface *) clazz->interface)->initWithContentsOfFile = initWithContentsOfFile;
+  ((MutableStringInterface *) clazz->interface)->initWithData = initWithData;
   ((MutableStringInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
   ((MutableStringInterface *) clazz->interface)->initWithCharacters = initWithCharacters;
   ((MutableStringInterface *) clazz->interface)->initWithFormat = initWithFormat;
