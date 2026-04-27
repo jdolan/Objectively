@@ -82,6 +82,13 @@ START_TEST(string) {
   String *whitespace = str(" hello ");
   String *trimmed = $(whitespace, trimmedString);
   ck_assert_str_eq("hello", trimmed->chars);
+  release(trimmed);
+
+  String *newlines = str("\nhello\n");
+  String *trimmedNewlines = $(newlines, trimmedString);
+  ck_assert_str_eq("hello", trimmedNewlines->chars);
+  release(newlines);
+  release(trimmedNewlines);
 
   const char *path = "/tmp/Objectively_String.test";
   ck_assert($(string, writeToFile, path, STRING_ENCODING_UTF8));
@@ -94,8 +101,6 @@ START_TEST(string) {
   release(fromFile);
   release(upper);
   release(lower);
-  release(whitespace);
-  release(trimmed);
   release(sep);
   release(components);
   release(substring);
