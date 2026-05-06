@@ -35,6 +35,10 @@ OBJCFLAGS += \
 HelloObjC_SOURCES = \
 	HelloObjC.m
 
+HelloObjC_LINK = \
+	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CC) $(OBJCFLAGS) $(HelloObjC_LDFLAGS) $(LDFLAGS) -o $@
+
 HelloObjC_LDFLAGS = \
 	-framework Foundation
 
