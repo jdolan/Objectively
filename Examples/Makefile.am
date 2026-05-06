@@ -23,23 +23,3 @@ HelloCpp_SOURCES = \
 
 HelloCpp_LDADD = \
 	$(LDADD)
-
-if APPLE
-
-noinst_PROGRAMS += \
-	HelloObjC
-
-OBJCFLAGS += \
-	@HOST_CFLAGS@
-
-HelloObjC_SOURCES = \
-	HelloObjC.m
-
-HelloObjC_LINK = \
-	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CC) $(OBJCFLAGS) $(HelloObjC_LDFLAGS) $(LDFLAGS) -o $@
-
-HelloObjC_LDFLAGS = \
-	-framework Foundation
-
-endif
