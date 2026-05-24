@@ -60,6 +60,65 @@ START_TEST(json) {
 
 } END_TEST
 
+/**
+ * @brief Verifies that writeString escapes special characters and that
+ * readString correctly round-trips them back.
+ */
+START_TEST(json_escaping) {
+
+  static const struct escape_case {
+    const char *key;
+    const char *value;
+  } cases[] = {
+    { "quote",      "say \"hello\""          },  // embedded double-quote
+    { "backslash",  "C:\\Users\\player"       },  // backslashes
+    { "newline",    "line1\nline2"            },  // \n
+    { "tab",        "col1\tcol2"              },  // \t
+    { "cr",         "carriage\rreturn"        },  // \r
+    { "backspace",  "back\bspace"             },  // \b
+    { "formfeed",   "form\ffeed"              },  // \f
+    { "control",    "esc\033char"             },  // raw control char (ESC, \u001b)
+    { "utf8",       "\xc3\xa9l\xc3\xa8ve"    },  // UTF-8 passthrough (éléve)
+    { "combined",   "\"\\n\t\r\b\f\001"      },  // several specials in one value
+  };
+
+  // Build a Dictionary from the test cases and serialize it.
+  MutableDictionary *dict0 = $(alloc(MutableDictionary), init);
+  for (size_t i = 0; i < lengthof(cases); i++) {
+    String *key = $$(String, stringWithCharacters, cases[i].key);
+    String *val = $$(String, stringWithCharacters, cases[i].value);
+    $(dict0, setObjectForKey, val, key);
+    release(key);
+    release(val);
+  }
+
+  Data *data = $$(JSONSerialization, dataFromObject, dict0, 0);
+  ck_assert_ptr_ne(NULL, data);
+
+  // The serialized bytes must not contain any raw unescaped control characters.
+  for (size_t i = 0; i < data->length; i++) {
+    unsigned char b = ((unsigned char *) data->bytes)[i];
+    ck_assert_msg(b >= 0x20 || b == '\0', "raw control char 0x%02x at offset %zu", b, i);
+  }
+
+  // Round-trip: deserialize and verify every value survives intact.
+  Dictionary *dict1 = $$(JSONSerialization, objectFromData, data, 0);
+  ck_assert_ptr_ne(NULL, dict1);
+
+  for (size_t i = 0; i < lengthof(cases); i++) {
+    String *key = $$(String, stringWithCharacters, cases[i].key);
+    String *val = $(dict1, objectForKey, key);
+    ck_assert_ptr_ne(NULL, val);
+    ck_assert_str_eq(cases[i].value, val->chars);
+    release(key);
+  }
+
+  release(data);
+  release(dict0);
+  release(dict1);
+
+} END_TEST
+
 int main(int argc, char **argv) {
 
   if (argc == 2) {
@@ -70,6 +129,7 @@ int main(int argc, char **argv) {
 
   TCase *tcase = tcase_create("Json");
   tcase_add_test(tcase, json);
+  tcase_add_test(tcase, json_escaping);
 
   Suite *suite = suite_create("Json");
   suite_add_tcase(suite, tcase);

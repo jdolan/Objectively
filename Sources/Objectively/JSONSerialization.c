@@ -22,6 +22,7 @@
  */
 
 #include <assert.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -74,14 +75,38 @@ static void writeBoole(JSONWriter *writer, const Boole *boolean) {
 }
 
 /**
- * @brief Writes `string` to `writer`.
+ * @brief Writes `string` to `writer`, with JSON escape sequences applied.
  * @param writer The JSONWriter.
  * @param string The String to write.
  */
 static void writeString(JSONWriter *writer, const String *string) {
 
   $(writer->data, appendBytes, (uint8_t *) "\"", 1);
-  $(writer->data, appendBytes, (uint8_t *) string->chars, string->length);
+
+  const char *s = string->chars;
+  const char *end = s + string->length;
+  while (s < end) {
+    const unsigned char c = (unsigned char) *s++;
+    switch (c) {
+      case '"':  $(writer->data, appendBytes, (uint8_t *) "\\\"", 2); break;
+      case '\\': $(writer->data, appendBytes, (uint8_t *) "\\\\", 2); break;
+      case '\b': $(writer->data, appendBytes, (uint8_t *) "\\b",  2); break;
+      case '\f': $(writer->data, appendBytes, (uint8_t *) "\\f",  2); break;
+      case '\n': $(writer->data, appendBytes, (uint8_t *) "\\n",  2); break;
+      case '\r': $(writer->data, appendBytes, (uint8_t *) "\\r",  2); break;
+      case '\t': $(writer->data, appendBytes, (uint8_t *) "\\t",  2); break;
+      default:
+        if (c < 0x20) {
+          char seq[7];
+          snprintf(seq, sizeof(seq), "\\u%04x", c);
+          $(writer->data, appendBytes, (uint8_t *) seq, 6);
+        } else {
+          $(writer->data, appendBytes, (uint8_t *) &c, 1);
+        }
+        break;
+    }
+  }
+
   $(writer->data, appendBytes, (uint8_t *) "\"", 1);
 }
 
@@ -300,19 +325,70 @@ static void consumeBytes(JSONReader *reader, const char *bytes) {
 }
 
 /**
- * @brief Reads a String from `reader`.
+ * @brief Reads a String from `reader`, handling JSON escape sequences.
  * @param reader The JSONReader.
  * @return The String.
  */
 static String *readString(JSONReader *reader) {
 
-  uint8_t *bytes = reader->b;
+  MutableData *buf = $(alloc(MutableData), init);
 
-  const int b = readByteUntil(reader, "\"");
-  assert(b == '"');
+  while (true) {
+    int b = readByte(reader);
+    if (b == -1 || b == '"') {
+      break;
+    }
+    if (b == '\\') {
+      b = readByte(reader);
+      switch (b) {
+        case '"':  b = '"';  break;
+        case '\\': b = '\\'; break;
+        case '/':  b = '/';  break;
+        case 'b':  b = '\b'; break;
+        case 'f':  b = '\f'; break;
+        case 'n':  b = '\n'; break;
+        case 'r':  b = '\r'; break;
+        case 't':  b = '\t'; break;
+        case 'u': {
+          // Read 4 hex digits and emit UTF-8.
+          char hex[5] = {0};
+          for (int i = 0; i < 4; i++) {
+            int h = readByte(reader);
+            assert(h != -1);
+            hex[i] = (char) h;
+          }
+          unsigned long cp = strtoul(hex, NULL, 16);
+          if (cp < 0x80) {
+            uint8_t byte = (uint8_t) cp;
+            $(buf, appendBytes, &byte, 1);
+          } else if (cp < 0x800) {
+            uint8_t bytes[2] = {
+              (uint8_t) (0xC0 | (cp >> 6)),
+              (uint8_t) (0x80 | (cp & 0x3F))
+            };
+            $(buf, appendBytes, bytes, 2);
+          } else {
+            uint8_t bytes[3] = {
+              (uint8_t) (0xE0 | (cp >> 12)),
+              (uint8_t) (0x80 | ((cp >> 6) & 0x3F)),
+              (uint8_t) (0x80 | (cp & 0x3F))
+            };
+            $(buf, appendBytes, bytes, 3);
+          }
+          continue;
+        }
+        default:
+          assert(false);
+          break;
+      }
+    }
+    uint8_t byte = (uint8_t) b;
+    $(buf, appendBytes, &byte, 1);
+  }
 
-  const size_t length = reader->b - bytes - 1;
-  return $$(String, stringWithBytes, bytes + 1, length, STRING_ENCODING_UTF8);
+  String *string = $$(String, stringWithBytes, buf->data.bytes, buf->data.length, STRING_ENCODING_UTF8);
+  release(buf);
+  return string;
 }
 
 /**
