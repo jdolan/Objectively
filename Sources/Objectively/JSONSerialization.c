@@ -618,7 +618,7 @@ static Dictionary *dictionaryFromStruct(const JsonProperty *properties, const vo
           case 4: b = *(const uint32_t *) field != 0; break;
           default: b = *(const uint8_t *) field != 0; break;
         }
-        val = b ? $$(Boole, True) : $$(Boole, False);
+        val = retain(b ? $$(Boole, True) : $$(Boole, False));
         break;
       }
     }
