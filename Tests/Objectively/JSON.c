@@ -22,6 +22,7 @@
  */
 
 #include <check.h>
+#include <stdlib.h>
 
 #include "Objectively.h"
 
@@ -157,7 +158,7 @@ START_TEST(json_array_toplevel) {
 } END_TEST
 
 /**
- * @brief Tests dictionaryFromStruct and dataFromStructs with a representative C struct.
+ * @brief Tests dictionaryFromInstance, dataFromInstances, and instancesFromData with a representative C struct.
  */
 START_TEST(json_struct_properties) {
 
@@ -178,12 +179,12 @@ START_TEST(json_struct_properties) {
   );
 
   TestStruct instances[2] = {
-    { .name = "Alice", .tag = "hero",   .score = 42,  .ratio = 0.75, .active = true  },
-    { .name = "Bob",   .tag = "villain",.score = -7,  .ratio = 0.25, .active = false },
+    { .name = "Alice", .tag = "hero",    .score = 42, .ratio = 0.75, .active = true  },
+    { .name = "Bob",   .tag = "villain", .score = -7, .ratio = 0.25, .active = false },
   };
 
-  // dictionaryFromStruct — single instance
-  Dictionary *dict = $$(JSONSerialization, dictionaryFromStruct, properties, &instances[0]);
+  // dictionaryFromInstance — single instance
+  Dictionary *dict = $$(JSONSerialization, dictionaryFromInstance, properties, &instances[0]);
   ck_assert_ptr_ne(NULL, dict);
 
   String *kName   = $$(String, stringWithCharacters, "name");
@@ -210,8 +211,8 @@ START_TEST(json_struct_properties) {
   release(kName); release(kTag); release(kScore); release(kRatio); release(kActive);
   release(dict);
 
-  // dataFromStructs — two instances, round-trip
-  Data *data = $$(JSONSerialization, dataFromStructs, properties, instances, 2, sizeof(TestStruct));
+  // dataFromInstances — two instances -> JSON
+  Data *data = $$(JSONSerialization, dataFromInstances, properties, instances, 2, sizeof(TestStruct));
   ck_assert_ptr_ne(NULL, data);
   ck_assert_int_eq('[', ((const char *) data->bytes)[0]);
 
@@ -232,8 +233,28 @@ START_TEST(json_struct_properties) {
   ck_assert(((Boole *) $(d1, objectForKey, k))->value == false);
   release(k);
 
-  release(data);
   release(parsed);
+
+  // instancesFromData — round-trip: JSON -> structs
+  TestStruct out[2] = { 0 };
+  size_t n = $$(JSONSerialization, instancesFromData, properties, data, out, sizeof(TestStruct), 2);
+  ck_assert_int_eq(2, (int) n);
+
+  ck_assert_str_eq("Alice",   out[0].name);
+  ck_assert_str_eq("hero",    out[0].tag);
+  ck_assert_int_eq(42,        out[0].score);
+  ck_assert(out[0].ratio > 0.74 && out[0].ratio < 0.76);
+  ck_assert(out[0].active == true);
+
+  ck_assert_str_eq("Bob",     out[1].name);
+  ck_assert_str_eq("villain", out[1].tag);
+  ck_assert_int_eq(-7,        out[1].score);
+  ck_assert(out[1].ratio > 0.24 && out[1].ratio < 0.26);
+  ck_assert(out[1].active == false);
+
+  free(out[0].tag);
+  free(out[1].tag);
+  release(data);
 
 } END_TEST
 

@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "Array.h"
 #include "Boole.h"
 #include "JSONSerialization.h"
 #include "MutableData.h"
@@ -572,10 +573,10 @@ static ident objectFromData(const Data *data, int options) {
 }
 
 /**
- * @fn Dictionary *JSONSerialization::dictionaryFromStruct(const JsonProperty *properties, const void *instance)
+ * @fn Dictionary *JSONSerialization::dictionaryFromInstance(const JsonProperty *properties, const void *instance)
  * @memberof JSONSerialization
  */
-static Dictionary *dictionaryFromStruct(const JsonProperty *properties, const void *instance) {
+static Dictionary *dictionaryFromInstance(const JsonProperty *properties, const void *instance) {
 
   MutableDictionary *dict = $(alloc(MutableDictionary), init);
 
@@ -634,10 +635,10 @@ static Dictionary *dictionaryFromStruct(const JsonProperty *properties, const vo
 }
 
 /**
- * @fn Data *JSONSerialization::dataFromStructs(const JsonProperty *properties, const void *instances, size_t count, size_t stride)
+ * @fn Data *JSONSerialization::dataFromInstances(const JsonProperty *properties, const void *instances, size_t count, size_t stride)
  * @memberof JSONSerialization
  */
-static Data *dataFromStructs(const JsonProperty *properties, const void *instances, size_t count, size_t stride) {
+static Data *dataFromInstances(const JsonProperty *properties, const void *instances, size_t count, size_t stride) {
 
   if (count == 0) {
     return NULL;
@@ -647,7 +648,7 @@ static Data *dataFromStructs(const JsonProperty *properties, const void *instanc
 
   for (size_t i = 0; i < count; i++) {
     const void *instance = (const uint8_t *) instances + i * stride;
-    Dictionary *dict = $$(JSONSerialization, dictionaryFromStruct, properties, instance);
+    Dictionary *dict = $$(JSONSerialization, dictionaryFromInstance, properties, instance);
     $(array, addObject, dict);
     release(dict);
   }
@@ -655,6 +656,87 @@ static Data *dataFromStructs(const JsonProperty *properties, const void *instanc
   Data *data = $$(JSONSerialization, dataFromObject, array, 0);
   release(array);
   return data;
+}
+
+/**
+ * @fn size_t JSONSerialization::instancesFromData(const JsonProperty *properties, const Data *data, void *instances, size_t stride, size_t count)
+ * @memberof JSONSerialization
+ */
+static size_t instancesFromData(const JsonProperty *properties, const Data *data, void *instances, size_t stride, size_t count) {
+
+  ident obj = $$(JSONSerialization, objectFromData, data, 0);
+  if (!obj || !$((Object *) obj, isKindOfClass, _Array())) {
+    release(obj);
+    return 0;
+  }
+
+  Array *array = (Array *) obj;
+  const size_t n = min(array->count, count);
+
+  for (size_t i = 0; i < n; i++) {
+    Dictionary *dict = (Dictionary *) $(array, objectAtIndex, i);
+    void *instance = (uint8_t *) instances + i * stride;
+
+    for (const JsonProperty *p = properties; p->name; p++) {
+      void *field = (uint8_t *) instance + p->offset;
+      String *key = $$(String, stringWithCharacters, p->name);
+      ident val = $(dict, objectForKey, key);
+      release(key);
+
+      if (!val) {
+        continue;
+      }
+
+      switch (p->type) {
+        case JsonPropertyTypeCharacters:
+          if ($((Object *) val, isKindOfClass, _String())) {
+            const char *s = ((String *) val)->chars;
+            if (p->size > 0) {
+              strncpy((char *) field, s, p->size - 1);
+              ((char *) field)[p->size - 1] = '\0';
+            } else {
+              *(char **) field = strdup(s);
+            }
+          }
+          break;
+        case JsonPropertyTypeInteger:
+          if ($((Object *) val, isKindOfClass, _Number())) {
+            const int64_t v = (int64_t) ((Number *) val)->value;
+            switch (p->size) {
+              case 1: *(int8_t *)  field = (int8_t)  v; break;
+              case 2: *(int16_t *) field = (int16_t) v; break;
+              case 4: *(int32_t *) field = (int32_t) v; break;
+              case 8: *(int64_t *) field = v;            break;
+            }
+          }
+          break;
+        case JsonPropertyTypeDouble:
+          if ($((Object *) val, isKindOfClass, _Number())) {
+            const double v = ((Number *) val)->value;
+            if (p->size == sizeof(float)) {
+              *(float *)  field = (float) v;
+            } else {
+              *(double *) field = v;
+            }
+          }
+          break;
+        case JsonPropertyTypeBool:
+          if ($((Object *) val, isKindOfClass, _Boole())) {
+            const bool b = ((Boole *) val)->value;
+            switch (p->size) {
+              case 1: *(uint8_t *)  field = (uint8_t)  b; break;
+              case 2: *(uint16_t *) field = (uint16_t) b; break;
+              case 4: *(uint32_t *) field = (uint32_t) b; break;
+              default: *(uint8_t *) field = (uint8_t)  b; break;
+            }
+          }
+          break;
+      }
+    }
+  }
+
+  release(array);
+  return n;
 }
 
 #pragma mark - Class lifecycle
@@ -665,8 +747,9 @@ static Data *dataFromStructs(const JsonProperty *properties, const void *instanc
 static void initialize(Class *clazz) {
 
   ((JSONSerializationInterface *) clazz->interface)->dataFromObject = dataFromObject;
-  ((JSONSerializationInterface *) clazz->interface)->dictionaryFromStruct = dictionaryFromStruct;
-  ((JSONSerializationInterface *) clazz->interface)->dataFromStructs = dataFromStructs;
+  ((JSONSerializationInterface *) clazz->interface)->dictionaryFromInstance = dictionaryFromInstance;
+  ((JSONSerializationInterface *) clazz->interface)->dataFromInstances = dataFromInstances;
+  ((JSONSerializationInterface *) clazz->interface)->instancesFromData = instancesFromData;
   ((JSONSerializationInterface *) clazz->interface)->objectFromData = objectFromData;
 }
 

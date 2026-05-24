@@ -72,8 +72,8 @@ typedef struct JsonProperty JsonProperty;
 /**
  * @brief Describes a single field of a C struct for JSON serialization.
  * @details Use `MakeJsonProperty` to construct and `MakeJsonProperties` to build a
- * NULL-terminated array.  Pass the array to `JSONSerialization::dictionaryFromStruct`
- * or `JSONSerialization::dataFromStructs`.
+ * NULL-terminated array.  Pass the array to `JSONSerialization::dictionaryFromInstance`
+ * or `JSONSerialization::dataFromInstances`.
  *
  * @code
  * static const JsonProperty frag_properties[] = MakeJsonProperties(
@@ -188,7 +188,7 @@ struct JSONSerializationInterface {
 
   /**
    * @static
-   * @fn Dictionary *JSONSerialization::dictionaryFromStruct(const JsonProperty *properties, const void *instance)
+   * @fn Dictionary *JSONSerialization::dictionaryFromInstance(const JsonProperty *properties, const void *instance)
    * @brief Creates an Objectively Dictionary from a single C struct instance.
    * @param properties A NULL-terminated array of JsonProperty descriptors.
    * @param instance Pointer to the struct instance to read from.
@@ -196,11 +196,11 @@ struct JSONSerializationInterface {
    *   corresponding Objectively objects.  The caller is responsible for releasing it.
    * @memberof JSONSerialization
    */
-  Dictionary *(*dictionaryFromStruct)(const JsonProperty *properties, const void *instance);
+  Dictionary *(*dictionaryFromInstance)(const JsonProperty *properties, const void *instance);
 
   /**
    * @static
-   * @fn Data *JSONSerialization::dataFromStructs(const JsonProperty *properties, const void *instances, size_t count, size_t stride)
+   * @fn Data *JSONSerialization::dataFromInstances(const JsonProperty *properties, const void *instances, size_t count, size_t stride)
    * @brief Serializes an array of C structs to a JSON array.
    * @param properties A NULL-terminated array of JsonProperty descriptors.
    * @param instances Pointer to the first struct in the array.
@@ -209,7 +209,21 @@ struct JSONSerializationInterface {
    * @return The resulting JSON Data (a top-level JSON array), or `NULL` if `count` is zero.
    * @memberof JSONSerialization
    */
-  Data *(*dataFromStructs)(const JsonProperty *properties, const void *instances, size_t count, size_t stride);
+  Data *(*dataFromInstances)(const JsonProperty *properties, const void *instances, size_t count, size_t stride);
+
+  /**
+   * @static
+   * @fn size_t JSONSerialization::instancesFromData(const JsonProperty *properties, const Data *data, void *instances, size_t stride, size_t count)
+   * @brief Deserializes a JSON array into an array of C structs.
+   * @param properties A NULL-terminated array of JsonProperty descriptors.
+   * @param data The JSON Data containing a top-level array.
+   * @param instances Pointer to a caller-allocated buffer of at least `count` structs.
+   * @param stride The byte distance between consecutive structs (typically `sizeof(Struct)`).
+   * @param count The capacity of the `instances` buffer.
+   * @return The number of structs actually written (min of parsed count and `count`).
+   * @memberof JSONSerialization
+   */
+  size_t (*instancesFromData)(const JsonProperty *properties, const Data *data, void *instances, size_t stride, size_t count);
 
   /**
    * @static
