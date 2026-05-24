@@ -586,8 +586,15 @@ static Dictionary *dictionaryFromInstance(const JsonProperty *properties, const 
     ident val = NULL;
 
     switch (p->type) {
-      case JsonPropertyCharacters: {
-        const char *s = p->size > 0 ? (const char *) field : *(const char **) field;
+      case JsonPropertyString: {
+        const char *s = (const char *) field;
+        if (s[0]) {
+          val = $$(String, stringWithCharacters, s);
+        }
+        break;
+      }
+      case JsonPropertyStringPtr: {
+        const char *s = *(const char **) field;
         if (s) {
           val = $$(String, stringWithCharacters, s);
         }
@@ -688,15 +695,15 @@ static size_t instancesFromData(const JsonProperty *properties, const Data *data
       }
 
       switch (p->type) {
-        case JsonPropertyCharacters:
+        case JsonPropertyString:
           if ($((Object *) val, isKindOfClass, _String())) {
-            const char *s = ((String *) val)->chars;
-            if (p->size > 0) {
-              strncpy((char *) field, s, p->size - 1);
-              ((char *) field)[p->size - 1] = '\0';
-            } else {
-              *(char **) field = strdup(s);
-            }
+            strncpy((char *) field, ((String *) val)->chars, p->size - 1);
+            ((char *) field)[p->size - 1] = '\0';
+          }
+          break;
+        case JsonPropertyStringPtr:
+          if ($((Object *) val, isKindOfClass, _String())) {
+            *(char **) field = strdup(((String *) val)->chars);
           }
           break;
         case JsonPropertyInteger:

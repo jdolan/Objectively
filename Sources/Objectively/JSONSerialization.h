@@ -46,9 +46,15 @@
 typedef enum {
 
   /**
-   * @brief A `char *` pointer (size == 0) or a fixed `char[N]` buffer (size > 0).
+   * @brief A fixed `char[N]` buffer; size is derived from the field.
    */
-  JsonPropertyCharacters,
+  JsonPropertyString,
+
+  /**
+   * @brief A `char *` pointer; the pointed-to string is serialized/deserialized.
+   * On deserialization, a new string is allocated with `strdup` and must be freed by the caller.
+   */
+  JsonPropertyStringPtr,
 
   /**
    * @brief A signed integer whose width is given by `size` (1, 2, 4, or 8 bytes).
@@ -77,10 +83,10 @@ typedef struct JsonProperty JsonProperty;
  *
  * @code
  * static const JsonProperty frag_properties[] = MakeJsonProperties(
- *     MakeJsonProperty("name", JsonPropertyCharacters, offsetof(MyStruct, name), sizeof(((MyStruct *)0)->name)),
- *     MakeJsonProperty("count", JsonPropertyInteger,    offsetof(MyStruct, count), sizeof(((MyStruct *)0)->count)),
- *     MakeJsonProperty("ratio", JsonPropertyDouble,     offsetof(MyStruct, ratio), sizeof(((MyStruct *)0)->ratio)),
- *     MakeJsonProperty("flag",  JsonPropertyBool,       offsetof(MyStruct, flag),  sizeof(((MyStruct *)0)->flag))
+ *     MakeJsonProperty(MyStruct, name,  JsonPropertyString),
+ *     MakeJsonProperty(MyStruct, count, JsonPropertyInteger),
+ *     MakeJsonProperty(MyStruct, ratio, JsonPropertyDouble),
+ *     MakeJsonProperty(MyStruct, flag,  JsonPropertyBool)
  * );
  * @endcode
  */
@@ -97,26 +103,31 @@ struct JsonProperty {
   JsonPropertyType type;
 
   /**
-   * @brief Byte offset of the field within the struct (use `offsetof`).
+   * @brief Byte offset of the field within the struct.
    */
   ptrdiff_t offset;
 
   /**
-   * @brief Type-dependent size.
-   * @details
-   *   - `JsonPropertyCharacters`: 0 for `char *`, > 0 for `char[N]`.
-   *   - `JsonPropertyInteger`: `sizeof` the integer field (1, 2, 4, or 8).
-   *   - `JsonPropertyDouble`: `sizeof` the float/double field (4 or 8).
-   *   - `JsonPropertyBool`: `sizeof` the boolean field.
+   * @brief Size of the field in bytes (`sizeof` the field).
+   * @details For `JsonPropertyStringPtr` this is the pointer size and is not used for
+   * string length; the type alone signals pointer semantics.
    */
   size_t size;
 };
 
 /**
- * @brief Creates a JsonProperty with the given parameters.
+ * @brief Creates a JsonProperty for a named field of a struct, deriving offset and size automatically.
+ * The JSON key is the stringified field name.
  */
-#define MakeJsonProperty(name, type, offset, size) \
-  (JsonProperty) { (name), (type), (ptrdiff_t)(offset), (size) }
+#define MakeJsonProperty(struct_type, field, type) \
+  (JsonProperty) { #field, (type), (ptrdiff_t) offsetof(struct_type, field), sizeof(((struct_type *)0)->field) }
+
+/**
+ * @brief Creates a JsonProperty with an explicit JSON key name, deriving offset and size automatically.
+ * Use when the desired JSON key differs from the C field name.
+ */
+#define MakeJsonPropertyNamed(struct_type, field, key, type) \
+  (JsonProperty) { (key), (type), (ptrdiff_t) offsetof(struct_type, field), sizeof(((struct_type *)0)->field) }
 
 /**
  * @brief Creates a NULL-terminated array of JsonProperty descriptors.
@@ -124,7 +135,7 @@ struct JsonProperty {
 #define MakeJsonProperties(...) \
   { \
     __VA_ARGS__, \
-    MakeJsonProperty(NULL, 0, 0, 0) \
+    (JsonProperty) { NULL, 0, 0, 0 } \
   }
 
 /**
