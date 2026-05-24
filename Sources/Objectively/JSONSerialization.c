@@ -586,14 +586,14 @@ static Dictionary *dictionaryFromInstance(const JsonProperty *properties, const 
     ident val = NULL;
 
     switch (p->type) {
-      case JsonPropertyTypeCharacters: {
+      case JsonPropertyCharacters: {
         const char *s = p->size > 0 ? (const char *) field : *(const char **) field;
         if (s) {
           val = $$(String, stringWithCharacters, s);
         }
         break;
       }
-      case JsonPropertyTypeInteger: {
+      case JsonPropertyInteger: {
         double v = 0;
         switch (p->size) {
           case 1: v = (double) *(const int8_t *)  field; break;
@@ -604,14 +604,14 @@ static Dictionary *dictionaryFromInstance(const JsonProperty *properties, const 
         val = $$(Number, numberWithValue, v);
         break;
       }
-      case JsonPropertyTypeDouble: {
+      case JsonPropertyDouble: {
         double v = p->size == sizeof(float)
           ? (double) *(const float *)  field
           :          *(const double *) field;
         val = $$(Number, numberWithValue, v);
         break;
       }
-      case JsonPropertyTypeBool: {
+      case JsonPropertyBool: {
         bool b;
         switch (p->size) {
           case 1: b = *(const uint8_t *)  field != 0; break;
@@ -688,7 +688,7 @@ static size_t instancesFromData(const JsonProperty *properties, const Data *data
       }
 
       switch (p->type) {
-        case JsonPropertyTypeCharacters:
+        case JsonPropertyCharacters:
           if ($((Object *) val, isKindOfClass, _String())) {
             const char *s = ((String *) val)->chars;
             if (p->size > 0) {
@@ -699,7 +699,7 @@ static size_t instancesFromData(const JsonProperty *properties, const Data *data
             }
           }
           break;
-        case JsonPropertyTypeInteger:
+        case JsonPropertyInteger:
           if ($((Object *) val, isKindOfClass, _Number())) {
             const int64_t v = (int64_t) ((Number *) val)->value;
             switch (p->size) {
@@ -710,7 +710,7 @@ static size_t instancesFromData(const JsonProperty *properties, const Data *data
             }
           }
           break;
-        case JsonPropertyTypeDouble:
+        case JsonPropertyDouble:
           if ($((Object *) val, isKindOfClass, _Number())) {
             const double v = ((Number *) val)->value;
             if (p->size == sizeof(float)) {
@@ -720,7 +720,7 @@ static size_t instancesFromData(const JsonProperty *properties, const Data *data
             }
           }
           break;
-        case JsonPropertyTypeBool:
+        case JsonPropertyBool:
           if ($((Object *) val, isKindOfClass, _Boole())) {
             const bool b = ((Boole *) val)->value;
             switch (p->size) {

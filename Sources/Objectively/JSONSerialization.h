@@ -48,22 +48,22 @@ typedef enum {
   /**
    * @brief A `char *` pointer (size == 0) or a fixed `char[N]` buffer (size > 0).
    */
-  JsonPropertyTypeCharacters,
+  JsonPropertyCharacters,
 
   /**
    * @brief A signed integer whose width is given by `size` (1, 2, 4, or 8 bytes).
    */
-  JsonPropertyTypeInteger,
+  JsonPropertyInteger,
 
   /**
    * @brief A floating-point value: `float` (size == 4) or `double` (size == 8).
    */
-  JsonPropertyTypeDouble,
+  JsonPropertyDouble,
 
   /**
    * @brief A boolean value whose width is given by `size` (typically 1 for `bool`/`_Bool`).
    */
-  JsonPropertyTypeBool,
+  JsonPropertyBool,
 
 } JsonPropertyType;
 
@@ -77,10 +77,10 @@ typedef struct JsonProperty JsonProperty;
  *
  * @code
  * static const JsonProperty frag_properties[] = MakeJsonProperties(
- *     MakeJsonProperty("name", JsonPropertyTypeCharacters, offsetof(MyStruct, name), sizeof(((MyStruct *)0)->name)),
- *     MakeJsonProperty("count", JsonPropertyTypeInteger,    offsetof(MyStruct, count), sizeof(((MyStruct *)0)->count)),
- *     MakeJsonProperty("ratio", JsonPropertyTypeDouble,     offsetof(MyStruct, ratio), sizeof(((MyStruct *)0)->ratio)),
- *     MakeJsonProperty("flag",  JsonPropertyTypeBool,       offsetof(MyStruct, flag),  sizeof(((MyStruct *)0)->flag))
+ *     MakeJsonProperty("name", JsonPropertyCharacters, offsetof(MyStruct, name), sizeof(((MyStruct *)0)->name)),
+ *     MakeJsonProperty("count", JsonPropertyInteger,    offsetof(MyStruct, count), sizeof(((MyStruct *)0)->count)),
+ *     MakeJsonProperty("ratio", JsonPropertyDouble,     offsetof(MyStruct, ratio), sizeof(((MyStruct *)0)->ratio)),
+ *     MakeJsonProperty("flag",  JsonPropertyBool,       offsetof(MyStruct, flag),  sizeof(((MyStruct *)0)->flag))
  * );
  * @endcode
  */
@@ -104,10 +104,10 @@ struct JsonProperty {
   /**
    * @brief Type-dependent size.
    * @details
-   *   - `JsonPropertyTypeCharacters`: 0 for `char *`, > 0 for `char[N]`.
-   *   - `JsonPropertyTypeInteger`: `sizeof` the integer field (1, 2, 4, or 8).
-   *   - `JsonPropertyTypeDouble`: `sizeof` the float/double field (4 or 8).
-   *   - `JsonPropertyTypeBool`: `sizeof` the boolean field.
+   *   - `JsonPropertyCharacters`: 0 for `char *`, > 0 for `char[N]`.
+   *   - `JsonPropertyInteger`: `sizeof` the integer field (1, 2, 4, or 8).
+   *   - `JsonPropertyDouble`: `sizeof` the float/double field (4 or 8).
+   *   - `JsonPropertyBool`: `sizeof` the boolean field.
    */
   size_t size;
 };

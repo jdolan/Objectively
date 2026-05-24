@@ -171,11 +171,11 @@ START_TEST(json_struct_properties) {
   } TestStruct;
 
   static const JsonProperty properties[] = MakeJsonProperties(
-    MakeJsonProperty("name",   JsonPropertyTypeCharacters, offsetof(TestStruct, name),   sizeof(((TestStruct *)0)->name)),
-    MakeJsonProperty("tag",    JsonPropertyTypeCharacters, offsetof(TestStruct, tag),    0),
-    MakeJsonProperty("score",  JsonPropertyTypeInteger,    offsetof(TestStruct, score),  sizeof(((TestStruct *)0)->score)),
-    MakeJsonProperty("ratio",  JsonPropertyTypeDouble,     offsetof(TestStruct, ratio),  sizeof(((TestStruct *)0)->ratio)),
-    MakeJsonProperty("active", JsonPropertyTypeBool,       offsetof(TestStruct, active), sizeof(((TestStruct *)0)->active))
+    MakeJsonProperty("name",   JsonPropertyCharacters, offsetof(TestStruct, name),   sizeof(((TestStruct *)0)->name)),
+    MakeJsonProperty("tag",    JsonPropertyCharacters, offsetof(TestStruct, tag),    0),
+    MakeJsonProperty("score",  JsonPropertyInteger,    offsetof(TestStruct, score),  sizeof(((TestStruct *)0)->score)),
+    MakeJsonProperty("ratio",  JsonPropertyDouble,     offsetof(TestStruct, ratio),  sizeof(((TestStruct *)0)->ratio)),
+    MakeJsonProperty("active", JsonPropertyBool,       offsetof(TestStruct, active), sizeof(((TestStruct *)0)->active))
   );
 
   TestStruct instances[2] = {
