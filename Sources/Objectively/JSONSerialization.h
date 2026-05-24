@@ -23,7 +23,11 @@
 
 #pragma once
 
+#include <stddef.h>
+#include <stdint.h>
+
 #include <Objectively/Data.h>
+#include <Objectively/Dictionary.h>
 #include <Objectively/Object.h>
 
 /**
@@ -35,6 +39,93 @@
  * @defgroup JSON JSON
  * @brief JSON serialization and introspection.
  */
+
+/**
+ * @brief The type of a JsonProperty value.
+ */
+typedef enum {
+
+  /**
+   * @brief A `char *` pointer (size == 0) or a fixed `char[N]` buffer (size > 0).
+   */
+  JsonPropertyTypeCharacters,
+
+  /**
+   * @brief A signed integer whose width is given by `size` (1, 2, 4, or 8 bytes).
+   */
+  JsonPropertyTypeInteger,
+
+  /**
+   * @brief A floating-point value: `float` (size == 4) or `double` (size == 8).
+   */
+  JsonPropertyTypeDouble,
+
+  /**
+   * @brief A boolean value whose width is given by `size` (typically 1 for `bool`/`_Bool`).
+   */
+  JsonPropertyTypeBool,
+
+} JsonPropertyType;
+
+typedef struct JsonProperty JsonProperty;
+
+/**
+ * @brief Describes a single field of a C struct for JSON serialization.
+ * @details Use `MakeJsonProperty` to construct and `MakeJsonProperties` to build a
+ * NULL-terminated array.  Pass the array to `JSONSerialization::dictionaryFromStruct`
+ * or `JSONSerialization::dataFromStructs`.
+ *
+ * @code
+ * static const JsonProperty frag_properties[] = MakeJsonProperties(
+ *     MakeJsonProperty("name", JsonPropertyTypeCharacters, offsetof(MyStruct, name), sizeof(((MyStruct *)0)->name)),
+ *     MakeJsonProperty("count", JsonPropertyTypeInteger,    offsetof(MyStruct, count), sizeof(((MyStruct *)0)->count)),
+ *     MakeJsonProperty("ratio", JsonPropertyTypeDouble,     offsetof(MyStruct, ratio), sizeof(((MyStruct *)0)->ratio)),
+ *     MakeJsonProperty("flag",  JsonPropertyTypeBool,       offsetof(MyStruct, flag),  sizeof(((MyStruct *)0)->flag))
+ * );
+ * @endcode
+ */
+struct JsonProperty {
+
+  /**
+   * @brief The JSON key name.  A `NULL` name terminates the list.
+   */
+  const char *name;
+
+  /**
+   * @brief The property type.
+   */
+  JsonPropertyType type;
+
+  /**
+   * @brief Byte offset of the field within the struct (use `offsetof`).
+   */
+  ptrdiff_t offset;
+
+  /**
+   * @brief Type-dependent size.
+   * @details
+   *   - `JsonPropertyTypeCharacters`: 0 for `char *`, > 0 for `char[N]`.
+   *   - `JsonPropertyTypeInteger`: `sizeof` the integer field (1, 2, 4, or 8).
+   *   - `JsonPropertyTypeDouble`: `sizeof` the float/double field (4 or 8).
+   *   - `JsonPropertyTypeBool`: `sizeof` the boolean field.
+   */
+  size_t size;
+};
+
+/**
+ * @brief Creates a JsonProperty with the given parameters.
+ */
+#define MakeJsonProperty(name, type, offset, size) \
+  (JsonProperty) { (name), (type), (ptrdiff_t)(offset), (size) }
+
+/**
+ * @brief Creates a NULL-terminated array of JsonProperty descriptors.
+ */
+#define MakeJsonProperties(...) \
+  { \
+    __VA_ARGS__, \
+    MakeJsonProperty(NULL, 0, 0, 0) \
+  }
 
 /**
  * @brief JSON write options.
@@ -94,6 +185,31 @@ struct JSONSerializationInterface {
    * @memberof JSONSerialization
    */
   Data *(*dataFromObject)(const ident obj, int options);
+
+  /**
+   * @static
+   * @fn Dictionary *JSONSerialization::dictionaryFromStruct(const JsonProperty *properties, const void *instance)
+   * @brief Creates an Objectively Dictionary from a single C struct instance.
+   * @param properties A NULL-terminated array of JsonProperty descriptors.
+   * @param instance Pointer to the struct instance to read from.
+   * @return A new Dictionary whose keys are the property names and whose values are the
+   *   corresponding Objectively objects.  The caller is responsible for releasing it.
+   * @memberof JSONSerialization
+   */
+  Dictionary *(*dictionaryFromStruct)(const JsonProperty *properties, const void *instance);
+
+  /**
+   * @static
+   * @fn Data *JSONSerialization::dataFromStructs(const JsonProperty *properties, const void *instances, size_t count, size_t stride)
+   * @brief Serializes an array of C structs to a JSON array.
+   * @param properties A NULL-terminated array of JsonProperty descriptors.
+   * @param instances Pointer to the first struct in the array.
+   * @param count The number of structs to serialize.
+   * @param stride The byte distance between consecutive structs (typically `sizeof(Struct)`).
+   * @return The resulting JSON Data (a top-level JSON array), or `NULL` if `count` is zero.
+   * @memberof JSONSerialization
+   */
+  Data *(*dataFromStructs)(const JsonProperty *properties, const void *instances, size_t count, size_t stride);
 
   /**
    * @static

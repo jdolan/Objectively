@@ -156,6 +156,87 @@ START_TEST(json_array_toplevel) {
 
 } END_TEST
 
+/**
+ * @brief Tests dictionaryFromStruct and dataFromStructs with a representative C struct.
+ */
+START_TEST(json_struct_properties) {
+
+  typedef struct {
+    char     name[64];
+    char     *tag;
+    int32_t  score;
+    double   ratio;
+    bool     active;
+  } TestStruct;
+
+  static const JsonProperty properties[] = MakeJsonProperties(
+    MakeJsonProperty("name",   JsonPropertyTypeCharacters, offsetof(TestStruct, name),   sizeof(((TestStruct *)0)->name)),
+    MakeJsonProperty("tag",    JsonPropertyTypeCharacters, offsetof(TestStruct, tag),    0),
+    MakeJsonProperty("score",  JsonPropertyTypeInteger,    offsetof(TestStruct, score),  sizeof(((TestStruct *)0)->score)),
+    MakeJsonProperty("ratio",  JsonPropertyTypeDouble,     offsetof(TestStruct, ratio),  sizeof(((TestStruct *)0)->ratio)),
+    MakeJsonProperty("active", JsonPropertyTypeBool,       offsetof(TestStruct, active), sizeof(((TestStruct *)0)->active))
+  );
+
+  TestStruct instances[2] = {
+    { .name = "Alice", .tag = "hero",   .score = 42,  .ratio = 0.75, .active = true  },
+    { .name = "Bob",   .tag = "villain",.score = -7,  .ratio = 0.25, .active = false },
+  };
+
+  // dictionaryFromStruct — single instance
+  Dictionary *dict = $$(JSONSerialization, dictionaryFromStruct, properties, &instances[0]);
+  ck_assert_ptr_ne(NULL, dict);
+
+  String *kName   = $$(String, stringWithCharacters, "name");
+  String *kTag    = $$(String, stringWithCharacters, "tag");
+  String *kScore  = $$(String, stringWithCharacters, "score");
+  String *kRatio  = $$(String, stringWithCharacters, "ratio");
+  String *kActive = $$(String, stringWithCharacters, "active");
+
+  String *vName = $(dict, objectForKey, kName);
+  ck_assert_str_eq("Alice", vName->chars);
+
+  String *vTag = $(dict, objectForKey, kTag);
+  ck_assert_str_eq("hero", vTag->chars);
+
+  Number *vScore = $(dict, objectForKey, kScore);
+  ck_assert_int_eq(42, (int) vScore->value);
+
+  Number *vRatio = $(dict, objectForKey, kRatio);
+  ck_assert(vRatio->value > 0.74 && vRatio->value < 0.76);
+
+  Boole *vActive = $(dict, objectForKey, kActive);
+  ck_assert(vActive->value);
+
+  release(kName); release(kTag); release(kScore); release(kRatio); release(kActive);
+  release(dict);
+
+  // dataFromStructs — two instances, round-trip
+  Data *data = $$(JSONSerialization, dataFromStructs, properties, instances, 2, sizeof(TestStruct));
+  ck_assert_ptr_ne(NULL, data);
+  ck_assert_int_eq('[', ((const char *) data->bytes)[0]);
+
+  Array *parsed = $$(JSONSerialization, objectFromData, data, 0);
+  ck_assert_ptr_ne(NULL, parsed);
+  ck_assert_int_eq(2, (int) parsed->count);
+
+  Dictionary *d0 = $(parsed, objectAtIndex, 0);
+  Dictionary *d1 = $(parsed, objectAtIndex, 1);
+
+  String *k = $$(String, stringWithCharacters, "name");
+  ck_assert_str_eq("Alice", ((String *) $(d0, objectForKey, k))->chars);
+  ck_assert_str_eq("Bob",   ((String *) $(d1, objectForKey, k))->chars);
+  release(k);
+
+  k = $$(String, stringWithCharacters, "active");
+  ck_assert(((Boole *) $(d0, objectForKey, k))->value == true);
+  ck_assert(((Boole *) $(d1, objectForKey, k))->value == false);
+  release(k);
+
+  release(data);
+  release(parsed);
+
+} END_TEST
+
 int main(int argc, char **argv) {
 
   if (argc == 2) {
@@ -168,6 +249,7 @@ int main(int argc, char **argv) {
   tcase_add_test(tcase, json);
   tcase_add_test(tcase, json_escaping);
   tcase_add_test(tcase, json_array_toplevel);
+  tcase_add_test(tcase, json_struct_properties);
 
   Suite *suite = suite_create("Json");
   suite_add_tcase(suite, tcase);

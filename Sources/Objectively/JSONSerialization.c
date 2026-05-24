@@ -22,6 +22,8 @@
  */
 
 #include <assert.h>
+#include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -569,6 +571,92 @@ static ident objectFromData(const Data *data, int options) {
   return NULL;
 }
 
+/**
+ * @fn Dictionary *JSONSerialization::dictionaryFromStruct(const JsonProperty *properties, const void *instance)
+ * @memberof JSONSerialization
+ */
+static Dictionary *dictionaryFromStruct(const JsonProperty *properties, const void *instance) {
+
+  MutableDictionary *dict = $(alloc(MutableDictionary), init);
+
+  for (const JsonProperty *p = properties; p->name; p++) {
+    const void *field = (const uint8_t *) instance + p->offset;
+    String *key = $$(String, stringWithCharacters, p->name);
+    ident val = NULL;
+
+    switch (p->type) {
+      case JsonPropertyTypeCharacters: {
+        const char *s = p->size > 0 ? (const char *) field : *(const char **) field;
+        if (s) {
+          val = $$(String, stringWithCharacters, s);
+        }
+        break;
+      }
+      case JsonPropertyTypeInteger: {
+        double v = 0;
+        switch (p->size) {
+          case 1: v = (double) *(const int8_t *)  field; break;
+          case 2: v = (double) *(const int16_t *) field; break;
+          case 4: v = (double) *(const int32_t *) field; break;
+          case 8: v = (double) *(const int64_t *) field; break;
+        }
+        val = $$(Number, numberWithValue, v);
+        break;
+      }
+      case JsonPropertyTypeDouble: {
+        double v = p->size == sizeof(float)
+          ? (double) *(const float *)  field
+          :          *(const double *) field;
+        val = $$(Number, numberWithValue, v);
+        break;
+      }
+      case JsonPropertyTypeBool: {
+        bool b;
+        switch (p->size) {
+          case 1: b = *(const uint8_t *)  field != 0; break;
+          case 2: b = *(const uint16_t *) field != 0; break;
+          case 4: b = *(const uint32_t *) field != 0; break;
+          default: b = *(const uint8_t *) field != 0; break;
+        }
+        val = b ? $$(Boole, True) : $$(Boole, False);
+        break;
+      }
+    }
+
+    if (val) {
+      $(dict, setObjectForKey, val, key);
+      release(val);
+    }
+    release(key);
+  }
+
+  return (Dictionary *) dict;
+}
+
+/**
+ * @fn Data *JSONSerialization::dataFromStructs(const JsonProperty *properties, const void *instances, size_t count, size_t stride)
+ * @memberof JSONSerialization
+ */
+static Data *dataFromStructs(const JsonProperty *properties, const void *instances, size_t count, size_t stride) {
+
+  if (count == 0) {
+    return NULL;
+  }
+
+  MutableArray *array = $(alloc(MutableArray), init);
+
+  for (size_t i = 0; i < count; i++) {
+    const void *instance = (const uint8_t *) instances + i * stride;
+    Dictionary *dict = $$(JSONSerialization, dictionaryFromStruct, properties, instance);
+    $(array, addObject, dict);
+    release(dict);
+  }
+
+  Data *data = $$(JSONSerialization, dataFromObject, array, 0);
+  release(array);
+  return data;
+}
+
 #pragma mark - Class lifecycle
 
 /**
@@ -577,6 +665,8 @@ static ident objectFromData(const Data *data, int options) {
 static void initialize(Class *clazz) {
 
   ((JSONSerializationInterface *) clazz->interface)->dataFromObject = dataFromObject;
+  ((JSONSerializationInterface *) clazz->interface)->dictionaryFromStruct = dictionaryFromStruct;
+  ((JSONSerializationInterface *) clazz->interface)->dataFromStructs = dataFromStructs;
   ((JSONSerializationInterface *) clazz->interface)->objectFromData = objectFromData;
 }
 

@@ -65,7 +65,7 @@ static Boole *False(void) {
     _False->value = false;
   });
 
-  return _False;
+  return retain(_False);
 }
 
 static Boole *_True;
@@ -83,7 +83,7 @@ static Boole *True(void) {
     _True->value = true;
   });
 
-  return _True;
+  return retain(_True);
 }
 
 /**
