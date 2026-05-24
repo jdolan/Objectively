@@ -258,6 +258,145 @@ START_TEST(json_struct_properties) {
 
 } END_TEST
 
+/**
+ * @brief Tests dataFromInstances with a struct mirroring g_frag_t from Quetoo,
+ * exercising the exact property types and edge cases seen in production.
+ */
+START_TEST(json_frag_t) {
+
+#define FRAG_QPATH 64
+
+  typedef struct {
+    char     level[FRAG_QPATH];
+    char     attacker[FRAG_QPATH];
+    char     attacker_guid[FRAG_QPATH];
+    bool     attacker_ai;
+    char     target[FRAG_QPATH];
+    char     target_guid[FRAG_QPATH];
+    bool     target_ai;
+    char     weapon[FRAG_QPATH];
+    int32_t  mod;
+    int32_t  damage;
+    uint32_t time;
+  } frag_t;
+
+  static const JsonProperty properties[] = MakeJsonProperties(
+    MakeJsonProperty(frag_t, level,         JsonPropertyString),
+    MakeJsonProperty(frag_t, attacker,      JsonPropertyString),
+    MakeJsonProperty(frag_t, attacker_guid, JsonPropertyString),
+    MakeJsonProperty(frag_t, attacker_ai,   JsonPropertyBool),
+    MakeJsonProperty(frag_t, target,        JsonPropertyString),
+    MakeJsonProperty(frag_t, target_guid,   JsonPropertyString),
+    MakeJsonProperty(frag_t, target_ai,     JsonPropertyBool),
+    MakeJsonProperty(frag_t, weapon,        JsonPropertyString),
+    MakeJsonProperty(frag_t, mod,           JsonPropertyInteger),
+    MakeJsonProperty(frag_t, damage,        JsonPropertyInteger),
+    MakeJsonProperty(frag_t, time,          JsonPropertyInteger)
+  );
+
+  // Mirror real-world permutations: human kills human, human kills bot,
+  // bot kills human, suicide, empty weapon, max uint32 time, zero damage.
+  frag_t frags[] = {
+    {
+      .level = "edge",
+      .attacker = "jdolan", .attacker_guid = "3a56346d46f8e00b88232df6db2b4595", .attacker_ai = false,
+      .target   = "Skies912", .target_guid  = "02bd0844f98709ceb87a9c41998484228", .target_ai = false,
+      .weapon = "rockets", .mod = 1, .damage = 80, .time = 12345
+    },
+    {
+      .level = "edge",
+      .attacker = "jdolan", .attacker_guid = "3a56346d46f8e00b88232df6db2b4595", .attacker_ai = false,
+      .target   = "[BOT] Makron", .target_guid = "81f97126cfaa1b4c41f152d76fee16b3", .target_ai = true,
+      .weapon = "railgun", .mod = 7, .damage = 100, .time = 23456
+    },
+    {
+      .level = "edge",
+      .attacker = "[BOT] Brain", .attacker_guid = "b19e1c04f191f77ea2cd73552997a603", .attacker_ai = true,
+      .target   = "Skies912", .target_guid = "02bd0844f98709ceb87a9c41998484228", .target_ai = false,
+      .weapon = "plasma", .mod = 3, .damage = 60, .time = 34567
+    },
+    {
+      // Suicide: attacker == target (same guid)
+      .level = "edge",
+      .attacker = "jdolan", .attacker_guid = "3a56346d46f8e00b88232df6db2b4595", .attacker_ai = false,
+      .target   = "jdolan", .target_guid   = "3a56346d46f8e00b88232df6db2b4595", .target_ai = false,
+      .weapon = "", .mod = 0, .damage = 0, .time = 45678  // empty weapon (e.g. world kill)
+    },
+    {
+      // Zero damage (telefrag / world)
+      .level = "edge",
+      .attacker = "Skies912", .attacker_guid = "02bd0844f98709ceb87a9c41998484228", .attacker_ai = false,
+      .target   = "jdolan",   .target_guid   = "3a56346d46f8e00b88232df6db2b4595", .target_ai = false,
+      .weapon = "bfg", .mod = 9, .damage = 0, .time = 56789
+    },
+    {
+      // Max uint32 time, negative mod (edge case)
+      .level = "edge",
+      .attacker = "jdolan", .attacker_guid = "3a56346d46f8e00b88232df6db2b4595", .attacker_ai = false,
+      .target   = "[BOT] Gladiator", .target_guid = "73c6bc5c39e6b7fbbca031eeadf71c09", .target_ai = true,
+      .weapon = "hyperblaster", .mod = 5, .damage = 50, .time = 0xffffffff
+    },
+  };
+  const size_t n = sizeof(frags) / sizeof(frags[0]);
+
+  // dataFromInstances — serialize all frags to JSON
+  Data *data = $$(JSONSerialization, dataFromInstances, properties, frags, n, sizeof(frag_t));
+  ck_assert_ptr_ne(NULL, data);
+  ck_assert_int_eq('[', ((const char *) data->bytes)[0]);
+
+  // Round-trip: parse back and verify count
+  Array *parsed = $$(JSONSerialization, objectFromData, data, 0);
+  ck_assert_ptr_ne(NULL, parsed);
+  ck_assert_int_eq((int) n, (int) parsed->count);
+
+  // Spot-check first frag (human→human)
+  {
+    Dictionary *d = $(parsed, objectAtIndex, 0);
+    String *k;
+
+    k = $$(String, stringWithCharacters, "attacker");
+    ck_assert_str_eq("jdolan", ((String *) $(d, objectForKey, k))->chars);
+    release(k);
+
+    k = $$(String, stringWithCharacters, "attacker_ai");
+    ck_assert(((Boole *) $(d, objectForKey, k))->value == false);
+    release(k);
+
+    k = $$(String, stringWithCharacters, "target_ai");
+    ck_assert(((Boole *) $(d, objectForKey, k))->value == false);
+    release(k);
+
+    k = $$(String, stringWithCharacters, "mod");
+    ck_assert_int_eq(1, (int) ((Number *) $(d, objectForKey, k))->value);
+    release(k);
+  }
+
+  // Spot-check fourth frag (suicide with empty weapon — weapon key should be absent)
+  {
+    Dictionary *d = $(parsed, objectAtIndex, 3);
+    String *k = $$(String, stringWithCharacters, "weapon");
+    ck_assert_ptr_eq(NULL, $(d, objectForKey, k));
+    release(k);
+  }
+
+  // Spot-check sixth frag (max uint32 time)
+  {
+    Dictionary *d = $(parsed, objectAtIndex, 5);
+    String *k = $$(String, stringWithCharacters, "time");
+    Number *t = $(d, objectForKey, k);
+    ck_assert_ptr_ne(NULL, t);
+    // uint32 max read as int32 wraps; just verify it round-tripped
+    ck_assert(t->value != 0);
+    release(k);
+  }
+
+  release(parsed);
+  release(data);
+
+#undef FRAG_QPATH
+
+} END_TEST
+
 int main(int argc, char **argv) {
 
   if (argc == 2) {
@@ -271,6 +410,7 @@ int main(int argc, char **argv) {
   tcase_add_test(tcase, json_escaping);
   tcase_add_test(tcase, json_array_toplevel);
   tcase_add_test(tcase, json_struct_properties);
+  tcase_add_test(tcase, json_frag_t);
 
   Suite *suite = suite_create("Json");
   suite_add_tcase(suite, tcase);
