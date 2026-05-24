@@ -253,7 +253,7 @@ static Data *dataFromObject(const ident obj, int options) {
       .options = options
     };
 
-    writeObject(&writer, obj);
+    writeElement(&writer, obj);
 
     return (Data *) writer.data;
   }

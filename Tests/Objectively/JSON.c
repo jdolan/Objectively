@@ -119,6 +119,43 @@ START_TEST(json_escaping) {
 
 } END_TEST
 
+/**
+ * @brief Verifies that dataFromObject handles an Array at the top level.
+ */
+START_TEST(json_array_toplevel) {
+
+  MutableArray *arr = $(alloc(MutableArray), init);
+
+  String *s1 = $$(String, stringWithCharacters, "hello");
+  String *s2 = $$(String, stringWithCharacters, "world");
+  $(arr, addObject, s1);
+  $(arr, addObject, s2);
+  release(s1);
+  release(s2);
+
+  Data *data = $$(JSONSerialization, dataFromObject, arr, 0);
+  ck_assert_ptr_ne(NULL, data);
+
+  // Should start with '[' and end with ']'
+  ck_assert_int_eq('[', ((const char *) data->bytes)[0]);
+  ck_assert_int_eq(']', ((const char *) data->bytes)[data->length - 1]);
+
+  // Round-trip: parse back
+  Array *parsed = $$(JSONSerialization, objectFromData, data, 0);
+  ck_assert_ptr_ne(NULL, parsed);
+  ck_assert_int_eq(2, (int) parsed->count);
+
+  String *r0 = $(parsed, objectAtIndex, 0);
+  String *r1 = $(parsed, objectAtIndex, 1);
+  ck_assert_str_eq("hello", r0->chars);
+  ck_assert_str_eq("world", r1->chars);
+
+  release(data);
+  release(arr);
+  release(parsed);
+
+} END_TEST
+
 int main(int argc, char **argv) {
 
   if (argc == 2) {
@@ -130,6 +167,7 @@ int main(int argc, char **argv) {
   TCase *tcase = tcase_create("Json");
   tcase_add_test(tcase, json);
   tcase_add_test(tcase, json_escaping);
+  tcase_add_test(tcase, json_array_toplevel);
 
   Suite *suite = suite_create("Json");
   suite_add_tcase(suite, tcase);
