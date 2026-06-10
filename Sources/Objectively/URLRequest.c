@@ -23,6 +23,7 @@
 
 #include <assert.h>
 
+#include "Hash.h"
 #include "MutableDictionary.h"
 #include "URLRequest.h"
 
@@ -47,7 +48,83 @@ static Object *copy(const Object *self) {
     that->httpHeaders = (Dictionary *) $((Object *) this->httpHeaders, copy);
   }
 
+  that->httpMethod = this->httpMethod;
+
   return (Object *) that;
+}
+
+/**
+ * @brief Tests equality of two Objects, accounting for NULL.
+ */
+static bool objectEquals(const Object *self, const Object *other) {
+
+  if (self) {
+    return other && $(self, isEqual, other);
+  }
+
+  return other == NULL;
+}
+
+/**
+ * @see Object::hash(const Object *)
+ */
+static int hash(const Object *self) {
+
+  const URLRequest *this = (URLRequest *) self;
+
+  int hash = HASH_SEED;
+  hash = HashForObject(hash, this->url);
+  hash = HashForInteger(hash, this->httpMethod);
+  hash = HashForObject(hash, this->httpBody);
+
+  if (this->httpHeaders) {
+
+    const Dictionary *headers = (Dictionary *) this->httpHeaders;
+    Array *keys = $(headers, allKeys);
+
+    int headersHash = 0;
+    for (size_t i = 0; i < keys->count; i++) {
+
+      const Object *key = $(keys, objectAtIndex, i);
+      const Object *value = $(headers, objectForKey, (ident) key);
+
+      int pairHash = HASH_SEED;
+      pairHash = HashForObject(pairHash, (ident) key);
+      pairHash = HashForObject(pairHash, (ident) value);
+
+      headersHash += pairHash;
+    }
+
+    release(keys);
+
+    hash = HashForInteger(hash, headersHash);
+    hash = HashForInteger(hash, this->httpHeaders->count);
+  }
+
+  return hash;
+}
+
+/**
+ * @see Object::isEqual(const Object *, const Object *)
+ */
+static bool isEqual(const Object *self, const Object *other) {
+
+  if (super(Object, self, isEqual, other)) {
+    return true;
+  }
+
+  if (other && $(other, isKindOfClass, _URLRequest())) {
+
+    const URLRequest *this = (URLRequest *) self;
+    const URLRequest *that = (URLRequest *) other;
+
+    return this->httpMethod == that->httpMethod
+      && objectEquals((Object *) this->url, (Object *) that->url)
+      && objectEquals((Object *) this->httpBody, (Object *) that->httpBody)
+      && objectEquals((Object *) this->httpHeaders, (Object *) that->httpHeaders);
+  }
+
+  return false;
 }
 
 /**
@@ -77,6 +154,9 @@ static URLRequest *initWithURL(URLRequest *self, URL *url) {
   self = (URLRequest *) super(Object, self, init);
   if (self) {
     self->url = retain(url);
+    assert(self->url);
+
+    self->httpMethod = HTTP_GET;
   }
 
   return self;
@@ -109,7 +189,9 @@ static void setValueForHTTPHeaderField(URLRequest *self, const char *value, cons
 static void initialize(Class *clazz) {
 
   ((ObjectInterface *) clazz->interface)->copy = copy;
+  ((ObjectInterface *) clazz->interface)->hash = hash;
   ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+  ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
   ((URLRequestInterface *) clazz->interface)->initWithURL = initWithURL;
   ((URLRequestInterface *) clazz->interface)->setValueForHTTPHeaderField = setValueForHTTPHeaderField;

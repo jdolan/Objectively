@@ -30,6 +30,7 @@
 #include "MutableArray.h"
 #include "MutableDictionary.h"
 #include "MutableString.h"
+#include "Null.h"
 
 #define _Class _Dictionary
 
@@ -416,6 +417,26 @@ static ident objectForKeyPath(const Dictionary *self, const char *path) {
   return obj;
 }
 
+/**
+ * @fn ident Dictionary::objectForKeyPathWithClass(const Dictionary *self, const char *path, const Class *clazz)
+ * @memberof Dictionary
+ */
+static ident objectForKeyPathWithClass(const Dictionary *self, const char *path, const Class *clazz) {
+
+  assert(path);
+
+  const ident value = $(self, objectForKeyPath, path);
+  if (value) {
+    if (instanceof(Null, value)) {
+      return NULL;
+    } else {
+      return _cast(clazz, value);
+    }
+  }
+
+  return NULL;
+}
+
 #pragma mark - Class lifecycle
 
 /**
@@ -442,6 +463,7 @@ static void initialize(Class *clazz) {
   ((DictionaryInterface *) clazz->interface)->mutableCopy = mutableCopy;
   ((DictionaryInterface *) clazz->interface)->objectForKey = objectForKey;
   ((DictionaryInterface *) clazz->interface)->objectForKeyPath = objectForKeyPath;
+  ((DictionaryInterface *) clazz->interface)->objectForKeyPathWithClass = objectForKeyPathWithClass;
 }
 
 /**

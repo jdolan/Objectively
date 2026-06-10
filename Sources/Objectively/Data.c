@@ -93,6 +93,10 @@ static bool isEqual(const Object *self, const Object *other) {
     const Data *that = (Data *) other;
 
     if (this->length == that->length) {
+      if (this->length == 0) {
+        return true;
+      }
+
       return memcmp(this->bytes, that->bytes, this->length) == 0;
     }
   }
@@ -144,10 +148,13 @@ static Data *dataWithMemory(ident mem, size_t length) {
  */
 static Data *initWithBytes(Data *self, const uint8_t *bytes, size_t length) {
 
-  ident mem = malloc(length);
-  assert(mem);
+  ident mem = NULL;
+  if (length) {
+    mem = malloc(length);
+    assert(mem);
 
-  memcpy(mem, bytes, length);
+    memcpy(mem, bytes, length);
+  }
 
   return $(self, initWithMemory, mem, length);
 }

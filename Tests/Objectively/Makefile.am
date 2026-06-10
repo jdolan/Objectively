@@ -31,6 +31,7 @@ TESTS = \
 	String \
 	StringReader \
 	Thread \
+	URLCache \
 	URL \
 	URLSession \
 	Vector

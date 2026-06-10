@@ -5,8 +5,6 @@
  */
 
 
-#include <assert.h>
-
 #include "URLSessionConfiguration.h"
 
 #define _Class _URLSessionConfiguration
@@ -23,6 +21,7 @@ static void dealloc(Object *self) {
   release(this->credentials.username);
   release(this->credentials.password);
   release(this->httpHeaders);
+  release(this->urlCache);
 
   super(Object, self, dealloc);
 }
@@ -38,6 +37,7 @@ static URLSessionConfiguration *init(URLSessionConfiguration *self) {
   self = (URLSessionConfiguration *) super(Object, self, init);
   if (self) {
     self->connectTimeout = 5;
+    self->urlCache = NULL;
   }
 
   return self;

@@ -144,7 +144,7 @@ ident _alloc(Class *clazz) {
   return obj;
 }
 
-ident _cast(Class *clazz, const ident obj) {
+ident _cast(const Class *clazz, const ident obj) {
 
   if (obj) {
     const Class *c = ((Object *) obj)->clazz;

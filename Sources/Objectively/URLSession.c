@@ -45,6 +45,7 @@ static void dealloc(Object *self) {
   release(this->locals.condition);
   release(this->locals.thread);
   release(this->locals.tasks);
+  release(this->configuration);
 
   super(Object, self, dealloc);
 }
@@ -74,7 +75,25 @@ static ident taskWithRequest(URLSession *self, ident task, URLRequest *request, 
  */
 static URLSessionDataTask *dataTaskWithRequest(URLSession *self, URLRequest *request, URLSessionTaskCompletion completion) {
 
-  return taskWithRequest(self, alloc(URLSessionDataTask), request, completion);
+  URLSessionDataTask *task = (URLSessionDataTask *) $((URLSessionTask *) alloc(URLSessionDataTask),
+      initWithRequestInSession, request, self, completion);
+  if (task) {
+
+    URLCache *cache = self->configuration->urlCache;
+    if (cache) {
+      task->cachedResponse = $(cache, cachedResponseForRequest, request);
+      if (task->cachedResponse) {
+        return task;
+      }
+    }
+
+    synchronized(self->locals.condition, {
+      $(self->locals.tasks, addObject, task);
+      $(self->locals.condition, signal);
+    });
+  }
+
+  return task;
 }
 
 /**
@@ -84,6 +103,7 @@ static URLSessionDataTask *dataTaskWithRequest(URLSession *self, URLRequest *req
 static URLSessionDataTask *dataTaskWithURL(URLSession *self, URL *url, URLSessionTaskCompletion completion) {
 
   URLRequest *request = $(alloc(URLRequest), initWithURL, url);
+  request->httpMethod = HTTP_GET;
 
   URLSessionDataTask *task = $(self, dataTaskWithRequest, request, completion);
 
@@ -241,6 +261,10 @@ static ident run(Thread *thread) {
         task->state = URLSESSIONTASK_COMPLETED;
 
         curl_easy_getinfo(task->locals.handle, CURLINFO_RESPONSE_CODE, (long *) &task->response->httpStatusCode);
+
+        if (message->data.result == CURLE_OK && $((Object *) task, isKindOfClass, _URLSessionDataTask())) {
+          $((URLSessionDataTask *) task, cacheResponse);
+        }
 
         if (task->completion) {
           task->completion(task, message->data.result == CURLE_OK);

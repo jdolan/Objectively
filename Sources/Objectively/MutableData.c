@@ -56,7 +56,9 @@ static void appendBytes(MutableData *self, const uint8_t *bytes, size_t length) 
 
   $(self, setLength, self->data.length + length);
 
-  memcpy(self->data.bytes + oldLength, bytes, length);
+  if (length) {
+    memcpy(self->data.bytes + oldLength, bytes, length);
+  }
 }
 
 /**

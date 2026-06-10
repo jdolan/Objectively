@@ -35,6 +35,7 @@
 #include <Objectively/Data.h>
 #include <Objectively/Date.h>
 #include <Objectively/DateFormatter.h>
+#include <Objectively/CachedURLResponse.h>
 #include <Objectively/Dictionary.h>
 #include <Objectively/Enum.h>
 #include <Objectively/Error.h>
@@ -66,6 +67,7 @@
 #include <Objectively/Thread.h>
 #include <Objectively/Types.h>
 #include <Objectively/URL.h>
+#include <Objectively/URLCache.h>
 #include <Objectively/URLRequest.h>
 #include <Objectively/URLResponse.h>
 #include <Objectively/URLSession.h>

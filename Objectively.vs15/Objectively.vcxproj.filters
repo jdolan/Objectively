@@ -135,6 +135,12 @@
     <ClInclude Include="..\Sources\Objectively\URL.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\CachedURLResponse.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\URLCache.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
     <ClInclude Include="..\Sources\Objectively\URLRequest.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
@@ -291,6 +297,12 @@
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
     <ClCompile Include="..\Sources\Objectively\URL.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\CachedURLResponse.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\URLCache.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
     <ClCompile Include="..\Sources\Objectively\URLRequest.c">

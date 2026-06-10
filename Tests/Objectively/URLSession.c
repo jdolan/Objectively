@@ -22,12 +22,15 @@
  */
 
 #include <check.h>
+#include <string.h>
 
 #include "Objectively.h"
 
 static Condition *condition;
 static bool taskDone;
 static bool taskSuccess;
+static bool cacheTaskDone;
+static bool cacheTaskSuccess;
 
 /**
  * @brief The completion handler.
@@ -39,6 +42,14 @@ void completion(URLSessionTask *task, bool success) {
     taskSuccess = success;
     $(condition, signal);
   });
+}
+
+static void cacheCompletion(URLSessionTask *task, bool success) {
+
+  (void) task;
+
+  cacheTaskDone = true;
+  cacheTaskSuccess = success;
 }
 
 START_TEST(asynchronous) {
@@ -139,10 +150,63 @@ START_TEST(synchronous) {
 
 } END_TEST
 
+START_TEST(cachedDataTaskWithURL) {
+
+  URLSessionConfiguration *configuration = $(alloc(URLSessionConfiguration), init);
+  ck_assert(configuration != NULL);
+  ck_assert(configuration->urlCache == NULL);
+
+  configuration->urlCache = $(alloc(URLCache), init);
+  ck_assert(configuration->urlCache != NULL);
+
+  URLSession *session = $(alloc(URLSession), initWithConfiguration, configuration);
+  ck_assert(session != NULL);
+
+  release(configuration);
+
+  URL *url = $(alloc(URL), initWithCharacters, "https://example.com/session-cache");
+  ck_assert(url != NULL);
+
+  URLRequest *request = $(alloc(URLRequest), initWithURL, url);
+  request->httpMethod = HTTP_GET;
+
+  URLResponse *response = $(alloc(URLResponse), init);
+  response->httpStatusCode = 200;
+
+  Data *data = $(alloc(Data), initWithBytes, (const uint8_t *) "cached", 6);
+  $(session->configuration->urlCache, storeCachedResponseForRequest, request, response, data);
+  release(request);
+
+  release(data);
+  release(response);
+
+  cacheTaskDone = false;
+  cacheTaskSuccess = false;
+
+  URLSessionDataTask *dataTask = $(session, dataTaskWithURL, url, cacheCompletion);
+  ck_assert(dataTask != NULL);
+  ck_assert_int_eq(HTTP_GET, dataTask->urlSessionTask.request->httpMethod);
+
+  $((URLSessionTask *) dataTask, resume);
+
+  ck_assert(cacheTaskDone);
+  ck_assert(cacheTaskSuccess);
+  ck_assert_int_eq(200, dataTask->urlSessionTask.response->httpStatusCode);
+  ck_assert(dataTask->data != NULL);
+  ck_assert_int_eq(6, dataTask->data->length);
+  ck_assert_int_eq(0, memcmp(dataTask->data->bytes, "cached", 6));
+
+  release(dataTask);
+  release(session);
+  release(url);
+
+} END_TEST
+
 int main(int argc, char **argv) {
 
   TCase *tcase = tcase_create("URLSession");
   tcase_add_test(tcase, asynchronous);
+  tcase_add_test(tcase, cachedDataTaskWithURL);
   tcase_add_test(tcase, synchronous);
 
   Suite *suite = suite_create("URLSession");

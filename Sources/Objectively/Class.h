@@ -125,7 +125,7 @@ OBJECTIVELY_EXPORT ident _alloc(Class *clazz);
 /**
  * @brief Perform a type-checking cast.
  */
-OBJECTIVELY_EXPORT ident _cast(Class *clazz, const ident obj);
+OBJECTIVELY_EXPORT ident _cast(const Class *clazz, const ident obj);
 
 /**
  * @return The Class with the given name, or `NULL` if no such Class has been initialized.

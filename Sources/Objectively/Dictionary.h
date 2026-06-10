@@ -220,6 +220,20 @@ struct DictionaryInterface {
    * @memberof Dictionary
    */
   ident (*objectForKeyPath)(const Dictionary *self, const char *path);
+
+  /**
+   * @fn ident Dictionary::objectForKeyPathWithClass(const Dictionary *self, const char *path, const Class *clazz)
+   * @param self The Dictionary.
+   * @param path The key path.
+   * @param clazz The Class.
+   * @return The Object stored at the specified key path in this Dictionary, or NULL.
+   * @memberof Dictionary
+   * @remarks This method performs unboxing of Null Objects, returning NULL in such cases.
+   * @remarks The returned Object reference will either be of the specified type, or NULL.
+   */
+  ident (*objectForKeyPathWithClass)(const Dictionary *self, const char *path, const Class *clazz);
+
+  
 };
 
 /**

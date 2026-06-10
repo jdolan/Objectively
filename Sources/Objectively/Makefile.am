@@ -14,6 +14,7 @@ pkginclude_HEADERS = \
 	Data.h \
 	Date.h \
 	DateFormatter.h \
+	CachedURLResponse.h \
 	Dictionary.h \
 	Enum.h \
 	Error.h \
@@ -45,6 +46,7 @@ pkginclude_HEADERS = \
 	Thread.h \
 	Types.h \
 	URL.h \
+	URLCache.h \
 	URLRequest.h \
 	URLResponse.h \
 	URLSession.h \
@@ -67,6 +69,7 @@ libObjectively_la_SOURCES = \
 	Data.c \
 	Date.c \
 	DateFormatter.c \
+	CachedURLResponse.c \
 	Dictionary.c \
 	Enum.c \
 	Error.c \
@@ -96,6 +99,7 @@ libObjectively_la_SOURCES = \
 	StringReader.c \
 	Thread.c \
 	URL.c \
+	URLCache.c \
 	URLRequest.c \
 	URLResponse.c \
 	URLSession.c \

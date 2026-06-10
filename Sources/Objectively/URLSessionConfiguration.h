@@ -26,6 +26,7 @@
 #include <Objectively/Dictionary.h>
 #include <Objectively/Object.h>
 #include <Objectively/String.h>
+#include <Objectively/URLCache.h>
 
 /**
  * @file
@@ -94,6 +95,11 @@ struct URLSessionConfiguration {
    * Use for requests that legitimately expect long periods of silence.
    */
   bool longPolling;
+
+  /**
+   * @brief The cache for URL responses, or `NULL` to disable caching.
+   */
+  URLCache *urlCache;
 };
 
 /**

@@ -170,6 +170,13 @@
 		CE76DA2B1C4860130096DD31 /* URLSessionTask.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8F91C481C4E0096DD31 /* URLSessionTask.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE76DA2C1C4860130096DD31 /* URLSessionUploadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8FB1C481C4E0096DD31 /* URLSessionUploadTask.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE76DA2D1C4860130096DD31 /* Objectively.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8FC1C481C4E0096DD31 /* Objectively.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE7F04242FD993C600AE0D63 /* CachedURLResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = CE7F04202FD993C600AE0D63 /* CachedURLResponse.h */; };
+		CE7F04252FD993C600AE0D63 /* URLCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CE7F04222FD993C600AE0D63 /* URLCache.h */; };
+		CE7F04262FD993C600AE0D63 /* URLCache.c in Sources */ = {isa = PBXBuildFile; fileRef = CE7F04232FD993C600AE0D63 /* URLCache.c */; };
+		CE7F04272FD993C600AE0D63 /* CachedURLResponse.c in Sources */ = {isa = PBXBuildFile; fileRef = CE7F04212FD993C600AE0D63 /* CachedURLResponse.c */; };
+		CE7F042E2FD9943600AE0D63 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
+		CE7F042F2FD9943600AE0D63 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */; };
+		CE7F04362FD9947500AE0D63 /* URLCache.c in Sources */ = {isa = PBXBuildFile; fileRef = CE7F04352FD9947500AE0D63 /* URLCache.c */; };
 		CE84A8A81DA15BB4008BC685 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
 		CE84A8A91DA15BD5008BC685 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */; };
 		CE89D9BF1F24060F005BF96C /* Array.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9431C481E390096DD31 /* Array.c */; };
@@ -513,6 +520,13 @@
 			remoteGlobalIDString = CE76D9671C48218E0096DD31;
 			remoteInfo = Objectively;
 		};
+		CE7F042A2FD9943600AE0D63 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE76D9671C48218E0096DD31;
+			remoteInfo = Objectively;
+		};
 		CE84A8A51DA15B88008BC685 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
@@ -746,6 +760,15 @@
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 		CE75455B23C417FD00140C52 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		CE7F04302FD9943600AE0D63 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -1123,6 +1146,12 @@
 		CE76D9631C481E390096DD31 /* URLSession.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = URLSession.c; sourceTree = "<group>"; };
 		CE76D9681C48218E0096DD31 /* libObjectively.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libObjectively.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE76DA2E1C4932340096DD31 /* Doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
+		CE7F04202FD993C600AE0D63 /* CachedURLResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CachedURLResponse.h; sourceTree = "<group>"; };
+		CE7F04212FD993C600AE0D63 /* CachedURLResponse.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CachedURLResponse.c; sourceTree = "<group>"; };
+		CE7F04222FD993C600AE0D63 /* URLCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLCache.h; sourceTree = "<group>"; };
+		CE7F04232FD993C600AE0D63 /* URLCache.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = URLCache.c; sourceTree = "<group>"; };
+		CE7F04342FD9943600AE0D63 /* Objectively-URLCache */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-URLCache"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE7F04352FD9947500AE0D63 /* URLCache.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = URLCache.c; sourceTree = "<group>"; };
 		CE84A89E1DA15B80008BC685 /* Objectively-Array */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Array"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9305BE1D9B1C5D00D62770 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		CEA3B07D1CBBD3420082EE04 /* eclipse-code-templates.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "eclipse-code-templates.xml"; sourceTree = "<group>"; };
@@ -1238,6 +1267,15 @@
 			files = (
 				CED157ED1C4BF60200FBA2DE /* libcurl.4.dylib in Frameworks */,
 				CED157EE1C4BF60200FBA2DE /* libiconv.2.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE7F042D2FD9943600AE0D63 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE7F042E2FD9943600AE0D63 /* libObjectively.dylib in Frameworks */,
+				CE7F042F2FD9943600AE0D63 /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1501,6 +1539,10 @@
 		CE76D8011C481C4E0096DD31 /* Objectively */ = {
 			isa = PBXGroup;
 			children = (
+				CE7F04202FD993C600AE0D63 /* CachedURLResponse.h */,
+				CE7F04212FD993C600AE0D63 /* CachedURLResponse.c */,
+				CE7F04222FD993C600AE0D63 /* URLCache.h */,
+				CE7F04232FD993C600AE0D63 /* URLCache.c */,
 				CE76D85E1C481C4E0096DD31 /* Array.c */,
 				CE76D85F1C481C4E0096DD31 /* Array.h */,
 				CE76D8601C481C4E0096DD31 /* Boole.c */,
@@ -1637,6 +1679,7 @@
 		CE76D9241C481E390096DD31 /* Objectively */ = {
 			isa = PBXGroup;
 			children = (
+				CE7F04352FD9947500AE0D63 /* URLCache.c */,
 				CE76D94A1C481E390096DD31 /* Fixtures */,
 				CE76D9431C481E390096DD31 /* Array.c */,
 				CE76D9441C481E390096DD31 /* Boole.c */,
@@ -1715,6 +1758,7 @@
 				CE4F535F202A8C6D00D71C07 /* Objectively-Resource */,
 				CE129E6E23B8242B007D0433 /* Objectively-Vector */,
 				CE75455F23C417FD00140C52 /* Objectively-MutableIndexSet */,
+				CE7F04342FD9943600AE0D63 /* Objectively-URLCache */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1810,6 +1854,8 @@
 				CE3BCDD21DB6FA62002E6C6D /* Resource.h in Headers */,
 				CE76DA211C4860130096DD31 /* Set.h in Headers */,
 				CE76DA221C4860130096DD31 /* String.h in Headers */,
+				CE7F04242FD993C600AE0D63 /* CachedURLResponse.h in Headers */,
+				CE7F04252FD993C600AE0D63 /* URLCache.h in Headers */,
 				CE594BD41F47BA07004D74FF /* StringReader.h in Headers */,
 				CE76DA231C4860130096DD31 /* Thread.h in Headers */,
 				CE76DA241C4860130096DD31 /* Types.h in Headers */,
@@ -1972,6 +2018,24 @@
 			productName = "Objectively-Xcode";
 			productReference = CE76D9681C48218E0096DD31 /* libObjectively.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
+		};
+		CE7F04282FD9943600AE0D63 /* Objectively-URLCache */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE7F04312FD9943600AE0D63 /* Build configuration list for PBXNativeTarget "Objectively-URLCache" */;
+			buildPhases = (
+				CE7F042B2FD9943600AE0D63 /* Sources */,
+				CE7F042D2FD9943600AE0D63 /* Frameworks */,
+				CE7F04302FD9943600AE0D63 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE7F04292FD9943600AE0D63 /* PBXTargetDependency */,
+			);
+			name = "Objectively-URLCache";
+			productName = "Objectively-Test";
+			productReference = CE7F04342FD9943600AE0D63 /* Objectively-URLCache */;
+			productType = "com.apple.product-type.tool";
 		};
 		CE84A89D1DA15B80008BC685 /* Objectively-Array */ = {
 			isa = PBXNativeTarget;
@@ -2485,6 +2549,7 @@
 				CE594BD61F49F931004D74FF /* Objectively-StringReader */,
 				CEEB02D41F40DD2B004C2EDD /* Objectively-Thread */,
 				CEEB02E11F40DD4E004C2EDD /* Objectively-URL */,
+				CE7F04282FD9943600AE0D63 /* Objectively-URLCache */,
 				CEEB02EE1F40DD4F004C2EDD /* Objectively-URLSession */,
 				CE129E6223B8242B007D0433 /* Objectively-Vector */,
 				CE4A532F1F40E0A600927421 /* Objectively-Tests */,
@@ -2590,17 +2655,16 @@
 			files = (
 				CE76D96E1C4821CE0096DD31 /* Array.c in Sources */,
 				CE76D96F1C4821CE0096DD31 /* Boole.c in Sources */,
+				CE7F04272FD993C600AE0D63 /* CachedURLResponse.c in Sources */,
 				CE76D9701C4821CE0096DD31 /* Class.c in Sources */,
 				CE76D9711C4821CE0096DD31 /* Condition.c in Sources */,
 				CE76D9721C4821CE0096DD31 /* Data.c in Sources */,
 				CE76D9731C4821CE0096DD31 /* Date.c in Sources */,
 				CE76D9741C4821CE0096DD31 /* DateFormatter.c in Sources */,
 				CE76D9751C4821CE0096DD31 /* Dictionary.c in Sources */,
-				CE75455123C3FC0600140C52 /* MutableIndexSet.c in Sources */,
 				CE76D9761C4821CE0096DD31 /* Error.c in Sources */,
-				CE76D9771C4821CE0096DD31 /* Hash.c in Sources */,
 				CE6BC16C1D79960C0070FB2D /* Enum.c in Sources */,
-				CEAAA3E425C6377300EE81B3 /* URLResponse.c in Sources */,
+				CE76D9771C4821CE0096DD31 /* Hash.c in Sources */,
 				CEB078C31D7605C200ABA6B3 /* IndexPath.c in Sources */,
 				CEB20D571D771B7A000EF6F3 /* IndexSet.c in Sources */,
 				CE76D9781C4821CE0096DD31 /* JSONPath.c in Sources */,
@@ -2610,6 +2674,7 @@
 				CE76D97D1C4821CE0096DD31 /* MutableArray.c in Sources */,
 				CE76D97E1C4821CE0096DD31 /* MutableData.c in Sources */,
 				CE76D97F1C4821CE0096DD31 /* MutableDictionary.c in Sources */,
+				CE75455123C3FC0600140C52 /* MutableIndexSet.c in Sources */,
 				CE76D9801C4821CE0096DD31 /* MutableSet.c in Sources */,
 				CE76D9811C4821CE0096DD31 /* MutableString.c in Sources */,
 				CE76D9821C4821CE0096DD31 /* Null.c in Sources */,
@@ -2625,15 +2690,25 @@
 				CE594BD31F47BA07004D74FF /* StringReader.c in Sources */,
 				CE76D98B1C4821CE0096DD31 /* Thread.c in Sources */,
 				CE76D98C1C4821CE0096DD31 /* URL.c in Sources */,
+				CE7F04262FD993C600AE0D63 /* URLCache.c in Sources */,
 				CE76D98D1C4821CE0096DD31 /* URLRequest.c in Sources */,
+				CEAAA3E425C6377300EE81B3 /* URLResponse.c in Sources */,
 				CE76D98E1C4821CE0096DD31 /* URLSession.c in Sources */,
 				CE76D98F1C4821CE0096DD31 /* URLSessionConfiguration.c in Sources */,
 				CE76D9901C4821CE0096DD31 /* URLSessionDataTask.c in Sources */,
 				CE76D9911C4821CE0096DD31 /* URLSessionDownloadTask.c in Sources */,
-				CE129E6023B7E4B4007D0433 /* Vector.c in Sources */,
 				CE76D9921C4821CE0096DD31 /* URLSessionTask.c in Sources */,
 				CE76D9931C4821CE0096DD31 /* URLSessionUploadTask.c in Sources */,
 				CEB078B71D73B74800ABA6B3 /* Value.c in Sources */,
+				CE129E6023B7E4B4007D0433 /* Vector.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE7F042B2FD9943600AE0D63 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE7F04362FD9947500AE0D63 /* URLCache.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3024,6 +3099,11 @@
 			target = CE76D9671C48218E0096DD31 /* Objectively */;
 			targetProxy = CE75455523C417FD00140C52 /* PBXContainerItemProxy */;
 		};
+		CE7F04292FD9943600AE0D63 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE76D9671C48218E0096DD31 /* Objectively */;
+			targetProxy = CE7F042A2FD9943600AE0D63 /* PBXContainerItemProxy */;
+		};
 		CE84A8A61DA15B88008BC685 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CE76D9671C48218E0096DD31 /* Objectively */;
@@ -3356,6 +3436,20 @@
 				EXECUTABLE_PREFIX = lib;
 				PRIVATE_HEADERS_FOLDER_PATH = "/usr/local/include/$(PRODUCT_NAME)";
 				PRODUCT_NAME = Objectively;
+			};
+			name = Release;
+		};
+		CE7F04322FD9943600AE0D63 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CE7F04332FD9943600AE0D63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -3807,6 +3901,15 @@
 			buildConfigurations = (
 				CE76D96B1C48218E0096DD31 /* Debug */,
 				CE76D96C1C48218E0096DD31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE7F04312FD9943600AE0D63 /* Build configuration list for PBXNativeTarget "Objectively-URLCache" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE7F04322FD9943600AE0D63 /* Debug */,
+				CE7F04332FD9943600AE0D63 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
