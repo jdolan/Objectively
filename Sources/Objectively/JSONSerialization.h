@@ -48,13 +48,13 @@ typedef enum {
   /**
    * @brief A fixed `char[N]` buffer; size is derived from the field.
    */
-  JsonPropertyString,
+  JsonPropertyCharacters,
 
   /**
    * @brief A `char *` pointer; the pointed-to string is serialized/deserialized.
    * On deserialization, a new string is allocated with `strdup` and must be freed by the caller.
    */
-  JsonPropertyStringPtr,
+  JsonPropertyCString,
 
   /**
    * @brief A signed integer whose width is given by `size` (1, 2, 4, or 8 bytes).

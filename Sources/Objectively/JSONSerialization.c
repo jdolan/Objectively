@@ -588,14 +588,14 @@ static Dictionary *dictionaryFromInstance(const JsonProperty *properties, const 
     ident val = NULL;
 
     switch (p->type) {
-      case JsonPropertyString: {
+      case JsonPropertyCharacters: {
         const char *s = (const char *) field;
         if (s[0]) {
           val = $$(String, stringWithCharacters, s);
         }
         break;
       }
-      case JsonPropertyStringPtr: {
+      case JsonPropertyCString: {
         const char *s = *(const char **) field;
         if (s) {
           val = $$(String, stringWithCharacters, s);
@@ -677,13 +677,13 @@ static void instanceFromDictionary(const JsonProperty *properties, const Diction
     }
 
     switch (p->type) {
-      case JsonPropertyString:
+      case JsonPropertyCharacters:
         if ($((Object *) val, isKindOfClass, _String())) {
           strncpy((char *) field, ((String *) val)->chars, p->size - 1);
           ((char *) field)[p->size - 1] = '\0';
         }
         break;
-      case JsonPropertyStringPtr:
+      case JsonPropertyCString:
         if ($((Object *) val, isKindOfClass, _String())) {
           *(char **) field = strdup(((String *) val)->chars);
         }

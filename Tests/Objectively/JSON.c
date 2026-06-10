@@ -171,8 +171,8 @@ START_TEST(json_struct_properties) {
   } TestStruct;
 
   static const JsonProperty properties[] = MakeJsonProperties(
-    MakeJsonProperty(TestStruct, name,   JsonPropertyString),
-    MakeJsonProperty(TestStruct, tag,    JsonPropertyStringPtr),
+    MakeJsonProperty(TestStruct, name,   JsonPropertyCharacters),
+    MakeJsonProperty(TestStruct, tag,    JsonPropertyCString),
     MakeJsonProperty(TestStruct, score,  JsonPropertyInteger),
     MakeJsonProperty(TestStruct, ratio,  JsonPropertyDouble),
     MakeJsonProperty(TestStruct, active, JsonPropertyBool)
@@ -307,14 +307,14 @@ START_TEST(json_frag_t) {
   } frag_t;
 
   static const JsonProperty properties[] = MakeJsonProperties(
-    MakeJsonProperty(frag_t, level,         JsonPropertyString),
-    MakeJsonProperty(frag_t, attacker,      JsonPropertyString),
-    MakeJsonProperty(frag_t, attacker_guid, JsonPropertyString),
+    MakeJsonProperty(frag_t, level,         JsonPropertyCharacters),
+    MakeJsonProperty(frag_t, attacker,      JsonPropertyCharacters),
+    MakeJsonProperty(frag_t, attacker_guid, JsonPropertyCharacters),
     MakeJsonProperty(frag_t, attacker_ai,   JsonPropertyBool),
-    MakeJsonProperty(frag_t, target,        JsonPropertyString),
-    MakeJsonProperty(frag_t, target_guid,   JsonPropertyString),
+    MakeJsonProperty(frag_t, target,        JsonPropertyCharacters),
+    MakeJsonProperty(frag_t, target_guid,   JsonPropertyCharacters),
     MakeJsonProperty(frag_t, target_ai,     JsonPropertyBool),
-    MakeJsonProperty(frag_t, weapon,        JsonPropertyString),
+    MakeJsonProperty(frag_t, weapon,        JsonPropertyCharacters),
     MakeJsonProperty(frag_t, mod,           JsonPropertyInteger),
     MakeJsonProperty(frag_t, damage,        JsonPropertyInteger),
     MakeJsonProperty(frag_t, time,          JsonPropertyInteger)
