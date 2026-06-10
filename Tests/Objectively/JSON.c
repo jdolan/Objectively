@@ -330,11 +330,11 @@ START_TEST(json_frag_t) {
       .weapon = "bfg", .mod = 9, .damage = 0, .time = 56789
     },
     {
-      // Max uint32 time, negative mod (edge case)
+      // Large epoch-like time, negative mod (edge case)
       .level = "edge",
       .attacker = "jdolan", .attacker_guid = "3a56346d46f8e00b88232df6db2b4595", .attacker_ai = false,
       .target   = "[BOT] Gladiator", .target_guid = "73c6bc5c39e6b7fbbca031eeadf71c09", .target_ai = true,
-      .weapon = "hyperblaster", .mod = 5, .damage = 50, .time = 0xffffffff
+      .weapon = "hyperblaster", .mod = 5, .damage = 50, .time = 1781060274
     },
   };
   const size_t n = sizeof(frags) / sizeof(frags[0]);
@@ -379,14 +379,13 @@ START_TEST(json_frag_t) {
     release(k);
   }
 
-  // Spot-check sixth frag (max uint32 time)
+  // Spot-check sixth frag (epoch-sized time).
   {
     Dictionary *d = $(parsed, objectAtIndex, 5);
     String *k = $$(String, stringWithCharacters, "time");
     Number *t = $(d, objectForKey, k);
     ck_assert_ptr_ne(NULL, t);
-    // uint32 max read as int32 wraps; just verify it round-tripped
-    ck_assert(t->value != 0);
+    ck_assert_int_eq(1781060274, (int32_t) t->value);
     release(k);
   }
 

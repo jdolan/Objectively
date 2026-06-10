@@ -120,7 +120,9 @@ static void writeString(JSONWriter *writer, const String *string) {
  */
 static void writeNumber(JSONWriter *writer, const Number *number) {
 
-  String *string = $(alloc(String), initWithFormat, "%g", number->value);
+  // Use enough significant digits to preserve 32-bit epoch seconds and other
+  // large integers exactly when round-tripping through JSON.
+  String *string = $(alloc(String), initWithFormat, "%.17g", number->value);
 
   $(writer->data, appendBytes, (uint8_t *) string->chars, string->length);
 
