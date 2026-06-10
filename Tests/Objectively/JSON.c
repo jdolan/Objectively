@@ -158,7 +158,7 @@ START_TEST(json_array_toplevel) {
 } END_TEST
 
 /**
- * @brief Tests dictionaryFromInstance, dataFromInstances, and instancesFromData with a representative C struct.
+ * @brief Tests dictionaryFromInstance, dataFromInstance, dataFromInstances, instanceFromData, and instancesFromData with a representative C struct.
  */
 START_TEST(json_struct_properties) {
 
@@ -208,8 +208,34 @@ START_TEST(json_struct_properties) {
   Boole *vActive = $(dict, objectForKey, kActive);
   ck_assert(vActive->value);
 
-  release(kName); release(kTag); release(kScore); release(kRatio); release(kActive);
   release(dict);
+
+  // dataFromInstance — single instance -> JSON
+  Data *singleData = $$(JSONSerialization, dataFromInstance, properties, &instances[0]);
+  ck_assert_ptr_ne(NULL, singleData);
+
+  Dictionary *singleDict = $$(JSONSerialization, objectFromData, singleData, 0);
+  ck_assert_ptr_ne(NULL, singleDict);
+  ck_assert_str_eq("Alice", ((String *) $(singleDict, objectForKey, kName))->chars);
+  ck_assert_str_eq("hero", ((String *) $(singleDict, objectForKey, kTag))->chars);
+  ck_assert_int_eq(42, (int) ((Number *) $(singleDict, objectForKey, kScore))->value);
+  ck_assert(((Boole *) $(singleDict, objectForKey, kActive))->value);
+  release(singleDict);
+
+  // instanceFromData — single object -> single struct
+  TestStruct singleOut = { 0 };
+  size_t m = $$(JSONSerialization, instanceFromData, properties, singleData, &singleOut);
+  ck_assert_int_eq(1, (int) m);
+  ck_assert_str_eq("Alice", singleOut.name);
+  ck_assert_str_eq("hero", singleOut.tag);
+  ck_assert_int_eq(42, (int) singleOut.score);
+  ck_assert(singleOut.ratio > 0.74 && singleOut.ratio < 0.76);
+  ck_assert(singleOut.active == true);
+  free(singleOut.tag);
+
+  release(singleData);
+
+  release(kName); release(kTag); release(kScore); release(kRatio); release(kActive);
 
   // dataFromInstances — two instances -> JSON
   Data *data = $$(JSONSerialization, dataFromInstances, properties, instances, 2, sizeof(TestStruct));

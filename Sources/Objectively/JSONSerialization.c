@@ -644,6 +644,108 @@ static Dictionary *dictionaryFromInstance(const JsonProperty *properties, const 
 }
 
 /**
+ * @brief Writes a single C struct instance to JSON Data.
+ * @param properties A NULL-terminated array of JsonProperty descriptors.
+ * @param instance Pointer to the struct instance to serialize.
+ * @return The resulting JSON Data.
+ */
+static Data *dataFromInstance(const JsonProperty *properties, const void *instance) {
+
+  Dictionary *dict = $$(JSONSerialization, dictionaryFromInstance, properties, instance);
+  Data *data = $$(JSONSerialization, dataFromObject, dict, 0);
+  release(dict);
+
+  return data;
+}
+
+/**
+ * @brief Populates a single struct instance from a JSON object.
+ * @param properties A NULL-terminated array of JsonProperty descriptors.
+ * @param dict The JSON object to read from.
+ * @param instance Pointer to the struct instance to populate.
+ */
+static void instanceFromDictionary(const JsonProperty *properties, const Dictionary *dict, void *instance) {
+
+  for (const JsonProperty *p = properties; p->name; p++) {
+    void *field = (uint8_t *) instance + p->offset;
+    String *key = $$(String, stringWithCharacters, p->name);
+    ident val = $(dict, objectForKey, key);
+    release(key);
+
+    if (!val) {
+      continue;
+    }
+
+    switch (p->type) {
+      case JsonPropertyString:
+        if ($((Object *) val, isKindOfClass, _String())) {
+          strncpy((char *) field, ((String *) val)->chars, p->size - 1);
+          ((char *) field)[p->size - 1] = '\0';
+        }
+        break;
+      case JsonPropertyStringPtr:
+        if ($((Object *) val, isKindOfClass, _String())) {
+          *(char **) field = strdup(((String *) val)->chars);
+        }
+        break;
+      case JsonPropertyInteger:
+        if ($((Object *) val, isKindOfClass, _Number())) {
+          const int64_t v = (int64_t) ((Number *) val)->value;
+          switch (p->size) {
+            case 1: *(int8_t *)  field = (int8_t)  v; break;
+            case 2: *(int16_t *) field = (int16_t) v; break;
+            case 4: *(int32_t *) field = (int32_t) v; break;
+            case 8: *(int64_t *) field = v;            break;
+          }
+        }
+        break;
+      case JsonPropertyDouble:
+        if ($((Object *) val, isKindOfClass, _Number())) {
+          const double v = ((Number *) val)->value;
+          if (p->size == sizeof(float)) {
+            *(float *) field = (float) v;
+          } else {
+            *(double *) field = v;
+          }
+        }
+        break;
+      case JsonPropertyBool:
+        if ($((Object *) val, isKindOfClass, _Boole())) {
+          const bool b = ((Boole *) val)->value;
+          switch (p->size) {
+            case 1: *(uint8_t *)  field = (uint8_t)  b; break;
+            case 2: *(uint16_t *) field = (uint16_t) b; break;
+            case 4: *(uint32_t *) field = (uint32_t) b; break;
+            default: *(uint8_t *)  field = (uint8_t)  b; break;
+          }
+        }
+        break;
+    }
+  }
+}
+
+/**
+ * @brief Reads a single C struct instance from JSON Data.
+ * @param properties A NULL-terminated array of JsonProperty descriptors.
+ * @param data The JSON Data containing a top-level object.
+ * @param instance Pointer to the struct instance to populate.
+ * @return 1 if the object was parsed, 0 otherwise.
+ */
+static size_t instanceFromData(const JsonProperty *properties, const Data *data, void *instance) {
+
+  ident obj = $$(JSONSerialization, objectFromData, data, 0);
+  if (!obj || !$((Object *) obj, isKindOfClass, _Dictionary())) {
+    release(obj);
+    return 0;
+  }
+
+  instanceFromDictionary(properties, (Dictionary *) obj, instance);
+
+  release(obj);
+  return 1;
+}
+
+/**
  * @fn Data *JSONSerialization::dataFromInstances(const JsonProperty *properties, const void *instances, size_t count, size_t stride)
  * @memberof JSONSerialization
  */
@@ -685,63 +787,7 @@ static size_t instancesFromData(const JsonProperty *properties, const Data *data
   for (size_t i = 0; i < n; i++) {
     Dictionary *dict = (Dictionary *) $(array, objectAtIndex, i);
     void *instance = (uint8_t *) instances + i * stride;
-
-    for (const JsonProperty *p = properties; p->name; p++) {
-      void *field = (uint8_t *) instance + p->offset;
-      String *key = $$(String, stringWithCharacters, p->name);
-      ident val = $(dict, objectForKey, key);
-      release(key);
-
-      if (!val) {
-        continue;
-      }
-
-      switch (p->type) {
-        case JsonPropertyString:
-          if ($((Object *) val, isKindOfClass, _String())) {
-            strncpy((char *) field, ((String *) val)->chars, p->size - 1);
-            ((char *) field)[p->size - 1] = '\0';
-          }
-          break;
-        case JsonPropertyStringPtr:
-          if ($((Object *) val, isKindOfClass, _String())) {
-            *(char **) field = strdup(((String *) val)->chars);
-          }
-          break;
-        case JsonPropertyInteger:
-          if ($((Object *) val, isKindOfClass, _Number())) {
-            const int64_t v = (int64_t) ((Number *) val)->value;
-            switch (p->size) {
-              case 1: *(int8_t *)  field = (int8_t)  v; break;
-              case 2: *(int16_t *) field = (int16_t) v; break;
-              case 4: *(int32_t *) field = (int32_t) v; break;
-              case 8: *(int64_t *) field = v;            break;
-            }
-          }
-          break;
-        case JsonPropertyDouble:
-          if ($((Object *) val, isKindOfClass, _Number())) {
-            const double v = ((Number *) val)->value;
-            if (p->size == sizeof(float)) {
-              *(float *)  field = (float) v;
-            } else {
-              *(double *) field = v;
-            }
-          }
-          break;
-        case JsonPropertyBool:
-          if ($((Object *) val, isKindOfClass, _Boole())) {
-            const bool b = ((Boole *) val)->value;
-            switch (p->size) {
-              case 1: *(uint8_t *)  field = (uint8_t)  b; break;
-              case 2: *(uint16_t *) field = (uint16_t) b; break;
-              case 4: *(uint32_t *) field = (uint32_t) b; break;
-              default: *(uint8_t *) field = (uint8_t)  b; break;
-            }
-          }
-          break;
-      }
-    }
+    instanceFromDictionary(properties, dict, instance);
   }
 
   release(array);
@@ -757,7 +803,9 @@ static void initialize(Class *clazz) {
 
   ((JSONSerializationInterface *) clazz->interface)->dataFromObject = dataFromObject;
   ((JSONSerializationInterface *) clazz->interface)->dictionaryFromInstance = dictionaryFromInstance;
+  ((JSONSerializationInterface *) clazz->interface)->dataFromInstance = dataFromInstance;
   ((JSONSerializationInterface *) clazz->interface)->dataFromInstances = dataFromInstances;
+  ((JSONSerializationInterface *) clazz->interface)->instanceFromData = instanceFromData;
   ((JSONSerializationInterface *) clazz->interface)->instancesFromData = instancesFromData;
   ((JSONSerializationInterface *) clazz->interface)->objectFromData = objectFromData;
 }

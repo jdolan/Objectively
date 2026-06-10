@@ -79,7 +79,8 @@ typedef struct JsonProperty JsonProperty;
  * @brief Describes a single field of a C struct for JSON serialization.
  * @details Use `MakeJsonProperty` to construct and `MakeJsonProperties` to build a
  * NULL-terminated array.  Pass the array to `JSONSerialization::dictionaryFromInstance`
- * or `JSONSerialization::dataFromInstances`.
+ * or `JSONSerialization::dataFromInstance` for a single struct, or to
+ * `JSONSerialization::dataFromInstances` for an array.
  *
  * @code
  * static const JsonProperty frag_properties[] = MakeJsonProperties(
@@ -211,6 +212,17 @@ struct JSONSerializationInterface {
 
   /**
    * @static
+   * @fn Data *JSONSerialization::dataFromInstance(const JsonProperty *properties, const void *instance)
+   * @brief Serializes a single C struct instance to a JSON object.
+   * @param properties A NULL-terminated array of JsonProperty descriptors.
+   * @param instance Pointer to the struct instance to read from.
+   * @return The resulting JSON Data.
+   * @memberof JSONSerialization
+   */
+  Data *(*dataFromInstance)(const JsonProperty *properties, const void *instance);
+
+  /**
+   * @static
    * @fn Data *JSONSerialization::dataFromInstances(const JsonProperty *properties, const void *instances, size_t count, size_t stride)
    * @brief Serializes an array of C structs to a JSON array.
    * @param properties A NULL-terminated array of JsonProperty descriptors.
@@ -221,6 +233,18 @@ struct JSONSerializationInterface {
    * @memberof JSONSerialization
    */
   Data *(*dataFromInstances)(const JsonProperty *properties, const void *instances, size_t count, size_t stride);
+
+  /**
+   * @static
+   * @fn size_t JSONSerialization::instanceFromData(const JsonProperty *properties, const Data *data, void *instance)
+   * @brief Deserializes a top-level JSON object into a single C struct.
+   * @param properties A NULL-terminated array of JsonProperty descriptors.
+   * @param data The JSON Data containing a top-level object.
+   * @param instance Pointer to the caller-allocated struct to populate.
+   * @return 1 if the object was parsed, 0 otherwise.
+   * @memberof JSONSerialization
+   */
+  size_t (*instanceFromData)(const JsonProperty *properties, const Data *data, void *instance);
 
   /**
    * @static
