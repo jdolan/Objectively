@@ -575,15 +575,15 @@ static ident objectFromData(const Data *data, int options) {
 }
 
 /**
- * @fn Dictionary *JSONSerialization::dictionaryFromInstance(const JsonProperty *properties, const void *instance)
+ * @fn Dictionary *JSONSerialization::dictionaryFromInstance(const JsonProperty *properties, const ident instance)
  * @memberof JSONSerialization
  */
-static Dictionary *dictionaryFromInstance(const JsonProperty *properties, const void *instance) {
+static Dictionary *dictionaryFromInstance(const JsonProperty *properties, const ident instance) {
 
   MutableDictionary *dict = $(alloc(MutableDictionary), init);
 
   for (const JsonProperty *p = properties; p->name; p++) {
-    const void *field = (const uint8_t *) instance + p->offset;
+    const ident field = instance + p->offset;
     String *key = $$(String, stringWithCharacters, p->name);
     ident val = NULL;
 
@@ -649,7 +649,7 @@ static Dictionary *dictionaryFromInstance(const JsonProperty *properties, const 
  * @param instance Pointer to the struct instance to serialize.
  * @return The resulting JSON Data.
  */
-static Data *dataFromInstance(const JsonProperty *properties, const void *instance) {
+static Data *dataFromInstance(const JsonProperty *properties, const ident instance) {
 
   Dictionary *dict = $$(JSONSerialization, dictionaryFromInstance, properties, instance);
   Data *data = $$(JSONSerialization, dataFromObject, dict, 0);
@@ -664,10 +664,10 @@ static Data *dataFromInstance(const JsonProperty *properties, const void *instan
  * @param dict The JSON object to read from.
  * @param instance Pointer to the struct instance to populate.
  */
-static void instanceFromDictionary(const JsonProperty *properties, const Dictionary *dict, void *instance) {
+static void instanceFromDictionary(const JsonProperty *properties, const Dictionary *dict, ident instance) {
 
   for (const JsonProperty *p = properties; p->name; p++) {
-    void *field = (uint8_t *) instance + p->offset;
+    ident field = instance + p->offset;
     String *key = $$(String, stringWithCharacters, p->name);
     ident val = $(dict, objectForKey, key);
     release(key);
@@ -716,7 +716,7 @@ static void instanceFromDictionary(const JsonProperty *properties, const Diction
             case 1: *(uint8_t *)  field = (uint8_t)  b; break;
             case 2: *(uint16_t *) field = (uint16_t) b; break;
             case 4: *(uint32_t *) field = (uint32_t) b; break;
-            default: *(uint8_t *)  field = (uint8_t)  b; break;
+            default: *(uint8_t *) field = (uint8_t)  b; break;
           }
         }
         break;
@@ -731,7 +731,7 @@ static void instanceFromDictionary(const JsonProperty *properties, const Diction
  * @param instance Pointer to the struct instance to populate.
  * @return 1 if the object was parsed, 0 otherwise.
  */
-static size_t instanceFromData(const JsonProperty *properties, const Data *data, void *instance) {
+static size_t instanceFromData(const JsonProperty *properties, const Data *data, ident instance) {
 
   ident obj = $$(JSONSerialization, objectFromData, data, 0);
   if (!obj || !$((Object *) obj, isKindOfClass, _Dictionary())) {
@@ -746,10 +746,10 @@ static size_t instanceFromData(const JsonProperty *properties, const Data *data,
 }
 
 /**
- * @fn Data *JSONSerialization::dataFromInstances(const JsonProperty *properties, const void *instances, size_t count, size_t stride)
+ * @fn Data *JSONSerialization::dataFromInstances(const JsonProperty *properties, const ident instances, size_t count, size_t stride)
  * @memberof JSONSerialization
  */
-static Data *dataFromInstances(const JsonProperty *properties, const void *instances, size_t count, size_t stride) {
+static Data *dataFromInstances(const JsonProperty *properties, const ident instances, size_t count, size_t stride) {
 
   if (count == 0) {
     return NULL;
@@ -758,7 +758,7 @@ static Data *dataFromInstances(const JsonProperty *properties, const void *insta
   MutableArray *array = $(alloc(MutableArray), init);
 
   for (size_t i = 0; i < count; i++) {
-    const void *instance = (const uint8_t *) instances + i * stride;
+    const ident instance = instances + i * stride;
     Dictionary *dict = $$(JSONSerialization, dictionaryFromInstance, properties, instance);
     $(array, addObject, dict);
     release(dict);
@@ -770,10 +770,10 @@ static Data *dataFromInstances(const JsonProperty *properties, const void *insta
 }
 
 /**
- * @fn size_t JSONSerialization::instancesFromData(const JsonProperty *properties, const Data *data, void *instances, size_t stride, size_t count)
+ * @fn size_t JSONSerialization::instancesFromData(const JsonProperty *properties, const Data *data, ident instances, size_t stride, size_t count)
  * @memberof JSONSerialization
  */
-static size_t instancesFromData(const JsonProperty *properties, const Data *data, void *instances, size_t stride, size_t count) {
+static size_t instancesFromData(const JsonProperty *properties, const Data *data, ident instances, size_t stride, size_t count) {
 
   ident obj = $$(JSONSerialization, objectFromData, data, 0);
   if (!obj || !$((Object *) obj, isKindOfClass, _Array())) {
@@ -786,7 +786,7 @@ static size_t instancesFromData(const JsonProperty *properties, const Data *data
 
   for (size_t i = 0; i < n; i++) {
     Dictionary *dict = (Dictionary *) $(array, objectAtIndex, i);
-    void *instance = (uint8_t *) instances + i * stride;
+    ident instance = instances + i * stride;
     instanceFromDictionary(properties, dict, instance);
   }
 

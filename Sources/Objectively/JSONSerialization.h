@@ -200,7 +200,7 @@ struct JSONSerializationInterface {
 
   /**
    * @static
-   * @fn Dictionary *JSONSerialization::dictionaryFromInstance(const JsonProperty *properties, const void *instance)
+   * @fn Dictionary *JSONSerialization::dictionaryFromInstance(const JsonProperty *properties, const ident instance)
    * @brief Creates an Objectively Dictionary from a single C struct instance.
    * @param properties A NULL-terminated array of JsonProperty descriptors.
    * @param instance Pointer to the struct instance to read from.
@@ -208,22 +208,22 @@ struct JSONSerializationInterface {
    *   corresponding Objectively objects.  The caller is responsible for releasing it.
    * @memberof JSONSerialization
    */
-  Dictionary *(*dictionaryFromInstance)(const JsonProperty *properties, const void *instance);
+  Dictionary *(*dictionaryFromInstance)(const JsonProperty *properties, const ident instance);
 
   /**
    * @static
-   * @fn Data *JSONSerialization::dataFromInstance(const JsonProperty *properties, const void *instance)
+   * @fn Data *JSONSerialization::dataFromInstance(const JsonProperty *properties, const ident instance)
    * @brief Serializes a single C struct instance to a JSON object.
    * @param properties A NULL-terminated array of JsonProperty descriptors.
    * @param instance Pointer to the struct instance to read from.
    * @return The resulting JSON Data.
    * @memberof JSONSerialization
    */
-  Data *(*dataFromInstance)(const JsonProperty *properties, const void *instance);
+  Data *(*dataFromInstance)(const JsonProperty *properties, const ident instance);
 
   /**
    * @static
-   * @fn Data *JSONSerialization::dataFromInstances(const JsonProperty *properties, const void *instances, size_t count, size_t stride)
+   * @fn Data *JSONSerialization::dataFromInstances(const JsonProperty *properties, const ident instances, size_t count, size_t stride)
    * @brief Serializes an array of C structs to a JSON array.
    * @param properties A NULL-terminated array of JsonProperty descriptors.
    * @param instances Pointer to the first struct in the array.
@@ -232,11 +232,11 @@ struct JSONSerializationInterface {
    * @return The resulting JSON Data (a top-level JSON array), or `NULL` if `count` is zero.
    * @memberof JSONSerialization
    */
-  Data *(*dataFromInstances)(const JsonProperty *properties, const void *instances, size_t count, size_t stride);
+  Data *(*dataFromInstances)(const JsonProperty *properties, const ident instances, size_t count, size_t stride);
 
   /**
    * @static
-   * @fn size_t JSONSerialization::instanceFromData(const JsonProperty *properties, const Data *data, void *instance)
+   * @fn size_t JSONSerialization::instanceFromData(const JsonProperty *properties, const Data *data, ident instance)
    * @brief Deserializes a top-level JSON object into a single C struct.
    * @param properties A NULL-terminated array of JsonProperty descriptors.
    * @param data The JSON Data containing a top-level object.
@@ -244,11 +244,11 @@ struct JSONSerializationInterface {
    * @return 1 if the object was parsed, 0 otherwise.
    * @memberof JSONSerialization
    */
-  size_t (*instanceFromData)(const JsonProperty *properties, const Data *data, void *instance);
+  size_t (*instanceFromData)(const JsonProperty *properties, const Data *data, ident instance);
 
   /**
    * @static
-   * @fn size_t JSONSerialization::instancesFromData(const JsonProperty *properties, const Data *data, void *instances, size_t stride, size_t count)
+   * @fn size_t JSONSerialization::instancesFromData(const JsonProperty *properties, const Data *data, ident instances, size_t stride, size_t count)
    * @brief Deserializes a JSON array into an array of C structs.
    * @param properties A NULL-terminated array of JsonProperty descriptors.
    * @param data The JSON Data containing a top-level array.
@@ -258,7 +258,7 @@ struct JSONSerializationInterface {
    * @return The number of structs actually written (min of parsed count and `count`).
    * @memberof JSONSerialization
    */
-  size_t (*instancesFromData)(const JsonProperty *properties, const Data *data, void *instances, size_t stride, size_t count);
+  size_t (*instancesFromData)(const JsonProperty *properties, const Data *data, ident instances, size_t stride, size_t count);
 
   /**
    * @static
