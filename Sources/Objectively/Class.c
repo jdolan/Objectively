@@ -215,7 +215,11 @@ ident retain(ident obj) {
 
   assert(object);
 
-  __sync_add_and_fetch(&object->referenceCount, 1);
+  int count;
+  do {
+    count = object->referenceCount;
+    assert(count > 0);
+  } while (!__sync_bool_compare_and_swap(&object->referenceCount, count, count + 1));
 
   return obj;
 }
