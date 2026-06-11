@@ -1206,7 +1206,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE129E6823B8242B007D0433 /* libObjectively.dylib in Frameworks */,
-				CE129E6923B8242B007D0433 /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1239,7 +1238,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE4F535A202A8C6D00D71C07 /* libObjectively.dylib in Frameworks */,
-				CE4F5359202A8C6D00D71C07 /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1248,7 +1246,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE594BDD1F49F931004D74FF /* libObjectively.dylib in Frameworks */,
-				CE594BDC1F49F931004D74FF /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1257,7 +1254,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE75455923C417FD00140C52 /* libObjectively.dylib in Frameworks */,
-				CE75455A23C417FD00140C52 /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1265,8 +1261,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CED157ED1C4BF60200FBA2DE /* libcurl.4.dylib in Frameworks */,
-				CED157EE1C4BF60200FBA2DE /* libiconv.2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1275,7 +1269,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE7F042E2FD9943600AE0D63 /* libObjectively.dylib in Frameworks */,
-				CE7F042F2FD9943600AE0D63 /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1284,7 +1277,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE84A8A81DA15BB4008BC685 /* libObjectively.dylib in Frameworks */,
-				CE84A8A91DA15BD5008BC685 /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1293,7 +1285,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB01B01F40DB3A004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB01AF1F40DB3A004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1302,7 +1293,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB01BD1F40DB3F004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB01BC1F40DB3F004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1311,7 +1301,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB01CA1F40DB47004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB01C91F40DB47004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1320,7 +1309,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB01D71F40DB4B004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB01D61F40DB4B004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1329,7 +1317,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB01E41F40DB4D004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB01E31F40DB4D004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1338,7 +1325,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB01F11F40DB50004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB01F01F40DB50004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1347,7 +1333,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB01FE1F40DB52004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB01FD1F40DB52004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1356,7 +1341,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB020B1F40DB55004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB020A1F40DB55004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1365,7 +1349,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB021B1F40DBCD004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB021A1F40DBCD004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1374,7 +1357,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB02281F40DBD0004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB02271F40DBD0004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1383,7 +1365,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB02351F40DBD2004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB02341F40DBD2004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1392,7 +1373,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB02421F40DBD4004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB02411F40DBD4004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1401,7 +1381,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB024F1F40DBD5004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB024E1F40DBD5004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1410,7 +1389,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB025C1F40DBD7004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB025B1F40DBD7004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1419,7 +1397,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB02691F40DBD9004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB02681F40DBD9004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1428,7 +1405,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB028D1F40DD20004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB028C1F40DD20004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1437,7 +1413,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB029A1F40DD22004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB02991F40DD22004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1446,7 +1421,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB02A71F40DD24004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB02A61F40DD24004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1455,7 +1429,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB02B41F40DD26004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB02B31F40DD26004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1464,7 +1437,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB02C11F40DD27004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB02C01F40DD27004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1473,7 +1445,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB02CE1F40DD29004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB02CD1F40DD29004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1482,7 +1453,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB02DB1F40DD2B004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB02DA1F40DD2B004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1491,7 +1461,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB02E81F40DD4E004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB02E71F40DD4E004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1500,7 +1469,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB02F51F40DD4F004C2EDD /* libObjectively.dylib in Frameworks */,
-				CEEB02F41F40DD4F004C2EDD /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3236,6 +3204,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3243,6 +3216,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3250,6 +3228,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
 			};
 			name = Debug;
 		};
@@ -3257,6 +3239,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
 			};
 			name = Release;
 		};
@@ -3264,6 +3250,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
 			};
 			name = Debug;
 		};
@@ -3271,6 +3261,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
 			};
 			name = Release;
 		};
@@ -3278,6 +3272,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
 			};
 			name = Debug;
 		};
@@ -3285,6 +3283,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
 			};
 			name = Release;
 		};
@@ -3320,6 +3322,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3327,6 +3334,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3334,6 +3346,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3341,6 +3358,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3348,6 +3370,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3355,6 +3382,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3427,6 +3459,14 @@
 				EXECUTABLE_PREFIX = lib;
 				PRIVATE_HEADERS_FOLDER_PATH = "/usr/local/include/$(PRODUCT_NAME)";
 				PRODUCT_NAME = Objectively;
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = (
+					"-lcurl",
+					"-liconv",
+				);
 			};
 			name = Debug;
 		};
@@ -3436,6 +3476,14 @@
 				EXECUTABLE_PREFIX = lib;
 				PRIVATE_HEADERS_FOLDER_PATH = "/usr/local/include/$(PRODUCT_NAME)";
 				PRODUCT_NAME = Objectively;
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = (
+					"-lcurl",
+					"-liconv",
+				);
 			};
 			name = Release;
 		};
@@ -3443,6 +3491,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3450,6 +3503,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3457,6 +3515,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3464,6 +3527,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3471,6 +3539,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3478,6 +3551,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3485,6 +3563,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3492,6 +3575,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3499,6 +3587,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3506,6 +3599,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3513,6 +3611,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3520,6 +3623,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3527,6 +3635,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3534,6 +3647,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3541,6 +3659,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3548,6 +3671,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3555,6 +3683,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3562,6 +3695,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3569,6 +3707,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3576,6 +3719,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3583,6 +3731,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3590,6 +3743,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3597,6 +3755,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3604,6 +3767,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3611,6 +3779,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3618,6 +3791,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3625,6 +3803,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3632,6 +3815,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3639,6 +3827,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3646,6 +3839,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3653,6 +3851,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3660,6 +3863,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3667,6 +3875,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3674,6 +3887,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3681,6 +3899,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3688,6 +3911,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3695,6 +3923,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3702,6 +3935,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3709,6 +3947,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3716,6 +3959,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3723,6 +3971,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3730,6 +3983,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3737,6 +3995,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3744,6 +4007,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3751,6 +4019,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3758,6 +4031,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3765,6 +4043,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3772,6 +4055,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3779,6 +4067,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3786,6 +4079,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
@@ -3793,6 +4091,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Debug;
 		};
@@ -3800,6 +4103,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
 			};
 			name = Release;
 		};
