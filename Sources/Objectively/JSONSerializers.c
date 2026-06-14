@@ -163,7 +163,7 @@ ident JSONSerializeObject(const JSONProperties *properties,
     return NULL;
   }
 
-  return (ident) JSONDictionaryFromInstance(context, child, value);
+  return (ident) $(context, dictionaryFromInstance, child, value);
 }
 
 ident JSONSerializeArray(const JSONProperties *properties,
@@ -184,7 +184,7 @@ ident JSONSerializeArray(const JSONProperties *properties,
 
   for (size_t i = 0; i < array->count; i++) {
     const ident instance = (uint8_t *) value + i * array->properties->size;
-    Dictionary *dict = JSONDictionaryFromInstance(context, array->properties, instance);
+    Dictionary *dict = $(context, dictionaryFromInstance, array->properties, instance);
     $(out, addObject, dict);
     release(dict);
   }
@@ -366,7 +366,7 @@ bool JSONDeserializeObject(const JSONProperties *properties,
     return false;
   }
 
-  return JSONInstanceFromDictionary(context, child, cast(Dictionary, value), field);
+  return $(context, instanceFromDictionary, child, cast(Dictionary, value), field);
 }
 
 bool JSONDeserializeArray(const JSONProperties *properties,
@@ -393,8 +393,8 @@ bool JSONDeserializeArray(const JSONProperties *properties,
     return false;
   }
 
-  const size_t n = JSONInstancesFromArray(context, array->properties,
-                                          cast(Array, value), field, array->count);
+  const size_t n = $(context, instancesFromArray, array->properties,
+                                                    cast(Array, value), field, array->count);
 
   if (array->count_offset != JSONArrayProperties_NoCount) {
     *(size_t *) (instance + array->count_offset) = n;

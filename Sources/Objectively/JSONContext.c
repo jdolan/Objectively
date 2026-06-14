@@ -568,9 +568,9 @@ static ident readElement(JSONReader *reader) {
 /**
  * @brief Serializes a C struct instance to a Dictionary.
  */
-Dictionary *JSONDictionaryFromInstance(JSONContext *self,
-                                       const JSONProperties *properties,
-                                       const ident instance) {
+static Dictionary *dictionaryFromInstance(JSONContext *self,
+                                           const JSONProperties *properties,
+                                           const ident instance) {
 
   if (!properties || !instance) {
     return NULL;
@@ -600,10 +600,10 @@ Dictionary *JSONDictionaryFromInstance(JSONContext *self,
 /**
  * @brief Deserializes a Dictionary into a C struct.
  */
-bool JSONInstanceFromDictionary(JSONContext *self,
-                                 const JSONProperties *properties,
-                                 const Dictionary *dictionary,
-                                 ident instance) {
+static bool instanceFromDictionary(JSONContext *self,
+                                    const JSONProperties *properties,
+                                    const Dictionary *dictionary,
+                                    ident instance) {
 
   if (!properties || !dictionary || !instance) {
     return false;
@@ -636,11 +636,11 @@ bool JSONInstanceFromDictionary(JSONContext *self,
 /**
  * @brief Deserializes a JSON Array into an array of C structs.
  */
-size_t JSONInstancesFromArray(JSONContext *self,
-                               const JSONProperties *properties,
-                               const Array *array,
-                               ident instances,
-                               size_t count) {
+static size_t instancesFromArray(JSONContext *self,
+                                  const JSONProperties *properties,
+                                  const Array *array,
+                                  ident instances,
+                                  size_t count) {
 
   if (!properties || !array || !instances || !count) {
     return 0;
@@ -650,7 +650,7 @@ size_t JSONInstancesFromArray(JSONContext *self,
 
   for (size_t i = 0; i < n; i++) {
     const Dictionary *dictionary = cast(Dictionary, $(array, objectAtIndex, i));
-    JSONInstanceFromDictionary(self, properties, dictionary, instances + i * properties->size);
+    instanceFromDictionary(self, properties, dictionary, instances + i * properties->size);
   }
 
   return n;
@@ -714,7 +714,7 @@ static Data *dataFromInstance(JSONContext *self,
                                const JSONProperties *properties,
                                const ident instance) {
 
-  Dictionary *dict = JSONDictionaryFromInstance(self, properties, instance);
+  Dictionary *dict = dictionaryFromInstance(self, properties, instance);
   Data *data = dataFromObject(self, dict, 0);
   release(dict);
   return data;
@@ -737,7 +737,7 @@ static Data *dataFromInstances(JSONContext *self,
 
   for (size_t i = 0; i < count; i++) {
     const ident instance = instances + i * properties->size;
-    Dictionary *dict = JSONDictionaryFromInstance(self, properties, instance);
+    Dictionary *dict = dictionaryFromInstance(self, properties, instance);
     $(array, addObject, dict);
     release(dict);
   }
@@ -762,7 +762,7 @@ static bool instanceFromData(JSONContext *self,
     return false;
   }
 
-  const bool ok = JSONInstanceFromDictionary(self, properties, (Dictionary *) obj, instance);
+  const bool ok = instanceFromDictionary(self, properties, (Dictionary *) obj, instance);
 
   release(obj);
   return ok;
@@ -784,7 +784,7 @@ static size_t instancesFromData(JSONContext *self,
     return 0;
   }
 
-  const size_t n = JSONInstancesFromArray(self, properties, (Array *) obj, instances, count);
+  const size_t n = instancesFromArray(self, properties, (Array *) obj, instances, count);
 
   release(obj);
   return n;
@@ -831,6 +831,9 @@ static void initialize(Class *clazz) {
   iface->dataFromInstances = dataFromInstances;
   iface->instanceFromData = instanceFromData;
   iface->instancesFromData = instancesFromData;
+  iface->dictionaryFromInstance = dictionaryFromInstance;
+  iface->instanceFromDictionary = instanceFromDictionary;
+  iface->instancesFromArray = instancesFromArray;
 }
 
 /**

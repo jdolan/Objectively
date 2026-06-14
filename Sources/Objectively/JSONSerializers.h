@@ -173,76 +173,76 @@ struct JSONProperties {
  * @details Omits the key (returns `NULL`) when the field is empty.
  */
 OBJECTIVELY_EXPORT ident JSONSerializeCharacters(const JSONProperties *properties,
-                                                  const JSONProperty *property,
-                                                  ident value,
-                                                  ident data,
-                                                  JSONContext *context);
+                                                 const JSONProperty *property,
+                                                 ident value,
+                                                 ident data,
+                                                 JSONContext *context);
 
 /**
  * @brief Serializes a `char *` heap string field to a JSON string.
  * @details Omits the key (returns `NULL`) when the pointer is `NULL`.
  */
 OBJECTIVELY_EXPORT ident JSONSerializeCString(const JSONProperties *properties,
-                                               const JSONProperty *property,
-                                               ident value,
-                                               ident data,
-                                               JSONContext *context);
+                                              const JSONProperty *property,
+                                              ident value,
+                                              ident data,
+                                              JSONContext *context);
 
 /**
  * @brief Serializes an `int32_t` field to a JSON number.
  */
 OBJECTIVELY_EXPORT ident JSONSerializeInt32(const JSONProperties *properties,
-                                             const JSONProperty *property,
-                                             ident value,
-                                             ident data,
-                                             JSONContext *context);
+                                            const JSONProperty *property,
+                                            ident value,
+                                            ident data,
+                                            JSONContext *context);
 
 /**
  * @brief Serializes a `uint32_t` field to a JSON number.
  */
 OBJECTIVELY_EXPORT ident JSONSerializeUint32(const JSONProperties *properties,
-                                              const JSONProperty *property,
-                                              ident value,
-                                              ident data,
-                                              JSONContext *context);
+                                             const JSONProperty *property,
+                                             ident value,
+                                             ident data,
+                                             JSONContext *context);
 
 /**
  * @brief Serializes a `double` field to a JSON number.
  */
 OBJECTIVELY_EXPORT ident JSONSerializeDouble(const JSONProperties *properties,
-                                              const JSONProperty *property,
-                                              ident value,
-                                              ident data,
-                                              JSONContext *context);
+                                             const JSONProperty *property,
+                                             ident value,
+                                             ident data,
+                                             JSONContext *context);
 
 /**
  * @brief Serializes a `bool` field to a JSON boolean.
  */
 OBJECTIVELY_EXPORT ident JSONSerializeBoole(const JSONProperties *properties,
-                                             const JSONProperty *property,
-                                             ident value,
-                                             ident data,
-                                             JSONContext *context);
+                                            const JSONProperty *property,
+                                            ident value,
+                                            ident data,
+                                            JSONContext *context);
 
 /**
  * @brief Serializes a nested struct field to a JSON object.
  * @details `property->data` must point to a JSONProperties describing the nested type.
  */
 OBJECTIVELY_EXPORT ident JSONSerializeObject(const JSONProperties *properties,
-                                              const JSONProperty *property,
-                                              ident value,
-                                              ident data,
-                                              JSONContext *context);
+                                             const JSONProperty *property,
+                                             ident value,
+                                             ident data,
+                                             JSONContext *context);
 
 /**
  * @brief Serializes an inline array field to a JSON array.
  * @details `property->data` must point to a JSONArrayProperties.
  */
 OBJECTIVELY_EXPORT ident JSONSerializeArray(const JSONProperties *properties,
-                                             const JSONProperty *property,
-                                             ident value,
-                                             ident data,
-                                             JSONContext *context);
+                                            const JSONProperty *property,
+                                            ident value,
+                                            ident data,
+                                            JSONContext *context);
 
 // ---------------------------------------------------------------------------
 // Standard deserializers
@@ -254,10 +254,10 @@ OBJECTIVELY_EXPORT ident JSONSerializeArray(const JSONProperties *properties,
  * @return `false` if the JSON value is not a String.
  */
 OBJECTIVELY_EXPORT bool JSONDeserializeCharacters(const JSONProperties *properties,
-                                                   const JSONProperty *property,
-                                                   const Object *value,
-                                                   ident field,
-                                                   JSONContext *context);
+                                                  const JSONProperty *property,
+                                                  const Object *value,
+                                                  ident field,
+                                                  JSONContext *context);
 
 /**
  * @brief Deserializes a JSON string into a heap-allocated `char *` field.
@@ -265,50 +265,50 @@ OBJECTIVELY_EXPORT bool JSONDeserializeCharacters(const JSONProperties *properti
  * @return `false` if the JSON value is not a String.
  */
 OBJECTIVELY_EXPORT bool JSONDeserializeCString(const JSONProperties *properties,
-                                                const JSONProperty *property,
-                                                const Object *value,
-                                                ident field,
-                                                JSONContext *context);
+                                               const JSONProperty *property,
+                                               const Object *value,
+                                               ident field,
+                                               JSONContext *context);
 
 /**
  * @brief Deserializes a JSON number into an `int32_t` field.
  * @return `false` if the JSON value is not a Number.
  */
 OBJECTIVELY_EXPORT bool JSONDeserializeInt32(const JSONProperties *properties,
-                                              const JSONProperty *property,
-                                              const Object *value,
-                                              ident field,
-                                              JSONContext *context);
+                                             const JSONProperty *property,
+                                             const Object *value,
+                                             ident field,
+                                             JSONContext *context);
 
 /**
  * @brief Deserializes a JSON number into a `uint32_t` field.
  * @return `false` if the JSON value is not a Number.
  */
 OBJECTIVELY_EXPORT bool JSONDeserializeUint32(const JSONProperties *properties,
-                                               const JSONProperty *property,
-                                               const Object *value,
-                                               ident field,
-                                               JSONContext *context);
+                                              const JSONProperty *property,
+                                              const Object *value,
+                                              ident field,
+                                              JSONContext *context);
 
 /**
  * @brief Deserializes a JSON number into a `double` field.
  * @return `false` if the JSON value is not a Number.
  */
 OBJECTIVELY_EXPORT bool JSONDeserializeDouble(const JSONProperties *properties,
-                                               const JSONProperty *property,
-                                               const Object *value,
-                                               ident field,
-                                               JSONContext *context);
+                                              const JSONProperty *property,
+                                              const Object *value,
+                                              ident field,
+                                              JSONContext *context);
 
 /**
  * @brief Deserializes a JSON boolean into a `bool` field.
  * @return `false` if the JSON value is not a Boole.
  */
 OBJECTIVELY_EXPORT bool JSONDeserializeBoole(const JSONProperties *properties,
-                                              const JSONProperty *property,
-                                              const Object *value,
-                                              ident field,
-                                              JSONContext *context);
+                                             const JSONProperty *property,
+                                             const Object *value,
+                                             ident field,
+                                             JSONContext *context);
 
 /**
  * @brief Deserializes a JSON object into a nested struct field.
@@ -316,10 +316,10 @@ OBJECTIVELY_EXPORT bool JSONDeserializeBoole(const JSONProperties *properties,
  * @return `false` if the JSON value is not a Dictionary.
  */
 OBJECTIVELY_EXPORT bool JSONDeserializeObject(const JSONProperties *properties,
-                                               const JSONProperty *property,
-                                               const Object *value,
-                                               ident field,
-                                               JSONContext *context);
+                                              const JSONProperty *property,
+                                              const Object *value,
+                                              ident field,
+                                              JSONContext *context);
 
 /**
  * @brief Deserializes a JSON array into an inline array field.
@@ -327,10 +327,10 @@ OBJECTIVELY_EXPORT bool JSONDeserializeObject(const JSONProperties *properties,
  * @return `false` if the JSON value is not an Array.
  */
 OBJECTIVELY_EXPORT bool JSONDeserializeArray(const JSONProperties *properties,
-                                              const JSONProperty *property,
-                                              const Object *value,
-                                              ident field,
-                                              JSONContext *context);
+                                             const JSONProperty *property,
+                                             const Object *value,
+                                             ident field,
+                                             JSONContext *context);
 
 // ---------------------------------------------------------------------------
 // JSONArrayProperties
@@ -363,60 +363,6 @@ typedef struct {
   ptrdiff_t count_offset;
 
 } JSONArrayProperties;
-
-// ---------------------------------------------------------------------------
-// Convenience macros
-// ---------------------------------------------------------------------------
-
-/**
- * @brief Creates a JSONProperty for a fixed-size `char[]` field.
- */
-#define MakeJSONCharactersProperty(Struct, field) \
-  MakeJSONProperty(Struct, field, JSONSerializeCharacters, JSONDeserializeCharacters, JSONFieldSize(Struct, field))
-
-/**
- * @brief Creates a JSONProperty for a heap-string `char *` field.
- */
-#define MakeJSONCStringProperty(Struct, field) \
-  MakeJSONProperty(Struct, field, JSONSerializeCString, JSONDeserializeCString, NULL)
-
-/**
- * @brief Creates a JSONProperty for an `int32_t` field.
- */
-#define MakeJSONInt32Property(Struct, field) \
-  MakeJSONProperty(Struct, field, JSONSerializeInt32, JSONDeserializeInt32, NULL)
-
-/**
- * @brief Creates a JSONProperty for a `uint32_t` field.
- */
-#define MakeJSONUint32Property(Struct, field) \
-  MakeJSONProperty(Struct, field, JSONSerializeUint32, JSONDeserializeUint32, NULL)
-
-/**
- * @brief Creates a JSONProperty for a `double` field.
- */
-#define MakeJSONDoubleProperty(Struct, field) \
-  MakeJSONProperty(Struct, field, JSONSerializeDouble, JSONDeserializeDouble, NULL)
-
-/**
- * @brief Creates a JSONProperty for a `bool` field.
- */
-#define MakeJSONBooleProperty(Struct, field) \
-  MakeJSONProperty(Struct, field, JSONSerializeBoole, JSONDeserializeBoole, NULL)
-
-/**
- * @brief Creates a JSONProperty for a nested struct field.
- * @param properties_ A JSONProperties describing the nested type.
- */
-#define MakeJSONObjectProperty(Struct, field, properties_) \
-  MakeJSONProperty(Struct, field, JSONSerializeObject, JSONDeserializeObject, (ident) &(properties_))
-
-/**
- * @brief Creates a JSONProperty for an inline array field.
- * @param context_ A JSONArrayProperties describing the array element type and capacity.
- */
-#define MakeJSONArrayProperty(Struct, field, context_) \
-  MakeJSONProperty(Struct, field, JSONSerializeArray, JSONDeserializeArray, (ident) &(context_))
 
 // ---------------------------------------------------------------------------
 // Object serializers / deserializers
@@ -546,49 +492,3 @@ OBJECTIVELY_EXPORT bool JSONDeserializeMutableDictionary(const JSONProperties *p
                                                          const Object *value,
                                                          ident field,
                                                          JSONContext *context);
-
-// ---------------------------------------------------------------------------
-// Object convenience macros
-// ---------------------------------------------------------------------------
-
-/**
- * @brief Creates a JSONProperty for a `String *` field.
- */
-#define MakeJSONStringProperty(Struct, field) \
-  MakeJSONProperty(Struct, field, JSONSerializeString, JSONDeserializeString, NULL)
-
-/**
- * @brief Creates a JSONProperty for a `URL *` field.
- */
-#define MakeJSONURLProperty(Struct, field) \
-  MakeJSONProperty(Struct, field, JSONSerializeURL, JSONDeserializeURL, NULL)
-
-/**
- * @brief Creates a JSONProperty for a `Date *` field (ISO 8601 format).
- */
-#define MakeJSONDateProperty(Struct, field) \
-  MakeJSONProperty(Struct, field, JSONSerializeDate, JSONDeserializeDate, NULL)
-
-/**
- * @brief Creates a JSONProperty for a `Date *` field with a custom format string.
- */
-#define MakeJSONDatePropertyWithFormat(Struct, field, fmt) \
-  MakeJSONProperty(Struct, field, JSONSerializeDate, JSONDeserializeDate, (ident)(fmt))
-
-/**
- * @brief Creates a JSONProperty for a `MutableArray *` field.
- */
-#define MakeJSONMutableArrayProperty(Struct, field) \
-  MakeJSONProperty(Struct, field, JSONSerializeMutableArray, JSONDeserializeMutableArray, NULL)
-
-/**
- * @brief Creates a JSONProperty for a `MutableSet *` field.
- */
-#define MakeJSONMutableSetProperty(Struct, field) \
-  MakeJSONProperty(Struct, field, JSONSerializeMutableSet, JSONDeserializeMutableSet, NULL)
-
-/**
- * @brief Creates a JSONProperty for a `MutableDictionary *` field.
- */
-#define MakeJSONMutableDictionaryProperty(Struct, field) \
-  MakeJSONProperty(Struct, field, JSONSerializeMutableDictionary, JSONDeserializeMutableDictionary, NULL)

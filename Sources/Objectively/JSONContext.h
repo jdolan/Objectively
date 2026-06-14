@@ -38,37 +38,6 @@
 typedef struct JSONContextInterface JSONContextInterface;
 
 // ---------------------------------------------------------------------------
-// Internal helpers
-// ---------------------------------------------------------------------------
-
-/**
- * @brief Serializes a C struct instance to a Dictionary.
- * @note Used internally by JSONSerializeObject and JSONSerializeArray.
- */
-OBJECTIVELY_EXPORT Dictionary *JSONDictionaryFromInstance(JSONContext *self,
-                                                          const JSONProperties *properties,
-                                                          const ident instance);
-
-/**
- * @brief Deserializes a Dictionary into a C struct.
- * @note Used internally by JSONDeserializeObject and JSONDeserializeArray.
- */
-OBJECTIVELY_EXPORT bool JSONInstanceFromDictionary(JSONContext *self,
-                                                    const JSONProperties *properties,
-                                                    const Dictionary *dictionary,
-                                                    ident instance);
-
-/**
- * @brief Deserializes a JSON Array into an array of C structs.
- * @note Used internally by JSONDeserializeArray.
- */
-OBJECTIVELY_EXPORT size_t JSONInstancesFromArray(JSONContext *self,
-                                                  const JSONProperties *properties,
-                                                  const Array *array,
-                                                  ident instances,
-                                                  size_t count);
-
-// ---------------------------------------------------------------------------
 // JSONWriteOptions
 // ---------------------------------------------------------------------------
 
@@ -213,6 +182,48 @@ struct JSONContextInterface {
                                const Data *data,
                                ident instances,
                                size_t count);
+
+  /**
+   * @fn Dictionary *JSONContext::dictionaryFromInstance(JSONContext *self, const JSONProperties *properties, const ident instance)
+   * @brief Serializes a C struct instance to a Dictionary.
+   * @param properties The JSONProperties for the struct type.
+   * @param instance Pointer to the struct instance.
+   * @return A new Dictionary, or `NULL` on error.
+   * @memberof JSONContext
+   */
+  Dictionary *(*dictionaryFromInstance)(JSONContext *self,
+                                         const JSONProperties *properties,
+                                         const ident instance);
+
+  /**
+   * @fn bool JSONContext::instanceFromDictionary(JSONContext *self, const JSONProperties *properties, const Dictionary *dictionary, ident instance)
+   * @brief Deserializes a Dictionary into a C struct.
+   * @param properties The JSONProperties for the struct type.
+   * @param dictionary The source Dictionary.
+   * @param instance Pointer to the caller-allocated struct to populate.
+   * @return `true` if all recognized fields were bound without type errors.
+   * @memberof JSONContext
+   */
+  bool (*instanceFromDictionary)(JSONContext *self,
+                                  const JSONProperties *properties,
+                                  const Dictionary *dictionary,
+                                  ident instance);
+
+  /**
+   * @fn size_t JSONContext::instancesFromArray(JSONContext *self, const JSONProperties *properties, const Array *array, ident instances, size_t count)
+   * @brief Deserializes an Array of Dictionaries into an array of C structs.
+   * @param properties The JSONProperties for the element type.
+   * @param array The source Array of Dictionary objects.
+   * @param instances Pointer to a caller-allocated buffer of at least `count` structs.
+   * @param count The capacity of the `instances` buffer.
+   * @return The number of structs actually written.
+   * @memberof JSONContext
+   */
+  size_t (*instancesFromArray)(JSONContext *self,
+                                const JSONProperties *properties,
+                                const Array *array,
+                                ident instances,
+                                size_t count);
 };
 
 /**

@@ -177,11 +177,11 @@ START_TEST(json_struct_properties) {
   } TestStruct;
 
   const JSONProperties properties = MakeJSONProperties(TestStruct,
-    MakeJSONCharactersProperty(TestStruct, name),
-    MakeJSONCStringProperty(TestStruct, tag),
-    MakeJSONInt32Property(TestStruct, score),
-    MakeJSONDoubleProperty(TestStruct, ratio),
-    MakeJSONBooleProperty(TestStruct, active)
+    MakeJSONProperty(TestStruct, name,   JSONSerializeCharacters, JSONDeserializeCharacters, JSONFieldSize(TestStruct, name)),
+    MakeJSONProperty(TestStruct, tag,    JSONSerializeCString,    JSONDeserializeCString,    NULL),
+    MakeJSONProperty(TestStruct, score,  JSONSerializeInt32,      JSONDeserializeInt32,      NULL),
+    MakeJSONProperty(TestStruct, ratio,  JSONSerializeDouble,     JSONDeserializeDouble,     NULL),
+    MakeJSONProperty(TestStruct, active, JSONSerializeBoole,      JSONDeserializeBoole,      NULL)
   );
 
   TestStruct instances[2] = {
@@ -279,8 +279,8 @@ typedef struct {
 } json_nested_response_t;
 
 static const JSONProperties json_nested_entry_properties = MakeJSONProperties(json_nested_entry_t,
-  MakeJSONCharactersProperty(json_nested_entry_t, name),
-  MakeJSONInt32Property(json_nested_entry_t, score)
+  MakeJSONProperty(json_nested_entry_t, name,  JSONSerializeCharacters, JSONDeserializeCharacters, JSONFieldSize(json_nested_entry_t, name)),
+  MakeJSONProperty(json_nested_entry_t, score, JSONSerializeInt32,      JSONDeserializeInt32,      NULL)
 );
 
 static const JSONArrayProperties json_nested_response_items = {
@@ -290,9 +290,9 @@ static const JSONArrayProperties json_nested_response_items = {
 };
 
 static const JSONProperties json_nested_response_properties = MakeJSONProperties(json_nested_response_t,
-  MakeJSONCharactersProperty(json_nested_response_t, title),
-  MakeJSONObjectProperty(json_nested_response_t, owner, json_nested_entry_properties),
-  MakeJSONArrayProperty(json_nested_response_t, items, json_nested_response_items)
+  MakeJSONProperty(json_nested_response_t, title, JSONSerializeCharacters, JSONDeserializeCharacters, JSONFieldSize(json_nested_response_t, title)),
+  MakeJSONProperty(json_nested_response_t, owner, JSONSerializeObject,     JSONDeserializeObject,     (ident) &json_nested_entry_properties),
+  MakeJSONProperty(json_nested_response_t, items, JSONSerializeArray,      JSONDeserializeArray,      (ident) &json_nested_response_items)
 );
 
 /**
@@ -397,17 +397,17 @@ START_TEST(json_frag_t) {
   } frag_t;
 
   const JSONProperties properties = MakeJSONProperties(frag_t,
-    MakeJSONCharactersProperty(frag_t, level),
-    MakeJSONCharactersProperty(frag_t, attacker),
-    MakeJSONCharactersProperty(frag_t, attacker_guid),
-    MakeJSONBooleProperty(frag_t, attacker_ai),
-    MakeJSONCharactersProperty(frag_t, target),
-    MakeJSONCharactersProperty(frag_t, target_guid),
-    MakeJSONBooleProperty(frag_t, target_ai),
-    MakeJSONCharactersProperty(frag_t, weapon),
-    MakeJSONInt32Property(frag_t, mod),
-    MakeJSONInt32Property(frag_t, damage),
-    MakeJSONUint32Property(frag_t, time)
+    MakeJSONProperty(frag_t, level,         JSONSerializeCharacters, JSONDeserializeCharacters, JSONFieldSize(frag_t, level)),
+    MakeJSONProperty(frag_t, attacker,      JSONSerializeCharacters, JSONDeserializeCharacters, JSONFieldSize(frag_t, attacker)),
+    MakeJSONProperty(frag_t, attacker_guid, JSONSerializeCharacters, JSONDeserializeCharacters, JSONFieldSize(frag_t, attacker_guid)),
+    MakeJSONProperty(frag_t, attacker_ai,   JSONSerializeBoole,      JSONDeserializeBoole,      NULL),
+    MakeJSONProperty(frag_t, target,        JSONSerializeCharacters, JSONDeserializeCharacters, JSONFieldSize(frag_t, target)),
+    MakeJSONProperty(frag_t, target_guid,   JSONSerializeCharacters, JSONDeserializeCharacters, JSONFieldSize(frag_t, target_guid)),
+    MakeJSONProperty(frag_t, target_ai,     JSONSerializeBoole,      JSONDeserializeBoole,      NULL),
+    MakeJSONProperty(frag_t, weapon,        JSONSerializeCharacters, JSONDeserializeCharacters, JSONFieldSize(frag_t, weapon)),
+    MakeJSONProperty(frag_t, mod,           JSONSerializeInt32,      JSONDeserializeInt32,      NULL),
+    MakeJSONProperty(frag_t, damage,        JSONSerializeInt32,      JSONDeserializeInt32,      NULL),
+    MakeJSONProperty(frag_t, time,          JSONSerializeUint32,     JSONDeserializeUint32,     NULL)
   );
 
   frag_t frags[] = {
@@ -521,12 +521,12 @@ START_TEST(json_object_properties) {
   } TestRecord;
 
   const JSONProperties properties = MakeJSONProperties(TestRecord,
-    MakeJSONStringProperty(TestRecord, name),
-    MakeJSONURLProperty(TestRecord, url),
-    MakeJSONDateProperty(TestRecord, date),
-    MakeJSONMutableArrayProperty(TestRecord, tags),
-    MakeJSONMutableSetProperty(TestRecord, flags),
-    MakeJSONMutableDictionaryProperty(TestRecord, meta)
+    MakeJSONProperty(TestRecord, name,  JSONSerializeString,             JSONDeserializeString,             NULL),
+    MakeJSONProperty(TestRecord, url,   JSONSerializeURL,                JSONDeserializeURL,                NULL),
+    MakeJSONProperty(TestRecord, date,  JSONSerializeDate,               JSONDeserializeDate,               NULL),
+    MakeJSONProperty(TestRecord, tags,  JSONSerializeMutableArray,       JSONDeserializeMutableArray,       NULL),
+    MakeJSONProperty(TestRecord, flags, JSONSerializeMutableSet,         JSONDeserializeMutableSet,         NULL),
+    MakeJSONProperty(TestRecord, meta,  JSONSerializeMutableDictionary,  JSONDeserializeMutableDictionary,  NULL)
   );
 
   JSONContext *ctx = $(alloc(JSONContext), init);
