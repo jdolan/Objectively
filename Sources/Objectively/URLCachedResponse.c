@@ -23,10 +23,10 @@
 
 #include <assert.h>
 
-#include "CachedURLResponse.h"
+#include "URLCachedResponse.h"
 #include "Hash.h"
 
-#define _Class _CachedURLResponse
+#define _Class _URLCachedResponse
 
 #pragma mark - Object
 
@@ -47,9 +47,9 @@ static bool objectEquals(const Object *self, const Object *other) {
  */
 static Object *copy(const Object *self) {
 
-  const CachedURLResponse *this = (CachedURLResponse *) self;
+  const URLCachedResponse *this = (URLCachedResponse *) self;
 
-  CachedURLResponse *that = $(alloc(CachedURLResponse), initWithResponseData, this->response, this->data);
+  URLCachedResponse *that = $(alloc(URLCachedResponse), initWithResponseData, this->response, this->data);
   if (that) {
     release(that->timestamp);
     that->timestamp = (Date *) $((Object *) this->timestamp, copy);
@@ -64,7 +64,7 @@ static Object *copy(const Object *self) {
  */
 static void dealloc(Object *self) {
 
-  CachedURLResponse *this = (CachedURLResponse *) self;
+  URLCachedResponse *this = (URLCachedResponse *) self;
 
   release(this->response);
   release(this->data);
@@ -78,7 +78,7 @@ static void dealloc(Object *self) {
  */
 static int hash(const Object *self) {
 
-  const CachedURLResponse *this = (CachedURLResponse *) self;
+  const URLCachedResponse *this = (URLCachedResponse *) self;
 
   int hash = HASH_SEED;
   hash = HashForInteger(hash, this->size);
@@ -99,10 +99,10 @@ static bool isEqual(const Object *self, const Object *other) {
     return true;
   }
 
-  if (other && $(other, isKindOfClass, _CachedURLResponse())) {
+  if (other && $(other, isKindOfClass, _URLCachedResponse())) {
 
-    const CachedURLResponse *this = (CachedURLResponse *) self;
-    const CachedURLResponse *that = (CachedURLResponse *) other;
+    const URLCachedResponse *this = (URLCachedResponse *) self;
+    const URLCachedResponse *that = (URLCachedResponse *) other;
 
     return this->size == that->size
       && this->response->httpStatusCode == that->response->httpStatusCode
@@ -114,18 +114,18 @@ static bool isEqual(const Object *self, const Object *other) {
   return false;
 }
 
-#pragma mark - CachedURLResponse
+#pragma mark - URLCachedResponse
 
 /**
- * @fn CachedURLResponse *CachedURLResponse::initWithResponseData(CachedURLResponse *self, const URLResponse *response, const Data *data)
- * @memberof CachedURLResponse
+ * @fn URLCachedResponse *URLCachedResponse::initWithResponseData(URLCachedResponse *self, const URLResponse *response, const Data *data)
+ * @memberof URLCachedResponse
  */
-static CachedURLResponse *initWithResponseData(CachedURLResponse *self, const URLResponse *response,
+static URLCachedResponse *initWithResponseData(URLCachedResponse *self, const URLResponse *response,
     const Data *data) {
 
   assert(response);
 
-  self = (CachedURLResponse *) super(Object, self, init);
+  self = (URLCachedResponse *) super(Object, self, init);
   if (self) {
     self->response = (URLResponse *) $((Object *) response, copy);
 
@@ -154,24 +154,24 @@ static void initialize(Class *clazz) {
   ((ObjectInterface *) clazz->interface)->hash = hash;
   ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-  ((CachedURLResponseInterface *) clazz->interface)->initWithResponseData = initWithResponseData;
+  ((URLCachedResponseInterface *) clazz->interface)->initWithResponseData = initWithResponseData;
 }
 
 /**
- * @fn Class *CachedURLResponse::_CachedURLResponse(void)
- * @memberof CachedURLResponse
+ * @fn Class *URLCachedResponse::_URLCachedResponse(void)
+ * @memberof URLCachedResponse
  */
-Class *_CachedURLResponse(void) {
+Class *_URLCachedResponse(void) {
   static Class *clazz;
   static Once once;
 
   do_once(&once, {
     clazz = _initialize(&(const ClassDef) {
-      .name = "CachedURLResponse",
+      .name = "URLCachedResponse",
       .superclass = _Object(),
-      .instanceSize = sizeof(CachedURLResponse),
-      .interfaceOffset = offsetof(CachedURLResponse, interface),
-      .interfaceSize = sizeof(CachedURLResponseInterface),
+      .instanceSize = sizeof(URLCachedResponse),
+      .interfaceOffset = offsetof(URLCachedResponse, interface),
+      .interfaceSize = sizeof(URLCachedResponseInterface),
       .initialize = initialize,
     });
   });

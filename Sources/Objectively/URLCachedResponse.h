@@ -33,15 +33,15 @@
  * @brief Cached HTTP responses.
  */
 
-typedef struct CachedURLResponse CachedURLResponse;
-typedef struct CachedURLResponseInterface CachedURLResponseInterface;
+typedef struct URLCachedResponse URLCachedResponse;
+typedef struct URLCachedResponseInterface URLCachedResponseInterface;
 
 /**
  * @brief A cached HTTP response.
  * @extends Object
  * @ingroup URLSession
  */
-struct CachedURLResponse {
+struct URLCachedResponse {
 
   /**
    * @brief The superclass.
@@ -52,7 +52,7 @@ struct CachedURLResponse {
    * @brief The interface.
    * @protected
    */
-  CachedURLResponseInterface *interface;
+  URLCachedResponseInterface *interface;
 
   /**
    * @brief The HTTP response.
@@ -76,9 +76,9 @@ struct CachedURLResponse {
 };
 
 /**
- * @brief The CachedURLResponse interface.
+ * @brief The URLCachedResponse interface.
  */
-struct CachedURLResponseInterface {
+struct URLCachedResponseInterface {
 
   /**
    * @brief The superclass interface.
@@ -86,22 +86,22 @@ struct CachedURLResponseInterface {
   ObjectInterface objectInterface;
 
   /**
-   * @fn CachedURLResponse *CachedURLResponse::initWithResponseData(CachedURLResponse *self, const URLResponse *response, const Data *data)
-   * @brief Initializes this CachedURLResponse with the given response and data.
-   * @param self The CachedURLResponse.
+   * @fn URLCachedResponse *URLCachedResponse::initWithResponseData(URLCachedResponse *self, const URLResponse *response, const Data *data)
+   * @brief Initializes this URLCachedResponse with the given response and data.
+   * @param self The URLCachedResponse.
    * @param response The HTTP response.
    * @param data The response body.
-   * @return The initialized CachedURLResponse, or `NULL` on error.
-   * @memberof CachedURLResponse
+   * @return The initialized URLCachedResponse, or `NULL` on error.
+   * @memberof URLCachedResponse
    */
-  CachedURLResponse *(*initWithResponseData)(CachedURLResponse *self, const URLResponse *response,
+  URLCachedResponse *(*initWithResponseData)(URLCachedResponse *self, const URLResponse *response,
       const Data *data);
 };
 
 /**
- * @fn Class *CachedURLResponse::_CachedURLResponse(void)
- * @brief The CachedURLResponse archetype.
- * @return The CachedURLResponse Class.
- * @memberof CachedURLResponse
+ * @fn Class *URLCachedResponse::_URLCachedResponse(void)
+ * @brief The URLCachedResponse archetype.
+ * @return The URLCachedResponse Class.
+ * @memberof URLCachedResponse
  */
-OBJECTIVELY_EXPORT Class *_CachedURLResponse(void);
+OBJECTIVELY_EXPORT Class *_URLCachedResponse(void);

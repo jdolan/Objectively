@@ -219,12 +219,12 @@ static void evictIfNeeded(URLCache *self) {
     Array *keys = $(dictionary, allKeys);
 
     const URLRequest *oldestKey = NULL;
-    CachedURLResponse *oldestResponse = NULL;
+    URLCachedResponse *oldestResponse = NULL;
 
     for (size_t i = 0; i < keys->count; i++) {
 
       const URLRequest *key = $(keys, objectAtIndex, i);
-      CachedURLResponse *candidate = $(dictionary, objectForKey, (ident) key);
+      URLCachedResponse *candidate = $(dictionary, objectForKey, (ident) key);
 
       if (candidate && (oldestResponse == NULL
           || $(candidate->timestamp, compareTo, oldestResponse->timestamp) == OrderAscending)) {
@@ -262,16 +262,16 @@ static void dealloc(Object *self) {
 #pragma mark - URLCache
 
 /**
- * @fn CachedURLResponse *URLCache::cachedResponseForRequest(URLCache *self, const URLRequest *request)
+ * @fn URLCachedResponse *URLCache::cachedResponseForRequest(URLCache *self, const URLRequest *request)
  * @memberof URLCache
  */
-static CachedURLResponse *cachedResponseForRequest(URLCache *self, const URLRequest *request) {
+static URLCachedResponse *cachedResponseForRequest(URLCache *self, const URLRequest *request) {
 
   if (requestIsCacheable(request) == false) {
     return NULL;
   }
 
-  CachedURLResponse *cachedResponse = NULL;
+  URLCachedResponse *cachedResponse = NULL;
   const Dictionary *dictionary = (Dictionary *) self->responses;
   synchronized(self->lock, {
     cachedResponse = $(dictionary, objectForKey, (ident) request);
@@ -323,7 +323,7 @@ static void removeCachedResponseForRequest(URLCache *self, const URLRequest *req
 
   synchronized(self->lock, {
     const Dictionary *dictionary = (Dictionary *) self->responses;
-    CachedURLResponse *cachedResponse = $(dictionary, objectForKey, (ident) request);
+    URLCachedResponse *cachedResponse = $(dictionary, objectForKey, (ident) request);
     if (cachedResponse) {
       self->currentSize -= cachedResponse->size;
       $(self->responses, removeObjectForKey, (ident) request);
@@ -360,7 +360,7 @@ static void storeCachedResponseForRequest(URLCache *self, const URLRequest *requ
     return;
   }
 
-  CachedURLResponse *cachedResponse = $(alloc(CachedURLResponse), initWithResponseData, response, data);
+  URLCachedResponse *cachedResponse = $(alloc(URLCachedResponse), initWithResponseData, response, data);
   if (cachedResponse == NULL) {
     return;
   }
@@ -369,7 +369,7 @@ static void storeCachedResponseForRequest(URLCache *self, const URLRequest *requ
     if (cachedResponse->size <= self->maxSize && self->maxSize > 0) {
 
       const Dictionary *dictionary = (Dictionary *) self->responses;
-      CachedURLResponse *existing = $(dictionary, objectForKey, (ident) request);
+      URLCachedResponse *existing = $(dictionary, objectForKey, (ident) request);
       if (existing) {
         self->currentSize -= existing->size;
         $(self->responses, removeObjectForKey, (ident) request);

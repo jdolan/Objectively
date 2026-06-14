@@ -23,24 +23,27 @@
 
 #include <check.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "Objectively.h"
 
 static char *path;
 
 START_TEST(json) {
-  
+
+  JSONContext *ctx = $(alloc(JSONContext), init);
+
   Data *data0 = $(alloc(Data), initWithContentsOfFile, path);
   ck_assert_ptr_ne(NULL, data0);
 
-  Dictionary *dict0 = $$(JSONSerialization, objectFromData, data0, 0);
+  Dictionary *dict0 = $(ctx, objectFromData, data0, 0);
   ck_assert(dict0->count);
 
-  Data *data1 = $$(JSONSerialization, dataFromObject, dict0, JSON_WRITE_PRETTY | JSON_WRITE_SORTED);
+  Data *data1 = $(ctx, dataFromObject, dict0, JSON_WRITE_PRETTY | JSON_WRITE_SORTED);
   ck_assert_ptr_ne(NULL, data1);
   ck_assert($((Object *) data0, isEqual, (Object *) data1));
 
-  Dictionary *dict1 = $$(JSONSerialization, objectFromData, data1, 0);
+  Dictionary *dict1 = $(ctx, objectFromData, data1, 0);
   ck_assert_int_eq(dict0->count, dict1->count);
   ck_assert($((Object *) dict0, isEqual, (Object *) dict1));
 
@@ -58,6 +61,7 @@ START_TEST(json) {
   release(data1);
   release(dict0);
   release(dict1);
+  release(ctx);
 
 } END_TEST
 
@@ -79,11 +83,12 @@ START_TEST(json_escaping) {
     { "backspace",  "back\bspace"             },  // \b
     { "formfeed",   "form\ffeed"              },  // \f
     { "control",    "esc\033char"             },  // raw control char (ESC, \u001b)
-    { "utf8",       "\xc3\xa9l\xc3\xa8ve"    },  // UTF-8 passthrough (éléve)
+    { "utf8",       "\xc3\xa9l\xc3\xa8ve"    },  // UTF-8 passthrough (eeleve)
     { "combined",   "\"\\n\t\r\b\f\001"      },  // several specials in one value
   };
 
-  // Build a Dictionary from the test cases and serialize it.
+  JSONContext *ctx = $(alloc(JSONContext), init);
+
   MutableDictionary *dict0 = $(alloc(MutableDictionary), init);
   for (size_t i = 0; i < lengthof(cases); i++) {
     String *key = $$(String, stringWithCharacters, cases[i].key);
@@ -93,17 +98,15 @@ START_TEST(json_escaping) {
     release(val);
   }
 
-  Data *data = $$(JSONSerialization, dataFromObject, dict0, 0);
+  Data *data = $(ctx, dataFromObject, dict0, 0);
   ck_assert_ptr_ne(NULL, data);
 
-  // The serialized bytes must not contain any raw unescaped control characters.
   for (size_t i = 0; i < data->length; i++) {
     unsigned char b = ((unsigned char *) data->bytes)[i];
     ck_assert_msg(b >= 0x20 || b == '\0', "raw control char 0x%02x at offset %zu", b, i);
   }
 
-  // Round-trip: deserialize and verify every value survives intact.
-  Dictionary *dict1 = $$(JSONSerialization, objectFromData, data, 0);
+  Dictionary *dict1 = $(ctx, objectFromData, data, 0);
   ck_assert_ptr_ne(NULL, dict1);
 
   for (size_t i = 0; i < lengthof(cases); i++) {
@@ -117,6 +120,7 @@ START_TEST(json_escaping) {
   release(data);
   release(dict0);
   release(dict1);
+  release(ctx);
 
 } END_TEST
 
@@ -124,6 +128,8 @@ START_TEST(json_escaping) {
  * @brief Verifies that dataFromObject handles an Array at the top level.
  */
 START_TEST(json_array_toplevel) {
+
+  JSONContext *ctx = $(alloc(JSONContext), init);
 
   MutableArray *arr = $(alloc(MutableArray), init);
 
@@ -134,15 +140,13 @@ START_TEST(json_array_toplevel) {
   release(s1);
   release(s2);
 
-  Data *data = $$(JSONSerialization, dataFromObject, arr, 0);
+  Data *data = $(ctx, dataFromObject, arr, 0);
   ck_assert_ptr_ne(NULL, data);
 
-  // Should start with '[' and end with ']'
   ck_assert_int_eq('[', ((const char *) data->bytes)[0]);
   ck_assert_int_eq(']', ((const char *) data->bytes)[data->length - 1]);
 
-  // Round-trip: parse back
-  Array *parsed = $$(JSONSerialization, objectFromData, data, 0);
+  Array *parsed = $(ctx, objectFromData, data, 0);
   ck_assert_ptr_ne(NULL, parsed);
   ck_assert_int_eq(2, (int) parsed->count);
 
@@ -154,11 +158,13 @@ START_TEST(json_array_toplevel) {
   release(data);
   release(arr);
   release(parsed);
+  release(ctx);
 
 } END_TEST
 
 /**
- * @brief Tests dictionaryFromInstance, dataFromInstance, dataFromInstances, instanceFromData, and instancesFromData with a representative C struct.
+ * @brief Tests dataFromInstance, dataFromInstances, instanceFromData, and
+ * instancesFromData with a representative C struct.
  */
 START_TEST(json_struct_properties) {
 
@@ -170,12 +176,12 @@ START_TEST(json_struct_properties) {
     bool     active;
   } TestStruct;
 
-  static const JsonProperty properties[] = MakeJsonProperties(
-    MakeJsonProperty(TestStruct, name,   JsonPropertyCharacters),
-    MakeJsonProperty(TestStruct, tag,    JsonPropertyCString),
-    MakeJsonProperty(TestStruct, score,  JsonPropertyInteger),
-    MakeJsonProperty(TestStruct, ratio,  JsonPropertyDouble),
-    MakeJsonProperty(TestStruct, active, JsonPropertyBool)
+  const JSONProperties properties = MakeJSONProperties(TestStruct,
+    MakeJSONCharactersProperty(TestStruct, name),
+    MakeJSONCStringProperty(TestStruct, tag),
+    MakeJSONInt32Property(TestStruct, score),
+    MakeJSONDoubleProperty(TestStruct, ratio),
+    MakeJSONBooleProperty(TestStruct, active)
   );
 
   TestStruct instances[2] = {
@@ -183,9 +189,7 @@ START_TEST(json_struct_properties) {
     { .name = "Bob",   .tag = "villain", .score = -7, .ratio = 0.25, .active = false },
   };
 
-  // dictionaryFromInstance — single instance
-  Dictionary *dict = $$(JSONSerialization, dictionaryFromInstance, properties, &instances[0]);
-  ck_assert_ptr_ne(NULL, dict);
+  JSONContext *ctx = $(alloc(JSONContext), init);
 
   String *kName   = $$(String, stringWithCharacters, "name");
   String *kTag    = $$(String, stringWithCharacters, "tag");
@@ -193,56 +197,34 @@ START_TEST(json_struct_properties) {
   String *kRatio  = $$(String, stringWithCharacters, "ratio");
   String *kActive = $$(String, stringWithCharacters, "active");
 
-  String *vName = $(dict, objectForKey, kName);
-  ck_assert_str_eq("Alice", vName->chars);
-
-  String *vTag = $(dict, objectForKey, kTag);
-  ck_assert_str_eq("hero", vTag->chars);
-
-  Number *vScore = $(dict, objectForKey, kScore);
-  ck_assert_int_eq(42, (int) vScore->value);
-
-  Number *vRatio = $(dict, objectForKey, kRatio);
-  ck_assert(vRatio->value > 0.74 && vRatio->value < 0.76);
-
-  Boole *vActive = $(dict, objectForKey, kActive);
-  ck_assert(vActive->value);
-
-  release(dict);
-
-  // dataFromInstance — single instance -> JSON
-  Data *singleData = $$(JSONSerialization, dataFromInstance, properties, &instances[0]);
+  Data *singleData = $(ctx, dataFromInstance, &properties, &instances[0]);
   ck_assert_ptr_ne(NULL, singleData);
 
-  Dictionary *singleDict = $$(JSONSerialization, objectFromData, singleData, 0);
+  Dictionary *singleDict = $(ctx, objectFromData, singleData, 0);
   ck_assert_ptr_ne(NULL, singleDict);
   ck_assert_str_eq("Alice", ((String *) $(singleDict, objectForKey, kName))->chars);
-  ck_assert_str_eq("hero", ((String *) $(singleDict, objectForKey, kTag))->chars);
+  ck_assert_str_eq("hero",  ((String *) $(singleDict, objectForKey, kTag))->chars);
   ck_assert_int_eq(42, (int) ((Number *) $(singleDict, objectForKey, kScore))->value);
   ck_assert(((Boole *) $(singleDict, objectForKey, kActive))->value);
   release(singleDict);
 
-  // instanceFromData — single object -> single struct
   TestStruct singleOut = { 0 };
-  size_t m = $$(JSONSerialization, instanceFromData, properties, singleData, &singleOut);
-  ck_assert_int_eq(1, (int) m);
+  ck_assert($(ctx, instanceFromData, &properties, singleData, &singleOut));
   ck_assert_str_eq("Alice", singleOut.name);
-  ck_assert_str_eq("hero", singleOut.tag);
+  ck_assert_str_eq("hero",  singleOut.tag);
   ck_assert_int_eq(42, (int) singleOut.score);
   ck_assert(singleOut.ratio > 0.74 && singleOut.ratio < 0.76);
   ck_assert(singleOut.active == true);
   free(singleOut.tag);
 
   release(singleData);
-
   release(kName); release(kTag); release(kScore); release(kRatio); release(kActive);
 
-  // dataFromInstances — two instances -> JSON
-  Data *data = $$(JSONSerialization, dataFromInstances, properties, instances, 2, sizeof(TestStruct));
+  Data *data = $(ctx, dataFromInstances, &properties, instances, 2);
   ck_assert_ptr_ne(NULL, data);
   ck_assert_int_eq('[', ((const char *) data->bytes)[0]);
 
-  Array *parsed = $$(JSONSerialization, objectFromData, data, 0);
+  Array *parsed = $(ctx, objectFromData, data, 0);
   ck_assert_ptr_ne(NULL, parsed);
   ck_assert_int_eq(2, (int) parsed->count);
 
@@ -261,9 +243,8 @@ START_TEST(json_struct_properties) {
 
   release(parsed);
 
-  // instancesFromData — round-trip: JSON -> structs
   TestStruct out[2] = { 0 };
-  size_t n = $$(JSONSerialization, instancesFromData, properties, data, out, sizeof(TestStruct), 2);
+  size_t n = $(ctx, instancesFromData, &properties, data, out, 2);
   ck_assert_int_eq(2, (int) n);
 
   ck_assert_str_eq("Alice",   out[0].name);
@@ -281,6 +262,115 @@ START_TEST(json_struct_properties) {
   free(out[0].tag);
   free(out[1].tag);
   release(data);
+  release(ctx);
+
+} END_TEST
+
+typedef struct {
+  char name[64];
+  int32_t score;
+} json_nested_entry_t;
+
+typedef struct {
+  char title[64];
+  json_nested_entry_t owner;
+  json_nested_entry_t items[2];
+  size_t num_items;
+} json_nested_response_t;
+
+static const JSONProperties json_nested_entry_properties = MakeJSONProperties(json_nested_entry_t,
+  MakeJSONCharactersProperty(json_nested_entry_t, name),
+  MakeJSONInt32Property(json_nested_entry_t, score)
+);
+
+static const JSONArrayProperties json_nested_response_items = {
+  .properties = &json_nested_entry_properties,
+  .count = lengthof(((json_nested_response_t *) 0)->items),
+  .count_offset = offsetof(json_nested_response_t, num_items),
+};
+
+static const JSONProperties json_nested_response_properties = MakeJSONProperties(json_nested_response_t,
+  MakeJSONCharactersProperty(json_nested_response_t, title),
+  MakeJSONObjectProperty(json_nested_response_t, owner, json_nested_entry_properties),
+  MakeJSONArrayProperty(json_nested_response_t, items, json_nested_response_items)
+);
+
+/**
+ * @brief Tests nested JSONSerializer/JSONDeserializer helpers with object and array parsing.
+ */
+START_TEST(json_nested_callbacks) {
+
+  JSONContext *ctx = $(alloc(JSONContext), init);
+
+  MutableDictionary *dict = $(alloc(MutableDictionary), init);
+
+  String *kTitle = $$(String, stringWithCharacters, "title");
+  String *vTitle = $$(String, stringWithCharacters, "outer");
+  $(dict, setObjectForKey, vTitle, kTitle);
+  release(kTitle);
+  release(vTitle);
+
+  MutableDictionary *owner = $(alloc(MutableDictionary), init);
+  String *kName = $$(String, stringWithCharacters, "name");
+  String *vName = $$(String, stringWithCharacters, "Alice");
+  $(owner, setObjectForKey, vName, kName);
+  release(kName);
+  release(vName);
+
+  String *kScore = $$(String, stringWithCharacters, "score");
+  Number *vScore = $$(Number, numberWithValue, 7);
+  $(owner, setObjectForKey, vScore, kScore);
+  release(kScore);
+  release(vScore);
+
+  String *kOwner = $$(String, stringWithCharacters, "owner");
+  $(dict, setObjectForKey, owner, kOwner);
+  release(kOwner);
+  release(owner);
+
+  MutableArray *items = $(alloc(MutableArray), init);
+  for (size_t i = 0; i < 2; i++) {
+    MutableDictionary *item = $(alloc(MutableDictionary), init);
+
+    String *key = $$(String, stringWithCharacters, "name");
+    String *name = $$(String, stringWithCharacters, i == 0 ? "one" : "two");
+    $(item, setObjectForKey, name, key);
+    release(key);
+    release(name);
+
+    key = $$(String, stringWithCharacters, "score");
+    Number *score = $$(Number, numberWithValue, (double) (i + 1));
+    $(item, setObjectForKey, score, key);
+    release(key);
+    release(score);
+
+    $(items, addObject, item);
+    release(item);
+  }
+
+  String *kItems = $$(String, stringWithCharacters, "items");
+  $(dict, setObjectForKey, items, kItems);
+  release(kItems);
+  release(items);
+
+  Data *data = $(ctx, dataFromObject, dict, 0);
+  ck_assert_ptr_ne(NULL, data);
+
+  json_nested_response_t response = { 0 };
+  ck_assert($(ctx, instanceFromData, &json_nested_response_properties, data, &response));
+
+  ck_assert_str_eq("outer", response.title);
+  ck_assert_str_eq("Alice", response.owner.name);
+  ck_assert_int_eq(7, (int) response.owner.score);
+  ck_assert_int_eq(2, (int) response.num_items);
+  ck_assert_str_eq("one", response.items[0].name);
+  ck_assert_int_eq(1, (int) response.items[0].score);
+  ck_assert_str_eq("two", response.items[1].name);
+  ck_assert_int_eq(2, (int) response.items[1].score);
+
+  release(data);
+  release(dict);
+  release(ctx);
 
 } END_TEST
 
@@ -306,22 +396,20 @@ START_TEST(json_frag_t) {
     uint32_t time;
   } frag_t;
 
-  static const JsonProperty properties[] = MakeJsonProperties(
-    MakeJsonProperty(frag_t, level,         JsonPropertyCharacters),
-    MakeJsonProperty(frag_t, attacker,      JsonPropertyCharacters),
-    MakeJsonProperty(frag_t, attacker_guid, JsonPropertyCharacters),
-    MakeJsonProperty(frag_t, attacker_ai,   JsonPropertyBool),
-    MakeJsonProperty(frag_t, target,        JsonPropertyCharacters),
-    MakeJsonProperty(frag_t, target_guid,   JsonPropertyCharacters),
-    MakeJsonProperty(frag_t, target_ai,     JsonPropertyBool),
-    MakeJsonProperty(frag_t, weapon,        JsonPropertyCharacters),
-    MakeJsonProperty(frag_t, mod,           JsonPropertyInteger),
-    MakeJsonProperty(frag_t, damage,        JsonPropertyInteger),
-    MakeJsonProperty(frag_t, time,          JsonPropertyInteger)
+  const JSONProperties properties = MakeJSONProperties(frag_t,
+    MakeJSONCharactersProperty(frag_t, level),
+    MakeJSONCharactersProperty(frag_t, attacker),
+    MakeJSONCharactersProperty(frag_t, attacker_guid),
+    MakeJSONBooleProperty(frag_t, attacker_ai),
+    MakeJSONCharactersProperty(frag_t, target),
+    MakeJSONCharactersProperty(frag_t, target_guid),
+    MakeJSONBooleProperty(frag_t, target_ai),
+    MakeJSONCharactersProperty(frag_t, weapon),
+    MakeJSONInt32Property(frag_t, mod),
+    MakeJSONInt32Property(frag_t, damage),
+    MakeJSONUint32Property(frag_t, time)
   );
 
-  // Mirror real-world permutations: human kills human, human kills bot,
-  // bot kills human, suicide, empty weapon, max uint32 time, zero damage.
   frag_t frags[] = {
     {
       .level = "edge",
@@ -342,21 +430,18 @@ START_TEST(json_frag_t) {
       .weapon = "plasma", .mod = 3, .damage = 60, .time = 34567
     },
     {
-      // Suicide: attacker == target (same guid)
       .level = "edge",
       .attacker = "jdolan", .attacker_guid = "3a56346d46f8e00b88232df6db2b4595", .attacker_ai = false,
       .target   = "jdolan", .target_guid   = "3a56346d46f8e00b88232df6db2b4595", .target_ai = false,
-      .weapon = "", .mod = 0, .damage = 0, .time = 45678  // empty weapon (e.g. world kill)
+      .weapon = "", .mod = 0, .damage = 0, .time = 45678
     },
     {
-      // Zero damage (telefrag / world)
       .level = "edge",
       .attacker = "Skies912", .attacker_guid = "02bd0844f98709ceb87a9c41998484228", .attacker_ai = false,
       .target   = "jdolan",   .target_guid   = "3a56346d46f8e00b88232df6db2b4595", .target_ai = false,
       .weapon = "bfg", .mod = 9, .damage = 0, .time = 56789
     },
     {
-      // Large epoch-like time, negative mod (edge case)
       .level = "edge",
       .attacker = "jdolan", .attacker_guid = "3a56346d46f8e00b88232df6db2b4595", .attacker_ai = false,
       .target   = "[BOT] Gladiator", .target_guid = "73c6bc5c39e6b7fbbca031eeadf71c09", .target_ai = true,
@@ -365,17 +450,16 @@ START_TEST(json_frag_t) {
   };
   const size_t n = sizeof(frags) / sizeof(frags[0]);
 
-  // dataFromInstances — serialize all frags to JSON
-  Data *data = $$(JSONSerialization, dataFromInstances, properties, frags, n, sizeof(frag_t));
+  JSONContext *ctx = $(alloc(JSONContext), init);
+
+  Data *data = $(ctx, dataFromInstances, &properties, frags, n);
   ck_assert_ptr_ne(NULL, data);
   ck_assert_int_eq('[', ((const char *) data->bytes)[0]);
 
-  // Round-trip: parse back and verify count
-  Array *parsed = $$(JSONSerialization, objectFromData, data, 0);
+  Array *parsed = $(ctx, objectFromData, data, 0);
   ck_assert_ptr_ne(NULL, parsed);
   ck_assert_int_eq((int) n, (int) parsed->count);
 
-  // Spot-check first frag (human→human)
   {
     Dictionary *d = $(parsed, objectAtIndex, 0);
     String *k;
@@ -397,7 +481,6 @@ START_TEST(json_frag_t) {
     release(k);
   }
 
-  // Spot-check fourth frag (suicide with empty weapon — weapon key should be absent)
   {
     Dictionary *d = $(parsed, objectAtIndex, 3);
     String *k = $$(String, stringWithCharacters, "weapon");
@@ -405,7 +488,6 @@ START_TEST(json_frag_t) {
     release(k);
   }
 
-  // Spot-check sixth frag (epoch-sized time).
   {
     Dictionary *d = $(parsed, objectAtIndex, 5);
     String *k = $$(String, stringWithCharacters, "time");
@@ -417,8 +499,107 @@ START_TEST(json_frag_t) {
 
   release(parsed);
   release(data);
+  release(ctx);
 
 #undef FRAG_QPATH
+
+} END_TEST
+
+/**
+ * @brief Tests Object-type serializers/deserializers: String, URL, Date,
+ * MutableArray, MutableSet, MutableDictionary.
+ */
+START_TEST(json_object_properties) {
+
+  typedef struct {
+    String          *name;
+    URL             *url;
+    Date            *date;
+    MutableArray    *tags;
+    MutableSet      *flags;
+    MutableDictionary *meta;
+  } TestRecord;
+
+  const JSONProperties properties = MakeJSONProperties(TestRecord,
+    MakeJSONStringProperty(TestRecord, name),
+    MakeJSONURLProperty(TestRecord, url),
+    MakeJSONDateProperty(TestRecord, date),
+    MakeJSONMutableArrayProperty(TestRecord, tags),
+    MakeJSONMutableSetProperty(TestRecord, flags),
+    MakeJSONMutableDictionaryProperty(TestRecord, meta)
+  );
+
+  JSONContext *ctx = $(alloc(JSONContext), init);
+
+  // Build a source record with Objectively objects.
+  TestRecord src = { 0 };
+  src.name  = $(alloc(String), initWithCharacters, "quetoo");
+  src.url   = $(alloc(URL), initWithCharacters, "https://quetoo.org");
+  src.date  = $$(Date, dateWithTimeSinceNow, NULL);
+
+  src.tags = $(alloc(MutableArray), init);
+  String *t1 = $$(String, stringWithCharacters, "fps");
+  String *t2 = $$(String, stringWithCharacters, "oss");
+  $(src.tags, addObject, t1);
+  $(src.tags, addObject, t2);
+  release(t1); release(t2);
+
+  src.flags = $(alloc(MutableSet), init);
+  String *f1 = $$(String, stringWithCharacters, "dedicated");
+  $(src.flags, addObject, f1);
+  release(f1);
+
+  src.meta = $(alloc(MutableDictionary), init);
+  String *mk = $$(String, stringWithCharacters, "version");
+  Number *mv = $$(Number, numberWithValue, 1.0);
+  $(src.meta, setObjectForKey, mv, mk);
+  release(mk); release(mv);
+
+  // Serialize → JSON.
+  Data *data = $(ctx, dataFromInstance, &properties, &src);
+  ck_assert_ptr_ne(NULL, data);
+
+  // Deserialize back into a fresh record.
+  TestRecord dst = { 0 };
+  ck_assert($(ctx, instanceFromData, &properties, data, &dst));
+
+  ck_assert_ptr_ne(NULL, dst.name);
+  ck_assert_str_eq("quetoo", dst.name->chars);
+
+  ck_assert_ptr_ne(NULL, dst.url);
+  ck_assert_str_eq("https://quetoo.org", dst.url->urlString->chars);
+
+  ck_assert_ptr_ne(NULL, dst.date);
+
+  ck_assert_ptr_ne(NULL, dst.tags);
+  ck_assert_int_eq(2, (int) ((Array *) dst.tags)->count);
+
+  ck_assert_ptr_ne(NULL, dst.flags);
+  ck_assert_int_eq(1, (int) ((Set *) dst.flags)->count);
+
+  ck_assert_ptr_ne(NULL, dst.meta);
+  String *vk = $$(String, stringWithCharacters, "version");
+  Number *vv = $((Dictionary *) dst.meta, objectForKey, vk);
+  ck_assert_ptr_ne(NULL, vv);
+  ck_assert(vv->value == 1.0);
+  release(vk);
+
+  release(src.name);
+  release(src.url);
+  release(src.date);
+  release(src.tags);
+  release(src.flags);
+  release(src.meta);
+
+  release(dst.name);
+  release(dst.url);
+  release(dst.date);
+  release(dst.tags);
+  release(dst.flags);
+  release(dst.meta);
+
+  release(data);
+  release(ctx);
 
 } END_TEST
 
@@ -435,6 +616,7 @@ int main(int argc, char **argv) {
   tcase_add_test(tcase, json_escaping);
   tcase_add_test(tcase, json_array_toplevel);
   tcase_add_test(tcase, json_struct_properties);
+  tcase_add_test(tcase, json_nested_callbacks);
   tcase_add_test(tcase, json_frag_t);
 
   Suite *suite = suite_create("Json");

@@ -72,7 +72,7 @@ START_TEST(cacheStore) {
   Data *data = $(alloc(Data), initWithBytes, (const uint8_t *) "", 0);
   $(cache, storeCachedResponseForRequest, request, response, data);
 
-  CachedURLResponse *cachedResponse = $(cache, cachedResponseForRequest, request);
+  URLCachedResponse *cachedResponse = $(cache, cachedResponseForRequest, request);
   ck_assert(cachedResponse != NULL);
   ck_assert_int_eq(200, cachedResponse->response->httpStatusCode);
   ck_assert_int_eq(0, cachedResponse->data->length);
@@ -100,7 +100,7 @@ START_TEST(cacheControl) {
   Data *data = $(alloc(Data), initWithBytes, (const uint8_t *) "body", 4);
   $(cache, storeCachedResponseForRequest, request, response, data);
 
-  CachedURLResponse *cachedResponse = $(cache, cachedResponseForRequest, request);
+  URLCachedResponse *cachedResponse = $(cache, cachedResponseForRequest, request);
   ck_assert(cachedResponse == NULL);
 
   release(data);
@@ -133,7 +133,7 @@ START_TEST(eviction) {
 
   ck_assert($(cache, cachedResponseForRequest, firstRequest) == NULL);
 
-  CachedURLResponse *cachedResponse = $(cache, cachedResponseForRequest, secondRequest);
+  URLCachedResponse *cachedResponse = $(cache, cachedResponseForRequest, secondRequest);
   ck_assert(cachedResponse != NULL);
   ck_assert_int_eq(4, cachedResponse->data->length);
   release(cachedResponse);

@@ -69,7 +69,10 @@
     <ClInclude Include="..\Sources\Objectively\JSONPath.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\JSONSerialization.h">
+    <ClInclude Include="..\Sources\Objectively\JSONContext.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\JSONSerializers.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
     <ClInclude Include="..\Sources\Objectively\Lock.h">
@@ -135,7 +138,7 @@
     <ClInclude Include="..\Sources\Objectively\URL.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\CachedURLResponse.h">
+    <ClInclude Include="..\Sources\Objectively\URLCachedResponse.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
     <ClInclude Include="..\Sources\Objectively\URLCache.h">
@@ -239,7 +242,10 @@
     <ClCompile Include="..\Sources\Objectively\JSONPath.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\JSONSerialization.c">
+    <ClCompile Include="..\Sources\Objectively\JSONContext.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\JSONSerializers.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
     <ClCompile Include="..\Sources\Objectively\Lock.c">
@@ -299,7 +305,7 @@
     <ClCompile Include="..\Sources\Objectively\URL.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\CachedURLResponse.c">
+    <ClCompile Include="..\Sources\Objectively\URLCachedResponse.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
     <ClCompile Include="..\Sources\Objectively\URLCache.c">

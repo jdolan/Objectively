@@ -33,7 +33,7 @@
 
 typedef struct URLSessionDataTask URLSessionDataTask;
 typedef struct URLSessionDataTaskInterface URLSessionDataTaskInterface;
-typedef struct CachedURLResponse CachedURLResponse;
+typedef struct URLCachedResponse URLCachedResponse;
 
 /**
  * @brief Use data tasks to send and receive Data in-memory.
@@ -62,7 +62,7 @@ struct URLSessionDataTask {
   /**
    * @brief A cached response, if this task was fulfilled from URLCache.
    */
-  CachedURLResponse *cachedResponse;
+  URLCachedResponse *cachedResponse;
 };
 
 /**

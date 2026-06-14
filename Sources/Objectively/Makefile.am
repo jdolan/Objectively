@@ -14,15 +14,15 @@ pkginclude_HEADERS = \
 	Data.h \
 	Date.h \
 	DateFormatter.h \
-	CachedURLResponse.h \
 	Dictionary.h \
 	Enum.h \
 	Error.h \
 	Hash.h \
 	IndexPath.h \
 	IndexSet.h \
+	JSONContext.h \
 	JSONPath.h \
-	JSONSerialization.h \
+	JSONSerializers.h \
 	Lock.h \
 	Log.h \
 	MutableArray.h \
@@ -47,6 +47,7 @@ pkginclude_HEADERS = \
 	Types.h \
 	URL.h \
 	URLCache.h \
+ 	URLCachedResponse.h \ 
 	URLRequest.h \
 	URLResponse.h \
 	URLSession.h \
@@ -69,15 +70,15 @@ libObjectively_la_SOURCES = \
 	Data.c \
 	Date.c \
 	DateFormatter.c \
-	CachedURLResponse.c \
 	Dictionary.c \
 	Enum.c \
 	Error.c \
 	Hash.c \
 	IndexPath.c \
 	IndexSet.c \
+	JSONContext.c \
 	JSONPath.c \
-	JSONSerialization.c \
+	JSONSerializers.c \
 	Lock.c \
 	Log.c \
 	MutableArray.c \
@@ -100,6 +101,7 @@ libObjectively_la_SOURCES = \
 	Thread.c \
 	URL.c \
 	URLCache.c \
+ 	URLCachedResponse.c \
 	URLRequest.c \
 	URLResponse.c \
 	URLSession.c \

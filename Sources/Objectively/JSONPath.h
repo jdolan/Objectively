@@ -71,7 +71,8 @@ struct JSONPathInterface {
    * @param path The JSONPath expression.
    * @return The nested property, or `NULL` if not found.
    * Accessing a nested boolean from JSON Data:
-   *     id obj = $$(JSONSerialization, objectFromData, data, 0);
+   *     JSONContext *ctx = $(alloc(JSONContext), init);
+   *     id obj = $(ctx, objectFromData, data, 0);
    *     Boole *boole = $$(JSONPath, objectForKeyPath, obj, "$.foo.bar[1].baz");
    * Use dot-notation (`.`) for accessing Dictionaries, and square braces (`[0]`) for Arrays.
    * @memberof JSONPath

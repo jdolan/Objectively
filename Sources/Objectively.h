@@ -35,7 +35,7 @@
 #include <Objectively/Data.h>
 #include <Objectively/Date.h>
 #include <Objectively/DateFormatter.h>
-#include <Objectively/CachedURLResponse.h>
+#include <Objectively/URLCachedResponse.h>
 #include <Objectively/Dictionary.h>
 #include <Objectively/Enum.h>
 #include <Objectively/Error.h>
@@ -43,7 +43,8 @@
 #include <Objectively/IndexPath.h>
 #include <Objectively/IndexSet.h>
 #include <Objectively/JSONPath.h>
-#include <Objectively/JSONSerialization.h>
+#include <Objectively/JSONContext.h>
+#include <Objectively/JSONSerializers.h>
 #include <Objectively/Lock.h>
 #include <Objectively/Log.h>
 #include <Objectively/MutableArray.h>

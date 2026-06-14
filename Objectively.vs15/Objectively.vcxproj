@@ -34,7 +34,8 @@
     <ClInclude Include="..\Sources\Objectively\IndexPath.h" />
     <ClInclude Include="..\Sources\Objectively\IndexSet.h" />
     <ClInclude Include="..\Sources\Objectively\JSONPath.h" />
-    <ClInclude Include="..\Sources\Objectively\JSONSerialization.h" />
+    <ClInclude Include="..\Sources\Objectively\JSONContext.h" />
+    <ClInclude Include="..\Sources\Objectively\JSONSerializers.h" />
     <ClInclude Include="..\Sources\Objectively\Lock.h" />
     <ClInclude Include="..\Sources\Objectively\Log.h" />
     <ClInclude Include="..\Sources\Objectively\MutableArray.h" />
@@ -57,7 +58,7 @@
     <ClInclude Include="..\Sources\Objectively\Thread.h" />
     <ClInclude Include="..\Sources\Objectively\Types.h" />
     <ClInclude Include="..\Sources\Objectively\URL.h" />
-    <ClInclude Include="..\Sources\Objectively\CachedURLResponse.h" />
+    <ClInclude Include="..\Sources\Objectively\URLCachedResponse.h" />
     <ClInclude Include="..\Sources\Objectively\URLCache.h" />
     <ClInclude Include="..\Sources\Objectively\URLRequest.h" />
     <ClInclude Include="..\Sources\Objectively\URLResponse.h" />
@@ -93,7 +94,8 @@
     <ClCompile Include="..\Sources\Objectively\IndexPath.c" />
     <ClCompile Include="..\Sources\Objectively\IndexSet.c" />
     <ClCompile Include="..\Sources\Objectively\JSONPath.c" />
-    <ClCompile Include="..\Sources\Objectively\JSONSerialization.c" />
+    <ClCompile Include="..\Sources\Objectively\JSONContext.c" />
+    <ClCompile Include="..\Sources\Objectively\JSONSerializers.c" />
     <ClCompile Include="..\Sources\Objectively\Lock.c" />
     <ClCompile Include="..\Sources\Objectively\Log.c" />
     <ClCompile Include="..\Sources\Objectively\MutableArray.c" />
@@ -114,7 +116,7 @@
     <ClCompile Include="..\Sources\Objectively\StringReader.c" />
     <ClCompile Include="..\Sources\Objectively\Thread.c" />
     <ClCompile Include="..\Sources\Objectively\URL.c" />
-    <ClCompile Include="..\Sources\Objectively\CachedURLResponse.c" />
+    <ClCompile Include="..\Sources\Objectively\URLCachedResponse.c" />
     <ClCompile Include="..\Sources\Objectively\URLCache.c" />
     <ClCompile Include="..\Sources\Objectively\URLRequest.c" />
     <ClCompile Include="..\Sources\Objectively\URLResponse.c" />

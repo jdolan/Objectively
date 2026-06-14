@@ -23,7 +23,7 @@
 
 #pragma once
 
-#include <Objectively/CachedURLResponse.h>
+#include <Objectively/URLCachedResponse.h>
 #include <Objectively/Lock.h>
 #include <Objectively/MutableDictionary.h>
 #include <Objectively/URLRequest.h>
@@ -86,14 +86,14 @@ struct URLCacheInterface {
   ObjectInterface objectInterface;
 
   /**
-   * @fn CachedURLResponse *URLCache::cachedResponseForRequest(URLCache *self, const URLRequest *request)
+   * @fn URLCachedResponse *URLCache::cachedResponseForRequest(URLCache *self, const URLRequest *request)
    * @brief Returns the cached response for the given request.
    * @param self The URLCache.
    * @param request The URLRequest.
    * @return The cached response, retained, or `NULL` if none is cached.
    * @memberof URLCache
    */
-  CachedURLResponse *(*cachedResponseForRequest)(URLCache *self, const URLRequest *request);
+  URLCachedResponse *(*cachedResponseForRequest)(URLCache *self, const URLRequest *request);
 
   /**
    * @fn URLCache *URLCache::init(URLCache *self)
