@@ -231,13 +231,11 @@ static void removeOperation(OperationQueue *self, Operation *operation) {
  */
 static void waitUntilAllOperationsAreFinished(OperationQueue *self) {
 
-  Array *operations = (Array *) self->locals.operations;
-  while (operations->count > 0) {
-
-    synchronized(self->locals.condition, {
+  synchronized(self->locals.condition, {
+    while (((Array *) self->locals.operations)->count > 0) {
       $(self->locals.condition, wait);
-    });
-  }
+    }
+  });
 }
 
 #pragma mark - Class lifecycle
