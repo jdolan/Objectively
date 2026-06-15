@@ -113,6 +113,60 @@ ident JSONSerializeUint32(const JSONProperties *properties,
   return (ident) $$(Number, numberWithValue, (double) *(const uint32_t *) value);
 }
 
+ident JSONSerializeInt64(const JSONProperties *properties,
+                          const JSONProperty *property,
+                          ident value,
+                          ident data,
+                          JSONContext *context) {
+
+  (void) properties;
+  (void) property;
+  (void) data;
+  (void) context;
+
+  if (!value) {
+    return NULL;
+  }
+
+  return (ident) $$(Number, numberWithValue, (double) *(const int64_t *) value);
+}
+
+ident JSONSerializeUint64(const JSONProperties *properties,
+                           const JSONProperty *property,
+                           ident value,
+                           ident data,
+                           JSONContext *context) {
+
+  (void) properties;
+  (void) property;
+  (void) data;
+  (void) context;
+
+  if (!value) {
+    return NULL;
+  }
+
+  return (ident) $$(Number, numberWithValue, (double) *(const uint64_t *) value);
+}
+
+ident JSONSerializeFloat(const JSONProperties *properties,
+                          const JSONProperty *property,
+                          ident value,
+                          ident data,
+                          JSONContext *context) {
+
+  (void) properties;
+  (void) property;
+  (void) data;
+  (void) context;
+
+  if (!value) {
+    return NULL;
+  }
+
+  return (ident) $$(Number, numberWithValue, (double) *(const float *) value);
+}
+
 ident JSONSerializeDouble(const JSONProperties *properties,
                            const JSONProperty *property,
                            ident value,
@@ -294,6 +348,81 @@ bool JSONDeserializeUint32(const JSONProperties *properties,
   }
 
   *dest = (uint32_t) cast(Number, value)->value;
+  return true;
+}
+
+bool JSONDeserializeInt64(const JSONProperties *properties,
+                            const JSONProperty *property,
+                            const Object *value,
+                            ident field,
+                            JSONContext *context) {
+
+  (void) properties;
+  (void) property;
+  (void) context;
+
+  int64_t *dest = field;
+  if (!dest) {
+    return false;
+  }
+
+  *dest = 0;
+
+  if (!$(value, isKindOfClass, _Number())) {
+    return false;
+  }
+
+  *dest = (int64_t) cast(Number, value)->value;
+  return true;
+}
+
+bool JSONDeserializeUint64(const JSONProperties *properties,
+                             const JSONProperty *property,
+                             const Object *value,
+                             ident field,
+                             JSONContext *context) {
+
+  (void) properties;
+  (void) property;
+  (void) context;
+
+  uint64_t *dest = field;
+  if (!dest) {
+    return false;
+  }
+
+  *dest = 0;
+
+  if (!$(value, isKindOfClass, _Number())) {
+    return false;
+  }
+
+  *dest = (uint64_t) cast(Number, value)->value;
+  return true;
+}
+
+bool JSONDeserializeFloat(const JSONProperties *properties,
+                            const JSONProperty *property,
+                            const Object *value,
+                            ident field,
+                            JSONContext *context) {
+
+  (void) properties;
+  (void) property;
+  (void) context;
+
+  float *dest = field;
+  if (!dest) {
+    return false;
+  }
+
+  *dest = 0.f;
+
+  if (!$(value, isKindOfClass, _Number())) {
+    return false;
+  }
+
+  *dest = (float) cast(Number, value)->value;
   return true;
 }
 

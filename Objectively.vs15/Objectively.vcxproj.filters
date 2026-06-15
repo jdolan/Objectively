@@ -186,6 +186,9 @@
     <ClInclude Include="..\Sources\Objectively\Regexp.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\RESTClient.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
     <ClInclude Include="libs\dlfcn\dlfcn.h">
       <Filter>Sources\libs\dlfcn</Filter>
     </ClInclude>
@@ -336,6 +339,9 @@
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
     <ClCompile Include="..\Sources\Objectively\Regexp.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\RESTClient.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
     <ClCompile Include="Sources\gnu\regex.c">

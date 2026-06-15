@@ -205,6 +205,37 @@ OBJECTIVELY_EXPORT ident JSONSerializeUint32(const JSONProperties *properties,
                                              JSONContext *context);
 
 /**
+ * @brief Serializes an `int64_t` field to a JSON number.
+ * @details JSON numbers are IEEE 754 doubles (53-bit mantissa). Values beyond
+ * 2^53 will lose precision on round-trip.
+ */
+OBJECTIVELY_EXPORT ident JSONSerializeInt64(const JSONProperties *properties,
+                                            const JSONProperty *property,
+                                            ident value,
+                                            ident data,
+                                            JSONContext *context);
+
+/**
+ * @brief Serializes a `uint64_t` field to a JSON number.
+ * @details JSON numbers are IEEE 754 doubles (53-bit mantissa). Values beyond
+ * 2^53 will lose precision on round-trip.
+ */
+OBJECTIVELY_EXPORT ident JSONSerializeUint64(const JSONProperties *properties,
+                                             const JSONProperty *property,
+                                             ident value,
+                                             ident data,
+                                             JSONContext *context);
+
+/**
+ * @brief Serializes a `float` field to a JSON number.
+ */
+OBJECTIVELY_EXPORT ident JSONSerializeFloat(const JSONProperties *properties,
+                                            const JSONProperty *property,
+                                            ident value,
+                                            ident data,
+                                            JSONContext *context);
+
+/**
  * @brief Serializes a `double` field to a JSON number.
  */
 OBJECTIVELY_EXPORT ident JSONSerializeDouble(const JSONProperties *properties,
@@ -285,6 +316,40 @@ OBJECTIVELY_EXPORT bool JSONDeserializeUint32(const JSONProperties *properties,
                                               const Object *value,
                                               ident field,
                                               JSONContext *context);
+
+/**
+ * @brief Deserializes a JSON number into an `int64_t` field.
+ * @details JSON numbers are IEEE 754 doubles (53-bit mantissa). Values beyond
+ * 2^53 will lose precision on round-trip.
+ * @return `false` if the JSON value is not a Number.
+ */
+OBJECTIVELY_EXPORT bool JSONDeserializeInt64(const JSONProperties *properties,
+                                             const JSONProperty *property,
+                                             const Object *value,
+                                             ident field,
+                                             JSONContext *context);
+
+/**
+ * @brief Deserializes a JSON number into a `uint64_t` field.
+ * @details JSON numbers are IEEE 754 doubles (53-bit mantissa). Values beyond
+ * 2^53 will lose precision on round-trip.
+ * @return `false` if the JSON value is not a Number.
+ */
+OBJECTIVELY_EXPORT bool JSONDeserializeUint64(const JSONProperties *properties,
+                                              const JSONProperty *property,
+                                              const Object *value,
+                                              ident field,
+                                              JSONContext *context);
+
+/**
+ * @brief Deserializes a JSON number into a `float` field.
+ * @return `false` if the JSON value is not a Number.
+ */
+OBJECTIVELY_EXPORT bool JSONDeserializeFloat(const JSONProperties *properties,
+                                             const JSONProperty *property,
+                                             const Object *value,
+                                             ident field,
+                                             JSONContext *context);
 
 /**
  * @brief Deserializes a JSON number into a `double` field.

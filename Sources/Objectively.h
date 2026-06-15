@@ -61,6 +61,7 @@
 #include <Objectively/OperationQueue.h>
 #include <Objectively/Once.h>
 #include <Objectively/Regexp.h>
+#include <Objectively/RESTClient.h>
 #include <Objectively/Resource.h>
 #include <Objectively/Set.h>
 #include <Objectively/String.h>

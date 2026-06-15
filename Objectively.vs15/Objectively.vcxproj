@@ -51,6 +51,7 @@
     <ClInclude Include="..\Sources\Objectively\Operation.h" />
     <ClInclude Include="..\Sources\Objectively\OperationQueue.h" />
     <ClInclude Include="..\Sources\Objectively\Regexp.h" />
+    <ClInclude Include="..\Sources\Objectively\RESTClient.h" />
     <ClInclude Include="..\Sources\Objectively\Resource.h" />
     <ClInclude Include="..\Sources\Objectively\Set.h" />
     <ClInclude Include="..\Sources\Objectively\String.h" />
@@ -110,6 +111,7 @@
     <ClCompile Include="..\Sources\Objectively\Operation.c" />
     <ClCompile Include="..\Sources\Objectively\OperationQueue.c" />
     <ClCompile Include="..\Sources\Objectively\Regexp.c" />
+    <ClCompile Include="..\Sources\Objectively\RESTClient.c" />
     <ClCompile Include="..\Sources\Objectively\Resource.c" />
     <ClCompile Include="..\Sources\Objectively\Set.c" />
     <ClCompile Include="..\Sources\Objectively\String.c" />

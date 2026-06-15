@@ -267,8 +267,14 @@ static void setup(URLSessionTask *self) {
     case HTTP_DELETE:
       curl_easy_setopt(self->locals.handle, CURLOPT_CUSTOMREQUEST, "DELETE");
       break;
+    case HTTP_PATCH:
+      curl_easy_setopt(self->locals.handle, CURLOPT_CUSTOMREQUEST, "PATCH");
+      break;
     case HTTP_HEAD:
       curl_easy_setopt(self->locals.handle, CURLOPT_NOBODY, true);
+      break;
+    case HTTP_OPTIONS:
+      curl_easy_setopt(self->locals.handle, CURLOPT_CUSTOMREQUEST, "OPTIONS");
       break;
     default:
       break;

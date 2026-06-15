@@ -26,6 +26,7 @@ TESTS = \
 	Object \
 	Operation \
 	Regexp \
+	RESTClient \
 	Resource \
 	Set \
 	String \

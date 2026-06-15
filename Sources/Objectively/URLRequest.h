@@ -41,11 +41,13 @@ typedef struct URLRequestInterface URLRequestInterface;
  */
 typedef enum {
   HTTP_NONE,
+  HTTP_HEAD,
+  HTTP_OPTIONS,
   HTTP_GET,
   HTTP_POST,
   HTTP_PUT,
+  HTTP_PATCH,
   HTTP_DELETE,
-  HTTP_HEAD
 } HTTPMethod;
 
 /**

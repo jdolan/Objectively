@@ -75,16 +75,16 @@ START_TEST(json_escaping) {
     const char *key;
     const char *value;
   } cases[] = {
-    { "quote",      "say \"hello\""          },  // embedded double-quote
-    { "backslash",  "C:\\Users\\player"       },  // backslashes
-    { "newline",    "line1\nline2"            },  // \n
-    { "tab",        "col1\tcol2"              },  // \t
-    { "cr",         "carriage\rreturn"        },  // \r
-    { "backspace",  "back\bspace"             },  // \b
-    { "formfeed",   "form\ffeed"              },  // \f
-    { "control",    "esc\033char"             },  // raw control char (ESC, \u001b)
-    { "utf8",       "\xc3\xa9l\xc3\xa8ve"    },  // UTF-8 passthrough (eeleve)
-    { "combined",   "\"\\n\t\r\b\f\001"      },  // several specials in one value
+    { "quote", "say \"hello\"" },         // embedded double-quote
+    { "backslash", "C:\\Users\\player" }, // backslashes
+    { "newline", "line1\nline2" },        // \n
+    { "tab", "col1\tcol2" },              // \t
+    { "cr", "carriage\rreturn" },         // \r
+    { "backspace", "back\bspace" },       // \b
+    { "formfeed", "form\ffeed" },         // \f
+    { "control", "esc\033char" },         // raw control char (ESC, \u001b)
+    { "utf8", "\xc3\xa9l\xc3\xa8ve" },    // UTF-8 passthrough (eeleve)
+    { "combined", "\"\\n\t\r\b\f\001" },  // several specials in one value
   };
 
   JSONContext *ctx = $(alloc(JSONContext), init);
@@ -169,32 +169,32 @@ START_TEST(json_array_toplevel) {
 START_TEST(json_struct_properties) {
 
   typedef struct {
-    char     name[64];
-    char     *tag;
-    int32_t  score;
-    double   ratio;
-    bool     active;
+    char name[64];
+    char *tag;
+    int score;
+    double ratio;
+    bool active;
   } TestStruct;
 
   const JSONProperties properties = MakeJSONProperties(TestStruct,
-    MakeJSONProperty(TestStruct, name,   JSONSerializeCharacters, JSONDeserializeCharacters, NULL),
-    MakeJSONProperty(TestStruct, tag,    JSONSerializeCString,    JSONDeserializeCString,    NULL),
-    MakeJSONProperty(TestStruct, score,  JSONSerializeInt32,      JSONDeserializeInt32,      NULL),
-    MakeJSONProperty(TestStruct, ratio,  JSONSerializeDouble,     JSONDeserializeDouble,     NULL),
-    MakeJSONProperty(TestStruct, active, JSONSerializeBoole,      JSONDeserializeBoole,      NULL)
+    MakeJSONProperty(TestStruct, name, JSONSerializeCharacters, JSONDeserializeCharacters, NULL),
+    MakeJSONProperty(TestStruct, tag, JSONSerializeCString, JSONDeserializeCString, NULL),
+    MakeJSONProperty(TestStruct, score, JSONSerializeInt32, JSONDeserializeInt32, NULL),
+    MakeJSONProperty(TestStruct, ratio, JSONSerializeDouble, JSONDeserializeDouble, NULL),
+    MakeJSONProperty(TestStruct, active, JSONSerializeBoole, JSONDeserializeBoole, NULL)
   );
 
   TestStruct instances[2] = {
-    { .name = "Alice", .tag = "hero",    .score = 42, .ratio = 0.75, .active = true  },
-    { .name = "Bob",   .tag = "villain", .score = -7, .ratio = 0.25, .active = false },
+    { .name = "Alice", .tag = "hero", .score = 42, .ratio = 0.75, .active = true  },
+    { .name = "Bob", .tag = "villain", .score = -7, .ratio = 0.25, .active = false },
   };
 
   JSONContext *ctx = $(alloc(JSONContext), init);
 
-  String *kName   = $$(String, stringWithCharacters, "name");
-  String *kTag    = $$(String, stringWithCharacters, "tag");
-  String *kScore  = $$(String, stringWithCharacters, "score");
-  String *kRatio  = $$(String, stringWithCharacters, "ratio");
+  String *kName = $$(String, stringWithCharacters, "name");
+  String *kTag = $$(String, stringWithCharacters, "tag");
+  String *kScore = $$(String, stringWithCharacters, "score");
+  String *kRatio = $$(String, stringWithCharacters, "ratio");
   String *kActive = $$(String, stringWithCharacters, "active");
 
   Data *singleData = $(ctx, dataFromStruct, &properties, &instances[0]);
@@ -233,7 +233,7 @@ START_TEST(json_struct_properties) {
 
   String *k = $$(String, stringWithCharacters, "name");
   ck_assert_str_eq("Alice", ((String *) $(d0, objectForKey, k))->chars);
-  ck_assert_str_eq("Bob",   ((String *) $(d1, objectForKey, k))->chars);
+  ck_assert_str_eq("Bob", ((String *) $(d1, objectForKey, k))->chars);
   release(k);
 
   k = $$(String, stringWithCharacters, "active");
@@ -247,15 +247,15 @@ START_TEST(json_struct_properties) {
   size_t n = $(ctx, structsFromData, &properties, data, out, 2);
   ck_assert_int_eq(2, (int) n);
 
-  ck_assert_str_eq("Alice",   out[0].name);
-  ck_assert_str_eq("hero",    out[0].tag);
-  ck_assert_int_eq(42,        out[0].score);
+  ck_assert_str_eq("Alice", out[0].name);
+  ck_assert_str_eq("hero", out[0].tag);
+  ck_assert_int_eq(42, out[0].score);
   ck_assert(out[0].ratio > 0.74 && out[0].ratio < 0.76);
   ck_assert(out[0].active == true);
 
-  ck_assert_str_eq("Bob",     out[1].name);
+  ck_assert_str_eq("Bob", out[1].name);
   ck_assert_str_eq("villain", out[1].tag);
-  ck_assert_int_eq(-7,        out[1].score);
+  ck_assert_int_eq(-7, out[1].score);
   ck_assert(out[1].ratio > 0.24 && out[1].ratio < 0.26);
   ck_assert(out[1].active == false);
 
@@ -268,7 +268,7 @@ START_TEST(json_struct_properties) {
 
 typedef struct {
   char name[64];
-  int32_t score;
+  int score;
 } json_nested_entry_t;
 
 typedef struct {
@@ -280,7 +280,7 @@ typedef struct {
 
 static const JSONProperties json_nested_entry_properties = MakeJSONProperties(json_nested_entry_t,
   MakeJSONProperty(json_nested_entry_t, name,  NULL, JSONDeserializeCharacters, NULL),
-  MakeJSONProperty(json_nested_entry_t, score, NULL, JSONDeserializeInt32,      NULL)
+  MakeJSONProperty(json_nested_entry_t, score, NULL, JSONDeserializeInt32, NULL)
 );
 
 static const JSONArrayProperties json_nested_response_items = {
@@ -291,8 +291,8 @@ static const JSONArrayProperties json_nested_response_items = {
 
 static const JSONProperties json_nested_response_properties = MakeJSONProperties(json_nested_response_t,
   MakeJSONProperty(json_nested_response_t, title, NULL, JSONDeserializeCharacters, NULL),
-  MakeJSONProperty(json_nested_response_t, owner, NULL, JSONDeserializeStruct,    (ident) &json_nested_entry_properties),
-  MakeJSONProperty(json_nested_response_t, items, NULL, JSONDeserializeArray,     (ident) &json_nested_response_items)
+  MakeJSONProperty(json_nested_response_t, owner, NULL, JSONDeserializeStruct, (ident) &json_nested_entry_properties),
+  MakeJSONProperty(json_nested_response_t, items, NULL, JSONDeserializeArray, (ident) &json_nested_response_items)
 );
 
 /**
@@ -375,7 +375,7 @@ START_TEST(json_nested_callbacks) {
 } END_TEST
 
 /**
- * @brief Tests dataFromStructs with a struct mirroring g_frag_t from Quetoo,
+ * @brief Tests dataFromStructs with a struct mirroring `g_frag_t` from Quetoo,
  * exercising the exact property types and edge cases seen in production.
  */
 START_TEST(json_frag_t) {
@@ -383,68 +383,68 @@ START_TEST(json_frag_t) {
 #define FRAG_QPATH 64
 
   typedef struct {
-    char     level[FRAG_QPATH];
-    char     attacker[FRAG_QPATH];
-    char     attacker_guid[FRAG_QPATH];
-    bool     attacker_ai;
-    char     target[FRAG_QPATH];
-    char     target_guid[FRAG_QPATH];
-    bool     target_ai;
-    char     weapon[FRAG_QPATH];
-    int32_t  mod;
-    int32_t  damage;
-    uint32_t time;
+    char level[FRAG_QPATH];
+    char attacker[FRAG_QPATH];
+    char attacker_guid[FRAG_QPATH];
+    bool attacker_ai;
+    char target[FRAG_QPATH];
+    char target_guid[FRAG_QPATH];
+    bool target_ai;
+    char weapon[FRAG_QPATH];
+    int mod;
+    int damage;
+    int time;
   } frag_t;
 
   const JSONProperties properties = MakeJSONProperties(frag_t,
-    MakeJSONProperty(frag_t, level,         JSONSerializeCharacters, NULL, NULL),
-    MakeJSONProperty(frag_t, attacker,      JSONSerializeCharacters, NULL, NULL),
+    MakeJSONProperty(frag_t, level, JSONSerializeCharacters, NULL, NULL),
+    MakeJSONProperty(frag_t, attacker, JSONSerializeCharacters, NULL, NULL),
     MakeJSONProperty(frag_t, attacker_guid, JSONSerializeCharacters, NULL, NULL),
-    MakeJSONProperty(frag_t, attacker_ai,   JSONSerializeBoole,      NULL, NULL),
-    MakeJSONProperty(frag_t, target,        JSONSerializeCharacters, NULL, NULL),
-    MakeJSONProperty(frag_t, target_guid,   JSONSerializeCharacters, NULL, NULL),
-    MakeJSONProperty(frag_t, target_ai,     JSONSerializeBoole,      NULL, NULL),
-    MakeJSONProperty(frag_t, weapon,        JSONSerializeCharacters, NULL, NULL),
-    MakeJSONProperty(frag_t, mod,           JSONSerializeInt32,      NULL, NULL),
-    MakeJSONProperty(frag_t, damage,        JSONSerializeInt32,      NULL, NULL),
-    MakeJSONProperty(frag_t, time,          JSONSerializeUint32,     NULL, NULL)
+    MakeJSONProperty(frag_t, attacker_ai, JSONSerializeBoole, NULL, NULL),
+    MakeJSONProperty(frag_t, target, JSONSerializeCharacters, NULL, NULL),
+    MakeJSONProperty(frag_t, target_guid, JSONSerializeCharacters, NULL, NULL),
+    MakeJSONProperty(frag_t, target_ai, JSONSerializeBoole, NULL, NULL),
+    MakeJSONProperty(frag_t, weapon, JSONSerializeCharacters, NULL, NULL),
+    MakeJSONProperty(frag_t, mod, JSONSerializeInt32, NULL, NULL),
+    MakeJSONProperty(frag_t, damage, JSONSerializeInt32, NULL, NULL),
+    MakeJSONProperty(frag_t, time, JSONSerializeUint32, NULL, NULL)
   );
 
   frag_t frags[] = {
     {
       .level = "edge",
       .attacker = "jdolan", .attacker_guid = "3a56346d46f8e00b88232df6db2b4595", .attacker_ai = false,
-      .target   = "Skies912", .target_guid  = "02bd0844f98709ceb87a9c41998484228", .target_ai = false,
+      .target = "Skies912", .target_guid  = "02bd0844f98709ceb87a9c41998484228", .target_ai = false,
       .weapon = "rockets", .mod = 1, .damage = 80, .time = 12345
     },
     {
       .level = "edge",
       .attacker = "jdolan", .attacker_guid = "3a56346d46f8e00b88232df6db2b4595", .attacker_ai = false,
-      .target   = "[BOT] Makron", .target_guid = "81f97126cfaa1b4c41f152d76fee16b3", .target_ai = true,
+      .target = "[BOT] Makron", .target_guid = "81f97126cfaa1b4c41f152d76fee16b3", .target_ai = true,
       .weapon = "railgun", .mod = 7, .damage = 100, .time = 23456
     },
     {
       .level = "edge",
       .attacker = "[BOT] Brain", .attacker_guid = "b19e1c04f191f77ea2cd73552997a603", .attacker_ai = true,
-      .target   = "Skies912", .target_guid = "02bd0844f98709ceb87a9c41998484228", .target_ai = false,
+      .target = "Skies912", .target_guid = "02bd0844f98709ceb87a9c41998484228", .target_ai = false,
       .weapon = "plasma", .mod = 3, .damage = 60, .time = 34567
     },
     {
       .level = "edge",
       .attacker = "jdolan", .attacker_guid = "3a56346d46f8e00b88232df6db2b4595", .attacker_ai = false,
-      .target   = "jdolan", .target_guid   = "3a56346d46f8e00b88232df6db2b4595", .target_ai = false,
+      .target = "jdolan", .target_guid   = "3a56346d46f8e00b88232df6db2b4595", .target_ai = false,
       .weapon = "", .mod = 0, .damage = 0, .time = 45678
     },
     {
       .level = "edge",
       .attacker = "Skies912", .attacker_guid = "02bd0844f98709ceb87a9c41998484228", .attacker_ai = false,
-      .target   = "jdolan",   .target_guid   = "3a56346d46f8e00b88232df6db2b4595", .target_ai = false,
+      .target = "jdolan",   .target_guid   = "3a56346d46f8e00b88232df6db2b4595", .target_ai = false,
       .weapon = "bfg", .mod = 9, .damage = 0, .time = 56789
     },
     {
       .level = "edge",
       .attacker = "jdolan", .attacker_guid = "3a56346d46f8e00b88232df6db2b4595", .attacker_ai = false,
-      .target   = "[BOT] Gladiator", .target_guid = "73c6bc5c39e6b7fbbca031eeadf71c09", .target_ai = true,
+      .target = "[BOT] Gladiator", .target_guid = "73c6bc5c39e6b7fbbca031eeadf71c09", .target_ai = true,
       .weapon = "hyperblaster", .mod = 5, .damage = 50, .time = 1781060274
     },
   };
@@ -493,7 +493,7 @@ START_TEST(json_frag_t) {
     String *k = $$(String, stringWithCharacters, "time");
     Number *t = $(d, objectForKey, k);
     ck_assert_ptr_ne(NULL, t);
-    ck_assert_int_eq(1781060274, (int32_t) t->value);
+    ck_assert_int_eq(1781060274, (int) t->value);
     release(k);
   }
 

@@ -22,10 +22,12 @@
 				CE4A533E1F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53401F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53421F40E0C800927421 /* PBXTargetDependency */,
+				CE7F04502FE05ABC00AE0D63 /* PBXTargetDependency */,
 				CE4A53461F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53481F40E0C800927421 /* PBXTargetDependency */,
 				CE4A534A1F40E0C800927421 /* PBXTargetDependency */,
 				CE4A534C1F40E0C800927421 /* PBXTargetDependency */,
+				CE7F044E2FE05A9E00AE0D63 /* PBXTargetDependency */,
 				CE4A534E1F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53501F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53521F40E0C800927421 /* PBXTargetDependency */,
@@ -34,11 +36,13 @@
 				CE4A53581F40E0C800927421 /* PBXTargetDependency */,
 				CE4A535A1F40E0C800927421 /* PBXTargetDependency */,
 				CE4F5362202A8FFA00D71C07 /* PBXTargetDependency */,
+				CE7F044A2FE05A8100AE0D63 /* PBXTargetDependency */,
 				CE4A535C1F40E0C800927421 /* PBXTargetDependency */,
 				CE4A535E1F40E0C800927421 /* PBXTargetDependency */,
 				CE594BE51F4B05D1004D74FF /* PBXTargetDependency */,
 				CE4A53601F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53621F40E0C800927421 /* PBXTargetDependency */,
+				CE7F044C2FE05A8B00AE0D63 /* PBXTargetDependency */,
 				CE4A53641F40E0C800927421 /* PBXTargetDependency */,
 				CE161E4823BE31780023AC8D /* PBXTargetDependency */,
 			);
@@ -61,6 +65,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		C03792ECBBFCF253C9418659 /* RESTClient.c in Sources */ = {isa = PBXBuildFile; fileRef = 022F82E935C7322D8BF6D8EF /* RESTClient.c */; };
 		CE129E5F23B7E4B4007D0433 /* Vector.h in Headers */ = {isa = PBXBuildFile; fileRef = CE129E5D23B7E4B4007D0433 /* Vector.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE129E6023B7E4B4007D0433 /* Vector.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E5E23B7E4B4007D0433 /* Vector.c */; };
 		CE129E6823B8242B007D0433 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
@@ -174,6 +179,8 @@
 		CE7F043A2FDF2B1100AE0D63 /* JSONContext.c in Sources */ = {isa = PBXBuildFile; fileRef = CE7F04382FDF2B1100AE0D63 /* JSONContext.c */; };
 		CE7F043B2FDF2B1100AE0D63 /* JSONSerializers.h in Headers */ = {isa = PBXBuildFile; fileRef = CE7F043C2FDF2B1100AE0D63 /* JSONSerializers.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE7F043D2FDF2B1100AE0D63 /* JSONSerializers.c in Sources */ = {isa = PBXBuildFile; fileRef = CE7F043E2FDF2B1100AE0D63 /* JSONSerializers.c */; };
+		CE7F04412FE058E700AE0D63 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
+		CE7F04482FE0592900AE0D63 /* RESTClient.c in Sources */ = {isa = PBXBuildFile; fileRef = CE7F04472FE0592900AE0D63 /* RESTClient.c */; };
 		CE84A8A81DA15BB4008BC685 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
 		CE89D9BF1F24060F005BF96C /* Array.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9431C481E390096DD31 /* Array.c */; };
 		CE9305BF1D9B1C5D00D62770 /* Config.h in Headers */ = {isa = PBXBuildFile; fileRef = CE9305BE1D9B1C5D00D62770 /* Config.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -228,6 +235,7 @@
 		CEEB030E1F40DD89004C2EDD /* Operation.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95D1C481E390096DD31 /* Operation.c */; };
 		CEEB030F1F40DD8D004C2EDD /* Object.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95C1C481E390096DD31 /* Object.c */; };
 		CEEB03101F40DD93004C2EDD /* Number.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95B1C481E390096DD31 /* Number.c */; };
+		F0657245161BBE650ECF5718 /* RESTClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DE6BE46719E60B72EF405CE /* RESTClient.h */; settings = {ATTRIBUTES = (Private, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -497,6 +505,41 @@
 			remoteGlobalIDString = CE76D9671C48218E0096DD31;
 			remoteInfo = Objectively;
 		};
+		CE7F043D2FE058E700AE0D63 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE76D9671C48218E0096DD31;
+			remoteInfo = Objectively;
+		};
+		CE7F04492FE05A8100AE0D63 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE7F043B2FE058E700AE0D63;
+			remoteInfo = "Objectively-RESTClient";
+		};
+		CE7F044B2FE05A8B00AE0D63 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE7F04282FD9943600AE0D63;
+			remoteInfo = "Objectively-URLCache";
+		};
+		CE7F044D2FE05A9E00AE0D63 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE75455323C417FD00140C52;
+			remoteInfo = "Objectively-MutableIndexSet";
+		};
+		CE7F044F2FE05ABC00AE0D63 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CEEB02041F40DB55004C2EDD;
+			remoteInfo = "Objectively-Locale";
+		};
 		CE84A8A51DA15B88008BC685 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
@@ -747,6 +790,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		CE7F04422FE058E700AE0D63 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		CE84A89C1DA15B80008BC685 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -975,6 +1027,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		022F82E935C7322D8BF6D8EF /* RESTClient.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = RESTClient.c; sourceTree = "<group>"; };
+		4DE6BE46719E60B72EF405CE /* RESTClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RESTClient.h; sourceTree = "<group>"; };
 		CE129E5D23B7E4B4007D0433 /* Vector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 		CE129E5E23B7E4B4007D0433 /* Vector.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Vector.c; sourceTree = "<group>"; };
 		CE129E6123B823F9007D0433 /* Vector.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Vector.c; sourceTree = "<group>"; };
@@ -1124,6 +1178,8 @@
 		CE7F04382FDF2B1100AE0D63 /* JSONContext.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = JSONContext.c; sourceTree = "<group>"; };
 		CE7F043C2FDF2B1100AE0D63 /* JSONSerializers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSONSerializers.h; sourceTree = "<group>"; };
 		CE7F043E2FDF2B1100AE0D63 /* JSONSerializers.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = JSONSerializers.c; sourceTree = "<group>"; };
+		CE7F04462FE058E700AE0D63 /* Objectively-RESTClient */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-RESTClient"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE7F04472FE0592900AE0D63 /* RESTClient.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = RESTClient.c; sourceTree = "<group>"; };
 		CE84A89E1DA15B80008BC685 /* Objectively-Array */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Array"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9305BE1D9B1C5D00D62770 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		CEA3B07D1CBBD3420082EE04 /* eclipse-code-templates.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "eclipse-code-templates.xml"; sourceTree = "<group>"; };
@@ -1241,6 +1297,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE7F042E2FD9943600AE0D63 /* libObjectively.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE7F04402FE058E700AE0D63 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE7F04412FE058E700AE0D63 /* libObjectively.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1546,6 +1610,8 @@
 				CE76D8E21C481C4E0096DD31 /* OperationQueue.h */,
 				CE6717081F93C289001C2767 /* Regexp.c */,
 				CE6717071F93C289001C2767 /* Regexp.h */,
+				022F82E935C7322D8BF6D8EF /* RESTClient.c */,
+				4DE6BE46719E60B72EF405CE /* RESTClient.h */,
 				CE3BCDCF1DB6FA62002E6C6D /* Resource.c */,
 				CE3BCDD01DB6FA62002E6C6D /* Resource.h */,
 				CE76D8E51C481C4E0096DD31 /* Set.c */,
@@ -1621,7 +1687,6 @@
 		CE76D9241C481E390096DD31 /* Objectively */ = {
 			isa = PBXGroup;
 			children = (
-				CE7F04352FD9947500AE0D63 /* URLCache.c */,
 				CE76D94A1C481E390096DD31 /* Fixtures */,
 				CE76D9431C481E390096DD31 /* Array.c */,
 				CE76D9441C481E390096DD31 /* Boole.c */,
@@ -1644,11 +1709,13 @@
 				CE76D95D1C481E390096DD31 /* Operation.c */,
 				CE76D95E1C481E390096DD31 /* Regexp.c */,
 				CE4F5352202A8BDD00D71C07 /* Resource.c */,
+				CE7F04472FE0592900AE0D63 /* RESTClient.c */,
 				CE76D95F1C481E390096DD31 /* Set.c */,
 				CE76D9601C481E390096DD31 /* String.c */,
 				CE594BD51F49F8DB004D74FF /* StringReader.c */,
 				CE76D9611C481E390096DD31 /* Thread.c */,
 				CE76D9621C481E390096DD31 /* URL.c */,
+				CE7F04352FD9947500AE0D63 /* URLCache.c */,
 				CE76D9631C481E390096DD31 /* URLSession.c */,
 				CE129E6123B823F9007D0433 /* Vector.c */,
 				CE76D9531C481E390096DD31 /* Makefile.am */,
@@ -1701,6 +1768,7 @@
 				CE129E6E23B8242B007D0433 /* Objectively-Vector */,
 				CE75455F23C417FD00140C52 /* Objectively-MutableIndexSet */,
 				CE7F04342FD9943600AE0D63 /* Objectively-URLCache */,
+				CE7F04462FE058E700AE0D63 /* Objectively-RESTClient */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1793,6 +1861,7 @@
 				CE76DA1E1C4860120096DD31 /* Operation.h in Headers */,
 				CE76DA1F1C4860120096DD31 /* OperationQueue.h in Headers */,
 				CE6717091F93C289001C2767 /* Regexp.h in Headers */,
+				F0657245161BBE650ECF5718 /* RESTClient.h in Headers */,
 				CE3BCDD21DB6FA62002E6C6D /* Resource.h in Headers */,
 				CE76DA211C4860130096DD31 /* Set.h in Headers */,
 				CE76DA221C4860130096DD31 /* String.h in Headers */,
@@ -1978,6 +2047,24 @@
 			name = "Objectively-URLCache";
 			productName = "Objectively-Test";
 			productReference = CE7F04342FD9943600AE0D63 /* Objectively-URLCache */;
+			productType = "com.apple.product-type.tool";
+		};
+		CE7F043B2FE058E700AE0D63 /* Objectively-RESTClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE7F04432FE058E700AE0D63 /* Build configuration list for PBXNativeTarget "Objectively-RESTClient" */;
+			buildPhases = (
+				CE7F043E2FE058E700AE0D63 /* Sources */,
+				CE7F04402FE058E700AE0D63 /* Frameworks */,
+				CE7F04422FE058E700AE0D63 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE7F043C2FE058E700AE0D63 /* PBXTargetDependency */,
+			);
+			name = "Objectively-RESTClient";
+			productName = "Objectively-Test";
+			productReference = CE7F04462FE058E700AE0D63 /* Objectively-RESTClient */;
 			productType = "com.apple.product-type.tool";
 		};
 		CE84A89D1DA15B80008BC685 /* Objectively-Array */ = {
@@ -2487,6 +2574,7 @@
 				CEEB02A01F40DD24004C2EDD /* Objectively-Operation */,
 				CEEB02AD1F40DD26004C2EDD /* Objectively-Regexp */,
 				CE4F5353202A8C6D00D71C07 /* Objectively-Resource */,
+				CE7F043B2FE058E700AE0D63 /* Objectively-RESTClient */,
 				CEEB02BA1F40DD27004C2EDD /* Objectively-Set */,
 				CEEB02C71F40DD29004C2EDD /* Objectively-String */,
 				CE594BD61F49F931004D74FF /* Objectively-StringReader */,
@@ -2531,7 +2619,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd $BUILT_PRODUCTS_DIR &&\n./Objectively-Array &&\n./Objectively-Boole &&\n./Objectively-Data &&\n./Objectively-Date &&\n./Objectively-Dictionary &&\n./Objectively-IndexPath &&\n./Objectively-IndexSet &&\n./Objectively-JSON \\\n    $SRCROOT/Tests/Objectively/Fixtures/test.json &&\n./Objectively-Log &&\n./Objectively-MutableArray &&\n./Objectively-MutableData &&\n./Objectively-MutableDictionary &&\n./Objectively-MutableSet &&\n./Objectively-Null &&\n./Objectively-Number &&\n./Objectively-Object &&\n./Objectively-Operation &&\n./Objectively-Regexp &&\n./Objectively-Resource &&\n./Objectively-Set &&\n./Objectively-String &&\n./Objectively-StringReader &&\n./Objectively-Thread &&\n./Objectively-URL &&\n./Objectively-URLSession &&\n./Objectively-Vector\n";
+			shellScript = "cd $BUILT_PRODUCTS_DIR &&\n./Objectively-Array &&\n./Objectively-Boole &&\n./Objectively-Data &&\n./Objectively-Date &&\n./Objectively-Dictionary &&\n./Objectively-IndexPath &&\n./Objectively-IndexSet &&\n./Objectively-JSON \\\n    $SRCROOT/Tests/Objectively/Fixtures/test.json &&\n./Objectively-Log &&\n./Objectively-MutableArray &&\n./Objectively-MutableData &&\n./Objectively-MutableDictionary &&\n./Objectively-MutableIndexSet &&\n./Objectively-MutableSet &&\n./Objectively-MutableString &&\n./Objectively-Null &&\n./Objectively-Number &&\n./Objectively-Object &&\n./Objectively-Operation &&\n./Objectively-Regexp &&\n./Objectively-RESTClient &&\n./Objectively-Resource &&\n./Objectively-Set &&\n./Objectively-String &&\n./Objectively-StringReader &&\n./Objectively-Thread &&\n./Objectively-URLCache &&\n./Objectively-URL &&\n./Objectively-URLSession &&\n./Objectively-Vector\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2627,6 +2715,7 @@
 				CE76D9861C4821CE0096DD31 /* Operation.c in Sources */,
 				CE76D9871C4821CE0096DD31 /* OperationQueue.c in Sources */,
 				CE67170A1F93C289001C2767 /* Regexp.c in Sources */,
+				C03792ECBBFCF253C9418659 /* RESTClient.c in Sources */,
 				CE3BCDD11DB6FA62002E6C6D /* Resource.c in Sources */,
 				CE76D9891C4821CE0096DD31 /* Set.c in Sources */,
 				CE76D98A1C4821CE0096DD31 /* String.c in Sources */,
@@ -2653,6 +2742,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE7F04362FD9947500AE0D63 /* URLCache.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE7F043E2FE058E700AE0D63 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE7F04482FE0592900AE0D63 /* RESTClient.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3047,6 +3144,31 @@
 			isa = PBXTargetDependency;
 			target = CE76D9671C48218E0096DD31 /* Objectively */;
 			targetProxy = CE7F042A2FD9943600AE0D63 /* PBXContainerItemProxy */;
+		};
+		CE7F043C2FE058E700AE0D63 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE76D9671C48218E0096DD31 /* Objectively */;
+			targetProxy = CE7F043D2FE058E700AE0D63 /* PBXContainerItemProxy */;
+		};
+		CE7F044A2FE05A8100AE0D63 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE7F043B2FE058E700AE0D63 /* Objectively-RESTClient */;
+			targetProxy = CE7F04492FE05A8100AE0D63 /* PBXContainerItemProxy */;
+		};
+		CE7F044C2FE05A8B00AE0D63 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE7F04282FD9943600AE0D63 /* Objectively-URLCache */;
+			targetProxy = CE7F044B2FE05A8B00AE0D63 /* PBXContainerItemProxy */;
+		};
+		CE7F044E2FE05A9E00AE0D63 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE75455323C417FD00140C52 /* Objectively-MutableIndexSet */;
+			targetProxy = CE7F044D2FE05A9E00AE0D63 /* PBXContainerItemProxy */;
+		};
+		CE7F04502FE05ABC00AE0D63 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CEEB02041F40DB55004C2EDD /* Objectively-Locale */;
+			targetProxy = CE7F044F2FE05ABC00AE0D63 /* PBXContainerItemProxy */;
 		};
 		CE84A8A61DA15B88008BC685 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3476,6 +3598,30 @@
 			name = Debug;
 		};
 		CE7F04332FD9943600AE0D63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		CE7F04442FE058E700AE0D63 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOMEBREW_PREFIX)/lib",
+					/usr/local/lib,
+				);
+				OTHER_LDFLAGS = "-lcheck";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CE7F04452FE058E700AE0D63 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LIBRARY_SEARCH_PATHS = (
@@ -4194,6 +4340,15 @@
 			buildConfigurations = (
 				CE7F04322FD9943600AE0D63 /* Debug */,
 				CE7F04332FD9943600AE0D63 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE7F04432FE058E700AE0D63 /* Build configuration list for PBXNativeTarget "Objectively-RESTClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE7F04442FE058E700AE0D63 /* Debug */,
+				CE7F04452FE058E700AE0D63 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

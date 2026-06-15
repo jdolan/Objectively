@@ -103,6 +103,13 @@ Class *_Foo(void) {
 ### Ordering
 Method declarations in interface structs and their implementations in `.c` files are kept in **alphabetical order** by method name.
 
+### Doxygen stubs
+Every function body in a `.c` file must have a Doxygen comment stub immediately above it:
+- Superclass override: `@see SuperClass::method(Params)`
+- New interface method: `@fn ReturnType Class::method(Params)` followed by `@memberof Class`
+
+These stubs are what allow Doxygen to associate the full header documentation with the implementation.
+
 ### Memory management
 - `alloc` gives refcount 1. Balance every `retain` with a `release`.
 - `release` always returns `NULL` — assign it back when nulling a field: `self->foo = release(self->foo)`.
