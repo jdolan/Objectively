@@ -331,7 +331,7 @@ OBJECTIVELY_EXPORT bool JSONDeserializeArray(const JSONProperties *properties,
 #pragma mark - JSONArrayProperties
 
 /**
- * @brief Sentinel for JSONArrayProperties::count_offset indicating no sibling count field.
+ * @brief Sentinel for JSONArrayProperties::count indicating no sibling count field.
  */
 #define JSONArrayProperties_NoCount ((ptrdiff_t) -1)
 
@@ -346,15 +346,15 @@ typedef struct {
   const JSONProperties *properties;
 
   /**
-   * @brief The capacity of the array field (number of elements).
+   * @brief The capacity of the array field (maximum number of elements).
    */
-  size_t count;
+  size_t capacity;
 
   /**
    * @brief Byte offset of the sibling element-count field, or JSONArrayProperties_NoCount.
    * @details When set, the deserializer writes the parsed element count here.
    */
-  ptrdiff_t count_offset;
+  ptrdiff_t count;
 
 } JSONArrayProperties;
 
@@ -365,8 +365,8 @@ typedef struct {
  *   A raw `(JSONArrayProperties){ ... }` literal cannot be used directly as a macro argument
  *   because the preprocessor does not track brace depth; its commas would split macro arguments.
  */
-#define MakeJSONArrayProperties(properties, count, count_offset) \
-  &(JSONArrayProperties){ .properties = (properties), .count = (count), .count_offset = (count_offset) }
+#define MakeJSONArrayProperties(properties, capacity, count) \
+  &(JSONArrayProperties){ .properties = (properties), .capacity = (capacity), .count = (count) }
 
 # pragma mark - Object serializers
 

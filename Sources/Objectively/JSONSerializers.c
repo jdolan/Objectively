@@ -182,7 +182,7 @@ ident JSONSerializeArray(const JSONProperties *properties,
 
   MutableArray *out = $(alloc(MutableArray), init);
 
-  for (size_t i = 0; i < array->count; i++) {
+  for (size_t i = 0; i < array->capacity; i++) {
     const ident instance = (uint8_t *) value + i * array->properties->size;
     Dictionary *dict = $(context, dictionaryFromStruct, array->properties, instance);
     $(out, addObject, dict);
@@ -383,21 +383,21 @@ bool JSONDeserializeArray(const JSONProperties *properties,
   }
 
   uint8_t *instance = (uint8_t *) field - property->offset;
-  if (array->count_offset != JSONArrayProperties_NoCount) {
-    *(size_t *) (instance + array->count_offset) = 0;
+  if (array->count != JSONArrayProperties_NoCount) {
+    *(size_t *) (instance + array->count) = 0;
   }
 
-  memset(field, 0, array->properties->size * array->count);
+  memset(field, 0, array->properties->size * array->capacity);
 
   if (!$(value, isKindOfClass, _Array())) {
     return false;
   }
 
   const size_t n = $(context, structsFromArray, array->properties,
-                                                    cast(Array, value), field, array->count);
+                                                    cast(Array, value), field, array->capacity);
 
-  if (array->count_offset != JSONArrayProperties_NoCount) {
-    *(size_t *) (instance + array->count_offset) = n;
+  if (array->count != JSONArrayProperties_NoCount) {
+    *(size_t *) (instance + array->count) = n;
   }
 
   return true;
