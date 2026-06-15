@@ -95,6 +95,11 @@ struct JSONProperty {
   ptrdiff_t offset;
 
   /**
+   * @brief The byte size of the field within the struct.
+   */
+  size_t size;
+
+  /**
    * @brief The JSONSerializer, or `NULL` to omit this field from serialization.
    */
   JSONSerializer serializer;
@@ -106,7 +111,7 @@ struct JSONProperty {
 
   /**
    * @brief Opaque user data passed to the serializer and deserializer.
-   * @details Carries type-specific metadata, e.g. field size for character arrays.
+   * @details Carries type-specific metadata, e.g. a nested JSONProperties pointer for structs.
    */
   ident data;
 };
@@ -140,6 +145,7 @@ struct JSONProperties {
   (JSONProperty) { \
     .key = #field, \
     .offset = (ptrdiff_t) offsetof(Struct, field), \
+    .size = sizeof(((Struct *) NULL)->field), \
     .serializer = (serializer_), \
     .deserializer = (deserializer_), \
     .data = (data_) \
@@ -157,12 +163,6 @@ struct JSONProperties {
       (JSONProperty) { .key = NULL } \
     } \
   }
-
-/**
- * @brief Yields the byte size of a struct field, as an `ident`.
- * @details Use as the `data_` argument to MakeJSONProperty for character array fields.
- */
-#define JSONFieldSize(Struct, field) ((ident) (size_t) sizeof(((Struct *) NULL)->field))
 
 #pragma mark - Standard JSONSerializers
 

@@ -204,7 +204,7 @@ bool JSONDeserializeCharacters(const JSONProperties *properties,
   (void) context;
 
   char *dest = field;
-  const size_t size = (size_t) property->data;
+  const size_t size = property->size;
 
   if (!dest || !size) {
     return false;
