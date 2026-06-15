@@ -358,6 +358,16 @@ typedef struct {
 
 } JSONArrayProperties;
 
+/**
+ * @brief Creates a pointer to a JSONArrayProperties compound literal.
+ * @details Use this macro (rather than a raw compound literal) as the `data` argument to
+ *   MakeJSONProperty when binding a JSONDeserializeArray/JSONSerializeArray property inline.
+ *   A raw `(JSONArrayProperties){ ... }` literal cannot be used directly as a macro argument
+ *   because the preprocessor does not track brace depth; its commas would split macro arguments.
+ */
+#define MakeJSONArrayProperties(properties, count, count_offset) \
+  &(JSONArrayProperties){ .properties = (properties), .count = (count), .count_offset = (count_offset) }
+
 # pragma mark - Object serializers
 
 /**
