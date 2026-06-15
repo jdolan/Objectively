@@ -44,7 +44,9 @@ static void RESTClient_AsyncCompletion(URLSessionTask *task, bool success) {
   URLSessionDataTask *dataTask = (URLSessionDataTask *) task;
   const int status = task->response ? task->response->httpStatusCode : 0;
 
-  state->completion(status, dataTask->data, state->user_data);
+  if (state->completion) {
+    state->completion(status, dataTask->data, state->user_data);
+  }
 
   free(state);
   release(task);
