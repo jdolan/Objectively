@@ -512,30 +512,30 @@ START_TEST(json_frag_t) {
 START_TEST(json_object_properties) {
 
   typedef struct {
-    String          *name;
-    URL             *url;
-    Date            *date;
-    MutableArray    *tags;
-    MutableSet      *flags;
+    String *name;
+    URL *url;
+    Date *date;
+    MutableArray *tags;
+    MutableSet *flags;
     MutableDictionary *meta;
   } TestRecord;
 
   const JSONProperties properties = MakeJSONProperties(TestRecord,
-    MakeJSONProperty(TestRecord, name,  JSONSerializeString,             JSONDeserializeString,             NULL),
-    MakeJSONProperty(TestRecord, url,   JSONSerializeURL,                JSONDeserializeURL,                NULL),
-    MakeJSONProperty(TestRecord, date,  JSONSerializeDate,               JSONDeserializeDate,               NULL),
-    MakeJSONProperty(TestRecord, tags,  JSONSerializeMutableArray,       JSONDeserializeMutableArray,       NULL),
-    MakeJSONProperty(TestRecord, flags, JSONSerializeMutableSet,         JSONDeserializeMutableSet,         NULL),
-    MakeJSONProperty(TestRecord, meta,  JSONSerializeMutableDictionary,  JSONDeserializeMutableDictionary,  NULL)
+    MakeJSONProperty(TestRecord, name, JSONSerializeString, JSONDeserializeString, NULL),
+    MakeJSONProperty(TestRecord, url, JSONSerializeURL, JSONDeserializeURL, NULL),
+    MakeJSONProperty(TestRecord, date, JSONSerializeDate, JSONDeserializeDate, NULL),
+    MakeJSONProperty(TestRecord, tags, JSONSerializeMutableArray, JSONDeserializeMutableArray, NULL),
+    MakeJSONProperty(TestRecord, flags, JSONSerializeMutableSet, JSONDeserializeMutableSet, NULL),
+    MakeJSONProperty(TestRecord, meta, JSONSerializeMutableDictionary, JSONDeserializeMutableDictionary, NULL)
   );
 
   JSONContext *ctx = $(alloc(JSONContext), init);
 
   // Build a source record with Objectively objects.
   TestRecord src = { 0 };
-  src.name  = $(alloc(String), initWithCharacters, "quetoo");
-  src.url   = $(alloc(URL), initWithCharacters, "https://quetoo.org");
-  src.date  = $$(Date, dateWithTimeSinceNow, NULL);
+  src.name = $(alloc(String), initWithCharacters, "quetoo");
+  src.url  = $(alloc(URL), initWithCharacters, "https://quetoo.org");
+  src.date = $$(Date, dateWithTimeSinceNow, NULL);
 
   src.tags = $(alloc(MutableArray), init);
   String *t1 = $$(String, stringWithCharacters, "fps");
@@ -618,6 +618,7 @@ int main(int argc, char **argv) {
   tcase_add_test(tcase, json_struct_properties);
   tcase_add_test(tcase, json_nested_callbacks);
   tcase_add_test(tcase, json_frag_t);
+  tcase_add_test(tcase, json_object_properties);
 
   Suite *suite = suite_create("Json");
   suite_add_tcase(suite, tcase);

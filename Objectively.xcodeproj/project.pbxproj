@@ -22,7 +22,6 @@
 				CE4A533E1F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53401F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53421F40E0C800927421 /* PBXTargetDependency */,
-				CE7F04502FE05ABC00AE0D63 /* PBXTargetDependency */,
 				CE4A53461F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53481F40E0C800927421 /* PBXTargetDependency */,
 				CE4A534A1F40E0C800927421 /* PBXTargetDependency */,
@@ -199,7 +198,6 @@
 		CEEB01E41F40DB4D004C2EDD /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
 		CEEB01F11F40DB50004C2EDD /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
 		CEEB01FE1F40DB52004C2EDD /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
-		CEEB020B1F40DB55004C2EDD /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* libObjectively.dylib */; };
 		CEEB02111F40DB67004C2EDD /* Boole.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9441C481E390096DD31 /* Boole.c */; };
 		CEEB02121F40DB77004C2EDD /* Data.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9471C481E390096DD31 /* Data.c */; };
 		CEEB02131F40DB83004C2EDD /* Date.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9481C481E390096DD31 /* Date.c */; };
@@ -533,13 +531,6 @@
 			remoteGlobalIDString = CE75455323C417FD00140C52;
 			remoteInfo = "Objectively-MutableIndexSet";
 		};
-		CE7F044F2FE05ABC00AE0D63 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CEEB02041F40DB55004C2EDD;
-			remoteInfo = "Objectively-Locale";
-		};
 		CE84A8A51DA15B88008BC685 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
@@ -590,13 +581,6 @@
 			remoteInfo = Objectively;
 		};
 		CEEB01F91F40DB52004C2EDD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CE76D9671C48218E0096DD31;
-			remoteInfo = Objectively;
-		};
-		CEEB02061F40DB55004C2EDD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
 			proxyType = 1;
@@ -863,15 +847,6 @@
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 		CEEB01FF1F40DB52004C2EDD /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-		CEEB020C1F40DB55004C2EDD /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -1209,7 +1184,6 @@
 		CEEB01E91F40DB4D004C2EDD /* Objectively-IndexPath */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-IndexPath"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB01F61F40DB50004C2EDD /* Objectively-IndexSet */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-IndexSet"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB02031F40DB52004C2EDD /* Objectively-JSON */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-JSON"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEEB02101F40DB55004C2EDD /* Objectively-Locale */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Locale"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB02201F40DBCD004C2EDD /* Objectively-Log */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Log"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB022D1F40DBD0004C2EDD /* Objectively-MutableArray */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-MutableArray"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB023A1F40DBD2004C2EDD /* Objectively-MutableData */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-MutableData"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1369,14 +1343,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB01FE1F40DB52004C2EDD /* libObjectively.dylib in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CEEB02091F40DB55004C2EDD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CEEB020B1F40DB55004C2EDD /* libObjectively.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1743,7 +1709,6 @@
 				CEEB01E91F40DB4D004C2EDD /* Objectively-IndexPath */,
 				CEEB01F61F40DB50004C2EDD /* Objectively-IndexSet */,
 				CEEB02031F40DB52004C2EDD /* Objectively-JSON */,
-				CEEB02101F40DB55004C2EDD /* Objectively-Locale */,
 				CEEB02201F40DBCD004C2EDD /* Objectively-Log */,
 				CEEB022D1F40DBD0004C2EDD /* Objectively-MutableArray */,
 				CEEB023A1F40DBD2004C2EDD /* Objectively-MutableData */,
@@ -2211,24 +2176,6 @@
 			productReference = CEEB02031F40DB52004C2EDD /* Objectively-JSON */;
 			productType = "com.apple.product-type.tool";
 		};
-		CEEB02041F40DB55004C2EDD /* Objectively-Locale */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CEEB020D1F40DB55004C2EDD /* Build configuration list for PBXNativeTarget "Objectively-Locale" */;
-			buildPhases = (
-				CEEB02071F40DB55004C2EDD /* Sources */,
-				CEEB02091F40DB55004C2EDD /* Frameworks */,
-				CEEB020C1F40DB55004C2EDD /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CEEB02051F40DB55004C2EDD /* PBXTargetDependency */,
-			);
-			name = "Objectively-Locale";
-			productName = "Objectively-Test";
-			productReference = CEEB02101F40DB55004C2EDD /* Objectively-Locale */;
-			productType = "com.apple.product-type.tool";
-		};
 		CEEB02141F40DBCD004C2EDD /* Objectively-Log */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CEEB021D1F40DBCD004C2EDD /* Build configuration list for PBXNativeTarget "Objectively-Log" */;
@@ -2524,7 +2471,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2620;
+				LastUpgradeCheck = 2640;
 				TargetAttributes = {
 					CE4A532F1F40E0A600927421 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -2560,7 +2507,6 @@
 				CEEB01DD1F40DB4D004C2EDD /* Objectively-IndexPath */,
 				CEEB01EA1F40DB50004C2EDD /* Objectively-IndexSet */,
 				CEEB01F71F40DB52004C2EDD /* Objectively-JSON */,
-				CEEB02041F40DB55004C2EDD /* Objectively-Locale */,
 				CEEB02141F40DBCD004C2EDD /* Objectively-Log */,
 				CEEB02211F40DBD0004C2EDD /* Objectively-MutableArray */,
 				CEEB022E1F40DBD2004C2EDD /* Objectively-MutableData */,
@@ -2610,6 +2556,7 @@
 		};
 		CE4A53A61F40ECA500927421 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -2619,7 +2566,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd $BUILT_PRODUCTS_DIR &&\n./Objectively-Array &&\n./Objectively-Boole &&\n./Objectively-Data &&\n./Objectively-Date &&\n./Objectively-Dictionary &&\n./Objectively-IndexPath &&\n./Objectively-IndexSet &&\n./Objectively-JSON \\\n    $SRCROOT/Tests/Objectively/Fixtures/test.json &&\n./Objectively-Log &&\n./Objectively-MutableArray &&\n./Objectively-MutableData &&\n./Objectively-MutableDictionary &&\n./Objectively-MutableIndexSet &&\n./Objectively-MutableSet &&\n./Objectively-MutableString &&\n./Objectively-Null &&\n./Objectively-Number &&\n./Objectively-Object &&\n./Objectively-Operation &&\n./Objectively-Regexp &&\n./Objectively-RESTClient &&\n./Objectively-Resource &&\n./Objectively-Set &&\n./Objectively-String &&\n./Objectively-StringReader &&\n./Objectively-Thread &&\n./Objectively-URLCache &&\n./Objectively-URL &&\n./Objectively-URLSession &&\n./Objectively-Vector\n";
+			shellScript = "cd $BUILT_PRODUCTS_DIR &&\n./Objectively-Array &&\n./Objectively-Boole &&\n./Objectively-Data &&\n./Objectively-Date &&\n./Objectively-Dictionary &&\n./Objectively-IndexPath &&\n./Objectively-IndexSet &&\n./Objectively-JSON \\\n    $SRCROOT/Tests/Objectively/Fixtures/test.json &&\n./Objectively-Log &&\n./Objectively-MutableArray &&\n./Objectively-MutableData &&\n./Objectively-MutableDictionary &&\n./Objectively-MutableIndexSet &&\n./Objectively-MutableSet &&\n./Objectively-MutableString &&\n./Objectively-Null &&\n./Objectively-Number &&\n./Objectively-Object &&\n./Objectively-Operation &&\n./Objectively-Regexp &&\n./Objectively-Resource &&\n./Objectively-RESTClient &&\n./Objectively-Set &&\n./Objectively-String &&\n./Objectively-StringReader &&\n./Objectively-Thread &&\n./Objectively-URL &&\n./Objectively-URLCache &&\n./Objectively-URLSession &&\n./Objectively-Vector\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2814,13 +2761,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEEB02811F40DCC8004C2EDD /* JSON.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CEEB02071F40DB55004C2EDD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3165,11 +3105,6 @@
 			target = CE75455323C417FD00140C52 /* Objectively-MutableIndexSet */;
 			targetProxy = CE7F044D2FE05A9E00AE0D63 /* PBXContainerItemProxy */;
 		};
-		CE7F04502FE05ABC00AE0D63 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CEEB02041F40DB55004C2EDD /* Objectively-Locale */;
-			targetProxy = CE7F044F2FE05ABC00AE0D63 /* PBXContainerItemProxy */;
-		};
 		CE84A8A61DA15B88008BC685 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CE76D9671C48218E0096DD31 /* Objectively */;
@@ -3209,11 +3144,6 @@
 			isa = PBXTargetDependency;
 			target = CE76D9671C48218E0096DD31 /* Objectively */;
 			targetProxy = CEEB01F91F40DB52004C2EDD /* PBXContainerItemProxy */;
-		};
-		CEEB02051F40DB55004C2EDD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CE76D9671C48218E0096DD31 /* Objectively */;
-			targetProxy = CEEB02061F40DB55004C2EDD /* PBXContainerItemProxy */;
 		};
 		CEEB02151F40DBCD004C2EDD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3825,30 +3755,6 @@
 			};
 			name = Release;
 		};
-		CEEB020E1F40DB55004C2EDD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-					/usr/local/lib,
-				);
-				OTHER_LDFLAGS = "-lcheck";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		CEEB020F1F40DB55004C2EDD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-					/usr/local/lib,
-				);
-				OTHER_LDFLAGS = "-lcheck";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		CEEB021E1F40DBCD004C2EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -4421,15 +4327,6 @@
 			buildConfigurations = (
 				CEEB02011F40DB52004C2EDD /* Debug */,
 				CEEB02021F40DB52004C2EDD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CEEB020D1F40DB55004C2EDD /* Build configuration list for PBXNativeTarget "Objectively-Locale" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CEEB020E1F40DB55004C2EDD /* Debug */,
-				CEEB020F1F40DB55004C2EDD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
