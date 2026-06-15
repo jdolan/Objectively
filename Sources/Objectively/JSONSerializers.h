@@ -164,9 +164,7 @@ struct JSONProperties {
  */
 #define JSONFieldSize(Struct, field) ((ident) (size_t) sizeof(((Struct *) NULL)->field))
 
-// ---------------------------------------------------------------------------
-// Standard serializers
-// ---------------------------------------------------------------------------
+#pragma mark - Standard JSONSerializers
 
 /**
  * @brief Serializes a fixed-size `char[]` field to a JSON string.
@@ -228,7 +226,7 @@ OBJECTIVELY_EXPORT ident JSONSerializeBoole(const JSONProperties *properties,
  * @brief Serializes a nested struct field to a JSON object.
  * @details `property->data` must point to a JSONProperties describing the nested type.
  */
-OBJECTIVELY_EXPORT ident JSONSerializeObject(const JSONProperties *properties,
+OBJECTIVELY_EXPORT ident JSONSerializeStruct(const JSONProperties *properties,
                                              const JSONProperty *property,
                                              ident value,
                                              ident data,
@@ -244,9 +242,7 @@ OBJECTIVELY_EXPORT ident JSONSerializeArray(const JSONProperties *properties,
                                             ident data,
                                             JSONContext *context);
 
-// ---------------------------------------------------------------------------
-// Standard deserializers
-// ---------------------------------------------------------------------------
+#pragma mark - Standard JSONDeserializers
 
 /**
  * @brief Deserializes a JSON string into a fixed-size `char[]` field.
@@ -315,7 +311,7 @@ OBJECTIVELY_EXPORT bool JSONDeserializeBoole(const JSONProperties *properties,
  * @details `property->data` must point to a JSONProperties describing the nested type.
  * @return `false` if the JSON value is not a Dictionary.
  */
-OBJECTIVELY_EXPORT bool JSONDeserializeObject(const JSONProperties *properties,
+OBJECTIVELY_EXPORT bool JSONDeserializeStruct(const JSONProperties *properties,
                                               const JSONProperty *property,
                                               const Object *value,
                                               ident field,
@@ -332,9 +328,7 @@ OBJECTIVELY_EXPORT bool JSONDeserializeArray(const JSONProperties *properties,
                                              ident field,
                                              JSONContext *context);
 
-// ---------------------------------------------------------------------------
-// JSONArrayProperties
-// ---------------------------------------------------------------------------
+#pragma mark - JSONArrayProperties
 
 /**
  * @brief Sentinel for JSONArrayProperties::count_offset indicating no sibling count field.
@@ -364,9 +358,7 @@ typedef struct {
 
 } JSONArrayProperties;
 
-// ---------------------------------------------------------------------------
-// Object serializers / deserializers
-// ---------------------------------------------------------------------------
+# pragma mark - Object serializers
 
 /**
  * @brief Serializes a `String *` field to a JSON string.

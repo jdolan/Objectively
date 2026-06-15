@@ -149,7 +149,7 @@ ident JSONSerializeBoole(const JSONProperties *properties,
   return retain(*(const bool *) value ? $$(Boole, True) : $$(Boole, False));
 }
 
-ident JSONSerializeObject(const JSONProperties *properties,
+ident JSONSerializeStruct(const JSONProperties *properties,
                            const JSONProperty *property,
                            ident value,
                            ident data,
@@ -163,7 +163,7 @@ ident JSONSerializeObject(const JSONProperties *properties,
     return NULL;
   }
 
-  return (ident) $(context, dictionaryFromInstance, child, value);
+  return (ident) $(context, dictionaryFromStruct, child, value);
 }
 
 ident JSONSerializeArray(const JSONProperties *properties,
@@ -184,7 +184,7 @@ ident JSONSerializeArray(const JSONProperties *properties,
 
   for (size_t i = 0; i < array->count; i++) {
     const ident instance = (uint8_t *) value + i * array->properties->size;
-    Dictionary *dict = $(context, dictionaryFromInstance, array->properties, instance);
+    Dictionary *dict = $(context, dictionaryFromStruct, array->properties, instance);
     $(out, addObject, dict);
     release(dict);
   }
@@ -347,7 +347,7 @@ bool JSONDeserializeBoole(const JSONProperties *properties,
   return true;
 }
 
-bool JSONDeserializeObject(const JSONProperties *properties,
+bool JSONDeserializeStruct(const JSONProperties *properties,
                              const JSONProperty *property,
                              const Object *value,
                              ident field,
@@ -366,7 +366,7 @@ bool JSONDeserializeObject(const JSONProperties *properties,
     return false;
   }
 
-  return $(context, instanceFromDictionary, child, cast(Dictionary, value), field);
+  return $(context, structFromDictionary, child, cast(Dictionary, value), field);
 }
 
 bool JSONDeserializeArray(const JSONProperties *properties,
@@ -393,7 +393,7 @@ bool JSONDeserializeArray(const JSONProperties *properties,
     return false;
   }
 
-  const size_t n = $(context, instancesFromArray, array->properties,
+  const size_t n = $(context, structsFromArray, array->properties,
                                                     cast(Array, value), field, array->count);
 
   if (array->count_offset != JSONArrayProperties_NoCount) {

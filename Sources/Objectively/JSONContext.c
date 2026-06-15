@@ -568,7 +568,7 @@ static ident readElement(JSONReader *reader) {
 /**
  * @brief Serializes a C struct instance to a Dictionary.
  */
-static Dictionary *dictionaryFromInstance(JSONContext *self,
+static Dictionary *dictionaryFromStruct(JSONContext *self,
                                            const JSONProperties *properties,
                                            const ident instance) {
 
@@ -600,7 +600,7 @@ static Dictionary *dictionaryFromInstance(JSONContext *self,
 /**
  * @brief Deserializes a Dictionary into a C struct.
  */
-static bool instanceFromDictionary(JSONContext *self,
+static bool structFromDictionary(JSONContext *self,
                                     const JSONProperties *properties,
                                     const Dictionary *dictionary,
                                     ident instance) {
@@ -636,7 +636,7 @@ static bool instanceFromDictionary(JSONContext *self,
 /**
  * @brief Deserializes a JSON Array into an array of C structs.
  */
-static size_t instancesFromArray(JSONContext *self,
+static size_t structsFromArray(JSONContext *self,
                                   const JSONProperties *properties,
                                   const Array *array,
                                   ident instances,
@@ -650,7 +650,7 @@ static size_t instancesFromArray(JSONContext *self,
 
   for (size_t i = 0; i < n; i++) {
     const Dictionary *dictionary = cast(Dictionary, $(array, objectAtIndex, i));
-    instanceFromDictionary(self, properties, dictionary, instances + i * properties->size);
+    structFromDictionary(self, properties, dictionary, instances + i * properties->size);
   }
 
   return n;
@@ -707,24 +707,24 @@ static Data *dataFromObject(JSONContext *self, const ident obj, int options) {
 }
 
 /**
- * @fn Data *JSONContext::dataFromInstance(JSONContext *self, const JSONProperties *properties, const ident instance)
+ * @fn Data *JSONContext::dataFromStruct(JSONContext *self, const JSONProperties *properties, const ident instance)
  * @memberof JSONContext
  */
-static Data *dataFromInstance(JSONContext *self,
+static Data *dataFromStruct(JSONContext *self,
                                const JSONProperties *properties,
                                const ident instance) {
 
-  Dictionary *dict = dictionaryFromInstance(self, properties, instance);
+  Dictionary *dict = dictionaryFromStruct(self, properties, instance);
   Data *data = dataFromObject(self, dict, 0);
   release(dict);
   return data;
 }
 
 /**
- * @fn Data *JSONContext::dataFromInstances(JSONContext *self, const JSONProperties *properties, const ident instances, size_t count)
+ * @fn Data *JSONContext::dataFromStructs(JSONContext *self, const JSONProperties *properties, const ident instances, size_t count)
  * @memberof JSONContext
  */
-static Data *dataFromInstances(JSONContext *self,
+static Data *dataFromStructs(JSONContext *self,
                                 const JSONProperties *properties,
                                 const ident instances,
                                 size_t count) {
@@ -737,7 +737,7 @@ static Data *dataFromInstances(JSONContext *self,
 
   for (size_t i = 0; i < count; i++) {
     const ident instance = instances + i * properties->size;
-    Dictionary *dict = dictionaryFromInstance(self, properties, instance);
+    Dictionary *dict = dictionaryFromStruct(self, properties, instance);
     $(array, addObject, dict);
     release(dict);
   }
@@ -748,10 +748,10 @@ static Data *dataFromInstances(JSONContext *self,
 }
 
 /**
- * @fn bool JSONContext::instanceFromData(JSONContext *self, const JSONProperties *properties, const Data *data, ident instance)
+ * @fn bool JSONContext::structFromData(JSONContext *self, const JSONProperties *properties, const Data *data, ident instance)
  * @memberof JSONContext
  */
-static bool instanceFromData(JSONContext *self,
+static bool structFromData(JSONContext *self,
                               const JSONProperties *properties,
                               const Data *data,
                               ident instance) {
@@ -762,17 +762,17 @@ static bool instanceFromData(JSONContext *self,
     return false;
   }
 
-  const bool ok = instanceFromDictionary(self, properties, (Dictionary *) obj, instance);
+  const bool ok = structFromDictionary(self, properties, (Dictionary *) obj, instance);
 
   release(obj);
   return ok;
 }
 
 /**
- * @fn size_t JSONContext::instancesFromData(JSONContext *self, const JSONProperties *properties, const Data *data, ident instances, size_t count)
+ * @fn size_t JSONContext::structsFromData(JSONContext *self, const JSONProperties *properties, const Data *data, ident instances, size_t count)
  * @memberof JSONContext
  */
-static size_t instancesFromData(JSONContext *self,
+static size_t structsFromData(JSONContext *self,
                                  const JSONProperties *properties,
                                  const Data *data,
                                  ident instances,
@@ -784,7 +784,7 @@ static size_t instancesFromData(JSONContext *self,
     return 0;
   }
 
-  const size_t n = instancesFromArray(self, properties, (Array *) obj, instances, count);
+  const size_t n = structsFromArray(self, properties, (Array *) obj, instances, count);
 
   release(obj);
   return n;
@@ -827,13 +827,13 @@ static void initialize(Class *clazz) {
 
   iface->objectFromData = objectFromData;
   iface->dataFromObject = dataFromObject;
-  iface->dataFromInstance = dataFromInstance;
-  iface->dataFromInstances = dataFromInstances;
-  iface->instanceFromData = instanceFromData;
-  iface->instancesFromData = instancesFromData;
-  iface->dictionaryFromInstance = dictionaryFromInstance;
-  iface->instanceFromDictionary = instanceFromDictionary;
-  iface->instancesFromArray = instancesFromArray;
+  iface->dataFromStruct = dataFromStruct;
+  iface->dataFromStructs = dataFromStructs;
+  iface->structFromData = structFromData;
+  iface->structsFromData = structsFromData;
+  iface->dictionaryFromStruct = dictionaryFromStruct;
+  iface->structFromDictionary = structFromDictionary;
+  iface->structsFromArray = structsFromArray;
 }
 
 /**

@@ -163,8 +163,8 @@ START_TEST(json_array_toplevel) {
 } END_TEST
 
 /**
- * @brief Tests dataFromInstance, dataFromInstances, instanceFromData, and
- * instancesFromData with a representative C struct.
+ * @brief Tests dataFromStruct, dataFromStructs, structFromData, and
+ * structsFromData with a representative C struct.
  */
 START_TEST(json_struct_properties) {
 
@@ -197,7 +197,7 @@ START_TEST(json_struct_properties) {
   String *kRatio  = $$(String, stringWithCharacters, "ratio");
   String *kActive = $$(String, stringWithCharacters, "active");
 
-  Data *singleData = $(ctx, dataFromInstance, &properties, &instances[0]);
+  Data *singleData = $(ctx, dataFromStruct, &properties, &instances[0]);
   ck_assert_ptr_ne(NULL, singleData);
 
   Dictionary *singleDict = $(ctx, objectFromData, singleData, 0);
@@ -209,7 +209,7 @@ START_TEST(json_struct_properties) {
   release(singleDict);
 
   TestStruct singleOut = { 0 };
-  ck_assert($(ctx, instanceFromData, &properties, singleData, &singleOut));
+  ck_assert($(ctx, structFromData, &properties, singleData, &singleOut));
   ck_assert_str_eq("Alice", singleOut.name);
   ck_assert_str_eq("hero",  singleOut.tag);
   ck_assert_int_eq(42, (int) singleOut.score);
@@ -220,7 +220,7 @@ START_TEST(json_struct_properties) {
   release(singleData);
   release(kName); release(kTag); release(kScore); release(kRatio); release(kActive);
 
-  Data *data = $(ctx, dataFromInstances, &properties, instances, 2);
+  Data *data = $(ctx, dataFromStructs, &properties, instances, 2);
   ck_assert_ptr_ne(NULL, data);
   ck_assert_int_eq('[', ((const char *) data->bytes)[0]);
 
@@ -244,7 +244,7 @@ START_TEST(json_struct_properties) {
   release(parsed);
 
   TestStruct out[2] = { 0 };
-  size_t n = $(ctx, instancesFromData, &properties, data, out, 2);
+  size_t n = $(ctx, structsFromData, &properties, data, out, 2);
   ck_assert_int_eq(2, (int) n);
 
   ck_assert_str_eq("Alice",   out[0].name);
@@ -291,7 +291,7 @@ static const JSONArrayProperties json_nested_response_items = {
 
 static const JSONProperties json_nested_response_properties = MakeJSONProperties(json_nested_response_t,
   MakeJSONProperty(json_nested_response_t, title, JSONSerializeCharacters, JSONDeserializeCharacters, JSONFieldSize(json_nested_response_t, title)),
-  MakeJSONProperty(json_nested_response_t, owner, JSONSerializeObject,     JSONDeserializeObject,     (ident) &json_nested_entry_properties),
+  MakeJSONProperty(json_nested_response_t, owner, JSONSerializeStruct,     JSONDeserializeStruct,     (ident) &json_nested_entry_properties),
   MakeJSONProperty(json_nested_response_t, items, JSONSerializeArray,      JSONDeserializeArray,      (ident) &json_nested_response_items)
 );
 
@@ -357,7 +357,7 @@ START_TEST(json_nested_callbacks) {
   ck_assert_ptr_ne(NULL, data);
 
   json_nested_response_t response = { 0 };
-  ck_assert($(ctx, instanceFromData, &json_nested_response_properties, data, &response));
+  ck_assert($(ctx, structFromData, &json_nested_response_properties, data, &response));
 
   ck_assert_str_eq("outer", response.title);
   ck_assert_str_eq("Alice", response.owner.name);
@@ -375,7 +375,7 @@ START_TEST(json_nested_callbacks) {
 } END_TEST
 
 /**
- * @brief Tests dataFromInstances with a struct mirroring g_frag_t from Quetoo,
+ * @brief Tests dataFromStructs with a struct mirroring g_frag_t from Quetoo,
  * exercising the exact property types and edge cases seen in production.
  */
 START_TEST(json_frag_t) {
@@ -452,7 +452,7 @@ START_TEST(json_frag_t) {
 
   JSONContext *ctx = $(alloc(JSONContext), init);
 
-  Data *data = $(ctx, dataFromInstances, &properties, frags, n);
+  Data *data = $(ctx, dataFromStructs, &properties, frags, n);
   ck_assert_ptr_ne(NULL, data);
   ck_assert_int_eq('[', ((const char *) data->bytes)[0]);
 
@@ -556,12 +556,12 @@ START_TEST(json_object_properties) {
   release(mk); release(mv);
 
   // Serialize → JSON.
-  Data *data = $(ctx, dataFromInstance, &properties, &src);
+  Data *data = $(ctx, dataFromStruct, &properties, &src);
   ck_assert_ptr_ne(NULL, data);
 
   // Deserialize back into a fresh record.
   TestRecord dst = { 0 };
-  ck_assert($(ctx, instanceFromData, &properties, data, &dst));
+  ck_assert($(ctx, structFromData, &properties, data, &dst));
 
   ck_assert_ptr_ne(NULL, dst.name);
   ck_assert_str_eq("quetoo", dst.name->chars);

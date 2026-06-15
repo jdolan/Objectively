@@ -128,19 +128,19 @@ struct JSONContextInterface {
   Data *(*dataFromObject)(JSONContext *self, const ident obj, int options);
 
   /**
-   * @fn Data *JSONContext::dataFromInstance(JSONContext *self, const JSONProperties *properties, const ident instance)
+   * @fn Data *JSONContext::dataFromStruct(JSONContext *self, const JSONProperties *properties, const ident instance)
    * @brief Serializes a C struct instance to a JSON object.
    * @param properties The JSONProperties for the struct type.
    * @param instance Pointer to the struct instance.
    * @return The resulting JSON Data.
    * @memberof JSONContext
    */
-  Data *(*dataFromInstance)(JSONContext *self,
+  Data *(*dataFromStruct)(JSONContext *self,
                              const JSONProperties *properties,
                              const ident instance);
 
   /**
-   * @fn Data *JSONContext::dataFromInstances(JSONContext *self, const JSONProperties *properties, const ident instances, size_t count)
+   * @fn Data *JSONContext::dataFromStructs(JSONContext *self, const JSONProperties *properties, const ident instances, size_t count)
    * @brief Serializes an array of C struct instances to a JSON array.
    * @param properties The JSONProperties for the struct type.
    * @param instances Pointer to the first instance.
@@ -148,13 +148,13 @@ struct JSONContextInterface {
    * @return The resulting JSON Data (a top-level JSON array), or `NULL` if `count` is zero.
    * @memberof JSONContext
    */
-  Data *(*dataFromInstances)(JSONContext *self,
+  Data *(*dataFromStructs)(JSONContext *self,
                               const JSONProperties *properties,
                               const ident instances,
                               size_t count);
 
   /**
-   * @fn bool JSONContext::instanceFromData(JSONContext *self, const JSONProperties *properties, const Data *data, ident instance)
+   * @fn bool JSONContext::structFromData(JSONContext *self, const JSONProperties *properties, const Data *data, ident instance)
    * @brief Deserializes a top-level JSON object into a C struct.
    * @param properties The JSONProperties for the struct type.
    * @param data The JSON Data containing a top-level object.
@@ -162,13 +162,13 @@ struct JSONContextInterface {
    * @return `true` if parsing succeeded and all recognized fields were bound without type errors.
    * @memberof JSONContext
    */
-  bool (*instanceFromData)(JSONContext *self,
+  bool (*structFromData)(JSONContext *self,
                             const JSONProperties *properties,
                             const Data *data,
                             ident instance);
 
   /**
-   * @fn size_t JSONContext::instancesFromData(JSONContext *self, const JSONProperties *properties, const Data *data, ident instances, size_t count)
+   * @fn size_t JSONContext::structsFromData(JSONContext *self, const JSONProperties *properties, const Data *data, ident instances, size_t count)
    * @brief Deserializes a top-level JSON array into an array of C structs.
    * @param properties The JSONProperties for the element type.
    * @param data The JSON Data containing a top-level array.
@@ -177,26 +177,26 @@ struct JSONContextInterface {
    * @return The number of structs actually written.
    * @memberof JSONContext
    */
-  size_t (*instancesFromData)(JSONContext *self,
+  size_t (*structsFromData)(JSONContext *self,
                                const JSONProperties *properties,
                                const Data *data,
                                ident instances,
                                size_t count);
 
   /**
-   * @fn Dictionary *JSONContext::dictionaryFromInstance(JSONContext *self, const JSONProperties *properties, const ident instance)
+   * @fn Dictionary *JSONContext::dictionaryFromStruct(JSONContext *self, const JSONProperties *properties, const ident instance)
    * @brief Serializes a C struct instance to a Dictionary.
    * @param properties The JSONProperties for the struct type.
    * @param instance Pointer to the struct instance.
    * @return A new Dictionary, or `NULL` on error.
    * @memberof JSONContext
    */
-  Dictionary *(*dictionaryFromInstance)(JSONContext *self,
+  Dictionary *(*dictionaryFromStruct)(JSONContext *self,
                                          const JSONProperties *properties,
                                          const ident instance);
 
   /**
-   * @fn bool JSONContext::instanceFromDictionary(JSONContext *self, const JSONProperties *properties, const Dictionary *dictionary, ident instance)
+   * @fn bool JSONContext::structFromDictionary(JSONContext *self, const JSONProperties *properties, const Dictionary *dictionary, ident instance)
    * @brief Deserializes a Dictionary into a C struct.
    * @param properties The JSONProperties for the struct type.
    * @param dictionary The source Dictionary.
@@ -204,13 +204,13 @@ struct JSONContextInterface {
    * @return `true` if all recognized fields were bound without type errors.
    * @memberof JSONContext
    */
-  bool (*instanceFromDictionary)(JSONContext *self,
+  bool (*structFromDictionary)(JSONContext *self,
                                   const JSONProperties *properties,
                                   const Dictionary *dictionary,
                                   ident instance);
 
   /**
-   * @fn size_t JSONContext::instancesFromArray(JSONContext *self, const JSONProperties *properties, const Array *array, ident instances, size_t count)
+   * @fn size_t JSONContext::structsFromArray(JSONContext *self, const JSONProperties *properties, const Array *array, ident instances, size_t count)
    * @brief Deserializes an Array of Dictionaries into an array of C structs.
    * @param properties The JSONProperties for the element type.
    * @param array The source Array of Dictionary objects.
@@ -219,7 +219,7 @@ struct JSONContextInterface {
    * @return The number of structs actually written.
    * @memberof JSONContext
    */
-  size_t (*instancesFromArray)(JSONContext *self,
+  size_t (*structsFromArray)(JSONContext *self,
                                 const JSONProperties *properties,
                                 const Array *array,
                                 ident instances,
