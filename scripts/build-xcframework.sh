@@ -40,12 +40,14 @@ mkdir -p "$BUILD_DIR" "$FRAMEWORKS_DIR"
 # ---------------------------------------------------------------------------
 
 CURL_SRC="$BUILD_DIR/curl-$CURL_VERSION"
+CURL_TARBALL="$BUILD_DIR/curl-${CURL_VERSION}.tar.gz"
 
 if [ ! -d "$CURL_SRC" ]; then
+    : "${CURL_SHA256:?Set CURL_SHA256 to the expected sha256 for curl-${CURL_VERSION}.tar.gz}"
     echo "==> Downloading curl $CURL_VERSION"
-    curl -L "https://curl.se/download/curl-${CURL_VERSION}.tar.gz" \
-         -o "$BUILD_DIR/curl-${CURL_VERSION}.tar.gz"
-    tar -xzf "$BUILD_DIR/curl-${CURL_VERSION}.tar.gz" -C "$BUILD_DIR"
+    curl -fsSL "https://curl.se/download/curl-${CURL_VERSION}.tar.gz" -o "$CURL_TARBALL"
+    echo "${CURL_SHA256}  ${CURL_TARBALL}" | shasum -a 256 -c -
+    tar -xzf "$CURL_TARBALL" -C "$BUILD_DIR"
 fi
 
 build_curl_slice() {
