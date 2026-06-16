@@ -178,9 +178,10 @@ build_objectively_slice() {
     ar cr "$prefix/lib/libObjectively.a" "$objdir"/*.o
     ranlib "$prefix/lib/libObjectively.a"
 
-    # Install public headers (source + generated Config.h)
+    # Install public headers (source + generated Config.h + umbrella)
     cp "$OBJECTIVELY_DIR/Sources/Objectively/"*.h "$prefix/include/Objectively/"
     cp "$objdir/Config.h" "$prefix/include/Objectively/"
+    cp "$OBJECTIVELY_DIR/Sources/Objectively.h" "$prefix/include/"
 
     popd > /dev/null
 }
