@@ -39,3 +39,5 @@ stamp-h1
 test-driver
 xcuserdata/
 /Objectively.vs15/.vs
+.build-xcframework/
+Frameworks/

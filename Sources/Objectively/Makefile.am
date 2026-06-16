@@ -1,5 +1,5 @@
 AUTOMAKE_OPTIONS = nostdinc
-AM_CPPFLAGS = -I$(top_srcdir)/Sources
+AM_CPPFLAGS = -I$(top_srcdir)/Sources -I$(top_builddir)/Sources/Objectively
 
 noinst_HEADERS = \
 	Config.h
@@ -122,8 +122,7 @@ libObjectively_la_CFLAGS = \
 	@CURL_CFLAGS@
 
 libObjectively_la_LDFLAGS = \
-	@HOST_LDFLAGS@ \
-	-shared
+	@HOST_LDFLAGS@
 
 libObjectively_la_LIBADD = \
 	-lpthread \
