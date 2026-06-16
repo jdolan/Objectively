@@ -23,7 +23,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: .build-xcframework
-        key: xcframework-curl-${{ env.CURL_VERSION }}-ios-${{ env.IOS_MIN }}-${{ hashFiles('Sources/Objectively/**/*.c', 'Sources/Objectively/**/*.h') }}
+        key: xcframework-curl-${{ env.CURL_VERSION }}-ios-${{ env.IOS_MIN }}-${{ hashFiles('configure.ac', 'Sources/**/Makefile.am', 'Sources/Objectively/**/*.c', 'Sources/Objectively/**/*.h', 'scripts/build-xcframework.sh') }}
         restore-keys: |
           xcframework-curl-${{ env.CURL_VERSION }}-ios-${{ env.IOS_MIN }}-
 
