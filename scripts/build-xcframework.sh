@@ -25,6 +25,7 @@ BUILD_DIR="$OBJECTIVELY_DIR/.build-xcframework"
 FRAMEWORKS_DIR="$OBJECTIVELY_DIR/Frameworks"
 
 CURL_VERSION="${CURL_VERSION:-8.10.1}"
+CURL_SHA256="${CURL_SHA256:-d15ebab765d793e2e96db090f0e172d127859d78ca6f6391d7eafecfd894bbc0}"
 IOS_MIN="${IOS_MIN:-14.0}"
 
 IPHONEOS_SDK=$(xcrun --sdk iphoneos --show-sdk-path)
