@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# build-xcframework.sh — builds Objectively.xcframework for iOS device + simulator.
+# build-xcframework.sh — builds Objectively.xcframework for macOS, iOS device, and iOS simulator.
 #
 # Outputs:
-#   Frameworks/libcurl.xcframework
-#   Frameworks/Objectively.xcframework
+#   Frameworks/libcurl.xcframework   (macos-arm64_x86_64 + ios-arm64 + ios-simulator)
+#   Frameworks/Objectively.xcframework  (same)
 #
 # Usage:
 #   scripts/build-xcframework.sh
@@ -12,6 +12,7 @@
 # Optional env vars:
 #   CURL_VERSION   — curl release to build (default: 8.10.1)
 #   IOS_MIN        — iOS deployment target (default: 14.0)
+#   MACOS_MIN      — macOS deployment target (default: 12.0)
 #
 set -e -o pipefail
 
@@ -27,7 +28,9 @@ FRAMEWORKS_DIR="$OBJECTIVELY_DIR/Frameworks"
 CURL_VERSION="${CURL_VERSION:-8.10.1}"
 CURL_SHA256="${CURL_SHA256:-d15ebab765d793e2e96db090f0e172d127859d78ca6f6391d7eafecfd894bbc0}"
 IOS_MIN="${IOS_MIN:-14.0}"
+MACOS_MIN="${MACOS_MIN:-12.0}"
 
+MACOSX_SDK=$(xcrun --sdk macosx --show-sdk-path)
 IPHONEOS_SDK=$(xcrun --sdk iphoneos --show-sdk-path)
 IPHONESIMULATOR_SDK=$(xcrun --sdk iphonesimulator --show-sdk-path)
 CLANG=$(xcrun --find clang)
@@ -113,6 +116,23 @@ mkdir -p "$CURL_SIM_DIR/lib"
     -output "$CURL_SIM_DIR/lib/libcurl.a"
 cp -r "$BUILD_DIR/curl-install-iphoneos-arm64/include" "$CURL_SIM_DIR/"
 
+build_curl_slice "macos-arm64" \
+    "$MACOSX_SDK" "arm64" "-mmacosx-version-min=$MACOS_MIN" \
+    "aarch64-apple-darwin"
+
+build_curl_slice "macos-x86_64" \
+    "$MACOSX_SDK" "x86_64" "-mmacosx-version-min=$MACOS_MIN" \
+    "x86_64-apple-darwin"
+
+echo "==> libcurl macOS: lipo arm64 + x86_64"
+CURL_MACOS_DIR="$BUILD_DIR/curl-install-macos-fat"
+mkdir -p "$CURL_MACOS_DIR/lib"
+"$LIPO" -create \
+    "$BUILD_DIR/curl-install-macos-arm64/lib/libcurl.a" \
+    "$BUILD_DIR/curl-install-macos-x86_64/lib/libcurl.a" \
+    -output "$CURL_MACOS_DIR/lib/libcurl.a"
+cp -r "$BUILD_DIR/curl-install-macos-arm64/include" "$CURL_MACOS_DIR/"
+
 echo "==> Creating libcurl.xcframework"
 rm -rf "$FRAMEWORKS_DIR/libcurl.xcframework"
 xcodebuild -create-xcframework \
@@ -120,6 +140,8 @@ xcodebuild -create-xcframework \
     -headers "$BUILD_DIR/curl-install-iphoneos-arm64/include" \
     -library "$CURL_SIM_DIR/lib/libcurl.a" \
     -headers "$CURL_SIM_DIR/include" \
+    -library "$CURL_MACOS_DIR/lib/libcurl.a" \
+    -headers "$CURL_MACOS_DIR/include" \
     -output "$FRAMEWORKS_DIR/libcurl.xcframework"
 
 # ---------------------------------------------------------------------------
@@ -236,14 +258,107 @@ cp -r "$BUILD_DIR/objectively-install-iphoneos-arm64/Objectively.framework/Heade
 cp "$BUILD_DIR/objectively-install-iphoneos-arm64/Objectively.framework/Info.plist" \
     "$OBJ_SIM_DIR/Objectively.framework/"
 
+# macOS slice — same compile/link approach but native SDK and different Info.plist
+build_objectively_macos_slice() {
+    local name="$1"
+    local arch="$2"
+    local host="$3"
+    local curl_prefix="$4"
+
+    local prefix="$BUILD_DIR/objectively-install-$name"
+    local builddir="$BUILD_DIR/objectively-build-$name"
+
+    if [ -f "$prefix/Objectively.framework/Objectively" ] && [ "$(wc -c < "$prefix/Objectively.framework/Objectively")" -gt 1000 ]; then
+        echo "==> Objectively $name: cached"
+        return 0
+    fi
+
+    echo "==> Objectively $name: configuring"
+    mkdir -p "$builddir"
+    pushd "$builddir" > /dev/null
+
+    CURL_CFLAGS="-I$curl_prefix/include" \
+    CURL_LIBS="$curl_prefix/lib/libcurl.a -framework Security -framework CoreFoundation -framework SystemConfiguration" \
+    CHECK_CFLAGS="" CHECK_LIBS="" \
+    "$OBJECTIVELY_DIR/configure" \
+        --host="$host" \
+        --prefix="$prefix" \
+        --disable-shared --enable-static \
+        CC="$CLANG" \
+        CFLAGS="-arch $arch -isysroot $MACOSX_SDK -mmacosx-version-min=$MACOS_MIN" \
+        LDFLAGS="-arch $arch -isysroot $MACOSX_SDK -mmacosx-version-min=$MACOS_MIN" \
+        > "$builddir/configure.log" 2>&1
+
+    echo "==> Objectively $name: building"
+    make -j"$NPROC" -C Sources >> "$builddir/make.log" 2>&1
+
+    echo "==> Objectively $name: linking framework"
+    local objdir="$builddir/Sources/Objectively"
+    local fwdir="$prefix/Objectively.framework"
+
+    mkdir -p "$fwdir/Headers/Objectively"
+
+    "$CLANG" -arch "$arch" -isysroot "$MACOSX_SDK" "-mmacosx-version-min=$MACOS_MIN" \
+        -dynamiclib \
+        -Wl,-install_name,@rpath/Objectively.framework/Objectively \
+        "$objdir"/*.o \
+        "$curl_prefix/lib/libcurl.a" \
+        -framework Security -framework CoreFoundation -framework SystemConfiguration \
+        -lz -liconv \
+        -o "$fwdir/Objectively"
+
+    cp "$OBJECTIVELY_DIR/Sources/Objectively/"*.h "$fwdir/Headers/Objectively/"
+    cp "$objdir/Config.h" "$fwdir/Headers/Objectively/"
+    cp "$OBJECTIVELY_DIR/Sources/Objectively.h" "$fwdir/Headers/"
+
+    cat > "$fwdir/Info.plist" << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key><string>en</string>
+    <key>CFBundleExecutable</key><string>Objectively</string>
+    <key>CFBundleIdentifier</key><string>com.jaydolan.Objectively</string>
+    <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+    <key>CFBundleName</key><string>Objectively</string>
+    <key>CFBundlePackageType</key><string>FMWK</string>
+    <key>CFBundleShortVersionString</key><string>1.0</string>
+    <key>CFBundleVersion</key><string>1</string>
+    <key>LSMinimumSystemVersion</key><string>$MACOS_MIN</string>
+</dict>
+</plist>
+EOF
+
+    popd > /dev/null
+}
+
+build_objectively_macos_slice "macos-arm64" "arm64" "aarch64-apple-darwin" \
+    "$CURL_MACOS_DIR"
+
+build_objectively_macos_slice "macos-x86_64" "x86_64" "x86_64-apple-darwin" \
+    "$CURL_MACOS_DIR"
+
+echo "==> Objectively macOS: lipo arm64 + x86_64"
+OBJ_MACOS_DIR="$BUILD_DIR/objectively-install-macos-fat"
+mkdir -p "$OBJ_MACOS_DIR/Objectively.framework/Headers"
+"$LIPO" -create \
+    "$BUILD_DIR/objectively-install-macos-arm64/Objectively.framework/Objectively" \
+    "$BUILD_DIR/objectively-install-macos-x86_64/Objectively.framework/Objectively" \
+    -output "$OBJ_MACOS_DIR/Objectively.framework/Objectively"
+cp -r "$BUILD_DIR/objectively-install-macos-arm64/Objectively.framework/Headers/." \
+    "$OBJ_MACOS_DIR/Objectively.framework/Headers/"
+cp "$BUILD_DIR/objectively-install-macos-arm64/Objectively.framework/Info.plist" \
+    "$OBJ_MACOS_DIR/Objectively.framework/"
+
 echo "==> Creating Objectively.xcframework"
 rm -rf "$FRAMEWORKS_DIR/Objectively.xcframework"
 xcodebuild -create-xcframework \
     -framework "$BUILD_DIR/objectively-install-iphoneos-arm64/Objectively.framework" \
     -framework "$OBJ_SIM_DIR/Objectively.framework" \
+    -framework "$OBJ_MACOS_DIR/Objectively.framework" \
     -output "$FRAMEWORKS_DIR/Objectively.xcframework"
 
 echo ""
 echo "Done!"
-echo "  $FRAMEWORKS_DIR/libcurl.xcframework"
-echo "  $FRAMEWORKS_DIR/Objectively.xcframework"
+echo "  $FRAMEWORKS_DIR/libcurl.xcframework  (macos + ios + ios-simulator)"
+echo "  $FRAMEWORKS_DIR/Objectively.xcframework  (macos + ios + ios-simulator)"
