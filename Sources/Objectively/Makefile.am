@@ -1,5 +1,5 @@
 AUTOMAKE_OPTIONS = nostdinc
-AM_CPPFLAGS = -I$(top_srcdir)/Sources -I$(top_builddir)/Sources/Objectively
+AM_CPPFLAGS = -I$(top_srcdir)/Sources -iquote$(top_builddir)/Sources/Objectively
 
 noinst_HEADERS = \
 	Config.h
