@@ -143,7 +143,7 @@ build_objectively_slice() {
     local prefix="$BUILD_DIR/objectively-install-$name"
     local builddir="$BUILD_DIR/objectively-build-$name"
 
-    if [ -f "$prefix/lib/libObjectively.a" ] && [ "$(wc -c < "$prefix/lib/libObjectively.a")" -gt 1000 ]; then
+    if [ -f "$prefix/Objectively.framework/Objectively" ] && [ "$(wc -c < "$prefix/Objectively.framework/Objectively")" -gt 1000 ]; then
         echo "==> Objectively $name: cached"
         return 0
     fi
@@ -169,19 +169,41 @@ build_objectively_slice() {
     echo "==> Objectively $name: building"
     make -j"$NPROC" -C Sources >> "$builddir/make.log" 2>&1
 
-    # libtool cross-compilation doesn't reliably archive non-PIC objects,
-    # so build the static archive directly from the compiled .o files.
-    echo "==> Objectively $name: archiving"
+    echo "==> Objectively $name: linking framework"
     local objdir="$builddir/Sources/Objectively"
-    mkdir -p "$prefix/lib" "$prefix/include/Objectively"
+    local fwdir="$prefix/Objectively.framework"
 
-    ar cr "$prefix/lib/libObjectively.a" "$objdir"/*.o
-    ranlib "$prefix/lib/libObjectively.a"
+    mkdir -p "$fwdir/Headers"
 
-    # Install public headers (source + generated Config.h + umbrella)
-    cp "$OBJECTIVELY_DIR/Sources/Objectively/"*.h "$prefix/include/Objectively/"
-    cp "$objdir/Config.h" "$prefix/include/Objectively/"
-    cp "$OBJECTIVELY_DIR/Sources/Objectively.h" "$prefix/include/"
+    "$CLANG" -arch "$arch" -isysroot "$sdk" $min_flag \
+        -dynamiclib \
+        -Wl,-install_name,@rpath/Objectively.framework/Objectively \
+        "$objdir"/*.o \
+        "$curl_prefix/lib/libcurl.a" \
+        -framework Security -framework CoreFoundation -framework SystemConfiguration \
+        -o "$fwdir/Objectively"
+
+    cp "$OBJECTIVELY_DIR/Sources/Objectively/"*.h "$fwdir/Headers/"
+    cp "$objdir/Config.h" "$fwdir/Headers/"
+    cp "$OBJECTIVELY_DIR/Sources/Objectively.h" "$fwdir/Headers/"
+
+    cat > "$fwdir/Info.plist" << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key><string>en</string>
+    <key>CFBundleExecutable</key><string>Objectively</string>
+    <key>CFBundleIdentifier</key><string>com.jaydolan.Objectively</string>
+    <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+    <key>CFBundleName</key><string>Objectively</string>
+    <key>CFBundlePackageType</key><string>FMWK</string>
+    <key>CFBundleShortVersionString</key><string>1.0</string>
+    <key>CFBundleVersion</key><string>1</string>
+    <key>MinimumOSVersion</key><string>$IOS_MIN</string>
+</dict>
+</plist>
+EOF
 
     popd > /dev/null
 }
@@ -203,20 +225,21 @@ build_objectively_slice "iphonesimulator-x86_64" \
 
 echo "==> Objectively simulator: lipo arm64 + x86_64"
 OBJ_SIM_DIR="$BUILD_DIR/objectively-install-iphonesimulator-fat"
-mkdir -p "$OBJ_SIM_DIR/lib"
+mkdir -p "$OBJ_SIM_DIR/Objectively.framework/Headers"
 "$LIPO" -create \
-    "$BUILD_DIR/objectively-install-iphonesimulator-arm64/lib/libObjectively.a" \
-    "$BUILD_DIR/objectively-install-iphonesimulator-x86_64/lib/libObjectively.a" \
-    -output "$OBJ_SIM_DIR/lib/libObjectively.a"
-cp -r "$BUILD_DIR/objectively-install-iphoneos-arm64/include" "$OBJ_SIM_DIR/"
+    "$BUILD_DIR/objectively-install-iphonesimulator-arm64/Objectively.framework/Objectively" \
+    "$BUILD_DIR/objectively-install-iphonesimulator-x86_64/Objectively.framework/Objectively" \
+    -output "$OBJ_SIM_DIR/Objectively.framework/Objectively"
+cp -r "$BUILD_DIR/objectively-install-iphoneos-arm64/Objectively.framework/Headers/." \
+    "$OBJ_SIM_DIR/Objectively.framework/Headers/"
+cp "$BUILD_DIR/objectively-install-iphoneos-arm64/Objectively.framework/Info.plist" \
+    "$OBJ_SIM_DIR/Objectively.framework/"
 
 echo "==> Creating Objectively.xcframework"
 rm -rf "$FRAMEWORKS_DIR/Objectively.xcframework"
 xcodebuild -create-xcframework \
-    -library "$BUILD_DIR/objectively-install-iphoneos-arm64/lib/libObjectively.a" \
-    -headers "$BUILD_DIR/objectively-install-iphoneos-arm64/include" \
-    -library "$OBJ_SIM_DIR/lib/libObjectively.a" \
-    -headers "$OBJ_SIM_DIR/include" \
+    -framework "$BUILD_DIR/objectively-install-iphoneos-arm64/Objectively.framework" \
+    -framework "$OBJ_SIM_DIR/Objectively.framework" \
     -output "$FRAMEWORKS_DIR/Objectively.xcframework"
 
 echo ""
