@@ -173,7 +173,7 @@ build_objectively_slice() {
     local objdir="$builddir/Sources/Objectively"
     local fwdir="$prefix/Objectively.framework"
 
-    mkdir -p "$fwdir/Headers"
+    mkdir -p "$fwdir/Headers/Objectively"
 
     "$CLANG" -arch "$arch" -isysroot "$sdk" $min_flag \
         -dynamiclib \
@@ -181,10 +181,11 @@ build_objectively_slice() {
         "$objdir"/*.o \
         "$curl_prefix/lib/libcurl.a" \
         -framework Security -framework CoreFoundation -framework SystemConfiguration \
+        -lz -liconv \
         -o "$fwdir/Objectively"
 
-    cp "$OBJECTIVELY_DIR/Sources/Objectively/"*.h "$fwdir/Headers/"
-    cp "$objdir/Config.h" "$fwdir/Headers/"
+    cp "$OBJECTIVELY_DIR/Sources/Objectively/"*.h "$fwdir/Headers/Objectively/"
+    cp "$objdir/Config.h" "$fwdir/Headers/Objectively/"
     cp "$OBJECTIVELY_DIR/Sources/Objectively.h" "$fwdir/Headers/"
 
     cat > "$fwdir/Info.plist" << EOF
