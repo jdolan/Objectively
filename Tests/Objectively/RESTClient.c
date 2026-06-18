@@ -229,7 +229,9 @@ START_TEST(options) {
 int main(int argc, char **argv) {
 
   RESTClient *probe = $(alloc(RESTClient), init);
-  const int32_t status = $(probe, head, HTTPBIN_GET);
+  Data *data = NULL;
+  const int32_t status = $(probe, get, HTTPBIN_GET, &data);
+  release(data);
   release(probe);
   if (status != 200) {
     fprintf(stderr, "RESTClient tests skipped: %s unreachable\n", HTTPBIN);
