@@ -103,7 +103,8 @@ START_TEST(cond) {
 
     release(date);
 
-    date = $$(Date, dateWithTimeSinceNow, &time);
+    const Time signalTime = { .tv_sec = 5, .tv_usec = USEC_PER_SEC * 0.5 };
+    date = $$(Date, dateWithTimeSinceNow, &signalTime);
     ck_assert(date != NULL);
 
     Thread *thread = $(alloc(Thread), initWithFunction, signalBeforeDate, date);
