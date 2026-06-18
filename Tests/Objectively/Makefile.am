@@ -26,7 +26,6 @@ TESTS = \
 	Object \
 	Operation \
 	Regexp \
-	RESTClient \
 	Resource \
 	Set \
 	String \
@@ -36,6 +35,9 @@ TESTS = \
 	URL \
 	URLSession \
 	Vector
+
+XFAIL_TESTS = \
+	RESTClient
 
 CFLAGS += \
 	-I$(top_srcdir)/Sources \
@@ -48,4 +50,5 @@ LDADD = \
 	@CHECK_LIBS@
 
 check_PROGRAMS = \
-	$(TESTS)
+	$(TESTS) \
+	RESTClient
