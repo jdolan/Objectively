@@ -333,10 +333,10 @@ EOF
 }
 
 build_objectively_macos_slice "macos-arm64" "arm64" "aarch64-apple-darwin" \
-    "$CURL_MACOS_DIR"
+    "$BUILD_DIR/curl-install-macos-arm64"
 
 build_objectively_macos_slice "macos-x86_64" "x86_64" "x86_64-apple-darwin" \
-    "$CURL_MACOS_DIR"
+    "$BUILD_DIR/curl-install-macos-x86_64"
 
 echo "==> Objectively macOS: lipo arm64 + x86_64"
 OBJ_MACOS_DIR="$BUILD_DIR/objectively-install-macos-fat"
