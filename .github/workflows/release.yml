@@ -1,0 +1,50 @@
+name: Release
+
+on:
+  push:
+    tags: [ "v*.*.*" ]
+
+permissions:
+  contents: write
+
+jobs:
+  release-xcframework:
+    runs-on: macos-14
+
+    env:
+      CURL_VERSION: "8.10.1"
+      IOS_MIN: "14.0"
+
+    steps:
+    - name: Install dependencies
+      run: brew install autoconf automake libtool pkg-config
+
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Cache xcframework build
+      uses: actions/cache@v4
+      with:
+        path: .build-xcframework
+        key: xcframework-curl-${{ env.CURL_VERSION }}-ios-${{ env.IOS_MIN }}-${{ hashFiles('configure.ac', 'Sources/**/Makefile.am', 'Sources/Objectively/**/*.c', 'Sources/Objectively/**/*.h', 'scripts/build-xcframework.sh') }}
+        restore-keys: |
+          xcframework-curl-${{ env.CURL_VERSION }}-ios-${{ env.IOS_MIN }}-
+
+    - name: Build xcframeworks
+      run: bash scripts/build-xcframework.sh
+
+    - name: Zip xcframeworks
+      run: |
+        cd Frameworks
+        zip -r ../libcurl.xcframework.zip libcurl.xcframework
+        zip -r ../Objectively.xcframework.zip Objectively.xcframework
+
+    - name: Create release
+      run: |
+        gh release create ${{ github.ref_name }} \
+          --title "Objectively ${{ github.ref_name }}" \
+          --generate-notes \
+          libcurl.xcframework.zip \
+          Objectively.xcframework.zip
+      env:
+        GH_TOKEN: ${{ github.token }}

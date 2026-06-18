@@ -39,7 +39,6 @@
 size_t _pageSize;
 
 static Class *_classes;
-static ident _handle;
 
 /**
  * @brief Called `atexit` to teardown Objectively.
@@ -65,10 +64,6 @@ static void teardown(void) {
     free(c);
 
     c = next;
-  }
-
-  if (_handle) {
-    dlclose(_handle);
   }
 }
 
@@ -176,12 +171,8 @@ Class *classForName(const char *name) {
 
     char *s;
     if (asprintf(&s, "_%s", name) > 0) {
-      static Once once;
-
-      do_once(&once, _handle = dlopen(NULL, 0));
-
       Class *clazz = NULL;
-      Class *(*archetype)(void) = dlsym(_handle, s);
+      Class *(*archetype)(void) = dlsym(RTLD_DEFAULT, s);
       if (archetype) {
         clazz = archetype();
       }
