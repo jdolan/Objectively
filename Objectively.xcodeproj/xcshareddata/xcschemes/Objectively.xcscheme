@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CE76D9671C48218E0096DD31"
-               BuildableName = "libObjectively.dylib"
+               BuildableName = "Objectively.framework"
                BlueprintName = "Objectively"
                ReferencedContainer = "container:Objectively.xcodeproj">
             </BuildableReference>
@@ -44,7 +44,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CE76D9671C48218E0096DD31"
-            BuildableName = "libObjectively.dylib"
+            BuildableName = "Objectively.framework"
             BlueprintName = "Objectively"
             ReferencedContainer = "container:Objectively.xcodeproj">
          </BuildableReference>
@@ -60,7 +60,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CE76D9671C48218E0096DD31"
-            BuildableName = "libObjectively.dylib"
+            BuildableName = "Objectively.framework"
             BlueprintName = "Objectively"
             ReferencedContainer = "container:Objectively.xcodeproj">
          </BuildableReference>
