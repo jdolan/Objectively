@@ -228,6 +228,14 @@ START_TEST(options) {
 
 int main(int argc, char **argv) {
 
+  RESTClient *probe = $(alloc(RESTClient), init);
+  const int32_t status = $(probe, head, HTTPBIN_GET);
+  release(probe);
+  if (status <= 0) {
+    fprintf(stderr, "RESTClient tests skipped: %s unreachable\n", HTTPBIN);
+    return 77;
+  }
+
   TCase *tcase = tcase_create("RESTClient");
   tcase_set_timeout(tcase, 30);
   tcase_add_test(tcase, get);
