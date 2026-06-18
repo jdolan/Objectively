@@ -189,7 +189,7 @@ build_objectively_slice() {
         > "$builddir/configure.log" 2>&1
 
     echo "==> Objectively $name: building"
-    make -j"$NPROC" -C Sources >> "$builddir/make.log" 2>&1
+    make -j"$NPROC" -C Sources >> "$builddir/make.log" 2>&1 || (cat "$builddir/make.log" >&2; exit 1)
 
     echo "==> Objectively $name: linking framework"
     local objdir="$builddir/Sources/Objectively"
@@ -290,7 +290,7 @@ build_objectively_macos_slice() {
         > "$builddir/configure.log" 2>&1
 
     echo "==> Objectively $name: building"
-    make -j"$NPROC" -C Sources >> "$builddir/make.log" 2>&1
+    make -j"$NPROC" -C Sources >> "$builddir/make.log" 2>&1 || (cat "$builddir/make.log" >&2; exit 1)
 
     echo "==> Objectively $name: linking framework"
     local objdir="$builddir/Sources/Objectively"
