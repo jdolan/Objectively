@@ -174,11 +174,11 @@ build_objectively_slice() {
     mkdir -p "$builddir"
     pushd "$builddir" > /dev/null
 
-    # CHECK_CFLAGS/LIBS set to empty strings so pkg-config is not invoked
+    # CHECK_CFLAGS/LIBS set to a space (not empty) so test -n passes and pkg-config is not invoked for check
     # for the unit test framework (not needed for the library itself).
     CURL_CFLAGS="-I$curl_prefix/include" \
     CURL_LIBS="$curl_prefix/lib/libcurl.a -framework Security -framework CoreFoundation -framework SystemConfiguration" \
-    CHECK_CFLAGS="" CHECK_LIBS="" \
+    CHECK_CFLAGS=" " CHECK_LIBS=" " \
     "$OBJECTIVELY_DIR/configure" \
         --host="$host" \
         --prefix="$prefix" \
@@ -279,7 +279,7 @@ build_objectively_macos_slice() {
 
     CURL_CFLAGS="-I$curl_prefix/include" \
     CURL_LIBS="$curl_prefix/lib/libcurl.a -framework Security -framework CoreFoundation -framework SystemConfiguration" \
-    CHECK_CFLAGS="" CHECK_LIBS="" \
+    CHECK_CFLAGS=" " CHECK_LIBS=" " \
     "$OBJECTIVELY_DIR/configure" \
         --host="$host" \
         --prefix="$prefix" \
