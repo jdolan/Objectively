@@ -3501,6 +3501,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEFINES_MODULE = YES;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Objectively;
 				PRODUCT_BUNDLE_IDENTIFIER = org.jdolan.Objectively;
@@ -3530,6 +3531,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEFINES_MODULE = YES;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Objectively;
 				PRODUCT_BUNDLE_IDENTIFIER = org.jdolan.Objectively;
