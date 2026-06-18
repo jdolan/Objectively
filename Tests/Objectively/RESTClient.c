@@ -185,7 +185,7 @@ START_TEST(getAsync) {
   async_status = 0;
   async_url[0] = '\0';
 
-  const Time timeout = { .tv_sec = 30 };
+  const Time timeout = { .tv_sec = 5 };
   Date *deadline = $$(Date, dateWithTimeSinceNow, &timeout);
 
   synchronized(condition, {
@@ -228,18 +228,25 @@ START_TEST(options) {
 
 int main(int argc, char **argv) {
 
-  RESTClient *probe = $(alloc(RESTClient), init);
+  URLSessionConfiguration *config = $(alloc(URLSessionConfiguration), init);
+  config->connectTimeout = 5;
+  config->timeout = 5;
+  URLSession *session = $(alloc(URLSession), initWithConfiguration, config);
+  release(config);
+
+  RESTClient *probe = $(alloc(RESTClient), initWithSession, session);
   Data *data = NULL;
   const int32_t status = $(probe, get, HTTPBIN_GET, &data);
   release(data);
   release(probe);
+  release(session);
   if (status != 200) {
     fprintf(stderr, "RESTClient tests skipped: %s unreachable\n", HTTPBIN);
     return 77;
   }
 
   TCase *tcase = tcase_create("RESTClient");
-  tcase_set_timeout(tcase, 30);
+  tcase_set_timeout(tcase, 5);
   tcase_add_test(tcase, get);
   tcase_add_test(tcase, post);
   tcase_add_test(tcase, patch);
