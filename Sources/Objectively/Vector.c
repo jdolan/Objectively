@@ -47,6 +47,7 @@ static Object *copy(const Object *self) {
 
   free(that->elements);
   that->elements = malloc(this->capacity * this->size);
+  assert(that->elements);
   memcpy(that->elements, this->elements, this->count * this->size);
   that->count = this->count;
   that->capacity = this->capacity;

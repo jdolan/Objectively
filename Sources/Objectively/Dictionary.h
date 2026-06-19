@@ -286,7 +286,7 @@ struct DictionaryInterface {
    * @param self The Dictionary.
    * @param enumerator The enumerator.
    * @param data The data.
-   * @memberof Array
+   * @memberof Dictionary
    */
   void (*removeAllObjectsWithEnumerator)(Dictionary *self, DictionaryEnumerator enumerator, ident data);
 

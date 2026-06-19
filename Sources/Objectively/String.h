@@ -578,7 +578,7 @@ struct StringInterface {
    * @fn void String::setString(String *self, const String *string)
    * @brief Sets the contents of this String to that of `string`.
    * @param self The String.
-   * @param chars The String to set the contents from, or NULL.
+   * @param string The String to set the contents from, or NULL.
    * @memberof String
    */
   void (*setString)(String *self, const String *string);
