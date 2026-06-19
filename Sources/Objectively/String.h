@@ -657,13 +657,3 @@ OBJECTIVELY_EXPORT String *str(const char *fmt, ...);
  * @return A trimmed copy of `str` which must be freed by the caller.
  */
 OBJECTIVELY_EXPORT char *strtrim(const char *s);
-
-
-
-/**
- * @brief A convenience function for instantiating Strings.
- * @param fmt The format string.
- * @return A new String, or `NULL` on error.
- * @relates String
- */
-OBJECTIVELY_EXPORT String *mstr(const char *fmt, ...);

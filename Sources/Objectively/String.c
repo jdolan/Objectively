@@ -1113,16 +1113,3 @@ char *strtrim(const char *s) {
 
   return trimmed;
 }
-
-String *mstr(const char *fmt, ...) {
-
-  String *string = $$(String, string);
-
-  va_list args;
-  va_start(args, fmt);
-
-  $(string, appendVaList, fmt, args);
-
-  va_end(args);
-  return string;
-}

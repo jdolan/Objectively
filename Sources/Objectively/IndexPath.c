@@ -62,7 +62,7 @@ static void dealloc(Object *self) {
 static String *description(const Object *self) {
 
   const IndexPath *this = (IndexPath *) self;
-  String *desc = mstr("[");
+  String *desc = str("[");
 
   for (size_t i = 0; i < this->length; i++) {
     $(desc, appendFormat, "%d", this->indexes[i]);

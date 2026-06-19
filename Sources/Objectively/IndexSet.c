@@ -97,7 +97,7 @@ static void dealloc(Object *self) {
 static String *description(const Object *self) {
 
   const IndexSet *this = (IndexSet *) self;
-  String *desc = mstr("[");
+  String *desc = str("[");
 
   for (size_t i = 0; i < this->count; i++) {
     $(desc, appendFormat, "%d", this->indexes[i]);
