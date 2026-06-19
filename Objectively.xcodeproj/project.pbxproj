@@ -1896,20 +1896,6 @@
 			productReference = CE594BE21F49F931004D74FF /* Objectively-StringReader */;
 			productType = "com.apple.product-type.tool";
 		};
-			isa = PBXNativeTarget;
-			buildPhases = (
-				CE75455623C417FD00140C52 /* Sources */,
-				CE75455823C417FD00140C52 /* Frameworks */,
-				CE75455B23C417FD00140C52 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CE75455423C417FD00140C52 /* PBXTargetDependency */,
-			);
-			productName = "Objectively-Test";
-			productType = "com.apple.product-type.tool";
-		};
 		CE76D9671C48218E0096DD31 /* Objectively */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CE76D96A1C48218E0096DD31 /* Build configuration list for PBXNativeTarget "Objectively" */;

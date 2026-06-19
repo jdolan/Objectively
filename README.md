@@ -28,7 +28,7 @@ Features
  * Automatic memory management with reference counting
  * Unicode and multibyte character set `String` support
  * `Object` primitives for `Boole`, `Date`, `Null`, `Number`, `String`
- * Mutable and immutable collections variants such as `Array` and `MutableDictionary`
+ * Mutable collection types such as `Array`, `Dictionary`, and `Set`
  * JSON parsing, marshaling and introspection with `JSONSerialization` and `JSONPath`
  * Low-level concurrency constructs such as `Lock`, `Condition`, and `Thread`
  * High-level concurrency with `Operation` and `OperationQueue`

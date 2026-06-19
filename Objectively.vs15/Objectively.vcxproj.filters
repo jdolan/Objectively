@@ -60,6 +60,9 @@
     <ClInclude Include="..\Sources\Objectively\Hash.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\HashTable.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
     <ClInclude Include="..\Sources\Objectively\IndexPath.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
@@ -81,19 +84,7 @@
     <ClInclude Include="..\Sources\Objectively\Log.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\MutableArray.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\MutableData.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\MutableDictionary.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\MutableSet.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\MutableString.h">
+    <ClInclude Include="..\Sources\Objectively\List.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
     <ClInclude Include="..\Sources\Objectively\Null.h">
@@ -236,6 +227,9 @@
     <ClCompile Include="..\Sources\Objectively\Hash.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\HashTable.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
     <ClCompile Include="..\Sources\Objectively\IndexPath.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
@@ -257,19 +251,7 @@
     <ClCompile Include="..\Sources\Objectively\Log.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\MutableArray.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\MutableData.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\MutableDictionary.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\MutableSet.c">
-      <Filter>Sources\Objectively</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\MutableString.c">
+    <ClCompile Include="..\Sources\Objectively\List.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
     <ClCompile Include="..\Sources\Objectively\Null.c">
