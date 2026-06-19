@@ -29,7 +29,7 @@
 
 /**
  * @file
- * @brief Immutable arrays.
+ * @brief Arrays.
  */
 
 /**
@@ -49,7 +49,7 @@ typedef struct ArrayInterface ArrayInterface;
 typedef void (*ArrayEnumerator)(const Array *array, ident obj, ident data);
 
 /**
- * @brief Immutable arrays.
+ * @brief Arrays.
  * @extends Object
  * @ingroup Collections
  */
@@ -76,9 +76,14 @@ struct Array {
    * @private
    */
   ident *elements;
+
+  /**
+   * @brief The Array capacity.
+   * @private
+   */
+  size_t capacity;
 };
 
-typedef struct MutableArray MutableArray;
 
 /**
  * @brief The Array interface.
@@ -246,14 +251,6 @@ struct ArrayInterface {
   Array *(*mappedArray)(const Array *self, Functor functor, ident data);
 
   /**
-   * @fn MutableArray *Array::mutableCopy(const Array *self)
-   * @param self The Array.
-   * @return A MutableArray with the contents of this Array.
-   * @memberof Array
-   */
-  MutableArray *(*mutableCopy)(const Array *self);
-
-  /**
    * @fn ident Array::objectAtIndex(const Array *self, size_t index)
    * @param self The Array.
    * @param index The index of the desired Object.
@@ -281,6 +278,154 @@ struct ArrayInterface {
    * @memberof Array
    */
   Array *(*sortedArray)(const Array *self, Comparator comparator);
+  /**
+   * @fn void Array::addObject(Array *self, const ident obj)
+   * @brief Adds the specified Object to this Array.
+   * @param self The Array.
+   * @param obj The Object to add.
+   * @memberof Array
+   */
+  void (*addObject)(Array *self, const ident obj);
+
+  /**
+   * @fn void Array::addObjects(Array *self, const ident obj, ...)
+   * @brief Adds the specified objects to this Array.
+   * @param self The Array.
+   * @param obj The `NULL`-terminated list of objects.
+   * @memberof Array
+   */
+  void (*addObjects)(Array *self, const ident obj, ...);
+
+  /**
+   * @fn void Array::addObjectsFromArray(Array *self, const Array *array)
+   * @brief Adds the Objects contained in `array` to this Array.
+   * @param self The Array.
+   * @param array An Array.
+   * @memberof Array
+   */
+  void (*addObjectsFromArray)(Array *self, const Array *array);
+
+  /**
+   * @static
+   * @fn Array *Array::array(void)
+   * @brief Returns a new Array.
+   * @return The new Array, or `NULL` on error.
+   * @memberof Array
+   */
+  Array *(*array)(void);
+
+  /**
+   * @static
+   * @fn Array *Array::arrayWithCapacity(size_t capacity)
+   * @brief Returns a new Array with the given `capacity`.
+   * @param capacity The desired initial capacity.
+   * @return The new Array, or `NULL` on error.
+   * @memberof Array
+   */
+  Array *(*arrayWithCapacity)(size_t capacity);
+
+  /**
+   * @fn void Array::filter(Array *self, Predicate predicate, ident data)
+   * @brief Filters this Array in place using `predicate`.
+   * @param self The Array.
+   * @param predicate A Predicate.
+   * @param data User data.
+   * @memberof Array
+   */
+  void (*filter)(Array *self, Predicate predicate, ident data);
+
+  /**
+   * @fn Array *Array::init(Array *self)
+   * @brief Initializes this Array.
+   * @param self The Array.
+   * @return The initialized Array, or `NULL` on error.
+   * @memberof Array
+   */
+  Array *(*init)(Array *self);
+
+  /**
+   * @fn Array *Array::initWithCapacity(Array *self, size_t capacity)
+   * @brief Initializes this Array with the specified capacity.
+   * @param self The Array.
+   * @param capacity The desired initial capacity.
+   * @return The initialized Array, or `NULL` on error.
+   * @memberof Array
+   */
+  Array *(*initWithCapacity)(Array *self, size_t capacity);
+
+  /**
+   * @fn void Array::insertObjectAtIndex(Array *self, ident obj, size_t index)
+   * @brief Inserts the Object at the specified index.
+   * @param self The Array.
+   * @param obj The Object to insert.
+   * @param index The index at which to insert.
+   * @memberof Array
+   */
+  void (*insertObjectAtIndex)(Array *self, ident obj, size_t index);
+
+  /**
+   * @fn void Array::removeAllObjects(Array *self)
+   * @brief Removes all Objects from this Array.
+   * @param self The Array.
+   * @memberof Array
+   */
+  void (*removeAllObjects)(Array *self);
+
+  /**
+   * @fn void Array::removeAllObjectsWithEnumerator(Array *self, ArrayEnumerator enumerator, ident data)
+   * @brief Removes all Objects from this Array, invoking `enumerator` for each Object.
+   * @param self The Array.
+   * @param enumerator The enumerator.
+   * @param data The data.
+   * @memberof Array
+   */
+  void (*removeAllObjectsWithEnumerator)(Array *self, ArrayEnumerator enumerator, ident data);
+
+  /**
+   * @fn void Array::removeLastObject(Array *self)
+   * @brief Removes the last Object from this Array.
+   * @param self The Array
+   * @memberof Array
+   */
+  void (*removeLastObject)(Array *self);
+
+  /**
+   * @fn void Array::removeObject(Array *self, const ident obj)
+   * @brief Removes the specified Object from this Array.
+   * @param self The Array.
+   * @param obj The Object to remove.
+   * @memberof Array
+   */
+  void (*removeObject)(Array *self, const ident obj);
+
+  /**
+   * @fn void Array::removeObjectAtIndex(Array *self, size_t index)
+   * @brief Removes the Object at the specified index.
+   * @param self The Array.
+   * @param index The index of the Object to remove.
+   * @memberof Array
+   */
+  void (*removeObjectAtIndex)(Array *self, size_t index);
+
+  /**
+   * @fn void Array::setObjectAtIndex(Array *self, const ident obj, size_t index)
+   * @brief Replaces the Object at the specified index.
+   * @param self The Array.
+   * @param obj The Object with which to replace.
+   * @param index The index of the Object to replace.
+   * @remarks The index must not exceed the size of the Array.
+   * @memberof Array
+   */
+  void (*setObjectAtIndex)(Array *self, const ident obj, size_t index);
+
+  /**
+   * @fn void Array::sort(Array *self, Comparator comparator)
+   * @brief Sorts this Array in place using `comparator`.
+   * @param self The Array.
+   * @param comparator A Comparator.
+   * @memberof Array
+   */
+  void (*sort)(Array *self, Comparator comparator);
 };
 
 /**
@@ -290,3 +435,14 @@ struct ArrayInterface {
  * @memberof Array
  */
 OBJECTIVELY_EXPORT Class *_Array(void);
+
+
+/**
+ * @brief A portability wrapper around reentrant qsort.
+ * @param base The base of the array to sort.
+ * @param count The count of elements in the array
+ * @param size The size of each element in the array.
+ * @param comparator The Comparator to sort with.
+ * @param data User data.
+ */
+OBJECTIVELY_EXPORT void quicksort(ident base, size_t count, size_t size, Comparator comparator, ident data);

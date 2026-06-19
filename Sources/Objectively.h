@@ -47,12 +47,6 @@
 #include <Objectively/JSONSerializers.h>
 #include <Objectively/Lock.h>
 #include <Objectively/Log.h>
-#include <Objectively/MutableArray.h>
-#include <Objectively/MutableData.h>
-#include <Objectively/MutableDictionary.h>
-#include <Objectively/MutableIndexSet.h>
-#include <Objectively/MutableSet.h>
-#include <Objectively/MutableString.h>
 #include <Objectively/Null.h>
 #include <Objectively/Number.h>
 #include <Objectively/NumberFormatter.h>

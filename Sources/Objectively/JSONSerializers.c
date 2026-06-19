@@ -29,9 +29,9 @@
 #include "Date.h"
 #include "DateFormatter.h"
 #include "JSONContext.h"
-#include "MutableArray.h"
-#include "MutableDictionary.h"
-#include "MutableSet.h"
+#include "Array.h"
+#include "Dictionary.h"
+#include "Set.h"
 #include "Null.h"
 #include "Number.h"
 #include "String.h"
@@ -220,7 +220,7 @@ ident JSONSerializeStruct(const JSONProperties *properties,
   return (ident) $(context, dictionaryFromStruct, child, value);
 }
 
-ident JSONSerializeArray(const JSONProperties *properties,
+ident JSONSerializeObjectArray(const JSONProperties *properties,
                           const JSONProperty *property,
                           ident value,
                           ident data,
@@ -234,7 +234,7 @@ ident JSONSerializeArray(const JSONProperties *properties,
     return NULL;
   }
 
-  MutableArray *out = $(alloc(MutableArray), init);
+  Array *out = $(alloc(Array), init);
 
   for (size_t i = 0; i < array->capacity; i++) {
     const ident instance = (uint8_t *) value + i * array->properties->size;
@@ -498,7 +498,7 @@ bool JSONDeserializeStruct(const JSONProperties *properties,
   return $(context, structFromDictionary, child, cast(Dictionary, value), field);
 }
 
-bool JSONDeserializeArray(const JSONProperties *properties,
+bool JSONDeserializeObjectArray(const JSONProperties *properties,
                             const JSONProperty *property,
                             const Object *value,
                             ident field,
@@ -653,7 +653,7 @@ bool JSONDeserializeDate(const JSONProperties *properties,
   return *dest != NULL;
 }
 
-ident JSONSerializeMutableArray(const JSONProperties *properties,
+ident JSONSerializeArray(const JSONProperties *properties,
                                  const JSONProperty *property,
                                  ident value,
                                  ident data,
@@ -664,11 +664,11 @@ ident JSONSerializeMutableArray(const JSONProperties *properties,
   (void) data;
   (void) context;
 
-  MutableArray **arr = value;
+  Array **arr = value;
   return *arr ? retain(*arr) : NULL;
 }
 
-bool JSONDeserializeMutableArray(const JSONProperties *properties,
+bool JSONDeserializeArray(const JSONProperties *properties,
                                   const JSONProperty *property,
                                   const Object *value,
                                   ident field,
@@ -678,7 +678,7 @@ bool JSONDeserializeMutableArray(const JSONProperties *properties,
   (void) property;
   (void) context;
 
-  MutableArray **dest = field;
+  Array **dest = field;
   release(*dest);
   *dest = NULL;
 
@@ -687,12 +687,12 @@ bool JSONDeserializeMutableArray(const JSONProperties *properties,
   }
 
   const Array *src = cast(Array, value);
-  *dest = $(alloc(MutableArray), initWithCapacity, src->count);
-  $(*(MutableArray **) dest, addObjectsFromArray, src);
+  *dest = $(alloc(Array), initWithCapacity, src->count);
+  $(*(Array **) dest, addObjectsFromArray, src);
   return true;
 }
 
-ident JSONSerializeMutableSet(const JSONProperties *properties,
+ident JSONSerializeSet(const JSONProperties *properties,
                                const JSONProperty *property,
                                ident value,
                                ident data,
@@ -703,7 +703,7 @@ ident JSONSerializeMutableSet(const JSONProperties *properties,
   (void) data;
   (void) context;
 
-  MutableSet **set = value;
+  Set **set = value;
   if (!*set) {
     return NULL;
   }
@@ -711,7 +711,7 @@ ident JSONSerializeMutableSet(const JSONProperties *properties,
   return (ident) $(cast(Set, *set), allObjects);
 }
 
-bool JSONDeserializeMutableSet(const JSONProperties *properties,
+bool JSONDeserializeSet(const JSONProperties *properties,
                                 const JSONProperty *property,
                                 const Object *value,
                                 ident field,
@@ -721,7 +721,7 @@ bool JSONDeserializeMutableSet(const JSONProperties *properties,
   (void) property;
   (void) context;
 
-  MutableSet **dest = field;
+  Set **dest = field;
   release(*dest);
   *dest = NULL;
 
@@ -730,12 +730,12 @@ bool JSONDeserializeMutableSet(const JSONProperties *properties,
   }
 
   const Array *src = cast(Array, value);
-  *dest = $(alloc(MutableSet), initWithCapacity, src->count);
-  $(*(MutableSet **) dest, addObjectsFromArray, src);
+  *dest = $(alloc(Set), initWithCapacity, src->count);
+  $(*(Set **) dest, addObjectsFromArray, src);
   return true;
 }
 
-ident JSONSerializeMutableDictionary(const JSONProperties *properties,
+ident JSONSerializeDictionary(const JSONProperties *properties,
                                       const JSONProperty *property,
                                       ident value,
                                       ident data,
@@ -746,11 +746,11 @@ ident JSONSerializeMutableDictionary(const JSONProperties *properties,
   (void) data;
   (void) context;
 
-  MutableDictionary **dict = value;
+  Dictionary **dict = value;
   return *dict ? retain(*dict) : NULL;
 }
 
-bool JSONDeserializeMutableDictionary(const JSONProperties *properties,
+bool JSONDeserializeDictionary(const JSONProperties *properties,
                                        const JSONProperty *property,
                                        const Object *value,
                                        ident field,
@@ -760,7 +760,7 @@ bool JSONDeserializeMutableDictionary(const JSONProperties *properties,
   (void) property;
   (void) context;
 
-  MutableDictionary **dest = field;
+  Dictionary **dest = field;
   release(*dest);
   *dest = NULL;
 
@@ -768,7 +768,7 @@ bool JSONDeserializeMutableDictionary(const JSONProperties *properties,
     return false;
   }
 
-  *dest = $(alloc(MutableDictionary), init);
-  $(*(MutableDictionary **) dest, addEntriesFromDictionary, cast(Dictionary, value));
+  *dest = $(alloc(Dictionary), init);
+  $(*(Dictionary **) dest, addEntriesFromDictionary, cast(Dictionary, value));
   return true;
 }

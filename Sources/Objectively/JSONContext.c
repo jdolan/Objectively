@@ -30,9 +30,9 @@
 
 #include "Boole.h"
 #include "JSONContext.h"
-#include "MutableArray.h"
-#include "MutableData.h"
-#include "MutableDictionary.h"
+#include "Array.h"
+#include "Data.h"
+#include "Dictionary.h"
 #include "Null.h"
 #include "Number.h"
 #include "String.h"
@@ -55,7 +55,7 @@ static void addError(JSONContext *self, int code, const char *key, const char *d
   }
 
   if (!self->errors) {
-    self->errors = $(alloc(MutableArray), init);
+    self->errors = $(alloc(Array), init);
   }
 
   String *domain = $$(String, stringWithCharacters, "JSONContext");
@@ -80,7 +80,7 @@ static void addError(JSONContext *self, int code, const char *key, const char *d
  * @brief Internal state for JSON text generation.
  */
 typedef struct {
-  MutableData *data;
+  Data *data;
   int options;
   size_t depth;
 } JSONWriter;
@@ -333,7 +333,7 @@ static bool consumeBytes(JSONReader *reader, const char *bytes) {
  */
 static String *readString(JSONReader *reader) {
 
-  MutableData *buf = $(alloc(MutableData), init);
+  Data *buf = $(alloc(Data), init);
 
   while (true) {
     int b = readByte(reader);
@@ -392,7 +392,7 @@ static String *readString(JSONReader *reader) {
     $(buf, appendBytes, &byte, 1);
   }
 
-  String *string = $$(String, stringWithBytes, buf->data.bytes, buf->data.length, STRING_ENCODING_UTF8);
+  String *string = $$(String, stringWithBytes, buf->bytes, buf->length, STRING_ENCODING_UTF8);
   release(buf);
   return string;
 }
@@ -477,7 +477,7 @@ static String *readLabel(JSONReader *reader) {
  */
 static Dictionary *readObject(JSONReader *reader) {
 
-  MutableDictionary *object = $(alloc(MutableDictionary), init);
+  Dictionary *object = $(alloc(Dictionary), init);
 
   while (true) {
 
@@ -518,7 +518,7 @@ static Dictionary *readObject(JSONReader *reader) {
  */
 static Array *readArray(JSONReader *reader) {
 
-  MutableArray *array = $(alloc(MutableArray), init);
+  Array *array = $(alloc(Array), init);
 
   while (true) {
 
@@ -576,7 +576,7 @@ static Dictionary *dictionaryFromStruct(JSONContext *self,
     return NULL;
   }
 
-  MutableDictionary *dict = $(alloc(MutableDictionary), init);
+  Dictionary *dict = $(alloc(Dictionary), init);
 
   for (const JSONProperty *p = properties->properties; p->key; p++) {
     if (!p->serializer) {
@@ -694,7 +694,7 @@ static Data *dataFromObject(JSONContext *self, const ident obj, int options) {
 
   if (obj) {
     JSONWriter writer = {
-      .data = $(alloc(MutableData), init),
+      .data = $(alloc(Data), init),
       .options = options
     };
 
@@ -733,7 +733,7 @@ static Data *dataFromStructs(JSONContext *self,
     return NULL;
   }
 
-  MutableArray *array = $(alloc(MutableArray), init);
+  Array *array = $(alloc(Array), init);
 
   for (size_t i = 0; i < count; i++) {
     const ident instance = instances + i * properties->size;

@@ -105,7 +105,7 @@ static Operation *init(Operation *self) {
     self->locals.condition = $(alloc(Condition), init);
     assert(self->locals.condition);
 
-    self->locals.dependencies = $(alloc(MutableArray), init);
+    self->locals.dependencies = $(alloc(Array), init);
     assert(self->locals.dependencies);
   }
 

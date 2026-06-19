@@ -32,8 +32,6 @@
 #include <wchar.h>
 
 #include "Hash.h"
-#include "MutableArray.h"
-#include "MutableString.h"
 #include "String.h"
 
 #if defined(__MINGW32__)
@@ -50,8 +48,8 @@
  */
 static Object *copy(const Object *self) {
 
-  String *this = (String *) self;
-  String *that = $$(String, stringWithCharacters, this->chars);
+  const String *this = (const String *) self;
+  String *that = $(alloc(String), initWithString, this);
 
   return (Object *) that;
 }
@@ -73,7 +71,7 @@ static void dealloc(Object *self) {
  */
 static String *description(const Object *self) {
 
-  return (String *) $(self, copy);
+  return (String *) $((Object *) self, copy);
 }
 
 /**
@@ -185,7 +183,7 @@ static Array *componentsSeparatedByCharacters(const String *self, const char *ch
 
   assert(chars);
 
-  MutableArray *components = $(alloc(MutableArray), init);
+  Array *components = $(alloc(Array), init);
 
   Range search = { 0, self->length };
   Range result = $(self, rangeOfCharacters, chars, search);
@@ -207,7 +205,7 @@ static Array *componentsSeparatedByCharacters(const String *self, const char *ch
   $(components, addObject, component);
   release(component);
 
-  return (Array *) components;
+  return components;
 }
 
 /**
@@ -276,130 +274,6 @@ static bool hasSuffix(const String *self, const String *suffix) {
  * @fn String *String::initWithBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding)
  * @memberof String
  */
-static String *initWithBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding) {
-
-  if (bytes) {
-
-    Transcode trans = {
-      .to = STRING_ENCODING_UTF8,
-      .from = encoding,
-      .in = (char *) bytes,
-      .length = length,
-      .out = calloc(length * sizeof(Unicode) + 1, sizeof(char)),
-      .size = length * sizeof(Unicode) + 1
-    };
-
-    assert(trans.out);
-
-    const size_t size = transcode(&trans);
-    assert(size < trans.size);
-
-    ident mem = realloc(trans.out, size + 1);
-    assert(mem);
-
-    return $(self, initWithMemory, mem, size);
-  }
-
-  return $(self, initWithMemory, NULL, 0);
-}
-
-/**
- * @fn String *String::initWithCharacters(String *self, const char *chars)
- * @memberof String
- */
-static String *initWithCharacters(String *self, const char *chars) {
-
-  if (chars) {
-
-    ident mem = strdup(chars);
-    assert(mem);
-
-    const size_t length = strlen(chars);
-    return $(self, initWithMemory, mem, length);
-  }
-
-  return $(self, initWithMemory, NULL, 0);
-}
-
-/**
- * @fn String *String::initWithContentsOfFile(String *self, const char *path, StringEncoding encoding)
- * @memberof String
- */
-static String *initWithContentsOfFile(String *self, const char *path, StringEncoding encoding) {
-
-  Data *data = $$(Data, dataWithContentsOfFile, path);
-  if (data) {
-    self = $(self, initWithData, data, encoding);
-  } else {
-    self = $(self, initWithMemory, NULL, 0);
-  }
-  release(data);
-
-  return self;
-}
-
-/**
- * @fn String *String::initWithData(String *self, const Data *data, StringEncoding encoding)
- * @memberof String
- */
-static String *initWithData(String *self, const Data *data, StringEncoding encoding) {
-
-  assert(data);
-
-  return $(self, initWithBytes, data->bytes, data->length, encoding);
-}
-
-/**
- * @fn String *String::initWithFormat(String *self, const char *fmt, ...)
- * @memberof String
- */
-static String *initWithFormat(String *self, const char *fmt, ...) {
-
-  va_list args;
-  va_start(args, fmt);
-
-  self = $(self, initWithVaList, fmt, args);
-
-  va_end(args);
-
-  return self;
-}
-
-/**
- * @fn String *String::initWithMemory(String *self, const ident mem, size_t length)
- * @memberof String
- */
-static String *initWithMemory(String *self, const ident mem, size_t length) {
-
-  self = (String *) super(Object, self, init);
-  if (self) {
-    self->chars = (char *) mem;
-    self->length = length;
-  }
-
-  return self;
-}
-
-/**
- * @fn String *String::initWithVaList(String *self, const char *fmt, va_list args)
- * @memberof String
- */
-static String *initWithVaList(String *self, const char *fmt, va_list args) {
-
-  self = (String *) super(Object, self, init);
-  if (self) {
-
-    if (fmt) {
-      const int len = vasprintf(&self->chars, fmt, args);
-      assert(len >= 0);
-
-      self->length = len;
-    }
-  }
-
-  return self;
-}
-
 /**
  * @fn String *String::lowercaseString(const String *self)
  * @memberof String
@@ -420,15 +294,6 @@ static String *lowercaseString(const String *self) {
 
   release(data);
   return lowercase;
-}
-
-/**
- * @fn MutableString *String::mutableCopy(const String *self)
- * @memberof String
- */
-static MutableString *mutableCopy(const String *self) {
-
-  return $(alloc(MutableString), initWithString, self);
 }
 
 /**
@@ -602,6 +467,449 @@ static bool writeToFile(const String *self, const char *path, StringEncoding enc
   return success;
 }
 
+#pragma mark - String mutation
+
+/**
+ * @fn void String::appendBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding)
+ * @memberof String
+ */
+static void appendBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding) {
+
+  String *string = $(alloc(String), initWithBytes, bytes, length, encoding);
+  if (string) {
+    $(self, appendCharacters, string->chars);
+    release(string);
+  }
+}
+
+/**
+ * @fn void String::appendCharacters(String *self, const char *chars)
+ * @memberof String
+ */
+static void appendCharacters(String *self, const char *chars) {
+
+  if (chars) {
+
+    const size_t len = strlen(chars);
+    if (len) {
+
+      const size_t newSize = self->length + strlen(chars) + 1;
+      const size_t newCapacity = (newSize / _pageSize + 1) * _pageSize;
+
+      if (newCapacity > self->capacity) {
+
+        if (self->length) {
+          self->chars = realloc(self->chars, newCapacity);
+        } else {
+          self->chars = malloc(newCapacity);
+        }
+
+        assert(self->chars);
+        self->capacity = newCapacity;
+      }
+
+      ident ptr = self->chars + self->length;
+      memmove(ptr, chars, len);
+
+      self->chars[newSize - 1] = '\0';
+      self->length += len;
+    }
+  }
+}
+
+/**
+ * @fn void String::appendFormat(String *self, const char *fmt, ...)
+ * @memberof String
+ */
+static void appendFormat(String *self, const char *fmt, ...) {
+
+  va_list args;
+  va_start(args, fmt);
+
+  $(self, appendVaList, fmt, args);
+
+  va_end(args);
+}
+
+/**
+ * @fn void String::appendString(String *self, const String *string)
+ * @memberof String
+ */
+static void appendString(String *self, const String *string) {
+
+  if (string) {
+    $(self, appendCharacters, string->chars);
+  }
+}
+
+/**
+ * @fn void String::appendVaList(String *self, const char *fmt, va_list args)
+ * @memberof String
+ */
+static void appendVaList(String *self, const char *fmt, va_list args) {
+  char *chars;
+
+  const int len = vasprintf(&chars, fmt, args);
+  if (len > 0) {
+    $(self, appendCharacters, chars);
+  }
+
+  free(chars);
+}
+
+/**
+ * @fn void String::deleteCharactersInRange(String *self, const Range range)
+ * @memberof String
+ */
+static void deleteCharactersInRange(String *self, const Range range) {
+
+  assert(range.location >= 0);
+  assert(range.length <= self->length);
+
+  ident ptr = self->chars + range.location;
+  const size_t length = self->length - range.location - range.length + 1;
+
+  memmove(ptr, ptr + range.length, length);
+
+  self->length -= range.length;
+}
+
+/**
+ * @fn String *String::init(String *self)
+ * @memberof String
+ */
+static String *init(String *self) {
+  return $(self, initWithCapacity, 0);
+}
+
+/**
+ * @fn String *String::initWithMemory(String *self, const ident mem, size_t length)
+ * @memberof String
+ */
+static String *initWithMemory(String *self, const ident mem, size_t length) {
+
+  self = (String *) super(Object, self, init);
+  if (self) {
+    self->chars = (char *) mem;
+    self->length = length;
+    self->capacity = self->chars ? length + 1 : 0;
+  }
+
+  return self;
+}
+
+/**
+ * @fn String *String::initWithBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding)
+ * @memberof String
+ */
+static String *initWithBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding) {
+
+  self = $(self, init);
+  if (self) {
+    $(self, appendBytes, bytes, length, encoding);
+  }
+
+  return self;
+}
+
+/**
+ * @fn String *String::initWithCapacity(String *self, size_t capacity)
+ * @memberof String
+ */
+static String *initWithCapacity(String *self, size_t capacity) {
+
+  self = initWithMemory(self, NULL, 0);
+  if (self) {
+    self->capacity = capacity;
+    if (self->capacity) {
+      self->chars = calloc(self->capacity, sizeof(char));
+      assert(self->chars);
+    }
+  }
+
+  return self;
+}
+
+/**
+ * @fn String *String::initWithCharacters(String *self, const char *chars)
+ * @memberof String
+ */
+static String *initWithCharacters(String *self, const char *chars) {
+
+  self = $(self, init);
+  if (self) {
+    $(self, appendCharacters, chars);
+  }
+
+  return self;
+}
+
+/**
+ * @fn String *String::initWithContentsOfFile(String *self, const char *path, StringEncoding encoding)
+ * @memberof String
+ */
+static String *initWithContentsOfFile(String *self, const char *path, StringEncoding encoding) {
+
+  Data *data = $$(Data, dataWithContentsOfFile, path);
+  if (data) {
+    self = $(self, initWithData, data, encoding);
+  } else {
+    self = $(self, init);
+  }
+
+  release(data);
+  return self;
+}
+
+/**
+ * @fn String *String::initWithData(String *self, const Data *data, StringEncoding encoding)
+ * @memberof String
+ */
+static String *initWithData(String *self, const Data *data, StringEncoding encoding) {
+
+  assert(data);
+
+  return $(self, initWithBytes, data->bytes, data->length, encoding);
+}
+
+/**
+ * @fn String *String::initWithFormat(String *self, const char *fmt, ...)
+ * @memberof String
+ */
+static String *initWithFormat(String *self, const char *fmt, ...) {
+
+  self = $(self, init);
+  if (self) {
+
+    va_list args;
+    va_start(args, fmt);
+
+    $(self, appendVaList, fmt, args);
+
+    va_end(args);
+  }
+
+  return self;
+}
+
+/**
+ * @fn String *String::initWithString(String *self, const String *string)
+ * @memberof String
+ */
+static String *initWithString(String *self, const String *string) {
+
+  self = $(self, init);
+  if (self) {
+    $(self, appendString, string);
+  }
+
+  return self;
+}
+
+/**
+ * @fn String *String::initWithVaList(String *self, const char *fmt, va_list args)
+ * @memberof String
+ */
+static String *initWithVaList(String *self, const char *fmt, va_list args) {
+
+  self = $(self, init);
+  if (self) {
+    $(self, appendVaList, fmt, args);
+  }
+
+  return self;
+}
+
+/**
+ * @fn void String::insertCharactersAtIndex(String *self, const char *chars, size_t index)
+ * @memberof String
+ */
+static void insertCharactersAtIndex(String *self, const char *chars, size_t index) {
+
+  const Range range = { .location = index };
+
+  $(self, replaceCharactersInRange, range, chars);
+}
+
+/**
+ * @fn void String::insertStringAtIndex(String *self, const String *string, size_t index)
+ * @memberof String
+ */
+static void insertStringAtIndex(String *self, const String *string, size_t index) {
+
+  $(self, insertCharactersAtIndex, string->chars, index);
+}
+
+/**
+ * @fn void String::replaceCharactersInRange(String *self, const Range range, const char *chars)
+ * @memberof String
+ */
+static void replaceCharactersInRange(String *self, const Range range, const char *chars) {
+
+  assert(range.location >= 0);
+  assert(range.location + range.length <= self->length);
+
+  if (self->capacity == 0) {
+    $(self, appendCharacters, chars);
+  } else {
+    char *remainder = strdup(self->chars + range.location + range.length);
+
+    self->length = range.location;
+    self->chars[range.location + 1] = '\0';
+
+    $(self, appendCharacters, chars);
+    $(self, appendCharacters, remainder);
+
+    free(remainder);
+  }
+}
+
+/**
+ * @fn void String::replaceOccurrencesOfCharacters(String *self, const char *chars, const char *replacement)
+ * @memberof String
+ */
+static void replaceOccurrencesOfCharacters(String *self, const char *chars, const char *replacement) {
+  $(self, replaceOccurrencesOfCharactersInRange, chars, (Range) { .length = self->length }, replacement);
+}
+
+/**
+ * @fn void String::replaceOccurrencesOfCharactersInRange(String *self, const char *chars, const Range range, const char *replacement)
+ * @memberof String
+ */
+static void replaceOccurrencesOfCharactersInRange(String *self, const char *chars, const Range range, const char *replacement) {
+
+  assert(chars);
+  assert(replacement);
+
+  assert(range.location >= 0);
+  assert(range.location + range.length <= self->length);
+
+  Range search = range;
+  while (true) {
+
+    const Range result = $((String *) self, rangeOfCharacters, chars, search);
+    if (result.location == -1) {
+      break;
+    }
+
+    $(self, replaceCharactersInRange, result, replacement);
+
+    search.length -= (result.location - search.location);
+    search.length -= strlen(replacement);
+    search.length += ((int) strlen(replacement) - (int) strlen(chars));
+
+    search.location = result.location + strlen(replacement);
+  }
+}
+
+/**
+ * @fn void String::replaceOccurrencesOfString(String *self, const String *string, const String *replacement)
+ * @memberof String
+ */
+static void replaceOccurrencesOfString(String *self, const String *string, const String *replacement) {
+  $(self, replaceOccurrencesOfStringInRange, string, (Range) { .length = self->length }, replacement);
+}
+
+/**
+ * @fn void String::replaceOccurrencesOfStringInRange(String *self, const String *string, const Range range, const String *replacement)
+ * @memberof String
+ */
+static void replaceOccurrencesOfStringInRange(String *self, const String *string, const Range range, const String *replacement) {
+
+  assert(string);
+  assert(replacement);
+
+  $(self, replaceOccurrencesOfCharactersInRange, string->chars, range, replacement->chars);
+}
+
+/**
+ * @fn void String::replaceStringInRange(String *self, const Range range, const String *string)
+ * @memberof String
+ */
+static void replaceStringInRange(String *self, const Range range, const String *string) {
+
+  $(self, replaceCharactersInRange, range, string->chars);
+}
+
+/**
+ * @fn void String::setCharacters(String *self, const char *chars)
+ * @memberof String
+ */
+static void setCharacters(String *self, const char *chars) {
+
+  $(self, setLength, 0);
+
+  $(self, appendCharacters, chars);
+}
+
+/**
+ * @fn void String::setFormat(String *self, const char *fmt, ...)
+ * @memberof String
+ */
+static void setFormat(String *self, const char *fmt, ...) {
+
+  $(self, setLength, 0);
+
+  va_list args;
+  va_start(args, fmt);
+
+  $(self, appendVaList, fmt, args);
+
+  va_end(args);
+}
+
+/**
+ * @fn void String::setLength(String *self, size_t length)
+ * @memberof String
+ */
+static void setLength(String *self, size_t length) {
+
+  if (length < self->length) {
+    self->length = length;
+    self->chars[length] = '\0';
+  }
+}
+
+/**
+ * @fn void String::setString(String *self, const String *string)
+ * @memberof String
+ */
+static void setString(String *self, const String *string) {
+
+  $(self, setLength, 0);
+
+  $(self, appendString, string);
+}
+
+/**
+ * @fn String *String::string(void)
+ * @memberof String
+ */
+static String *string(void) {
+  return $(alloc(String), init);
+}
+
+/**
+ * @fn String *String::stringWithCapacity(size_t capacity)
+ * @memberof String
+ */
+static String *stringWithCapacity(size_t capacity) {
+  return $(alloc(String), initWithCapacity, capacity);
+}
+
+/**
+ * @fn void String::trim(String *self)
+ * @memberof String
+ */
+static void trim(String *self) {
+
+  String *trimmed = $((String *) self, trimmedString);
+
+  $(self, replaceStringInRange, (const Range) { .length = self->length }, trimmed);
+
+  release(trimmed);
+}
+
 #pragma mark - Class lifecycle
 
 /**
@@ -629,7 +937,30 @@ static void initialize(Class *clazz) {
   ((StringInterface *) clazz->interface)->initWithMemory = initWithMemory;
   ((StringInterface *) clazz->interface)->initWithVaList = initWithVaList;
   ((StringInterface *) clazz->interface)->lowercaseString = lowercaseString;
-  ((StringInterface *) clazz->interface)->mutableCopy = mutableCopy;
+  ((StringInterface *) clazz->interface)->appendBytes = appendBytes;
+  ((StringInterface *) clazz->interface)->appendCharacters = appendCharacters;
+  ((StringInterface *) clazz->interface)->appendFormat = appendFormat;
+  ((StringInterface *) clazz->interface)->appendString = appendString;
+  ((StringInterface *) clazz->interface)->appendVaList = appendVaList;
+  ((StringInterface *) clazz->interface)->deleteCharactersInRange = deleteCharactersInRange;
+  ((StringInterface *) clazz->interface)->init = init;
+  ((StringInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
+  ((StringInterface *) clazz->interface)->initWithString = initWithString;
+  ((StringInterface *) clazz->interface)->insertCharactersAtIndex = insertCharactersAtIndex;
+  ((StringInterface *) clazz->interface)->insertStringAtIndex = insertStringAtIndex;
+  ((StringInterface *) clazz->interface)->replaceCharactersInRange = replaceCharactersInRange;
+  ((StringInterface *) clazz->interface)->replaceOccurrencesOfCharacters = replaceOccurrencesOfCharacters;
+  ((StringInterface *) clazz->interface)->replaceOccurrencesOfCharactersInRange = replaceOccurrencesOfCharactersInRange;
+  ((StringInterface *) clazz->interface)->replaceOccurrencesOfString = replaceOccurrencesOfString;
+  ((StringInterface *) clazz->interface)->replaceOccurrencesOfStringInRange = replaceOccurrencesOfStringInRange;
+  ((StringInterface *) clazz->interface)->replaceStringInRange = replaceStringInRange;
+  ((StringInterface *) clazz->interface)->setCharacters = setCharacters;
+  ((StringInterface *) clazz->interface)->setFormat = setFormat;
+  ((StringInterface *) clazz->interface)->setLength = setLength;
+  ((StringInterface *) clazz->interface)->setString = setString;
+  ((StringInterface *) clazz->interface)->string = string;
+  ((StringInterface *) clazz->interface)->stringWithCapacity = stringWithCapacity;
+  ((StringInterface *) clazz->interface)->trim = trim;
   ((StringInterface *) clazz->interface)->rangeOfCharacters = rangeOfCharacters;
   ((StringInterface *) clazz->interface)->rangeOfString = rangeOfString;
   ((StringInterface *) clazz->interface)->stringWithBytes = stringWithBytes;
@@ -764,4 +1095,17 @@ char *strtrim(const char *s) {
   }
 
   return trimmed;
+}
+
+String *mstr(const char *fmt, ...) {
+
+  String *string = $$(String, string);
+
+  va_list args;
+  va_start(args, fmt);
+
+  $(string, appendVaList, fmt, args);
+
+  va_end(args);
+  return string;
 }

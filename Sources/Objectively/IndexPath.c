@@ -27,7 +27,7 @@
 
 #include "Hash.h"
 #include "IndexPath.h"
-#include "MutableString.h"
+#include "String.h"
 
 #define _Class _IndexPath
 
@@ -62,7 +62,7 @@ static void dealloc(Object *self) {
 static String *description(const Object *self) {
 
   const IndexPath *this = (IndexPath *) self;
-  MutableString *desc = mstr("[");
+  String *desc = mstr("[");
 
   for (size_t i = 0; i < this->length; i++) {
     $(desc, appendFormat, "%d", this->indexes[i]);

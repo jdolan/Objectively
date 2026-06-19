@@ -38,7 +38,7 @@ typedef struct URLSessionInterface URLSessionInterface;
 
 #include <Objectively/Condition.h>
 #include <Objectively/Lock.h>
-#include <Objectively/MutableArray.h>
+#include <Objectively/Array.h>
 #include <Objectively/Object.h>
 #include <Objectively/Thread.h>
 #include <Objectively/URLRequest.h>
@@ -84,7 +84,7 @@ struct URLSession {
     /**
      * @brief The URLSessionTasks.
      */
-    MutableArray *tasks;
+    Array *tasks;
 
     /**
      * @brief The backing Thread.

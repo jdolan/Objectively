@@ -32,7 +32,7 @@
 
 /**
  * @file
- * @brief Immutable UTF-8 strings.
+ * @brief UTF-8 strings.
  */
 
 /**
@@ -57,7 +57,7 @@ typedef enum {
 typedef struct StringInterface StringInterface;
 
 /**
- * @brief Immutable UTF-8 strings.
+ * @brief UTF-8 strings.
  * @remarks Because Strings are encoded using UTF-8, they must not be treated as ASCII C strings.
  * That is, a single Unicode code point will often span multiple `char`s. Be mindful of this when
  * executing Range operations.
@@ -88,9 +88,14 @@ struct String {
    * @brief The length of the String in bytes.
    */
   size_t length;
+
+  /**
+   * @brief The capacity.
+   * @private
+   */
+  size_t capacity;
 };
 
-typedef struct MutableString MutableString;
 
 /**
  * @brief The String interface.
@@ -250,12 +255,12 @@ struct StringInterface {
   String *(*lowercaseString)(const String *self);
 
   /**
-   * @fn MutableString *String::mutableCopy(const String *self)
+   * @fn String *String::copy(const String *self)
    * @param self The String.
-   * @return A MutableString with the contents of this String.
+   * @return A String with the contents of this String.
    * @memberof String
    */
-  MutableString *(*mutableCopy)(const String *self);
+  String *(*copy)(const String *self);
 
   /**
    * @fn Range String::rangeOfCharacters(const String *self, const char *chars, const Range range)
@@ -382,6 +387,236 @@ struct StringInterface {
    * @memberof String
    */
   bool (*writeToFile)(const String *self, const char *path, StringEncoding encoding);
+  /**
+   * @fn void String::appendBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding)
+   * @brief Appends the decoded contents of `bytes`.
+   * @param self The String.
+   * @param bytes The bytes.
+   * @param length The length of `bytes` to decode.
+   * @param encoding The character encoding.
+   * @memberof String
+   */
+  void (*appendBytes)(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding);
+
+  /**
+   * @fn void String::appendCharacters(String *self, const char *chars)
+   * @brief Appends the specified UTF-8 encoded C string.
+   * @param self The String.
+   * @param chars A UTF-encoded C string.
+   * @memberof String
+   */
+  void (*appendCharacters)(String *self, const char *chars);
+
+  /**
+   * @fn void String::appendFormat(String *self, const char *fmt, ...)
+   * @brief Appends the specified formatted string.
+   * @param self The String.
+   * @param fmt The format string.
+   * @memberof String
+   */
+  void (*appendFormat)(String *self, const char *fmt, ...);
+
+  /**
+   * @fn void String::appendString(String *self, const String *string)
+   * @brief Appends the specified String to this String.
+   * @param self The String.
+   * @param string The String to append.
+   * @memberof String
+   */
+  void (*appendString)(String *self, const String *string);
+
+  /**
+   * @fn void String::appendVaList(String *self, const char *fmt, va_list args)
+   * @brief Appends the specified format string.
+   * @param self The String.
+   * @param fmt The format string.
+   * @param args The format arguments.
+   * @memberof String
+   */
+  void (*appendVaList)(String *self, const char *fmt, va_list args);
+
+  /**
+   * @fn void String::deleteCharactersInRange(String *self, const Range range)
+   * @brief Deletes the characters within `range` from this String.
+   * @param self The String.
+   * @param range The Range of characters to delete.
+   * @memberof String
+   */
+  void (*deleteCharactersInRange)(String *self, const Range range);
+
+  /**
+   * @fn String *String::init(String *self)
+   * @brief Initializes this String.
+   * @param self The String.
+   * @return The initialized String, or `NULL` on error.
+   * @memberof String
+   */
+  String *(*init)(String *self);
+
+  /**
+   * @fn String *String::initWithCapacity(String *self, size_t capacity)
+   * @brief Initializes this String with the given `capacity`.
+   * @param self The String.
+   * @param capacity The capacity, in bytes.
+   * @return The initialized String, or `NULL` on error.
+   * @memberof String
+   */
+  String *(*initWithCapacity)(String *self, size_t capacity);
+
+  /**
+   * @fn String *String::initWithString(String *self, const String *string)
+   * @brief Initializes this String with the contents of `string`.
+   * @param self The String.
+   * @param string A String.
+   * @return The initialized String, or `NULL` on error.
+   * @memberof String
+   */
+  String *(*initWithString)(String *self, const String *string);
+
+  /**
+   * @fn void String::insertCharactersAtIndex(String *self, const char *chars, size_t index)
+   * @brief Inserts the specified String at the given index.
+   * @param self The String.
+   * @param chars The null-terminated UTF-8 encoded C string to insert.
+   * @param index The index.
+   * @memberof String
+   */
+  void (*insertCharactersAtIndex)(String *self, const char *chars, size_t index);
+
+  /**
+   * @fn void String::insertStringAtIndex(String *self, const String *string, size_t index)
+   * @brief Inserts the specified String at the given index.
+   * @param self The String.
+   * @param string The String to insert.
+   * @param index The index.
+   * @memberof String
+   */
+  void (*insertStringAtIndex)(String *self, const String *string, size_t index);
+
+  /**
+   * @fn void String::replaceCharactersInRange(String *self, const Range range, const char *chars)
+   * @brief Replaces the characters in `range` with the given characters.
+   * @param self The String.
+   * @param range The Range of characters to replace.
+   * @param chars The null-terminated UTF-8 encoded C string to substitute.
+   * @memberof String
+   */
+  void (*replaceCharactersInRange)(String *self, const Range range, const char *chars);
+
+  /**
+   * @fn void String::replaceOccurrencesOfCharacters(String *self, const char *chars, const char *replacement)
+   * @brief Replaces all occurrences of `chars` with the given `replacement`.
+   * @param self The String.
+   * @param chars The null-terminated UTF-8 encoded C string to replace.
+   * @param replacement The null-terminated UTF-8 encoded C string replacement.
+   * @memberof String
+   */
+  void (*replaceOccurrencesOfCharacters)(String *self, const char *chars, const char *replacement);
+
+  /**
+   * @fn void String::replaceOccurrencesOfCharactersInRange(String *self, const char *chars, const Range range, const char *replacement)
+   * @brief Replaces occurrences of `chars` in `range` with the given `replacement`.
+   * @param self The String.
+   * @param chars The null-terminated UTF-8 encoded C string to replace.
+   * @param range The Range in which to replace.
+   * @param replacement The null-terminated UTF-8 encoded C string replacement.
+   * @memberof String
+   */
+  void (*replaceOccurrencesOfCharactersInRange)(String *self, const char *chars, const Range range, const char *replacement);
+
+  /**
+   * @fn void String::replaceOccurrencesOfString(String *self, const String *string, const String *replacement)
+   * @brief Replaces all occurrences of `string` with the given `replacement`.
+   * @param self The String.
+   * @param string The String to replace.
+   * @param replacement The String replacement.
+   * @memberof String
+   */
+  void (*replaceOccurrencesOfString)(String *self, const String *string, const String *replacement);
+
+  /**
+   * @fn void String::replaceOccurrencesOfStringInRange(String *self, const String *string, const Range range, const String *replacement)
+   * @brief Replaces occurrences of `string` in `range` with the given `replacement`.
+   * @param self The String.
+   * @param string The String to replace.
+   * @param range The Range in which to replace.
+   * @param replacement The String replacement.
+   * @memberof String
+   */
+  void (*replaceOccurrencesOfStringInRange)(String *self, const String *string, const Range range, const String *replacement);
+
+  /**
+   * @fn void String::replaceStringInRange(String *self, const Range range, const String *string)
+   * @brief Replaces the characters in `range` with the contents of `string`.
+   * @param self The String.
+   * @param range The Range of characters to replace.
+   * @param string The String to substitute.
+   * @memberof String
+   */
+  void (*replaceStringInRange)(String *self, const Range range, const String *string);
+
+  /**
+   * @fn void String::setCharacters(String *self, const char *chars)
+   * @brief Sets the contents of this String to `chars`.
+   * @param self The String.
+   * @param chars The characters to set, or NULL.
+   * @memberof String
+   */
+  void (*setCharacters)(String *self, const char *chars);
+
+  /**
+   * @fn void String::setFormat(String *self, const char *chars)
+   * @brief Sets the contents of this String to the formatted string.
+   * @param self The String.
+   * @param fmt The format string.
+   * @memberof String
+   */
+  void (*setFormat)(String *self, const char *fmt, ...);
+
+  /**
+   * @fn void String::setLength(String *self, size_t length)
+   * @brief Sets the length of this String to `length`.
+   * @param self The String.
+   * @param length The length, which must be less than or equal to `capacity`.
+   * @memberof String
+   */
+  void (*setLength)(String *self, size_t length);
+
+  /**
+   * @fn void String::setString(String *self, const String *string)
+   * @brief Sets the contents of this String to that of `string`.
+   * @param self The String.
+   * @param chars The String to set the contents from, or NULL.
+   * @memberof String
+   */
+  void (*setString)(String *self, const String *string);
+
+  /**
+   * @static
+   * @fn String *String::string(void)
+   * @brief Returns a new String.
+   * @return The new String, or `NULL` on error.
+   * @memberof String
+   */
+  String *(*string)(void);
+
+  /**
+   * @static
+   * @fn String *String::stringWithCapacity(size_t capacity)
+   * @brief Returns a new String with the given `capacity`.
+   * @param capacity The desired capacity, in bytes.
+   * @return The new String, or `NULL` on error.
+   * @memberof String
+   */
+  String *(*stringWithCapacity)(size_t capacity);
+
+  /**
+   * @fn void String::trim(String *self)
+   * @brief Trims leading and trailing whitespace from this String.
+   * @param self The String.
+   * @memberof String
+   */
+  void (*trim)(String *self);
 };
 
 /**
@@ -431,3 +666,12 @@ OBJECTIVELY_EXPORT String *str(const char *fmt, ...);
  */
 OBJECTIVELY_EXPORT char *strtrim(const char *s);
 
+
+
+/**
+ * @brief A convenience function for instantiating Strings.
+ * @param fmt The format string.
+ * @return A new String, or `NULL` on error.
+ * @relates String
+ */
+OBJECTIVELY_EXPORT String *mstr(const char *fmt, ...);

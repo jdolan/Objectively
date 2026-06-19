@@ -27,12 +27,12 @@
 
 /**
  * @file
- * @brief Immutable data buffers.
+ * @brief Data buffers.
  */
 
 /**
  * @defgroup ByteStreams Byte Streams
- * @brief Mutable and immutable byte streams.
+ * @brief Byte streams.
  */
 typedef struct Data Data;
 typedef struct DataInterface DataInterface;
@@ -43,7 +43,7 @@ typedef struct DataInterface DataInterface;
 typedef void (*DataDestructor)(ident mem);
 
 /**
- * @brief Immutable data buffers.
+ * @brief Data buffers.
  * @extends Object
  * @ingroup ByteStreams
  */
@@ -74,9 +74,14 @@ struct Data {
    * @brief The length of `bytes`.
    */
   size_t length;
+
+  /**
+   * @brief The capacity.
+   * @private
+   */
+  size_t capacity;
 };
 
-typedef struct MutableData MutableData;
 
 /**
  * @brief The Data interface.
@@ -175,12 +180,12 @@ struct DataInterface {
   Data *(*initWithMemory)(Data *self, ident mem, size_t length);
 
   /**
-   * @fn MutableData *Data::mutableCopy(const Data *self)
+   * @fn Data *Data::copy(const Data *self)
    * @param self The Data.
-   * @return A MutableData with the contents of this Data.
+   * @return A Data with the contents of this Data.
    * @memberof Data
    */
-  MutableData *(*mutableCopy)(const Data *self);
+  Data *(*copy)(const Data *self);
 
   /**
    * @fn bool Data::writeToFile(const Data *self, const char *path)
@@ -191,6 +196,86 @@ struct DataInterface {
    * @memberof Data
    */
   bool (*writeToFile)(const Data *self, const char *path);
+  /**
+   * @fn void Data::appendBytes(Data *self, const uint8_t *bytes, size_t length)
+   * @brief Appends the given `bytes` to this Data.
+   * @param self The Data.
+   * @param bytes The bytes to append.
+   * @param length The length of bytes to append.
+   * @remarks Data are grown in blocks as bytes are appended. This
+   * provides a significant performance gain when frequently appending small
+   * chunks of bytes.
+   * @memberof Data
+   */
+  void (*appendBytes)(Data *self, const uint8_t *bytes, size_t length);
+
+  /**
+   * @fn void Data::appendData(Data *self, const Data *data)
+   * @brief Appends the given `data` to this Data.
+   * @param self The Data.
+   * @param data The Data to append.
+   * @memberof Data
+   */
+  void (*appendData)(Data *self, const Data *data);
+
+  /**
+   * @static
+   * @fn Data *Data::data(void)
+   * @brief Returns a new Data.
+   * @return The new Data, or `NULL` on error.
+   * @memberof Data
+   */
+  Data *(*data)(void);
+
+  /**
+   * @static
+   * @fn Data *Data::dataWithCapacity(size_t capacity)
+   * @brief Returns a new Data with the given `capacity`.
+   * @param capacity The desired capacity in bytes.
+   * @return The new Data, or `NULL` on error.
+   * @memberof Data
+   */
+  Data *(*dataWithCapacity)(size_t capacity);
+
+  /**
+   * @fn Data *Data::init(Data *self)
+   * @brief Initializes this Data with length `0`.
+   * @param self The Data.
+   * @return The initialized Data, or `NULL` on error.
+   * @memberof Data
+   */
+  Data *(*init)(Data *self);
+
+  /**
+   * @fn Data *Data::initWithCapacity(Data *self, size_t capacity)
+   * @brief Initializes this Data with the given capacity.
+   * @param self The Data.
+   * @param capacity The capacity in bytes.
+   * @return The initialized Data, or `NULL` on error.
+   * @memberof Data
+   */
+  Data *(*initWithCapacity)(Data *self, size_t capacity);
+
+  /**
+   * @fn Data *Data::initWithData(Data *self, const Data *data)
+   * @brief Initializes this Data with the contents of `data`.
+   * @param self The Data.
+   * @param data A Data.
+   * @return The initialized Data, or `NULL` on error.
+   * @memberof Data
+   */
+  Data *(*initWithData)(Data *self, const Data *data);
+
+  /**
+   * @fn void Data::setLength(Data *self, size_t length)
+   * @brief Sets the length of this Data, truncating or expanding it.
+   * @param self The Data.
+   * @param length The new desired length.
+   * @remarks If the data is expanded, the newly allocated bytes are filled
+   * with zeros.
+   * @memberof Data
+   */
+  void (*setLength)(Data *self, size_t length);
 };
 
 /**

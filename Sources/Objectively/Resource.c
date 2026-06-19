@@ -26,15 +26,15 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#include "MutableArray.h"
+#include "Array.h"
 #include "Resource.h"
 #include "String.h"
 #include "Value.h"
 
 #define _Class _Resource
 
-static MutableArray *_resourcePaths;
-static MutableArray *_resourceProviders;
+static Array *_resourcePaths;
+static Array *_resourceProviders;
 
 #pragma mark - Object
 
@@ -203,7 +203,7 @@ static void initialize(Class *clazz) {
   ((ResourceInterface *) clazz->interface)->removeResourceProvider = removeResourceProvider;
   ((ResourceInterface *) clazz->interface)->resourceWithName = resourceWithName;
 
-  _resourcePaths = $(alloc(MutableArray), init);
+  _resourcePaths = $(alloc(Array), init);
   assert(_resourcePaths);
 
   const char *env = getenv("OBJECTIVELY_RESOURCE_PATH");
@@ -222,7 +222,7 @@ static void initialize(Class *clazz) {
 
   addResourcePath(".");
 
-  _resourceProviders = $(alloc(MutableArray), init);
+  _resourceProviders = $(alloc(Array), init);
   assert(_resourceProviders);
 }
 

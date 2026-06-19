@@ -168,7 +168,7 @@ static OperationQueue *init(OperationQueue *self) {
     self->locals.condition = $(alloc(Condition), init);
     assert(self->locals.condition);
 
-    self->locals.operations = $(alloc(MutableArray), init);
+    self->locals.operations = $(alloc(Array), init);
     assert(self->locals.operations);
 
     self->locals.thread = $(alloc(Thread), initWithFunction, run, self);

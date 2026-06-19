@@ -26,12 +26,14 @@
 #include <stdlib.h>
 
 #include "Hash.h"
-#include "MutableArray.h"
-#include "MutableSet.h"
 #include "Set.h"
 #include "String.h"
 
 #define _Class _Set
+
+#define SET_DEFAULT_CAPACITY 64
+#define SET_GROW_FACTOR 2.0
+#define SET_MAX_LOAD 0.75f
 
 #pragma mark - Object
 
@@ -42,7 +44,9 @@ static Object *copy(const Object *self) {
 
   const Set *this = (Set *) self;
 
-  Set *that = $(alloc(Set), initWithSet, this);
+  Set *that = $(alloc(Set), initWithCapacity, this->capacity);
+
+  $(that, addObjectsFromSet, this);
 
   return (Object *) that;
 }
@@ -129,10 +133,103 @@ static bool isEqual(const Object *self, const Object *other) {
 #pragma mark - Set
 
 /**
+ * @brief A helper for resizing Sets as Objects are added to them.
+ * @remarks Static method invocations are used for all operations.
+ */
+static void addObject_resize(Set *set) {
+
+  if (set->capacity) {
+
+    const float load = set->count / (float) set->capacity;
+    if (load >= SET_MAX_LOAD) {
+
+      size_t capacity = set->capacity;
+      ident *elements = set->elements;
+
+      set->capacity = set->capacity * SET_GROW_FACTOR;
+      set->count = 0;
+
+      set->elements = calloc(set->capacity, sizeof(ident));
+      assert(set->elements);
+
+      for (size_t i = 0; i < capacity; i++) {
+
+        Array *array = elements[i];
+        if (array) {
+          $(set, addObjectsFromArray, array);
+          release(array);
+        }
+      }
+
+      free(elements);
+    }
+  } else {
+    $(set, initWithCapacity, SET_DEFAULT_CAPACITY);
+  }
+}
+
+/**
+ * @fn void Set::addObject(Set *self, const ident obj)
+ * @memberof Set
+ */
+static void addObject(Set *self, const ident obj) {
+
+  addObject_resize(self);
+
+  const size_t bin = HashForObject(HASH_SEED, obj) % self->capacity;
+
+  Array *array = self->elements[bin];
+  if (array == NULL) {
+    array = self->elements[bin] = $(alloc(Array), init);
+  }
+
+  if ($((Array *) array, containsObject, obj) == false) {
+    $(array, addObject, obj);
+    self->count++;
+  }
+}
+
+/**
+ * @brief ArrayEnumerator for addObjectsFromArray.
+ */
+static void addObjectsFromArray_enumerator(const Array *array, ident obj, ident data) {
+  $((Set *) data, addObject, obj);
+}
+
+/**
+ * @fn void Set::addObjectsFromArray(Set *self, const Array *array)
+ * @memberof Set
+ */
+static void addObjectsFromArray(Set *self, const Array *array) {
+
+  if (array) {
+    $(array, enumerateObjects, addObjectsFromArray_enumerator, self);
+  }
+}
+
+/**
+ * @brief SetEnumerator for addObjectsFromSet.
+ */
+static void addObjectsFromSet_enumerator(const Set *set, ident obj, ident data) {
+  $((Set *) data, addObject, obj);
+}
+
+/**
+ * @fn void Set::addObjectsFromSet(Set *self, const Set *set)
+ * @memberof Set
+ */
+static void addObjectsFromSet(Set *self, const Set *set) {
+
+  if (set) {
+    $(set, enumerateObjects, addObjectsFromSet_enumerator, self);
+  }
+}
+
+/**
  * @brief SetEnumerator for allObjects.
  */
 static void allObjects_enumerator(const Set *set, ident obj, ident data) {
-  $((MutableArray *) data, addObject, obj);
+  $((Array *) data, addObject, obj);
 }
 
 /**
@@ -141,11 +238,11 @@ static void allObjects_enumerator(const Set *set, ident obj, ident data) {
  */
 static Array *allObjects(const Set *self) {
 
-  MutableArray *objects = $(alloc(MutableArray), initWithCapacity, self->count);
+  Array *objects = $(alloc(Array), initWithCapacity, self->count);
 
   $(self, enumerateObjects, allObjects_enumerator, objects);
 
-  return (Array *) objects;
+  return objects;
 }
 
 /**
@@ -211,6 +308,33 @@ static void enumerateObjects(const Set *self, SetEnumerator enumerator, ident da
 }
 
 /**
+ * @fn void Set::filter(Set *self, Predicate predicate, ident data)
+ * @memberof Set
+ */
+static void filter(Set *self, Predicate predicate, ident data) {
+
+  assert(predicate);
+
+  self->count = 0;
+
+  for (size_t i = 0; i < self->capacity; i++) {
+
+    Array *array = self->elements[i];
+    if (array) {
+
+      $(array, filter, predicate, data);
+
+      if (array->count == 0) {
+        release(array);
+        self->elements[i] = NULL;
+      } else {
+        self->count += array->count;
+      }
+    }
+  }
+}
+
+/**
  * @fn Set *Set::filteredSet(const Set *self, Predicate predicate, ident data)
  * @memberof Set
  */
@@ -218,7 +342,7 @@ static Set *filteredSet(const Set *self, Predicate predicate, ident data) {
 
   assert(predicate);
 
-  MutableSet *set = $(alloc(MutableSet), init);
+  Set *set = $(alloc(Set), init);
 
   for (size_t i = 0; i < self->capacity; i++) {
 
@@ -235,14 +359,23 @@ static Set *filteredSet(const Set *self, Predicate predicate, ident data) {
     }
   }
 
-  return (Set *) set;
+  return set;
+}
+
+/**
+ * @fn Set *Set::init(Set *self)
+ * @memberof Set
+ */
+static Set *init(Set *self) {
+
+  return $(self, initWithCapacity, SET_DEFAULT_CAPACITY);
 }
 
 /**
  * @brief ArrayEnumerator for initWithArray.
  */
 static void initWithArray_enumerator(const Array *array, ident obj, ident data) {
-  $$(MutableSet, addObject, (MutableSet *) data, obj);
+  $((Set *) data, addObject, obj);
 }
 
 /**
@@ -255,6 +388,26 @@ static Set *initWithArray(Set *self, const Array *array) {
   if (self) {
     if (array) {
       $(array, enumerateObjects, initWithArray_enumerator, self);
+    }
+  }
+
+  return self;
+}
+
+/**
+ * @fn Set *Set::initWithCapacity(Set *self, size_t capacity)
+ * @memberof Set
+ */
+static Set *initWithCapacity(Set *self, size_t capacity) {
+
+  self = (Set *) super(Object, self, init);
+  if (self) {
+
+    self->capacity = capacity;
+    if (self->capacity) {
+
+      self->elements = calloc(self->capacity, sizeof(ident));
+      assert(self->elements);
     }
   }
 
@@ -277,7 +430,7 @@ static Set *initWithObjects(Set *self, ...) {
 
       ident obj = va_arg(args, ident);
       if (obj) {
-        $$(MutableSet, addObject, (MutableSet *) self, obj);
+        $(self, addObject, obj);
       } else {
         break;
       }
@@ -293,7 +446,7 @@ static Set *initWithObjects(Set *self, ...) {
  * @brief SetEnumerator for initWithSet.
  */
 static void initWithSet_enumerator(const Set *set, ident obj, ident data) {
-  $$(MutableSet, addObject, (MutableSet *) data, obj);
+  $((Set *) data, addObject, obj);
 }
 
 /**
@@ -320,7 +473,7 @@ static Set *mappedSet(const Set *self, Functor functor, ident data) {
 
   assert(functor);
 
-  MutableSet *set = $(alloc(MutableSet), initWithCapacity, self->count);
+  Set *set = $(alloc(Set), initWithCapacity, self->count);
   assert(set);
 
   for (size_t i = 0; i < self->capacity; i++) {
@@ -339,20 +492,7 @@ static Set *mappedSet(const Set *self, Functor functor, ident data) {
     }
   }
 
-  return (Set *) set;
-}
-
-/**
- * @fn MutableSet *Set::mutableCopy(const Set *self)
- * @memberof Set
- */
-static MutableSet *mutableCopy(const Set *self) {
-
-  MutableSet *copy = $(alloc(MutableSet), initWithCapacity, self->count);
-  assert(copy);
-
-  $(copy, addObjectsFromSet, self);
-  return copy;
+  return set;
 }
 
 /**
@@ -378,12 +518,78 @@ static ident reduce(const Set *self, Reducer reducer, ident accumulator, ident d
 }
 
 /**
+ * @fn void Set::removeAllObjects(Set *self)
+ * @memberof Set
+ */
+static void removeAllObjects(Set *self) {
+
+  for (size_t i = 0; i < self->capacity; i++) {
+
+    Array *array = self->elements[i];
+    if (array) {
+      release(array);
+      self->elements[i] = NULL;
+    }
+  }
+
+  self->count = 0;
+}
+
+/**
+ * @fn void Set::removeObject(Set *self, const ident obj)
+ * @memberof Set
+ */
+static void removeObject(Set *self, const ident obj) {
+
+  if (self->capacity == 0) {
+    return;
+  }
+
+  const size_t bin = HashForObject(HASH_SEED, obj) % self->capacity;
+
+  Array *array = self->elements[bin];
+  if (array) {
+
+    const ssize_t index = $(array, indexOfObject, obj);
+    if (index > -1) {
+
+      $(array, removeObjectAtIndex, index);
+
+      if (((Array *) array)->count == 0) {
+        release(array);
+        self->elements[bin] = NULL;
+      }
+
+      self->count--;
+    }
+  }
+}
+
+/**
+ * @fn Set *Set::set(void)
+ * @memberof Set
+ */
+static Set *set(void) {
+
+  return $(alloc(Set), init);
+}
+
+/**
  * @fn Set *Set::setWithArray(const Array *array)
  * @memberof Set
  */
 static Set *setWithArray(const Array *array) {
 
   return $(alloc(Set), initWithArray, array);
+}
+
+/**
+ * @fn Set *Set::setWithCapacity(size_t capacity)
+ * @memberof Set
+ */
+static Set *setWithCapacity(size_t capacity) {
+
+  return $(alloc(Set), initWithCapacity, capacity);
 }
 
 /**
@@ -399,7 +605,7 @@ static Set *setWithObjects(ident obj, ...) {
     va_start(args, obj);
 
     while (obj) {
-      $$(MutableSet, addObject, (MutableSet * ) set, obj);
+      $(set, addObject, obj);
       obj = va_arg(args, ident);
     }
 
@@ -431,18 +637,27 @@ static void initialize(Class *clazz) {
   ((ObjectInterface *) clazz->interface)->hash = hash;
   ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
+  ((SetInterface *) clazz->interface)->addObject = addObject;
+  ((SetInterface *) clazz->interface)->addObjectsFromArray = addObjectsFromArray;
+  ((SetInterface *) clazz->interface)->addObjectsFromSet = addObjectsFromSet;
   ((SetInterface *) clazz->interface)->allObjects = allObjects;
   ((SetInterface *) clazz->interface)->containsObject = containsObject;
   ((SetInterface *) clazz->interface)->containsObjectMatching = containsObjectMatching;
   ((SetInterface *) clazz->interface)->enumerateObjects = enumerateObjects;
+  ((SetInterface *) clazz->interface)->filter = filter;
   ((SetInterface *) clazz->interface)->filteredSet = filteredSet;
+  ((SetInterface *) clazz->interface)->init = init;
   ((SetInterface *) clazz->interface)->initWithArray = initWithArray;
-  ((SetInterface *) clazz->interface)->initWithSet = initWithSet;
+  ((SetInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
   ((SetInterface *) clazz->interface)->initWithObjects = initWithObjects;
+  ((SetInterface *) clazz->interface)->initWithSet = initWithSet;
   ((SetInterface *) clazz->interface)->mappedSet = mappedSet;
-  ((SetInterface *) clazz->interface)->mutableCopy = mutableCopy;
   ((SetInterface *) clazz->interface)->reduce = reduce;
+  ((SetInterface *) clazz->interface)->removeAllObjects = removeAllObjects;
+  ((SetInterface *) clazz->interface)->removeObject = removeObject;
+  ((SetInterface *) clazz->interface)->set = set;
   ((SetInterface *) clazz->interface)->setWithArray = setWithArray;
+  ((SetInterface *) clazz->interface)->setWithCapacity = setWithCapacity;
   ((SetInterface *) clazz->interface)->setWithObjects = setWithObjects;
   ((SetInterface *) clazz->interface)->setWithSet = setWithSet;
 }
@@ -470,4 +685,3 @@ Class *_Set(void) {
 }
 
 #undef _Class
-

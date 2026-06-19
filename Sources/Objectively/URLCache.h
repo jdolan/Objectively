@@ -25,7 +25,7 @@
 
 #include <Objectively/URLCachedResponse.h>
 #include <Objectively/Lock.h>
-#include <Objectively/MutableDictionary.h>
+#include <Objectively/Dictionary.h>
 #include <Objectively/URLRequest.h>
 
 /**
@@ -62,7 +62,7 @@ struct URLCache {
   /**
    * @brief The cached responses, keyed by URLRequest.
    */
-  MutableDictionary *responses;
+  Dictionary *responses;
 
   /**
    * @brief The current cached body size.

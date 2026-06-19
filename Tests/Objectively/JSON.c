@@ -89,7 +89,7 @@ START_TEST(json_escaping) {
 
   JSONContext *ctx = $(alloc(JSONContext), init);
 
-  MutableDictionary *dict0 = $(alloc(MutableDictionary), init);
+  Dictionary *dict0 = $(alloc(Dictionary), init);
   for (size_t i = 0; i < lengthof(cases); i++) {
     String *key = $$(String, stringWithCharacters, cases[i].key);
     String *val = $$(String, stringWithCharacters, cases[i].value);
@@ -131,7 +131,7 @@ START_TEST(json_array_toplevel) {
 
   JSONContext *ctx = $(alloc(JSONContext), init);
 
-  MutableArray *arr = $(alloc(MutableArray), init);
+  Array *arr = $(alloc(Array), init);
 
   String *s1 = $$(String, stringWithCharacters, "hello");
   String *s2 = $$(String, stringWithCharacters, "world");
@@ -302,7 +302,7 @@ START_TEST(json_nested_callbacks) {
 
   JSONContext *ctx = $(alloc(JSONContext), init);
 
-  MutableDictionary *dict = $(alloc(MutableDictionary), init);
+  Dictionary *dict = $(alloc(Dictionary), init);
 
   String *kTitle = $$(String, stringWithCharacters, "title");
   String *vTitle = $$(String, stringWithCharacters, "outer");
@@ -310,7 +310,7 @@ START_TEST(json_nested_callbacks) {
   release(kTitle);
   release(vTitle);
 
-  MutableDictionary *owner = $(alloc(MutableDictionary), init);
+  Dictionary *owner = $(alloc(Dictionary), init);
   String *kName = $$(String, stringWithCharacters, "name");
   String *vName = $$(String, stringWithCharacters, "Alice");
   $(owner, setObjectForKey, vName, kName);
@@ -328,9 +328,9 @@ START_TEST(json_nested_callbacks) {
   release(kOwner);
   release(owner);
 
-  MutableArray *items = $(alloc(MutableArray), init);
+  Array *items = $(alloc(Array), init);
   for (size_t i = 0; i < 2; i++) {
-    MutableDictionary *item = $(alloc(MutableDictionary), init);
+    Dictionary *item = $(alloc(Dictionary), init);
 
     String *key = $$(String, stringWithCharacters, "name");
     String *name = $$(String, stringWithCharacters, i == 0 ? "one" : "two");
@@ -507,7 +507,7 @@ START_TEST(json_frag_t) {
 
 /**
  * @brief Tests Object-type serializers/deserializers: String, URL, Date,
- * MutableArray, MutableSet, MutableDictionary.
+ * Array, Set, Dictionary.
  */
 START_TEST(json_object_properties) {
 
@@ -515,18 +515,18 @@ START_TEST(json_object_properties) {
     String *name;
     URL *url;
     Date *date;
-    MutableArray *tags;
-    MutableSet *flags;
-    MutableDictionary *meta;
+    Array *tags;
+    Set *flags;
+    Dictionary *meta;
   } TestRecord;
 
   const JSONProperties properties = MakeJSONProperties(TestRecord,
     MakeJSONProperty(TestRecord, name, JSONSerializeString, JSONDeserializeString, NULL),
     MakeJSONProperty(TestRecord, url, JSONSerializeURL, JSONDeserializeURL, NULL),
     MakeJSONProperty(TestRecord, date, JSONSerializeDate, JSONDeserializeDate, NULL),
-    MakeJSONProperty(TestRecord, tags, JSONSerializeMutableArray, JSONDeserializeMutableArray, NULL),
-    MakeJSONProperty(TestRecord, flags, JSONSerializeMutableSet, JSONDeserializeMutableSet, NULL),
-    MakeJSONProperty(TestRecord, meta, JSONSerializeMutableDictionary, JSONDeserializeMutableDictionary, NULL)
+    MakeJSONProperty(TestRecord, tags, JSONSerializeObjectArray, JSONDeserializeObjectArray, NULL),
+    MakeJSONProperty(TestRecord, flags, JSONSerializeSet, JSONDeserializeSet, NULL),
+    MakeJSONProperty(TestRecord, meta, JSONSerializeDictionary, JSONDeserializeDictionary, NULL)
   );
 
   JSONContext *ctx = $(alloc(JSONContext), init);
@@ -537,19 +537,19 @@ START_TEST(json_object_properties) {
   src.url  = $(alloc(URL), initWithCharacters, "https://quetoo.org");
   src.date = $$(Date, dateWithTimeSinceNow, NULL);
 
-  src.tags = $(alloc(MutableArray), init);
+  src.tags = $(alloc(Array), init);
   String *t1 = $$(String, stringWithCharacters, "fps");
   String *t2 = $$(String, stringWithCharacters, "oss");
   $(src.tags, addObject, t1);
   $(src.tags, addObject, t2);
   release(t1); release(t2);
 
-  src.flags = $(alloc(MutableSet), init);
+  src.flags = $(alloc(Set), init);
   String *f1 = $$(String, stringWithCharacters, "dedicated");
   $(src.flags, addObject, f1);
   release(f1);
 
-  src.meta = $(alloc(MutableDictionary), init);
+  src.meta = $(alloc(Dictionary), init);
   String *mk = $$(String, stringWithCharacters, "version");
   Number *mv = $$(Number, numberWithValue, 1.0);
   $(src.meta, setObjectForKey, mv, mk);

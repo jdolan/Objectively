@@ -29,9 +29,9 @@
 #include <Objectively/Array.h>
 #include <Objectively/Date.h>
 #include <Objectively/Dictionary.h>
-#include <Objectively/MutableArray.h>
-#include <Objectively/MutableDictionary.h>
-#include <Objectively/MutableSet.h>
+#include <Objectively/Array.h>
+#include <Objectively/Dictionary.h>
+#include <Objectively/Set.h>
 #include <Objectively/Object.h>
 #include <Objectively/URL.h>
 
@@ -497,64 +497,64 @@ OBJECTIVELY_EXPORT bool JSONDeserializeDate(const JSONProperties *properties,
                                             JSONContext *context);
 
 /**
- * @brief Serializes a `MutableArray *` field to a JSON array.
+ * @brief Serializes an `Array *` field to a JSON array.
  * @details Elements are written as-is; each must be a JSON-compatible Objectively type.
  */
-OBJECTIVELY_EXPORT ident JSONSerializeMutableArray(const JSONProperties *properties,
+OBJECTIVELY_EXPORT ident JSONSerializeObjectArray(const JSONProperties *properties,
                                                    const JSONProperty *property,
                                                    ident value,
                                                    ident data,
                                                    JSONContext *context);
 
 /**
- * @brief Deserializes a JSON array into a `MutableArray *` field.
- * @details The existing MutableArray is released before replacement. Elements are
+ * @brief Deserializes a JSON array into an `Array *` field.
+ * @details The existing Array is released before replacement. Elements are
  *   retained as their parsed Objectively types (String, Number, Boole, etc.).
  * @return `false` if the JSON value is not an Array.
  */
-OBJECTIVELY_EXPORT bool JSONDeserializeMutableArray(const JSONProperties *properties,
+OBJECTIVELY_EXPORT bool JSONDeserializeObjectArray(const JSONProperties *properties,
                                                     const JSONProperty *property,
                                                     const Object *value,
                                                     ident field,
                                                     JSONContext *context);
 
 /**
- * @brief Serializes a `MutableSet *` field to a JSON array.
+ * @brief Serializes a `Set *` field to a JSON array.
  * @details Elements are written as-is; each must be a JSON-compatible Objectively type.
  */
-OBJECTIVELY_EXPORT ident JSONSerializeMutableSet(const JSONProperties *properties,
+OBJECTIVELY_EXPORT ident JSONSerializeSet(const JSONProperties *properties,
                                                  const JSONProperty *property,
                                                  ident value,
                                                  ident data,
                                                  JSONContext *context);
 
 /**
- * @brief Deserializes a JSON array into a `MutableSet *` field.
- * @details The existing MutableSet is released before replacement.
+ * @brief Deserializes a JSON array into a `Set *` field.
+ * @details The existing Set is released before replacement.
  * @return `false` if the JSON value is not an Array.
  */
-OBJECTIVELY_EXPORT bool JSONDeserializeMutableSet(const JSONProperties *properties,
+OBJECTIVELY_EXPORT bool JSONDeserializeSet(const JSONProperties *properties,
                                                   const JSONProperty *property,
                                                   const Object *value,
                                                   ident field,
                                                   JSONContext *context);
 
 /**
- * @brief Serializes a `MutableDictionary *` field to a JSON object.
+ * @brief Serializes a `Dictionary *` field to a JSON object.
  * @details Values are written as-is; each must be a JSON-compatible Objectively type.
  */
-OBJECTIVELY_EXPORT ident JSONSerializeMutableDictionary(const JSONProperties *properties,
+OBJECTIVELY_EXPORT ident JSONSerializeDictionary(const JSONProperties *properties,
                                                         const JSONProperty *property,
                                                         ident value,
                                                         ident data,
                                                         JSONContext *context);
 
 /**
- * @brief Deserializes a JSON object into a `MutableDictionary *` field.
- * @details The existing MutableDictionary is released before replacement.
+ * @brief Deserializes a JSON object into a `Dictionary *` field.
+ * @details The existing Dictionary is released before replacement.
  * @return `false` if the JSON value is not a Dictionary.
  */
-OBJECTIVELY_EXPORT bool JSONDeserializeMutableDictionary(const JSONProperties *properties,
+OBJECTIVELY_EXPORT bool JSONDeserializeDictionary(const JSONProperties *properties,
                                                          const JSONProperty *property,
                                                          const Object *value,
                                                          ident field,

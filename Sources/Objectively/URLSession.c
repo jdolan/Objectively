@@ -166,10 +166,10 @@ static ident run(Thread *thread) {
 
     bool idle;
     synchronized(self->locals.condition, {
-      while (!thread->isCancelled && self->locals.tasks->array.count == 0) {
+      while (!thread->isCancelled && self->locals.tasks->count == 0) {
         $(self->locals.condition, wait);
       }
-      idle = thread->isCancelled && self->locals.tasks->array.count == 0;
+      idle = thread->isCancelled && self->locals.tasks->count == 0;
     });
 
     if (idle) {
@@ -299,7 +299,7 @@ static URLSession *initWithConfiguration(URLSession *self, URLSessionConfigurati
     self->configuration = retain(configuration);
 
     self->locals.condition = $(alloc(Condition), init);
-    self->locals.tasks = $(alloc(MutableArray), init);
+    self->locals.tasks = $(alloc(Array), init);
     self->locals.thread = $(alloc(Thread), initWithFunction, run, self);
 
     $(self->locals.thread, start);

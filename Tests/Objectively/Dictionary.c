@@ -83,10 +83,98 @@ START_TEST(dictionary) {
 
 } END_TEST
 
+START_TEST(mutableDictionary) {
+
+  Dictionary *dict = $$(Dictionary, dictionaryWithCapacity, 4);
+
+  ck_assert(dict != NULL);
+  ck_assert_ptr_eq(_Dictionary(), classof(dict));
+
+  ck_assert_int_eq(0, dict->count);
+  ck_assert_int_eq(4, dict->capacity);
+
+  Object *objectOne = $(alloc(Object), init);
+  Object *objectTwo = $(alloc(Object), init);
+  Object *objectThree = $(alloc(Object), init);
+
+  String *keyOne = str("one");
+  String *keyTwo = str("two");
+  String *keyThree = str("three");
+
+  $(dict, setObjectForKey, objectOne, keyOne);
+  $(dict, setObjectForKey, objectTwo, keyTwo);
+  $(dict, setObjectForKey, objectThree, keyThree);
+
+  ck_assert_int_eq(3, dict->count);
+
+  ck_assert_ptr_eq(objectOne, $(dict, objectForKey, keyOne));
+  ck_assert_ptr_eq(objectTwo, $(dict, objectForKey, keyTwo));
+  ck_assert_ptr_eq(objectThree, $(dict, objectForKey, keyThree));
+
+  ck_assert_int_eq(2, objectOne->referenceCount);
+  ck_assert_int_eq(2, objectTwo->referenceCount);
+  ck_assert_int_eq(2, objectThree->referenceCount);
+
+  $(dict, removeObjectForKey, keyOne);
+
+  ck_assert_ptr_eq(NULL, $(dict, objectForKey, keyOne));
+  ck_assert_int_eq(1, objectOne->referenceCount);
+  ck_assert_int_eq(2, dict->count);
+
+  $(dict, removeAllObjects);
+
+  ck_assert_int_eq(0, dict->count);
+
+  ck_assert_ptr_eq(NULL, $(dict, objectForKey, keyTwo));
+  ck_assert_int_eq(1, objectTwo->referenceCount);
+
+  ck_assert_ptr_eq(NULL, $(dict, objectForKey, keyThree));
+  ck_assert_int_eq(1, objectThree->referenceCount);
+
+  release(objectOne);
+  release(objectTwo);
+  release(objectThree);
+
+  release(keyOne);
+  release(keyTwo);
+  release(keyThree);
+
+  for (int i = 0; i < 1024; i++) {
+
+    Object *object = $(alloc(Object), init);
+    String *key = $(alloc(String), initWithFormat, "%d", i);
+
+    $(dict, setObjectForKey, object, key);
+
+    release(object);
+    release(key);
+  }
+
+  ck_assert_int_eq(1024, dict->count);
+
+  $(dict, removeAllObjects);
+
+  ck_assert_int_eq(0, dict->count);
+
+  objectOne = $(alloc(Object), init);
+  objectTwo = $(alloc(Object), init);
+
+  $(dict, setObjectsForKeyPaths, objectOne, "one", objectTwo, "two", NULL);
+
+  ck_assert_int_eq(2, dict->count);
+
+  release(objectOne);
+  release(objectTwo);
+
+  release(dict);
+
+} END_TEST
+
 int main(int argc, char **argv) {
 
   TCase *tcase = tcase_create("Dictionary");
   tcase_add_test(tcase, dictionary);
+  tcase_add_test(tcase, mutableDictionary);
 
   Suite *suite = suite_create("Dictionary");
   suite_add_tcase(suite, tcase);

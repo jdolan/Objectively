@@ -43,7 +43,7 @@ static Object *copy(const Object *self) {
 
   const Vector *this = (Vector *) self;
 
-  Vector *copy = (Vector *) $(self, copy);
+  Vector *copy = (Vector *) $((Object *) self, copy);
 
   copy->elements = malloc(this->capacity * this->size);
   memcpy(copy->elements, this->elements, this->count * this->size);

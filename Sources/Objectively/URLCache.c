@@ -214,7 +214,7 @@ static void evictIfNeeded(URLCache *self) {
 
   const Dictionary *dictionary = (Dictionary *) self->responses;
 
-  while (self->currentSize > self->maxSize && self->responses->dictionary.count > 0) {
+  while (self->currentSize > self->maxSize && self->responses->count > 0) {
 
     Array *keys = $(dictionary, allKeys);
 
@@ -294,7 +294,7 @@ static URLCache *init(URLCache *self) {
     self->lock = $(alloc(Lock), init);
     assert(self->lock);
 
-    self->responses = $(alloc(MutableDictionary), init);
+    self->responses = $(alloc(Dictionary), init);
     assert(self->responses);
 
     self->maxSize = URLCACHE_DEFAULT_MAX_SIZE;

@@ -25,7 +25,7 @@
 
 #include "Error.h"
 #include "Hash.h"
-#include "MutableString.h"
+#include "String.h"
 
 #define _Class _Error
 
@@ -62,7 +62,7 @@ static String *description(const Object *self) {
 
   Error *this = (Error *) self;
 
-  MutableString *desc = $(alloc(MutableString), init);
+  String *desc = $(alloc(String), init);
 
   $(desc, appendFormat, "%ls: %d", this->domain->chars, this->code);
 
