@@ -11,9 +11,11 @@ TESTS = \
 	Data \
 	Date \
 	Dictionary \
+	HashTable \
 	IndexPath \
 	IndexSet \
 	JSON \
+	List \
 	Log \
 	Null \
 	Number \
