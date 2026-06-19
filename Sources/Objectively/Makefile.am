@@ -18,19 +18,15 @@ pkginclude_HEADERS = \
 	Enum.h \
 	Error.h \
 	Hash.h \
+	HashTable.h \
 	IndexPath.h \
 	IndexSet.h \
 	JSONContext.h \
 	JSONPath.h \
 	JSONSerializers.h \
+	List.h \
 	Lock.h \
 	Log.h \
-	MutableArray.h \
-	MutableData.h \
-	MutableDictionary.h \
-	MutableIndexSet.h \
-	MutableSet.h \
-	MutableString.h \
 	Null.h \
 	Number.h \
 	NumberFormatter.h \
@@ -75,19 +71,15 @@ libObjectively_la_SOURCES = \
 	Enum.c \
 	Error.c \
 	Hash.c \
+	HashTable.c \
 	IndexPath.c \
 	IndexSet.c \
 	JSONContext.c \
 	JSONPath.c \
 	JSONSerializers.c \
+	List.c \
 	Lock.c \
 	Log.c \
-	MutableArray.c \
-	MutableData.c \
-	MutableDictionary.c \
-	MutableIndexSet.c \
-	MutableSet.c \
-	MutableString.c \
 	Null.c \
 	Number.c \
 	NumberFormatter.c \
@@ -122,7 +114,8 @@ libObjectively_la_CFLAGS = \
 	@CURL_CFLAGS@
 
 libObjectively_la_LDFLAGS = \
-	@HOST_LDFLAGS@
+	@HOST_LDFLAGS@ \
+	-version-info @LT_VERSION@
 
 libObjectively_la_LIBADD = \
 	-lpthread \

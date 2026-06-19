@@ -27,7 +27,7 @@
 #include <Objectively/Dictionary.h>
 #include <Objectively/Error.h>
 #include <Objectively/JSONSerializers.h>
-#include <Objectively/MutableArray.h>
+#include <Objectively/Array.h>
 #include <Objectively/Object.h>
 
 /**
@@ -86,7 +86,7 @@ struct JSONContext {
    * @brief Errors accumulated during the operation.
    * @details Lazily allocated; `NULL` until the first error is recorded.
    */
-  MutableArray *errors;
+  Array *errors;
 };
 
 /**

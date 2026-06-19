@@ -15,12 +15,6 @@ TESTS = \
 	IndexSet \
 	JSON \
 	Log \
-	MutableArray \
-	MutableData \
-	MutableDictionary \
-	MutableIndexSet \
-	MutableSet \
-	MutableString \
 	Null \
 	Number \
 	Object \

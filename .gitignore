@@ -47,12 +47,6 @@ Tests/Objectively/IndexPath
 Tests/Objectively/IndexSet
 Tests/Objectively/JSON
 Tests/Objectively/Log
-Tests/Objectively/MutableArray
-Tests/Objectively/MutableData
-Tests/Objectively/MutableDictionary
-Tests/Objectively/MutableIndexSet
-Tests/Objectively/MutableSet
-Tests/Objectively/MutableString
 Tests/Objectively/Null
 Tests/Objectively/Number
 Tests/Objectively/Object

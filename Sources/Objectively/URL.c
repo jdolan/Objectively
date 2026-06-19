@@ -24,7 +24,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#include "MutableString.h"
+#include "String.h"
 #include "Regexp.h"
 #include "URL.h"
 
@@ -107,7 +107,7 @@ static bool isEqual(const Object *self, const Object *other) {
  */
 static URL *baseURL(const URL *self) {
 
-  MutableString *string = $(alloc(MutableString), init);
+  String *string = $(alloc(String), init);
 
   $(string, appendString, self->scheme);
   $(string, appendFormat, "://");

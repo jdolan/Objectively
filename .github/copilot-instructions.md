@@ -15,7 +15,7 @@ make -j$(nproc)
 make check
 
 # Run a single test (each test is a standalone binary)
-cd Tests/Objectively && ./MutableString
+cd Tests/Objectively && ./String
 ```
 
 Tests use [libcheck](https://libcheck.github.io/check/). Each test file has its own `main()`.
@@ -114,11 +114,11 @@ These stubs are what allow Doxygen to associate the full header documentation wi
 - `alloc` gives refcount 1. Balance every `retain` with a `release`.
 - `release` always returns `NULL` — assign it back when nulling a field: `self->foo = release(self->foo)`.
 
-### Mutable / immutable pairs
-Mutable types (`MutableArray`, `MutableString`, etc.) extend their immutable counterparts and add mutating methods. The immutable type's `copy` override returns a `Mutable*` instance.
+### Collection mutability
+Collection and data types are directly mutable (`Array`, `String`, `Data`, etc.). `copy` returns the same concrete type.
 
 ### `_pageSize`
-Used in `Mutable*` types for capacity growth calculations (round up to page boundary).
+Used in collection and data types for capacity growth calculations (round up to page boundary).
 
 ### `ident`
 `typedef void *ident` — the generic object pointer type, analogous to Objective-C `id`.

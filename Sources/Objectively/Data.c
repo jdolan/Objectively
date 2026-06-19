@@ -28,7 +28,6 @@
 
 #include "Data.h"
 #include "Hash.h"
-#include "MutableData.h"
 
 #define _Class _Data
 
@@ -41,9 +40,12 @@
  */
 static Object *copy(const Object *self) {
 
-  Data *this = (Data *) self;
+  const Data *this = (const Data *) self;
 
-  return (Object *) $(alloc(Data), initWithBytes, this->bytes, this->length);
+  Data *that = $(alloc(Data), initWithCapacity, this->capacity ?: this->length);
+  $(that, appendBytes, this->bytes, this->length);
+
+  return (Object *) that;
 }
 
 /**
@@ -169,6 +171,7 @@ static Data *initWithConstMemory(Data *self, const ident mem, size_t length) {
   if (self) {
     self->bytes = mem;
     self->length = length;
+    self->capacity = length;
   }
 
   return self;
@@ -224,15 +227,6 @@ static Data *initWithMemory(Data *self, ident mem, size_t length) {
 }
 
 /**
- * @fn MutableData *Data::mutableCopy(const Data *self)
- * @memberof Data
- */
-static MutableData *mutableCopy(const Data *self) {
-
-  return $(alloc(MutableData), initWithData, self);
-}
-
-/**
  * @fn bool Data::writeToFile(const Data *self, const char *path)
  * @memberof Data
  */
@@ -259,6 +253,134 @@ static bool writeToFile(const Data *self, const char *path) {
   return false;
 }
 
+#pragma mark - Data mutation
+
+/**
+ * @fn void Data::appendBytes(Data *self, const uint8_t *bytes, size_t length)
+ * @memberof Data
+ */
+static void appendBytes(Data *self, const uint8_t *bytes, size_t length) {
+
+  const size_t oldLength = self->length;
+
+  $(self, setLength, self->length + length);
+
+  if (length) {
+    memcpy(self->bytes + oldLength, bytes, length);
+  }
+}
+
+/**
+ * @fn void Data::appendData(Data *self, const Data *data)
+ * @memberof Data
+ */
+static void appendData(Data *self, const Data *data) {
+
+  $(self, appendBytes, data->bytes, data->length);
+}
+
+/**
+ * @fn Data *Data::data(void)
+ * @memberof Data
+ */
+static Data *data(void) {
+
+  return $(alloc(Data), init);
+}
+
+/**
+ * @fn Data *Data::dataWithCapacity(size_t capacity)
+ * @memberof Data
+ */
+static Data *dataWithCapacity(size_t capacity) {
+
+  return $(alloc(Data), initWithCapacity, capacity);
+}
+
+/**
+ * @fn Data *Data::init(Data *self)
+ * @memberof Data
+ */
+static Data *init(Data *self) {
+
+  return $(self, initWithCapacity, 0);
+}
+
+/**
+ * @fn Data *Data::initWithCapacity(Data *self, size_t capacity)
+ * @memberof Data
+ */
+static Data *initWithCapacity(Data *self, size_t capacity) {
+
+  self = (Data *) super(Object, self, init);
+  if (self) {
+
+    self->capacity = capacity;
+    if (self->capacity) {
+
+      self->bytes = calloc(capacity, sizeof(uint8_t));
+      assert(self->bytes);
+    }
+
+    self->destroy = free;
+  }
+
+  return self;
+}
+
+/**
+ * @fn Data *Data::initWithData(Data *self, const Data *data)
+ * @memberof Data
+ */
+static Data *initWithData(Data *self, const Data *data) {
+
+  self = $(self, initWithCapacity, data->length);
+  if (self) {
+    $(self, appendData, data);
+  }
+
+  return self;
+}
+
+/**
+ * @fn void Data::setLength(Data *self, size_t length)
+ * @memberof Data
+ */
+static void setLength(Data *self, size_t length) {
+
+  const size_t newCapacity = (length / _pageSize + 1) * _pageSize;
+  if (newCapacity > self->capacity) {
+
+    if (self->bytes == NULL) {
+      self->bytes = calloc(newCapacity, sizeof(uint8_t));
+      assert(self->bytes);
+    } else {
+      if (self->destroy != free) {
+        uint8_t *owned = malloc(newCapacity);
+        assert(owned);
+        memcpy(owned, self->bytes, self->length);
+        if (length > self->length) {
+          memset(owned + self->length, 0, length - self->length);
+        }
+        self->bytes = owned;
+        self->destroy = free;
+      } else {
+        self->bytes = realloc(self->bytes, newCapacity);
+        assert(self->bytes);
+        if (length > self->length) {
+          memset(self->bytes + self->length, 0, length - self->length);
+        }
+      }
+    }
+
+    self->capacity = newCapacity;
+  } else if (length > self->length) {
+    memset(self->bytes + self->length, 0, length - self->length);
+  }
+
+  self->length = length;
+}
+
 #pragma mark - Class lifecycle
 
 /**
@@ -279,7 +401,14 @@ static void initialize(Class *clazz) {
   ((DataInterface *) clazz->interface)->initWithConstMemory = initWithConstMemory;
   ((DataInterface *) clazz->interface)->initWithContentsOfFile = initWithContentsOfFile;
   ((DataInterface *) clazz->interface)->initWithMemory = initWithMemory;
-  ((DataInterface *) clazz->interface)->mutableCopy = mutableCopy;
+  ((DataInterface *) clazz->interface)->appendBytes = appendBytes;
+  ((DataInterface *) clazz->interface)->appendData = appendData;
+  ((DataInterface *) clazz->interface)->data = data;
+  ((DataInterface *) clazz->interface)->dataWithCapacity = dataWithCapacity;
+  ((DataInterface *) clazz->interface)->init = init;
+  ((DataInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
+  ((DataInterface *) clazz->interface)->initWithData = initWithData;
+  ((DataInterface *) clazz->interface)->setLength = setLength;
   ((DataInterface *) clazz->interface)->writeToFile = writeToFile;
 }
 

@@ -31,6 +31,7 @@
     <ClInclude Include="..\Sources\Objectively\Enum.h" />
     <ClInclude Include="..\Sources\Objectively\Error.h" />
     <ClInclude Include="..\Sources\Objectively\Hash.h" />
+    <ClInclude Include="..\Sources\Objectively\HashTable.h" />
     <ClInclude Include="..\Sources\Objectively\IndexPath.h" />
     <ClInclude Include="..\Sources\Objectively\IndexSet.h" />
     <ClInclude Include="..\Sources\Objectively\JSONPath.h" />
@@ -38,11 +39,7 @@
     <ClInclude Include="..\Sources\Objectively\JSONSerializers.h" />
     <ClInclude Include="..\Sources\Objectively\Lock.h" />
     <ClInclude Include="..\Sources\Objectively\Log.h" />
-    <ClInclude Include="..\Sources\Objectively\MutableArray.h" />
-    <ClInclude Include="..\Sources\Objectively\MutableData.h" />
-    <ClInclude Include="..\Sources\Objectively\MutableDictionary.h" />
-    <ClInclude Include="..\Sources\Objectively\MutableSet.h" />
-    <ClInclude Include="..\Sources\Objectively\MutableString.h" />
+    <ClInclude Include="..\Sources\Objectively\List.h" />
     <ClInclude Include="..\Sources\Objectively\Null.h" />
     <ClInclude Include="..\Sources\Objectively\Number.h" />
     <ClInclude Include="..\Sources\Objectively\NumberFormatter.h" />
@@ -92,6 +89,7 @@
     <ClCompile Include="..\Sources\Objectively\Enum.c" />
     <ClCompile Include="..\Sources\Objectively\Error.c" />
     <ClCompile Include="..\Sources\Objectively\Hash.c" />
+    <ClCompile Include="..\Sources\Objectively\HashTable.c" />
     <ClCompile Include="..\Sources\Objectively\IndexPath.c" />
     <ClCompile Include="..\Sources\Objectively\IndexSet.c" />
     <ClCompile Include="..\Sources\Objectively\JSONPath.c" />
@@ -99,11 +97,7 @@
     <ClCompile Include="..\Sources\Objectively\JSONSerializers.c" />
     <ClCompile Include="..\Sources\Objectively\Lock.c" />
     <ClCompile Include="..\Sources\Objectively\Log.c" />
-    <ClCompile Include="..\Sources\Objectively\MutableArray.c" />
-    <ClCompile Include="..\Sources\Objectively\MutableData.c" />
-    <ClCompile Include="..\Sources\Objectively\MutableDictionary.c" />
-    <ClCompile Include="..\Sources\Objectively\MutableSet.c" />
-    <ClCompile Include="..\Sources\Objectively\MutableString.c" />
+    <ClCompile Include="..\Sources\Objectively\List.c" />
     <ClCompile Include="..\Sources\Objectively\Null.c" />
     <ClCompile Include="..\Sources\Objectively\Number.c" />
     <ClCompile Include="..\Sources\Objectively\NumberFormatter.c" />

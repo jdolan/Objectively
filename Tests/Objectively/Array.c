@@ -22,6 +22,7 @@
  */
 
 #include <check.h>
+#include <stdlib.h>
 
 #include "Objectively.h"
 
@@ -93,10 +94,105 @@ START_TEST(array) {
 
 } END_TEST
 
+
+static Order comparator(const ident obj1, const ident obj2) {
+  return $((Number *) obj1, compareTo, (Number *) obj2);
+}
+
+START_TEST(array_mutation) {
+
+  Array *array = $$(Array, array);
+
+  ck_assert(array != NULL);
+  ck_assert_ptr_eq(_Array(), classof(array));
+
+  ck_assert_int_eq(0, ((Array *) array)->count);
+
+  Object *one = $(alloc(Object), init);
+  Object *two = $(alloc(Object), init);
+  Object *three = $(alloc(Object), init);
+
+  $(array, addObject, one);
+  $(array, addObject, two);
+  $(array, addObject, three);
+
+  ck_assert_int_eq(3, ((Array *) array)->count);
+
+  ck_assert($((Array *) array, containsObject, one));
+  ck_assert($((Array *) array, containsObject, two));
+  ck_assert($((Array *) array, containsObject, three));
+
+  ck_assert_int_eq(0, $((Array *) array, indexOfObject, one));
+  ck_assert_int_eq(1, $((Array *) array, indexOfObject, two));
+  ck_assert_int_eq(2, $((Array *) array, indexOfObject, three));
+
+  ck_assert_int_eq(2, one->referenceCount);
+  ck_assert_int_eq(2, two->referenceCount);
+  ck_assert_int_eq(2, three->referenceCount);
+
+  $(array, removeObject, one);
+
+  ck_assert(!$((Array *) array, containsObject, one));
+  ck_assert_int_eq(1, one->referenceCount);
+  ck_assert_int_eq(2, ((Array *) array)->count);
+
+  $(array, insertObjectAtIndex, one, 0);
+
+  ck_assert_int_eq(0, $((Array *) array, indexOfObject, one));
+  ck_assert_int_eq(1, $((Array *) array, indexOfObject, two));
+  ck_assert_int_eq(2, $((Array *) array, indexOfObject, three));
+
+  $(array, removeAllObjects);
+
+  ck_assert_int_eq(0, ((Array *) array)->count);
+
+  ck_assert(!$((Array *) array, containsObject, two));
+  ck_assert_int_eq(1, two->referenceCount);
+
+  ck_assert(!$((Array *) array, containsObject, three));
+  ck_assert_int_eq(1, three->referenceCount);
+
+  release(one);
+  release(two);
+  release(three);
+
+  $(array, removeAllObjects);
+
+  ck_assert_int_eq(((Array *) array)->count, 0);
+
+  for (size_t i = 0; i < 100; i++) {
+
+    Number *number = $$(Number, numberWithValue, rand());
+
+    $(array, addObject, number);
+
+    release(number);
+  }
+
+  $(array, sort, comparator);
+
+  int previous = -1;
+
+  for (size_t i = 0; i < ((Array *) array)->count; i++) {
+
+    Number *number = $((Array *) array, objectAtIndex, i);
+
+    ck_assert_int_ge($(number, intValue), previous);
+
+    previous = $(number, intValue);
+  }
+
+  release(array);
+
+} END_TEST
+
+
 int main(int argc, char **argv) {
 
   TCase *tcase = tcase_create("Array");
   tcase_add_test(tcase, array);
+
+  tcase_add_test(tcase, array_mutation);
 
   Suite *suite = suite_create("Array");
   suite_add_tcase(suite, tcase);

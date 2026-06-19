@@ -27,14 +27,14 @@
 
 /**
  * @file
- * @brief Immutable collections of unique index values.
+ * @brief Collections of unique index values.
  */
 
 typedef struct IndexSet IndexSet;
 typedef struct IndexSetInterface IndexSetInterface;
 
 /**
- * @brief Immutable collections of unique index values.
+ * @brief Collections of unique index values.
  * @extends Object
  * @ingroup Collections
  */
@@ -60,6 +60,12 @@ struct IndexSet {
    * @brief The count of `indexes`.
    */
   size_t count;
+
+  /**
+   * @brief The capacity.
+   * @private
+   */
+  size_t capacity;
 };
 
 /**
@@ -101,6 +107,88 @@ struct IndexSetInterface {
    * @memberof IndexSet
    */
   IndexSet *(*initWithIndexes)(IndexSet *self, size_t *indexes, size_t count);
+  /**
+   * @fn void IndexSet::addIndex(IndexSet *self, size_t index)
+   * @brief Adds the specified index to this IndexSet.
+   * @param self The IndexSet.
+   * @param index The index to add.
+   * @memberof IndexSet
+   */
+  void (*addIndex)(IndexSet *self, size_t index);
+
+  /**
+   * @fn void IndexSet::addIndexes(IndexSet *self, size_t *indexes, size_t count)
+   * @brief Adds the specified indexes to this IndexSet.
+   * @param self The IndexSet.
+   * @param indexes The indexes to add.
+   * @param count The count of indexes.
+   * @memberof IndexSet
+   */
+  void (*addIndexes)(IndexSet *self, size_t *indexes, size_t count);
+
+  /**
+   * @fn void IndexSet::addIndexesInRange(IndexSet *self, const Range range)
+   * @brief Adds indexes in the specified Range to this IndexSet.
+   * @param self The IndexSet.
+   * @param range The Range of indexes to add.
+   * @memberof IndexSet
+   */
+  void (*addIndexesInRange)(IndexSet *self, const Range range);
+
+  /**
+   * @fn IndexSet *IndexSet::init(IndexSet *self)
+   * @brief Initializes this IndexSet.
+   * @param self The IndexSet.
+   * @return The initialized IndexSet, or `NULL` on error.
+   * @memberof IndexSet
+   */
+  IndexSet *(*init)(IndexSet *self);
+
+  /**
+   * @fn IndexSet *IndexSet::initWithCapacity(IndexSet *self, size_t capacity)
+   * @brief Initializes this IndexSet with the specified capacity.
+   * @param self The IndexSet.
+   * @param capacity The capacity.
+   * @return The initialized IndexSet, or `NULL` on error.
+   * @memberof IndexSet
+   */
+  IndexSet *(*initWithCapacity)(IndexSet *self, size_t capacity);
+
+  /**
+   * @fn void IndexSet::removeAllIndexes(IndexSet *self)
+   * @brief Removes all indexes from this IndexSet.
+   * @param self The IndexSet.
+   * @memberof IndexSet
+   */
+  void (*removeAllIndexes)(IndexSet *self);
+
+  /**
+   * @fn void IndexSet::removeIndex(IndexSet *self, size_t index)
+   * @brief Removes the specified index from this IndexSet.
+   * @param self The IndexSet.
+   * @param index The index to remove.
+   * @memberof IndexSet
+   */
+  void (*removeIndex)(IndexSet *self, size_t index);
+
+  /**
+   * @fn void IndexSet::removeIndexes(IndexSet *self, size_t *indexes, size_t count)
+   * @brief Removes the specified indexes from this IndexSet.
+   * @param self The IndexSet.
+   * @param indexes The indexes to remove.
+   * @param count The count of indexes.
+   * @memberof IndexSet
+   */
+  void (*removeIndexes)(IndexSet *self, size_t *indexes, size_t count);
+
+  /**
+  * @fn void IndexSet::removeIndexesInRange(IndexSet *self, const Range range)
+  * @brief Removes indexes in the specified Range from this IndexSet.
+  * @param self The IndexSet.
+  * @param range The Range of indexes to remove.
+  * @memberof IndexSet
+  */
+  void (*removeIndexesInRange)(IndexSet *self, const Range range);
 };
 
 /**

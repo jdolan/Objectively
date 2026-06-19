@@ -21,16 +21,60 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+#include "Config.h"
+
 #include <assert.h>
 #include <stdarg.h>
 #include <stdlib.h>
 
 #include "Array.h"
 #include "Hash.h"
-#include "MutableArray.h"
-#include "MutableString.h"
+#include "String.h"
+
+#if defined(__APPLE__)
+
+/**
+ * @brief BSD qsort_r.
+ */
+static int _quicksort(void *data, const void *a, const void *b) {
+  return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
+}
+
+void quicksort(ident base, size_t count, size_t size, Comparator comparator, ident data) {
+  qsort_r(base, count, size, comparator, _quicksort);
+}
+
+#elif defined(_WIN32)
+
+/**
+ * @brief WIN32 qsort_s.
+ */
+static int _quicksort(void *data, const void *a, const void *b) {
+  return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
+}
+
+void quicksort(ident base, size_t count, size_t size, Comparator comparator, ident data) {
+  qsort_s(base, count, size, _quicksort, comparator);
+}
+
+#else
+
+/**
+ * @brief GNU qsort_r.
+ */
+static int _quicksort(const void *a, const void *b, void *data) {
+  return ((Comparator) data)(*((const ident *) a), *((const ident *) b));
+}
+
+void quicksort(ident base, size_t count, size_t size, Comparator comparator, ident data) {
+  qsort_r(base, count, size, _quicksort, comparator);
+}
+
+#endif
 
 #define _Class _Array
+
+#define ARRAY_CHUNK_SIZE 64
 
 #pragma mark - Object
 
@@ -41,7 +85,12 @@ static Object *copy(const Object *self) {
 
   const Array *this = (Array *) self;
 
-  return (Object *) $(alloc(Array), initWithArray, this);
+  Array *copy = $(alloc(Array), initWithCapacity, this->count);
+  assert(copy);
+
+  $(copy, addObjectsFromArray, this);
+
+  return (Object *) copy;
 }
 
 /**
@@ -125,7 +174,6 @@ static bool isEqual(const Object *self, const Object *other) {
 
 #pragma mark - Array
 
-
 /**
  * @fn Array *Array::arrayWithArray(const Array *array)
  * @memberof Array
@@ -175,7 +223,7 @@ static Array *arrayWithVaList(va_list args) {
  */
 static String *componentsJoinedByCharacters(const Array *self, const char *chars) {
 
-  MutableString *string = $(alloc(MutableString), init);
+  String *string = $(alloc(String), init);
 
   for (size_t i = 0; i < self->count; i++) {
 
@@ -193,7 +241,6 @@ static String *componentsJoinedByCharacters(const Array *self, const char *chars
 }
 
 /**
- **
  * @fn String *Array::componentsJoinedByString(const Array *self, const String *string)
  * @memberof Array
  */
@@ -230,11 +277,11 @@ static Array *filteredArray(const Array *self, Predicate predicate, ident data) 
 
   assert(predicate);
 
-  MutableArray *copy = $(self, mutableCopy);
+  Array *copy = (Array *) $((Object *) self, copy);
 
   $(copy, filter, predicate, data);
 
-  return (Array *) copy;
+  return copy;
 }
 
 /**
@@ -358,7 +405,7 @@ static Array *mappedArray(const Array *self, Functor functor, ident data) {
 
   assert(functor);
 
-  MutableArray *array = $$(MutableArray, arrayWithCapacity, self->count);
+  Array *array = $(alloc(Array), initWithCapacity, self->count);
   assert(array);
   
   for (size_t i = 0; i < self->count; i++) {
@@ -370,20 +417,7 @@ static Array *mappedArray(const Array *self, Functor functor, ident data) {
     release(obj);
   }
 
-  return (Array *) array;
-}
-
-/**
- * @fn MutableArray *Array::mutableCopy(const Array *self)
- * @memberof Array
- */
-static MutableArray *mutableCopy(const Array *self) {
-
-  MutableArray *copy = $(alloc(MutableArray), initWithCapacity, self->count);
-  assert(copy);
-
-  $(copy, addObjectsFromArray, self);
-  return copy;
+  return array;
 }
 
 /**
@@ -420,11 +454,233 @@ static Array *sortedArray(const Array *self, Comparator comparator) {
 
   assert(comparator);
 
-  MutableArray *array = $(self, mutableCopy);
+  Array *array = (Array *) $((Object *) self, copy);
 
   $(array, sort, comparator);
 
-  return (Array *) array;
+  return array;
+}
+
+/**
+ * @fn void Array::addObject(Array *self, const ident obj)
+ * @memberof Array
+ */
+static void addObject(Array *self, const ident obj) {
+
+  if (self->count == self->capacity) {
+
+    self->capacity += ARRAY_CHUNK_SIZE;
+
+    if (self->elements) {
+      self->elements = realloc(self->elements, self->capacity * sizeof(ident));
+    } else {
+      self->elements = calloc(self->capacity, sizeof(ident));
+    }
+
+    assert(self->elements);
+  }
+
+  self->elements[self->count++] = retain(obj);
+}
+
+/**
+ * @fn void Array::addObjects(Array *self, const ident obj, ...)
+ * @memberof Array
+ */
+static void addObjects(Array *self, const ident obj, ...) {
+
+  va_list args;
+  va_start(args, obj);
+
+  ident object = obj;
+  while (object) {
+    $(self, addObject, object);
+    object = va_arg(args, ident);
+  }
+
+  va_end(args);
+}
+
+/**
+ * @fn void Array::addObjectsFromArray(Array *self, const Array *array)
+ * @memberof Array
+ */
+static void addObjectsFromArray(Array *self, const Array *array) {
+
+  if (array) {
+    for (size_t i = 0; i < array->count; i++) {
+      $(self, addObject, array->elements[i]);
+    }
+  }
+}
+
+/**
+ * @fn Array *Array::array(void)
+ * @memberof Array
+ */
+static Array *array(void) {
+
+  return $(alloc(Array), init);
+}
+
+/**
+ * @fn Array *Array::arrayWithCapacity(size_t capacity)
+ * @memberof Array
+ */
+static Array *arrayWithCapacity(size_t capacity) {
+
+  return $(alloc(Array), initWithCapacity, capacity);
+}
+
+/**
+ * @fn void Array::filter(Array *self, Predicate predicate, ident data)
+ * @memberof Array
+ */
+static void filter(Array *self, Predicate predicate, ident data) {
+
+  assert(predicate);
+
+  for (size_t i = 0; i < self->count; i++) {
+    if (predicate(self->elements[i], data) == false) {
+      $(self, removeObjectAtIndex, i--);
+    }
+  }
+}
+
+/**
+ * @fn Array *Array::init(Array *self)
+ * @memberof Array
+ */
+static Array *init(Array *self) {
+
+  return $(self, initWithCapacity, 0);
+}
+
+/**
+ * @fn Array *Array::initWithCapacity(Array *self, size_t capacity)
+ * @memberof Array
+ */
+static Array *initWithCapacity(Array *self, size_t capacity) {
+
+  self = (Array *) super(Object, self, init);
+  if (self) {
+
+    self->capacity = capacity;
+    if (self->capacity) {
+
+      self->elements = calloc(self->capacity, sizeof(ident));
+      assert(self->elements);
+    }
+  }
+
+  return self;
+}
+
+/**
+ * @fn void Array::insertObjectAtIndex(Array *self, ident obj, size_t index)
+ * @memberof Array
+ */
+static void insertObjectAtIndex(Array *self, ident obj, size_t index) {
+
+  assert(index <= self->count);
+
+  $(self, addObject, obj);
+
+  for (size_t i = self->count - 1; i > index; i--) {
+    self->elements[i] = self->elements[i - 1];
+  }
+
+  self->elements[index] = obj;
+}
+
+/**
+ * @fn void Array::removeAllObjects(Array *self)
+ * @memberof Array
+ */
+static void removeAllObjects(Array *self) {
+
+  while (self->count) {
+    $(self, removeLastObject);
+  }
+}
+
+/**
+ * @fn void Array::removeAllObjectsWithEnumerator(Array *self, ArrayEnumerator enumerator, ident data)
+ * @memberof Array
+ */
+static void removeAllObjectsWithEnumerator(Array *self, ArrayEnumerator enumerator, ident data) {
+
+  assert(enumerator);
+
+  while (self->count) {
+
+    enumerator(self, $(self, lastObject), data);
+
+    $(self, removeLastObject);
+  }
+}
+
+/**
+ * @fn void Array::removeLastObject(Array *self)
+ * @memberof Array
+ */
+static void removeLastObject(Array *self) {
+
+  if (self->count) {
+    $(self, removeObjectAtIndex, self->count - 1);
+  }
+}
+
+/**
+ * @fn void Array::removeObject(Array *self, const ident obj)
+ * @memberof Array
+ */
+static void removeObject(Array *self, const ident obj) {
+
+  const ssize_t index = $(self, indexOfObject, obj);
+  if (index > -1) {
+    $(self, removeObjectAtIndex, index);
+  }
+}
+
+/**
+ * @fn void Array::removeObjectAtIndex(Array *self, size_t index)
+ * @memberof Array
+ */
+static void removeObjectAtIndex(Array *self, size_t index) {
+
+  assert(index < self->count);
+
+  release(self->elements[index]);
+
+  for (size_t i = index; i < self->count - 1; i++) {
+    self->elements[i] = self->elements[i + 1];
+  }
+
+  self->count--;
+}
+
+/**
+ * @fn void Array::setObjectAtIndex(Array *self, const ident obj, size_t index)
+ * @memberof Array
+ */
+static void setObjectAtIndex(Array *self, const ident obj, size_t index) {
+
+  assert(index < self->count);
+
+  retain(obj);
+
+  release(self->elements[index]);
+
+  self->elements[index] = obj;
+}
+
+/**
+ * @fn void Array::sort(Array *self, Comparator comparator)
+ * @memberof Array
+ */
+static void sort(Array *self, Comparator comparator) {
+  quicksort(self->elements, self->count, sizeof(ident), comparator, NULL);
 }
 
 #pragma mark - Class lifecycle
@@ -440,25 +696,40 @@ static void initialize(Class *clazz) {
   ((ObjectInterface *) clazz->interface)->hash = hash;
   ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
+  ((ArrayInterface *) clazz->interface)->addObject = addObject;
+  ((ArrayInterface *) clazz->interface)->addObjects = addObjects;
+  ((ArrayInterface *) clazz->interface)->addObjectsFromArray = addObjectsFromArray;
+  ((ArrayInterface *) clazz->interface)->array = array;
   ((ArrayInterface *) clazz->interface)->arrayWithArray = arrayWithArray;
+  ((ArrayInterface *) clazz->interface)->arrayWithCapacity = arrayWithCapacity;
   ((ArrayInterface *) clazz->interface)->arrayWithObjects = arrayWithObjects;
   ((ArrayInterface *) clazz->interface)->arrayWithVaList = arrayWithVaList;
   ((ArrayInterface *) clazz->interface)->componentsJoinedByCharacters = componentsJoinedByCharacters;
   ((ArrayInterface *) clazz->interface)->componentsJoinedByString = componentsJoinedByString;
   ((ArrayInterface *) clazz->interface)->containsObject = containsObject;
   ((ArrayInterface *) clazz->interface)->enumerateObjects = enumerateObjects;
+  ((ArrayInterface *) clazz->interface)->filter = filter;
   ((ArrayInterface *) clazz->interface)->filteredArray = filteredArray;
   ((ArrayInterface *) clazz->interface)->findObject = findObject;
   ((ArrayInterface *) clazz->interface)->firstObject = firstObject;
   ((ArrayInterface *) clazz->interface)->indexOfObject = indexOfObject;
+  ((ArrayInterface *) clazz->interface)->init = init;
   ((ArrayInterface *) clazz->interface)->initWithArray = initWithArray;
+  ((ArrayInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
   ((ArrayInterface *) clazz->interface)->initWithObjects = initWithObjects;
   ((ArrayInterface *) clazz->interface)->initWithVaList = initWithVaList;
+  ((ArrayInterface *) clazz->interface)->insertObjectAtIndex = insertObjectAtIndex;
   ((ArrayInterface *) clazz->interface)->lastObject = lastObject;
   ((ArrayInterface *) clazz->interface)->mappedArray = mappedArray;
-  ((ArrayInterface *) clazz->interface)->mutableCopy = mutableCopy;
   ((ArrayInterface *) clazz->interface)->objectAtIndex = objectAtIndex;
   ((ArrayInterface *) clazz->interface)->reduce = reduce;
+  ((ArrayInterface *) clazz->interface)->removeAllObjects = removeAllObjects;
+  ((ArrayInterface *) clazz->interface)->removeAllObjectsWithEnumerator = removeAllObjectsWithEnumerator;
+  ((ArrayInterface *) clazz->interface)->removeLastObject = removeLastObject;
+  ((ArrayInterface *) clazz->interface)->removeObject = removeObject;
+  ((ArrayInterface *) clazz->interface)->removeObjectAtIndex = removeObjectAtIndex;
+  ((ArrayInterface *) clazz->interface)->setObjectAtIndex = setObjectAtIndex;
+  ((ArrayInterface *) clazz->interface)->sort = sort;
   ((ArrayInterface *) clazz->interface)->sortedArray = sortedArray;
 }
 

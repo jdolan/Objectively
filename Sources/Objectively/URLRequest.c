@@ -24,7 +24,7 @@
 #include <assert.h>
 
 #include "Hash.h"
-#include "MutableDictionary.h"
+#include "Dictionary.h"
 #include "URLRequest.h"
 
 #define _Class _URLRequest
@@ -169,13 +169,13 @@ static URLRequest *initWithURL(URLRequest *self, URL *url) {
 static void setValueForHTTPHeaderField(URLRequest *self, const char *value, const char *field) {
 
   if (self->httpHeaders == NULL) {
-    self->httpHeaders = (Dictionary *) $(alloc(MutableDictionary), init);
+    self->httpHeaders = (Dictionary *) $(alloc(Dictionary), init);
   }
 
   String *object = str(value);
   String *key = str(field);
 
-  $((MutableDictionary *) self->httpHeaders, setObjectForKey, object, key);
+  $((Dictionary *) self->httpHeaders, setObjectForKey, object, key);
 
   release(object);
   release(key);

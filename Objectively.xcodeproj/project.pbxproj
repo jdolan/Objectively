@@ -77,9 +77,6 @@
 		CE4A53211F40E00700927421 /* HelloCpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CED1578E1C4B1A2100FBA2DE /* HelloCpp.cpp */; };
 		CE4A53281F40E00A00927421 /* Objectively.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* Objectively.framework */; };
 		CE4A532E1F40E01900927421 /* HelloObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9191C481E390096DD31 /* HelloObjC.m */; };
-		CE4A53A11F40E27800927421 /* MutableDictionary.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9571C481E390096DD31 /* MutableDictionary.c */; };
-		CE4A53A21F40E27F00927421 /* MutableSet.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9581C481E390096DD31 /* MutableSet.c */; };
-		CE4A53A31F40E28600927421 /* MutableString.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9591C481E390096DD31 /* MutableString.c */; };
 		CE4A53A41F40E28C00927421 /* Null.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95A1C481E390096DD31 /* Null.c */; };
 		CE4F535A202A8C6D00D71C07 /* Objectively.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* Objectively.framework */; };
 		CE4F5360202A8C8600D71C07 /* Resource.c in Sources */ = {isa = PBXBuildFile; fileRef = CE4F5352202A8BDD00D71C07 /* Resource.c */; };
@@ -91,10 +88,7 @@
 		CE67170A1F93C289001C2767 /* Regexp.c in Sources */ = {isa = PBXBuildFile; fileRef = CE6717081F93C289001C2767 /* Regexp.c */; };
 		CE6BC16C1D79960C0070FB2D /* Enum.c in Sources */ = {isa = PBXBuildFile; fileRef = CE6BC16A1D79960C0070FB2D /* Enum.c */; };
 		CE6BC16D1D79960C0070FB2D /* Enum.h in Headers */ = {isa = PBXBuildFile; fileRef = CE6BC16B1D79960C0070FB2D /* Enum.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE75455023C3FC0600140C52 /* MutableIndexSet.h in Headers */ = {isa = PBXBuildFile; fileRef = CE75454E23C3FC0600140C52 /* MutableIndexSet.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE75455123C3FC0600140C52 /* MutableIndexSet.c in Sources */ = {isa = PBXBuildFile; fileRef = CE75454F23C3FC0600140C52 /* MutableIndexSet.c */; };
 		CE75455923C417FD00140C52 /* Objectively.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* Objectively.framework */; };
-		CE75456023C4181300140C52 /* MutableIndexSet.c in Sources */ = {isa = PBXBuildFile; fileRef = CE75455223C417D700140C52 /* MutableIndexSet.c */; };
 		CE76D96E1C4821CE0096DD31 /* Array.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D85E1C481C4E0096DD31 /* Array.c */; };
 		CE76D96F1C4821CE0096DD31 /* Boole.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8601C481C4E0096DD31 /* Boole.c */; };
 		CE76D9701C4821CE0096DD31 /* Class.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8621C481C4E0096DD31 /* Class.c */; };
@@ -105,14 +99,11 @@
 		CE76D9751C4821CE0096DD31 /* Dictionary.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D86C1C481C4E0096DD31 /* Dictionary.c */; };
 		CE76D9761C4821CE0096DD31 /* Error.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D86E1C481C4E0096DD31 /* Error.c */; };
 		CE76D9771C4821CE0096DD31 /* Hash.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8701C481C4E0096DD31 /* Hash.c */; };
+		A1B2C3D4E5F60718293A4B5D /* HashTable.c in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B61 /* HashTable.c */; };
 		CE76D9781C4821CE0096DD31 /* JSONPath.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8721C481C4E0096DD31 /* JSONPath.c */; };
 		CE76D97B1C4821CE0096DD31 /* Lock.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8C51C481C4E0096DD31 /* Lock.c */; };
 		CE76D97C1C4821CE0096DD31 /* Log.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8C71C481C4E0096DD31 /* Log.c */; };
-		CE76D97D1C4821CE0096DD31 /* MutableArray.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8CC1C481C4E0096DD31 /* MutableArray.c */; };
-		CE76D97E1C4821CE0096DD31 /* MutableData.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8CE1C481C4E0096DD31 /* MutableData.c */; };
-		CE76D97F1C4821CE0096DD31 /* MutableDictionary.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8D01C481C4E0096DD31 /* MutableDictionary.c */; };
-		CE76D9801C4821CE0096DD31 /* MutableSet.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8D21C481C4E0096DD31 /* MutableSet.c */; };
-		CE76D9811C4821CE0096DD31 /* MutableString.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8D41C481C4E0096DD31 /* MutableString.c */; };
+		A1B2C3D4E5F60718293A4B5F /* List.c in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B63 /* List.c */; };
 		CE76D9821C4821CE0096DD31 /* Null.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8D61C481C4E0096DD31 /* Null.c */; };
 		CE76D9831C4821CE0096DD31 /* Number.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8D81C481C4E0096DD31 /* Number.c */; };
 		CE76D9841C4821CE0096DD31 /* NumberFormatter.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D8DA1C481C4E0096DD31 /* NumberFormatter.c */; };
@@ -140,14 +131,11 @@
 		CE76DA0C1C4860120096DD31 /* Dictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D86D1C481C4E0096DD31 /* Dictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA0D1C4860120096DD31 /* Error.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D86F1C481C4E0096DD31 /* Error.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA0E1C4860120096DD31 /* Hash.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8711C481C4E0096DD31 /* Hash.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A1B2C3D4E5F60718293A4B5C /* HashTable.h in Headers */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B60 /* HashTable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA0F1C4860120096DD31 /* JSONPath.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8731C481C4E0096DD31 /* JSONPath.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA121C4860120096DD31 /* Lock.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8C61C481C4E0096DD31 /* Lock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA131C4860120096DD31 /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8C81C481C4E0096DD31 /* Log.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE76DA141C4860120096DD31 /* MutableArray.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8CD1C481C4E0096DD31 /* MutableArray.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE76DA151C4860120096DD31 /* MutableData.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8CF1C481C4E0096DD31 /* MutableData.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE76DA161C4860120096DD31 /* MutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8D11C481C4E0096DD31 /* MutableDictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE76DA171C4860120096DD31 /* MutableSet.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8D31C481C4E0096DD31 /* MutableSet.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE76DA181C4860120096DD31 /* MutableString.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8D51C481C4E0096DD31 /* MutableString.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A1B2C3D4E5F60718293A4B5E /* List.h in Headers */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B62 /* List.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA191C4860120096DD31 /* Null.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8D71C481C4E0096DD31 /* Null.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA1A1C4860120096DD31 /* Number.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8D91C481C4E0096DD31 /* Number.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE76DA1B1C4860120096DD31 /* NumberFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8DB1C481C4E0096DD31 /* NumberFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -213,8 +201,6 @@
 		CEEB02801F40DCC5004C2EDD /* IndexSet.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB20D581D77492A000EF6F3 /* IndexSet.c */; };
 		CEEB02811F40DCC8004C2EDD /* JSON.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D94D1C481E390096DD31 /* JSON.c */; };
 		CEEB02831F40DCDD004C2EDD /* Log.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9511C481E390096DD31 /* Log.c */; };
-		CEEB02841F40DCE2004C2EDD /* MutableArray.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9551C481E390096DD31 /* MutableArray.c */; };
-		CEEB02851F40DCED004C2EDD /* MutableData.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9561C481E390096DD31 /* MutableData.c */; };
 		CEEB028D1F40DD20004C2EDD /* Objectively.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* Objectively.framework */; };
 		CEEB029A1F40DD22004C2EDD /* Objectively.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* Objectively.framework */; };
 		CEEB02A71F40DD24004C2EDD /* Objectively.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* Objectively.framework */; };
@@ -340,35 +326,30 @@
 			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = CEEB02211F40DBD0004C2EDD;
-			remoteInfo = "Objectively-MutableArray";
 		};
 		CE4A53491F40E0C800927421 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = CEEB022E1F40DBD2004C2EDD;
-			remoteInfo = "Objectively-MutableData";
 		};
 		CE4A534B1F40E0C800927421 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = CEEB023B1F40DBD4004C2EDD;
-			remoteInfo = "Objectively-MutableDictionary";
 		};
 		CE4A534D1F40E0C800927421 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = CEEB02481F40DBD5004C2EDD;
-			remoteInfo = "Objectively-MutableSet";
 		};
 		CE4A534F1F40E0C800927421 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = CEEB02551F40DBD7004C2EDD;
-			remoteInfo = "Objectively-MutableString";
 		};
 		CE4A53511F40E0C800927421 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -529,7 +510,6 @@
 			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = CE75455323C417FD00140C52;
-			remoteInfo = "Objectively-MutableIndexSet";
 		};
 		CE84A8A51DA15B88008BC685 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1026,10 +1006,6 @@
 		CE6BC16A1D79960C0070FB2D /* Enum.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Enum.c; sourceTree = "<group>"; };
 		CE6BC16B1D79960C0070FB2D /* Enum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enum.h; sourceTree = "<group>"; };
 		CE6C2D0E1E213E9000F55B0A /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
-		CE75454E23C3FC0600140C52 /* MutableIndexSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MutableIndexSet.h; sourceTree = "<group>"; };
-		CE75454F23C3FC0600140C52 /* MutableIndexSet.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MutableIndexSet.c; sourceTree = "<group>"; };
-		CE75455223C417D700140C52 /* MutableIndexSet.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MutableIndexSet.c; sourceTree = "<group>"; };
-		CE75455F23C417FD00140C52 /* Objectively-MutableIndexSet */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-MutableIndexSet"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE76D7FF1C481C4E0096DD31 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		CE76D85E1C481C4E0096DD31 /* Array.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Array.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		CE76D85F1C481C4E0096DD31 /* Array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Array.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1051,23 +1027,17 @@
 		CE76D86F1C481C4E0096DD31 /* Error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Error.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CE76D8701C481C4E0096DD31 /* Hash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Hash.c; sourceTree = "<group>"; };
 		CE76D8711C481C4E0096DD31 /* Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hash.h; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B60 /* HashTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashTable.h; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B61 /* HashTable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = HashTable.c; sourceTree = "<group>"; };
 		CE76D8721C481C4E0096DD31 /* JSONPath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = JSONPath.c; sourceTree = "<group>"; };
 		CE76D8731C481C4E0096DD31 /* JSONPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = JSONPath.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CE76D8C51C481C4E0096DD31 /* Lock.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Lock.c; sourceTree = "<group>"; };
 		CE76D8C61C481C4E0096DD31 /* Lock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Lock.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CE76D8C71C481C4E0096DD31 /* Log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Log.c; sourceTree = "<group>"; };
 		CE76D8C81C481C4E0096DD31 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Log.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		A1B2C3D4E5F60718293A4B62 /* List.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = List.h; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B63 /* List.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = List.c; sourceTree = "<group>"; };
 		CE76D8CA1C481C4E0096DD31 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		CE76D8CC1C481C4E0096DD31 /* MutableArray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MutableArray.c; sourceTree = "<group>"; };
-		CE76D8CD1C481C4E0096DD31 /* MutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MutableArray.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		CE76D8CE1C481C4E0096DD31 /* MutableData.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MutableData.c; sourceTree = "<group>"; };
-		CE76D8CF1C481C4E0096DD31 /* MutableData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MutableData.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		CE76D8D01C481C4E0096DD31 /* MutableDictionary.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MutableDictionary.c; sourceTree = "<group>"; };
-		CE76D8D11C481C4E0096DD31 /* MutableDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MutableDictionary.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		CE76D8D21C481C4E0096DD31 /* MutableSet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MutableSet.c; sourceTree = "<group>"; };
-		CE76D8D31C481C4E0096DD31 /* MutableSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MutableSet.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		CE76D8D41C481C4E0096DD31 /* MutableString.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MutableString.c; sourceTree = "<group>"; };
-		CE76D8D51C481C4E0096DD31 /* MutableString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MutableString.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CE76D8D61C481C4E0096DD31 /* Null.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Null.c; sourceTree = "<group>"; };
 		CE76D8D71C481C4E0096DD31 /* Null.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Null.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CE76D8D81C481C4E0096DD31 /* Number.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Number.c; sourceTree = "<group>"; };
@@ -1126,11 +1096,6 @@
 		CE76D94D1C481E390096DD31 /* JSON.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = JSON.c; sourceTree = "<group>"; };
 		CE76D9511C481E390096DD31 /* Log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Log.c; sourceTree = "<group>"; };
 		CE76D9531C481E390096DD31 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		CE76D9551C481E390096DD31 /* MutableArray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MutableArray.c; sourceTree = "<group>"; };
-		CE76D9561C481E390096DD31 /* MutableData.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MutableData.c; sourceTree = "<group>"; };
-		CE76D9571C481E390096DD31 /* MutableDictionary.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MutableDictionary.c; sourceTree = "<group>"; };
-		CE76D9581C481E390096DD31 /* MutableSet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MutableSet.c; sourceTree = "<group>"; };
-		CE76D9591C481E390096DD31 /* MutableString.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MutableString.c; sourceTree = "<group>"; };
 		CE76D95A1C481E390096DD31 /* Null.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Null.c; sourceTree = "<group>"; };
 		CE76D95B1C481E390096DD31 /* Number.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Number.c; sourceTree = "<group>"; };
 		CE76D95C1C481E390096DD31 /* Object.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Object.c; sourceTree = "<group>"; };
@@ -1185,11 +1150,6 @@
 		CEEB01F61F40DB50004C2EDD /* Objectively-IndexSet */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-IndexSet"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB02031F40DB52004C2EDD /* Objectively-JSON */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-JSON"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB02201F40DBCD004C2EDD /* Objectively-Log */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Log"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEEB022D1F40DBD0004C2EDD /* Objectively-MutableArray */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-MutableArray"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEEB023A1F40DBD2004C2EDD /* Objectively-MutableData */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-MutableData"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEEB02471F40DBD4004C2EDD /* Objectively-MutableDictionary */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-MutableDictionary"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEEB02541F40DBD5004C2EDD /* Objectively-MutableSet */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-MutableSet"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEEB02611F40DBD7004C2EDD /* Objectively-MutableString */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-MutableString"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB026E1F40DBD9004C2EDD /* Objectively-Null */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Null"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB02921F40DD20004C2EDD /* Objectively-Number */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Number"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB029F1F40DD22004C2EDD /* Objectively-Object */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Object"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1535,6 +1495,8 @@
 				CE76D86F1C481C4E0096DD31 /* Error.h */,
 				CE76D8701C481C4E0096DD31 /* Hash.c */,
 				CE76D8711C481C4E0096DD31 /* Hash.h */,
+				A1B2C3D4E5F60718293A4B61 /* HashTable.c */,
+				A1B2C3D4E5F60718293A4B60 /* HashTable.h */,
 				CEB078C11D7605C200ABA6B3 /* IndexPath.c */,
 				CEB078C21D7605C200ABA6B3 /* IndexPath.h */,
 				CEB20D561D771B7A000EF6F3 /* IndexSet.c */,
@@ -1549,18 +1511,8 @@
 				CE76D8C61C481C4E0096DD31 /* Lock.h */,
 				CE76D8C71C481C4E0096DD31 /* Log.c */,
 				CE76D8C81C481C4E0096DD31 /* Log.h */,
-				CE76D8CC1C481C4E0096DD31 /* MutableArray.c */,
-				CE76D8CD1C481C4E0096DD31 /* MutableArray.h */,
-				CE76D8CE1C481C4E0096DD31 /* MutableData.c */,
-				CE76D8CF1C481C4E0096DD31 /* MutableData.h */,
-				CE76D8D01C481C4E0096DD31 /* MutableDictionary.c */,
-				CE76D8D11C481C4E0096DD31 /* MutableDictionary.h */,
-				CE75454E23C3FC0600140C52 /* MutableIndexSet.h */,
-				CE75454F23C3FC0600140C52 /* MutableIndexSet.c */,
-				CE76D8D21C481C4E0096DD31 /* MutableSet.c */,
-				CE76D8D31C481C4E0096DD31 /* MutableSet.h */,
-				CE76D8D41C481C4E0096DD31 /* MutableString.c */,
-				CE76D8D51C481C4E0096DD31 /* MutableString.h */,
+				A1B2C3D4E5F60718293A4B63 /* List.c */,
+				A1B2C3D4E5F60718293A4B62 /* List.h */,
 				CE76D8D61C481C4E0096DD31 /* Null.c */,
 				CE76D8D71C481C4E0096DD31 /* Null.h */,
 				CE76D8D81C481C4E0096DD31 /* Number.c */,
@@ -1663,12 +1615,6 @@
 				CEB20D581D77492A000EF6F3 /* IndexSet.c */,
 				CE76D94D1C481E390096DD31 /* JSON.c */,
 				CE76D9511C481E390096DD31 /* Log.c */,
-				CE76D9551C481E390096DD31 /* MutableArray.c */,
-				CE76D9561C481E390096DD31 /* MutableData.c */,
-				CE76D9571C481E390096DD31 /* MutableDictionary.c */,
-				CE75455223C417D700140C52 /* MutableIndexSet.c */,
-				CE76D9581C481E390096DD31 /* MutableSet.c */,
-				CE76D9591C481E390096DD31 /* MutableString.c */,
 				CE76D95A1C481E390096DD31 /* Null.c */,
 				CE76D95B1C481E390096DD31 /* Number.c */,
 				CE76D95C1C481E390096DD31 /* Object.c */,
@@ -1710,11 +1656,6 @@
 				CEEB01F61F40DB50004C2EDD /* Objectively-IndexSet */,
 				CEEB02031F40DB52004C2EDD /* Objectively-JSON */,
 				CEEB02201F40DBCD004C2EDD /* Objectively-Log */,
-				CEEB022D1F40DBD0004C2EDD /* Objectively-MutableArray */,
-				CEEB023A1F40DBD2004C2EDD /* Objectively-MutableData */,
-				CEEB02471F40DBD4004C2EDD /* Objectively-MutableDictionary */,
-				CEEB02541F40DBD5004C2EDD /* Objectively-MutableSet */,
-				CEEB02611F40DBD7004C2EDD /* Objectively-MutableString */,
 				CEEB026E1F40DBD9004C2EDD /* Objectively-Null */,
 				CEEB02921F40DD20004C2EDD /* Objectively-Number */,
 				CEEB029F1F40DD22004C2EDD /* Objectively-Object */,
@@ -1731,7 +1672,6 @@
 				CE594BE21F49F931004D74FF /* Objectively-StringReader */,
 				CE4F535F202A8C6D00D71C07 /* Objectively-Resource */,
 				CE129E6E23B8242B007D0433 /* Objectively-Vector */,
-				CE75455F23C417FD00140C52 /* Objectively-MutableIndexSet */,
 				CE7F04342FD9943600AE0D63 /* Objectively-URLCache */,
 				CE7F04462FE058E700AE0D63 /* Objectively-RESTClient */,
 			);
@@ -1805,6 +1745,7 @@
 				CE6BC16D1D79960C0070FB2D /* Enum.h in Headers */,
 				CE76DA0D1C4860120096DD31 /* Error.h in Headers */,
 				CE76DA0E1C4860120096DD31 /* Hash.h in Headers */,
+				A1B2C3D4E5F60718293A4B5C /* HashTable.h in Headers */,
 				CEB078C41D7605C200ABA6B3 /* IndexPath.h in Headers */,
 				CEB20D551D771B6F000EF6F3 /* IndexSet.h in Headers */,
 				CE7F04392FDF2B1100AE0D63 /* JSONContext.h in Headers */,
@@ -1812,12 +1753,7 @@
 				CE76DA0F1C4860120096DD31 /* JSONPath.h in Headers */,
 				CE76DA121C4860120096DD31 /* Lock.h in Headers */,
 				CE76DA131C4860120096DD31 /* Log.h in Headers */,
-				CE76DA141C4860120096DD31 /* MutableArray.h in Headers */,
-				CE76DA151C4860120096DD31 /* MutableData.h in Headers */,
-				CE76DA161C4860120096DD31 /* MutableDictionary.h in Headers */,
-				CE75455023C3FC0600140C52 /* MutableIndexSet.h in Headers */,
-				CE76DA171C4860120096DD31 /* MutableSet.h in Headers */,
-				CE76DA181C4860120096DD31 /* MutableString.h in Headers */,
+				A1B2C3D4E5F60718293A4B5E /* List.h in Headers */,
 				CE76DA191C4860120096DD31 /* Null.h in Headers */,
 				CE76DA1A1C4860120096DD31 /* Number.h in Headers */,
 				CE76DA1B1C4860120096DD31 /* NumberFormatter.h in Headers */,
@@ -1958,24 +1894,6 @@
 			name = "Objectively-StringReader";
 			productName = "Objectively-Test";
 			productReference = CE594BE21F49F931004D74FF /* Objectively-StringReader */;
-			productType = "com.apple.product-type.tool";
-		};
-		CE75455323C417FD00140C52 /* Objectively-MutableIndexSet */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CE75455C23C417FD00140C52 /* Build configuration list for PBXNativeTarget "Objectively-MutableIndexSet" */;
-			buildPhases = (
-				CE75455623C417FD00140C52 /* Sources */,
-				CE75455823C417FD00140C52 /* Frameworks */,
-				CE75455B23C417FD00140C52 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CE75455423C417FD00140C52 /* PBXTargetDependency */,
-			);
-			name = "Objectively-MutableIndexSet";
-			productName = "Objectively-Test";
-			productReference = CE75455F23C417FD00140C52 /* Objectively-MutableIndexSet */;
 			productType = "com.apple.product-type.tool";
 		};
 		CE76D9671C48218E0096DD31 /* Objectively */ = {
@@ -2193,96 +2111,6 @@
 			name = "Objectively-Log";
 			productName = "Objectively-Test";
 			productReference = CEEB02201F40DBCD004C2EDD /* Objectively-Log */;
-			productType = "com.apple.product-type.tool";
-		};
-		CEEB02211F40DBD0004C2EDD /* Objectively-MutableArray */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CEEB022A1F40DBD0004C2EDD /* Build configuration list for PBXNativeTarget "Objectively-MutableArray" */;
-			buildPhases = (
-				CEEB02241F40DBD0004C2EDD /* Sources */,
-				CEEB02261F40DBD0004C2EDD /* Frameworks */,
-				CEEB02291F40DBD0004C2EDD /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CEEB02221F40DBD0004C2EDD /* PBXTargetDependency */,
-			);
-			name = "Objectively-MutableArray";
-			productName = "Objectively-Test";
-			productReference = CEEB022D1F40DBD0004C2EDD /* Objectively-MutableArray */;
-			productType = "com.apple.product-type.tool";
-		};
-		CEEB022E1F40DBD2004C2EDD /* Objectively-MutableData */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CEEB02371F40DBD2004C2EDD /* Build configuration list for PBXNativeTarget "Objectively-MutableData" */;
-			buildPhases = (
-				CEEB02311F40DBD2004C2EDD /* Sources */,
-				CEEB02331F40DBD2004C2EDD /* Frameworks */,
-				CEEB02361F40DBD2004C2EDD /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CEEB022F1F40DBD2004C2EDD /* PBXTargetDependency */,
-			);
-			name = "Objectively-MutableData";
-			productName = "Objectively-Test";
-			productReference = CEEB023A1F40DBD2004C2EDD /* Objectively-MutableData */;
-			productType = "com.apple.product-type.tool";
-		};
-		CEEB023B1F40DBD4004C2EDD /* Objectively-MutableDictionary */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CEEB02441F40DBD4004C2EDD /* Build configuration list for PBXNativeTarget "Objectively-MutableDictionary" */;
-			buildPhases = (
-				CEEB023E1F40DBD4004C2EDD /* Sources */,
-				CEEB02401F40DBD4004C2EDD /* Frameworks */,
-				CEEB02431F40DBD4004C2EDD /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CEEB023C1F40DBD4004C2EDD /* PBXTargetDependency */,
-			);
-			name = "Objectively-MutableDictionary";
-			productName = "Objectively-Test";
-			productReference = CEEB02471F40DBD4004C2EDD /* Objectively-MutableDictionary */;
-			productType = "com.apple.product-type.tool";
-		};
-		CEEB02481F40DBD5004C2EDD /* Objectively-MutableSet */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CEEB02511F40DBD5004C2EDD /* Build configuration list for PBXNativeTarget "Objectively-MutableSet" */;
-			buildPhases = (
-				CEEB024B1F40DBD5004C2EDD /* Sources */,
-				CEEB024D1F40DBD5004C2EDD /* Frameworks */,
-				CEEB02501F40DBD5004C2EDD /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CEEB02491F40DBD5004C2EDD /* PBXTargetDependency */,
-			);
-			name = "Objectively-MutableSet";
-			productName = "Objectively-Test";
-			productReference = CEEB02541F40DBD5004C2EDD /* Objectively-MutableSet */;
-			productType = "com.apple.product-type.tool";
-		};
-		CEEB02551F40DBD7004C2EDD /* Objectively-MutableString */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CEEB025E1F40DBD7004C2EDD /* Build configuration list for PBXNativeTarget "Objectively-MutableString" */;
-			buildPhases = (
-				CEEB02581F40DBD7004C2EDD /* Sources */,
-				CEEB025A1F40DBD7004C2EDD /* Frameworks */,
-				CEEB025D1F40DBD7004C2EDD /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CEEB02561F40DBD7004C2EDD /* PBXTargetDependency */,
-			);
-			name = "Objectively-MutableString";
-			productName = "Objectively-Test";
-			productReference = CEEB02611F40DBD7004C2EDD /* Objectively-MutableString */;
 			productType = "com.apple.product-type.tool";
 		};
 		CEEB02621F40DBD9004C2EDD /* Objectively-Null */ = {
@@ -2509,12 +2337,6 @@
 				CEEB01EA1F40DB50004C2EDD /* Objectively-IndexSet */,
 				CEEB01F71F40DB52004C2EDD /* Objectively-JSON */,
 				CEEB02141F40DBCD004C2EDD /* Objectively-Log */,
-				CEEB02211F40DBD0004C2EDD /* Objectively-MutableArray */,
-				CEEB022E1F40DBD2004C2EDD /* Objectively-MutableData */,
-				CEEB023B1F40DBD4004C2EDD /* Objectively-MutableDictionary */,
-				CE75455323C417FD00140C52 /* Objectively-MutableIndexSet */,
-				CEEB02481F40DBD5004C2EDD /* Objectively-MutableSet */,
-				CEEB02551F40DBD7004C2EDD /* Objectively-MutableString */,
 				CEEB02621F40DBD9004C2EDD /* Objectively-Null */,
 				CEEB02861F40DD20004C2EDD /* Objectively-Number */,
 				CEEB02931F40DD22004C2EDD /* Objectively-Object */,
@@ -2582,7 +2404,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd $BUILT_PRODUCTS_DIR &&\n./Objectively-Array &&\n./Objectively-Boole &&\n./Objectively-Data &&\n./Objectively-Date &&\n./Objectively-Dictionary &&\n./Objectively-IndexPath &&\n./Objectively-IndexSet &&\n./Objectively-JSON \\\n    $SRCROOT/Tests/Objectively/Fixtures/test.json &&\n./Objectively-Log &&\n./Objectively-MutableArray &&\n./Objectively-MutableData &&\n./Objectively-MutableDictionary &&\n./Objectively-MutableIndexSet &&\n./Objectively-MutableSet &&\n./Objectively-MutableString &&\n./Objectively-Null &&\n./Objectively-Number &&\n./Objectively-Object &&\n./Objectively-Operation &&\n./Objectively-Regexp &&\n./Objectively-Resource &&\n./Objectively-RESTClient &&\n./Objectively-Set &&\n./Objectively-String &&\n./Objectively-StringReader &&\n./Objectively-Thread &&\n./Objectively-URL &&\n./Objectively-URLCache &&\n./Objectively-URLSession &&\n./Objectively-Vector\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2639,7 +2460,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE75456023C4181300140C52 /* MutableIndexSet.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2658,6 +2478,7 @@
 				CE76D9761C4821CE0096DD31 /* Error.c in Sources */,
 				CE6BC16C1D79960C0070FB2D /* Enum.c in Sources */,
 				CE76D9771C4821CE0096DD31 /* Hash.c in Sources */,
+				A1B2C3D4E5F60718293A4B5D /* HashTable.c in Sources */,
 				CEB078C31D7605C200ABA6B3 /* IndexPath.c in Sources */,
 				CEB20D571D771B7A000EF6F3 /* IndexSet.c in Sources */,
 				CE7F043A2FDF2B1100AE0D63 /* JSONContext.c in Sources */,
@@ -2665,12 +2486,7 @@
 				CE76D9781C4821CE0096DD31 /* JSONPath.c in Sources */,
 				CE76D97B1C4821CE0096DD31 /* Lock.c in Sources */,
 				CE76D97C1C4821CE0096DD31 /* Log.c in Sources */,
-				CE76D97D1C4821CE0096DD31 /* MutableArray.c in Sources */,
-				CE76D97E1C4821CE0096DD31 /* MutableData.c in Sources */,
-				CE76D97F1C4821CE0096DD31 /* MutableDictionary.c in Sources */,
-				CE75455123C3FC0600140C52 /* MutableIndexSet.c in Sources */,
-				CE76D9801C4821CE0096DD31 /* MutableSet.c in Sources */,
-				CE76D9811C4821CE0096DD31 /* MutableString.c in Sources */,
+				A1B2C3D4E5F60718293A4B5F /* List.c in Sources */,
 				CE76D9821C4821CE0096DD31 /* Null.c in Sources */,
 				CE76D9831C4821CE0096DD31 /* Number.c in Sources */,
 				CE76D9841C4821CE0096DD31 /* NumberFormatter.c in Sources */,
@@ -2792,7 +2608,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB02841F40DCE2004C2EDD /* MutableArray.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2800,7 +2615,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEB02851F40DCED004C2EDD /* MutableData.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2808,7 +2622,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE4A53A11F40E27800927421 /* MutableDictionary.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2816,7 +2629,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE4A53A21F40E27F00927421 /* MutableSet.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2824,7 +2636,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE4A53A31F40E28600927421 /* MutableString.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2983,27 +2794,22 @@
 		};
 		CE4A53481F40E0C800927421 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CEEB02211F40DBD0004C2EDD /* Objectively-MutableArray */;
 			targetProxy = CE4A53471F40E0C800927421 /* PBXContainerItemProxy */;
 		};
 		CE4A534A1F40E0C800927421 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CEEB022E1F40DBD2004C2EDD /* Objectively-MutableData */;
 			targetProxy = CE4A53491F40E0C800927421 /* PBXContainerItemProxy */;
 		};
 		CE4A534C1F40E0C800927421 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CEEB023B1F40DBD4004C2EDD /* Objectively-MutableDictionary */;
 			targetProxy = CE4A534B1F40E0C800927421 /* PBXContainerItemProxy */;
 		};
 		CE4A534E1F40E0C800927421 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CEEB02481F40DBD5004C2EDD /* Objectively-MutableSet */;
 			targetProxy = CE4A534D1F40E0C800927421 /* PBXContainerItemProxy */;
 		};
 		CE4A53501F40E0C800927421 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CEEB02551F40DBD7004C2EDD /* Objectively-MutableString */;
 			targetProxy = CE4A534F1F40E0C800927421 /* PBXContainerItemProxy */;
 		};
 		CE4A53521F40E0C800927421 /* PBXTargetDependency */ = {
@@ -3118,7 +2924,6 @@
 		};
 		CE7F044E2FE05A9E00AE0D63 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CE75455323C417FD00140C52 /* Objectively-MutableIndexSet */;
 			targetProxy = CE7F044D2FE05A9E00AE0D63 /* PBXContainerItemProxy */;
 		};
 		CE84A8A61DA15B88008BC685 /* PBXTargetDependency */ = {
@@ -4256,15 +4061,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CE75455C23C417FD00140C52 /* Build configuration list for PBXNativeTarget "Objectively-MutableIndexSet" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CE75455D23C417FD00140C52 /* Debug */,
-				CE75455E23C417FD00140C52 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		CE76D7F61C481B530096DD31 /* Build configuration list for PBXProject "Objectively" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -4378,51 +4174,6 @@
 			buildConfigurations = (
 				CEEB021E1F40DBCD004C2EDD /* Debug */,
 				CEEB021F1F40DBCD004C2EDD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CEEB022A1F40DBD0004C2EDD /* Build configuration list for PBXNativeTarget "Objectively-MutableArray" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CEEB022B1F40DBD0004C2EDD /* Debug */,
-				CEEB022C1F40DBD0004C2EDD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CEEB02371F40DBD2004C2EDD /* Build configuration list for PBXNativeTarget "Objectively-MutableData" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CEEB02381F40DBD2004C2EDD /* Debug */,
-				CEEB02391F40DBD2004C2EDD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CEEB02441F40DBD4004C2EDD /* Build configuration list for PBXNativeTarget "Objectively-MutableDictionary" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CEEB02451F40DBD4004C2EDD /* Debug */,
-				CEEB02461F40DBD4004C2EDD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CEEB02511F40DBD5004C2EDD /* Build configuration list for PBXNativeTarget "Objectively-MutableSet" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CEEB02521F40DBD5004C2EDD /* Debug */,
-				CEEB02531F40DBD5004C2EDD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CEEB025E1F40DBD7004C2EDD /* Build configuration list for PBXNativeTarget "Objectively-MutableString" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CEEB025F1F40DBD7004C2EDD /* Debug */,
-				CEEB02601F40DBD7004C2EDD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

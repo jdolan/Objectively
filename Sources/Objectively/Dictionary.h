@@ -28,7 +28,7 @@
 
 /**
  * @file
- * @brief Immutable key-value stores.
+ * @brief Key-value stores.
  */
 
 typedef struct Dictionary Dictionary;
@@ -53,7 +53,7 @@ typedef void (*DictionaryEnumerator)(const Dictionary *dictionary, ident obj, id
 typedef bool (*DictionaryPredicate)(ident obj, ident key, ident data);
 
 /**
- * @brief Immutable key-value stores.
+ * @brief Key-value stores.
  * @extends Object
  * @ingroup Collections
  */
@@ -88,7 +88,6 @@ struct Dictionary {
   ident *elements;
 };
 
-typedef struct MutableDictionary MutableDictionary;
 
 /**
  * @brief The Dictionary interface.
@@ -196,14 +195,6 @@ struct DictionaryInterface {
   Dictionary *(*initWithObjectsAndKeys)(Dictionary *self, ...);
 
   /**
-   * @fn MutableDictionary *Dictionary::mutableCopy(const Dictionary *self)
-   * @param self The Dictionary.
-   * @return A MutableDictionary with the contents of this Dictionary.
-   * @memberof Dictionary
-   */
-  MutableDictionary *(*mutableCopy)(const Dictionary *self);
-
-  /**
    * @fn ident Dictionary::objectForKey(const Dictionary *self, const ident key)
    * @param self The Dictionary.
    * @param key The key.
@@ -234,6 +225,124 @@ struct DictionaryInterface {
   ident (*objectForKeyPathWithClass)(const Dictionary *self, const char *path, const Class *clazz);
 
   
+  /**
+   * @fn void Dictionary::addEntriesFromDictionary(Dictionary *self, const Dictionary *dictionary)
+   * @brief Adds the key-value entries from `dictionary` to this Dictionary.
+   * @param self The Dictionary.
+   * @param dictionary A Dictionary.
+   * @memberof Dictionary
+   */
+  void (*addEntriesFromDictionary)(Dictionary *self, const Dictionary *dictionary);
+
+  /**
+   * @static
+   * @fn Dictionary *Dictionary::dictionary(void)
+   * @brief Returns a new Dictionary.
+   * @return The new Dictionary, or `NULL` on error.
+   * @memberof Dictionary
+   */
+  Dictionary *(*dictionary)(void);
+
+  /**
+   * @static
+   * @fn Dictionary *Dictionary::dictionaryWithCapacity(size_t capacity)
+   * @brief Returns a new Dictionary with the given `capacity`.
+   * @param capacity The desired initial capacity.
+   * @return The new Dictionary, or `NULL` on error.
+   * @memberof Dictionary
+   */
+  Dictionary *(*dictionaryWithCapacity)(size_t capacity);
+
+  /**
+   * @fn Dictionary *Dictionary::init(Dictionary *self)
+   * @brief Initializes this Dictionary.
+   * @param self The Dictionary.
+   * @return The initialized Dictionary, or `NULL` on error.
+   * @memberof Dictionary
+   */
+  Dictionary *(*init)(Dictionary *self);
+
+  /**
+   * @fn Dictionary *Dictionary::initWithCapacity(Dictionary *self, size_t capacity)
+   * @brief Initializes this Dictionary with the specified capacity.
+   * @param self The Dictionary.
+   * @param capacity The initial capacity.
+   * @return The initialized Dictionary, or `NULL` on error.
+   * @memberof Dictionary
+   */
+  Dictionary *(*initWithCapacity)(Dictionary *self, size_t capacity);
+
+  /**
+   * @fn void Dictionary::removeAllObjects(Dictionary *self)
+   * @brief Removes all Objects from this Dictionary.
+   * @param self The Dictionary.
+   * @memberof Dictionary
+   */
+  void (*removeAllObjects)(Dictionary *self);
+
+  /**
+   * @fn void Dictionary::removeAllObjectsWithEnumerator(Dictionary *self, DictionaryEnumerator enumerator, ident data)
+   * @brief Removes all Objects from this Dictionary, invoking `enumerator` for each Object and key pair.
+   * @param self The Dictionary.
+   * @param enumerator The enumerator.
+   * @param data The data.
+   * @memberof Dictionary
+   */
+  void (*removeAllObjectsWithEnumerator)(Dictionary *self, DictionaryEnumerator enumerator, ident data);
+
+  /**
+   * @fn void Dictionary::removeObjectForKey(Dictionary *self, const ident key)
+   * @brief Removes the Object with the specified key from this Dictionary.
+   * @param self The Dictionary.
+   * @param key The key of the Object to remove.
+   * @memberof Dictionary
+   */
+  void (*removeObjectForKey)(Dictionary *self, const ident key);
+
+  /**
+   * @fn void Dictionary::removeObjectForKeyPath(Dictionary *self, const char *path)
+   * @brief Removes the Object with the specified key path from this Dictionary.
+   * @param self The Dictionary.
+   * @param path The key path of the Object to remove.
+   * @memberof Dictionary
+   */
+  void (*removeObjectForKeyPath)(Dictionary *self, const char *path);
+
+  /**
+   * @fn void Dictionary ::setObjectForKey(Dictionary *self, const ident obj, const ident key)
+   * @brief Sets a pair in this Dictionary.
+   * @param self The Dictionary.
+   * @param obj The Object to set.
+   * @param key The key of the Object to set.
+   * @memberof Dictionary
+   */
+  void (*setObjectForKey)(Dictionary *self, const ident obj, const ident key);
+
+  /**
+   * @fn void Dictionary::setObjectForKeyPath(Dictionary *self, const ident obj, const char *path)
+   * @brief Sets a pair in this Dictionary.
+   * @param self The Dictionary.
+   * @param obj The Object to set.
+   * @param path The key path of the Object to set.
+   * @memberof Dictionary
+   */
+  void (*setObjectForKeyPath)(Dictionary *self, const ident obj, const char *path);
+
+  /**
+   * @fn void Dictionary::setObjectsForKeyPaths(Dictionary *self, ...)
+   * @brief Sets pairs in this Dictionary from the NULL-terminated list.
+   * @param self The Dictionary.
+   * @memberof Dictionary
+   */
+  void (*setObjectsForKeyPaths)(Dictionary *self, ...);
+
+  /**
+   * @fn void Dictionary::setObjectsForKeys(Dictionary *self, ...)
+   * @brief Sets pairs in this Dictionary from the NULL-terminated list.
+   * @param self The Dictionary.
+   * @memberof Dictionary
+   */
+  void (*setObjectsForKeys)(Dictionary *self, ...);
 };
 
 /**

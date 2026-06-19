@@ -28,7 +28,7 @@
 
 /**
  * @file
- * @brief Immutable sets.
+ * @brief Sets.
  */
 
 /**
@@ -48,7 +48,7 @@ typedef struct SetInterface SetInterface;
 typedef void (*SetEnumerator)(const Set *set, ident obj, ident data);
 
 /**
- * @brief Immutable sets.
+ * @brief Sets.
  * @extends Object
  * @ingroup Collections
  */
@@ -83,7 +83,6 @@ struct Set {
   ident *elements;
 };
 
-typedef struct MutableSet MutableSet;
 
 /**
  * @brief The Set interface.
@@ -185,15 +184,7 @@ struct SetInterface {
   Set *(*mappedSet)(const Set *self, Functor functor, ident data);
 
   /**
-   * @fn MutableSet *Set::mutableCopy(const Set *self)
-   * @param self The Set.
-   * @return A MutableSet with the contents of this Set.
-   * @memberof Set
-   */
-  MutableSet *(*mutableCopy)(const Set *self);
-
-  /**
-   * @fn ident Set::reduce(const Set *self, Reducer reducer, ident accumulator, ident data)
+  * @fn ident Set::reduce(const Set *self, Reducer reducer, ident accumulator, ident data)
    * @param self The Set.
    * @param reducer The Reducer.
    * @param accumulator The initial accumulator value.
@@ -232,6 +223,97 @@ struct SetInterface {
    * @memberof Set
    */
   Set *(*setWithSet)(const Set *set);
+  /**
+   * @fn void Set::addObject(Set *self, const ident obj)
+   * @brief Adds the specified Object to this Set.
+   * @param self The Set.
+   * @param obj An Object.
+   * @memberof Set
+   */
+  void (*addObject)(Set *self, const ident obj);
+
+  /**
+   * @fn void Set::addObjectsFromArray(Set *self, const Array *array)
+   * @brief Adds the Objects contained in `array` to this Set.
+   * @param self The Set.
+   * @param array An Array.
+   * @memberof Set
+   */
+  void (*addObjectsFromArray)(Set *self, const Array *array);
+
+  /**
+   * @fn void Set::addObjectsFromSet(Set *self, const Set *set)
+   * @brief Adds the Objects contained in `set` to this Set.
+   * @param self The Set.
+   * @param set A Set.
+   * @memberof Set
+   */
+  void (*addObjectsFromSet)(Set *self, const Set *set);
+
+  /**
+   * @fn void Set::filter(Set *self, Predicate predicate, ident data)
+   * @brief Filters this Set in place using `predicate`.
+   * @param self The Set.
+   * @param predicate A Predicate.
+   * @param data User data.
+   * @memberof Set
+   */
+  void (*filter)(Set *self, Predicate predicate, ident data);
+
+  /**
+   * @fn Set *Set::init(Set *self)
+   * @brief Initializes this Set.
+   * @param self The Set.
+   * @return The initialized Set, or `NULL` on error.
+   * @memberof Set
+   */
+  Set *(*init)(Set *self);
+
+  /**
+   * @fn Set *Set::initWithCapacity(Set *self, size_t capacity)
+   * @brief Initializes this Set with the specified capacity.
+   * @param self The Set.
+   * @param capacity The desired initial capacity.
+   * @return The initialized Set, or `NULL` on error.
+   * @memberof Set
+   */
+  Set *(*initWithCapacity)(Set *self, size_t capacity);
+
+  /**
+   * @fn void Set::removeAllObjects(Set *self)
+   * @brief Removes all Objects from this Set.
+   * @param self The Set.
+   * @memberof Set
+   */
+  void (*removeAllObjects)(Set *self);
+
+  /**
+   * @fn void Set::removeObject(Set *self, const ident obj)
+   * @brief Removes the specified Object from this Set.
+   * @param self The Set.
+   * @param obj The Object to remove.
+   * @memberof Set
+   */
+  void (*removeObject)(Set *self, const ident obj);
+
+  /**
+   * @static
+   * @fn Set *Set::set(void)
+   * @brief Returns a new Set.
+   * @return The new Set, or `NULL` on error.
+   * @memberof Set
+   */
+  Set *(*set)(void);
+
+  /**
+   * @static
+   * @fn Set *Set::setWithCapacity(size_t capacity)
+   * @brief Returns a new Set with the given `capacity`.
+   * @param capacity The desired initial capacity.
+   * @return The new Set, or `NULL` on error.
+   * @memberof Set
+   */
+  Set *(*setWithCapacity)(size_t capacity);
 };
 
 /**

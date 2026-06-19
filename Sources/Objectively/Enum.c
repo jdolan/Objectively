@@ -26,7 +26,7 @@
 #include <string.h>
 
 #include "Enum.h"
-#include "MutableString.h"
+#include "String.h"
 
 String *nameof(const EnumName *names, int value) {
 
@@ -36,13 +36,13 @@ String *nameof(const EnumName *names, int value) {
     }
   }
 
-  MutableString *string = NULL;
+  String *string = NULL;
 
   for (const EnumName *name = names; name->name; name++) {
     if (name->value) {
       if ((name->value & value) == name->value) {
         if (string == NULL) {
-          string = $$(MutableString, string);
+          string = $$(String, string);
         } else {
           $(string, appendCharacters, " | ");
         }

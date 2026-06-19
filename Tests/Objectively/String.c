@@ -90,7 +90,7 @@ START_TEST(string) {
   release(newlines);
   release(trimmedNewlines);
 
-  const char *path = "/tmp/Objectively_String.test";
+  const char *path = "Objectively_String.test";
   ck_assert($(string, writeToFile, path, STRING_ENCODING_UTF8));
 
   String *fromFile = $$(String, stringWithContentsOfFile, path, STRING_ENCODING_UTF8);
@@ -134,11 +134,123 @@ START_TEST(_strtrim) {
   free(trimmed);
 } END_TEST
 
+
+START_TEST(string_mutation) {
+
+  String *string = $$(String, string);
+
+  ck_assert(string != NULL);
+  ck_assert_ptr_eq(_String(), classof(string));
+
+  String *hello = str("hello");
+
+  $(string, appendString, hello);
+  ck_assert_str_eq("hello", string->chars);
+
+  $(string, appendFormat, " %s", "world!");
+  ck_assert_str_eq("hello world!", string->chars);
+
+  String *goodbye = str("goodbye cruel");
+
+  $(string, replaceStringInRange, (Range) { 0, 5 }, goodbye);
+  ck_assert_str_eq("goodbye cruel world!", string->chars);
+
+  $(string, replaceOccurrencesOfCharactersInRange, " ", (Range) { 0, 20 }, "  ");
+  ck_assert_str_eq("goodbye  cruel  world!", string->chars);
+
+  $(string, replaceOccurrencesOfCharacters, " ", "");
+  ck_assert_str_eq("goodbyecruelworld!", string->chars);
+
+  $(string, setString, NULL);
+  ck_assert_str_eq("", string->chars);
+
+  $(string, setString, hello);
+  ck_assert_str_eq("hello", string->chars);
+
+  String *copy = (String *) $((Object * ) string, copy);
+  ck_assert_ptr_eq(_String(), classof(copy));
+  ck_assert($((Object *) string, isEqual, (Object *) copy));
+
+  release(hello);
+  release(goodbye);
+  release(string);
+  release(copy);
+
+} END_TEST
+
+START_TEST(string_appendBytes) {
+
+  String *string = $$(String, string);
+
+  const uint8_t hello[] = "hello";
+  $(string, appendBytes, hello, sizeof(hello) - 1, STRING_ENCODING_ASCII);
+  ck_assert_str_eq("hello", string->chars);
+
+  const uint8_t world[] = " world";
+  $(string, appendBytes, world, sizeof(world) - 1, STRING_ENCODING_ASCII);
+  ck_assert_str_eq("hello world", string->chars);
+
+  release(string);
+
+} END_TEST
+
+START_TEST(string_initWithBytes) {
+
+  const uint8_t bytes[] = "hello world";
+  String *string = $(alloc(String), initWithBytes, bytes, sizeof(bytes) - 1, STRING_ENCODING_ASCII);
+
+  ck_assert(string != NULL);
+  ck_assert_str_eq("hello world", string->chars);
+
+  release(string);
+
+} END_TEST
+
+START_TEST(string_initWithData) {
+
+  const uint8_t bytes[] = "hello world";
+  Data *data = $$(Data, dataWithBytes, bytes, sizeof(bytes) - 1);
+
+  String *string = $(alloc(String), initWithData, data, STRING_ENCODING_ASCII);
+
+  ck_assert(string != NULL);
+  ck_assert_str_eq("hello world", string->chars);
+
+  release(data);
+  release(string);
+
+} END_TEST
+
+START_TEST(string_initWithContentsOfFile) {
+
+  const char *path = "/tmp/Objectively_String.test";
+
+  String *written = $(alloc(String), initWithCharacters, "hello world");
+  ck_assert($((String *) written, writeToFile, path, STRING_ENCODING_UTF8));
+  release(written);
+
+  String *string = $(alloc(String), initWithContentsOfFile, path, STRING_ENCODING_UTF8);
+
+  ck_assert(string != NULL);
+  ck_assert_str_eq("hello world", string->chars);
+
+  release(string);
+  unlink(path);
+
+} END_TEST
+
+
 int main(int argc, char **argv) {
 
   TCase *tcase = tcase_create("String");
   tcase_add_test(tcase, string);
   tcase_add_test(tcase, _strtrim);
+
+  tcase_add_test(tcase, string_mutation);
+  tcase_add_test(tcase, string_appendBytes);
+  tcase_add_test(tcase, string_initWithBytes);
+  tcase_add_test(tcase, string_initWithData);
+  tcase_add_test(tcase, string_initWithContentsOfFile);
 
   Suite *suite = suite_create("String");
   suite_add_tcase(suite, tcase);

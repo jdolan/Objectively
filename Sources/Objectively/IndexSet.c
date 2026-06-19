@@ -27,7 +27,7 @@
 
 #include "Hash.h"
 #include "IndexSet.h"
-#include "MutableString.h"
+#include "String.h"
 
 /**
  * @brief qsort comparator for indexes.
@@ -64,6 +64,8 @@ static size_t compact(size_t *indexes, size_t count) {
 
 #define _Class _IndexSet
 
+#define INDEX_SET_CHUNK_SIZE 8
+
 #pragma mark - Object
 
 /**
@@ -95,7 +97,7 @@ static void dealloc(Object *self) {
 static String *description(const Object *self) {
 
   const IndexSet *this = (IndexSet *) self;
-  MutableString *desc = mstr("[");
+  String *desc = mstr("[");
 
   for (size_t i = 0; i < this->count; i++) {
     $(desc, appendFormat, "%d", this->indexes[i]);
@@ -181,6 +183,7 @@ static IndexSet *initWithIndexes(IndexSet *self, size_t *indexes, size_t count) 
   if (self) {
 
     self->count = compact(indexes, count);
+    self->capacity = self->count;
     if (self->count) {
 
       self->indexes = calloc(sizeof(size_t), self->count);
@@ -191,6 +194,146 @@ static IndexSet *initWithIndexes(IndexSet *self, size_t *indexes, size_t count) 
   }
 
   return self;
+}
+
+#pragma mark - IndexSet mutation
+
+/**
+ * @fn void IndexSet::addIndex(IndexSet *self, size_t index)
+ * @memberof IndexSet
+ */
+static void addIndex(IndexSet *self, size_t index) {
+
+  IndexSet *this = self;
+
+  size_t i;
+  for (i = 0; i < this->count; i++) {
+    if (this->indexes[i] == index) {
+      return;
+    }
+    if (this->indexes[i] > index) {
+      break;
+    }
+  }
+
+  if (this->count == self->capacity) {
+    self->capacity += INDEX_SET_CHUNK_SIZE;
+
+    this->indexes = realloc(this->indexes, self->capacity * sizeof(size_t));
+    assert(this->indexes);
+  }
+
+  for (size_t j = this->count; j > i; j--) {
+    this->indexes[j] = this->indexes[j - 1];
+  }
+
+  this->indexes[i] = index;
+  this->count++;
+}
+
+/**
+ * @fn void IndexSet::addIndexes(IndexSet *self, size_t *indexes, size_t count)
+ * @memberof IndexSet
+ */
+static void addIndexes(IndexSet *self, size_t *indexes, size_t count) {
+
+  for (size_t i = 0; i < count; i++) {
+    $(self, addIndex, indexes[i]);
+  }
+}
+
+/**
+ * @fn void IndexSet::addIndexesInRange(IndexSet *self, const Range range)
+ * @brief Adds indexes in the specified Range to this IndexSet.
+ * @param self The IndexSet.
+ * @param range The Range of indexes to add.
+ * @memberof IndexSet
+ */
+static void addIndexesInRange(IndexSet *self, const Range range) {
+
+  for (size_t i = range.location; i < range.location + range.length; i++) {
+    $(self, addIndex, i);
+  }
+}
+
+/**
+ * @fn IndexSet *IndexSet::init(IndexSet *self)
+ * @memberof IndexSet
+ */
+static IndexSet *init(IndexSet *self) {
+  return $(self, initWithCapacity, INDEX_SET_CHUNK_SIZE);
+}
+
+/**
+ * @fn IndexSet *IndexSet::initWithCapacity(IndexSet *self, size_t capacity)
+ * @memberof IndexSet
+ */
+static IndexSet *initWithCapacity(IndexSet *self, size_t capacity) {
+
+  self = (IndexSet *) super(Object, self, init);
+  if (self) {
+    self->capacity = capacity;
+
+    self->indexes = malloc(self->capacity * sizeof(size_t));
+    assert(self->indexes);
+  }
+
+  return self;
+}
+
+/**
+ * @fn void IndexSet::removeAllIndexes(IndexSet *self)
+ * @memberof IndexSet
+ */
+static void removeAllIndexes(IndexSet *self) {
+
+  IndexSet *this = self;
+
+  free(this->indexes);
+  this->indexes = NULL;
+
+  this->count = 0;
+  self->capacity = 0;
+}
+
+/**
+ * @fn void IndexSet::removeIndex(IndexSet *self, size_t index)
+ * @memberof IndexSet
+ */
+static void removeIndex(IndexSet *self, size_t index) {
+
+  IndexSet *this = self;
+  for (size_t i = 0; i < this->count; i++) {
+    if (this->indexes[i] == index) {
+      this->count--;
+      for (size_t j = i; j < this->count; j++) {
+        this->indexes[j] = this->indexes[j + 1];
+      }
+      return;
+    }
+  }
+}
+
+/**
+ * @fn void IndexSet::removeIndexes(IndexSet *self, size_t *indexes, size_t count)
+ * @memberof IndexSet
+ */
+static void removeIndexes(IndexSet *self, size_t *indexes, size_t count) {
+
+  for (size_t i = 0; i < count; i++) {
+    $(self, removeIndex, indexes[i]);
+  }
+}
+
+/**
+* @fn void IndexSet::removeIndexesInRange(IndexSet *self, const Range range)
+* @memberof IndexSet
+*/
+static void removeIndexesInRange(IndexSet *self, const Range range) {
+
+  for (size_t i = range.location; i < range.location + range.length; i++) {
+    $(self, removeIndex, i);
+  }
 }
 
 #pragma mark - Class lifecycle
@@ -207,8 +350,17 @@ static void initialize(Class *clazz) {
   ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
   ((IndexSetInterface *) clazz->interface)->containsIndex = containsIndex;
+  ((IndexSetInterface *) clazz->interface)->addIndex = addIndex;
+  ((IndexSetInterface *) clazz->interface)->addIndexes = addIndexes;
+  ((IndexSetInterface *) clazz->interface)->addIndexesInRange = addIndexesInRange;
+  ((IndexSetInterface *) clazz->interface)->init = init;
+  ((IndexSetInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
   ((IndexSetInterface *) clazz->interface)->initWithIndex = initWithIndex;
   ((IndexSetInterface *) clazz->interface)->initWithIndexes = initWithIndexes;
+  ((IndexSetInterface *) clazz->interface)->removeAllIndexes = removeAllIndexes;
+  ((IndexSetInterface *) clazz->interface)->removeIndex = removeIndex;
+  ((IndexSetInterface *) clazz->interface)->removeIndexes = removeIndexes;
+  ((IndexSetInterface *) clazz->interface)->removeIndexesInRange = removeIndexesInRange;
 }
 
 /**

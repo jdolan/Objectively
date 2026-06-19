@@ -25,7 +25,7 @@
 
 #include <Objectively/Condition.h>
 #include <Objectively/Object.h>
-#include <Objectively/MutableArray.h>
+#include <Objectively/Array.h>
 
 /**
  * @file
@@ -73,7 +73,7 @@ struct Operation {
     /**
      * @brief Contains Operations which must finish before this one can start.
      */
-    MutableArray *dependencies;
+    Array *dependencies;
 
   } locals;
 

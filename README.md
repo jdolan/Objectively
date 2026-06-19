@@ -27,12 +27,12 @@ Features
  * Automatic class loading and lifecycle management
  * Automatic memory management with reference counting
  * Unicode and multibyte character set `String` support
- * `Object` primitives for `Boole`, `Date`, `Null`, `Number`, `String`
- * Mutable and immutable collections variants such as `Array` and `MutableDictionary`
- * JSON parsing, marshaling and introspection with `JSONSerialization` and `JSONPath`
+ * Robust collections including as `Array`, `Dictionary`, `HashTable` `List` and `Set`
  * Low-level concurrency constructs such as `Lock`, `Condition`, and `Thread`
  * High-level concurrency with `Operation` and `OperationQueue`
  * Resource loading via Internet protocols with `URLSession` and `URLSessionTask`
+ * JSON parsing, marshaling and introspection with `JSONContext` and `JSONPath`
+ * RESTClient provides high-level convenience for modern application development
 
 Adding Objectively to your project
 ---
