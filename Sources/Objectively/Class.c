@@ -172,7 +172,17 @@ Class *classForName(const char *name) {
     char *s;
     if (asprintf(&s, "_%s", name) > 0) {
       Class *clazz = NULL;
+#if defined(_WIN32)
+      // dlfcn-win32's RTLD_DEFAULT is a null handle; dlopen(NULL) yields a
+      // global handle whose dlsym searches all loaded modules (exe and DLLs).
+      static ident self;
+      if (self == NULL) {
+        self = dlopen(NULL, RTLD_LAZY);
+      }
+      Class *(*archetype)(void) = dlsym(self, s);
+#else
       Class *(*archetype)(void) = dlsym(RTLD_DEFAULT, s);
+#endif
       if (archetype) {
         clazz = archetype();
       }
