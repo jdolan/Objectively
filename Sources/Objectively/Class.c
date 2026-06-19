@@ -33,6 +33,11 @@
 #include <unistd.h>
 #endif
 
+#if defined(_WIN32)
+#include <Windows.h>
+#include <TlHelp32.h>
+#endif
+
 #include "Class.h"
 #include "Object.h"
 
@@ -158,6 +163,49 @@ ident _cast(const Class *clazz, const ident obj) {
   return (ident) obj;
 }
 
+/**
+ * @brief The Class archetype constructor signature, e.g. `_Object`.
+ */
+typedef Class *(*Archetype)(void);
+
+/**
+ * @brief Resolves a Class archetype by its exported symbol name.
+ * @remarks On ELF and Mach-O, `dlsym` against the global handle resolves symbols
+ * in every loaded object. The Windows `dlfcn` shim only searches the executable
+ * and explicitly `dlopen`'d libraries, so archetypes exported by implicitly linked
+ * DLLs (e.g. ObjectivelyMVC) are invisible to it. Enumerate the process' loaded
+ * modules and resolve the symbol directly.
+ */
+static Archetype archetypeForSymbol(const char *symbol) {
+
+#if defined(_WIN32)
+  Archetype archetype = NULL;
+
+  HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, 0);
+  if (snapshot != INVALID_HANDLE_VALUE) {
+
+    MODULEENTRY32 module;
+    module.dwSize = sizeof(module);
+
+    if (Module32First(snapshot, &module)) {
+      do {
+        FARPROC proc = GetProcAddress(module.hModule, symbol);
+        if (proc) {
+          archetype = (Archetype) (void *) proc;
+          break;
+        }
+      } while (Module32Next(snapshot, &module));
+    }
+
+    CloseHandle(snapshot);
+  }
+
+  return archetype;
+#else
+  return (Archetype) dlsym(RTLD_DEFAULT, symbol);
+#endif
+}
+
 Class *classForName(const char *name) {
 
   if (name) {
@@ -172,7 +220,7 @@ Class *classForName(const char *name) {
     char *s;
     if (asprintf(&s, "_%s", name) > 0) {
       Class *clazz = NULL;
-      Class *(*archetype)(void) = dlsym(RTLD_DEFAULT, s);
+      const Archetype archetype = archetypeForSymbol(s);
       if (archetype) {
         clazz = archetype();
       }
