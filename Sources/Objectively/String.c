@@ -475,10 +475,27 @@ static bool writeToFile(const String *self, const char *path, StringEncoding enc
  */
 static void appendBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding) {
 
-  String *string = $(alloc(String), initWithBytes, bytes, length, encoding);
-  if (string) {
-    $(self, appendCharacters, string->chars);
-    release(string);
+  if (bytes) {
+
+    Transcode trans = {
+      .to = STRING_ENCODING_UTF8,
+      .from = encoding,
+      .in = (char *) bytes,
+      .length = length,
+      .out = calloc(length * sizeof(Unicode) + 1, sizeof(char)),
+      .size = length * sizeof(Unicode) + 1
+    };
+
+    assert(trans.out);
+
+    const size_t size = transcode(&trans);
+    assert(size < trans.size);
+
+    trans.out[size] = '\0';
+
+    $(self, appendCharacters, trans.out);
+
+    free(trans.out);
   }
 }
 

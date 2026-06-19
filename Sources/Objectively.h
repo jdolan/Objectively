@@ -40,11 +40,13 @@
 #include <Objectively/Enum.h>
 #include <Objectively/Error.h>
 #include <Objectively/Hash.h>
+#include <Objectively/HashTable.h>
 #include <Objectively/IndexPath.h>
 #include <Objectively/IndexSet.h>
 #include <Objectively/JSONPath.h>
 #include <Objectively/JSONContext.h>
 #include <Objectively/JSONSerializers.h>
+#include <Objectively/List.h>
 #include <Objectively/Lock.h>
 #include <Objectively/Log.h>
 #include <Objectively/Null.h>

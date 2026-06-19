@@ -220,7 +220,7 @@ ident JSONSerializeStruct(const JSONProperties *properties,
   return (ident) $(context, dictionaryFromStruct, child, value);
 }
 
-ident JSONSerializeObjectArray(const JSONProperties *properties,
+ident JSONSerializeArray(const JSONProperties *properties,
                           const JSONProperty *property,
                           ident value,
                           ident data,
@@ -498,7 +498,7 @@ bool JSONDeserializeStruct(const JSONProperties *properties,
   return $(context, structFromDictionary, child, cast(Dictionary, value), field);
 }
 
-bool JSONDeserializeObjectArray(const JSONProperties *properties,
+bool JSONDeserializeArray(const JSONProperties *properties,
                             const JSONProperty *property,
                             const Object *value,
                             ident field,
@@ -653,7 +653,7 @@ bool JSONDeserializeDate(const JSONProperties *properties,
   return *dest != NULL;
 }
 
-ident JSONSerializeArray(const JSONProperties *properties,
+ident JSONSerializeObjectArray(const JSONProperties *properties,
                                  const JSONProperty *property,
                                  ident value,
                                  ident data,
@@ -668,7 +668,7 @@ ident JSONSerializeArray(const JSONProperties *properties,
   return *arr ? retain(*arr) : NULL;
 }
 
-bool JSONDeserializeArray(const JSONProperties *properties,
+bool JSONDeserializeObjectArray(const JSONProperties *properties,
                                   const JSONProperty *property,
                                   const Object *value,
                                   ident field,

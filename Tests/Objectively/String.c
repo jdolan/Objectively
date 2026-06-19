@@ -90,7 +90,7 @@ START_TEST(string) {
   release(newlines);
   release(trimmedNewlines);
 
-  const char *path = "/tmp/Objectively_String.test";
+  const char *path = "Objectively_String.test";
   ck_assert($(string, writeToFile, path, STRING_ENCODING_UTF8));
 
   String *fromFile = $$(String, stringWithContentsOfFile, path, STRING_ENCODING_UTF8);
@@ -111,7 +111,31 @@ START_TEST(string) {
 
 } END_TEST
 
-START_TEST(stringMutable) {
+START_TEST(_strtrim) {
+
+  char *trimmed = strtrim("hello world");
+  ck_assert_str_eq("hello world", trimmed);
+
+  free(trimmed);
+
+  trimmed = strtrim("\t hello world");
+  ck_assert_str_eq("hello world", trimmed);
+
+  free(trimmed);
+
+  trimmed = strtrim("hello world\t ");
+  ck_assert_str_eq("hello world", trimmed);
+
+  free(trimmed);
+
+  trimmed = strtrim("\n hello world \n\t");
+  ck_assert_str_eq("hello world", trimmed);
+
+  free(trimmed);
+} END_TEST
+
+
+START_TEST(string_mutation) {
 
   String *string = $$(String, string);
 
@@ -154,7 +178,7 @@ START_TEST(stringMutable) {
 
 } END_TEST
 
-START_TEST(appendBytes) {
+START_TEST(string_appendBytes) {
 
   String *string = $$(String, string);
 
@@ -170,7 +194,7 @@ START_TEST(appendBytes) {
 
 } END_TEST
 
-START_TEST(initWithBytes) {
+START_TEST(string_initWithBytes) {
 
   const uint8_t bytes[] = "hello world";
   String *string = $(alloc(String), initWithBytes, bytes, sizeof(bytes) - 1, STRING_ENCODING_ASCII);
@@ -182,7 +206,7 @@ START_TEST(initWithBytes) {
 
 } END_TEST
 
-START_TEST(initWithData) {
+START_TEST(string_initWithData) {
 
   const uint8_t bytes[] = "hello world";
   Data *data = $$(Data, dataWithBytes, bytes, sizeof(bytes) - 1);
@@ -197,12 +221,12 @@ START_TEST(initWithData) {
 
 } END_TEST
 
-START_TEST(initWithContentsOfFile) {
+START_TEST(string_initWithContentsOfFile) {
 
   const char *path = "/tmp/Objectively_String.test";
 
   String *written = $(alloc(String), initWithCharacters, "hello world");
-  ck_assert($(written, writeToFile, path, STRING_ENCODING_UTF8));
+  ck_assert($((String *) written, writeToFile, path, STRING_ENCODING_UTF8));
   release(written);
 
   String *string = $(alloc(String), initWithContentsOfFile, path, STRING_ENCODING_UTF8);
@@ -215,39 +239,18 @@ START_TEST(initWithContentsOfFile) {
 
 } END_TEST
 
-START_TEST(_strtrim) {
-
-  char *trimmed = strtrim("hello world");
-  ck_assert_str_eq("hello world", trimmed);
-
-  free(trimmed);
-
-  trimmed = strtrim("\t hello world");
-  ck_assert_str_eq("hello world", trimmed);
-
-  free(trimmed);
-
-  trimmed = strtrim("hello world\t ");
-  ck_assert_str_eq("hello world", trimmed);
-
-  free(trimmed);
-
-  trimmed = strtrim("\n hello world \n\t");
-  ck_assert_str_eq("hello world", trimmed);
-
-  free(trimmed);
-} END_TEST
 
 int main(int argc, char **argv) {
 
   TCase *tcase = tcase_create("String");
   tcase_add_test(tcase, string);
   tcase_add_test(tcase, _strtrim);
-  tcase_add_test(tcase, stringMutable);
-  tcase_add_test(tcase, appendBytes);
-  tcase_add_test(tcase, initWithBytes);
-  tcase_add_test(tcase, initWithData);
-  tcase_add_test(tcase, initWithContentsOfFile);
+
+  tcase_add_test(tcase, string_mutation);
+  tcase_add_test(tcase, string_appendBytes);
+  tcase_add_test(tcase, string_initWithBytes);
+  tcase_add_test(tcase, string_initWithData);
+  tcase_add_test(tcase, string_initWithContentsOfFile);
 
   Suite *suite = suite_create("String");
   suite_add_tcase(suite, tcase);

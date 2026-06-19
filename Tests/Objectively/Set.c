@@ -25,7 +25,7 @@
 
 #include "Objectively.h"
 
-static void enumerator(const Set *set, ident obj, ident data) {
+static void mutation_enumerator(const Set *set, ident obj, ident data) {
   (*(int *) data)++;
 }
 
@@ -69,7 +69,7 @@ START_TEST(set) {
   release(three);
 
   int count = 0;
-  $(set, enumerateObjects, enumerator, &count);
+  $(set, enumerateObjects, mutation_enumerator, &count);
 
   ck_assert_int_eq(set->count, count);
 
@@ -95,7 +95,12 @@ START_TEST(set) {
 
 } END_TEST
 
-START_TEST(mutableSet) {
+
+static void enumerator(const Set *set, ident obj, ident data) {
+  (*(int *) data)++;
+}
+
+START_TEST(set_mutation) {
   
   Set *set = $$(Set, setWithCapacity, 5);
 
@@ -168,11 +173,13 @@ START_TEST(mutableSet) {
 
 } END_TEST
 
+
 int main(int argc, char **argv) {
 
   TCase *tcase = tcase_create("Set");
   tcase_add_test(tcase, set);
-  tcase_add_test(tcase, mutableSet);
+
+  tcase_add_test(tcase, set_mutation);
 
   Suite *suite = suite_create("Set");
   suite_add_tcase(suite, tcase);

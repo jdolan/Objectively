@@ -22,6 +22,7 @@
  */
 
 #include <unistd.h>
+#include <stdlib.h>
 #include <check.h>
 
 #include "Objectively.h"
@@ -45,7 +46,7 @@ START_TEST(data) {
   ck_assert($((Object *) data1, isEqual, (Object *) data2) == true);
   release(data2);
 
-  const char *path = "/tmp/Objectively_Data.test";
+  const char *path = "Objectively_Data.test";
   ck_assert($(data1, writeToFile, path) == true);
 
   data2 = $(alloc(Data), initWithContentsOfFile, path);
@@ -58,10 +59,44 @@ START_TEST(data) {
   release(data2);
 } END_TEST
 
+
+START_TEST(data_mutation) {
+
+  Data *data = $(alloc(Data), init);
+  $(data, appendBytes, (uint8_t *) "123", 3);
+
+  ck_assert_int_eq(3, data->length);
+  ck_assert(strncmp("123", (char *) data->bytes, 3) == 0);
+
+  $(data, setLength, 128);
+  ck_assert_int_eq(128, data->length);
+  ck_assert_int_eq(0, data->bytes[data->length - 1]);
+
+  ident mem = malloc(8192 * sizeof(uint8_t));
+  ck_assert(mem != NULL);
+
+  memset(mem, 1, 8192 * sizeof(uint8_t));
+
+  Data *append = $(alloc(Data), initWithMemory, mem, 8192);
+  ck_assert(append != NULL);
+
+  $(data, appendData, append);
+  release(append);
+
+  ck_assert_int_eq(8192 + 128, data->length);
+  ck_assert_int_eq(1, data->bytes[data->length - 1]);
+
+  release(data);
+
+} END_TEST
+
+
 int main(int argc, char **argv) {
 
   TCase *tcase = tcase_create("Data");
   tcase_add_test(tcase, data);
+
+  tcase_add_test(tcase, data_mutation);
 
   Suite *suite = suite_create("Data");
   suite_add_tcase(suite, tcase);
