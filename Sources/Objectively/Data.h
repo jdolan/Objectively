@@ -180,14 +180,6 @@ struct DataInterface {
   Data *(*initWithMemory)(Data *self, ident mem, size_t length);
 
   /**
-   * @fn Data *Data::copy(const Data *self)
-   * @param self The Data.
-   * @return A Data with the contents of this Data.
-   * @memberof Data
-   */
-  Data *(*copy)(const Data *self);
-
-  /**
    * @fn bool Data::writeToFile(const Data *self, const char *path)
    * @brief Writes this Data to `path`.
    * @param self The Data.

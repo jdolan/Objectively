@@ -355,10 +355,18 @@ static void setLength(Data *self, size_t length) {
       self->bytes = calloc(newCapacity, sizeof(uint8_t));
       assert(self->bytes);
     } else {
-      self->bytes = realloc(self->bytes, newCapacity);
-      assert(self->bytes);
-
-      memset(self->bytes + self->length, 0, length - self->length);
+      if (self->destroy != free) {
+        uint8_t *owned = malloc(newCapacity);
+        assert(owned);
+        memcpy(owned, self->bytes, self->length);
+        memset(owned + self->length, 0, length - self->length);
+        self->bytes = owned;
+        self->destroy = free;
+      } else {
+        self->bytes = realloc(self->bytes, newCapacity);
+        assert(self->bytes);
+        memset(self->bytes + self->length, 0, length - self->length);
+      }
     }
 
     self->capacity = newCapacity;

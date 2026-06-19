@@ -29,8 +29,6 @@
 #include <Objectively/Array.h>
 #include <Objectively/Date.h>
 #include <Objectively/Dictionary.h>
-#include <Objectively/Array.h>
-#include <Objectively/Dictionary.h>
 #include <Objectively/Set.h>
 #include <Objectively/Object.h>
 #include <Objectively/URL.h>

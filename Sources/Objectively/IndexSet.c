@@ -251,7 +251,7 @@ static void addIndexes(IndexSet *self, size_t *indexes, size_t count) {
  */
 static void addIndexesInRange(IndexSet *self, const Range range) {
 
-  for (size_t i = range.location; i < range.length; i++) {
+  for (size_t i = range.location; i < range.location + range.length; i++) {
     $(self, addIndex, i);
   }
 }
@@ -265,8 +265,8 @@ static IndexSet *init(IndexSet *self) {
 }
 
 /**
- * @fn Set *Set::initWithCapacity(Set *self, size_t capacity)
- * @memberof Set
+ * @fn IndexSet *IndexSet::initWithCapacity(IndexSet *self, size_t capacity)
+ * @memberof IndexSet
  */
 static IndexSet *initWithCapacity(IndexSet *self, size_t capacity) {
 
@@ -331,7 +331,7 @@ static void removeIndexes(IndexSet *self, size_t *indexes, size_t count) {
 */
 static void removeIndexesInRange(IndexSet *self, const Range range) {
 
-  for (size_t i = range.location; i < range.length; i++) {
+  for (size_t i = range.location; i < range.location + range.length; i++) {
     $(self, removeIndex, i);
   }
 }

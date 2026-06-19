@@ -104,7 +104,7 @@ START_TEST(indexSet_addIndexesInRange) {
   $(indexSet, addIndexesInRange, range);
 
   const size_t *indexes = indexSet->indexes;
-  for (size_t r = range.location, i = 0; r < range.length; r++, i++) {
+  for (size_t r = range.location, i = 0; r < range.location + range.length; r++, i++) {
     ck_assert_int_eq(r, indexes[i]);
   }
 

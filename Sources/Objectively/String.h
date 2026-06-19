@@ -255,14 +255,6 @@ struct StringInterface {
   String *(*lowercaseString)(const String *self);
 
   /**
-   * @fn String *String::copy(const String *self)
-   * @param self The String.
-   * @return A String with the contents of this String.
-   * @memberof String
-   */
-  String *(*copy)(const String *self);
-
-  /**
    * @fn Range String::rangeOfCharacters(const String *self, const char *chars, const Range range)
    * @brief Finds and returns the first occurrence of `chars` in this String.
    * @param self The String.

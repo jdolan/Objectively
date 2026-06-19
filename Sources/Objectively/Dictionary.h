@@ -195,14 +195,6 @@ struct DictionaryInterface {
   Dictionary *(*initWithObjectsAndKeys)(Dictionary *self, ...);
 
   /**
-   * @fn Dictionary *Dictionary::copy(const Dictionary *self)
-   * @param self The Dictionary.
-   * @return A Dictionary with the contents of this Dictionary.
-   * @memberof Dictionary
-   */
-  Dictionary *(*copy)(const Dictionary *self);
-
-  /**
    * @fn ident Dictionary::objectForKey(const Dictionary *self, const ident key)
    * @param self The Dictionary.
    * @param key The key.
