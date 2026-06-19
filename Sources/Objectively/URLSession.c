@@ -376,6 +376,16 @@ static URLSessionUploadTask *uploadTaskWithRequest(URLSession *self, URLRequest 
 #pragma mark - Class lifecycle
 
 /**
+ * @see Class::destroy(Class *)
+ */
+static void destroy(Class *clazz) {
+
+  _sharedInstance = release(_sharedInstance);
+
+  curl_global_cleanup();
+}
+
+/**
  * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
@@ -395,16 +405,6 @@ static void initialize(Class *clazz) {
 
   const CURLcode code = curl_global_init(CURL_GLOBAL_ALL);
   assert(code == CURLE_OK);
-}
-
-/**
- * @see Class::destroy(Class *)
- */
-static void destroy(Class *clazz) {
-
-  _sharedInstance = release(_sharedInstance);
-
-  curl_global_cleanup();
 }
 
 /**

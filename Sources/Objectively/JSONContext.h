@@ -100,24 +100,6 @@ struct JSONContextInterface {
   ObjectInterface objectInterface;
 
   /**
-   * @fn JSONContext *JSONContext::init(JSONContext *self)
-   * @brief Initializes a JSONContext.
-   * @return The initialized JSONContext.
-   * @memberof JSONContext
-   */
-  JSONContext *(*init)(JSONContext *self);
-
-  /**
-   * @fn ident JSONContext::objectFromData(JSONContext *self, const Data *data, int options)
-   * @brief Parses a JSON Data buffer into an Objectively object graph.
-   * @param data The JSON Data to parse.
-   * @param options Reserved; pass 0.
-   * @return The root Object (Dictionary or Array), or `NULL` on parse error.
-   * @memberof JSONContext
-   */
-  ident (*objectFromData)(JSONContext *self, const Data *data, int options);
-
-  /**
    * @fn Data *JSONContext::dataFromObject(JSONContext *self, const ident obj, int options)
    * @brief Serializes an Objectively object graph to JSON Data.
    * @param obj The root Object to serialize.
@@ -154,6 +136,36 @@ struct JSONContextInterface {
                               size_t count);
 
   /**
+   * @fn Dictionary *JSONContext::dictionaryFromStruct(JSONContext *self, const JSONProperties *properties, const ident instance)
+   * @brief Serializes a C struct instance to a Dictionary.
+   * @param properties The JSONProperties for the struct type.
+   * @param instance Pointer to the struct instance.
+   * @return A new Dictionary, or `NULL` on error.
+   * @memberof JSONContext
+   */
+  Dictionary *(*dictionaryFromStruct)(JSONContext *self,
+                                         const JSONProperties *properties,
+                                         const ident instance);
+
+  /**
+   * @fn JSONContext *JSONContext::init(JSONContext *self)
+   * @brief Initializes a JSONContext.
+   * @return The initialized JSONContext.
+   * @memberof JSONContext
+   */
+  JSONContext *(*init)(JSONContext *self);
+
+  /**
+   * @fn ident JSONContext::objectFromData(JSONContext *self, const Data *data, int options)
+   * @brief Parses a JSON Data buffer into an Objectively object graph.
+   * @param data The JSON Data to parse.
+   * @param options Reserved; pass 0.
+   * @return The root Object (Dictionary or Array), or `NULL` on parse error.
+   * @memberof JSONContext
+   */
+  ident (*objectFromData)(JSONContext *self, const Data *data, int options);
+
+  /**
    * @fn bool JSONContext::structFromData(JSONContext *self, const JSONProperties *properties, const Data *data, ident instance)
    * @brief Deserializes a top-level JSON object into a C struct.
    * @param properties The JSONProperties for the struct type.
@@ -166,34 +178,6 @@ struct JSONContextInterface {
                             const JSONProperties *properties,
                             const Data *data,
                             ident instance);
-
-  /**
-   * @fn size_t JSONContext::structsFromData(JSONContext *self, const JSONProperties *properties, const Data *data, ident instances, size_t count)
-   * @brief Deserializes a top-level JSON array into an array of C structs.
-   * @param properties The JSONProperties for the element type.
-   * @param data The JSON Data containing a top-level array.
-   * @param instances Pointer to a caller-allocated buffer of at least `count` structs.
-   * @param count The capacity of the `instances` buffer.
-   * @return The number of structs actually written.
-   * @memberof JSONContext
-   */
-  size_t (*structsFromData)(JSONContext *self,
-                               const JSONProperties *properties,
-                               const Data *data,
-                               ident instances,
-                               size_t count);
-
-  /**
-   * @fn Dictionary *JSONContext::dictionaryFromStruct(JSONContext *self, const JSONProperties *properties, const ident instance)
-   * @brief Serializes a C struct instance to a Dictionary.
-   * @param properties The JSONProperties for the struct type.
-   * @param instance Pointer to the struct instance.
-   * @return A new Dictionary, or `NULL` on error.
-   * @memberof JSONContext
-   */
-  Dictionary *(*dictionaryFromStruct)(JSONContext *self,
-                                         const JSONProperties *properties,
-                                         const ident instance);
 
   /**
    * @fn bool JSONContext::structFromDictionary(JSONContext *self, const JSONProperties *properties, const Dictionary *dictionary, ident instance)
@@ -224,6 +208,23 @@ struct JSONContextInterface {
                                 const Array *array,
                                 ident instances,
                                 size_t count);
+
+  /**
+   * @fn size_t JSONContext::structsFromData(JSONContext *self, const JSONProperties *properties, const Data *data, ident instances, size_t count)
+   * @brief Deserializes a top-level JSON array into an array of C structs.
+   * @param properties The JSONProperties for the element type.
+   * @param data The JSON Data containing a top-level array.
+   * @param instances Pointer to a caller-allocated buffer of at least `count` structs.
+   * @param count The capacity of the `instances` buffer.
+   * @return The number of structs actually written.
+   * @memberof JSONContext
+   */
+  size_t (*structsFromData)(JSONContext *self,
+                               const JSONProperties *properties,
+                               const Data *data,
+                               ident instances,
+                               size_t count);
+
 };
 
 /**

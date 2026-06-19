@@ -215,6 +215,14 @@ static Array *pathComponents(const URL *self) {
 #pragma mark - Class lifecycle
 
 /**
+ * @see Class::destroy(Class *)
+ */
+static void destroy(Class *clazz) {
+
+  release(_re);
+}
+
+/**
  * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
@@ -231,14 +239,6 @@ static void initialize(Class *clazz) {
   ((URLInterface *) clazz->interface)->pathComponents = pathComponents;
 
   _re = re("([a-z]+)://([^:/\?]+)?(:[0-9]+)?(/[^\?#]+)?([^#]+)?(#.*)?", 0);
-}
-
-/**
- * @see Class::destroy(Class *)
- */
-static void destroy(Class *clazz) {
-
-  release(_re);
 }
 
 /**

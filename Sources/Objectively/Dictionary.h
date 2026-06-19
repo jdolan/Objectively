@@ -100,6 +100,15 @@ struct DictionaryInterface {
   ObjectInterface objectInterface;
 
   /**
+   * @fn void Dictionary::addEntriesFromDictionary(Dictionary *self, const Dictionary *dictionary)
+   * @brief Adds the key-value entries from `dictionary` to this Dictionary.
+   * @param self The Dictionary.
+   * @param dictionary A Dictionary.
+   * @memberof Dictionary
+   */
+  void (*addEntriesFromDictionary)(Dictionary *self, const Dictionary *dictionary);
+
+  /**
    * @fn Array *Dictionary::allKeys(const Dictionary *self)
    * @param self The Dictionary.
    * @return An Array containing all keys in this Dictionary.
@@ -132,6 +141,25 @@ struct DictionaryInterface {
    * @memberof Dictionary
    */
   bool (*containsKeyPath)(const Dictionary *self, const char *path);
+
+  /**
+   * @static
+   * @fn Dictionary *Dictionary::dictionary(void)
+   * @brief Returns a new Dictionary.
+   * @return The new Dictionary, or `NULL` on error.
+   * @memberof Dictionary
+   */
+  Dictionary *(*dictionary)(void);
+
+  /**
+   * @static
+   * @fn Dictionary *Dictionary::dictionaryWithCapacity(size_t capacity)
+   * @brief Returns a new Dictionary with the given `capacity`.
+   * @param capacity The desired initial capacity.
+   * @return The new Dictionary, or `NULL` on error.
+   * @memberof Dictionary
+   */
+  Dictionary *(*dictionaryWithCapacity)(size_t capacity);
 
   /**
    * @static
@@ -174,6 +202,25 @@ struct DictionaryInterface {
    * @memberof Dictionary
    */
   Dictionary *(*filterObjectsAndKeys)(const Dictionary *self, DictionaryPredicate predicate, ident data);
+
+  /**
+   * @fn Dictionary *Dictionary::init(Dictionary *self)
+   * @brief Initializes this Dictionary.
+   * @param self The Dictionary.
+   * @return The initialized Dictionary, or `NULL` on error.
+   * @memberof Dictionary
+   */
+  Dictionary *(*init)(Dictionary *self);
+
+  /**
+   * @fn Dictionary *Dictionary::initWithCapacity(Dictionary *self, size_t capacity)
+   * @brief Initializes this Dictionary with the specified capacity.
+   * @param self The Dictionary.
+   * @param capacity The initial capacity.
+   * @return The initialized Dictionary, or `NULL` on error.
+   * @memberof Dictionary
+   */
+  Dictionary *(*initWithCapacity)(Dictionary *self, size_t capacity);
 
   /**
    * @fn Dictionary *Dictionary::initWithDictionary(Dictionary *self, const Dictionary *dictionary)
@@ -223,54 +270,6 @@ struct DictionaryInterface {
    * @remarks The returned Object reference will either be of the specified type, or NULL.
    */
   ident (*objectForKeyPathWithClass)(const Dictionary *self, const char *path, const Class *clazz);
-
-  
-  /**
-   * @fn void Dictionary::addEntriesFromDictionary(Dictionary *self, const Dictionary *dictionary)
-   * @brief Adds the key-value entries from `dictionary` to this Dictionary.
-   * @param self The Dictionary.
-   * @param dictionary A Dictionary.
-   * @memberof Dictionary
-   */
-  void (*addEntriesFromDictionary)(Dictionary *self, const Dictionary *dictionary);
-
-  /**
-   * @static
-   * @fn Dictionary *Dictionary::dictionary(void)
-   * @brief Returns a new Dictionary.
-   * @return The new Dictionary, or `NULL` on error.
-   * @memberof Dictionary
-   */
-  Dictionary *(*dictionary)(void);
-
-  /**
-   * @static
-   * @fn Dictionary *Dictionary::dictionaryWithCapacity(size_t capacity)
-   * @brief Returns a new Dictionary with the given `capacity`.
-   * @param capacity The desired initial capacity.
-   * @return The new Dictionary, or `NULL` on error.
-   * @memberof Dictionary
-   */
-  Dictionary *(*dictionaryWithCapacity)(size_t capacity);
-
-  /**
-   * @fn Dictionary *Dictionary::init(Dictionary *self)
-   * @brief Initializes this Dictionary.
-   * @param self The Dictionary.
-   * @return The initialized Dictionary, or `NULL` on error.
-   * @memberof Dictionary
-   */
-  Dictionary *(*init)(Dictionary *self);
-
-  /**
-   * @fn Dictionary *Dictionary::initWithCapacity(Dictionary *self, size_t capacity)
-   * @brief Initializes this Dictionary with the specified capacity.
-   * @param self The Dictionary.
-   * @param capacity The initial capacity.
-   * @return The initialized Dictionary, or `NULL` on error.
-   * @memberof Dictionary
-   */
-  Dictionary *(*initWithCapacity)(Dictionary *self, size_t capacity);
 
   /**
    * @fn void Dictionary::removeAllObjects(Dictionary *self)
@@ -343,6 +342,7 @@ struct DictionaryInterface {
    * @memberof Dictionary
    */
   void (*setObjectsForKeys)(Dictionary *self, ...);
+
 };
 
 /**

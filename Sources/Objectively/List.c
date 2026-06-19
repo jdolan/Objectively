@@ -144,20 +144,7 @@ static ident find(const List *self, Predicate predicate, ident data) {
   return NULL;
 }
 
-/**
- * @fn ListNode *List::nodeForElement(const List *self, const ident element)
- * @memberof List
- */
-static ListNode *nodeForElement(const List *self, const ident element) {
 
-  for (ListNode *node = self->head; node; node = node->next) {
-    if (node->element == element) {
-      return node;
-    }
-  }
-
-  return NULL;
-}
 
 /**
  * @fn List *List::init(List *self)
@@ -222,6 +209,21 @@ static List *mappedList(const List *self, Functor functor, ident data) {
   }
 
   return list;
+}
+
+/**
+ * @fn ListNode *List::nodeForElement(const List *self, const ident element)
+ * @memberof List
+ */
+static ListNode *nodeForElement(const List *self, const ident element) {
+
+  for (ListNode *node = self->head; node; node = node->next) {
+    if (node->element == element) {
+      return node;
+    }
+  }
+
+  return NULL;
 }
 
 /**

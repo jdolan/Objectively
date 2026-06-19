@@ -54,15 +54,17 @@ static Object *copy(const Object *self) {
 }
 
 /**
- * @brief Tests equality of two Objects, accounting for NULL.
+ * @see Object::dealloc(Object *)
  */
-static bool objectEquals(const Object *self, const Object *other) {
+static void dealloc(Object *self) {
 
-  if (self) {
-    return other && $(self, isEqual, other);
-  }
+  URLRequest *this = (URLRequest *) self;
 
-  return other == NULL;
+  release(this->httpBody);
+  release(this->httpHeaders);
+  release(this->url);
+
+  super(Object, self, dealloc);
 }
 
 /**
@@ -105,6 +107,18 @@ static int hash(const Object *self) {
 }
 
 /**
+ * @brief Tests equality of two Objects, accounting for NULL.
+ */
+static bool objectEquals(const Object *self, const Object *other) {
+
+  if (self) {
+    return other && $(self, isEqual, other);
+  }
+
+  return other == NULL;
+}
+
+/**
  * @see Object::isEqual(const Object *, const Object *)
  */
 static bool isEqual(const Object *self, const Object *other) {
@@ -125,20 +139,6 @@ static bool isEqual(const Object *self, const Object *other) {
   }
 
   return false;
-}
-
-/**
- * @see Object::dealloc(Object *)
- */
-static void dealloc(Object *self) {
-
-  URLRequest *this = (URLRequest *) self;
-
-  release(this->httpBody);
-  release(this->httpHeaders);
-  release(this->url);
-
-  super(Object, self, dealloc);
 }
 
 #pragma mark - URLRequest

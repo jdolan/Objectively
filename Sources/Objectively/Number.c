@@ -123,14 +123,6 @@ static float floatValue(const Number *self) {
 }
 
 /**
- * @fn long Number::longValue(const Number *self)
- * @memberof Number
- */
-static long longValue(const Number *self) {
-  return (long) self->value;
-}
-
-/**
  * @fn Number *Number::initWithValue(Number *self, double value)
  * @memberof Number
  */
@@ -150,6 +142,14 @@ static Number *initWithValue(Number *self, const double value) {
  */
 static int intValue(const Number *self) {
   return (int) self->value;
+}
+
+/**
+ * @fn long Number::longValue(const Number *self)
+ * @memberof Number
+ */
+static long longValue(const Number *self) {
+  return (long) self->value;
 }
 
 /**

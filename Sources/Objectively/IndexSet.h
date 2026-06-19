@@ -79,35 +79,6 @@ struct IndexSetInterface {
   ObjectInterface objectInterface;
 
   /**
-   * @fn bool IndexSet::containsIndex(const IndexSet *self, size_t index)
-   * @param self The IndexSet.
-   * @param index The index.
-   * @return True if this IndexSet contains `index`, false otherwise.
-   * @memberof IndexSet
-   */
-  bool (*containsIndex)(const IndexSet *self, size_t index);
-
-  /**
-   * @fn IndexSet *IndexSet::initWithIndex(IndexSet *self, size_t index)
-   * @brief Initializes this IndexSet with the specified index.
-   * @param self The IndexSet.
-   * @param index The index.
-   * @return The intialized IndexSet, or `NULL` on error.
-   * @memberof IndexSet
-   */
-  IndexSet *(*initWithIndex)(IndexSet *self, size_t index);
-
-  /**
-   * @fn IndexSet *IndexSet::initWithIndexes(IndexSet *self, size_t *indexes, size_t count)
-   * @brief Initializes this IndexSet with the specified indexes and count.
-   * @param self The IndexSet.
-   * @param indexes The indexes.
-   * @param count The count of `indexes`.
-   * @return The intialized IndexSet, or `NULL` on error.
-   * @memberof IndexSet
-   */
-  IndexSet *(*initWithIndexes)(IndexSet *self, size_t *indexes, size_t count);
-  /**
    * @fn void IndexSet::addIndex(IndexSet *self, size_t index)
    * @brief Adds the specified index to this IndexSet.
    * @param self The IndexSet.
@@ -136,6 +107,15 @@ struct IndexSetInterface {
   void (*addIndexesInRange)(IndexSet *self, const Range range);
 
   /**
+   * @fn bool IndexSet::containsIndex(const IndexSet *self, size_t index)
+   * @param self The IndexSet.
+   * @param index The index.
+   * @return True if this IndexSet contains `index`, false otherwise.
+   * @memberof IndexSet
+   */
+  bool (*containsIndex)(const IndexSet *self, size_t index);
+
+  /**
    * @fn IndexSet *IndexSet::init(IndexSet *self)
    * @brief Initializes this IndexSet.
    * @param self The IndexSet.
@@ -153,6 +133,27 @@ struct IndexSetInterface {
    * @memberof IndexSet
    */
   IndexSet *(*initWithCapacity)(IndexSet *self, size_t capacity);
+
+  /**
+   * @fn IndexSet *IndexSet::initWithIndex(IndexSet *self, size_t index)
+   * @brief Initializes this IndexSet with the specified index.
+   * @param self The IndexSet.
+   * @param index The index.
+   * @return The intialized IndexSet, or `NULL` on error.
+   * @memberof IndexSet
+   */
+  IndexSet *(*initWithIndex)(IndexSet *self, size_t index);
+
+  /**
+   * @fn IndexSet *IndexSet::initWithIndexes(IndexSet *self, size_t *indexes, size_t count)
+   * @brief Initializes this IndexSet with the specified indexes and count.
+   * @param self The IndexSet.
+   * @param indexes The indexes.
+   * @param count The count of `indexes`.
+   * @return The intialized IndexSet, or `NULL` on error.
+   * @memberof IndexSet
+   */
+  IndexSet *(*initWithIndexes)(IndexSet *self, size_t *indexes, size_t count);
 
   /**
    * @fn void IndexSet::removeAllIndexes(IndexSet *self)
@@ -189,6 +190,7 @@ struct IndexSetInterface {
   * @memberof IndexSet
   */
   void (*removeIndexesInRange)(IndexSet *self, const Range range);
+
 };
 
 /**

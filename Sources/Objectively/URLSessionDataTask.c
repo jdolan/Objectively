@@ -51,8 +51,6 @@ static void dealloc(Object *self) {
 
 #pragma mark - URLSessionTask
 
-#define CURL_WRITEFUNC_ABORT 0
-
 /**
  * @brief Copies a cached response into this task's live response and data fields.
  */
@@ -78,34 +76,19 @@ static void materializeCachedResponse(URLSessionDataTask *self) {
 }
 
 /**
- * @brief The `CURLOPT_WRITEFUNCTION` callback.
+ * @fn void URLSessionDataTask::cacheResponse(URLSessionDataTask *self)
+ * @memberof URLSessionDataTask
  */
-static size_t writeFunction(char *data, size_t size, size_t count, ident self) {
+static void cacheResponse(URLSessionDataTask *self) {
 
-  URLSessionDataTask *this = (URLSessionDataTask *) self;
-
-  const uint8_t *bytes = (uint8_t *) data;
-  const size_t bytesReceived = size * count;
-
-  if (this->data == NULL) {
-    this->data = (Data *) $(alloc(Data), init);
+  if (self->cachedResponse) {
+    return;
   }
 
-  $((Data *) this->data, appendBytes, bytes, bytesReceived);
-
-  this->urlSessionTask.bytesReceived += bytesReceived;
-  return bytesReceived;
-}
-
-/**
- * @see URLSessionTask::setup(URLSessionTask *)
- */
-static void setup(URLSessionTask *self) {
-
-  super(URLSessionTask, self, setup);
-
-  curl_easy_setopt(self->locals.handle, CURLOPT_WRITEFUNCTION, writeFunction);
-  curl_easy_setopt(self->locals.handle, CURLOPT_WRITEDATA, self);
+  URLCache *cache = self->urlSessionTask.session->configuration->urlCache;
+  if (cache) {
+    $(cache, storeCachedResponseForRequest, self->urlSessionTask.request, self->urlSessionTask.response, self->data);
+  }
 }
 
 /**
@@ -162,22 +145,6 @@ static void execute(URLSessionTask *self) {
 }
 
 /**
- * @fn void URLSessionDataTask::cacheResponse(URLSessionDataTask *self)
- * @memberof URLSessionDataTask
- */
-static void cacheResponse(URLSessionDataTask *self) {
-
-  if (self->cachedResponse) {
-    return;
-  }
-
-  URLCache *cache = self->urlSessionTask.session->configuration->urlCache;
-  if (cache) {
-    $(cache, storeCachedResponseForRequest, self->urlSessionTask.request, self->urlSessionTask.response, self->data);
-  }
-}
-
-/**
  * @see URLSessionTask::resume(URLSessionTask *)
  */
 static void resume(URLSessionTask *self) {
@@ -204,6 +171,37 @@ static void resume(URLSessionTask *self) {
   }
 
   super(URLSessionTask, self, resume);
+}
+
+/**
+ * @brief The `CURLOPT_WRITEFUNCTION` callback.
+ */
+static size_t writeFunction(char *data, size_t size, size_t count, ident self) {
+
+  URLSessionDataTask *this = (URLSessionDataTask *) self;
+
+  const uint8_t *bytes = (uint8_t *) data;
+  const size_t bytesReceived = size * count;
+
+  if (this->data == NULL) {
+    this->data = (Data *) $(alloc(Data), init);
+  }
+
+  $((Data *) this->data, appendBytes, bytes, bytesReceived);
+
+  this->urlSessionTask.bytesReceived += bytesReceived;
+  return bytesReceived;
+}
+
+/**
+ * @see URLSessionTask::setup(URLSessionTask *)
+ */
+static void setup(URLSessionTask *self) {
+
+  super(URLSessionTask, self, setup);
+
+  curl_easy_setopt(self->locals.handle, CURLOPT_WRITEFUNCTION, writeFunction);
+  curl_easy_setopt(self->locals.handle, CURLOPT_WRITEDATA, self);
 }
 
 #pragma mark - Class lifecycle

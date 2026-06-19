@@ -97,6 +97,15 @@ static Boole *valueof(bool value) {
 #pragma mark - Class lifecycle
 
 /**
+ * @see Class::destroy(Class *)
+ */
+static void destroy(Class *clazz) {
+
+  release(_False);
+  release(_True);
+}
+
+/**
  * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
@@ -107,15 +116,6 @@ static void initialize(Class *clazz) {
   ((BooleInterface *) clazz->interface)->False = False;
   ((BooleInterface *) clazz->interface)->True = True;
   ((BooleInterface *) clazz->interface)->valueof = valueof;
-}
-
-/**
- * @see Class::destroy(Class *)
- */
-static void destroy(Class *clazz) {
-
-  release(_False);
-  release(_True);
 }
 
 /**

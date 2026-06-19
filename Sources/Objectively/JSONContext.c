@@ -659,32 +659,6 @@ static size_t structsFromArray(JSONContext *self,
 #pragma mark - JSONContext instance methods
 
 /**
- * @fn ident JSONContext::objectFromData(JSONContext *self, const Data *data, int options)
- * @memberof JSONContext
- */
-static ident objectFromData(JSONContext *self, const Data *data, int options) {
-
-  if (data && data->length) {
-    JSONReader reader = {
-      .data = data,
-      .options = options
-    };
-
-    ident obj = readElement(&reader);
-
-    if (reader.error) {
-      addError(self, 1, NULL, "JSON parse error");
-      release(obj);
-      return NULL;
-    }
-
-    return obj;
-  }
-
-  return NULL;
-}
-
-/**
  * @fn Data *JSONContext::dataFromObject(JSONContext *self, const ident obj, int options)
  * @memberof JSONContext
  */
@@ -745,6 +719,32 @@ static Data *dataFromStructs(JSONContext *self,
   Data *data = dataFromObject(self, array, 0);
   release(array);
   return data;
+}
+
+/**
+ * @fn ident JSONContext::objectFromData(JSONContext *self, const Data *data, int options)
+ * @memberof JSONContext
+ */
+static ident objectFromData(JSONContext *self, const Data *data, int options) {
+
+  if (data && data->length) {
+    JSONReader reader = {
+      .data = data,
+      .options = options
+    };
+
+    ident obj = readElement(&reader);
+
+    if (reader.error) {
+      addError(self, 1, NULL, "JSON parse error");
+      release(obj);
+      return NULL;
+    }
+
+    return obj;
+  }
+
+  return NULL;
 }
 
 /**
@@ -815,6 +815,13 @@ static JSONContext *init(JSONContext *self) {
 #pragma mark - Class lifecycle
 
 /**
+ * @see Class::destroy(Class *)
+ */
+static void destroy(Class *clazz) {
+  (void) clazz;
+}
+
+/**
  * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
@@ -834,13 +841,6 @@ static void initialize(Class *clazz) {
   iface->dictionaryFromStruct = dictionaryFromStruct;
   iface->structFromDictionary = structFromDictionary;
   iface->structsFromArray = structsFromArray;
-}
-
-/**
- * @see Class::destroy(Class *)
- */
-static void destroy(Class *clazz) {
-  (void) clazz;
 }
 
 /**

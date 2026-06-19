@@ -95,6 +95,33 @@ struct SetInterface {
   ObjectInterface objectInterface;
 
   /**
+   * @fn void Set::addObject(Set *self, const ident obj)
+   * @brief Adds the specified Object to this Set.
+   * @param self The Set.
+   * @param obj An Object.
+   * @memberof Set
+   */
+  void (*addObject)(Set *self, const ident obj);
+
+  /**
+   * @fn void Set::addObjectsFromArray(Set *self, const Array *array)
+   * @brief Adds the Objects contained in `array` to this Set.
+   * @param self The Set.
+   * @param array An Array.
+   * @memberof Set
+   */
+  void (*addObjectsFromArray)(Set *self, const Array *array);
+
+  /**
+   * @fn void Set::addObjectsFromSet(Set *self, const Set *set)
+   * @brief Adds the Objects contained in `set` to this Set.
+   * @param self The Set.
+   * @param set A Set.
+   * @memberof Set
+   */
+  void (*addObjectsFromSet)(Set *self, const Set *set);
+
+  /**
    * @fn Array *Set::allObjects(const Set *self)
    * @param self The Set.
    * @return An Array containing all Objects in this Set.
@@ -133,6 +160,16 @@ struct SetInterface {
   void (*enumerateObjects)(const Set *self, SetEnumerator enumerator, ident data);
 
   /**
+   * @fn void Set::filter(Set *self, Predicate predicate, ident data)
+   * @brief Filters this Set in place using `predicate`.
+   * @param self The Set.
+   * @param predicate A Predicate.
+   * @param data User data.
+   * @memberof Set
+   */
+  void (*filter)(Set *self, Predicate predicate, ident data);
+
+  /**
    * @fn Set *Set::filteredSet(const Set *self, Predicate predicate, ident data)
    * @brief Creates a new Set with elements that pass `predicate`.
    * @param self The Set.
@@ -144,6 +181,15 @@ struct SetInterface {
   Set *(*filteredSet)(const Set *self, Predicate predicate, ident data);
 
   /**
+   * @fn Set *Set::init(Set *self)
+   * @brief Initializes this Set.
+   * @param self The Set.
+   * @return The initialized Set, or `NULL` on error.
+   * @memberof Set
+   */
+  Set *(*init)(Set *self);
+
+  /**
    * @fn Set *Set::initWithArray(Set *self, const Array *array)
    * @brief Initializes this Set to contain the Objects in `array`.
    * @param self The Set.
@@ -152,6 +198,16 @@ struct SetInterface {
    * @memberof Set
    */
   Set *(*initWithArray)(Set *self, const Array *array);
+
+  /**
+   * @fn Set *Set::initWithCapacity(Set *self, size_t capacity)
+   * @brief Initializes this Set with the specified capacity.
+   * @param self The Set.
+   * @param capacity The desired initial capacity.
+   * @return The initialized Set, or `NULL` on error.
+   * @memberof Set
+   */
+  Set *(*initWithCapacity)(Set *self, size_t capacity);
 
   /**
    * @fn Set *Set::initWithObjects(Set *self, ...)
@@ -195,91 +251,6 @@ struct SetInterface {
   ident (*reduce)(const Set *self, Reducer reducer, ident accumulator, ident data);
 
   /**
-   * @static
-   * @fn Set *Set::setWithArray(const Array *array)
-   * @brief Returns a new Set with the contents of `array`.
-   * @param array An Array.
-   * @return The new Set, or `NULL` on error.
-   * @memberof Set
-   */
-  Set *(*setWithArray)(const Array *array);
-
-  /**
-   * @static
-   * @fn Set *Set::setWithObjects(ident obj, ...)
-   * @brief Returns a new Set containing the specified Objects.
-   * @param obj A `NULL`-terminated list of Objects.
-   * @return The new Set, or `NULL` on error.
-   * @memberof Set
-   */
-  Set *(*setWithObjects)(ident obj, ...);
-
-  /**
-   * @static
-   * @fn Set *Set::setWithSet(const Set *set)
-   * @brief Returns a new Set with the contents of `set`.
-   * @param set A set.
-   * @return The new Set, or `NULL` on error.
-   * @memberof Set
-   */
-  Set *(*setWithSet)(const Set *set);
-  /**
-   * @fn void Set::addObject(Set *self, const ident obj)
-   * @brief Adds the specified Object to this Set.
-   * @param self The Set.
-   * @param obj An Object.
-   * @memberof Set
-   */
-  void (*addObject)(Set *self, const ident obj);
-
-  /**
-   * @fn void Set::addObjectsFromArray(Set *self, const Array *array)
-   * @brief Adds the Objects contained in `array` to this Set.
-   * @param self The Set.
-   * @param array An Array.
-   * @memberof Set
-   */
-  void (*addObjectsFromArray)(Set *self, const Array *array);
-
-  /**
-   * @fn void Set::addObjectsFromSet(Set *self, const Set *set)
-   * @brief Adds the Objects contained in `set` to this Set.
-   * @param self The Set.
-   * @param set A Set.
-   * @memberof Set
-   */
-  void (*addObjectsFromSet)(Set *self, const Set *set);
-
-  /**
-   * @fn void Set::filter(Set *self, Predicate predicate, ident data)
-   * @brief Filters this Set in place using `predicate`.
-   * @param self The Set.
-   * @param predicate A Predicate.
-   * @param data User data.
-   * @memberof Set
-   */
-  void (*filter)(Set *self, Predicate predicate, ident data);
-
-  /**
-   * @fn Set *Set::init(Set *self)
-   * @brief Initializes this Set.
-   * @param self The Set.
-   * @return The initialized Set, or `NULL` on error.
-   * @memberof Set
-   */
-  Set *(*init)(Set *self);
-
-  /**
-   * @fn Set *Set::initWithCapacity(Set *self, size_t capacity)
-   * @brief Initializes this Set with the specified capacity.
-   * @param self The Set.
-   * @param capacity The desired initial capacity.
-   * @return The initialized Set, or `NULL` on error.
-   * @memberof Set
-   */
-  Set *(*initWithCapacity)(Set *self, size_t capacity);
-
-  /**
    * @fn void Set::removeAllObjects(Set *self)
    * @brief Removes all Objects from this Set.
    * @param self The Set.
@@ -307,6 +278,16 @@ struct SetInterface {
 
   /**
    * @static
+   * @fn Set *Set::setWithArray(const Array *array)
+   * @brief Returns a new Set with the contents of `array`.
+   * @param array An Array.
+   * @return The new Set, or `NULL` on error.
+   * @memberof Set
+   */
+  Set *(*setWithArray)(const Array *array);
+
+  /**
+   * @static
    * @fn Set *Set::setWithCapacity(size_t capacity)
    * @brief Returns a new Set with the given `capacity`.
    * @param capacity The desired initial capacity.
@@ -314,6 +295,27 @@ struct SetInterface {
    * @memberof Set
    */
   Set *(*setWithCapacity)(size_t capacity);
+
+  /**
+   * @static
+   * @fn Set *Set::setWithObjects(ident obj, ...)
+   * @brief Returns a new Set containing the specified Objects.
+   * @param obj A `NULL`-terminated list of Objects.
+   * @return The new Set, or `NULL` on error.
+   * @memberof Set
+   */
+  Set *(*setWithObjects)(ident obj, ...);
+
+  /**
+   * @static
+   * @fn Set *Set::setWithSet(const Set *set)
+   * @brief Returns a new Set with the contents of `set`.
+   * @param set A set.
+   * @return The new Set, or `NULL` on error.
+   * @memberof Set
+   */
+  Set *(*setWithSet)(const Set *set);
+
 };
 
 /**

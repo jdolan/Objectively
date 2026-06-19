@@ -138,6 +138,57 @@ static void dealloc(Object *self) {
 #pragma mark - RESTClient
 
 /**
+ * @fn int RESTClient::get(RESTClient *, const char *, Data **)
+ * @memberof RESTClient
+ */
+static int get(RESTClient *self, const char *url, Data **data) {
+  return request(self, HTTP_GET, url, NULL, data);
+}
+
+/**
+ * @fn void RESTClient::getAsync(RESTClient *, const char *, RESTClientCompletion, void *)
+ * @memberof RESTClient
+ */
+static void getAsync(RESTClient *self, const char *url,
+    RESTClientCompletion completion, void *user_data) {
+  requestAsync(self, HTTP_GET, url, NULL, completion, user_data);
+}
+
+/**
+ * @fn int RESTClient::head(RESTClient *, const char *)
+ * @memberof RESTClient
+ */
+static int head(RESTClient *self, const char *url) {
+  return request(self, HTTP_HEAD, url, NULL, NULL);
+}
+
+/**
+ * @fn void RESTClient::headAsync(RESTClient *, const char *, RESTClientCompletion, void *)
+ * @memberof RESTClient
+ */
+static void headAsync(RESTClient *self, const char *url,
+    RESTClientCompletion completion, void *user_data) {
+  requestAsync(self, HTTP_HEAD, url, NULL, completion, user_data);
+}
+
+/**
+ * @fn int RESTClient::httpDelete(RESTClient *, const char *, Data **)
+ * @memberof RESTClient
+ */
+static int httpDelete(RESTClient *self, const char *url, Data **data) {
+  return request(self, HTTP_DELETE, url, NULL, data);
+}
+
+/**
+ * @fn void RESTClient::httpDeleteAsync(RESTClient *, const char *, RESTClientCompletion, void *)
+ * @memberof RESTClient
+ */
+static void httpDeleteAsync(RESTClient *self, const char *url,
+    RESTClientCompletion completion, void *user_data) {
+  requestAsync(self, HTTP_DELETE, url, NULL, completion, user_data);
+}
+
+/**
  * @fn RESTClient *RESTClient::init(RESTClient *)
  * @memberof RESTClient
  */
@@ -160,54 +211,6 @@ static RESTClient *initWithSession(RESTClient *self, URLSession *session) {
 }
 
 /**
- * @fn int RESTClient::httpDelete(RESTClient *, const char *, Data **)
- * @memberof RESTClient
- */
-static int httpDelete(RESTClient *self, const char *url, Data **data) {
-  return request(self, HTTP_DELETE, url, NULL, data);
-}
-
-/**
- * @fn int RESTClient::head(RESTClient *, const char *)
- * @memberof RESTClient
- */
-static int head(RESTClient *self, const char *url) {
-  return request(self, HTTP_HEAD, url, NULL, NULL);
-}
-
-/**
- * @fn int RESTClient::get(RESTClient *, const char *, Data **)
- * @memberof RESTClient
- */
-static int get(RESTClient *self, const char *url, Data **data) {
-  return request(self, HTTP_GET, url, NULL, data);
-}
-
-/**
- * @fn int RESTClient::patch(RESTClient *, const char *, const Data *, Data **)
- * @memberof RESTClient
- */
-static int patch(RESTClient *self, const char *url, const Data *body, Data **data) {
-  return request(self, HTTP_PATCH, url, body, data);
-}
-
-/**
- * @fn int RESTClient::post(RESTClient *, const char *, const Data *, Data **)
- * @memberof RESTClient
- */
-static int post(RESTClient *self, const char *url, const Data *body, Data **data) {
-  return request(self, HTTP_POST, url, body, data);
-}
-
-/**
- * @fn int RESTClient::put(RESTClient *, const char *, const Data *, Data **)
- * @memberof RESTClient
- */
-static int put(RESTClient *self, const char *url, const Data *body, Data **data) {
-  return request(self, HTTP_PUT, url, body, data);
-}
-
-/**
  * @fn int RESTClient::options(RESTClient *, const char *, Data **)
  * @memberof RESTClient
  */
@@ -216,30 +219,20 @@ static int options(RESTClient *self, const char *url, Data **data) {
 }
 
 /**
- * @fn void RESTClient::httpDeleteAsync(RESTClient *, const char *, RESTClientCompletion, void *)
+ * @fn void RESTClient::optionsAsync(RESTClient *, const char *, RESTClientCompletion, void *)
  * @memberof RESTClient
  */
-static void httpDeleteAsync(RESTClient *self, const char *url,
+static void optionsAsync(RESTClient *self, const char *url,
     RESTClientCompletion completion, void *user_data) {
-  requestAsync(self, HTTP_DELETE, url, NULL, completion, user_data);
+  requestAsync(self, HTTP_OPTIONS, url, NULL, completion, user_data);
 }
 
 /**
- * @fn void RESTClient::headAsync(RESTClient *, const char *, RESTClientCompletion, void *)
+ * @fn int RESTClient::patch(RESTClient *, const char *, const Data *, Data **)
  * @memberof RESTClient
  */
-static void headAsync(RESTClient *self, const char *url,
-    RESTClientCompletion completion, void *user_data) {
-  requestAsync(self, HTTP_HEAD, url, NULL, completion, user_data);
-}
-
-/**
- * @fn void RESTClient::getAsync(RESTClient *, const char *, RESTClientCompletion, void *)
- * @memberof RESTClient
- */
-static void getAsync(RESTClient *self, const char *url,
-    RESTClientCompletion completion, void *user_data) {
-  requestAsync(self, HTTP_GET, url, NULL, completion, user_data);
+static int patch(RESTClient *self, const char *url, const Data *body, Data **data) {
+  return request(self, HTTP_PATCH, url, body, data);
 }
 
 /**
@@ -252,6 +245,14 @@ static void patchAsync(RESTClient *self, const char *url, const Data *body,
 }
 
 /**
+ * @fn int RESTClient::post(RESTClient *, const char *, const Data *, Data **)
+ * @memberof RESTClient
+ */
+static int post(RESTClient *self, const char *url, const Data *body, Data **data) {
+  return request(self, HTTP_POST, url, body, data);
+}
+
+/**
  * @fn void RESTClient::postAsync(RESTClient *, const char *, const Data *, RESTClientCompletion, void *)
  * @memberof RESTClient
  */
@@ -261,21 +262,20 @@ static void postAsync(RESTClient *self, const char *url, const Data *body,
 }
 
 /**
+ * @fn int RESTClient::put(RESTClient *, const char *, const Data *, Data **)
+ * @memberof RESTClient
+ */
+static int put(RESTClient *self, const char *url, const Data *body, Data **data) {
+  return request(self, HTTP_PUT, url, body, data);
+}
+
+/**
  * @fn void RESTClient::putAsync(RESTClient *, const char *, const Data *, RESTClientCompletion, void *)
  * @memberof RESTClient
  */
 static void putAsync(RESTClient *self, const char *url, const Data *body,
     RESTClientCompletion completion, void *user_data) {
   requestAsync(self, HTTP_PUT, url, body, completion, user_data);
-}
-
-/**
- * @fn void RESTClient::optionsAsync(RESTClient *, const char *, RESTClientCompletion, void *)
- * @memberof RESTClient
- */
-static void optionsAsync(RESTClient *self, const char *url,
-    RESTClientCompletion completion, void *user_data) {
-  requestAsync(self, HTTP_OPTIONS, url, NULL, completion, user_data);
 }
 
 static RESTClient *_sharedInstance;
@@ -296,6 +296,10 @@ static RESTClient *sharedInstance(void) {
 }
 
 #pragma mark - Class lifecycle
+
+static void destroy(Class *clazz) {
+  _sharedInstance = release(_sharedInstance);
+}
 
 static void initialize(Class *clazz) {
 
@@ -323,10 +327,6 @@ static void initialize(Class *clazz) {
   rest->optionsAsync = optionsAsync;
 
   rest->sharedInstance = sharedInstance;
-}
-
-static void destroy(Class *clazz) {
-  _sharedInstance = release(_sharedInstance);
 }
 
 Class *_RESTClient(void) {

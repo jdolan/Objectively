@@ -188,6 +188,14 @@ static Resource *resourceWithName(const char *name) {
 #pragma mark - Class lifecycle
 
 /**
+ * @see Class::destroy(Class *)
+ */
+static void destroy(Class *clazz) {
+  release(_resourcePaths);
+  release(_resourceProviders);
+}
+
+/**
  * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
@@ -224,14 +232,6 @@ static void initialize(Class *clazz) {
 
   _resourceProviders = $(alloc(Array), init);
   assert(_resourceProviders);
-}
-
-/**
- * @see Class::destroy(Class *)
- */
-static void destroy(Class *clazz) {
-  release(_resourcePaths);
-  release(_resourceProviders);
 }
 
 /**

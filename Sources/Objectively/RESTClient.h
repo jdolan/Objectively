@@ -88,6 +88,74 @@ struct RESTClientInterface {
   ObjectInterface objectInterface;
 
   /**
+   * @fn int RESTClient::get(RESTClient *self, const char *url, Data **data)
+   * @brief Synchronously performs an HTTP `GET` request.
+   * @param self The RESTClient.
+   * @param url The URL string.
+   * @param data Optionally receives the retained response body. Caller must `release`.
+   * @return The HTTP response status code, or `0` on connection failure.
+   * @memberof RESTClient
+   */
+  int (*get)(RESTClient *self, const char *url, Data **data);
+
+  /**
+   * @fn void RESTClient::getAsync(RESTClient *self, const char *url, RESTClientCompletion completion, void *user_data)
+   * @brief Asynchronously performs an HTTP `GET` request.
+   * @param self The RESTClient.
+   * @param url The URL string.
+   * @param completion The completion handler.
+   * @param user_data User data passed through to `completion`.
+   * @memberof RESTClient
+   */
+  void (*getAsync)(RESTClient *self, const char *url,
+      RESTClientCompletion completion, void *user_data);
+
+  /**
+   * @fn int RESTClient::head(RESTClient *self, const char *url)
+   * @brief Synchronously performs an HTTP `HEAD` request.
+   * @param self The RESTClient.
+   * @param url The URL string.
+   * @return The HTTP response status code, or `0` on connection failure.
+   * @memberof RESTClient
+   */
+  int (*head)(RESTClient *self, const char *url);
+
+  /**
+   * @fn void RESTClient::headAsync(RESTClient *self, const char *url, RESTClientCompletion completion, void *user_data)
+   * @brief Asynchronously performs an HTTP `HEAD` request.
+   * @param self The RESTClient.
+   * @param url The URL string.
+   * @param completion The completion handler.
+   * @param user_data User data passed through to `completion`.
+   * @memberof RESTClient
+   */
+  void (*headAsync)(RESTClient *self, const char *url,
+      RESTClientCompletion completion, void *user_data);
+
+  /**
+   * @fn int RESTClient::httpDelete(RESTClient *self, const char *url, Data **data)
+   * @brief Synchronously performs an HTTP `DELETE` request.
+   * @param self The RESTClient.
+   * @param url The URL string.
+   * @param data Optionally receives the retained response body. Caller must `release`.
+   * @return The HTTP response status code, or `0` on connection failure.
+   * @memberof RESTClient
+   */
+  int (*httpDelete)(RESTClient *self, const char *url, Data **data);
+
+  /**
+   * @fn void RESTClient::httpDeleteAsync(RESTClient *self, const char *url, RESTClientCompletion completion, void *user_data)
+   * @brief Asynchronously performs an HTTP `DELETE` request.
+   * @param self The RESTClient.
+   * @param url The URL string.
+   * @param completion The completion handler.
+   * @param user_data User data passed through to `completion`.
+   * @memberof RESTClient
+   */
+  void (*httpDeleteAsync)(RESTClient *self, const char *url,
+      RESTClientCompletion completion, void *user_data);
+
+  /**
    * @fn RESTClient *RESTClient::init(RESTClient *self)
    * @brief Initializes this RESTClient with the shared URLSession.
    * @param self The RESTClient.
@@ -107,36 +175,27 @@ struct RESTClientInterface {
   RESTClient *(*initWithSession)(RESTClient *self, URLSession *session);
 
   /**
-   * @fn int RESTClient::httpDelete(RESTClient *self, const char *url, Data **data)
-   * @brief Synchronously performs an HTTP `DELETE` request.
+   * @fn int RESTClient::options(RESTClient *self, const char *url, Data **data)
+   * @brief Synchronously performs an HTTP `OPTIONS` request.
    * @param self The RESTClient.
    * @param url The URL string.
    * @param data Optionally receives the retained response body. Caller must `release`.
    * @return The HTTP response status code, or `0` on connection failure.
    * @memberof RESTClient
    */
-  int (*httpDelete)(RESTClient *self, const char *url, Data **data);
+  int (*options)(RESTClient *self, const char *url, Data **data);
 
   /**
-   * @fn int RESTClient::head(RESTClient *self, const char *url)
-   * @brief Synchronously performs an HTTP `HEAD` request.
+   * @fn void RESTClient::optionsAsync(RESTClient *self, const char *url, RESTClientCompletion completion, void *user_data)
+   * @brief Asynchronously performs an HTTP `OPTIONS` request.
    * @param self The RESTClient.
    * @param url The URL string.
-   * @return The HTTP response status code, or `0` on connection failure.
+   * @param completion The completion handler.
+   * @param user_data User data passed through to `completion`.
    * @memberof RESTClient
    */
-  int (*head)(RESTClient *self, const char *url);
-
-  /**
-   * @fn int RESTClient::get(RESTClient *self, const char *url, Data **data)
-   * @brief Synchronously performs an HTTP `GET` request.
-   * @param self The RESTClient.
-   * @param url The URL string.
-   * @param data Optionally receives the retained response body. Caller must `release`.
-   * @return The HTTP response status code, or `0` on connection failure.
-   * @memberof RESTClient
-   */
-  int (*get)(RESTClient *self, const char *url, Data **data);
+  void (*optionsAsync)(RESTClient *self, const char *url,
+      RESTClientCompletion completion, void *user_data);
 
   /**
    * @fn int RESTClient::patch(RESTClient *self, const char *url, const Data *body, Data **data)
@@ -149,77 +208,6 @@ struct RESTClientInterface {
    * @memberof RESTClient
    */
   int (*patch)(RESTClient *self, const char *url, const Data *body, Data **data);
-
-  /**
-   * @fn int RESTClient::post(RESTClient *self, const char *url, const Data *body, Data **data)
-   * @brief Synchronously performs an HTTP `POST` request.
-   * @param self The RESTClient.
-   * @param url The URL string.
-   * @param body The request body, or `NULL`.
-   * @param data Optionally receives the retained response body. Caller must `release`.
-   * @return The HTTP response status code, or `0` on connection failure.
-   * @memberof RESTClient
-   */
-  int (*post)(RESTClient *self, const char *url, const Data *body, Data **data);
-
-  /**
-   * @fn int RESTClient::put(RESTClient *self, const char *url, const Data *body, Data **data)
-   * @brief Synchronously performs an HTTP `PUT` request.
-   * @param self The RESTClient.
-   * @param url The URL string.
-   * @param body The request body, or `NULL`.
-   * @param data Optionally receives the retained response body. Caller must `release`.
-   * @return The HTTP response status code, or `0` on connection failure.
-   * @memberof RESTClient
-   */
-  int (*put)(RESTClient *self, const char *url, const Data *body, Data **data);
-
-  /**
-   * @fn int RESTClient::options(RESTClient *self, const char *url, Data **data)
-   * @brief Synchronously performs an HTTP `OPTIONS` request.
-   * @param self The RESTClient.
-   * @param url The URL string.
-   * @param data Optionally receives the retained response body. Caller must `release`.
-   * @return The HTTP response status code, or `0` on connection failure.
-   * @memberof RESTClient
-   */
-  int (*options)(RESTClient *self, const char *url, Data **data);
-
-  /**
-   * @fn void RESTClient::httpDeleteAsync(RESTClient *self, const char *url, RESTClientCompletion completion, void *user_data)
-   * @brief Asynchronously performs an HTTP `DELETE` request.
-   * @param self The RESTClient.
-   * @param url The URL string.
-   * @param completion The completion handler.
-   * @param user_data User data passed through to `completion`.
-   * @memberof RESTClient
-   */
-  void (*httpDeleteAsync)(RESTClient *self, const char *url,
-      RESTClientCompletion completion, void *user_data);
-
-  /**
-   * @fn void RESTClient::headAsync(RESTClient *self, const char *url, RESTClientCompletion completion, void *user_data)
-   * @brief Asynchronously performs an HTTP `HEAD` request.
-   * @param self The RESTClient.
-   * @param url The URL string.
-   * @param completion The completion handler.
-   * @param user_data User data passed through to `completion`.
-   * @memberof RESTClient
-   */
-  void (*headAsync)(RESTClient *self, const char *url,
-      RESTClientCompletion completion, void *user_data);
-
-  /**
-   * @fn void RESTClient::getAsync(RESTClient *self, const char *url, RESTClientCompletion completion, void *user_data)
-   * @brief Asynchronously performs an HTTP `GET` request.
-   * @param self The RESTClient.
-   * @param url The URL string.
-   * @param completion The completion handler.
-   * @param user_data User data passed through to `completion`.
-   * @memberof RESTClient
-   */
-  void (*getAsync)(RESTClient *self, const char *url,
-      RESTClientCompletion completion, void *user_data);
 
   /**
    * @fn void RESTClient::patchAsync(RESTClient *self, const char *url, const Data *body, RESTClientCompletion completion, void *user_data)
@@ -235,6 +223,18 @@ struct RESTClientInterface {
       RESTClientCompletion completion, void *user_data);
 
   /**
+   * @fn int RESTClient::post(RESTClient *self, const char *url, const Data *body, Data **data)
+   * @brief Synchronously performs an HTTP `POST` request.
+   * @param self The RESTClient.
+   * @param url The URL string.
+   * @param body The request body, or `NULL`.
+   * @param data Optionally receives the retained response body. Caller must `release`.
+   * @return The HTTP response status code, or `0` on connection failure.
+   * @memberof RESTClient
+   */
+  int (*post)(RESTClient *self, const char *url, const Data *body, Data **data);
+
+  /**
    * @fn void RESTClient::postAsync(RESTClient *self, const char *url, const Data *body, RESTClientCompletion completion, void *user_data)
    * @brief Asynchronously performs an HTTP `POST` request.
    * @param self The RESTClient.
@@ -246,6 +246,18 @@ struct RESTClientInterface {
    */
   void (*postAsync)(RESTClient *self, const char *url, const Data *body,
       RESTClientCompletion completion, void *user_data);
+
+  /**
+   * @fn int RESTClient::put(RESTClient *self, const char *url, const Data *body, Data **data)
+   * @brief Synchronously performs an HTTP `PUT` request.
+   * @param self The RESTClient.
+   * @param url The URL string.
+   * @param body The request body, or `NULL`.
+   * @param data Optionally receives the retained response body. Caller must `release`.
+   * @return The HTTP response status code, or `0` on connection failure.
+   * @memberof RESTClient
+   */
+  int (*put)(RESTClient *self, const char *url, const Data *body, Data **data);
 
   /**
    * @fn void RESTClient::putAsync(RESTClient *self, const char *url, const Data *body, RESTClientCompletion completion, void *user_data)
@@ -261,24 +273,13 @@ struct RESTClientInterface {
       RESTClientCompletion completion, void *user_data);
 
   /**
-   * @fn void RESTClient::optionsAsync(RESTClient *self, const char *url, RESTClientCompletion completion, void *user_data)
-   * @brief Asynchronously performs an HTTP `OPTIONS` request.
-   * @param self The RESTClient.
-   * @param url The URL string.
-   * @param completion The completion handler.
-   * @param user_data User data passed through to `completion`.
-   * @memberof RESTClient
-   */
-  void (*optionsAsync)(RESTClient *self, const char *url,
-      RESTClientCompletion completion, void *user_data);
-
-  /**
    * @static
    * @fn RESTClient *RESTClient::sharedInstance(void)
    * @return The shared RESTClient instance, backed by the shared URLSession.
    * @memberof RESTClient
    */
   RESTClient *(*sharedInstance)(void);
+
 };
 
 /**

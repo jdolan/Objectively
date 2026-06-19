@@ -110,14 +110,6 @@ struct NumberInterface {
   float (*floatValue)(const Number *self);
 
   /**
-   * @fn long Number::longValue(const Number *self)
-   * @param self The Number.
-   * @return This Number's long value.
-   * @memberof Number
-   */
-  long (*longValue)(const Number *self);
-
-  /**
    * @fn Number *Number::initWithValue(Number *self, double value)
    * @brief Initializes this Number with the specified value.
    * @param self The Number.
@@ -136,6 +128,14 @@ struct NumberInterface {
   int (*intValue)(const Number *self);
 
   /**
+   * @fn long Number::longValue(const Number *self)
+   * @param self The Number.
+   * @return This Number's long value.
+   * @memberof Number
+   */
+  long (*longValue)(const Number *self);
+
+  /**
    * @static
    * @fn Number *Number::numberWithValue(double value)
    * @brief Returns a new Number with the given value.
@@ -152,6 +152,7 @@ struct NumberInterface {
    * @memberof Number
    */
   short (*shortValue)(const Number *self);
+
 };
 
 /**

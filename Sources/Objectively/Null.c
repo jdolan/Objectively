@@ -59,6 +59,14 @@ static Null *null(void) {
 #pragma mark - Class lifecycle
 
 /**
+ * @see Class::destroy(Class *)
+ */
+static void destroy(Class *clazz) {
+
+  release(_null);
+}
+
+/**
  * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
@@ -66,14 +74,6 @@ static void initialize(Class *clazz) {
   ((ObjectInterface *) clazz->interface)->copy = copy;
 
   ((NullInterface *) clazz->interface)->null = null;
-}
-
-/**
- * @see Class::destroy(Class *)
- */
-static void destroy(Class *clazz) {
-
-  release(_null);
 }
 
 /**

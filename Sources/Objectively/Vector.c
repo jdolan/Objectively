@@ -356,19 +356,19 @@ static void sort(Vector *self, Comparator comparator) {
 #endif
 
 /**
- * @fn Vector *Vector::vectorWithSize(size_t size)
- * @memberof Vector
- */
-static Vector *vectorWithSize(size_t size) {
-  return $(alloc(Vector), initWithSize, size);
-}
-
-/**
  * @fn Vector *Vector::vectorWithElements(size_t size, size_t count, ident elements)
  * @memberof Vector
  */
 static Vector *vectorWithElements(size_t size, size_t count, ident elements) {
   return $(alloc(Vector), initWithElements, size, count, elements);
+}
+
+/**
+ * @fn Vector *Vector::vectorWithSize(size_t size)
+ * @memberof Vector
+ */
+static Vector *vectorWithSize(size_t size) {
+  return $(alloc(Vector), initWithSize, size);
 }
 
 #pragma mark - Class lifecycle

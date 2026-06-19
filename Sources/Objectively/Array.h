@@ -96,6 +96,42 @@ struct ArrayInterface {
   ObjectInterface objectInterface;
 
   /**
+   * @fn void Array::addObject(Array *self, const ident obj)
+   * @brief Adds the specified Object to this Array.
+   * @param self The Array.
+   * @param obj The Object to add.
+   * @memberof Array
+   */
+  void (*addObject)(Array *self, const ident obj);
+
+  /**
+   * @fn void Array::addObjects(Array *self, const ident obj, ...)
+   * @brief Adds the specified objects to this Array.
+   * @param self The Array.
+   * @param obj The `NULL`-terminated list of objects.
+   * @memberof Array
+   */
+  void (*addObjects)(Array *self, const ident obj, ...);
+
+  /**
+   * @fn void Array::addObjectsFromArray(Array *self, const Array *array)
+   * @brief Adds the Objects contained in `array` to this Array.
+   * @param self The Array.
+   * @param array An Array.
+   * @memberof Array
+   */
+  void (*addObjectsFromArray)(Array *self, const Array *array);
+
+  /**
+   * @static
+   * @fn Array *Array::array(void)
+   * @brief Returns a new Array.
+   * @return The new Array, or `NULL` on error.
+   * @memberof Array
+   */
+  Array *(*array)(void);
+
+  /**
    * @static
    * @fn Array *Array::arrayWithArray(const Array *array)
    * @brief Returns a new Array containing the contents of `array`.
@@ -104,6 +140,16 @@ struct ArrayInterface {
    * @memberof Array
    */
   Array *(*arrayWithArray)(const Array *array);
+
+  /**
+   * @static
+   * @fn Array *Array::arrayWithCapacity(size_t capacity)
+   * @brief Returns a new Array with the given `capacity`.
+   * @param capacity The desired initial capacity.
+   * @return The new Array, or `NULL` on error.
+   * @memberof Array
+   */
+  Array *(*arrayWithCapacity)(size_t capacity);
 
   /**
    * @static
@@ -165,6 +211,16 @@ struct ArrayInterface {
   void (*enumerate)(const Array *self, ArrayEnumerator enumerator, ident data);
 
   /**
+   * @fn void Array::filter(Array *self, Predicate predicate, ident data)
+   * @brief Filters this Array in place using `predicate`.
+   * @param self The Array.
+   * @param predicate A Predicate.
+   * @param data User data.
+   * @memberof Array
+   */
+  void (*filter)(Array *self, Predicate predicate, ident data);
+
+  /**
    * @fn Array *Array::filteredArray(const Array *self, Predicate predicate, ident data)
    * @brief Creates a new Array with elements that pass `predicate`.
    * @param self The Array.
@@ -203,6 +259,15 @@ struct ArrayInterface {
   ssize_t (*indexOfObject)(const Array *self, const ident obj);
 
   /**
+   * @fn Array *Array::init(Array *self)
+   * @brief Initializes this Array.
+   * @param self The Array.
+   * @return The initialized Array, or `NULL` on error.
+   * @memberof Array
+   */
+  Array *(*init)(Array *self);
+
+  /**
    * @fn Array *Array::initWithArray(Array *self, const Array *array)
    * @brief Initializes this Array to contain the Objects in `array`.
    * @param self The Array.
@@ -211,6 +276,16 @@ struct ArrayInterface {
    * @memberof Array
    */
   Array *(*initWithArray)(Array *self, const Array *array);
+
+  /**
+   * @fn Array *Array::initWithCapacity(Array *self, size_t capacity)
+   * @brief Initializes this Array with the specified capacity.
+   * @param self The Array.
+   * @param capacity The desired initial capacity.
+   * @return The initialized Array, or `NULL` on error.
+   * @memberof Array
+   */
+  Array *(*initWithCapacity)(Array *self, size_t capacity);
 
   /**
    * @fn Array *Array::initWithObjects(Array *self, ...)
@@ -230,6 +305,16 @@ struct ArrayInterface {
    * @memberof Array
    */
   Array *(*initWithVaList)(Array *self, va_list args);
+
+  /**
+   * @fn void Array::insertObjectAtIndex(Array *self, ident obj, size_t index)
+   * @brief Inserts the Object at the specified index.
+   * @param self The Array.
+   * @param obj The Object to insert.
+   * @param index The index at which to insert.
+   * @memberof Array
+   */
+  void (*insertObjectAtIndex)(Array *self, ident obj, size_t index);
 
   /**
    * @fn ident Array::lastObject(const Array *self)
@@ -279,100 +364,6 @@ struct ArrayInterface {
    * @memberof Array
    */
   ident (*reduce)(const Array *self, Reducer reducer, ident accumulator, ident data);
-
-  /**
-   * @fn Array *Array::sortedArray(const Array *self, Comparator comparator)
-   * @param self The Array.
-   * @param comparator The Comparator
-   * @return A copy of this Array, sorted by the given Comparator.
-   * @memberof Array
-   */
-  Array *(*sortedArray)(const Array *self, Comparator comparator);
-
-  /**
-   * @fn void Array::addObject(Array *self, const ident obj)
-   * @brief Adds the specified Object to this Array.
-   * @param self The Array.
-   * @param obj The Object to add.
-   * @memberof Array
-   */
-  void (*addObject)(Array *self, const ident obj);
-
-  /**
-   * @fn void Array::addObjects(Array *self, const ident obj, ...)
-   * @brief Adds the specified objects to this Array.
-   * @param self The Array.
-   * @param obj The `NULL`-terminated list of objects.
-   * @memberof Array
-   */
-  void (*addObjects)(Array *self, const ident obj, ...);
-
-  /**
-   * @fn void Array::addObjectsFromArray(Array *self, const Array *array)
-   * @brief Adds the Objects contained in `array` to this Array.
-   * @param self The Array.
-   * @param array An Array.
-   * @memberof Array
-   */
-  void (*addObjectsFromArray)(Array *self, const Array *array);
-
-  /**
-   * @static
-   * @fn Array *Array::array(void)
-   * @brief Returns a new Array.
-   * @return The new Array, or `NULL` on error.
-   * @memberof Array
-   */
-  Array *(*array)(void);
-
-  /**
-   * @static
-   * @fn Array *Array::arrayWithCapacity(size_t capacity)
-   * @brief Returns a new Array with the given `capacity`.
-   * @param capacity The desired initial capacity.
-   * @return The new Array, or `NULL` on error.
-   * @memberof Array
-   */
-  Array *(*arrayWithCapacity)(size_t capacity);
-
-  /**
-   * @fn void Array::filter(Array *self, Predicate predicate, ident data)
-   * @brief Filters this Array in place using `predicate`.
-   * @param self The Array.
-   * @param predicate A Predicate.
-   * @param data User data.
-   * @memberof Array
-   */
-  void (*filter)(Array *self, Predicate predicate, ident data);
-
-  /**
-   * @fn Array *Array::init(Array *self)
-   * @brief Initializes this Array.
-   * @param self The Array.
-   * @return The initialized Array, or `NULL` on error.
-   * @memberof Array
-   */
-  Array *(*init)(Array *self);
-
-  /**
-   * @fn Array *Array::initWithCapacity(Array *self, size_t capacity)
-   * @brief Initializes this Array with the specified capacity.
-   * @param self The Array.
-   * @param capacity The desired initial capacity.
-   * @return The initialized Array, or `NULL` on error.
-   * @memberof Array
-   */
-  Array *(*initWithCapacity)(Array *self, size_t capacity);
-
-  /**
-   * @fn void Array::insertObjectAtIndex(Array *self, ident obj, size_t index)
-   * @brief Inserts the Object at the specified index.
-   * @param self The Array.
-   * @param obj The Object to insert.
-   * @param index The index at which to insert.
-   * @memberof Array
-   */
-  void (*insertObjectAtIndex)(Array *self, ident obj, size_t index);
 
   /**
    * @fn void Array::removeAllObjects(Array *self)
@@ -437,6 +428,16 @@ struct ArrayInterface {
    * @memberof Array
    */
   void (*sort)(Array *self, Comparator comparator);
+
+  /**
+   * @fn Array *Array::sortedArray(const Array *self, Comparator comparator)
+   * @param self The Array.
+   * @param comparator The Comparator
+   * @return A copy of this Array, sorted by the given Comparator.
+   * @memberof Array
+   */
+  Array *(*sortedArray)(const Array *self, Comparator comparator);
+
 };
 
 /**

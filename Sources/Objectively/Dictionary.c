@@ -162,6 +162,24 @@ static bool isEqual(const Object *self, const Object *other) {
 #pragma mark - Dictionary
 
 /**
+ * @brief DictionaryEnumerator for addEntriesFromDictionary.
+ */
+static void addEntriesFromDictionary_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
+  $((Dictionary *) data, setObjectForKey, obj, key);
+}
+
+/**
+ * @fn void Dictionary::addEntriesFromDictionary(Dictionary *self, const Dictionary *dictionary)
+ * @memberof Dictionary
+ */
+static void addEntriesFromDictionary(Dictionary *self, const Dictionary *dictionary) {
+
+  assert(dictionary);
+
+  $(dictionary, enumerateObjectsAndKeys, addEntriesFromDictionary_enumerator, self);
+}
+
+/**
  * @brief DictionaryEnumerator for allKeys.
  */
 static void allKeys_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
@@ -215,6 +233,24 @@ static bool containsKey(const Dictionary *self, const ident key) {
  */
 static bool containsKeyPath(const Dictionary *self, const char *path) {
   return $(self, objectForKeyPath, path) != NULL;
+}
+
+/**
+ * @fn Dictionary *Dictionary::dictionary(void)
+ * @memberof Dictionary
+ */
+static Dictionary *dictionary(void) {
+
+  return $(alloc(Dictionary), init);
+}
+
+/**
+ * @fn Dictionary *Dictionary::dictionaryWithCapacity(size_t capacity)
+ * @memberof Dictionary
+ */
+static Dictionary *dictionaryWithCapacity(size_t capacity) {
+
+  return $(alloc(Dictionary), initWithCapacity, capacity);
 }
 
 /**
@@ -305,6 +341,35 @@ static Dictionary *filterObjectsAndKeys(const Dictionary *self, DictionaryPredic
   }
 
   return dictionary;
+}
+
+/**
+ * @fn Dictionary *Dictionary::init(Dictionary *self)
+ * @memberof Dictionary
+ */
+static Dictionary *init(Dictionary *self) {
+
+  return $(self, initWithCapacity, DICTIONARY_DEFAULT_CAPACITY);
+}
+
+/**
+ * @fn Dictionary *Dictionary::initWithCapacity(Dictionary *self, size_t capacity)
+ * @memberof Dictionary
+ */
+static Dictionary *initWithCapacity(Dictionary *self, size_t capacity) {
+
+  self = (Dictionary *) super(Object, self, init);
+  if (self) {
+
+    self->capacity = capacity;
+    if (self->capacity) {
+
+      self->elements = calloc(self->capacity, sizeof(ident));
+      assert(self->elements);
+    }
+  }
+
+  return self;
 }
 
 /**
@@ -426,71 +491,6 @@ static ident objectForKeyPathWithClass(const Dictionary *self, const char *path,
   }
 
   return NULL;
-}
-
-/**
- * @brief DictionaryEnumerator for addEntriesFromDictionary.
- */
-static void addEntriesFromDictionary_enumerator(const Dictionary *dict, ident obj, ident key, ident data) {
-  $((Dictionary *) data, setObjectForKey, obj, key);
-}
-
-/**
- * @fn void Dictionary::addEntriesFromDictionary(Dictionary *self, const Dictionary *dictionary)
- * @memberof Dictionary
- */
-static void addEntriesFromDictionary(Dictionary *self, const Dictionary *dictionary) {
-
-  assert(dictionary);
-
-  $(dictionary, enumerateObjectsAndKeys, addEntriesFromDictionary_enumerator, self);
-}
-
-/**
- * @fn Dictionary *Dictionary::dictionary(void)
- * @memberof Dictionary
- */
-static Dictionary *dictionary(void) {
-
-  return $(alloc(Dictionary), init);
-}
-
-/**
- * @fn Dictionary *Dictionary::dictionaryWithCapacity(size_t capacity)
- * @memberof Dictionary
- */
-static Dictionary *dictionaryWithCapacity(size_t capacity) {
-
-  return $(alloc(Dictionary), initWithCapacity, capacity);
-}
-
-/**
- * @fn Dictionary *Dictionary::init(Dictionary *self)
- * @memberof Dictionary
- */
-static Dictionary *init(Dictionary *self) {
-
-  return $(self, initWithCapacity, DICTIONARY_DEFAULT_CAPACITY);
-}
-
-/**
- * @fn Dictionary *Dictionary::initWithCapacity(Dictionary *self, size_t capacity)
- * @memberof Dictionary
- */
-static Dictionary *initWithCapacity(Dictionary *self, size_t capacity) {
-
-  self = (Dictionary *) super(Object, self, init);
-  if (self) {
-
-    self->capacity = capacity;
-    if (self->capacity) {
-
-      self->elements = calloc(self->capacity, sizeof(ident));
-      assert(self->elements);
-    }
-  }
-
-  return self;
 }
 
 /**

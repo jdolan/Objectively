@@ -108,6 +108,54 @@ struct StringInterface {
   ObjectInterface objectInterface;
 
   /**
+   * @fn void String::appendBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding)
+   * @brief Appends the decoded contents of `bytes`.
+   * @param self The String.
+   * @param bytes The bytes.
+   * @param length The length of `bytes` to decode.
+   * @param encoding The character encoding.
+   * @memberof String
+   */
+  void (*appendBytes)(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding);
+
+  /**
+   * @fn void String::appendCharacters(String *self, const char *chars)
+   * @brief Appends the specified UTF-8 encoded C string.
+   * @param self The String.
+   * @param chars A UTF-encoded C string.
+   * @memberof String
+   */
+  void (*appendCharacters)(String *self, const char *chars);
+
+  /**
+   * @fn void String::appendFormat(String *self, const char *fmt, ...)
+   * @brief Appends the specified formatted string.
+   * @param self The String.
+   * @param fmt The format string.
+   * @memberof String
+   */
+  void (*appendFormat)(String *self, const char *fmt, ...);
+
+  /**
+   * @fn void String::appendString(String *self, const String *string)
+   * @brief Appends the specified String to this String.
+   * @param self The String.
+   * @param string The String to append.
+   * @memberof String
+   */
+  void (*appendString)(String *self, const String *string);
+
+  /**
+   * @fn void String::appendVaList(String *self, const char *fmt, va_list args)
+   * @brief Appends the specified format string.
+   * @param self The String.
+   * @param fmt The format string.
+   * @param args The format arguments.
+   * @memberof String
+   */
+  void (*appendVaList)(String *self, const char *fmt, va_list args);
+
+  /**
    * @fn Order String::compareTo(const String *self, const String *other, const Range range)
    * @brief Compares this String lexicographically to another.
    * @param self The String.
@@ -137,6 +185,15 @@ struct StringInterface {
    * @memberof String
    */
   Array *(*componentsSeparatedByString)(const String *self, const String *string);
+
+  /**
+   * @fn void String::deleteCharactersInRange(String *self, const Range range)
+   * @brief Deletes the characters within `range` from this String.
+   * @param self The String.
+   * @param range The Range of characters to delete.
+   * @memberof String
+   */
+  void (*deleteCharactersInRange)(String *self, const Range range);
 
   /**
    * @fn Data *String::getData(const String *self, StringEncoding encoding)
@@ -169,6 +226,15 @@ struct StringInterface {
   bool (*hasSuffix)(const String *self, const String *suffix);
 
   /**
+   * @fn String *String::init(String *self)
+   * @brief Initializes this String.
+   * @param self The String.
+   * @return The initialized String, or `NULL` on error.
+   * @memberof String
+   */
+  String *(*init)(String *self);
+
+  /**
    * @fn String *String::initWithBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding)
    * @brief Initializes this String by decoding `length` of `bytes`.
    * @param self The String.
@@ -179,6 +245,16 @@ struct StringInterface {
    * @memberof String
    */
   String *(*initWithBytes)(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding);
+
+  /**
+   * @fn String *String::initWithCapacity(String *self, size_t capacity)
+   * @brief Initializes this String with the given `capacity`.
+   * @param self The String.
+   * @param capacity The capacity, in bytes.
+   * @return The initialized String, or `NULL` on error.
+   * @memberof String
+   */
+  String *(*initWithCapacity)(String *self, size_t capacity);
 
   /**
    * @fn String *String::initWithCharacters(String *self, const char *chars)
@@ -235,6 +311,16 @@ struct StringInterface {
   String *(*initWithMemory)(String *self, const ident mem, size_t length);
 
   /**
+   * @fn String *String::initWithString(String *self, const String *string)
+   * @brief Initializes this String with the contents of `string`.
+   * @param self The String.
+   * @param string A String.
+   * @return The initialized String, or `NULL` on error.
+   * @memberof String
+   */
+  String *(*initWithString)(String *self, const String *string);
+
+  /**
    * @fn String *String::initWithVaList(String *self, const char *fmt, va_list args)
    * @brief Initializes this String with the specified arguments list.
    * @param self The String.
@@ -245,6 +331,26 @@ struct StringInterface {
    * @see vasprintf(3)
    */
   String *(*initWithVaList)(String *self, const char *fmt, va_list args);
+
+  /**
+   * @fn void String::insertCharactersAtIndex(String *self, const char *chars, size_t index)
+   * @brief Inserts the specified String at the given index.
+   * @param self The String.
+   * @param chars The null-terminated UTF-8 encoded C string to insert.
+   * @param index The index.
+   * @memberof String
+   */
+  void (*insertCharactersAtIndex)(String *self, const char *chars, size_t index);
+
+  /**
+   * @fn void String::insertStringAtIndex(String *self, const String *string, size_t index)
+   * @brief Inserts the specified String at the given index.
+   * @param self The String.
+   * @param string The String to insert.
+   * @param index The index.
+   * @memberof String
+   */
+  void (*insertStringAtIndex)(String *self, const String *string, size_t index);
 
   /**
    * @fn String *String::lowercaseString(const String *self)
@@ -275,215 +381,6 @@ struct StringInterface {
    * @memberof String
    */
   Range (*rangeOfString)(const String *self, const String *string, const Range range);
-
-  /**
-   * @static
-   * @fn String *String::stringWithBytes(const uint8_t *bytes, size_t length, StringEncoding encoding)
-   * @brief Returns a new String by decoding `length` of `bytes` to UTF-8.
-   * @param bytes The bytes.
-   * @param length The length of `bytes` to copy.
-   * @param encoding The character encoding.
-   * @return The new String, or `NULL` on error.
-   * @memberof String
-   */
-  String *(*stringWithBytes)(const uint8_t *bytes, size_t length, StringEncoding encoding);
-
-  /**
-   * @static
-   * @fn String *String::stringWithCharacters(const char *chars)
-   * @brief Returns a new String by copying `chars`.
-   * @param chars The null-terminated UTF-8 encoded C string.
-   * @return The new String, or `NULL` on error.
-   * @memberof String
-   */
-  String *(*stringWithCharacters)(const char *chars);
-
-  /**
-   * @static
-   * @fn String *String::stringWithContentsOfFile(const char *path, StringEncoding encoding)
-   * @brief Returns a new String with the contents of the FILE at `path`.
-   * @param path A path name.
-   * @param encoding The character encoding.
-   * @return The new String, or `NULL` on error.
-   * @memberof String
-   */
-  String *(*stringWithContentsOfFile)(const char *path, StringEncoding encoding);
-
-  /**
-   * @static
-   * @fn String *String::stringWithData(const Data *data, StringEncoding encoding)
-   * @brief Returns a new String with the the given Data.
-   * @param data A Data.
-   * @param encoding The character encoding.
-   * @return The new String, or `NULL` on error.
-   * @memberof String
-   */
-  String *(*stringWithData)(const Data *data, StringEncoding encoding);
-
-  /**
-   * @static
-   * @fn String *String::stringWithFormat(const char *fmt)
-   * @brief Returns a new String with the given format string.
-   * @param fmt The format string.
-   * @return The new String, or `NULL` on error.
-   * @memberof String
-   */
-  String *(*stringWithFormat)(const char *fmt, ...);
-
-  /**
-   * @static
-   * @fn String *String::stringWithMemory(const ident mem, size_t length)
-   * @brief Returns a new String with the given buffer.
-   * @param mem A dynamically allocated, null-terminated UTF-8 encoded buffer.
-   * @param length The length of `mem` in bytes.
-   * @return The new String, or `NULL` on error.
-   * @remarks The memory will be freed when the returned String is deallocated.
-   * @memberof String
-   */
-  String *(*stringWithMemory)(const ident mem, size_t length);
-
-  /**
-   * @fn String *String::substring(const String *self, const Range range)
-   * @brief Creates a new String from a subset of this one.
-   * @param self The String.
-   * @param range The character Range.
-   * @return The new String.
-   * @memberof String
-   */
-  String *(*substring)(const String *self, const Range range);
-
-  /**
-   * @fn String *String::trimmedString(const String *self)
-   * @brief Creates a copy of this String with leading and trailing whitespace removed.
-   * @param self The String.
-   * @return The trimmed String.
-   * @memberof String
-   */
-  String *(*trimmedString)(const String *self);
-
-  /**
-   * @fn String *String::uppercaseString(const String *self)
-   * @param self The String.
-   * @return An uppercase representation of this String.
-   * @memberof String
-   */
-  String *(*uppercaseString)(const String *self);
-
-  /**
-   * @fn bool String::writeToFile(const String *self, const char *path, StringEncoding encoding)
-   * @brief Writes this String to `path`.
-   * @param self The String.
-   * @param path The path of the file to write.
-   * @param encoding The character encoding.
-   * @return `true` on success, `false` on error.
-   * @memberof String
-   */
-  bool (*writeToFile)(const String *self, const char *path, StringEncoding encoding);
-  /**
-   * @fn void String::appendBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding)
-   * @brief Appends the decoded contents of `bytes`.
-   * @param self The String.
-   * @param bytes The bytes.
-   * @param length The length of `bytes` to decode.
-   * @param encoding The character encoding.
-   * @memberof String
-   */
-  void (*appendBytes)(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding);
-
-  /**
-   * @fn void String::appendCharacters(String *self, const char *chars)
-   * @brief Appends the specified UTF-8 encoded C string.
-   * @param self The String.
-   * @param chars A UTF-encoded C string.
-   * @memberof String
-   */
-  void (*appendCharacters)(String *self, const char *chars);
-
-  /**
-   * @fn void String::appendFormat(String *self, const char *fmt, ...)
-   * @brief Appends the specified formatted string.
-   * @param self The String.
-   * @param fmt The format string.
-   * @memberof String
-   */
-  void (*appendFormat)(String *self, const char *fmt, ...);
-
-  /**
-   * @fn void String::appendString(String *self, const String *string)
-   * @brief Appends the specified String to this String.
-   * @param self The String.
-   * @param string The String to append.
-   * @memberof String
-   */
-  void (*appendString)(String *self, const String *string);
-
-  /**
-   * @fn void String::appendVaList(String *self, const char *fmt, va_list args)
-   * @brief Appends the specified format string.
-   * @param self The String.
-   * @param fmt The format string.
-   * @param args The format arguments.
-   * @memberof String
-   */
-  void (*appendVaList)(String *self, const char *fmt, va_list args);
-
-  /**
-   * @fn void String::deleteCharactersInRange(String *self, const Range range)
-   * @brief Deletes the characters within `range` from this String.
-   * @param self The String.
-   * @param range The Range of characters to delete.
-   * @memberof String
-   */
-  void (*deleteCharactersInRange)(String *self, const Range range);
-
-  /**
-   * @fn String *String::init(String *self)
-   * @brief Initializes this String.
-   * @param self The String.
-   * @return The initialized String, or `NULL` on error.
-   * @memberof String
-   */
-  String *(*init)(String *self);
-
-  /**
-   * @fn String *String::initWithCapacity(String *self, size_t capacity)
-   * @brief Initializes this String with the given `capacity`.
-   * @param self The String.
-   * @param capacity The capacity, in bytes.
-   * @return The initialized String, or `NULL` on error.
-   * @memberof String
-   */
-  String *(*initWithCapacity)(String *self, size_t capacity);
-
-  /**
-   * @fn String *String::initWithString(String *self, const String *string)
-   * @brief Initializes this String with the contents of `string`.
-   * @param self The String.
-   * @param string A String.
-   * @return The initialized String, or `NULL` on error.
-   * @memberof String
-   */
-  String *(*initWithString)(String *self, const String *string);
-
-  /**
-   * @fn void String::insertCharactersAtIndex(String *self, const char *chars, size_t index)
-   * @brief Inserts the specified String at the given index.
-   * @param self The String.
-   * @param chars The null-terminated UTF-8 encoded C string to insert.
-   * @param index The index.
-   * @memberof String
-   */
-  void (*insertCharactersAtIndex)(String *self, const char *chars, size_t index);
-
-  /**
-   * @fn void String::insertStringAtIndex(String *self, const String *string, size_t index)
-   * @brief Inserts the specified String at the given index.
-   * @param self The String.
-   * @param string The String to insert.
-   * @param index The index.
-   * @memberof String
-   */
-  void (*insertStringAtIndex)(String *self, const String *string, size_t index);
 
   /**
    * @fn void String::replaceCharactersInRange(String *self, const Range range, const char *chars)
@@ -594,6 +491,18 @@ struct StringInterface {
 
   /**
    * @static
+   * @fn String *String::stringWithBytes(const uint8_t *bytes, size_t length, StringEncoding encoding)
+   * @brief Returns a new String by decoding `length` of `bytes` to UTF-8.
+   * @param bytes The bytes.
+   * @param length The length of `bytes` to copy.
+   * @param encoding The character encoding.
+   * @return The new String, or `NULL` on error.
+   * @memberof String
+   */
+  String *(*stringWithBytes)(const uint8_t *bytes, size_t length, StringEncoding encoding);
+
+  /**
+   * @static
    * @fn String *String::stringWithCapacity(size_t capacity)
    * @brief Returns a new String with the given `capacity`.
    * @param capacity The desired capacity, in bytes.
@@ -603,12 +512,105 @@ struct StringInterface {
   String *(*stringWithCapacity)(size_t capacity);
 
   /**
+   * @static
+   * @fn String *String::stringWithCharacters(const char *chars)
+   * @brief Returns a new String by copying `chars`.
+   * @param chars The null-terminated UTF-8 encoded C string.
+   * @return The new String, or `NULL` on error.
+   * @memberof String
+   */
+  String *(*stringWithCharacters)(const char *chars);
+
+  /**
+   * @static
+   * @fn String *String::stringWithContentsOfFile(const char *path, StringEncoding encoding)
+   * @brief Returns a new String with the contents of the FILE at `path`.
+   * @param path A path name.
+   * @param encoding The character encoding.
+   * @return The new String, or `NULL` on error.
+   * @memberof String
+   */
+  String *(*stringWithContentsOfFile)(const char *path, StringEncoding encoding);
+
+  /**
+   * @static
+   * @fn String *String::stringWithData(const Data *data, StringEncoding encoding)
+   * @brief Returns a new String with the the given Data.
+   * @param data A Data.
+   * @param encoding The character encoding.
+   * @return The new String, or `NULL` on error.
+   * @memberof String
+   */
+  String *(*stringWithData)(const Data *data, StringEncoding encoding);
+
+  /**
+   * @static
+   * @fn String *String::stringWithFormat(const char *fmt)
+   * @brief Returns a new String with the given format string.
+   * @param fmt The format string.
+   * @return The new String, or `NULL` on error.
+   * @memberof String
+   */
+  String *(*stringWithFormat)(const char *fmt, ...);
+
+  /**
+   * @static
+   * @fn String *String::stringWithMemory(const ident mem, size_t length)
+   * @brief Returns a new String with the given buffer.
+   * @param mem A dynamically allocated, null-terminated UTF-8 encoded buffer.
+   * @param length The length of `mem` in bytes.
+   * @return The new String, or `NULL` on error.
+   * @remarks The memory will be freed when the returned String is deallocated.
+   * @memberof String
+   */
+  String *(*stringWithMemory)(const ident mem, size_t length);
+
+  /**
+   * @fn String *String::substring(const String *self, const Range range)
+   * @brief Creates a new String from a subset of this one.
+   * @param self The String.
+   * @param range The character Range.
+   * @return The new String.
+   * @memberof String
+   */
+  String *(*substring)(const String *self, const Range range);
+
+  /**
    * @fn void String::trim(String *self)
    * @brief Trims leading and trailing whitespace from this String.
    * @param self The String.
    * @memberof String
    */
   void (*trim)(String *self);
+
+  /**
+   * @fn String *String::trimmedString(const String *self)
+   * @brief Creates a copy of this String with leading and trailing whitespace removed.
+   * @param self The String.
+   * @return The trimmed String.
+   * @memberof String
+   */
+  String *(*trimmedString)(const String *self);
+
+  /**
+   * @fn String *String::uppercaseString(const String *self)
+   * @param self The String.
+   * @return An uppercase representation of this String.
+   * @memberof String
+   */
+  String *(*uppercaseString)(const String *self);
+
+  /**
+   * @fn bool String::writeToFile(const String *self, const char *path, StringEncoding encoding)
+   * @brief Writes this String to `path`.
+   * @param self The String.
+   * @param path The path of the file to write.
+   * @param encoding The character encoding.
+   * @return `true` on success, `false` on error.
+   * @memberof String
+   */
+  bool (*writeToFile)(const String *self, const char *path, StringEncoding encoding);
+
 };
 
 /**

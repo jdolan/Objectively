@@ -600,22 +600,6 @@ static String *init(String *self) {
 }
 
 /**
- * @fn String *String::initWithMemory(String *self, const ident mem, size_t length)
- * @memberof String
- */
-static String *initWithMemory(String *self, const ident mem, size_t length) {
-
-  self = (String *) super(Object, self, init);
-  if (self) {
-    self->chars = (char *) mem;
-    self->length = length;
-    self->capacity = self->chars ? length + 1 : 0;
-  }
-
-  return self;
-}
-
-/**
  * @fn String *String::initWithBytes(String *self, const uint8_t *bytes, size_t length, StringEncoding encoding)
  * @memberof String
  */
@@ -635,7 +619,7 @@ static String *initWithBytes(String *self, const uint8_t *bytes, size_t length, 
  */
 static String *initWithCapacity(String *self, size_t capacity) {
 
-  self = initWithMemory(self, NULL, 0);
+  self = $(self, initWithMemory, NULL, 0);
   if (self) {
     self->capacity = capacity;
     if (self->capacity) {
@@ -704,6 +688,22 @@ static String *initWithFormat(String *self, const char *fmt, ...) {
     $(self, appendVaList, fmt, args);
 
     va_end(args);
+  }
+
+  return self;
+}
+
+/**
+ * @fn String *String::initWithMemory(String *self, const ident mem, size_t length)
+ * @memberof String
+ */
+static String *initWithMemory(String *self, const ident mem, size_t length) {
+
+  self = (String *) super(Object, self, init);
+  if (self) {
+    self->chars = (char *) mem;
+    self->length = length;
+    self->capacity = self->chars ? length + 1 : 0;
   }
 
   return self;

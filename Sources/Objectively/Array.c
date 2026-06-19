@@ -175,12 +175,83 @@ static bool isEqual(const Object *self, const Object *other) {
 #pragma mark - Array
 
 /**
+ * @fn void Array::addObject(Array *self, const ident obj)
+ * @memberof Array
+ */
+static void addObject(Array *self, const ident obj) {
+
+  if (self->count == self->capacity) {
+
+    self->capacity += ARRAY_CHUNK_SIZE;
+
+    if (self->elements) {
+      self->elements = realloc(self->elements, self->capacity * sizeof(ident));
+    } else {
+      self->elements = calloc(self->capacity, sizeof(ident));
+    }
+
+    assert(self->elements);
+  }
+
+  self->elements[self->count++] = retain(obj);
+}
+
+/**
+ * @fn void Array::addObjects(Array *self, const ident obj, ...)
+ * @memberof Array
+ */
+static void addObjects(Array *self, const ident obj, ...) {
+
+  va_list args;
+  va_start(args, obj);
+
+  ident object = obj;
+  while (object) {
+    $(self, addObject, object);
+    object = va_arg(args, ident);
+  }
+
+  va_end(args);
+}
+
+/**
+ * @fn void Array::addObjectsFromArray(Array *self, const Array *array)
+ * @memberof Array
+ */
+static void addObjectsFromArray(Array *self, const Array *array) {
+
+  if (array) {
+    for (size_t i = 0; i < array->count; i++) {
+      $(self, addObject, array->elements[i]);
+    }
+  }
+}
+
+/**
+ * @fn Array *Array::array(void)
+ * @memberof Array
+ */
+static Array *array(void) {
+
+  return $(alloc(Array), init);
+}
+
+/**
  * @fn Array *Array::arrayWithArray(const Array *array)
  * @memberof Array
  */
 static Array *arrayWithArray(const Array *array) {
 
   return $(alloc(Array), initWithArray, array);
+}
+
+/**
+ * @fn Array *Array::arrayWithCapacity(size_t capacity)
+ * @memberof Array
+ */
+static Array *arrayWithCapacity(size_t capacity) {
+
+  return $(alloc(Array), initWithCapacity, capacity);
 }
 
 /**
@@ -270,6 +341,21 @@ static void enumerate(const Array *self, ArrayEnumerator enumerator, ident data)
 }
 
 /**
+ * @fn void Array::filter(Array *self, Predicate predicate, ident data)
+ * @memberof Array
+ */
+static void filter(Array *self, Predicate predicate, ident data) {
+
+  assert(predicate);
+
+  for (size_t i = 0; i < self->count; i++) {
+    if (predicate(self->elements[i], data) == false) {
+      $(self, removeObjectAtIndex, i--);
+    }
+  }
+}
+
+/**
  * @fn Array *Array::filteredArray(const Array *self, Predicate predicate, ident data)
  * @memberof Array
  */
@@ -328,6 +414,15 @@ static ssize_t indexOfObject(const Array *self, const ident obj) {
 }
 
 /**
+ * @fn Array *Array::init(Array *self)
+ * @memberof Array
+ */
+static Array *init(Array *self) {
+
+  return $(self, initWithCapacity, 0);
+}
+
+/**
  * @fn Array *Array::initWithArray(Array *self, const Array *array)
  * @memberof Array
  */
@@ -345,6 +440,26 @@ static Array *initWithArray(Array *self, const Array *array) {
       for (size_t i = 0; i < self->count; i++) {
         self->elements[i] = retain(array->elements[i]);
       }
+    }
+  }
+
+  return self;
+}
+
+/**
+ * @fn Array *Array::initWithCapacity(Array *self, size_t capacity)
+ * @memberof Array
+ */
+static Array *initWithCapacity(Array *self, size_t capacity) {
+
+  self = (Array *) super(Object, self, init);
+  if (self) {
+
+    self->capacity = capacity;
+    if (self->capacity) {
+
+      self->elements = calloc(self->capacity, sizeof(ident));
+      assert(self->elements);
     }
   }
 
@@ -386,6 +501,23 @@ static Array *initWithVaList(Array *self, va_list args) {
   }
 
   return self;
+}
+
+/**
+ * @fn void Array::insertObjectAtIndex(Array *self, ident obj, size_t index)
+ * @memberof Array
+ */
+static void insertObjectAtIndex(Array *self, ident obj, size_t index) {
+
+  assert(index <= self->count);
+
+  $(self, addObject, obj);
+
+  for (size_t i = self->count - 1; i > index; i--) {
+    self->elements[i] = self->elements[i - 1];
+  }
+
+  self->elements[index] = obj;
 }
 
 /**
@@ -463,153 +595,6 @@ static ident reduce(const Array *self, Reducer reducer, ident accumulator, ident
   }
 
   return accumulator;
-}
-
-/**
- * @fn Array *Array::sortedArray(const Array *self, Comparator comparator)
- * @memberof Array
- */
-static Array *sortedArray(const Array *self, Comparator comparator) {
-
-  assert(comparator);
-
-  Array *array = (Array *) $((Object *) self, copy);
-
-  $(array, sort, comparator);
-
-  return array;
-}
-
-/**
- * @fn void Array::addObject(Array *self, const ident obj)
- * @memberof Array
- */
-static void addObject(Array *self, const ident obj) {
-
-  if (self->count == self->capacity) {
-
-    self->capacity += ARRAY_CHUNK_SIZE;
-
-    if (self->elements) {
-      self->elements = realloc(self->elements, self->capacity * sizeof(ident));
-    } else {
-      self->elements = calloc(self->capacity, sizeof(ident));
-    }
-
-    assert(self->elements);
-  }
-
-  self->elements[self->count++] = retain(obj);
-}
-
-/**
- * @fn void Array::addObjects(Array *self, const ident obj, ...)
- * @memberof Array
- */
-static void addObjects(Array *self, const ident obj, ...) {
-
-  va_list args;
-  va_start(args, obj);
-
-  ident object = obj;
-  while (object) {
-    $(self, addObject, object);
-    object = va_arg(args, ident);
-  }
-
-  va_end(args);
-}
-
-/**
- * @fn void Array::addObjectsFromArray(Array *self, const Array *array)
- * @memberof Array
- */
-static void addObjectsFromArray(Array *self, const Array *array) {
-
-  if (array) {
-    for (size_t i = 0; i < array->count; i++) {
-      $(self, addObject, array->elements[i]);
-    }
-  }
-}
-
-/**
- * @fn Array *Array::array(void)
- * @memberof Array
- */
-static Array *array(void) {
-
-  return $(alloc(Array), init);
-}
-
-/**
- * @fn Array *Array::arrayWithCapacity(size_t capacity)
- * @memberof Array
- */
-static Array *arrayWithCapacity(size_t capacity) {
-
-  return $(alloc(Array), initWithCapacity, capacity);
-}
-
-/**
- * @fn void Array::filter(Array *self, Predicate predicate, ident data)
- * @memberof Array
- */
-static void filter(Array *self, Predicate predicate, ident data) {
-
-  assert(predicate);
-
-  for (size_t i = 0; i < self->count; i++) {
-    if (predicate(self->elements[i], data) == false) {
-      $(self, removeObjectAtIndex, i--);
-    }
-  }
-}
-
-/**
- * @fn Array *Array::init(Array *self)
- * @memberof Array
- */
-static Array *init(Array *self) {
-
-  return $(self, initWithCapacity, 0);
-}
-
-/**
- * @fn Array *Array::initWithCapacity(Array *self, size_t capacity)
- * @memberof Array
- */
-static Array *initWithCapacity(Array *self, size_t capacity) {
-
-  self = (Array *) super(Object, self, init);
-  if (self) {
-
-    self->capacity = capacity;
-    if (self->capacity) {
-
-      self->elements = calloc(self->capacity, sizeof(ident));
-      assert(self->elements);
-    }
-  }
-
-  return self;
-}
-
-/**
- * @fn void Array::insertObjectAtIndex(Array *self, ident obj, size_t index)
- * @memberof Array
- */
-static void insertObjectAtIndex(Array *self, ident obj, size_t index) {
-
-  assert(index <= self->count);
-
-  $(self, addObject, obj);
-
-  for (size_t i = self->count - 1; i > index; i--) {
-    self->elements[i] = self->elements[i - 1];
-  }
-
-  self->elements[index] = obj;
 }
 
 /**
@@ -700,6 +685,21 @@ static void setObjectAtIndex(Array *self, const ident obj, size_t index) {
  */
 static void sort(Array *self, Comparator comparator) {
   quicksort(self->elements, self->count, sizeof(ident), comparator, NULL);
+}
+
+/**
+ * @fn Array *Array::sortedArray(const Array *self, Comparator comparator)
+ * @memberof Array
+ */
+static Array *sortedArray(const Array *self, Comparator comparator) {
+
+  assert(comparator);
+
+  Array *array = (Array *) $((Object *) self, copy);
+
+  $(array, sort, comparator);
+
+  return array;
 }
 
 #pragma mark - Class lifecycle

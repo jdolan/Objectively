@@ -94,6 +94,14 @@ static ident objectForKeyPath(const ident root, const char *path) {
 #pragma mark - Class lifecycle
 
 /**
+ * @see Class::destroy(Class *)
+ */
+static void destroy(Class *clazz) {
+
+  release(_re);
+}
+
+/**
  * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
@@ -101,14 +109,6 @@ static void initialize(Class *clazz) {
   ((JSONPathInterface *) clazz->interface)->objectForKeyPath = objectForKeyPath;
 
   _re = re("(.[^.\\[]+|\\[[0-9]+\\])", 0);
-}
-
-/**
- * @see Class::destroy(Class *)
- */
-static void destroy(Class *clazz) {
-
-  release(_re);
 }
 
 /**

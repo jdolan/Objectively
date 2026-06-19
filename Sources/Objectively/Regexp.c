@@ -43,16 +43,6 @@ static Object *copy(const Object *self) {
 }
 
 /**
- * @see Object::description(const Object *)
- */
-static String *description(const Object *self) {
-
-  const Regexp *this = (Regexp *) self;
-
-  return $$(String, stringWithCharacters, this->pattern);
-}
-
-/**
  * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
@@ -63,6 +53,16 @@ static void dealloc(Object *self) {
   free(this->regex);
 
   super(Object, self, dealloc);
+}
+
+/**
+ * @see Object::description(const Object *)
+ */
+static String *description(const Object *self) {
+
+  const Regexp *this = (Regexp *) self;
+
+  return $$(String, stringWithCharacters, this->pattern);
 }
 
 /**

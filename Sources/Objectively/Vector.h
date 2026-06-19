@@ -237,16 +237,6 @@ struct VectorInterface {
 
   /**
    * @static
-   * @fn Vector *Vector::vectorWithSize(size_t size)
-   * @brief Creates a new Vector with the specified element size.
-   * @param size The element size.
-   * @return The new Vector.
-   * @memberof Vector
-   */
-  Vector *(*vectorWithSize)(size_t size);
-
-  /**
-   * @static
    * @fn Vector *Vector::vectorWithElements(size_t size, size_t count, ident elements)
    * @brief Creates a new Vector with the specified elements.
    * @param size The element size.
@@ -256,6 +246,16 @@ struct VectorInterface {
    * @memberof Vector
    */
   Vector *(*vectorWithElements)(size_t size, size_t count, ident elements);
+
+  /**
+   * @static
+   * @fn Vector *Vector::vectorWithSize(size_t size)
+   * @brief Creates a new Vector with the specified element size.
+   * @param size The element size.
+   * @return The new Vector.
+   * @memberof Vector
+   */
+  Vector *(*vectorWithSize)(size_t size);
 };
 
 /**

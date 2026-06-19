@@ -251,6 +251,14 @@ static void warn(const Log *self, const char *fmt, ...) {
 #pragma mark - Class lifecycle
 
 /**
+ * @see Class::destroy(Class *)
+ */
+static void destroy(Class *clazz) {
+
+  _sharedInstance = release(_sharedInstance);
+}
+
+/**
  * @see Class::initialize(Class *)
  */
 static void initialize(Class *clazz) {
@@ -268,14 +276,6 @@ static void initialize(Class *clazz) {
   ((LogInterface *) clazz->interface)->trace = trace;
   ((LogInterface *) clazz->interface)->sharedInstance = sharedInstance;
   ((LogInterface *) clazz->interface)->warn = warn;
-}
-
-/**
- * @see Class::destroy(Class *)
- */
-static void destroy(Class *clazz) {
-
-  _sharedInstance = release(_sharedInstance);
 }
 
 /**
