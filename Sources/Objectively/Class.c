@@ -173,11 +173,10 @@ Class *classForName(const char *name) {
     if (asprintf(&s, "_%s", name) > 0) {
       Class *clazz = NULL;
 #if defined(_WIN32)
+      static Once once;
       static ident handle;
-      if (handle == NULL) {
-        handle = dlopen(NULL, RTLD_LAZY);
-      }
-      Class *(*archetype)(void) = dlsym(handle, s);
+      do_once(&once, { handle = dlopen(NULL, RTLD_LAZY); });
+      Class *(*archetype)(void) = handle ? dlsym(handle, s) : NULL;
 #else
       Class *(*archetype)(void) = dlsym(RTLD_DEFAULT, s);
 #endif
