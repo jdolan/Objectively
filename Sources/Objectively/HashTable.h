@@ -62,6 +62,8 @@ typedef void (*HashTableEnumerator)(const HashTable *table, ident key, ident val
  */
 OBJECTIVELY_EXPORT size_t HashTableHashStr(const ident key);
 OBJECTIVELY_EXPORT bool   HashTableEqualStr(const ident a, const ident b);
+OBJECTIVELY_EXPORT size_t HashTableHashStri(const ident key);
+OBJECTIVELY_EXPORT bool   HashTableEqualStri(const ident a, const ident b);
 OBJECTIVELY_EXPORT size_t HashTableHashDirect(const ident key);
 OBJECTIVELY_EXPORT bool   HashTableEqualDirect(const ident a, const ident b);
 
@@ -151,14 +153,14 @@ struct HashTableInterface {
   bool (*containsKey)(const HashTable *self, const ident key);
 
   /**
-   * @fn void HashTable::enumerateEntries(const HashTable *self, HashTableEnumerator enumerator, ident data)
+   * @fn void HashTable::enumerate(const HashTable *self, HashTableEnumerator enumerator, ident data)
    * @brief Enumerates the entries of this HashTable with the given function.
    * @param self The HashTable.
    * @param enumerator The enumerator function.
    * @param data User data.
    * @memberof HashTable
    */
-  void (*enumerateEntries)(const HashTable *self, HashTableEnumerator enumerator, ident data);
+  void (*enumerate)(const HashTable *self, HashTableEnumerator enumerator, ident data);
 
   /**
    * @fn ident HashTable::get(const HashTable *self, const ident key)

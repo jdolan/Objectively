@@ -257,10 +257,10 @@ static bool containsObject(const Array *self, const ident obj) {
 }
 
 /**
- * @fn void Array::enumerateObjects(const Array *self, ArrayEnumerator enumerator, ident data)
+ * @fn void Array::enumerate(const Array *self, ArrayEnumerator enumerator, ident data)
  * @memberof Array
  */
-static void enumerateObjects(const Array *self, ArrayEnumerator enumerator, ident data) {
+static void enumerate(const Array *self, ArrayEnumerator enumerator, ident data) {
 
   assert(enumerator);
 
@@ -285,10 +285,10 @@ static Array *filteredArray(const Array *self, Predicate predicate, ident data) 
 }
 
 /**
- * @fn ident Array::findObject(const Array *self, Predicate predicate, ident data)
+ * @fn ident Array::find(const Array *self, Predicate predicate, ident data)
  * @memberof Array
  */
-static ident findObject(const Array *self, Predicate predicate, ident data) {
+static ident find(const Array *self, Predicate predicate, ident data) {
 
   assert(predicate);
 
@@ -395,6 +395,25 @@ static Array *initWithVaList(Array *self, va_list args) {
 static ident lastObject(const Array *self) {
 
   return self->count ? $(self, objectAtIndex, self->count - 1) : NULL;
+}
+
+/**
+ * @fn void Array::map(Array *self, Functor functor, ident data)
+ * @memberof Array
+ */
+static void map(Array *self, Functor functor, ident data) {
+
+  assert(functor);
+
+  for (size_t i = 0; i < self->count; i++) {
+    ident obj = functor(self->elements[i], data);
+
+    retain(obj);
+
+    release(self->elements[i]);
+
+    self->elements[i] = obj;
+  }
 }
 
 /**
@@ -707,10 +726,10 @@ static void initialize(Class *clazz) {
   ((ArrayInterface *) clazz->interface)->componentsJoinedByCharacters = componentsJoinedByCharacters;
   ((ArrayInterface *) clazz->interface)->componentsJoinedByString = componentsJoinedByString;
   ((ArrayInterface *) clazz->interface)->containsObject = containsObject;
-  ((ArrayInterface *) clazz->interface)->enumerateObjects = enumerateObjects;
+  ((ArrayInterface *) clazz->interface)->enumerate = enumerate;
   ((ArrayInterface *) clazz->interface)->filter = filter;
   ((ArrayInterface *) clazz->interface)->filteredArray = filteredArray;
-  ((ArrayInterface *) clazz->interface)->findObject = findObject;
+  ((ArrayInterface *) clazz->interface)->find = find;
   ((ArrayInterface *) clazz->interface)->firstObject = firstObject;
   ((ArrayInterface *) clazz->interface)->indexOfObject = indexOfObject;
   ((ArrayInterface *) clazz->interface)->init = init;
@@ -720,6 +739,7 @@ static void initialize(Class *clazz) {
   ((ArrayInterface *) clazz->interface)->initWithVaList = initWithVaList;
   ((ArrayInterface *) clazz->interface)->insertObjectAtIndex = insertObjectAtIndex;
   ((ArrayInterface *) clazz->interface)->lastObject = lastObject;
+  ((ArrayInterface *) clazz->interface)->map = map;
   ((ArrayInterface *) clazz->interface)->mappedArray = mappedArray;
   ((ArrayInterface *) clazz->interface)->objectAtIndex = objectAtIndex;
   ((ArrayInterface *) clazz->interface)->reduce = reduce;

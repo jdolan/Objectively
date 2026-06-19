@@ -203,7 +203,7 @@ static void addObjectsFromArray_enumerator(const Array *array, ident obj, ident 
 static void addObjectsFromArray(Set *self, const Array *array) {
 
   if (array) {
-    $(array, enumerateObjects, addObjectsFromArray_enumerator, self);
+    $(array, enumerate, addObjectsFromArray_enumerator, self);
   }
 }
 
@@ -387,7 +387,7 @@ static Set *initWithArray(Set *self, const Array *array) {
   self = (Set *) super(Object, self, init);
   if (self) {
     if (array) {
-      $(array, enumerateObjects, initWithArray_enumerator, self);
+      $(array, enumerate, initWithArray_enumerator, self);
     }
   }
 

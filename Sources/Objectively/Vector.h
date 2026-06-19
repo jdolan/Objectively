@@ -108,34 +108,34 @@ struct VectorInterface {
   void (*addElement)(Vector *self, const ident element);
 
   /**
-   * @fn void Vector::enumerateElements(const Vector *self, VectorEnumerator enumerator, ident data)
+   * @fn void Vector::enumerate(const Vector *self, VectorEnumerator enumerator, ident data)
    * @brief Enumerates the elements of this Vector with the given function.
    * @param self The Vector.
    * @param enumerator The enumerator function.
    * @param data User data.
    * @memberof Vector
    */
-  void (*enumerateElements)(const Vector *self, VectorEnumerator enumerator, ident data);
+  void (*enumerate)(const Vector *self, VectorEnumerator enumerator, ident data);
 
   /**
-   * @fn void Vector::filterElements(const Vector *self, Predicate predicate, ident data)
+   * @fn void Vector::filter(const Vector *self, Predicate predicate, ident data)
    * @brief Filters the elements of this Vector with the given Predicate.
    * @param self The Vector.
    * @param predicate The Predicate.
    * @param data User data.
    * @memberof Vector
    */
-  void (*filterElements)(Vector *self, Predicate predicate, ident data);
+  void (*filter)(Vector *self, Predicate predicate, ident data);
 
   /**
-   * @fn ident Vector::findElement(const Vector *self, Predicate predicate, ident data)
+   * @fn ident Vector::find(const Vector *self, Predicate predicate, ident data)
    * @param self The Vector.
    * @param predicate The Predicate.
    * @param data User data.
    * @return The first element of this Vector to pass the given Predicate.
    * @memberof Vector
    */
-  ident (*findElement)(const Vector *self, Predicate predicate, ident data);
+  ident (*find)(const Vector *self, Predicate predicate, ident data);
 
   /**
    * @fn ssize_t Vector::indexOfElement(const Vector *self, const ident element)
@@ -177,6 +177,17 @@ struct VectorInterface {
    * @memberof Vector
    */
   void (*insertElementAtIndex)(Vector *self, const ident element, size_t index);
+
+  /**
+   * @fn Vector *Vector::mappedVector(const Vector *self, Functor functor, ident data)
+   * @brief Returns a new Vector containing the elements of this Vector transformed by `functor`.
+   * @param self The Vector.
+   * @param functor The Functor.
+   * @param data User data.
+   * @return A new mapped Vector.
+   * @memberof Vector
+   */
+  Vector *(*mappedVector)(const Vector *self, Functor functor, ident data);
 
   /**
    * @fn ident Vector::reduce(const Vector *self, Reducer reducer, ident accumulator, ident data)

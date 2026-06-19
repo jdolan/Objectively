@@ -155,14 +155,14 @@ struct ArrayInterface {
   bool (*containsObject)(const Array *self, const ident obj);
 
   /**
-   * @fn void Array::enumerateObjects(const Array *self, ArrayEnumerator enumerator, ident data)
+   * @fn void Array::enumerate(const Array *self, ArrayEnumerator enumerator, ident data)
    * @brief Enumerate the elements of this Array with the given function.
    * @param self The Array.
    * @param enumerator The enumerator function.
    * @param data User data.
    * @memberof Array
    */
-  void (*enumerateObjects)(const Array *self, ArrayEnumerator enumerator, ident data);
+  void (*enumerate)(const Array *self, ArrayEnumerator enumerator, ident data);
 
   /**
    * @fn Array *Array::filteredArray(const Array *self, Predicate predicate, ident data)
@@ -176,14 +176,14 @@ struct ArrayInterface {
   Array *(*filteredArray)(const Array *self, Predicate predicate, ident data);
 
   /**
-   * @fn ident Array::findObject(const Array *self, Predicate predicate, ident data)
+   * @fn ident Array::find(const Array *self, Predicate predicate, ident data)
    * @param self The Array.
    * @param predicate The predicate function.
    * @param data User data.
    * @return The first element of this Array to pass the predicate function.
    * @memberof Array
    */
-  ident (*findObject)(const Array *self, Predicate predicate, ident data);
+  ident (*find)(const Array *self, Predicate predicate, ident data);
 
   /**
    * @fn ident Array::firstObject(const Array *self)
@@ -240,6 +240,16 @@ struct ArrayInterface {
   ident (*lastObject)(const Array *self);
 
   /**
+   * @fn void Array::map(Array *self, Functor functor, ident data)
+   * @brief Transforms the elements in this Array in place using `functor`.
+   * @param self The Array.
+   * @param functor The Functor.
+   * @param data User data.
+   * @memberof Array
+   */
+  void (*map)(Array *self, Functor functor, ident data);
+
+  /**
    * @fn Array *Array::mappedArray(const Array *self, Functor functor, ident data)
    * @brief Transforms the elements in this Array by `functor`.
    * @param self The Array.
@@ -278,6 +288,7 @@ struct ArrayInterface {
    * @memberof Array
    */
   Array *(*sortedArray)(const Array *self, Comparator comparator);
+
   /**
    * @fn void Array::addObject(Array *self, const ident obj)
    * @brief Adds the specified Object to this Array.
@@ -422,7 +433,7 @@ struct ArrayInterface {
    * @fn void Array::sort(Array *self, Comparator comparator)
    * @brief Sorts this Array in place using `comparator`.
    * @param self The Array.
-   * @param comparator A Comparator.
+   * @param comparator The Comparator.
    * @memberof Array
    */
   void (*sort)(Array *self, Comparator comparator);

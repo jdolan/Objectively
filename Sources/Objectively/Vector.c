@@ -130,10 +130,10 @@ static void addElement(Vector *self, const ident element) {
 }
 
 /**
- * @fn void Vector::enumerateObjects(const Vector *self, VectorEnumerator enumerator, ident data)
+ * @fn void Vector::enumerate(const Vector *self, VectorEnumerator enumerator, ident data)
  * @memberof Vector
  */
-static void enumerateElements(const Vector *self, VectorEnumerator enumerator, ident data) {
+static void enumerate(const Vector *self, VectorEnumerator enumerator, ident data) {
 
   assert(enumerator);
 
@@ -143,10 +143,10 @@ static void enumerateElements(const Vector *self, VectorEnumerator enumerator, i
 }
 
 /**
- * @fn void Vector::filterElements(Vector *self, Predicate predicate, ident data)
+ * @fn void Vector::filter(Vector *self, Predicate predicate, ident data)
  * @memberof Vector
  */
-static void filterElements(Vector *self, Predicate predicate, ident data) {
+static void filter(Vector *self, Predicate predicate, ident data) {
 
   assert(predicate);
 
@@ -158,10 +158,10 @@ static void filterElements(Vector *self, Predicate predicate, ident data) {
 }
 
 /**
- * @fn ident Vector::findElement(const Vector *self, Predicate predicate, ident data)
+ * @fn ident Vector::find(const Vector *self, Predicate predicate, ident data)
  * @memberof Vector
  */
-static ident findElement(const Vector *self, Predicate predicate, ident data) {
+static ident find(const Vector *self, Predicate predicate, ident data) {
 
   assert(predicate);
 
@@ -233,6 +233,22 @@ static void insertElementAtIndex(Vector *self, const ident element, size_t index
   }
 
   memcpy(self->elements + index * self->size, element, self->size);
+}
+
+/**
+ * @fn Vector *Vector::mappedVector(const Vector *self, Functor functor, ident data)
+ * @memberof Vector
+ */
+static Vector *mappedVector(const Vector *self, Functor functor, ident data) {
+
+  assert(functor);
+
+  Vector *vector = $(alloc(Vector), initWithSize, self->size);
+  for (size_t i = 0; i < self->count; i++) {
+    ident result = functor(self->elements + i * self->size, data);
+    $(vector, addElement, result);
+  }
+  return vector;
 }
 
 /**
@@ -368,20 +384,21 @@ static void initialize(Class *clazz) {
   ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
   ((VectorInterface *) clazz->interface)->addElement = addElement;
-  ((VectorInterface *) clazz->interface)->enumerateElements = enumerateElements;
-  ((VectorInterface *) clazz->interface)->filterElements = filterElements;
-  ((VectorInterface *) clazz->interface)->findElement = findElement;
+  ((VectorInterface *) clazz->interface)->enumerate = enumerate;
+  ((VectorInterface *) clazz->interface)->filter = filter;
+  ((VectorInterface *) clazz->interface)->find = find;
   ((VectorInterface *) clazz->interface)->indexOfElement = indexOfElement;
   ((VectorInterface *) clazz->interface)->initWithElements = initWithElements;
   ((VectorInterface *) clazz->interface)->initWithSize = initWithSize;
   ((VectorInterface *) clazz->interface)->insertElementAtIndex = insertElementAtIndex;
+  ((VectorInterface *) clazz->interface)->mappedVector = mappedVector;
   ((VectorInterface *) clazz->interface)->reduce = reduce;
   ((VectorInterface *) clazz->interface)->removeAllElements = removeAllElements;
   ((VectorInterface *) clazz->interface)->removeElementAtIndex = removeElementAtIndex;
   ((VectorInterface *) clazz->interface)->resize = resize;
   ((VectorInterface *) clazz->interface)->sort = sort;
-  ((VectorInterface *) clazz->interface)->vectorWithSize = vectorWithSize;
   ((VectorInterface *) clazz->interface)->vectorWithElements = vectorWithElements;
+  ((VectorInterface *) clazz->interface)->vectorWithSize = vectorWithSize;
 }
 
 /**

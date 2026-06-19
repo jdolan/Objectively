@@ -67,7 +67,7 @@ static bool enumerator(const List *list, ListNode *node, ident data) {
   return false;
 }
 
-START_TEST(enumerateElements) {
+START_TEST(enumerate) {
 
   int one = 1, two = 2, three = 3;
 
@@ -78,7 +78,7 @@ START_TEST(enumerateElements) {
   $(list, appendElement, &three);
 
   int sum = 0;
-  $(list, enumerateElements, enumerator, &sum);
+  $(list, enumerate, enumerator, &sum);
 
   ck_assert_int_eq(6, sum);
 
@@ -86,9 +86,13 @@ START_TEST(enumerateElements) {
 
 } END_TEST
 
-START_TEST(findElement) {
+static bool predicate(const ident element, ident data) {
+  return *(int *) element > (intptr_t) data;
+}
 
-  int one = 1, two = 2, three = 3, other = 4;
+START_TEST(filter) {
+
+  int one = 1, two = 2, three = 3;
 
   List *list = $(alloc(List), init);
 
@@ -96,10 +100,53 @@ START_TEST(findElement) {
   $(list, appendElement, &two);
   $(list, appendElement, &three);
 
-  ck_assert_ptr_eq(&one, $(list, findElement, &one)->element);
-  ck_assert_ptr_eq(&two, $(list, findElement, &two)->element);
-  ck_assert_ptr_eq(&three, $(list, findElement, &three)->element);
-  ck_assert_ptr_eq(NULL, $(list, findElement, &other));
+  $(list, filter, predicate, (ident) 1);
+
+  ck_assert_int_eq(2, list->count);
+  ck_assert(!$(list, containsElement, &one));
+  ck_assert($(list, containsElement, &two));
+  ck_assert($(list, containsElement, &three));
+
+  release(list);
+
+} END_TEST
+
+START_TEST(filteredList) {
+
+  int one = 1, two = 2, three = 3;
+
+  List *list = $(alloc(List), init);
+
+  $(list, appendElement, &one);
+  $(list, appendElement, &two);
+  $(list, appendElement, &three);
+
+  List *filtered = $(list, filteredList, predicate, (ident) 1);
+
+  ck_assert_int_eq(3, list->count);
+  ck_assert_int_eq(2, filtered->count);
+  ck_assert(!$(filtered, containsElement, &one));
+  ck_assert($(filtered, containsElement, &two));
+  ck_assert($(filtered, containsElement, &three));
+
+  release(filtered);
+  release(list);
+
+} END_TEST
+
+START_TEST(find) {
+
+  int one = 1, two = 2, three = 3;
+
+  List *list = $(alloc(List), init);
+
+  $(list, appendElement, &one);
+  $(list, appendElement, &two);
+  $(list, appendElement, &three);
+
+  ck_assert_ptr_eq(&two, $(list, find, predicate, (ident) 1));
+  ck_assert_ptr_eq(&three, $(list, find, predicate, (ident) 2));
+  ck_assert_ptr_eq(NULL, $(list, find, predicate, (ident) 3));
 
   release(list);
 
@@ -128,13 +175,81 @@ START_TEST(insertElementAfter) {
   $(list, appendElement, &one);
   $(list, appendElement, &three);
 
-  ListNode *node = $(list, findElement, &one);
+  ListNode *node = $(list, nodeForElement, &one);
   $(list, insertElementAfter, node, &two);
 
   ck_assert_int_eq(3, list->count);
   ck_assert_ptr_eq(&one, list->head->element);
   ck_assert_ptr_eq(&two, list->head->next->element);
   ck_assert_ptr_eq(&three, list->tail->element);
+
+  release(list);
+
+} END_TEST
+
+static ident functor(const ident element, ident data) {
+  int *n = (int *) element;
+  return (ident)(intptr_t)(*n * 2);
+}
+
+START_TEST(map) {
+
+  int one = 1, two = 2, three = 3;
+
+  List *list = $(alloc(List), init);
+
+  $(list, appendElement, &one);
+  $(list, appendElement, &two);
+  $(list, appendElement, &three);
+
+  $(list, map, functor, NULL);
+
+  ck_assert_int_eq(3, list->count);
+  ck_assert_int_eq(2, (intptr_t) list->head->element);
+  ck_assert_int_eq(4, (intptr_t) list->head->next->element);
+  ck_assert_int_eq(6, (intptr_t) list->tail->element);
+
+  release(list);
+
+} END_TEST
+
+START_TEST(mappedList) {
+
+  int one = 1, two = 2, three = 3;
+
+  List *list = $(alloc(List), init);
+
+  $(list, appendElement, &one);
+  $(list, appendElement, &two);
+  $(list, appendElement, &three);
+
+  List *mapped = $(list, mappedList, functor, NULL);
+
+  ck_assert_int_eq(3, list->count);
+  ck_assert_int_eq(3, mapped->count);
+  ck_assert_int_eq(2, (intptr_t) mapped->head->element);
+  ck_assert_int_eq(4, (intptr_t) mapped->head->next->element);
+  ck_assert_int_eq(6, (intptr_t) mapped->tail->element);
+
+  release(mapped);
+  release(list);
+
+} END_TEST
+
+START_TEST(nodeForElement) {
+
+  int one = 1, two = 2, three = 3, other = 4;
+
+  List *list = $(alloc(List), init);
+
+  $(list, appendElement, &one);
+  $(list, appendElement, &two);
+  $(list, appendElement, &three);
+
+  ck_assert_ptr_eq(&one, $(list, nodeForElement, &one)->element);
+  ck_assert_ptr_eq(&two, $(list, nodeForElement, &two)->element);
+  ck_assert_ptr_eq(&three, $(list, nodeForElement, &three)->element);
+  ck_assert_ptr_eq(NULL, $(list, nodeForElement, &other));
 
   release(list);
 
@@ -153,6 +268,26 @@ START_TEST(prependElement) {
   ck_assert_int_eq(3, list->count);
   ck_assert_ptr_eq(&one, list->head->element);
   ck_assert_ptr_eq(&three, list->tail->element);
+
+  release(list);
+
+} END_TEST
+
+static ident reducer(const ident element, ident accumulator, ident data) {
+  return (ident)((intptr_t) accumulator + *(int *) element);
+}
+
+START_TEST(reduce) {
+
+  int one = 1, two = 2, three = 3;
+
+  List *list = $(alloc(List), init);
+
+  $(list, appendElement, &one);
+  $(list, appendElement, &two);
+  $(list, appendElement, &three);
+
+  ck_assert_int_eq(6, (intptr_t) $(list, reduce, reducer, (ident) 0, NULL));
 
   release(list);
 
@@ -209,7 +344,7 @@ START_TEST(removeNode) {
   $(list, appendElement, &two);
   $(list, appendElement, &three);
 
-  ListNode *node = $(list, findElement, &one);
+  ListNode *node = $(list, nodeForElement, &one);
   $(list, removeNode, node);
 
   ck_assert_int_eq(2, list->count);
@@ -249,11 +384,17 @@ int main(int argc, char **argv) {
   TCase *tcase = tcase_create("List");
   tcase_add_test(tcase, appendElement);
   tcase_add_test(tcase, containsElement);
-  tcase_add_test(tcase, enumerateElements);
-  tcase_add_test(tcase, findElement);
+  tcase_add_test(tcase, enumerate);
+  tcase_add_test(tcase, filter);
+  tcase_add_test(tcase, filteredList);
+  tcase_add_test(tcase, find);
   tcase_add_test(tcase, init);
   tcase_add_test(tcase, insertElementAfter);
+  tcase_add_test(tcase, map);
+  tcase_add_test(tcase, mappedList);
+  tcase_add_test(tcase, nodeForElement);
   tcase_add_test(tcase, prependElement);
+  tcase_add_test(tcase, reduce);
   tcase_add_test(tcase, removeAll);
   tcase_add_test(tcase, removeElement);
   tcase_add_test(tcase, removeNode);

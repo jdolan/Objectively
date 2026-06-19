@@ -87,7 +87,7 @@ static void enumerator(const HashTable *table, ident key, ident value, ident dat
   (*(int *) data)++;
 }
 
-START_TEST(enumerateEntries) {
+START_TEST(enumerate) {
 
   HashTable *table = $(alloc(HashTable), init, HashTableHashStr, HashTableEqualStr);
 
@@ -96,7 +96,7 @@ START_TEST(enumerateEntries) {
   $(table, set, "three", "3");
 
   int count = 0;
-  $(table, enumerateEntries, enumerator, &count);
+  $(table, enumerate, enumerator, &count);
 
   ck_assert_int_eq(3, count);
 
@@ -179,7 +179,7 @@ int main(int argc, char **argv) {
   tcase_add_test(tcase, initWithCapacity);
   tcase_add_test(tcase, set_get);
   tcase_add_test(tcase, containsKey);
-  tcase_add_test(tcase, enumerateEntries);
+  tcase_add_test(tcase, enumerate);
   tcase_add_test(tcase, removeEntry);
   tcase_add_test(tcase, removeAll);
   tcase_add_test(tcase, set_replaces);

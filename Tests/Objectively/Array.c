@@ -71,7 +71,7 @@ START_TEST(array) {
   release(three);
 
   int count = 0;
-  $(array, enumerateObjects, enumerator, &count);
+  $(array, enumerate, enumerator, &count);
 
   ck_assert_int_eq(array->count, count);
 
@@ -94,6 +94,54 @@ START_TEST(array) {
 
 } END_TEST
 
+
+static ident map_functor(const ident obj, ident data) {
+  return $((Object *) obj, copy);
+}
+
+START_TEST(find) {
+
+  Object *one = $(alloc(Object), init);
+  Object *two = $(alloc(Object), init);
+  Object *three = $(alloc(Object), init);
+
+  Array *array = $$(Array, arrayWithObjects, one, two, three, NULL);
+
+  release(one);
+  release(two);
+  release(three);
+
+  ck_assert_ptr_eq(one, $(array, find, predicate, one));
+  ck_assert_ptr_eq(two, $(array, find, predicate, two));
+  ck_assert_ptr_eq(three, $(array, find, predicate, three));
+  ck_assert_ptr_eq(NULL, $(array, find, predicate, NULL));
+
+  release(array);
+
+} END_TEST
+
+START_TEST(map) {
+
+  Object *one = $(alloc(Object), init);
+  Object *two = $(alloc(Object), init);
+
+  Array *array = $$(Array, arrayWithObjects, one, two, NULL);
+
+  release(one);
+  release(two);
+
+  ident before_zero = $(array, objectAtIndex, 0);
+  ident before_one  = $(array, objectAtIndex, 1);
+
+  $(array, map, map_functor, NULL);
+
+  ck_assert_int_eq(2, array->count);
+  ck_assert_ptr_ne(before_zero, $(array, objectAtIndex, 0));
+  ck_assert_ptr_ne(before_one,  $(array, objectAtIndex, 1));
+
+  release(array);
+
+} END_TEST
 
 static Order comparator(const ident obj1, const ident obj2) {
   return $((Number *) obj1, compareTo, (Number *) obj2);
@@ -191,8 +239,9 @@ int main(int argc, char **argv) {
 
   TCase *tcase = tcase_create("Array");
   tcase_add_test(tcase, array);
-
   tcase_add_test(tcase, array_mutation);
+  tcase_add_test(tcase, find);
+  tcase_add_test(tcase, map);
 
   Suite *suite = suite_create("Array");
   suite_add_tcase(suite, tcase);

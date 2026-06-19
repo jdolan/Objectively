@@ -46,19 +46,13 @@ typedef void (*ListDestroyFunc)(ident obj);
  * @param data User data.
  * @return True to stop enumeration, false to continue.
  */
-typedef bool (*ListEnumerator)(const List *list, ListNode *node, ident data);
-
-/**
- * @brief Comparator function for sorting list elements.
- * @return Negative if a < b, zero if equal, positive if a > b.
- */
-typedef int (*ListSortFunc)(const ident a, const ident b);
+typedef bool (*ListEnumerator)(const List *list, ListNode *node, ident element);
 
 /**
  * @brief A node in a List.
  */
 struct ListNode {
-  ident data;
+  ident element;
   ListNode *prev;
   ListNode *next;
 };
@@ -113,41 +107,63 @@ struct ListInterface {
   ObjectInterface objectInterface;
 
   /**
-   * @fn void List::append(List *self, const ident data)
+   * @fn void List::append(List *self, const ident element)
    * @brief Appends the given element to the tail of this List.
    * @param self The List.
    * @param data The element to append.
    * @memberof List
    */
-  void (*append)(List *self, const ident data);
+  void (*appendElement)(List *self, const ident element);
 
   /**
-   * @fn bool List::containsElement(const List *self, const ident data)
+   * @fn bool List::containsElement(const List *self, const ident element)
    * @param self The List.
    * @param data The element to search for (pointer equality).
    * @return True if this List contains the given element.
    * @memberof List
    */
-  bool (*containsElement)(const List *self, const ident data);
+  bool (*containsElement)(const List *self, const ident element);
 
   /**
-   * @fn void List::enumerateElements(const List *self, ListEnumerator enumerator, ident data)
+   * @fn void List::enumerate(const List *self, ListEnumerator enumerator, ident element)
    * @brief Enumerates this List with the given function.
    * @param self The List.
    * @param enumerator The enumerator function.
    * @param data User data.
    * @memberof List
    */
-  void (*enumerateElements)(const List *self, ListEnumerator enumerator, ident data);
+  void (*enumerate)(const List *self, ListEnumerator enumerator, ident element);
 
   /**
-   * @fn ListNode *List::findNode(const List *self, const ident data)
+   * @fn void List::filter(List *self, Predicate predicate, ident data)
+   * @brief Filters this List in place using `predicate`.
    * @param self The List.
-   * @param data The element to find (pointer equality).
-   * @return The first node whose data matches, or NULL.
+   * @param predicate The Predicate.
+   * @param data User data.
    * @memberof List
    */
-  ListNode *(*findNode)(const List *self, const ident data);
+  void (*filter)(List *self, Predicate predicate, ident data);
+
+  /**
+   * @fn List *List::filteredList(const List *self, Predicate predicate, ident data)
+   * @brief Returns a new List containing elements of this List that pass `predicate`.
+   * @param self The List.
+   * @param predicate The Predicate.
+   * @param data User data.
+   * @return A new filtered List.
+   * @memberof List
+   */
+  List *(*filteredList)(const List *self, Predicate predicate, ident data);
+
+  /**
+   * @fn ident List::find(const List *self, Predicate predicate, ident data)
+   * @param self The List.
+   * @param predicate The Predicate.
+   * @param data User data.
+   * @return The first element to pass `predicate`, or NULL.
+   * @memberof List
+   */
+  ident (*find)(const List *self, Predicate predicate, ident data);
 
   /**
    * @fn List *List::init(List *self)
@@ -159,23 +175,64 @@ struct ListInterface {
   List *(*init)(List *self);
 
   /**
-   * @fn void List::insertAfter(List *self, ListNode *node, const ident data)
+   * @fn void List::insertElementAfter(List *self, ListNode *node, const ident element)
    * @brief Inserts an element after the given node.
    * @param self The List.
    * @param node The node to insert after, or NULL to prepend.
    * @param data The element to insert.
    * @memberof List
    */
-  void (*insertAfter)(List *self, ListNode *node, const ident data);
+  void (*insertElementAfter)(List *self, ListNode *node, const ident element);
 
   /**
-   * @fn void List::prepend(List *self, const ident data)
+   * @fn void List::map(List *self, Functor functor, ident data)
+   * @brief Transforms the elements in this List in place using `functor`.
+   * @param self The List.
+   * @param functor The Functor.
+   * @param data User data.
+   * @memberof List
+   */
+  void (*map)(List *self, Functor functor, ident data);
+
+  /**
+   * @fn List *List::mappedList(const List *self, Functor functor, ident data)
+   * @brief Returns a new List containing the elements of this List transformed by `functor`.
+   * @param self The List.
+   * @param functor The Functor.
+   * @param data User data.
+   * @return A new mapped List.
+   * @memberof List
+   */
+  List *(*mappedList)(const List *self, Functor functor, ident data);
+
+  /**
+   * @fn ListNode *List::nodeForElement(const List *self, const ident element)
+   * @param self The List.
+   * @param data The element to find (pointer equality).
+   * @return The first node whose data matches, or NULL.
+   * @memberof List
+   */
+  ListNode *(*nodeForElement)(const List *self, const ident element);
+
+  /**
+   * @fn void List::prepend(List *self, const ident element)
    * @brief Prepends the given element to the head of this List.
    * @param self The List.
    * @param data The element to prepend.
    * @memberof List
    */
-  void (*prepend)(List *self, const ident data);
+  void (*prependElement)(List *self, const ident element);
+
+  /**
+   * @fn ident List::reduce(const List *self, Reducer reducer, ident accumulator, ident data)
+   * @param self The List.
+   * @param reducer The Reducer.
+   * @param accumulator The initial accumulator value.
+   * @param data User data.
+   * @return The reduction result.
+   * @memberof List
+   */
+  ident (*reduce)(const List *self, Reducer reducer, ident accumulator, ident data);
 
   /**
    * @fn void List::removeAll(List *self)
@@ -184,6 +241,15 @@ struct ListInterface {
    * @memberof List
    */
   void (*removeAll)(List *self);
+
+  /**
+   * @fn void List::removeElement(List *self, const ident element)
+   * @brief Removes the first occurrence of element from this List.
+   * @param self The List.
+   * @param element The element to remove.
+   * @memberof List
+   */
+  void (*removeElement)(List *self, const ident element);
 
   /**
    * @fn void List::removeNode(List *self, ListNode *node)
@@ -198,10 +264,10 @@ struct ListInterface {
    * @fn void List::sort(List *self, ListSortFunc sort)
    * @brief Sorts this List in-place using the given comparator.
    * @param self The List.
-   * @param sort The comparator function.
+   * @param comparator The Comparator.
    * @memberof List
    */
-  void (*sort)(List *self, ListSortFunc sort);
+  void (*sort)(List *self, Comparator comparator);
 };
 
 /**

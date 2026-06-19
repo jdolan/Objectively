@@ -24,6 +24,7 @@
 #include "Config.h"
 
 #include <assert.h>
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -54,6 +55,26 @@ size_t HashTableHashStr(const ident key) {
  */
 bool HashTableEqualStr(const ident a, const ident b) {
   return strcmp((const char *) a, (const char *) b) == 0;
+}
+
+/**
+ * @see HashTableHashStri
+ */
+size_t HashTableHashStri(const ident key) {
+  const char *s = (const char *) key;
+  size_t h = 5381;
+  int c;
+  while ((c = *s++)) {
+    h = ((h << 5) + h) + (size_t) tolower(c);
+  }
+  return h;
+}
+
+/**
+ * @see HashTableEqualStri
+ */
+bool HashTableEqualStri(const ident a, const ident b) {
+  return strcasecmp((const char *) a, (const char *) b) == 0;
 }
 
 /**
@@ -110,10 +131,10 @@ static bool containsKey(const HashTable *self, const ident key) {
 }
 
 /**
- * @fn void HashTable::enumerateEntries(const HashTable *self, HashTableEnumerator enumerator, ident data)
+ * @fn void HashTable::enumerate(const HashTable *self, HashTableEnumerator enumerator, ident data)
  * @memberof HashTable
  */
-static void enumerateEntries(const HashTable *self, HashTableEnumerator enumerator, ident data) {
+static void enumerate(const HashTable *self, HashTableEnumerator enumerator, ident data) {
 
   assert(enumerator);
 
@@ -262,7 +283,7 @@ static void initialize(Class *clazz) {
   ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
   ((HashTableInterface *) clazz->interface)->containsKey = containsKey;
-  ((HashTableInterface *) clazz->interface)->enumerateEntries = enumerateEntries;
+  ((HashTableInterface *) clazz->interface)->enumerate = enumerate;
   ((HashTableInterface *) clazz->interface)->get = get;
   ((HashTableInterface *) clazz->interface)->init = init;
   ((HashTableInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
