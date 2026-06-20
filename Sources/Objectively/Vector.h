@@ -83,10 +83,16 @@ struct Vector {
 };
 
 /**
- * @brief Access the typed element of vector at the specified index.
+ * @brief Access the typed element of Vector at the specified index.
  */
 #define VectorElement(vector, type, index) \
   (((type *) vector->elements) + (index))
+
+/**
+ * @brief Access the typed value of a Vector at the specified index.
+ */
+#define VectorValue(vector, type, index) \
+  *(VectorElement(vector, type, index))
 
 /**
  * @brief The Vector interface.
