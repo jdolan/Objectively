@@ -21,6 +21,7 @@ TESTS = \
 	Number \
 	Object \
 	Operation \
+	PointerArray \
 	Regexp \
 	Resource \
 	Set \
