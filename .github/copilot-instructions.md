@@ -20,6 +20,11 @@ cd Tests/Objectively && ./String
 
 Tests use [libcheck](https://libcheck.github.io/check/). Each test file has its own `main()`.
 
+**Every new type must have a corresponding test file.** When adding `Foo`:
+1. Create `Tests/Objectively/Foo.c` — one `START_TEST` block per public method, plus a `destroy` test if the type has a `Consumer destroy` callback (verify the callback receives the correct value, not a pointer-to-pointer).
+2. Add `Foo` to the `TESTS` list in `Tests/Objectively/Makefile.am` (alphabetical order).
+3. Re-run `autoreconf -i && ./configure && make check` to confirm all tests pass.
+
 ## Architecture
 
 Every Objectively type consists of exactly three pieces:

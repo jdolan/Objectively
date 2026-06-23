@@ -68,10 +68,10 @@ static void append(List *self, const ident element) {
 }
 
 /**
- * @fn bool List::containsElement(const List *self, const ident element)
+ * @fn bool List::contains(const List *self, const ident element)
  * @memberof List
  */
-static bool containsElement(const List *self, const ident element) {
+static bool contains(const List *self, const ident element) {
   return $(self, nodeForElement, element) != NULL;
 }
 
@@ -120,7 +120,7 @@ static List *filteredList(const List *self, Predicate predicate, ident data) {
   List *list = $(alloc(List), init);
   for (ListNode *node = self->head; node; node = node->next) {
     if (predicate(node->element, data)) {
-      $(list, appendElement, node->element);
+      $(list, append, node->element);
     }
   }
 
@@ -157,13 +157,13 @@ static List *init(List *self) {
 }
 
 /**
- * @fn void List::insertElementAfter(List *self, ListNode *node, const ident element)
+ * @fn void List::insertAfter(List *self, ListNode *node, const ident element)
  * @memberof List
  */
-static void insertElementAfter(List *self, ListNode *node, const ident element) {
+static void insertAfter(List *self, ListNode *node, const ident element) {
 
   if (node == NULL || node == self->tail) {
-    $(self, appendElement, element);
+    $(self, append, element);
     return;
   }
 
@@ -205,7 +205,7 @@ static List *mappedList(const List *self, Functor functor, ident data) {
 
   List *list = $(alloc(List), init);
   for (ListNode *node = self->head; node; node = node->next) {
-    $(list, appendElement, functor(node->element, data));
+    $(list, append, functor(node->element, data));
   }
 
   return list;
@@ -227,10 +227,10 @@ static ListNode *nodeForElement(const List *self, const ident element) {
 }
 
 /**
- * @fn void List::prependElement(List *self, const ident element)
+ * @fn void List::prepend(List *self, const ident element)
  * @memberof List
  */
-static void prependElement(List *self, const ident element) {
+static void prepend(List *self, const ident element) {
 
   ListNode *node = calloc(1, sizeof(ListNode));
   assert(node);
@@ -284,10 +284,10 @@ static void removeAll(List *self) {
 }
 
 /**
- * @fn void List::removeElement(List *self, const ident element)
+ * @fn void List::remove(List *self, const ident element)
  * @memberof List
  */
-static void removeElement(List *self, const ident element) {
+static void _remove(List *self, const ident element) {
 
   ListNode *node = $(self, nodeForElement, element);
   if (node) {
@@ -359,21 +359,21 @@ static void initialize(Class *clazz) {
 
   ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-  ((ListInterface *) clazz->interface)->appendElement = append;
-  ((ListInterface *) clazz->interface)->containsElement = containsElement;
+  ((ListInterface *) clazz->interface)->append = append;
+  ((ListInterface *) clazz->interface)->contains = contains;
   ((ListInterface *) clazz->interface)->enumerate = enumerate;
   ((ListInterface *) clazz->interface)->filter = filter;
   ((ListInterface *) clazz->interface)->filteredList = filteredList;
   ((ListInterface *) clazz->interface)->find = find;
   ((ListInterface *) clazz->interface)->init = init;
-  ((ListInterface *) clazz->interface)->insertElementAfter = insertElementAfter;
+  ((ListInterface *) clazz->interface)->insertAfter = insertAfter;
   ((ListInterface *) clazz->interface)->map = map;
   ((ListInterface *) clazz->interface)->mappedList = mappedList;
   ((ListInterface *) clazz->interface)->nodeForElement = nodeForElement;
-  ((ListInterface *) clazz->interface)->prependElement = prependElement;
+  ((ListInterface *) clazz->interface)->prepend = prepend;
   ((ListInterface *) clazz->interface)->reduce = reduce;
   ((ListInterface *) clazz->interface)->removeAll = removeAll;
-  ((ListInterface *) clazz->interface)->removeElement = removeElement;
+  ((ListInterface *) clazz->interface)->remove = _remove;
   ((ListInterface *) clazz->interface)->removeNode = removeNode;
   ((ListInterface *) clazz->interface)->sort = _sort;
 }

@@ -56,6 +56,8 @@
 #include <Objectively/Operation.h>
 #include <Objectively/OperationQueue.h>
 #include <Objectively/Once.h>
+#include <Objectively/Pointer.h>
+#include <Objectively/PointerArray.h>
 #include <Objectively/Regexp.h>
 #include <Objectively/RESTClient.h>
 #include <Objectively/Resource.h>
@@ -74,5 +76,4 @@
 #include <Objectively/URLSessionDownloadTask.h>
 #include <Objectively/URLSessionTask.h>
 #include <Objectively/URLSessionUploadTask.h>
-#include <Objectively/Value.h>
 #include <Objectively/Vector.h>

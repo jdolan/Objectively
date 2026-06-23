@@ -108,16 +108,16 @@ struct ListInterface {
    * @param data The element to append.
    * @memberof List
    */
-  void (*appendElement)(List *self, const ident element);
+  void (*append)(List *self, const ident element);
 
   /**
-   * @fn bool List::containsElement(const List *self, const ident element)
+   * @fn bool List::contains(const List *self, const ident element)
    * @param self The List.
    * @param data The element to search for (pointer equality).
    * @return True if this List contains the given element.
    * @memberof List
    */
-  bool (*containsElement)(const List *self, const ident element);
+  bool (*contains)(const List *self, const ident element);
 
   /**
    * @fn void List::enumerate(const List *self, ListEnumerator enumerator, ident element)
@@ -170,14 +170,14 @@ struct ListInterface {
   List *(*init)(List *self);
 
   /**
-   * @fn void List::insertElementAfter(List *self, ListNode *node, const ident element)
+   * @fn void List::insertAfter(List *self, ListNode *node, const ident element)
    * @brief Inserts an element after the given node.
    * @param self The List.
    * @param node The node to insert after, or NULL to prepend.
    * @param data The element to insert.
    * @memberof List
    */
-  void (*insertElementAfter)(List *self, ListNode *node, const ident element);
+  void (*insertAfter)(List *self, ListNode *node, const ident element);
 
   /**
    * @fn void List::map(List *self, Functor functor, ident data)
@@ -216,7 +216,7 @@ struct ListInterface {
    * @param data The element to prepend.
    * @memberof List
    */
-  void (*prependElement)(List *self, const ident element);
+  void (*prepend)(List *self, const ident element);
 
   /**
    * @fn ident List::reduce(const List *self, Reducer reducer, ident accumulator, ident data)
@@ -238,13 +238,13 @@ struct ListInterface {
   void (*removeAll)(List *self);
 
   /**
-   * @fn void List::removeElement(List *self, const ident element)
+   * @fn void List::remove(List *self, const ident element)
    * @brief Removes the first occurrence of element from this List.
    * @param self The List.
    * @param element The element to remove.
    * @memberof List
    */
-  void (*removeElement)(List *self, const ident element);
+  void (*remove)(List *self, const ident element);
 
   /**
    * @fn void List::removeNode(List *self, ListNode *node)
