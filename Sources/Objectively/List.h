@@ -35,11 +35,6 @@ typedef struct ListInterface ListInterface;
 typedef struct ListNode ListNode;
 
 /**
- * @brief A function called to destroy a list element on removal.
- */
-typedef void (*ListDestroyFunc)(ident obj);
-
-/**
  * @brief The ListEnumerator function type.
  * @param list The List.
  * @param node The current node.
@@ -93,7 +88,7 @@ struct List {
   /**
    * @brief Optional destructor called when an element is removed.
    */
-  ListDestroyFunc destroy;
+  Consumer destroy;
 };
 
 /**

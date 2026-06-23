@@ -80,6 +80,11 @@ struct Vector {
    * @brief The elements.
    */
   ident elements;
+
+  /**
+   * @brief Optional destructor called when an element is removed.
+   */
+  Consumer destroy;
 };
 
 /**
