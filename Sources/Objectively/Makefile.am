@@ -34,6 +34,8 @@ pkginclude_HEADERS = \
 	Operation.h \
 	OperationQueue.h \
 	Once.h \
+	Pointer.h \
+	PointerArray.h \
 	Regexp.h \
 	RESTClient.h \
 	Resource.h \
@@ -53,8 +55,6 @@ pkginclude_HEADERS = \
 	URLSessionDownloadTask.h \
 	URLSessionTask.h \
 	URLSessionUploadTask.h \
-	Pointer.h \
-	PointerArray.h \
 	Vector.h
 
 lib_LTLIBRARIES = \
@@ -87,6 +87,8 @@ libObjectively_la_SOURCES = \
 	Object.c \
 	Operation.c \
 	OperationQueue.c \
+	Pointer.c \
+	PointerArray.c \
 	Regexp.c \
 	RESTClient.c \
 	Resource.c \
@@ -105,8 +107,6 @@ libObjectively_la_SOURCES = \
 	URLSessionDownloadTask.c \
 	URLSessionTask.c \
 	URLSessionUploadTask.c \
-	Pointer.c \
-	PointerArray.c \
 	Vector.c
 
 libObjectively_la_CFLAGS = \

@@ -47,6 +47,8 @@
     <ClInclude Include="..\Sources\Objectively\Once.h" />
     <ClInclude Include="..\Sources\Objectively\Operation.h" />
     <ClInclude Include="..\Sources\Objectively\OperationQueue.h" />
+    <ClInclude Include="..\Sources\Objectively\Pointer.h" />
+    <ClInclude Include="..\Sources\Objectively\PointerArray.h" />
     <ClInclude Include="..\Sources\Objectively\Regexp.h" />
     <ClInclude Include="..\Sources\Objectively\RESTClient.h" />
     <ClInclude Include="..\Sources\Objectively\Resource.h" />
@@ -66,8 +68,6 @@
     <ClInclude Include="..\Sources\Objectively\URLSessionDownloadTask.h" />
     <ClInclude Include="..\Sources\Objectively\URLSessionTask.h" />
     <ClInclude Include="..\Sources\Objectively\URLSessionUploadTask.h" />
-    <ClInclude Include="..\Sources\Objectively\Pointer.h" />
-    <ClInclude Include="..\Sources\Objectively\PointerArray.h" />
     <ClInclude Include="..\Sources\Objectively\Vector.h" />
     <ClInclude Include="libs\dlfcn\dlfcn.h" />
     <ClInclude Include="Sources\gnu\config.h" />
@@ -105,6 +105,8 @@
     <ClCompile Include="..\Sources\Objectively\Object.c" />
     <ClCompile Include="..\Sources\Objectively\Operation.c" />
     <ClCompile Include="..\Sources\Objectively\OperationQueue.c" />
+    <ClCompile Include="..\Sources\Objectively\Pointer.c" />
+    <ClCompile Include="..\Sources\Objectively\PointerArray.c" />
     <ClCompile Include="..\Sources\Objectively\Regexp.c" />
     <ClCompile Include="..\Sources\Objectively\RESTClient.c" />
     <ClCompile Include="..\Sources\Objectively\Resource.c" />
@@ -123,8 +125,6 @@
     <ClCompile Include="..\Sources\Objectively\URLSessionDownloadTask.c" />
     <ClCompile Include="..\Sources\Objectively\URLSessionTask.c" />
     <ClCompile Include="..\Sources\Objectively\URLSessionUploadTask.c" />
-    <ClCompile Include="..\Sources\Objectively\Pointer.c" />
-    <ClCompile Include="..\Sources\Objectively\PointerArray.c" />
     <ClCompile Include="..\Sources\Objectively\Vector.c" />
     <ClCompile Include="Sources\gnu\regex.c" />
     <ClCompile Include="Sources\Windowly.c" />
