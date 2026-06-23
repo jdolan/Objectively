@@ -168,10 +168,10 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>EnableAllWarnings</WarningLevel>
       <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;BUILDING_OBJECTIVELY;PTW32_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;HAVE_STRUCT_TIMESPEC;__clang__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <CompileAs>Default</CompileAs>
+      <CompileAs>CompileAsC</CompileAs>
+      <ExceptionHandling>false</ExceptionHandling>
       <SDLCheck>true</SDLCheck>
       <AdditionalOptions>-ferror-limit=0 %(AdditionalOptions)</AdditionalOptions>
-      <CompileAs>Default</CompileAs>
       <CLanguageStandard>gnu99</CLanguageStandard>
     </ClCompile>
     <Link>
