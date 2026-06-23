@@ -71,7 +71,7 @@ START_TEST(destroy) {
   $(vector, add, &two);
   $(vector, add, &three);
 
-  $(vector, removeElementAtIndex, 0);
+  $(vector, removeAt, 0);
   ck_assert_int_eq(1, destroyCount);
 
   // Leave two elements in the vector; release exercises the dealloc path.
@@ -239,7 +239,7 @@ START_TEST(removeAll) {
 
 } END_TEST
 
-START_TEST(removeElementAtIndex) {
+START_TEST(removeAt) {
 
   Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
 
@@ -249,7 +249,7 @@ START_TEST(removeElementAtIndex) {
   $(vector, add, &two);
   $(vector, add, &three);
 
-  $(vector, removeElementAtIndex, 0);
+  $(vector, removeAt, 0);
 
   ck_assert_int_eq(2, vector->count);
 
@@ -357,7 +357,7 @@ int main(int argc, char **argv) {
   tcase_add_test(tcase, mappedVector);
   tcase_add_test(tcase, reduce);
   tcase_add_test(tcase, removeAll);
-  tcase_add_test(tcase, removeElementAtIndex);
+  tcase_add_test(tcase, removeAt);
   tcase_add_test(tcase, resize);
   tcase_add_test(tcase, sort);
 

@@ -155,7 +155,7 @@ static void filter(Vector *self, Predicate predicate, ident data) {
 
   for (size_t i = 0; i < self->count; i++) {
     if (!predicate(self->elements + i * self->size, data)) {
-      $(self, removeElementAtIndex, i);
+      $(self, removeAt, i);
     }
   }
 }
@@ -285,10 +285,10 @@ static void removeAll(Vector *self) {
 }
 
 /**
- * @fn void Vector::removeElementAtIndex(Vector *self, size_t index)
+ * @fn void Vector::removeAt(Vector *self, size_t index)
  * @memberof Vector
  */
-static void removeElementAtIndex(Vector *self, size_t index) {
+static void removeAt(Vector *self, size_t index) {
 
   assert(index < self->count);
 
@@ -414,7 +414,7 @@ static void initialize(Class *clazz) {
   ((VectorInterface *) clazz->interface)->mappedVector = mappedVector;
   ((VectorInterface *) clazz->interface)->reduce = reduce;
   ((VectorInterface *) clazz->interface)->removeAll = removeAll;
-  ((VectorInterface *) clazz->interface)->removeElementAtIndex = removeElementAtIndex;
+  ((VectorInterface *) clazz->interface)->removeAt = removeAt;
   ((VectorInterface *) clazz->interface)->resize = resize;
   ((VectorInterface *) clazz->interface)->sort = sort;
   ((VectorInterface *) clazz->interface)->vectorWithElements = vectorWithElements;
