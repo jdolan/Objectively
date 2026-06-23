@@ -101,6 +101,20 @@ static PointerArray *initWithDestroy(PointerArray *self, Consumer destroy) {
 }
 
 /**
+ * @fn void PointerArray::remove(PointerArray *self, ident pointer)
+ * @memberof PointerArray
+ */
+static void _remove(PointerArray *self, ident pointer) {
+
+  for (size_t i = 0; i < self->count; i++) {
+    if (self->elements[i] == pointer) {
+      $(self, removeAt, i);
+      return;
+    }
+  }
+}
+
+/**
  * @fn void PointerArray::removeAll(PointerArray *self)
  * @memberof PointerArray
  */
@@ -116,24 +130,10 @@ static void removeAll(PointerArray *self) {
 }
 
 /**
- * @fn void PointerArray::remove(PointerArray *self, ident pointer)
+ * @fn void PointerArray::removeAt(PointerArray *self, size_t index)
  * @memberof PointerArray
  */
-static void _remove(PointerArray *self, ident pointer) {
-
-  for (size_t i = 0; i < self->count; i++) {
-    if (self->elements[i] == pointer) {
-      $(self, removeElementAtIndex, i);
-      return;
-    }
-  }
-}
-
-/**
- * @fn void PointerArray::removeElementAtIndex(PointerArray *self, size_t index)
- * @memberof PointerArray
- */
-static void removeElementAtIndex(PointerArray *self, size_t index) {
+static void removeAt(PointerArray *self, size_t index) {
 
   assert(index < self->count);
 
@@ -168,9 +168,9 @@ static void initialize(Class *clazz) {
   ((PointerArrayInterface *) clazz->interface)->get = get;
   ((PointerArrayInterface *) clazz->interface)->init = init;
   ((PointerArrayInterface *) clazz->interface)->initWithDestroy = initWithDestroy;
-  ((PointerArrayInterface *) clazz->interface)->removeAll = removeAll;
   ((PointerArrayInterface *) clazz->interface)->remove = _remove;
-  ((PointerArrayInterface *) clazz->interface)->removeElementAtIndex = removeElementAtIndex;
+  ((PointerArrayInterface *) clazz->interface)->removeAll = removeAll;
+  ((PointerArrayInterface *) clazz->interface)->removeAt = removeAt;
   ((PointerArrayInterface *) clazz->interface)->sort = sort;
 }
 

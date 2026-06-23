@@ -223,13 +223,13 @@ struct VectorInterface {
   void (*removeAll)(Vector *self);
   
   /**
-   * @fn void Vector::removeElementAtIndex(Vector *self, size_t index)
+   * @fn void Vector::removeAt(Vector *self, size_t index)
    * @brief Removes the element at the specified index.
    * @param self The Vector.
    * @param index The index of the element to remove.
    * @memberof Vector
    */
-  void (*removeElementAtIndex)(Vector *self, size_t index);
+  void (*removeAt)(Vector *self, size_t index);
 
   /**
    * @fn void Vector::resize(Vector *self, size_t capacity)

@@ -125,14 +125,6 @@ struct PointerArrayInterface {
   PointerArray *(*initWithDestroy)(PointerArray *self, Consumer destroy);
 
   /**
-   * @fn void PointerArray::removeAll(PointerArray *self)
-   * @brief Removes all elements from this PointerArray without modifying its capacity.
-   * @param self The PointerArray.
-   * @memberof PointerArray
-   */
-  void (*removeAll)(PointerArray *self);
-
-  /**
    * @fn void PointerArray::remove(PointerArray *self, ident pointer)
    * @brief Removes the first occurrence of `pointer` from this PointerArray.
    * @param self The PointerArray.
@@ -142,13 +134,21 @@ struct PointerArrayInterface {
   void (*remove)(PointerArray *self, ident pointer);
 
   /**
-   * @fn void PointerArray::removeElementAtIndex(PointerArray *self, size_t index)
+   * @fn void PointerArray::removeAt(PointerArray *self, size_t index)
    * @brief Removes the pointer at the specified index.
    * @param self The PointerArray.
    * @param index The index of the element to remove.
    * @memberof PointerArray
    */
-  void (*removeElementAtIndex)(PointerArray *self, size_t index);
+  void (*removeAt)(PointerArray *self, size_t index);
+
+  /**
+   * @fn void PointerArray::removeAll(PointerArray *self)
+   * @brief Removes all elements from this PointerArray without modifying its capacity.
+   * @param self The PointerArray.
+   * @memberof PointerArray
+   */
+  void (*removeAll)(PointerArray *self);
 
   /**
    * @fn void PointerArray::sort(PointerArray *self, Comparator comparator)
