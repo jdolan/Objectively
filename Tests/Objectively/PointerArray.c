@@ -179,6 +179,31 @@ START_TEST(removeElementAtIndex) {
 
 } END_TEST
 
+static Order comparator(const ident a, const ident b) {
+  return *(int *) a - *(int *) b;
+}
+
+START_TEST(sort) {
+
+  int one = 1, two = 2, three = 3;
+
+  PointerArray *array = $(alloc(PointerArray), init);
+
+  $(array, add, &three);
+  $(array, add, &one);
+  $(array, add, &two);
+
+  $(array, sort, comparator);
+
+  ck_assert_int_eq(3, array->count);
+  ck_assert_ptr_eq(&one,   array->elements[0]);
+  ck_assert_ptr_eq(&two,   array->elements[1]);
+  ck_assert_ptr_eq(&three, array->elements[2]);
+
+  release(array);
+
+} END_TEST
+
 int main(int argc, char **argv) {
 
   TCase *tcase = tcase_create("PointerArray");
@@ -190,6 +215,7 @@ int main(int argc, char **argv) {
   tcase_add_test(tcase, removeAll);
   tcase_add_test(tcase, _remove);
   tcase_add_test(tcase, removeElementAtIndex);
+  tcase_add_test(tcase, sort);
 
   Suite *suite = suite_create("PointerArray");
   suite_add_tcase(suite, tcase);

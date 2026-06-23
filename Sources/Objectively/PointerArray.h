@@ -149,6 +149,15 @@ struct PointerArrayInterface {
    * @memberof PointerArray
    */
   void (*removeElementAtIndex)(PointerArray *self, size_t index);
+
+  /**
+   * @fn void PointerArray::sort(PointerArray *self, Comparator comparator)
+   * @brief Sorts this PointerArray in place using `comparator`.
+   * @param self The PointerArray.
+   * @param comparator A Comparator.
+   * @memberof PointerArray
+   */
+  void (*sort)(PointerArray *self, Comparator comparator);
 };
 
 /**

@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "Array.h"
 #include "PointerArray.h"
 
 #define _Class _PointerArray
@@ -118,7 +119,7 @@ static void removeAll(PointerArray *self) {
  * @fn void PointerArray::remove(PointerArray *self, ident pointer)
  * @memberof PointerArray
  */
-static void remove(PointerArray *self, ident pointer) {
+static void _remove(PointerArray *self, ident pointer) {
 
   for (size_t i = 0; i < self->count; i++) {
     if (self->elements[i] == pointer) {
@@ -146,6 +147,14 @@ static void removeElementAtIndex(PointerArray *self, size_t index) {
   self->count--;
 }
 
+/**
+ * @fn void PointerArray::sort(PointerArray *self, Comparator comparator)
+ * @memberof PointerArray
+ */
+static void sort(PointerArray *self, Comparator comparator) {
+  quicksort(self->elements, self->count, sizeof(ident), comparator, NULL);
+}
+
 #pragma mark - Class lifecycle
 
 /**
@@ -160,8 +169,9 @@ static void initialize(Class *clazz) {
   ((PointerArrayInterface *) clazz->interface)->init = init;
   ((PointerArrayInterface *) clazz->interface)->initWithDestroy = initWithDestroy;
   ((PointerArrayInterface *) clazz->interface)->removeAll = removeAll;
-  ((PointerArrayInterface *) clazz->interface)->remove = remove;
+  ((PointerArrayInterface *) clazz->interface)->remove = _remove;
   ((PointerArrayInterface *) clazz->interface)->removeElementAtIndex = removeElementAtIndex;
+  ((PointerArrayInterface *) clazz->interface)->sort = sort;
 }
 
 /**
