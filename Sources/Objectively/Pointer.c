@@ -26,9 +26,9 @@
 #include <string.h>
 
 #include "Hash.h"
-#include "Value.h"
+#include "Pointer.h"
 
-#define _Class _Value
+#define _Class _Pointer
 
 #pragma mark - Object
 
@@ -37,10 +37,10 @@
  */
 static void dealloc(Object *self) {
 
-  Value *this = (Value *) self;
+  Pointer *this = (Pointer *) self;
 
-  if (this->destructor) {
-    this->destructor(this->value);
+  if (this->destroy) {
+    this->destroy(this->pointer);
   }
 
   super(Object, self, dealloc);
@@ -51,9 +51,9 @@ static void dealloc(Object *self) {
  */
 static int hash(const Object *self) {
 
-  const Value *this = (Value *) self;
+  const Pointer *this = (Pointer *) self;
 
-  uintptr_t addr = (uintptr_t) this->value;
+  uintptr_t addr = (uintptr_t) this->pointer;
 
   return (int) ((13 * addr) ^ (addr >> 15));
 }
@@ -67,33 +67,33 @@ static bool isEqual(const Object *self, const Object *other) {
     return true;
   }
 
-  if (other && $(other, isKindOfClass, _Value())) {
+  if (other && $(other, isKindOfClass, _Pointer())) {
 
-    const Value *this = (Value *) self;
-    const Value *that = (Value *) other;
+    const Pointer *this = (Pointer *) self;
+    const Pointer *that = (Pointer *) other;
 
-    return this->value == that->value;
+    return this->pointer == that->pointer;
   }
 
   return false;
 }
 
-#pragma mark - Value
+#pragma mark - Pointer
 
 /**
- * @fn Value *Value::initWithBytes(Value *self, const uint8_t *bytes, size_t length)
- * @memberof Value
+ * @fn Pointer *Pointer::initWithBytes(Pointer *self, const uint8_t *bytes, size_t length)
+ * @memberof Pointer
  */
-static Value *initWithBytes(Value *self, const uint8_t *bytes, size_t length) {
+static Pointer *initWithBytes(Pointer *self, const uint8_t *bytes, size_t length) {
 
-  self = (Value *) super(Object, self, init);
+  self = (Pointer *) super(Object, self, init);
   if (self) {
     if (bytes) {
-      self->value = calloc(1, length);
-      assert(self->value);
+      self->pointer = calloc(1, length);
+      assert(self->pointer);
 
-      memcpy(self->value, bytes, length);
-      self->destructor = free;
+      memcpy(self->pointer, bytes, length);
+      self->destroy = free;
     }
   }
 
@@ -101,14 +101,15 @@ static Value *initWithBytes(Value *self, const uint8_t *bytes, size_t length) {
 }
 
 /**
- * @fn Value *Value::initWithValue(Value *self, ident value)
- * @memberof Value
+ * @fn Pointer *Pointer::initWithPointer(Pointer *self, ident pointer, Consumer destroy)
+ * @memberof Pointer
  */
-static Value *initWithValue(Value *self, ident value) {
+static Pointer *initWithPointer(Pointer *self, ident pointer, Consumer destroy) {
 
-  self = (Value *) super(Object, self, init);
+  self = (Pointer *) super(Object, self, init);
   if (self) {
-    self->value = value;
+    self->pointer = pointer;
+    self->destroy = destroy;
   }
 
   return self;
@@ -125,25 +126,25 @@ static void initialize(Class *clazz) {
   ((ObjectInterface *) clazz->interface)->hash = hash;
   ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-  ((ValueInterface *) clazz->interface)->initWithBytes = initWithBytes;
-  ((ValueInterface *) clazz->interface)->initWithValue = initWithValue;
+  ((PointerInterface *) clazz->interface)->initWithBytes = initWithBytes;
+  ((PointerInterface *) clazz->interface)->initWithPointer = initWithPointer;
 }
 
 /**
- * @fn Class *Value::_Value(void)
- * @memberof Value
+ * @fn Class *Pointer::_Pointer(void)
+ * @memberof Pointer
  */
-Class *_Value(void) {
+Class *_Pointer(void) {
   static Class *clazz;
   static Once once;
 
   do_once(&once, {
     clazz = _initialize(&(const ClassDef) {
-      .name = "Value",
+      .name = "Pointer",
       .superclass = _Object(),
-      .instanceSize = sizeof(Value),
-      .interfaceOffset = offsetof(Value, interface),
-      .interfaceSize = sizeof(ValueInterface),
+      .instanceSize = sizeof(Pointer),
+      .interfaceOffset = offsetof(Pointer, interface),
+      .interfaceSize = sizeof(PointerInterface),
       .initialize = initialize,
     });
   });
@@ -153,3 +154,6 @@ Class *_Value(void) {
 
 #undef _Class
 
+Pointer *ptr(ident pointer, Consumer destroy) {
+  return $(alloc(Pointer), initWithPointer, pointer, destroy);
+}

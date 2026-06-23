@@ -53,7 +53,8 @@ pkginclude_HEADERS = \
 	URLSessionDownloadTask.h \
 	URLSessionTask.h \
 	URLSessionUploadTask.h \
-	Value.h \
+	Pointer.h \
+	PointerArray.h \
 	Vector.h
 
 lib_LTLIBRARIES = \
@@ -104,7 +105,8 @@ libObjectively_la_SOURCES = \
 	URLSessionDownloadTask.c \
 	URLSessionTask.c \
 	URLSessionUploadTask.c \
-	Value.c \
+	Pointer.c \
+	PointerArray.c \
 	Vector.c
 
 libObjectively_la_CFLAGS = \

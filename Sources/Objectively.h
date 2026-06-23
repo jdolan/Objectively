@@ -74,5 +74,6 @@
 #include <Objectively/URLSessionDownloadTask.h>
 #include <Objectively/URLSessionTask.h>
 #include <Objectively/URLSessionUploadTask.h>
-#include <Objectively/Value.h>
+#include <Objectively/Pointer.h>
+#include <Objectively/PointerArray.h>
 #include <Objectively/Vector.h>

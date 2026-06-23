@@ -29,7 +29,7 @@
 #include "Array.h"
 #include "Resource.h"
 #include "String.h"
-#include "Value.h"
+#include "Pointer.h"
 
 #define _Class _Resource
 
@@ -74,10 +74,10 @@ static void addResourcePath(const char *path) {
 static void addResourceProvider(ResourceProvider provider) {
 
   assert(provider);
-  Value *value = $(alloc(Value), initWithValue, provider);
-  
-  $(_resourceProviders, addObject, value);
-  release(value);
+  Pointer *pointer = $(alloc(Pointer), initWithPointer, provider, NULL);
+
+  $(_resourceProviders, addObject, pointer);
+  release(pointer);
 }
 
 /**
@@ -122,8 +122,8 @@ static Resource *initWithName(Resource *self, const char *name) {
   const Array *resourceProviders = (Array *) _resourceProviders;
   for (size_t i = 0; i < resourceProviders->count && data == NULL; i++) {
 
-    const Value *value = $(resourceProviders, objectAtIndex, i);
-    data = ((ResourceProvider) (value->value))(name);
+    const Pointer *pointer = $(resourceProviders, objectAtIndex, i);
+    data = ((ResourceProvider) (pointer->pointer))(name);
   }
 
   const Array *resourcePaths = (Array *) _resourcePaths;
@@ -170,11 +170,11 @@ static void removeResourcePath(const char *path) {
  */
 static void removeResourceProvider(ResourceProvider provider) {
 
-  Value *value = $(alloc(Value), initWithValue, provider);
+  Pointer *pointer = $(alloc(Pointer), initWithPointer, provider, NULL);
 
-  $(_resourceProviders, removeObject, value);
+  $(_resourceProviders, removeObject, pointer);
 
-  release(value);
+  release(pointer);
 }
 
 /**
