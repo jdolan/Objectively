@@ -51,6 +51,7 @@ Tests/Objectively/Null
 Tests/Objectively/Number
 Tests/Objectively/Object
 Tests/Objectively/Operation
+Tests/Objectively/PointerArray
 Tests/Objectively/Regexp
 Tests/Objectively/RESTClient
 Tests/Objectively/Resource
