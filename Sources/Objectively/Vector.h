@@ -83,6 +83,9 @@ struct Vector {
 
   /**
    * @brief Optional destructor called when an element is removed.
+   * @details The argument is a pointer into the Vector's contiguous element
+   * storage, not an owned object pointer. Cast it to the appropriate element
+   * pointer type to access the value being destroyed.
    */
   Consumer destroy;
 };

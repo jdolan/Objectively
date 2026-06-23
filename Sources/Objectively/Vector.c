@@ -296,9 +296,9 @@ static void removeElementAtIndex(Vector *self, size_t index) {
     self->destroy(self->elements + index * self->size);
   }
 
-  const size_t size = (self->count - index) * self->size;
+  const size_t size = (self->count - index - 1) * self->size;
 
-  memcpy(self->elements + index * self->size, self->elements + (index + 1) * self->size, size);
+  memmove(self->elements + index * self->size, self->elements + (index + 1) * self->size, size);
 
   self->count--;
 }

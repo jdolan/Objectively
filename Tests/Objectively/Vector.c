@@ -74,10 +74,9 @@ START_TEST(destroy) {
   $(vector, removeElementAtIndex, 0);
   ck_assert_int_eq(1, destroyCount);
 
-  $(vector, removeAllElements);
-  ck_assert_int_eq(3, destroyCount);
-
+  // Leave two elements in the vector; release exercises the dealloc path.
   release(vector);
+  ck_assert_int_eq(3, destroyCount);
 
 } END_TEST
 
