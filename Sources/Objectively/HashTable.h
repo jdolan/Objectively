@@ -44,11 +44,6 @@ typedef size_t (*HashTableHashFunc)(const ident key);
 typedef bool (*HashTableEqualFunc)(const ident a, const ident b);
 
 /**
- * @brief A function called to destroy a key or value on removal.
- */
-typedef void (*HashTableDestroyFunc)(ident obj);
-
-/**
  * @brief The HashTableEnumerator function type.
  * @param table The HashTable.
  * @param key The key.
@@ -125,12 +120,12 @@ struct HashTable {
   /**
    * @brief Optional destructor called when a key is removed or replaced.
    */
-  HashTableDestroyFunc destroyKey;
+  Consumer destroyKey;
 
   /**
    * @brief Optional destructor called when a value is removed or replaced.
    */
-  HashTableDestroyFunc destroyValue;
+  Consumer destroyValue;
 };
 
 /**

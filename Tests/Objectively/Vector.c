@@ -52,6 +52,35 @@ START_TEST(addElement) {
 
 } END_TEST
 
+static int destroyCount;
+
+static void destroyFunc(ident element) {
+  destroyCount++;
+}
+
+START_TEST(destroy) {
+
+  destroyCount = 0;
+
+  Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
+  vector->destroy = destroyFunc;
+
+  Foo one = { 1 }, two = { 2 }, three = { 3 };
+
+  $(vector, addElement, &one);
+  $(vector, addElement, &two);
+  $(vector, addElement, &three);
+
+  $(vector, removeElementAtIndex, 0);
+  ck_assert_int_eq(1, destroyCount);
+
+  $(vector, removeAllElements);
+  ck_assert_int_eq(3, destroyCount);
+
+  release(vector);
+
+} END_TEST
+
 static void enumerator(const Vector *vector, ident element, ident data) {
   *(int *) data += *(int *) element;
 }
@@ -319,6 +348,7 @@ int main(int argc, char **argv) {
 
   TCase *tcase = tcase_create("Vector");
   tcase_add_test(tcase, addElement);
+  tcase_add_test(tcase, destroy);
   tcase_add_test(tcase, enumerate);
   tcase_add_test(tcase, filter);
   tcase_add_test(tcase, find);

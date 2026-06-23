@@ -51,6 +51,7 @@ static Object *copy(const Object *self) {
   memcpy(that->elements, this->elements, this->count * this->size);
   that->count = this->count;
   that->capacity = this->capacity;
+  that->destroy = this->destroy;
 
   return (Object *) that;
 }
@@ -61,6 +62,8 @@ static Object *copy(const Object *self) {
 static void dealloc(Object *self) {
 
   Vector *this = (Vector *) self;
+
+  $(this, removeAllElements);
 
   free(this->elements);
 
@@ -271,6 +274,13 @@ static ident reduce(const Vector *self, Reducer reducer, ident accumulator, iden
  * @memberof Vector
  */
 static void removeAllElements(Vector *self) {
+
+  if (self->destroy) {
+    for (size_t i = 0; i < self->count; i++) {
+      self->destroy(self->elements + i * self->size);
+    }
+  }
+
   self->count = 0;
 }
 
@@ -281,6 +291,10 @@ static void removeAllElements(Vector *self) {
 static void removeElementAtIndex(Vector *self, size_t index) {
 
   assert(index < self->count);
+
+  if (self->destroy) {
+    self->destroy(self->elements + index * self->size);
+  }
 
   const size_t size = (self->count - index) * self->size;
 
@@ -294,6 +308,12 @@ static void removeElementAtIndex(Vector *self, size_t index) {
  * @memberof Vector
  */
 static void resize(Vector *self, size_t capacity) {
+
+  if (self->destroy) {
+    for (size_t i = capacity; i < self->count; i++) {
+      self->destroy(self->elements + i * self->size);
+    }
+  }
 
   self->elements = realloc(self->elements, capacity * self->size);
   assert(self->elements);
