@@ -31,9 +31,9 @@ START_TEST(appendElement) {
 
   List *list = $(alloc(List), init);
 
-  $(list, appendElement, &one);
-  $(list, appendElement, &two);
-  $(list, appendElement, &three);
+  $(list, append, &one);
+  $(list, append, &two);
+  $(list, append, &three);
 
   ck_assert_int_eq(3, list->count);
   ck_assert_ptr_eq(&one, list->head->element);
@@ -49,14 +49,14 @@ START_TEST(containsElement) {
 
   List *list = $(alloc(List), init);
 
-  $(list, appendElement, &one);
-  $(list, appendElement, &two);
-  $(list, appendElement, &three);
+  $(list, append, &one);
+  $(list, append, &two);
+  $(list, append, &three);
 
-  ck_assert($(list, containsElement, &one));
-  ck_assert($(list, containsElement, &two));
-  ck_assert($(list, containsElement, &three));
-  ck_assert(!$(list, containsElement, &other));
+  ck_assert($(list, contains, &one));
+  ck_assert($(list, contains, &two));
+  ck_assert($(list, contains, &three));
+  ck_assert(!$(list, contains, &other));
 
   release(list);
 
@@ -73,9 +73,9 @@ START_TEST(enumerate) {
 
   List *list = $(alloc(List), init);
 
-  $(list, appendElement, &one);
-  $(list, appendElement, &two);
-  $(list, appendElement, &three);
+  $(list, append, &one);
+  $(list, append, &two);
+  $(list, append, &three);
 
   int sum = 0;
   $(list, enumerate, enumerator, &sum);
@@ -96,16 +96,16 @@ START_TEST(filter) {
 
   List *list = $(alloc(List), init);
 
-  $(list, appendElement, &one);
-  $(list, appendElement, &two);
-  $(list, appendElement, &three);
+  $(list, append, &one);
+  $(list, append, &two);
+  $(list, append, &three);
 
   $(list, filter, predicate, (ident) 1);
 
   ck_assert_int_eq(2, list->count);
-  ck_assert(!$(list, containsElement, &one));
-  ck_assert($(list, containsElement, &two));
-  ck_assert($(list, containsElement, &three));
+  ck_assert(!$(list, contains, &one));
+  ck_assert($(list, contains, &two));
+  ck_assert($(list, contains, &three));
 
   release(list);
 
@@ -117,17 +117,17 @@ START_TEST(filteredList) {
 
   List *list = $(alloc(List), init);
 
-  $(list, appendElement, &one);
-  $(list, appendElement, &two);
-  $(list, appendElement, &three);
+  $(list, append, &one);
+  $(list, append, &two);
+  $(list, append, &three);
 
   List *filtered = $(list, filteredList, predicate, (ident) 1);
 
   ck_assert_int_eq(3, list->count);
   ck_assert_int_eq(2, filtered->count);
-  ck_assert(!$(filtered, containsElement, &one));
-  ck_assert($(filtered, containsElement, &two));
-  ck_assert($(filtered, containsElement, &three));
+  ck_assert(!$(filtered, contains, &one));
+  ck_assert($(filtered, contains, &two));
+  ck_assert($(filtered, contains, &three));
 
   release(filtered);
   release(list);
@@ -140,9 +140,9 @@ START_TEST(find) {
 
   List *list = $(alloc(List), init);
 
-  $(list, appendElement, &one);
-  $(list, appendElement, &two);
-  $(list, appendElement, &three);
+  $(list, append, &one);
+  $(list, append, &two);
+  $(list, append, &three);
 
   ck_assert_ptr_eq(&two, $(list, find, predicate, (ident) 1));
   ck_assert_ptr_eq(&three, $(list, find, predicate, (ident) 2));
@@ -166,17 +166,17 @@ START_TEST(init) {
 
 } END_TEST
 
-START_TEST(insertElementAfter) {
+START_TEST(insertAfter) {
 
   int one = 1, two = 2, three = 3;
 
   List *list = $(alloc(List), init);
 
-  $(list, appendElement, &one);
-  $(list, appendElement, &three);
+  $(list, append, &one);
+  $(list, append, &three);
 
   ListNode *node = $(list, nodeForElement, &one);
-  $(list, insertElementAfter, node, &two);
+  $(list, insertAfter, node, &two);
 
   ck_assert_int_eq(3, list->count);
   ck_assert_ptr_eq(&one, list->head->element);
@@ -198,9 +198,9 @@ START_TEST(map) {
 
   List *list = $(alloc(List), init);
 
-  $(list, appendElement, &one);
-  $(list, appendElement, &two);
-  $(list, appendElement, &three);
+  $(list, append, &one);
+  $(list, append, &two);
+  $(list, append, &three);
 
   $(list, map, functor, NULL);
 
@@ -219,9 +219,9 @@ START_TEST(mappedList) {
 
   List *list = $(alloc(List), init);
 
-  $(list, appendElement, &one);
-  $(list, appendElement, &two);
-  $(list, appendElement, &three);
+  $(list, append, &one);
+  $(list, append, &two);
+  $(list, append, &three);
 
   List *mapped = $(list, mappedList, functor, NULL);
 
@@ -242,9 +242,9 @@ START_TEST(nodeForElement) {
 
   List *list = $(alloc(List), init);
 
-  $(list, appendElement, &one);
-  $(list, appendElement, &two);
-  $(list, appendElement, &three);
+  $(list, append, &one);
+  $(list, append, &two);
+  $(list, append, &three);
 
   ck_assert_ptr_eq(&one, $(list, nodeForElement, &one)->element);
   ck_assert_ptr_eq(&two, $(list, nodeForElement, &two)->element);
@@ -255,15 +255,15 @@ START_TEST(nodeForElement) {
 
 } END_TEST
 
-START_TEST(prependElement) {
+START_TEST(prepend) {
 
   int one = 1, two = 2, three = 3;
 
   List *list = $(alloc(List), init);
 
-  $(list, prependElement, &three);
-  $(list, prependElement, &two);
-  $(list, prependElement, &one);
+  $(list, prepend, &three);
+  $(list, prepend, &two);
+  $(list, prepend, &one);
 
   ck_assert_int_eq(3, list->count);
   ck_assert_ptr_eq(&one, list->head->element);
@@ -283,9 +283,9 @@ START_TEST(reduce) {
 
   List *list = $(alloc(List), init);
 
-  $(list, appendElement, &one);
-  $(list, appendElement, &two);
-  $(list, appendElement, &three);
+  $(list, append, &one);
+  $(list, append, &two);
+  $(list, append, &three);
 
   ck_assert_int_eq(6, (intptr_t) $(list, reduce, reducer, (ident) 0, NULL));
 
@@ -299,9 +299,9 @@ START_TEST(removeAll) {
 
   List *list = $(alloc(List), init);
 
-  $(list, appendElement, &one);
-  $(list, appendElement, &two);
-  $(list, appendElement, &three);
+  $(list, append, &one);
+  $(list, append, &two);
+  $(list, append, &three);
 
   $(list, removeAll);
 
@@ -313,20 +313,20 @@ START_TEST(removeAll) {
 
 } END_TEST
 
-START_TEST(removeElement) {
+START_TEST(_remove) {
 
   int one = 1, two = 2, three = 3;
 
   List *list = $(alloc(List), init);
 
-  $(list, appendElement, &one);
-  $(list, appendElement, &two);
-  $(list, appendElement, &three);
+  $(list, append, &one);
+  $(list, append, &two);
+  $(list, append, &three);
 
-  $(list, removeElement, &two);
+  $(list, remove, &two);
 
   ck_assert_int_eq(2, list->count);
-  ck_assert(!$(list, containsElement, &two));
+  ck_assert(!$(list, contains, &two));
   ck_assert_ptr_eq(&one, list->head->element);
   ck_assert_ptr_eq(&three, list->tail->element);
 
@@ -340,9 +340,9 @@ START_TEST(removeNode) {
 
   List *list = $(alloc(List), init);
 
-  $(list, appendElement, &one);
-  $(list, appendElement, &two);
-  $(list, appendElement, &three);
+  $(list, append, &one);
+  $(list, append, &two);
+  $(list, append, &three);
 
   ListNode *node = $(list, nodeForElement, &one);
   $(list, removeNode, node);
@@ -364,9 +364,9 @@ START_TEST(sort) {
 
   List *list = $(alloc(List), init);
 
-  $(list, appendElement, &three);
-  $(list, appendElement, &one);
-  $(list, appendElement, &two);
+  $(list, append, &three);
+  $(list, append, &one);
+  $(list, append, &two);
 
   $(list, sort, comparator);
 
@@ -389,14 +389,14 @@ int main(int argc, char **argv) {
   tcase_add_test(tcase, filteredList);
   tcase_add_test(tcase, find);
   tcase_add_test(tcase, init);
-  tcase_add_test(tcase, insertElementAfter);
+  tcase_add_test(tcase, insertAfter);
   tcase_add_test(tcase, map);
   tcase_add_test(tcase, mappedList);
   tcase_add_test(tcase, nodeForElement);
-  tcase_add_test(tcase, prependElement);
+  tcase_add_test(tcase, prepend);
   tcase_add_test(tcase, reduce);
   tcase_add_test(tcase, removeAll);
-  tcase_add_test(tcase, removeElement);
+  tcase_add_test(tcase, _remove);
   tcase_add_test(tcase, removeNode);
   tcase_add_test(tcase, sort);
 

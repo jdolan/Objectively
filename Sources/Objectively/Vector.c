@@ -63,7 +63,7 @@ static void dealloc(Object *self) {
 
   Vector *this = (Vector *) self;
 
-  $(this, removeAllElements);
+  $(this, removeAll);
 
   free(this->elements);
 
@@ -110,10 +110,10 @@ static bool isEqual(const Object *self, const Object *other) {
 #pragma mark - Vector
 
 /**
- * @fn void Vector::addElement(Vector *self, const ident element)
+ * @fn void Vector::add(Vector *self, const ident element)
  * @memberof Vector
  */
-static void addElement(Vector *self, const ident element) {
+static void add(Vector *self, const ident element) {
 
   if (self->count == self->capacity) {
 
@@ -178,10 +178,10 @@ static ident find(const Vector *self, Predicate predicate, ident data) {
 }
 
 /**
- * @fn ssize_t Vector::indexOfElement(const Vector *self, const ident element)
+ * @fn ssize_t Vector::indexOf(const Vector *self, const ident element)
  * @memberof Vector
  */
-static ssize_t indexOfElement(const Vector *self, const ident element) {
+static ssize_t indexOf(const Vector *self, const ident element) {
 
   for (size_t i = 0; i < self->count; i++) {
     if (memcmp(self->elements + i * self->size, element, self->size) == 0) {
@@ -222,14 +222,14 @@ static Vector *initWithSize(Vector *self, size_t size) {
 }
 
 /**
- * @fn void Vector::insertElementAtIndex(Vector *self, const ident element, size_t index)
+ * @fn void Vector::insert(Vector *self, const ident element, size_t index)
  * @memberof Vector
  */
-static void insertElementAtIndex(Vector *self, const ident element, size_t index) {
+static void insert(Vector *self, const ident element, size_t index) {
 
   assert(index <= self->count);
 
-  $(self, addElement, element);
+  $(self, add, element);
 
   for (size_t i = self->count - 1; i > index; i--) {
     memcpy(self->elements + i * self->size, self->elements + (i - 1) * self->size, self->size);
@@ -249,7 +249,7 @@ static Vector *mappedVector(const Vector *self, Functor functor, ident data) {
   Vector *vector = $(alloc(Vector), initWithSize, self->size);
   for (size_t i = 0; i < self->count; i++) {
     ident result = functor(self->elements + i * self->size, data);
-    $(vector, addElement, result);
+    $(vector, add, result);
   }
   return vector;
 }
@@ -270,10 +270,10 @@ static ident reduce(const Vector *self, Reducer reducer, ident accumulator, iden
 }
 
 /**
- * @fn void Vector::removeAllElements(Vector *self)
+ * @fn void Vector::removeAll(Vector *self)
  * @memberof Vector
  */
-static void removeAllElements(Vector *self) {
+static void removeAll(Vector *self) {
 
   if (self->destroy) {
     for (size_t i = 0; i < self->count; i++) {
@@ -403,17 +403,17 @@ static void initialize(Class *clazz) {
   ((ObjectInterface *) clazz->interface)->hash = hash;
   ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 
-  ((VectorInterface *) clazz->interface)->addElement = addElement;
+  ((VectorInterface *) clazz->interface)->add = add;
   ((VectorInterface *) clazz->interface)->enumerate = enumerate;
   ((VectorInterface *) clazz->interface)->filter = filter;
   ((VectorInterface *) clazz->interface)->find = find;
-  ((VectorInterface *) clazz->interface)->indexOfElement = indexOfElement;
+  ((VectorInterface *) clazz->interface)->indexOf = indexOf;
   ((VectorInterface *) clazz->interface)->initWithElements = initWithElements;
   ((VectorInterface *) clazz->interface)->initWithSize = initWithSize;
-  ((VectorInterface *) clazz->interface)->insertElementAtIndex = insertElementAtIndex;
+  ((VectorInterface *) clazz->interface)->insert = insert;
   ((VectorInterface *) clazz->interface)->mappedVector = mappedVector;
   ((VectorInterface *) clazz->interface)->reduce = reduce;
-  ((VectorInterface *) clazz->interface)->removeAllElements = removeAllElements;
+  ((VectorInterface *) clazz->interface)->removeAll = removeAll;
   ((VectorInterface *) clazz->interface)->removeElementAtIndex = removeElementAtIndex;
   ((VectorInterface *) clazz->interface)->resize = resize;
   ((VectorInterface *) clazz->interface)->sort = sort;

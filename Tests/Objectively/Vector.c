@@ -30,15 +30,15 @@ typedef struct {
   int bar;
 } Foo;
 
-START_TEST(addElement) {
+START_TEST(add) {
 
   Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
 
   Foo one = { 1 }, two = { 2 }, three = { 3 };
 
-  $(vector, addElement, &one);
-  $(vector, addElement, &two);
-  $(vector, addElement, &three);
+  $(vector, add, &one);
+  $(vector, add, &two);
+  $(vector, add, &three);
 
   ck_assert_int_eq(3, vector->count);
 
@@ -67,9 +67,9 @@ START_TEST(destroy) {
 
   Foo one = { 1 }, two = { 2 }, three = { 3 };
 
-  $(vector, addElement, &one);
-  $(vector, addElement, &two);
-  $(vector, addElement, &three);
+  $(vector, add, &one);
+  $(vector, add, &two);
+  $(vector, add, &three);
 
   $(vector, removeElementAtIndex, 0);
   ck_assert_int_eq(1, destroyCount);
@@ -90,9 +90,9 @@ START_TEST(enumerate) {
 
   Foo one = { 1 }, two = { 2 }, three = { 3 };
 
-  $(vector, addElement, &one);
-  $(vector, addElement, &two);
-  $(vector, addElement, &three);
+  $(vector, add, &one);
+  $(vector, add, &two);
+  $(vector, add, &three);
 
   int sum = 0;
   $(vector, enumerate, enumerator, &sum);
@@ -113,9 +113,9 @@ START_TEST(filter) {
 
   Foo one = { 1 }, two = { 2 }, three = { 3 };
 
-  $(vector, addElement, &one);
-  $(vector, addElement, &two);
-  $(vector, addElement, &three);
+  $(vector, add, &one);
+  $(vector, add, &two);
+  $(vector, add, &three);
 
   $(vector, filter, predicate, (ident) 2);
 
@@ -132,9 +132,9 @@ START_TEST(find) {
 
   Foo one = { 1 }, two = { 2 }, three = { 3 }, *foo;
 
-  $(vector, addElement, &one);
-  $(vector, addElement, &two);
-  $(vector, addElement, &three);
+  $(vector, add, &one);
+  $(vector, add, &two);
+  $(vector, add, &three);
 
   foo = $(vector, find, predicate, (ident) 1);
   ck_assert_int_eq(1, foo->bar);
@@ -179,15 +179,15 @@ START_TEST(initWithSize) {
 
 } END_TEST
 
-START_TEST(insertElementAtIndex) {
+START_TEST(insert) {
 
   Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
 
   Foo one = { 1 }, two = { 2 }, three = { 3 };
 
-  $(vector, insertElementAtIndex, &one, 0);
-  $(vector, insertElementAtIndex, &two, 0);
-  $(vector, insertElementAtIndex, &three, 0);
+  $(vector, insert, &one, 0);
+  $(vector, insert, &two, 0);
+  $(vector, insert, &three, 0);
 
   ck_assert_int_eq(3, vector->count);
 
@@ -211,9 +211,9 @@ START_TEST(reduce) {
 
   Foo one = { 1 }, two = { 2 }, three = { 3 };
 
-  $(vector, addElement, &one);
-  $(vector, addElement, &two);
-  $(vector, addElement, &three);
+  $(vector, add, &one);
+  $(vector, add, &two);
+  $(vector, add, &three);
 
   ck_assert_int_eq(6, (intptr_t) $(vector, reduce, reducer, (ident) 0, NULL));
 
@@ -221,17 +221,17 @@ START_TEST(reduce) {
 
 } END_TEST
 
-START_TEST(removeAllElements) {
+START_TEST(removeAll) {
 
   Vector *vector = $(alloc(Vector), initWithSize, sizeof(Foo));
 
   Foo one = { 1 }, two = { 2 }, three = { 3 };
 
-  $(vector, addElement, &one);
-  $(vector, addElement, &two);
-  $(vector, addElement, &three);
+  $(vector, add, &one);
+  $(vector, add, &two);
+  $(vector, add, &three);
 
-  $(vector, removeAllElements);
+  $(vector, removeAll);
 
   ck_assert_int_eq(0, vector->count);
 
@@ -245,9 +245,9 @@ START_TEST(removeElementAtIndex) {
 
   Foo one = { 1 }, two = { 2 }, three = { 3 };
 
-  $(vector, addElement, &one);
-  $(vector, addElement, &two);
-  $(vector, addElement, &three);
+  $(vector, add, &one);
+  $(vector, add, &two);
+  $(vector, add, &three);
 
   $(vector, removeElementAtIndex, 0);
 
@@ -268,9 +268,9 @@ START_TEST(resize) {
 
   Foo one = { 1 }, two = { 2 }, three = { 3 };
 
-  $(vector, addElement, &one);
-  $(vector, addElement, &two);
-  $(vector, addElement, &three);
+  $(vector, add, &one);
+  $(vector, add, &two);
+  $(vector, add, &three);
 
   ck_assert_int_eq(3, vector->count);
 
@@ -297,9 +297,9 @@ START_TEST(sort) {
 
   Foo one = { 1 }, two = { 2 }, three = { 3 };
 
-  $(vector, addElement, &one);
-  $(vector, addElement, &two);
-  $(vector, addElement, &three);
+  $(vector, add, &one);
+  $(vector, add, &two);
+  $(vector, add, &three);
 
   ck_assert_int_eq(3, vector->count);
 
@@ -327,9 +327,9 @@ START_TEST(mappedVector) {
 
   Foo one = { 1 }, two = { 2 }, three = { 3 };
 
-  $(vector, addElement, &one);
-  $(vector, addElement, &two);
-  $(vector, addElement, &three);
+  $(vector, add, &one);
+  $(vector, add, &two);
+  $(vector, add, &three);
 
   Vector *mapped = $(vector, mappedVector, functor, NULL);
 
@@ -346,17 +346,17 @@ START_TEST(mappedVector) {
 int main(int argc, char **argv) {
 
   TCase *tcase = tcase_create("Vector");
-  tcase_add_test(tcase, addElement);
+  tcase_add_test(tcase, add);
   tcase_add_test(tcase, destroy);
   tcase_add_test(tcase, enumerate);
   tcase_add_test(tcase, filter);
   tcase_add_test(tcase, find);
   tcase_add_test(tcase, initWithElements);
   tcase_add_test(tcase, initWithSize);
-  tcase_add_test(tcase, insertElementAtIndex);
+  tcase_add_test(tcase, insert);
   tcase_add_test(tcase, mappedVector);
   tcase_add_test(tcase, reduce);
-  tcase_add_test(tcase, removeAllElements);
+  tcase_add_test(tcase, removeAll);
   tcase_add_test(tcase, removeElementAtIndex);
   tcase_add_test(tcase, resize);
   tcase_add_test(tcase, sort);

@@ -113,13 +113,13 @@ struct VectorInterface {
   ObjectInterface objectInterface;
 
   /**
-   * @fn void Vector::addElement(Vector *self, const ident element)
+   * @fn void Vector::add(Vector *self, const ident element)
    * @brief Adds the specified element to this Vector.
    * @param self The Vector.
    * @param element The element to add.
    * @memberof Vector
    */
-  void (*addElement)(Vector *self, const ident element);
+  void (*add)(Vector *self, const ident element);
 
   /**
    * @fn void Vector::enumerate(const Vector *self, VectorEnumerator enumerator, ident data)
@@ -152,13 +152,13 @@ struct VectorInterface {
   ident (*find)(const Vector *self, Predicate predicate, ident data);
 
   /**
-   * @fn ssize_t Vector::indexOfElement(const Vector *self, const ident element)
+   * @fn ssize_t Vector::indexOf(const Vector *self, const ident element)
    * @param self The Vector.
    * @param element The element.
    * @return The index of the given element, or `-1` if not found.
    * @memberof Vector
    */
-  ssize_t (*indexOfElement)(const Vector *self, const ident element);
+  ssize_t (*indexOf)(const Vector *self, const ident element);
 
   /**
    * @fn Vector *Vector::initWithElements(Vector *self, size_t size, size_t count, ident elements)
@@ -183,14 +183,14 @@ struct VectorInterface {
   Vector *(*initWithSize)(Vector *self, size_t size);
 
   /**
-   * @fn void Vector::insertElementAtIndex(Vector *self, const ident element, size_t index)
+   * @fn void Vector::insert(Vector *self, const ident element, size_t index)
    * @brief Inserts the element at the specified index.
    * @param self The Vector.
    * @param element The element to insert.
    * @param index The index at which to insert.
    * @memberof Vector
    */
-  void (*insertElementAtIndex)(Vector *self, const ident element, size_t index);
+  void (*insert)(Vector *self, const ident element, size_t index);
 
   /**
    * @fn Vector *Vector::mappedVector(const Vector *self, Functor functor, ident data)
@@ -215,12 +215,12 @@ struct VectorInterface {
   ident (*reduce)(const Vector *self, Reducer reducer, ident accumulator, ident data);
 
   /**
-   * @fn void Vector::removeAllElements(Vector *self)
+   * @fn void Vector::removeAll(Vector *self)
    * @brief Removes all elements from this Vector without modifying its capacity.
    * @param self The Vector
    * @memberof Vector
    */
-  void (*removeAllElements)(Vector *self);
+  void (*removeAll)(Vector *self);
   
   /**
    * @fn void Vector::removeElementAtIndex(Vector *self, size_t index)

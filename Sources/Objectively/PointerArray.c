@@ -40,7 +40,7 @@ static void dealloc(Object *self) {
 
   PointerArray *this = (PointerArray *) self;
 
-  $(this, removeAllPointers);
+  $(this, removeAll);
 
   free(this->elements);
 
@@ -50,20 +50,31 @@ static void dealloc(Object *self) {
 #pragma mark - PointerArray
 
 /**
- * @fn void PointerArray::addPointer(PointerArray *self, void *pointer)
+ * @fn void PointerArray::add(PointerArray *self, ident pointer)
  * @memberof PointerArray
  */
-static void addPointer(PointerArray *self, void *pointer) {
+static void add(PointerArray *self, ident pointer) {
 
   if (self->count == self->capacity) {
 
     self->capacity += POINTER_ARRAY_CHUNK_SIZE;
 
-    self->elements = realloc(self->elements, self->capacity * sizeof(void *));
+    self->elements = realloc(self->elements, self->capacity * sizeof(ident ));
     assert(self->elements);
   }
 
   self->elements[self->count++] = pointer;
+}
+
+/**
+ * @fn ident PointerArray::get(const PointerArray *self, size_t index)
+ * @memberof PointerArray
+ */
+static ident get(const PointerArray *self, size_t index) {
+
+  assert(index < self->count);
+
+  return self->elements[index];
 }
 
 /**
@@ -89,21 +100,10 @@ static PointerArray *initWithDestroy(PointerArray *self, Consumer destroy) {
 }
 
 /**
- * @fn void *PointerArray::pointerAtIndex(const PointerArray *self, size_t index)
+ * @fn void PointerArray::removeAll(PointerArray *self)
  * @memberof PointerArray
  */
-static void *pointerAtIndex(const PointerArray *self, size_t index) {
-
-  assert(index < self->count);
-
-  return self->elements[index];
-}
-
-/**
- * @fn void PointerArray::removeAllPointers(PointerArray *self)
- * @memberof PointerArray
- */
-static void removeAllPointers(PointerArray *self) {
+static void removeAll(PointerArray *self) {
 
   if (self->destroy) {
     for (size_t i = 0; i < self->count; i++) {
@@ -115,24 +115,24 @@ static void removeAllPointers(PointerArray *self) {
 }
 
 /**
- * @fn void PointerArray::removePointer(PointerArray *self, void *pointer)
+ * @fn void PointerArray::remove(PointerArray *self, ident pointer)
  * @memberof PointerArray
  */
-static void removePointer(PointerArray *self, void *pointer) {
+static void remove(PointerArray *self, ident pointer) {
 
   for (size_t i = 0; i < self->count; i++) {
     if (self->elements[i] == pointer) {
-      $(self, removePointerAtIndex, i);
+      $(self, removeElementAtIndex, i);
       return;
     }
   }
 }
 
 /**
- * @fn void PointerArray::removePointerAtIndex(PointerArray *self, size_t index)
+ * @fn void PointerArray::removeElementAtIndex(PointerArray *self, size_t index)
  * @memberof PointerArray
  */
-static void removePointerAtIndex(PointerArray *self, size_t index) {
+static void removeElementAtIndex(PointerArray *self, size_t index) {
 
   assert(index < self->count);
 
@@ -141,7 +141,7 @@ static void removePointerAtIndex(PointerArray *self, size_t index) {
   }
 
   const size_t tail = self->count - index - 1;
-  memmove(self->elements + index, self->elements + index + 1, tail * sizeof(void *));
+  memmove(self->elements + index, self->elements + index + 1, tail * sizeof(ident ));
 
   self->count--;
 }
@@ -155,13 +155,13 @@ static void initialize(Class *clazz) {
 
   ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-  ((PointerArrayInterface *) clazz->interface)->addPointer = addPointer;
+  ((PointerArrayInterface *) clazz->interface)->add = add;
+  ((PointerArrayInterface *) clazz->interface)->get = get;
   ((PointerArrayInterface *) clazz->interface)->init = init;
   ((PointerArrayInterface *) clazz->interface)->initWithDestroy = initWithDestroy;
-  ((PointerArrayInterface *) clazz->interface)->pointerAtIndex = pointerAtIndex;
-  ((PointerArrayInterface *) clazz->interface)->removeAllPointers = removeAllPointers;
-  ((PointerArrayInterface *) clazz->interface)->removePointer = removePointer;
-  ((PointerArrayInterface *) clazz->interface)->removePointerAtIndex = removePointerAtIndex;
+  ((PointerArrayInterface *) clazz->interface)->removeAll = removeAll;
+  ((PointerArrayInterface *) clazz->interface)->remove = remove;
+  ((PointerArrayInterface *) clazz->interface)->removeElementAtIndex = removeElementAtIndex;
 }
 
 /**

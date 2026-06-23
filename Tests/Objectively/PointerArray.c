@@ -26,15 +26,15 @@
 
 #include "Objectively.h"
 
-START_TEST(addPointer) {
+START_TEST(add) {
 
   int one = 1, two = 2, three = 3;
 
   PointerArray *array = $(alloc(PointerArray), init);
 
-  $(array, addPointer, &one);
-  $(array, addPointer, &two);
-  $(array, addPointer, &three);
+  $(array, add, &one);
+  $(array, add, &two);
+  $(array, add, &three);
 
   ck_assert_int_eq(3, array->count);
   ck_assert_ptr_eq(&one, array->elements[0]);
@@ -62,11 +62,11 @@ START_TEST(destroy) {
 
   PointerArray *array = $(alloc(PointerArray), initWithDestroy, destroyFunc);
 
-  $(array, addPointer, &one);
-  $(array, addPointer, &two);
-  $(array, addPointer, &three);
+  $(array, add, &one);
+  $(array, add, &two);
+  $(array, add, &three);
 
-  $(array, removePointerAtIndex, 1);
+  $(array, removeElementAtIndex, 1);
 
   ck_assert_int_eq(1, destroyCount);
   ck_assert_ptr_eq(&two, lastDestroyed);
@@ -103,35 +103,35 @@ START_TEST(initWithDestroy) {
 
 } END_TEST
 
-START_TEST(pointerAtIndex) {
+START_TEST(elementAtIndex) {
 
   int one = 1, two = 2, three = 3;
 
   PointerArray *array = $(alloc(PointerArray), init);
 
-  $(array, addPointer, &one);
-  $(array, addPointer, &two);
-  $(array, addPointer, &three);
+  $(array, add, &one);
+  $(array, add, &two);
+  $(array, add, &three);
 
-  ck_assert_ptr_eq(&one,   $(array, pointerAtIndex, 0));
-  ck_assert_ptr_eq(&two,   $(array, pointerAtIndex, 1));
-  ck_assert_ptr_eq(&three, $(array, pointerAtIndex, 2));
+  ck_assert_ptr_eq(&one,   $(array, get, 0));
+  ck_assert_ptr_eq(&two,   $(array, get, 1));
+  ck_assert_ptr_eq(&three, $(array, get, 2));
 
   release(array);
 
 } END_TEST
 
-START_TEST(removeAllPointers) {
+START_TEST(removeAll) {
 
   int one = 1, two = 2, three = 3;
 
   PointerArray *array = $(alloc(PointerArray), init);
 
-  $(array, addPointer, &one);
-  $(array, addPointer, &two);
-  $(array, addPointer, &three);
+  $(array, add, &one);
+  $(array, add, &two);
+  $(array, add, &three);
 
-  $(array, removeAllPointers);
+  $(array, removeAll);
 
   ck_assert_int_eq(0, array->count);
 
@@ -139,17 +139,17 @@ START_TEST(removeAllPointers) {
 
 } END_TEST
 
-START_TEST(removePointer) {
+START_TEST(_remove) {
 
   int one = 1, two = 2, three = 3;
 
   PointerArray *array = $(alloc(PointerArray), init);
 
-  $(array, addPointer, &one);
-  $(array, addPointer, &two);
-  $(array, addPointer, &three);
+  $(array, add, &one);
+  $(array, add, &two);
+  $(array, add, &three);
 
-  $(array, removePointer, &two);
+  $(array, remove, &two);
 
   ck_assert_int_eq(2, array->count);
   ck_assert_ptr_eq(&one,   array->elements[0]);
@@ -159,17 +159,17 @@ START_TEST(removePointer) {
 
 } END_TEST
 
-START_TEST(removePointerAtIndex) {
+START_TEST(removeElementAtIndex) {
 
   int one = 1, two = 2, three = 3;
 
   PointerArray *array = $(alloc(PointerArray), init);
 
-  $(array, addPointer, &one);
-  $(array, addPointer, &two);
-  $(array, addPointer, &three);
+  $(array, add, &one);
+  $(array, add, &two);
+  $(array, add, &three);
 
-  $(array, removePointerAtIndex, 0);
+  $(array, removeElementAtIndex, 0);
 
   ck_assert_int_eq(2, array->count);
   ck_assert_ptr_eq(&two,   array->elements[0]);
@@ -182,14 +182,14 @@ START_TEST(removePointerAtIndex) {
 int main(int argc, char **argv) {
 
   TCase *tcase = tcase_create("PointerArray");
-  tcase_add_test(tcase, addPointer);
+  tcase_add_test(tcase, add);
   tcase_add_test(tcase, destroy);
   tcase_add_test(tcase, init);
   tcase_add_test(tcase, initWithDestroy);
-  tcase_add_test(tcase, pointerAtIndex);
-  tcase_add_test(tcase, removeAllPointers);
-  tcase_add_test(tcase, removePointer);
-  tcase_add_test(tcase, removePointerAtIndex);
+  tcase_add_test(tcase, elementAtIndex);
+  tcase_add_test(tcase, removeAll);
+  tcase_add_test(tcase, _remove);
+  tcase_add_test(tcase, removeElementAtIndex);
 
   Suite *suite = suite_create("PointerArray");
   suite_add_tcase(suite, tcase);

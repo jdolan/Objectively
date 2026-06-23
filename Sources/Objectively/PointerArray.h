@@ -60,12 +60,12 @@ struct PointerArray {
   size_t capacity;
 
   /**
-   * @brief The count of pointers.
+   * @brief The count of elements.
    */
   size_t count;
 
   /**
-   * @brief Optional destructor called when a pointer is removed.
+   * @brief Optional destructor called when a element is removed.
    * @details The argument is the pointer value itself, not a pointer into the
    * backing buffer.
    */
@@ -74,7 +74,7 @@ struct PointerArray {
   /**
    * @brief The backing array of pointers.
    */
-  void **elements;
+  ident *elements;
 };
 
 /**
@@ -88,13 +88,22 @@ struct PointerArrayInterface {
   ObjectInterface objectInterface;
 
   /**
-   * @fn void PointerArray::addPointer(PointerArray *self, void *pointer)
+   * @fn void PointerArray::add(PointerArray *self, ident pointer)
    * @brief Appends the given pointer to this PointerArray.
    * @param self The PointerArray.
    * @param pointer The pointer to add.
    * @memberof PointerArray
    */
-  void (*addPointer)(PointerArray *self, void *pointer);
+  void (*add)(PointerArray *self, ident pointer);
+
+  /**
+   * @fn ident PointerArray::get(const PointerArray *self, size_t index)
+   * @param self The PointerArray.
+   * @param index The index.
+   * @return The element at the given index.
+   * @memberof PointerArray
+   */
+  ident (*get)(const PointerArray *self, size_t index);
 
   /**
    * @fn PointerArray *PointerArray::init(PointerArray *self)
@@ -116,39 +125,30 @@ struct PointerArrayInterface {
   PointerArray *(*initWithDestroy)(PointerArray *self, Consumer destroy);
 
   /**
-   * @fn void *PointerArray::pointerAtIndex(const PointerArray *self, size_t index)
-   * @param self The PointerArray.
-   * @param index The index.
-   * @return The pointer at the given index.
-   * @memberof PointerArray
-   */
-  void *(*pointerAtIndex)(const PointerArray *self, size_t index);
-
-  /**
-   * @fn void PointerArray::removeAllPointers(PointerArray *self)
-   * @brief Removes all pointers from this PointerArray without modifying its capacity.
+   * @fn void PointerArray::removeAll(PointerArray *self)
+   * @brief Removes all elements from this PointerArray without modifying its capacity.
    * @param self The PointerArray.
    * @memberof PointerArray
    */
-  void (*removeAllPointers)(PointerArray *self);
+  void (*removeAll)(PointerArray *self);
 
   /**
-   * @fn void PointerArray::removePointer(PointerArray *self, void *pointer)
+   * @fn void PointerArray::remove(PointerArray *self, ident pointer)
    * @brief Removes the first occurrence of `pointer` from this PointerArray.
    * @param self The PointerArray.
-   * @param pointer The pointer to remove (compared by value).
+   * @param pointer The element to remove (compared by value).
    * @memberof PointerArray
    */
-  void (*removePointer)(PointerArray *self, void *pointer);
+  void (*remove)(PointerArray *self, ident pointer);
 
   /**
-   * @fn void PointerArray::removePointerAtIndex(PointerArray *self, size_t index)
+   * @fn void PointerArray::removeElementAtIndex(PointerArray *self, size_t index)
    * @brief Removes the pointer at the specified index.
    * @param self The PointerArray.
-   * @param index The index of the pointer to remove.
+   * @param index The index of the element to remove.
    * @memberof PointerArray
    */
-  void (*removePointerAtIndex)(PointerArray *self, size_t index);
+  void (*removeElementAtIndex)(PointerArray *self, size_t index);
 };
 
 /**
