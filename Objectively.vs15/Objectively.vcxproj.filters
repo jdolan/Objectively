@@ -156,7 +156,13 @@
     <ClInclude Include="..\Sources\Objectively\URLSessionUploadTask.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\Value.h">
+    <ClInclude Include="..\Sources\Objectively\Pointer.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\PointerArray.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\Vector.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
     <ClInclude Include="Sources\gnu\regex.h">
@@ -184,9 +190,6 @@
       <Filter>Sources\libs\dlfcn</Filter>
     </ClInclude>
     <ClInclude Include="..\Sources\Objectively\URLResponse.h">
-      <Filter>Sources\Objectively</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Sources\Objectively\Vector.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
   </ItemGroup>
@@ -317,7 +320,10 @@
     <ClCompile Include="..\Sources\Objectively\URLSessionUploadTask.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
-    <ClCompile Include="..\Sources\Objectively\Value.c">
+    <ClCompile Include="..\Sources\Objectively\Pointer.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\PointerArray.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
     <ClCompile Include="..\Sources\Objectively\Regexp.c">
