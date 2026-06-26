@@ -3001,37 +3001,31 @@
 		CE129E6C23B8242B007D0433 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Debug;
 		};
 		CE129E6D23B8242B007D0433 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Release;
 		};
 		CE4A53111F40DFE800927421 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3039,9 +3033,7 @@
 		CE4A53121F40DFE800927421 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3049,9 +3041,7 @@
 		CE4A531E1F40DFFC00927421 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3059,9 +3049,7 @@
 		CE4A531F1F40DFFC00927421 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3069,9 +3057,7 @@
 		CE4A532B1F40E00A00927421 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3079,9 +3065,7 @@
 		CE4A532C1F40E00A00927421 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3118,9 +3102,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3130,9 +3112,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3142,9 +3122,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3154,9 +3132,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3182,9 +3158,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/Sources",
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/Sources";
 				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				ONLY_ACTIVE_ARCH = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -3211,9 +3185,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/Sources",
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/Sources";
 				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				ONLY_ACTIVE_ARCH = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -3228,9 +3200,8 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Objectively;
-				"LIBRARY_SEARCH_PATHS[sdk=macosx*]" = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				"LIBRARY_SEARCH_PATHS[sdk=macosx*]" = "$(HOMEBREW_PREFIX)/lib";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				"OTHER_LDFLAGS[sdk=iphoneos*]" = (
 					"-undefined",
 					dynamic_lookup,
@@ -3257,9 +3228,8 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Objectively;
-				"LIBRARY_SEARCH_PATHS[sdk=macosx*]" = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				"LIBRARY_SEARCH_PATHS[sdk=macosx*]" = "$(HOMEBREW_PREFIX)/lib";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				"OTHER_LDFLAGS[sdk=iphoneos*]" = (
 					"-undefined",
 					dynamic_lookup,
@@ -3283,9 +3253,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3295,9 +3263,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3307,9 +3273,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3319,9 +3283,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3331,9 +3293,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3343,9 +3303,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3355,9 +3313,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3367,9 +3323,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3379,9 +3333,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3391,9 +3343,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3403,9 +3353,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3415,9 +3363,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3427,9 +3373,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3439,9 +3383,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3451,9 +3393,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3463,9 +3403,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3475,9 +3413,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3487,9 +3423,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3499,9 +3433,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3511,9 +3443,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3523,9 +3453,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3535,9 +3463,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3547,9 +3473,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3559,9 +3483,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3571,9 +3493,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3583,9 +3503,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3595,9 +3513,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3607,9 +3523,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3619,9 +3533,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3631,9 +3543,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3643,9 +3553,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3655,9 +3563,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3667,9 +3573,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3679,9 +3583,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3691,9 +3593,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3703,9 +3603,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3715,9 +3613,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3727,9 +3623,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3739,9 +3633,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3751,9 +3643,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3763,9 +3653,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3775,9 +3663,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3787,9 +3673,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3799,9 +3683,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3811,9 +3693,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3823,9 +3703,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3835,9 +3713,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3847,9 +3723,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOMEBREW_PREFIX)/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

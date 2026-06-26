@@ -43,10 +43,12 @@ Tests/Objectively/Boole
 Tests/Objectively/Data
 Tests/Objectively/Date
 Tests/Objectively/Dictionary
+Tests/Objectively/HashTable
 Tests/Objectively/IndexPath
 Tests/Objectively/IndexSet
 Tests/Objectively/JSON
 Tests/Objectively/Log
+Tests/Objectively/List
 Tests/Objectively/Null
 Tests/Objectively/Number
 Tests/Objectively/Object
