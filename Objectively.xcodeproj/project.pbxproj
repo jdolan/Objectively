@@ -57,6 +57,17 @@
 			name = "Objectively-Examples";
 			productName = "Objectively-Tests";
 		};
+		OB01000000000000000000A1 /* Objectively-xcframework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = OB01400000000000000000A1 /* Build configuration list for PBXAggregateTarget "Objectively-xcframework" */;
+			buildPhases = (
+				OB01100000000000000000A1 /* Run Script */,
+			);
+			dependencies = (
+			);
+			name = "Objectively-xcframework";
+			productName = "Objectively-xcframework";
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -2261,6 +2272,9 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 2640;
 				TargetAttributes = {
+				OB01000000000000000000A1 = {
+					CreatedOnToolsVersion = 16.0;
+				};
 					CE4A532F1F40E0A600927421 = {
 						CreatedOnToolsVersion = 8.3.3;
 						ProvisioningStyle = Automatic;
@@ -2319,6 +2333,7 @@
 				CE4A53151F40DFFC00927421 /* Objectively-HelloCpp */,
 				CE4A53221F40E00A00927421 /* Objectively-HelloObjC */,
 				CE4A53651F40E0CD00927421 /* Objectively-Examples */,
+							OB01000000000000000000A1 /* Objectively-xcframework */,
 			);
 		};
 /* End PBXProject section */
@@ -2367,6 +2382,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [ ! -f \"$SRCROOT/Sources/Objectively/Config.h\" ]; then\n  cd \"$SRCROOT\" && autoreconf -i && ./configure\nfi\n";
+		};
+		OB01100000000000000000A1 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "exec \"$SRCROOT/scripts/build-xcframework.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -3884,6 +3918,20 @@
 			};
 			name = Release;
 		};
+		OB01200000000000000000A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Objectively-xcframework";
+			};
+			name = Debug;
+		};
+		OB01300000000000000000A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Objectively-xcframework";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -4189,6 +4237,15 @@
 			buildConfigurations = (
 				CEF601DC2FEAB228005C680C /* Debug */,
 				CEF601DD2FEAB228005C680C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OB01400000000000000000A1 /* Build configuration list for PBXAggregateTarget "Objectively-xcframework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OB01200000000000000000A1 /* Debug */,
+				OB01300000000000000000A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
