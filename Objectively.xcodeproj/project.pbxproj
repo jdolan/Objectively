@@ -1102,7 +1102,6 @@
 		CEF601CE2FEAB202005C680C /* PointerArray.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PointerArray.c; sourceTree = "<group>"; };
 		CEF601DE2FEAB228005C680C /* Objectively-PointerArray */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-PointerArray"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF601DF2FEAB24E005C680C /* PointerArray.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PointerArray.c; sourceTree = "<group>"; };
-		OB00010000000000000000A1 /* Objectively.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Objectively.xcframework; path = Frameworks/Objectively.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2272,9 +2271,6 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 2640;
 				TargetAttributes = {
-				OB01000000000000000000A1 = {
-					CreatedOnToolsVersion = 16.0;
-				};
 					CE4A532F1F40E0A600927421 = {
 						CreatedOnToolsVersion = 8.3.3;
 						ProvisioningStyle = Automatic;
@@ -2284,6 +2280,9 @@
 					};
 					CE84A89D1DA15B80008BC685 = {
 						CreatedOnToolsVersion = 7.3.1;
+					};
+					OB01000000000000000000A1 = {
+						CreatedOnToolsVersion = 16.0;
 					};
 				};
 			};
@@ -2301,6 +2300,7 @@
 			projectRoot = "";
 			targets = (
 				CE76D9671C48218E0096DD31 /* Objectively */,
+				OB01000000000000000000A1 /* Objectively-xcframework */,
 				CE84A89D1DA15B80008BC685 /* Objectively-Array */,
 				CEEB01A91F40DB3A004C2EDD /* Objectively-Boole */,
 				CEEB01B61F40DB3F004C2EDD /* Objectively-Data */,
@@ -2333,7 +2333,6 @@
 				CE4A53151F40DFFC00927421 /* Objectively-HelloCpp */,
 				CE4A53221F40E00A00927421 /* Objectively-HelloObjC */,
 				CE4A53651F40E0CD00927421 /* Objectively-Examples */,
-							OB01000000000000000000A1 /* Objectively-xcframework */,
 			);
 		};
 /* End PBXProject section */
@@ -3009,6 +3008,8 @@
 				);
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Debug;
 		};
@@ -3022,6 +3023,8 @@
 				);
 				OTHER_LDFLAGS = "-lcheck";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Release;
 		};
@@ -3196,7 +3199,6 @@
 					"$(HOMEBREW_PREFIX)/include",
 				);
 				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
-				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				ONLY_ACTIVE_ARCH = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				USE_HEADERMAP = NO;
@@ -3227,7 +3229,6 @@
 					"$(HOMEBREW_PREFIX)/include",
 				);
 				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
-				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				ONLY_ACTIVE_ARCH = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				USE_HEADERMAP = NO;
