@@ -1,29 +1,29 @@
-Objectively Documentation {#index}
-===
-[Objectively](https://github.com/jdolan/Objectively) provides object oriented programming constructs for [GNU C](http://www.gnu.org/software/gnu-c-manual/), and implements a small but useful core library resembling Apple's [Foundation framework](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/ObjC_classic/index.html). It's primary goals are as follows:
+Objectively {#index}
+============
 
- * Bring rich object oriented programming semantics to GNU C / C99
- * Provide convenient solutions to challenges commonly faced in modern application development
- * Embrace popular modern compilers (GCC and Clang), utilizing extensions thoughtfully
+[Objectively](https://github.com/jdolan/Objectively) is an ultra-lightweight object oriented framework for [GNU C](https://www.gnu.org/software/gnu-c-manual/). It brings OOP semantics — inheritance, polymorphism, and automatic reference counting — to C without requiring C++ or Objective-C.
 
-Key Features
----
- * Single-parent inheritance through _starts-with_ structure composition
- * Class and instance methods with strongly typed interfaces
- * Automatic class loading and lifecycle management
- * Automatic memory management with reference counting
- * Unicode and multibyte character set String support
- * Object primitives for Boole, Date, Null, Number, String
- * Mutable collection types such as Array, Dictionary, and Set
- * JSON parsing, marshaling and introspection with JSONSerialization and JSONPath
- * Low-level concurrency constructs such as Lock, Condition, and Thread
- * High-level concurrency with Operation and OperationQueue
- * Resource loading via Internet protocols with URLSession and URLSessionTask
+## Features
 
-API
----
-Browse the [Class hierarchy](hierarchy.html) to grok the API.
+- **Single-parent inheritance** via _starts-with_ struct composition
+- **Class and instance methods** with strongly typed interfaces
+- **Automatic reference counting** memory management
+- **Unicode strings** with multibyte character set support
+- **Collections**: Array, Dictionary, Set, Vector, and more
+- **JSON** parsing, marshaling, and JSONPath queries
+- **Concurrency**: Lock, Condition, Thread, Operation, OperationQueue
+- **Networking**: URLSession and URLSessionTask for HTTP/HTTPS
+- **Resource loading** with pluggable ResourceProvider
+- **Windows, macOS, Linux** — cross-platform
 
-Examples
----
-Examples of implementing types, invoking methods, etc.. are covered in the project's [README](https://github.com/jdolan/Objectively).
+## API
+
+Browse the [class hierarchy](hierarchy.html) to navigate the API.
+
+## Building
+
+```sh
+autoreconf -i
+./configure
+make && sudo make install
+```
