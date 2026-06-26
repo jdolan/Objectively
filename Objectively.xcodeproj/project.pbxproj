@@ -76,7 +76,6 @@
 		CE4A531B1F40DFFC00927421 /* Objectively.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* Objectively.framework */; };
 		CE4A53211F40E00700927421 /* HelloCpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CED1578E1C4B1A2100FBA2DE /* HelloCpp.cpp */; };
 		CE4A53281F40E00A00927421 /* Objectively.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* Objectively.framework */; };
-		CE4A532E1F40E01900927421 /* HelloObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9191C481E390096DD31 /* HelloObjC.m */; };
 		CE4A53A41F40E28C00927421 /* Null.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95A1C481E390096DD31 /* Null.c */; };
 		CE4F535A202A8C6D00D71C07 /* Objectively.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* Objectively.framework */; };
 		CE4F5360202A8C8600D71C07 /* Resource.c in Sources */ = {isa = PBXBuildFile; fileRef = CE4F5352202A8BDD00D71C07 /* Resource.c */; };
@@ -1010,7 +1009,6 @@
 		CE76D9061C481E390096DD31 /* index.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = index.md; sourceTree = "<group>"; };
 		CE76D9071C481E390096DD31 /* layout.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = layout.xml; sourceTree = "<group>"; };
 		CE76D9131C481E390096DD31 /* Hello.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Hello.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		CE76D9191C481E390096DD31 /* HelloObjC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelloObjC.m; sourceTree = "<group>"; };
 		CE76D91C1C481E390096DD31 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		CE76D91E1C481E390096DD31 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		CE76D91F1C481E390096DD31 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; lineEnding = 0; path = README.md; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.markdown; };
@@ -1056,7 +1054,6 @@
 		CEA3B0821CBBD3420082EE04 /* TemplateIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TemplateIcon.png; sourceTree = "<group>"; };
 		CEA3B0831CBBD3420082EE04 /* TemplateIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TemplateIcon@2x.png"; sourceTree = "<group>"; };
 		CEA3B0841CBBD3420082EE04 /* TemplateInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcheck.0.dylib; path = /opt/local/lib/libcheck.0.dylib; sourceTree = "<absolute>"; };
 		CEAAA3E125C6377300EE81B3 /* URLResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLResponse.h; sourceTree = "<group>"; };
 		CEAAA3E225C6377300EE81B3 /* URLResponse.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = URLResponse.c; sourceTree = "<group>"; };
 		CEB078C11D7605C200ABA6B3 /* IndexPath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = IndexPath.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -1066,8 +1063,6 @@
 		CEB20D561D771B7A000EF6F3 /* IndexSet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = IndexSet.c; sourceTree = "<group>"; };
 		CEB20D581D77492A000EF6F3 /* IndexSet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = IndexSet.c; sourceTree = "<group>"; };
 		CED1578E1C4B1A2100FBA2DE /* HelloCpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloCpp.cpp; sourceTree = "<group>"; };
-		CED157EB1C4BF60200FBA2DE /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = /opt/local/lib/libcurl.4.dylib; sourceTree = "<absolute>"; };
-		CED157EC1C4BF60200FBA2DE /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = /opt/local/lib/libiconv.2.dylib; sourceTree = "<absolute>"; };
 		CEEB01B51F40DB3A004C2EDD /* Objectively-Boole */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Boole"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB01C21F40DB3F004C2EDD /* Objectively-Data */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Data"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB01CF1F40DB47004C2EDD /* Objectively-Date */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Date"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1096,6 +1091,7 @@
 		CEF601CE2FEAB202005C680C /* PointerArray.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PointerArray.c; sourceTree = "<group>"; };
 		CEF601DE2FEAB228005C680C /* Objectively-PointerArray */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-PointerArray"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF601DF2FEAB24E005C680C /* PointerArray.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PointerArray.c; sourceTree = "<group>"; };
+		OB00010000000000000000A1 /* Objectively.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Objectively.xcframework; path = Frameworks/Objectively.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1354,7 +1350,6 @@
 			children = (
 				CE76D9021C481E390096DD31 /* Documentation */,
 				CE76D9081C481E390096DD31 /* Examples */,
-				CED157EF1C4BF88A00FBA2DE /* Libraries */,
 				CE76D9691C48218E0096DD31 /* Products */,
 				CE76D7FD1C481C4E0096DD31 /* Sources */,
 				CEA3B07B1CBBD3420082EE04 /* Templates */,
@@ -1385,8 +1380,6 @@
 				CE76D85F1C481C4E0096DD31 /* Array.h */,
 				CE76D8601C481C4E0096DD31 /* Boole.c */,
 				CE76D8611C481C4E0096DD31 /* Boole.h */,
-				CE7F04202FD993C600AE0D63 /* URLCachedResponse.h */,
-				CE7F04212FD993C600AE0D63 /* URLCachedResponse.c */,
 				CE76D8621C481C4E0096DD31 /* Class.c */,
 				CE76D8631C481C4E0096DD31 /* Class.h */,
 				CE76D8641C481C4E0096DD31 /* Condition.c */,
@@ -1461,6 +1454,8 @@
 				CE76D8ED1C481C4E0096DD31 /* URL.h */,
 				CE7F04222FD993C600AE0D63 /* URLCache.h */,
 				CE7F04232FD993C600AE0D63 /* URLCache.c */,
+				CE7F04202FD993C600AE0D63 /* URLCachedResponse.h */,
+				CE7F04212FD993C600AE0D63 /* URLCachedResponse.c */,
 				CE76D8EE1C481C4E0096DD31 /* URLRequest.c */,
 				CE76D8EF1C481C4E0096DD31 /* URLRequest.h */,
 				CEAAA3E125C6377300EE81B3 /* URLResponse.h */,
@@ -1501,7 +1496,6 @@
 				CE76D9131C481E390096DD31 /* Hello.c */,
 				CE423A501F544CFB002767E7 /* Hello.h */,
 				CED1578E1C4B1A2100FBA2DE /* HelloCpp.cpp */,
-				CE76D9191C481E390096DD31 /* HelloObjC.m */,
 				CE76D91C1C481E390096DD31 /* Makefile.am */,
 			);
 			path = Examples;
@@ -1633,16 +1627,6 @@
 				CEA3B0841CBBD3420082EE04 /* TemplateInfo.plist */,
 			);
 			path = "Objectively C Type.xctemplate";
-			sourceTree = "<group>";
-		};
-		CED157EF1C4BF88A00FBA2DE /* Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				CEA3B0871CBBE95E0082EE04 /* libcheck.0.dylib */,
-				CED157EB1C4BF60200FBA2DE /* libcurl.4.dylib */,
-				CED157EC1C4BF60200FBA2DE /* libiconv.2.dylib */,
-			);
-			name = Libraries;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2415,7 +2399,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE4A532E1F40E01900927421 /* HelloObjC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
