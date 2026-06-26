@@ -6,7 +6,7 @@ Objectively
 ===
 Ultra-lightweight object oriented framework for [GNU C](http://www.gnu.org/software/gnu-c-manual/).
 
-[Foundation](https://developer.apple.com/reference/foundation)-inspired [core library](http://jaydolan.com/projects/Objectively).
+[Foundation](https://developer.apple.com/reference/foundation)-inspired [core library](https://jdolan.github.io/Objectively/).
 
 Zlib [license](./COPYING).
 
@@ -337,4 +337,4 @@ Install the Eclipse CDT templates through the Eclipse CDT preferences:
 
 API documentation
 ---
-The API documentation can be [browsed online](http://jaydolan.com/projects/Objectively) or generated with [Doxygen](http://www.doxygen.org) by running `make html`.
+The API documentation is published at [jdolan.github.io/Objectively](https://jdolan.github.io/Objectively/) and can also be generated locally with [Doxygen](https://www.doxygen.org) by running `make html` (requires cloning `doxygen-awesome-css` first — see the comment in `Makefile.am`).
