@@ -46,7 +46,7 @@ pkginclude_HEADERS = \
 	Types.h \
 	URL.h \
 	URLCache.h \
- 	URLCachedResponse.h \ 
+ 	URLCachedResponse.h \
 	URLRequest.h \
 	URLResponse.h \
 	URLSession.h \
