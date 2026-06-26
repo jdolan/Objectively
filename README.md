@@ -1,38 +1,33 @@
 [![Build](https://github.com/jdolan/Objectively/actions/workflows/build.yml/badge.svg)](https://github.com/jdolan/Objectively/actions/workflows/build.yml)
 [![Zlib License](https://img.shields.io/badge/license-Zlib-brightgreen.svg)](https://opensource.org/licenses/Zlib)
-![This software is ALPHA](https://img.shields.io/badge/development_stage-BETA-green.svg)
+[![Stable](https://img.shields.io/badge/maturity-stable-green.svg)]
 
 Objectively
 ===
-Ultra-lightweight object oriented framework for [GNU C](http://www.gnu.org/software/gnu-c-manual/).
-
-[Foundation](https://developer.apple.com/reference/foundation)-inspired [core library](https://jdolan.github.io/Objectively/).
+Object oriented framework for C. 
 
 Zlib [license](./COPYING).
 
 About
 ---
- Objectively is a cross-platform object oriented framework for the C programming language. Unlike [GObject](https://developer.gnome.org/gobject/stable/), Objectively is not a platform on which to build OO languages. Rather, Objectively provides rich OO semantics to enable object oriented programming directly in C. It is based on C99, but utilizes several GNU extensions, and therefore requires `gcc` or `clang`. While others may work, the following targets are actively supported:
- 
- * GNU / Linux with GCC or Clang
- * macOS with GCC or Clang
- * [MinGW-w64](https://mingw-w64.org) cross compile
- * MinGW-w64 Windows native
- * Visual Studio 2015 or later with Clang
+Objectively is a cross-platform object oriented framework for the C programming language. 
+Objectively provides rich OO semantics to enable object oriented programming directly in C.
 
 Features
 ---
- * Single inheritance through _starts-with_ structure composition
- * `Class` and instance methods with strongly typed interfaces
- * Automatic class loading and lifecycle management
- * Automatic memory management with reference counting
- * Unicode and multibyte character set `String` support
- * Robust collections including as `Array`, `Dictionary`, `HashTable` `List` and `Set`
- * Low-level concurrency constructs such as `Lock`, `Condition`, and `Thread`
- * High-level concurrency with `Operation` and `OperationQueue`
- * Resource loading via Internet protocols with `URLSession` and `URLSessionTask`
- * JSON parsing, marshaling and introspection with `JSONContext` and `JSONPath`
- * RESTClient provides high-level convenience for modern application development
+ * **Windows, macOS, iOS, Android & Linux** cross-platform support
+ * **Single-parent inheritance** with _starts-with_ struct composition
+ * **Class and instance methods** with strongly typed interfaces
+ * **Automatic class loading** and lifecycle management
+ * **Automatic memory management** with reference counting
+ * **Unicode strings** with mutlibyte character support
+ * **Collections** for Objects and C types: Array, Dictionary, List, Set and more
+ * **Concurrency**: Lock, Condition, Thread, Operation, OperationQueue
+ * **Networking**: URLSession, JSONContext & RESTClient
+
+## API Documentation
+
+Browse the [API Documentation](https://jdolan.github.io/Objectively/) to explore the library.
 
 Adding Objectively to your project
 ---
@@ -40,7 +35,9 @@ Adding Objectively to your project
 1. Do the Autotools dance.
 
 ```shell
-autoreconf -i; ./configure; make; sudo make install
+autoreconf -i
+./configure
+make -j8 && sudo make install
 ```
 
 2. Include the main header file in your source.
@@ -76,20 +73,20 @@ Types in Objectively are comprised of 3 components:
  */
 struct Hello {
 
-	/**
-	 * @brief The parent.
-	 */
-	Object object;
+  /**
+   * @brief The parent.
+   */
+  Object object;
 
-	/**
-	 * @brief The interface.
-	 */
-	HelloInterface *interface;
+  /**
+   * @brief The interface.
+   */
+  HelloInterface *interface;
 
-	/**
-	 * @brief The greeting.
-	 */
-	const char *greeting;
+  /**
+   * @brief The greeting.
+   */
+  const char *greeting;
 };
 ```
 
@@ -101,38 +98,38 @@ struct Hello {
  */
 struct HelloInterface {
 
-	/**
-	 * @brief The parent.
-	 */
-	ObjectInterface objectInterface;
+  /**
+   * @brief The parent.
+   */
+  ObjectInterface objectInterface;
 
-	/**
-	 * @static
-	 * @fn Hello *Hello::helloWithGreeting(const char *greeting)
-	 * @brief A factory method for instantiating Hello.
-	 * @param greeting The greeting.
-	 * @return A new Hello with the given `greeting`.
-	 * @memberof Hello
-	 */
-	Hello *(*helloWithGreeting)(const char *greeting);
+  /**
+   * @static
+   * @fn Hello *Hello::helloWithGreeting(const char *greeting)
+   * @brief A factory method for instantiating Hello.
+   * @param greeting The greeting.
+   * @return A new Hello with the given `greeting`.
+   * @memberof Hello
+   */
+  Hello *(*helloWithGreeting)(const char *greeting);
 
-	/**
-	 * @fn Hello *Hello::initWithGreeting(Hello *self, const char *greeting)
-	 * @brief Initializes this Hello with the given `greeting`.
-	 * @param self The Hello.
-	 * @param greeting The greeting.
-	 * @return The initialized Hello, or `NULL` on error.
-	 * @memberof Hello
-	 */
-	Hello *(*initWithGreeting)(Hello *self, const char *greeting);
+  /**
+   * @fn Hello *Hello::initWithGreeting(Hello *self, const char *greeting)
+   * @brief Initializes this Hello with the given `greeting`.
+   * @param self The Hello.
+   * @param greeting The greeting.
+   * @return The initialized Hello, or `NULL` on error.
+   * @memberof Hello
+   */
+  Hello *(*initWithGreeting)(Hello *self, const char *greeting);
 
-	/**
-	 * @fn void Hello::sayHello(const Hello *self)
-	 * @brief Prints this Hello's greeting to the console.
-	 * @param self The Hello.
-	 * @memberof Hello
-	 */
-	void (*sayHello)(const Hello *self);
+  /**
+   * @fn void Hello::sayHello(const Hello *self)
+   * @brief Prints this Hello's greeting to the console.
+   * @param self The Hello.
+   * @memberof Hello
+   */
+  void (*sayHello)(const Hello *self);
 };
 ```
 
@@ -164,7 +161,7 @@ To implement a type, implement its instance and Class methods and Class initiali
  * @memberof Hello
  */
 static Hello *helloWithGreeting(const char *greeting) {
-	return $(alloc(Hello), initWithGreeting, greeting);
+  return $(alloc(Hello), initWithGreeting, greeting);
 }
 
 /**
@@ -173,11 +170,11 @@ static Hello *helloWithGreeting(const char *greeting) {
  */
 static Hello *initWithGreeting(Hello *self, const char *greeting) {
 
-	self = (Hello *) super(Object, self, init);
-	if (self) {
-		self->greeting = greeting ? : "Hello World!";
-	}
-	return self;
+  self = (Hello *) super(Object, self, init);
+  if (self) {
+    self->greeting = greeting ? : "Hello World!";
+  }
+  return self;
 }
 
 /**
@@ -185,7 +182,7 @@ static Hello *initWithGreeting(Hello *self, const char *greeting) {
  * @memberof Hello
  */
 static void sayHello(const Hello *self) {
-	printf("%s\n", self->greeting);
+  printf("%s\n", self->greeting);
 }
 
 #pragma mark - Class lifecycle
@@ -195,9 +192,9 @@ static void sayHello(const Hello *self) {
  */
 static void initialize(Class *clazz) {
  
-	((HelloInterface *) clazz->interface)->helloWithGreeting = helloWithGreeting;
-	((HelloInterface *) clazz->interface)->initWithGreeting = initWithGreeting;
-	((HelloInterface *) clazz->interface)->sayHello = sayHello;
+  ((HelloInterface *) clazz->interface)->helloWithGreeting = helloWithGreeting;
+  ((HelloInterface *) clazz->interface)->initWithGreeting = initWithGreeting;
+  ((HelloInterface *) clazz->interface)->sayHello = sayHello;
 }
 
 /**
@@ -205,21 +202,21 @@ static void initialize(Class *clazz) {
  * @memberof Hello
  */
 Class *_Hello(void) {
-	static Class *clazz;
-	static Once once;
+  static Class *clazz;
+  static Once once;
 
-	do_once(&once, {
-		clazz = _initialize(&(const ClassDef) {
-			.name = "Hello",
-			.superclass = _Object(),
-			.instanceSize = sizeof(Hello),
-			.interfaceOffset = offsetof(Hello, interface),
-			.interfaceSize = sizeof(HelloInterface),
-			.initialize = initialize
-		});
-	});
+  do_once(&once, {
+    clazz = _initialize(&(const ClassDef) {
+      .name = "Hello",
+      .superclass = _Object(),
+      .instanceSize = sizeof(Hello),
+      .interfaceOffset = offsetof(Hello, interface),
+      .interfaceSize = sizeof(HelloInterface),
+      .initialize = initialize
+    });
+  });
  
-	return clazz;
+  return clazz;
 };
     
 #undef _Class
@@ -227,6 +224,8 @@ Class *_Hello(void) {
 
 Using a type
 ---
+Using your custom type is trivial. Instantiate it like you would any Objectively type.
+
 ```c
 Hello *hello = $(alloc(Hello), initWithGreeting, NULL);
 
@@ -234,6 +233,7 @@ $(hello, sayHello);
 
 release(hello);
 ```
+
 See [Hello.h](Examples/Hello.h) and [Hello.c](Examples/Hello.c) for the full source to this example.
 
 Initialization
@@ -253,7 +253,7 @@ Invoking a Class method
 To invoke a Class method, use the `$$` macro.
 
 ```c
-    Dictionary *dict = $$(JSONSerialization, objectWithData, data);
+    Dictionary *dict = $$(Dictionary, dictionary);
 ```
 
 Overriding a method
@@ -289,20 +289,20 @@ static URLSession *_sharedInstance;
  * @memberof URLSession
  */
 static *URLSession sharedInstance(void) {
-	static Once once;
+  static Once once;
 
-	do_once(&once, {
-		_sharedInstance = $(alloc(URLSession), init);
-	});
+  do_once(&once, {
+    _sharedInstance = $(alloc(URLSession), init);
+  });
 
-	return _sharedInstance;
+  return _sharedInstance;
 }
 
 /**
  * @see Class::destroy(Class *)
  */
 static void destroy(Class *clazz) {
-	_sharedInstance = release(_sharedInstance);
+  _sharedInstance = release(_sharedInstance);
 }
 
 // ...
@@ -311,15 +311,6 @@ URLSession *session = $$(URLSession, sharedInstance);
 ```
 
 Remember to wire up the desctructor in your Class' initialization block. See [Once.h](Sources/Objectively/Once.h) for details on `do_once`.
-    
-Examples & projects using Objectively
----
-
-1. The Hello example above can be seen [here](Examples/Hello.c).
-1. The [unit tests](Tests/Objectively) provide examples for using every Objectively class.
-1. [ObjectivelyMVC](https://github.com/jdolan/ObjectivelyMVC) is a cross-platform user interface and interaction framework for SDL3 and OpenGL built on Objectively.
-
-![ObjectivelyMVC](https://github.com/jdolan/ObjectivelyMVC/blob/master/Documentation/demo.gif)
 
 Code Templates
 ---
@@ -335,6 +326,12 @@ Install the Eclipse CDT templates through the Eclipse CDT preferences:
 
 ![Objectively code templates in Eclipse CDT](Documentation/eclipse-template-dialog.png)
 
-API documentation
+Examples & projects using Objectively
 ---
-The API documentation is published at [jdolan.github.io/Objectively](https://jdolan.github.io/Objectively/) and can also be generated locally with [Doxygen](https://www.doxygen.org) by running `make html` (requires cloning `doxygen-awesome-css` first — see the comment in `Makefile.am`).
+
+1. The Hello example above can be seen [here](Examples/Hello.c).
+1. The [unit tests](Tests/Objectively) provide examples for using every Objectively class.
+1. [ObjectivelyMVC](https://github.com/jdolan/ObjectivelyMVC) is a cross-platform UI framework for SDL3 built on Objectively.
+1. [Quetoo](https://github.com/jdolan/quetoo) is a free first-person shooter that uses Objectively extensively.
+
+![ObjectivelyMVC](https://github.com/jdolan/ObjectivelyMVC/blob/master/Documentation/demo.gif)

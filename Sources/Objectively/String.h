@@ -454,7 +454,7 @@ struct StringInterface {
   void (*setCharacters)(String *self, const char *chars);
 
   /**
-   * @fn void String::setFormat(String *self, const char *chars)
+   * @fn void String::setFormat(String *self, const char *fmt)
    * @brief Sets the contents of this String to the formatted string.
    * @param self The String.
    * @param fmt The format string.

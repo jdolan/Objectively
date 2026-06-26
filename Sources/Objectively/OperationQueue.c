@@ -74,7 +74,7 @@ static void addOperation(OperationQueue *self, Operation *operation) {
 }
 
 /**
- * @fn void OperationQueue::addOperationWithFunction(OperationQueue *self, OperationFunction function, ident data)
+ * @fn Operation *OperationQueue::addOperationWithFunction(OperationQueue *self, OperationFunction function, ident data)
  * @memberof OperationQueue
  */
 static Operation *addOperationWithFunction(OperationQueue *self, OperationFunction function, ident data) {

@@ -102,7 +102,7 @@ struct OperationQueueInterface {
   void (*addOperation)(OperationQueue *self, Operation *operation);
 
   /**
-   * @fn void OperationQueue::addOperationWithFunction(OperationQueue *self, OperationFunction *function)
+   * @fn Operation * OperationQueue::addOperationWithFunction(OperationQueue *self, OperationFunction *function, ident data)
    * @brief Adds an Operation to this queue.
    * @param self The OperationQueue.
    * @param function The OperationFunction to add.

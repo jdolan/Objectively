@@ -1,38 +1,29 @@
 Objectively {#index}
 ============
+Object oriented framework for C.
 
-[Objectively](https://github.com/jdolan/Objectively) is an ultra-lightweight object oriented framework for [GNU C](https://www.gnu.org/software/gnu-c-manual/). It brings OOP semantics — inheritance, polymorphism, and automatic reference counting — to C without requiring C++ or Objective-C.
+Zlib license.
+
+## About
+
+[Objectively](https://github.com/jdolan/Objectively) is a cross-platform object oriented framework for the C programming language. Objectively provides rich OO semantics to enable object oriented programming directly in C.
 
 ## Features
 
-- **Single-parent inheritance** via _starts-with_ struct composition
+- **Windows, macOS, iOS, Android & Linux** cross-platform support
+- **Single-parent inheritance** with _starts-with_ struct composition
 - **Class and instance methods** with strongly typed interfaces
-- **Automatic reference counting** memory management
+- **Automatic class loading** and lifecycle management
+- **Automatic memory management** with reference counting
 - **Unicode strings** with multibyte character set support
-- **Collections**: Array, Dictionary, Set, Vector, and more
+- **Collections** for Objects and C types: Array, Dictionary, List, Set and more
 - **JSON** parsing, marshaling, and JSONPath queries
 - **Concurrency**: Lock, Condition, Thread, Operation, OperationQueue
-- **Networking**: URLSession and URLSessionTask for HTTP/HTTPS
-- **Resource loading** with pluggable ResourceProvider
-- **Windows, macOS, Linux** — cross-platform
+- **Networking**: URLSession, JSONContext & RESTClient
 
-## Building
+## Class Hierarchy
 
-```sh
-autoreconf -i
-./configure
-make && sudo make install
-```
-
-Include the main header in your source and link with pkg-config:
-
-```c
-#include <Objectively.h>
-```
-
-```sh
-gcc `pkg-config --cflags --libs Objectively` -o myprogram *.c
-```
+Browse the [class hierarchy](hierarchy.html) to navigate the full API.
 
 ## Declaring a Type
 
@@ -119,6 +110,8 @@ Class *_Hello(void) {
 
 ## Using a Type
 
+Using your custom type is trivial. Instantiate it like you would any Objectively type.
+
 ```c
 Hello *hello = $(alloc(Hello), initWithGreeting, "Hello, World!");
 
@@ -129,25 +122,78 @@ release(hello);
 
 See [Hello.h](https://github.com/jdolan/Objectively/blob/main/Examples/Hello.h) and [Hello.c](https://github.com/jdolan/Objectively/blob/main/Examples/Hello.c) for the full source.
 
-## Dispatch Macros
+Initialization
+---
+There is no explicit setup or teardown with Objectively. To instantiate a type, simply call `alloc` from anywhere in your program. The first time a type is instantiated, its Class initializer, `initialize`, is called. Use `initialize` to setup your interface, override methods, or initialize a library your class wraps. When your application terminates, an optional Class destructor, `destroy`, is also called.
 
-Macro | Purpose
------ | -------
-`$(obj, method, args)` | Invoke an instance method
-`$$(Type, method, args)` | Invoke a class (static) method
-`super(Type, obj, method, args)` | Call the superclass method implementation
-`alloc(Type)` | Allocate and zero an instance (refcount 1)
-`retain(obj)` | Increment the reference count
-`release(obj)` | Decrement the reference count; deallocates at 0, returns `NULL`
-
-## Memory Management
-
-Objectively uses reference counting. Newly allocated objects have a reference count of 1. Balance every `retain` with a `release`. Because `release` always returns `NULL`, assign it back when nulling a field:
+Invoking an instance method
+---
+To invoke an instance method, use the `$` macro.
 
 ```c
-self->child = release(self->child);
+    $(condition, waitUntilDate, date);
 ```
 
-## API Reference
+Invoking a Class method
+---
+To invoke a Class method, use the `$$` macro.
 
-Browse the [class hierarchy](hierarchy.html) to navigate the full API.
+```c
+    Dictionary *dict = $$(Dictionary, dictionary);
+```
+
+Overriding a method
+---
+To override a method, overwrite the function pointer from within your Class' `initialize` method.
+
+```c
+    ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+    ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
+```
+
+Calling super
+---
+To invoke a supertype's method implementation, use the `super` macro.
+
+```c
+    super(Object, self, dealloc);
+```
+
+Managing memory
+---
+Objectively uses reference counting to govern object retention. Newly instantiated Objects have a reference count of 1. To retain a strong reference to an Object, call `retain(obj)`. To relinquish it, call `release(obj)`. Once an Object's reference count reaches 0, it is deallocated. Remember to balance every `retain` with a `release`.
+
+Shared instances
+---
+A shared instance or _singleton pattern_ can be achieved through Class methods and _release-on-destroy_.
+
+```c
+static URLSession *_sharedInstance;
+
+/**
+ * @fn URLSession *URLSessionInterface::sharedInstance(void)
+ * @memberof URLSession
+ */
+static *URLSession sharedInstance(void) {
+  static Once once;
+
+  do_once(&once, {
+    _sharedInstance = $(alloc(URLSession), init);
+  });
+
+  return _sharedInstance;
+}
+
+/**
+ * @see Class::destroy(Class *)
+ */
+static void destroy(Class *clazz) {
+  _sharedInstance = release(_sharedInstance);
+}
+
+// ...
+
+URLSession *session = $$(URLSession, sharedInstance);
+```
+
+Remember to wire up the desctructor in your Class' initialization block. See [Once.h](Sources/Objectively/Once.h) for details on `do_once`.
