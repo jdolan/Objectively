@@ -22,6 +22,8 @@
  */
 
 #include <check.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "Objectively.h"
 
@@ -155,6 +157,31 @@ START_TEST(set_replaces) {
 
 } END_TEST
 
+START_TEST(set_resizes) {
+
+  HashTable *table = $(alloc(HashTable), init, HashTableHashStr, HashTableEqualStr);
+
+  ck_assert_int_eq(16, table->capacity);
+
+  enum { N = 100000 };
+  char (*keys)[16] = malloc(N * sizeof(*keys));
+  for (int i = 0; i < N; i++) {
+    snprintf(keys[i], sizeof(*keys), "%d", i);
+    $(table, set, keys[i], keys[i]);
+  }
+
+  ck_assert_int_eq(N, table->count);
+  ck_assert(table->capacity > 16);
+
+  for (int i = 0; i < N; i++) {
+    ck_assert_str_eq(keys[i], $(table, get, keys[i]));
+  }
+
+  free(keys);
+  release(table);
+
+} END_TEST
+
 START_TEST(hash_direct) {
 
   int a = 1, b = 2;
@@ -183,6 +210,7 @@ int main(int argc, char **argv) {
   tcase_add_test(tcase, removeEntry);
   tcase_add_test(tcase, removeAll);
   tcase_add_test(tcase, set_replaces);
+  tcase_add_test(tcase, set_resizes);
   tcase_add_test(tcase, hash_direct);
 
   Suite *suite = suite_create("HashTable");
