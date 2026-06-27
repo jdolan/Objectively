@@ -34,6 +34,8 @@
 #define _Class _HashTable
 
 #define HASHTABLE_DEFAULT_CAPACITY 16
+#define HASHTABLE_GROW_FACTOR 2
+#define HASHTABLE_MAX_LOAD 0.75f
 
 #pragma mark - Built-in hash/equal functions
 
@@ -244,10 +246,37 @@ static void removeAll(HashTable *self) {
 }
 
 /**
+ * @brief Rehashes all entries into a new bucket array of the given capacity.
+ */
+static void resize(HashTable *self, size_t capacity) {
+
+  HashTableEntry **buckets = calloc(capacity, sizeof(HashTableEntry *));
+  assert(buckets);
+
+  for (size_t i = 0; i < self->capacity; i++) {
+    for (HashTableEntry *e = self->buckets[i]; e; ) {
+      HashTableEntry *next = e->next;
+      const size_t bin = self->hash(e->key) % capacity;
+      e->next = buckets[bin];
+      buckets[bin] = e;
+      e = next;
+    }
+  }
+
+  free(self->buckets);
+  self->buckets = buckets;
+  self->capacity = capacity;
+}
+
+/**
  * @fn void HashTable::set(HashTable *self, const ident key, const ident value)
  * @memberof HashTable
  */
 static void set(HashTable *self, const ident key, const ident value) {
+
+  if ((float) self->count / (float) self->capacity >= HASHTABLE_MAX_LOAD) {
+    resize(self, self->capacity * HASHTABLE_GROW_FACTOR);
+  }
 
   const size_t bin = self->hash(key) % self->capacity;
 
