@@ -2394,7 +2394,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "exec \"$SRCROOT/scripts/build-xcframework.sh\"\n";
+			shellScript = "exec \"$SRCROOT/Frameworks/build-xcframework.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

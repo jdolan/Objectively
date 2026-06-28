@@ -26,12 +26,12 @@ jobs:
       uses: actions/cache@v4
       with:
         path: .build-xcframework
-        key: xcframework-curl-${{ env.CURL_VERSION }}-ios-${{ env.IOS_MIN }}-${{ hashFiles('configure.ac', 'Sources/**/Makefile.am', 'Sources/Objectively/**/*.c', 'Sources/Objectively/**/*.h', 'scripts/build-xcframework.sh') }}
+        key: xcframework-curl-${{ env.CURL_VERSION }}-ios-${{ env.IOS_MIN }}-${{ hashFiles('configure.ac', 'Sources/**/Makefile.am', 'Sources/Objectively/**/*.c', 'Sources/Objectively/**/*.h', 'Frameworks/build-xcframework.sh') }}
         restore-keys: |
           xcframework-curl-${{ env.CURL_VERSION }}-ios-${{ env.IOS_MIN }}-
 
     - name: Build xcframeworks
-      run: bash scripts/build-xcframework.sh
+      run: bash Frameworks/build-xcframework.sh
 
     - name: Zip xcframeworks
       run: |
