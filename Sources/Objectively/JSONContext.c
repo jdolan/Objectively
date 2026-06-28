@@ -39,7 +39,21 @@
 
 #define _Class _JSONContext
 
-#pragma mark - Error accumulation
+#pragma mark - Object
+
+/**
+ * @see Object::dealloc(Object *)
+ */
+static void dealloc(Object *self) {
+
+  JSONContext *this = (JSONContext *) self;
+
+  release(this->errors);
+
+  super(Object, self, dealloc);
+}
+
+#pragma mark - Writer
 
 /**
  * @brief Records an error on the context.
@@ -73,8 +87,6 @@ static void addError(JSONContext *self, int code, const char *key, const char *d
   release(message);
   release(error);
 }
-
-#pragma mark - Writer
 
 /**
  * @brief Internal state for JSON text generation.
@@ -563,14 +575,70 @@ static ident readElement(JSONReader *reader) {
   return NULL;
 }
 
-#pragma mark - Internal helpers
+#pragma mark - JSONContext
+
+/**
+ * @fn Data *JSONContext::dataFromObject(JSONContext *self, const ident obj, int options)
+ * @memberof JSONContext
+ */
+static Data *dataFromObject(JSONContext *self, const ident obj, int options) {
+
+  (void) self;
+
+  if (obj) {
+    JSONWriter writer = {
+      .data = $(alloc(Data), init),
+      .options = options
+    };
+
+    writeElement(&writer, obj);
+
+    return (Data *) writer.data;
+  }
+
+  return NULL;
+}
+
+/**
+ * @fn Data *JSONContext::dataFromStruct(JSONContext *self, const JSONProperties *properties, const ident instance)
+ * @memberof JSONContext
+ */
+static Data *dataFromStruct(JSONContext *self, const JSONProperties *properties, const ident instance) {
+
+  Dictionary *dict = $(self, dictionaryFromStruct, properties, instance);
+  Data *data = dataFromObject(self, dict, 0);
+  release(dict);
+  return data;
+}
+
+/**
+ * @fn Data *JSONContext::dataFromStructs(JSONContext *self, const JSONProperties *properties, const ident instances, size_t count)
+ * @memberof JSONContext
+ */
+static Data *dataFromStructs(JSONContext *self, const JSONProperties *properties, const ident instances, size_t count) {
+
+  if (!count) {
+    return NULL;
+  }
+
+  Array *array = $(alloc(Array), init);
+
+  for (size_t i = 0; i < count; i++) {
+    const ident instance = instances + i * properties->size;
+    Dictionary *dict = $(self, dictionaryFromStruct, properties, instance);
+    $(array, addObject, dict);
+    release(dict);
+  }
+
+  Data *data = dataFromObject(self, array, 0);
+  release(array);
+  return data;
+}
 
 /**
  * @brief Serializes a C struct instance to a Dictionary.
  */
-static Dictionary *dictionaryFromStruct(JSONContext *self,
-                                           const JSONProperties *properties,
-                                           const ident instance) {
+static Dictionary *dictionaryFromStruct(JSONContext *self, const JSONProperties *properties, const ident instance) {
 
   if (!properties || !instance) {
     return NULL;
@@ -598,12 +666,42 @@ static Dictionary *dictionaryFromStruct(JSONContext *self,
 }
 
 /**
+ * @see Object::init(Object *)
+ */
+static JSONContext *init(JSONContext *self) {
+  return (JSONContext *) super(Object, self, init);
+}
+
+/**
+ * @fn ident JSONContext::objectFromData(JSONContext *self, const Data *data, int options)
+ * @memberof JSONContext
+ */
+static ident objectFromData(JSONContext *self, const Data *data, int options) {
+
+  if (data && data->length) {
+    JSONReader reader = {
+      .data = data,
+      .options = options
+    };
+
+    ident obj = readElement(&reader);
+
+    if (reader.error) {
+      addError(self, 1, NULL, "JSON parse error");
+      release(obj);
+      return NULL;
+    }
+
+    return obj;
+  }
+
+  return NULL;
+}
+
+/**
  * @brief Deserializes a Dictionary into a C struct.
  */
-static bool structFromDictionary(JSONContext *self,
-                                    const JSONProperties *properties,
-                                    const Dictionary *dictionary,
-                                    ident instance) {
+static bool structFromDictionary(JSONContext *self, const JSONProperties *properties, const Dictionary *dictionary, ident instance) {
 
   if (!properties || !dictionary || !instance) {
     return false;
@@ -636,11 +734,7 @@ static bool structFromDictionary(JSONContext *self,
 /**
  * @brief Deserializes a JSON Array into an array of C structs.
  */
-static size_t structsFromArray(JSONContext *self,
-                                  const JSONProperties *properties,
-                                  const Array *array,
-                                  ident instances,
-                                  size_t count) {
+static size_t structsFromArray(JSONContext *self, const JSONProperties *properties, const Array *array, ident instances, size_t count) {
 
   if (!properties || !array || !instances || !count) {
     return 0;
@@ -650,113 +744,19 @@ static size_t structsFromArray(JSONContext *self,
 
   for (size_t i = 0; i < n; i++) {
     const Dictionary *dictionary = cast(Dictionary, $(array, objectAtIndex, i));
-    structFromDictionary(self, properties, dictionary, instances + i * properties->size);
+    $(self, structFromDictionary, properties, dictionary, instances + i * properties->size);
   }
 
   return n;
-}
-
-#pragma mark - JSONContext instance methods
-
-/**
- * @fn Data *JSONContext::dataFromObject(JSONContext *self, const ident obj, int options)
- * @memberof JSONContext
- */
-static Data *dataFromObject(JSONContext *self, const ident obj, int options) {
-
-  (void) self;
-
-  if (obj) {
-    JSONWriter writer = {
-      .data = $(alloc(Data), init),
-      .options = options
-    };
-
-    writeElement(&writer, obj);
-
-    return (Data *) writer.data;
-  }
-
-  return NULL;
-}
-
-/**
- * @fn Data *JSONContext::dataFromStruct(JSONContext *self, const JSONProperties *properties, const ident instance)
- * @memberof JSONContext
- */
-static Data *dataFromStruct(JSONContext *self,
-                               const JSONProperties *properties,
-                               const ident instance) {
-
-  Dictionary *dict = dictionaryFromStruct(self, properties, instance);
-  Data *data = dataFromObject(self, dict, 0);
-  release(dict);
-  return data;
-}
-
-/**
- * @fn Data *JSONContext::dataFromStructs(JSONContext *self, const JSONProperties *properties, const ident instances, size_t count)
- * @memberof JSONContext
- */
-static Data *dataFromStructs(JSONContext *self,
-                                const JSONProperties *properties,
-                                const ident instances,
-                                size_t count) {
-
-  if (!count) {
-    return NULL;
-  }
-
-  Array *array = $(alloc(Array), init);
-
-  for (size_t i = 0; i < count; i++) {
-    const ident instance = instances + i * properties->size;
-    Dictionary *dict = dictionaryFromStruct(self, properties, instance);
-    $(array, addObject, dict);
-    release(dict);
-  }
-
-  Data *data = dataFromObject(self, array, 0);
-  release(array);
-  return data;
-}
-
-/**
- * @fn ident JSONContext::objectFromData(JSONContext *self, const Data *data, int options)
- * @memberof JSONContext
- */
-static ident objectFromData(JSONContext *self, const Data *data, int options) {
-
-  if (data && data->length) {
-    JSONReader reader = {
-      .data = data,
-      .options = options
-    };
-
-    ident obj = readElement(&reader);
-
-    if (reader.error) {
-      addError(self, 1, NULL, "JSON parse error");
-      release(obj);
-      return NULL;
-    }
-
-    return obj;
-  }
-
-  return NULL;
 }
 
 /**
  * @fn bool JSONContext::structFromData(JSONContext *self, const JSONProperties *properties, const Data *data, ident instance)
  * @memberof JSONContext
  */
-static bool structFromData(JSONContext *self,
-                              const JSONProperties *properties,
-                              const Data *data,
-                              ident instance) {
+static bool structFromData(JSONContext *self, const JSONProperties *properties, const Data *data, ident instance) {
 
-  ident obj = objectFromData(self, data, 0);
+  ident obj = $(self, objectFromData, data, 0);
   if (!obj || !$((Object *) obj, isKindOfClass, _Dictionary())) {
     release(obj);
     return false;
@@ -772,11 +772,7 @@ static bool structFromData(JSONContext *self,
  * @fn size_t JSONContext::structsFromData(JSONContext *self, const JSONProperties *properties, const Data *data, ident instances, size_t count)
  * @memberof JSONContext
  */
-static size_t structsFromData(JSONContext *self,
-                                 const JSONProperties *properties,
-                                 const Data *data,
-                                 ident instances,
-                                 size_t count) {
+static size_t structsFromData(JSONContext *self, const JSONProperties *properties, const Data *data, ident instances, size_t count) {
 
   ident obj = objectFromData(self, data, 0);
   if (!obj || !$((Object *) obj, isKindOfClass, _Array())) {
@@ -788,28 +784,6 @@ static size_t structsFromData(JSONContext *self,
 
   release(obj);
   return n;
-}
-
-#pragma mark - Object lifecycle
-
-/**
- * @see Object::dealloc(Object *)
- */
-static void dealloc(Object *self) {
-
-  JSONContext *this = (JSONContext *) self;
-
-  release(this->errors);
-
-  super(Object, self, dealloc);
-}
-
-/**
- * @see Object::init(Object *)
- */
-static JSONContext *init(JSONContext *self) {
-
-  return (JSONContext *) super(Object, self, init);
 }
 
 #pragma mark - Class lifecycle
@@ -828,19 +802,16 @@ static void initialize(Class *clazz) {
 
   ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-  JSONContextInterface *iface = (JSONContextInterface *) clazz->interface;
-
-  iface->init = init;
-
-  iface->objectFromData = objectFromData;
-  iface->dataFromObject = dataFromObject;
-  iface->dataFromStruct = dataFromStruct;
-  iface->dataFromStructs = dataFromStructs;
-  iface->structFromData = structFromData;
-  iface->structsFromData = structsFromData;
-  iface->dictionaryFromStruct = dictionaryFromStruct;
-  iface->structFromDictionary = structFromDictionary;
-  iface->structsFromArray = structsFromArray;
+  ((JSONContextInterface *) clazz->interface)->dataFromObject = dataFromObject;
+  ((JSONContextInterface *) clazz->interface)->dataFromStruct = dataFromStruct;
+  ((JSONContextInterface *) clazz->interface)->dataFromStructs = dataFromStructs;
+  ((JSONContextInterface *) clazz->interface)->dictionaryFromStruct = dictionaryFromStruct;
+  ((JSONContextInterface *) clazz->interface)->init = init;
+  ((JSONContextInterface *) clazz->interface)->objectFromData = objectFromData;
+  ((JSONContextInterface *) clazz->interface)->structFromData = structFromData;
+  ((JSONContextInterface *) clazz->interface)->structsFromData = structsFromData;
+  ((JSONContextInterface *) clazz->interface)->structFromDictionary = structFromDictionary;
+  ((JSONContextInterface *) clazz->interface)->structsFromArray = structsFromArray;
 }
 
 /**

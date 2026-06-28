@@ -119,9 +119,7 @@ struct JSONContextInterface {
    * @return The resulting JSON Data.
    * @memberof JSONContext
    */
-  Data *(*dataFromStruct)(JSONContext *self,
-                             const JSONProperties *properties,
-                             const ident instance);
+  Data *(*dataFromStruct)(JSONContext *self, const JSONProperties *properties, const ident instance);
 
   /**
    * @fn Data *JSONContext::dataFromStructs(JSONContext *self, const JSONProperties *properties, const ident instances, size_t count)
@@ -133,10 +131,7 @@ struct JSONContextInterface {
    * @return The resulting JSON Data (a top-level JSON array), or `NULL` if `count` is zero.
    * @memberof JSONContext
    */
-  Data *(*dataFromStructs)(JSONContext *self,
-                              const JSONProperties *properties,
-                              const ident instances,
-                              size_t count);
+  Data *(*dataFromStructs)(JSONContext *self, const JSONProperties *properties, const ident instances, size_t count);
 
   /**
    * @fn Dictionary *JSONContext::dictionaryFromStruct(JSONContext *self, const JSONProperties *properties, const ident instance)
@@ -147,9 +142,7 @@ struct JSONContextInterface {
    * @return A new Dictionary, or `NULL` on error.
    * @memberof JSONContext
    */
-  Dictionary *(*dictionaryFromStruct)(JSONContext *self,
-                                         const JSONProperties *properties,
-                                         const ident instance);
+  Dictionary *(*dictionaryFromStruct)(JSONContext *self, const JSONProperties *properties, const ident instance);
 
   /**
    * @fn JSONContext *JSONContext::init(JSONContext *self)
@@ -181,10 +174,7 @@ struct JSONContextInterface {
    * @return `true` if parsing succeeded and all recognized fields were bound without type errors.
    * @memberof JSONContext
    */
-  bool (*structFromData)(JSONContext *self,
-                            const JSONProperties *properties,
-                            const Data *data,
-                            ident instance);
+  bool (*structFromData)(JSONContext *self, const JSONProperties *properties, const Data *data, ident instance);
 
   /**
    * @fn bool JSONContext::structFromDictionary(JSONContext *self, const JSONProperties *properties, const Dictionary *dictionary, ident instance)
@@ -196,10 +186,7 @@ struct JSONContextInterface {
    * @return `true` if all recognized fields were bound without type errors.
    * @memberof JSONContext
    */
-  bool (*structFromDictionary)(JSONContext *self,
-                                  const JSONProperties *properties,
-                                  const Dictionary *dictionary,
-                                  ident instance);
+  bool (*structFromDictionary)(JSONContext *self, const JSONProperties *properties, const Dictionary *dictionary, ident instance);
 
   /**
    * @fn size_t JSONContext::structsFromArray(JSONContext *self, const JSONProperties *properties, const Array *array, ident instances, size_t count)
@@ -212,11 +199,7 @@ struct JSONContextInterface {
    * @return The number of structs actually written.
    * @memberof JSONContext
    */
-  size_t (*structsFromArray)(JSONContext *self,
-                                const JSONProperties *properties,
-                                const Array *array,
-                                ident instances,
-                                size_t count);
+  size_t (*structsFromArray)(JSONContext *self, const JSONProperties *properties, const Array *array, ident instances, size_t count);
 
   /**
    * @fn size_t JSONContext::structsFromData(JSONContext *self, const JSONProperties *properties, const Data *data, ident instances, size_t count)
@@ -229,11 +212,7 @@ struct JSONContextInterface {
    * @return The number of structs actually written.
    * @memberof JSONContext
    */
-  size_t (*structsFromData)(JSONContext *self,
-                               const JSONProperties *properties,
-                               const Data *data,
-                               ident instances,
-                               size_t count);
+  size_t (*structsFromData)(JSONContext *self, const JSONProperties *properties, const Data *data, ident instances, size_t count);
 };
 
 /**
