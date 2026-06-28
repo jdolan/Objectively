@@ -1071,6 +1071,9 @@
 		CEB20D541D771B6F000EF6F3 /* IndexSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = IndexSet.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CEB20D561D771B7A000EF6F3 /* IndexSet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = IndexSet.c; sourceTree = "<group>"; };
 		CEB20D581D77492A000EF6F3 /* IndexSet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = IndexSet.c; sourceTree = "<group>"; };
+		CECF83C92FF166E700CB0CCA /* build-xcframework.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "build-xcframework.sh"; sourceTree = "<group>"; };
+		OB02000000000000000000A1 /* Objectively.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Objectively.xcframework; path = Frameworks/Objectively.xcframework; sourceTree = "<group>"; };
+		OB02100000000000000000A1 /* libcurl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libcurl.xcframework; path = Frameworks/libcurl.xcframework; sourceTree = "<group>"; };
 		CED1578E1C4B1A2100FBA2DE /* HelloCpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloCpp.cpp; sourceTree = "<group>"; };
 		CEEB01B51F40DB3A004C2EDD /* Objectively-Boole */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Boole"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB01C21F40DB3F004C2EDD /* Objectively-Data */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Data"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1358,6 +1361,7 @@
 			children = (
 				CE76D9021C481E390096DD31 /* Documentation */,
 				CE76D9081C481E390096DD31 /* Examples */,
+				CECF83CC2FF166E700CB0CCA /* Frameworks */,
 				CE76D9691C48218E0096DD31 /* Products */,
 				CE76D7FD1C481C4E0096DD31 /* Sources */,
 				CEA3B07B1CBBD3420082EE04 /* Templates */,
@@ -1633,6 +1637,16 @@
 				CEA3B0841CBBD3420082EE04 /* TemplateInfo.plist */,
 			);
 			path = "Objectively C Type.xctemplate";
+			sourceTree = "<group>";
+		};
+		CECF83CC2FF166E700CB0CCA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				OB02000000000000000000A1 /* Objectively.xcframework */,
+				OB02100000000000000000A1 /* libcurl.xcframework */,
+				CECF83C92FF166E700CB0CCA /* build-xcframework.sh */,
+			);
+			path = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
