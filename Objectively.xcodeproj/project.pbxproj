@@ -1072,8 +1072,8 @@
 		CEB20D561D771B7A000EF6F3 /* IndexSet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = IndexSet.c; sourceTree = "<group>"; };
 		CEB20D581D77492A000EF6F3 /* IndexSet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = IndexSet.c; sourceTree = "<group>"; };
 		CECF83C92FF166E700CB0CCA /* build-xcframework.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "build-xcframework.sh"; sourceTree = "<group>"; };
-		OB02000000000000000000A1 /* Objectively.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Objectively.xcframework; path = Frameworks/Objectively.xcframework; sourceTree = "<group>"; };
-		OB02100000000000000000A1 /* libcurl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libcurl.xcframework; path = Frameworks/libcurl.xcframework; sourceTree = "<group>"; };
+		OB02000000000000000000A1 /* Objectively.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Objectively.xcframework; path = Objectively.xcframework; sourceTree = "<group>"; };
+		OB02100000000000000000A1 /* libcurl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libcurl.xcframework; path = libcurl.xcframework; sourceTree = "<group>"; };
 		CED1578E1C4B1A2100FBA2DE /* HelloCpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloCpp.cpp; sourceTree = "<group>"; };
 		CEEB01B51F40DB3A004C2EDD /* Objectively-Boole */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Boole"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB01C21F40DB3F004C2EDD /* Objectively-Data */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Data"; sourceTree = BUILT_PRODUCTS_DIR; };
