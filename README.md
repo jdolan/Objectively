@@ -2,19 +2,16 @@
 [![Zlib License](https://img.shields.io/badge/license-Zlib-brightgreen.svg)](https://opensource.org/licenses/Zlib)
 ![Stable](https://img.shields.io/badge/maturity-stable-green.svg)
 
-Objectively
-===
+# Objectively
 Object oriented framework for C. 
 
 Zlib [license](./COPYING).
 
-About
----
+## About
 Objectively is a cross-platform object oriented framework for the C programming language. 
 Objectively provides rich OO semantics to enable object oriented programming directly in C.
 
-Features
----
+## Features
  * **Windows, macOS, iOS, Android & Linux** cross-platform support
  * **Single-parent inheritance** with _starts-with_ struct composition
  * **Class and instance methods** with strongly typed interfaces
@@ -29,8 +26,9 @@ Features
 
 Browse the [API Documentation](https://jdolan.github.io/Objectively/) to explore the library.
 
-Adding Objectively to your project
----
+## Getting Started
+
+### Installing
 
 1. Do the Autotools dance.
 
@@ -60,8 +58,7 @@ release(obj);
 gcc `pkg-config --cflags --libs Objectively` -o myprogram *.c
 ```
 
-Declaring a custom type
----
+### Declaring a custom type
 
 Types in Objectively are comprised of 3 components:
 
@@ -145,8 +142,7 @@ struct HelloInterface {
 OBJECTIVELY_EXPORT Class *_Hello(void);
 ```
 
-Implementing a type
----
+### Implementing a type
 
 To implement a type, implement its instance and Class methods and Class initializer:
 
@@ -222,8 +218,7 @@ Class *_Hello(void) {
 #undef _Class
 ```
 
-Using a type
----
+### Using a type
 Using your custom type is trivial. Instantiate it like you would any Objectively type.
 
 ```c
@@ -236,28 +231,24 @@ release(hello);
 
 See [Hello.h](Examples/Hello.h) and [Hello.c](Examples/Hello.c) for the full source to this example.
 
-Initialization
----
+### Initialization
 There is no explicit setup or teardown with Objectively. To instantiate a type, simply call `alloc` from anywhere in your program. The first time a type is instantiated, its Class initializer, `initialize`, is called. Use `initialize` to setup your interface, override methods, or initialize a library your class wraps. When your application terminates, an optional Class destructor, `destroy`, is also called.
 
-Invoking an instance method
----
+### Invoking an instance method
 To invoke an instance method, use the `$` macro.
 
 ```c
     $(condition, waitUntilDate, date);
 ```
 
-Invoking a Class method
----
+### Invoking a Class method
 To invoke a Class method, use the `$$` macro.
 
 ```c
     Dictionary *dict = $$(Dictionary, dictionary);
 ```
 
-Overriding a method
----
+### Overriding a method
 To override a method, overwrite the function pointer from within your Class' `initialize` method.
 
 ```c
@@ -265,20 +256,17 @@ To override a method, overwrite the function pointer from within your Class' `in
     ((ObjectInterface *) clazz->interface)->isEqual = isEqual;
 ```
 
-Calling super
----
+### Calling super
 To invoke a supertype's method implementation, use the `super` macro.
 
 ```c
     super(Object, self, dealloc);
 ```
 
-Managing memory
----
+### Managing memory
 Objectively uses reference counting to govern object retention. Newly instantiated Objects have a reference count of 1. To retain a strong reference to an Object, call `retain(obj)`. To relinquish it, call `release(obj)`. Once an Object's reference count reaches 0, it is deallocated. Remember to balance every `retain` with a `release`.
 
-Shared instances
----
+### Shared instances
 A shared instance or _singleton pattern_ can be achieved through Class methods and _release-on-destroy_.
 
 ```c
@@ -312,8 +300,7 @@ URLSession *session = $$(URLSession, sharedInstance);
 
 Remember to wire up the desctructor in your Class' initialization block. See [Once.h](Sources/Objectively/Once.h) for details on `do_once`.
 
-Code Templates
----
+### Code Templates
 Objectively provides code templates for Xcode and Eclipse CDT that greatly cut down on the boilerplate required to declare and implement a type. These are _highly recommended_, as they will save you time and reduce errors in type declaration.
 
 #### Xcode
@@ -326,8 +313,7 @@ Install the Eclipse CDT templates through the Eclipse CDT preferences:
 
 ![Objectively code templates in Eclipse CDT](Documentation/eclipse-template-dialog.png)
 
-Examples & projects using Objectively
----
+## Examples & projects using Objectively
 
 1. The Hello example above can be seen [here](Examples/Hello.c).
 1. The [unit tests](Tests/Objectively) provide examples for using every Objectively class.
