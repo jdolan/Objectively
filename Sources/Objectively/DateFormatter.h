@@ -32,6 +32,11 @@
  */
 
 /**
+ * @defgroup Localization Localization
+ * @brief Locale-aware formatting and parsing of dates and numbers.
+ */
+
+/**
  * @brief ISO8601 date format.
  */
 #define DATEFORMAT_ISO8601 "%Y-%m-%dT%H:%M:%S%z"

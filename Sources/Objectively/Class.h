@@ -209,9 +209,7 @@ OBJECTIVELY_EXPORT size_t _pageSize;
     _obj->interface->method(_obj, ## __VA_ARGS__); \
   })
 
-/**
- * @brief Invoke a Class method.
- */
+/// @brief Invoke a Class method.
 #define $$(type, method, ...) \
   ({ \
     interfaceof(type, _##type())->method(__VA_ARGS__); \
