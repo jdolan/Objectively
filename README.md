@@ -32,8 +32,7 @@ Read the [Getting Started](./GUIDE.md) guide to install Objectively and write yo
 
 ## Examples & projects using Objectively
 
-1. The Hello example above can be seen [here](Examples/Hello.c).
-1. The [unit tests](Tests/Objectively) provide examples for using every Objectively class.
+1. [Objectively test suite](Tests/Objectively) provides examples for using every Objectively C type.
 1. [ObjectivelyGPU](https://github.com/jdolan/ObjectivelyGPU) is a framework for modern graphics built on SDL3 and Objectively.
 1. [ObjectivelyMVC](https://github.com/jdolan/ObjectivelyMVC) is a framework for modern game interfaces built on SDL3, Objectively and ObjectivelyGPU.
 1. [Quetoo](https://github.com/jdolan/quetoo) is a free first-person shooter that uses Objectively, ObjectivelyGPU and ObjectivelyMVC extensively.
