@@ -2,7 +2,7 @@ Objectively
 ============
 Object oriented framework for C.
 
-Zlib license.
+[View on GitHub](https://github.com/jdolan/Objectively) — Zlib license.
 
 ## About
 
