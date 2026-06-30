@@ -919,6 +919,7 @@
 		CE129E5E23B7E4B4007D0433 /* Vector.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Vector.c; sourceTree = "<group>"; };
 		CE129E6123B823F9007D0433 /* Vector.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Vector.c; sourceTree = "<group>"; };
 		CE129E6E23B8242B007D0433 /* Objectively-Vector */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Vector"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE16433F2FF45A6800863996 /* guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = guide.md; sourceTree = "<group>"; };
 		CE3BCDCF1DB6FA62002E6C6D /* Resource.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Resource.c; sourceTree = "<group>"; };
 		CE3BCDD01DB6FA62002E6C6D /* Resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Resource.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CE423A501F544CFB002767E7 /* Hello.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hello.h; sourceTree = "<group>"; };
@@ -1481,6 +1482,7 @@
 		CE76D9021C481E390096DD31 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
+				CE16433F2FF45A6800863996 /* guide.md */,
 				CE76D9061C481E390096DD31 /* index.md */,
 				CE76D9071C481E390096DD31 /* layout.xml */,
 			);

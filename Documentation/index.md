@@ -10,7 +10,7 @@ Object oriented framework for C.
 
 ## Features
 
-- **Windows, macOS, iOS, Android & Linux** cross-platform support
+- **Cross-platform** works on Android, iOS, macOS, Linux and Windows
 - **Single-parent inheritance** with _starts-with_ struct composition
 - **Class and instance methods** with strongly typed interfaces
 - **Automatic class loading** and lifecycle management
@@ -27,4 +27,4 @@ Browse the [class hierarchy](hierarchy.html) to navigate the full API.
 
 ## Getting Started
 
-See the @subpage getting-started guide to declare, implement, and use your own types.
+See the @subpage guide guide to declare, implement, and use your own types.

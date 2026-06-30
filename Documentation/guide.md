@@ -1,4 +1,4 @@
-Getting Started {#getting-started}
+Objectively Users Guide {#guide}
 ===============
 
 A guide to declaring, implementing, and using your own types with Objectively.
