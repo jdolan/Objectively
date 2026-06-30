@@ -23,7 +23,7 @@ Object oriented framework for C.
 
 ## User Guide
 
-Consult the @subpage guide [User Guide] to declare, implement, and use your own types.
+Consult the @subpage guide to declare, implement, and use your own types.
 
 ## Class Hierarchy
 
