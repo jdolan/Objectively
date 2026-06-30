@@ -8,8 +8,7 @@ Object oriented framework for C.
 Zlib [license](./COPYING).
 
 ## About
-Objectively is a cross-platform object oriented framework for the C programming language. 
-Objectively provides rich OO semantics to enable object oriented programming directly in C.
+Objectively is a cross-platform framework that provides rich object-oriented semantics to enable OOP in C.
 
 ## Features
  * **Cross-platform** works on Android, iOS, macOS, Linux and Windows
