@@ -12,7 +12,7 @@ Objectively is a cross-platform object oriented framework for the C programming 
 Objectively provides rich OO semantics to enable object oriented programming directly in C.
 
 ## Features
- * **Windows, macOS, iOS, Android & Linux** cross-platform support
+ * **Cross-platform** works on Android, iOS, macOS, Linux and Windows
  * **Single-parent inheritance** with _starts-with_ struct composition
  * **Class and instance methods** with strongly typed interfaces
  * **Automatic class loading** and lifecycle management
