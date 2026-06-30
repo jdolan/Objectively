@@ -10,7 +10,7 @@ Object oriented framework for C.
 
 ## Features
 
-- **Cross-platform** works on Android, iOS, macOS, Linux and Windows
+- **Cross-platform** support for Android, iOS, macOS, Linux and Windows
 - **Single-parent inheritance** with _starts-with_ struct composition
 - **Class and instance methods** with strongly typed interfaces
 - **Automatic class loading** and lifecycle management
@@ -21,10 +21,10 @@ Object oriented framework for C.
 - **Concurrency**: Lock, Condition, Thread, Operation, OperationQueue
 - **Networking**: URLSession, JSONContext & RESTClient
 
-## Class Hierarchy
-
-Browse the [class hierarchy](hierarchy.html) to navigate the full API.
-
 ## User Guide
 
-See the @subpage guide guide to declare, implement, and use your own types.
+Consult the @subpage guide [User Guide] to declare, implement, and use your own types.
+
+## Class Hierarchy
+
+Browse the [Class Hierarchy](hierarchy.html) to navigate the full API.
