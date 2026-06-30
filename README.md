@@ -37,9 +37,8 @@ Read the [Getting Started](./GUIDE.md) guide to install Objectively and write yo
 1. [ObjectivelyMVC](https://github.com/jdolan/ObjectivelyMVC) is a framework for modern game interfaces built on SDL3, Objectively and ObjectivelyGPU.
 1. [Quetoo](https://github.com/jdolan/quetoo) is a free first-person shooter that uses Objectively, ObjectivelyGPU and ObjectivelyMVC extensively.
 
-![ObjectivelyMVC](https://raw.githubusercontent.com/jdolan/ObjectivelyMVC/master/Documentation/demo.gif)
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/jdolan/ObjectivelyGPU/main/Documentation/Hello.gif" width="48%" alt="ObjectivelyGPU Hello — a spinning, multisampled 3D cube">
   <img src="https://raw.githubusercontent.com/jdolan/ObjectivelyGPU/main/Documentation/HelloCompute.gif" width="48%" alt="ObjectivelyGPU HelloCompute — particles animated by a compute shader">
+  <img src="https://github.com/jdolan/ObjectivelyMVC/raw/jdolan-sdl-gpu-renderer/Documentation/demo.gif" width="96%" alt="ObjectivelyMVC Hello - a simple in-game menu">
 </p>
