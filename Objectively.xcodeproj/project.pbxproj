@@ -57,17 +57,6 @@
 			name = "Objectively-Examples";
 			productName = "Objectively-Tests";
 		};
-		OB01000000000000000000A1 /* Objectively-xcframework */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = OB01400000000000000000A1 /* Build configuration list for PBXAggregateTarget "Objectively-xcframework" */;
-			buildPhases = (
-				OB01100000000000000000A1 /* Run Script */,
-			);
-			dependencies = (
-			);
-			name = "Objectively-xcframework";
-			productName = "Objectively-xcframework";
-		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -1071,9 +1060,6 @@
 		CEB20D541D771B6F000EF6F3 /* IndexSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = IndexSet.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CEB20D561D771B7A000EF6F3 /* IndexSet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = IndexSet.c; sourceTree = "<group>"; };
 		CEB20D581D77492A000EF6F3 /* IndexSet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = IndexSet.c; sourceTree = "<group>"; };
-		CECF83C92FF166E700CB0CCA /* build-xcframework.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "build-xcframework.sh"; sourceTree = "<group>"; };
-		OB02000000000000000000A1 /* Objectively.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Objectively.xcframework; path = Objectively.xcframework; sourceTree = "<group>"; };
-		OB02100000000000000000A1 /* libcurl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libcurl.xcframework; path = libcurl.xcframework; sourceTree = "<group>"; };
 		CED1578E1C4B1A2100FBA2DE /* HelloCpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloCpp.cpp; sourceTree = "<group>"; };
 		CEEB01B51F40DB3A004C2EDD /* Objectively-Boole */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Boole"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEB01C21F40DB3F004C2EDD /* Objectively-Data */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Data"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1103,6 +1089,7 @@
 		CEF601CE2FEAB202005C680C /* PointerArray.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PointerArray.c; sourceTree = "<group>"; };
 		CEF601DE2FEAB228005C680C /* Objectively-PointerArray */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-PointerArray"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF601DF2FEAB24E005C680C /* PointerArray.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PointerArray.c; sourceTree = "<group>"; };
+		OB02100000000000000000A1 /* libcurl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libcurl.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1642,9 +1629,7 @@
 		CECF83CC2FF166E700CB0CCA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				OB02000000000000000000A1 /* Objectively.xcframework */,
 				OB02100000000000000000A1 /* libcurl.xcframework */,
-				CECF83C92FF166E700CB0CCA /* build-xcframework.sh */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -2291,9 +2276,6 @@
 					CE84A89D1DA15B80008BC685 = {
 						CreatedOnToolsVersion = 7.3.1;
 					};
-					OB01000000000000000000A1 = {
-						CreatedOnToolsVersion = 16.0;
-					};
 				};
 			};
 			buildConfigurationList = CE76D7F61C481B530096DD31 /* Build configuration list for PBXProject "Objectively" */;
@@ -2310,7 +2292,6 @@
 			projectRoot = "";
 			targets = (
 				CE76D9671C48218E0096DD31 /* Objectively */,
-				OB01000000000000000000A1 /* Objectively-xcframework */,
 				CE84A89D1DA15B80008BC685 /* Objectively-Array */,
 				CEEB01A91F40DB3A004C2EDD /* Objectively-Boole */,
 				CEEB01B61F40DB3F004C2EDD /* Objectively-Data */,
@@ -2391,25 +2372,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export PATH=\"/opt/homebrew/bin:/usr/local/bin:${PATH}\"\nif [ ! -f \"$SRCROOT/Sources/Objectively/Config.h\" ]; then\n  cd \"$SRCROOT\" && autoreconf -i && ./configure\nfi\n";
-		};
-		OB01100000000000000000A1 /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "exec \"$SRCROOT/Frameworks/build-xcframework.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -3210,6 +3172,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Objectively;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				"LIBRARY_SEARCH_PATHS[sdk=macosx*]" = "$(HOMEBREW_PREFIX)/lib";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				"OTHER_LDFLAGS[sdk=iphoneos*]" = (
@@ -3228,6 +3191,7 @@
 				PRODUCT_NAME = Objectively;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -3238,6 +3202,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Objectively;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				"LIBRARY_SEARCH_PATHS[sdk=macosx*]" = "$(HOMEBREW_PREFIX)/lib";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				"OTHER_LDFLAGS[sdk=iphoneos*]" = (
@@ -3256,6 +3221,7 @@
 				PRODUCT_NAME = Objectively;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -3739,20 +3705,6 @@
 			};
 			name = Release;
 		};
-		OB01200000000000000000A1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "Objectively-xcframework";
-			};
-			name = Debug;
-		};
-		OB01300000000000000000A2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "Objectively-xcframework";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -4058,15 +4010,6 @@
 			buildConfigurations = (
 				CEF601DC2FEAB228005C680C /* Debug */,
 				CEF601DD2FEAB228005C680C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		OB01400000000000000000A1 /* Build configuration list for PBXAggregateTarget "Objectively-xcframework" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OB01200000000000000000A1 /* Debug */,
-				OB01300000000000000000A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

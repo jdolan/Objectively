@@ -67,4 +67,5 @@ Tests/Objectively/URLSession
 Tests/Objectively/Vector
 /Objectively.vs15/.vs
 .build-xcframework/
-Frameworks/
+Frameworks/*
+!Frameworks/*.sh
