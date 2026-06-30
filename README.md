@@ -1,6 +1,6 @@
 [![Build](https://github.com/jdolan/Objectively/actions/workflows/build.yml/badge.svg)](https://github.com/jdolan/Objectively/actions/workflows/build.yml)
-[![Zlib License](https://img.shields.io/badge/license-Zlib-brightgreen.svg)](https://opensource.org/licenses/Zlib)
-![Stable](https://img.shields.io/badge/maturity-stable-brightgreen.svg)
+[![Zlib License](https://img.shields.io/badge/license-Zlib-limegreen.svg)](https://opensource.org/licenses/Zlib)
+![Stable](https://img.shields.io/badge/maturity-stable-limegreen.svg)
 
 # Objectively
 Object oriented framework for C. 
