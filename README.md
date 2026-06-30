@@ -21,13 +21,13 @@ Objectively is a cross-platform framework that provides rich object-oriented sem
  * **Concurrency**: Lock, Condition, Thread, Operation, OperationQueue
  * **Networking**: URLSession, JSONContext & RESTClient
 
+## User Guide
+
+Consult the [User Guide](./GUIDE.md) to install Objectively and write your first Class.
+
 ## API Documentation
 
 Browse the [API Documentation](https://jdolan.github.io/Objectively/) to explore the library.
-
-## Getting Started
-
-Read the [Getting Started](./GUIDE.md) guide to install Objectively and write your first Class.
 
 ## Examples & projects using Objectively
 
