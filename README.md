@@ -11,7 +11,7 @@ Zlib [license](./COPYING).
 Objectively is a cross-platform framework that provides rich object-oriented semantics to enable OOP in C.
 
 ## Features
- * **Cross-platform** works on Android, iOS, macOS, Linux and Windows
+ * **Cross-platform** support for Android, iOS, macOS, Linux and Windows
  * **Single-parent inheritance** with _starts-with_ struct composition
  * **Class and instance methods** with strongly typed interfaces
  * **Automatic class loading** and lifecycle management
