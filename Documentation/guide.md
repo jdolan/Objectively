@@ -177,3 +177,7 @@ URLSession *session = $$(URLSession, sharedInstance);
 ```
 
 Remember to wire up the desctructor in your Class' initialization block. See [Once.h](https://github.com/jdolan/Objectively/blob/main/Sources/Objectively/Once.h) for details on `do_once`.
+
+## Code Templates
+
+Objectively ships code templates that cut down the boilerplate of declaring and implementing a type — highly recommended. Install the [Xcode template](https://github.com/jdolan/Objectively/tree/main/Templates/Xcode) by building the Xcode project, or import the [Eclipse CDT templates](https://github.com/jdolan/Objectively/tree/main/Templates/Eclipse) through the Eclipse CDT preferences.

@@ -21,6 +21,26 @@ Object oriented framework for C.
 - **Concurrency**: Lock, Condition, Thread, Operation, OperationQueue
 - **Networking**: URLSession, JSONContext & RESTClient
 
+## tl;dr
+
+Objectively brings classes, single-parent inheritance, strongly typed methods and reference counting to plain C — no C++, and no code generation.
+
+Declare a type once, then instantiate and use it like any other:
+
+```c
+Hello *hello = $(alloc(Hello), initWithGreeting, "Hello, World!");
+
+$(hello, sayHello);
+
+hello = release(hello);
+```
+
+`alloc` and `release` manage the lifecycle, `$` dispatches through the type's interface, and `super`, method overrides and shared instances all behave exactly as you'd expect from a "real" object oriented language.
+
+## Getting Started
+
+Consult the @subpage install for dependencies, building, and linking.
+
 ## User Guide
 
 Consult the @subpage guide to declare, implement, and use your own types.
