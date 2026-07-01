@@ -35,7 +35,7 @@ $(hello, sayHello);
 hello = release(hello);
 ```
 
-`alloc` and `release` manage the lifecycle, `$` dispatches through the type's interface, and `super`, method overrides and shared instances all behave exactly as you'd expect from a "real" object oriented language.
+`alloc` and `release` manage the lifecycle, `$` dispatches through the type's interface, and `super`, method overrides and shared instances all behave exactly as you'd expect from an object oriented language.
 
 ## Getting Started
 
