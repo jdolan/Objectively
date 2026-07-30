@@ -304,6 +304,27 @@ static void removeAt(Vector *self, size_t index) {
 }
 
 /**
+ * @fn void Vector::removeAtFast(Vector *self, size_t index)
+ * @memberof Vector
+ */
+static void removeAtFast(Vector *self, size_t index) {
+
+  assert(index < self->count);
+
+  if (self->destroy) {
+    self->destroy(self->elements + index * self->size);
+  }
+
+  const size_t last = self->count - 1;
+
+  if (index != last) {
+    memcpy(self->elements + index * self->size, self->elements + last * self->size, self->size);
+  }
+
+  self->count--;
+}
+
+/**
  * @fn void Vector::resize(Vector *self, size_t capacity)
  * @memberof Vector
  */
@@ -415,6 +436,7 @@ static void initialize(Class *clazz) {
   ((VectorInterface *) clazz->interface)->reduce = reduce;
   ((VectorInterface *) clazz->interface)->removeAll = removeAll;
   ((VectorInterface *) clazz->interface)->removeAt = removeAt;
+  ((VectorInterface *) clazz->interface)->removeAtFast = removeAtFast;
   ((VectorInterface *) clazz->interface)->resize = resize;
   ((VectorInterface *) clazz->interface)->sort = sort;
   ((VectorInterface *) clazz->interface)->vectorWithElements = vectorWithElements;

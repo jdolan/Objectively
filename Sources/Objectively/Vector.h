@@ -232,6 +232,18 @@ struct VectorInterface {
   void (*removeAt)(Vector *self, size_t index);
 
   /**
+   * @fn void Vector::removeAtFast(Vector *self, size_t index)
+   * @brief Removes the element at the specified index in constant time by
+   * moving the last element into its place.
+   * @param self The Vector.
+   * @param index The index of the element to remove.
+   * @remarks This does not preserve element order, and MUST NOT be used where
+   * order is significant. Prefer Vector::removeAt in that case.
+   * @memberof Vector
+   */
+  void (*removeAtFast)(Vector *self, size_t index);
+
+  /**
    * @fn void Vector::resize(Vector *self, size_t capacity)
    * @brief Resizes this Vector to the specified capacity.
    * @param self The Vector.
