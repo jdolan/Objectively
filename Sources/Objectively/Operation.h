@@ -23,9 +23,10 @@
 
 #pragma once
 
+#include <Objectively/Array.h>
 #include <Objectively/Condition.h>
 #include <Objectively/Object.h>
-#include <Objectively/Array.h>
+#include <Objectively/Thread.h>
 
 /**
  * @file
@@ -34,6 +35,8 @@
 
 typedef struct Operation Operation;
 typedef struct OperationInterface OperationInterface;
+
+typedef struct OperationQueue OperationQueue;
 
 /**
  * @brief The function type for Operation execution.
@@ -64,7 +67,6 @@ struct Operation {
    * @private
    */
   struct {
-
     /**
      * @brief The Condition enabling `waitUntilFinished`.
      */
@@ -75,6 +77,13 @@ struct Operation {
      */
     Array *dependencies;
 
+    /**
+     * @brief The OperationQueue this Operation was added to, if any.
+     * @remarks Not retained; an OperationQueue retains its Operations. This
+     * exists so that `cancel` can notify the queue, which must re-evaluate
+     * because cancelling an Operation makes it ready.
+     */
+    OperationQueue *queue;
   } locals;
 
   /**
@@ -97,6 +106,12 @@ struct Operation {
    * @brief `true` when this Operation has been cancelled, `false` otherwise.
    */
   bool isCancelled;
+  
+  /**
+   * @brief True once an OperationQueue has dispatched this Operation to one of
+   * its Threads, so that no other Thread also starts it.
+   */
+  bool isDispatched;
 
   /**
    * @brief `true` when this Operation is executing, `false` otherwise.
@@ -188,9 +203,9 @@ struct OperationInterface {
    * @param self The Operation.
    * @remarks The default implementation of this method checks the state of the Operation and, if
    * all criteria are met, dispatches the configured `function` synchronously. When this method
-   * returns, the Operation `isFinished` and has removed itself from any queues it belonged to.
+   * returns, the Operation `isFinished`.
    * @remarks Asynchronous Operations should override this method and coordinate their own state
-   * transitions and queue removal. This method should _not_ be invoked by `super`.
+   * transitions. This method should _not_ be invoked by `super`.
    * @memberof Operation
    */
   void (*start)(Operation *self);

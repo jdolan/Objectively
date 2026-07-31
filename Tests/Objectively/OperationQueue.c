@@ -67,7 +67,8 @@ START_TEST(suspendResume) {
   OperationQueue *queue = $(alloc(OperationQueue), init);
   ck_assert(queue != NULL);
 
-  queue->isSuspended = true;
+  $(queue, suspend);
+  ck_assert(queue->isSuspended);
   int counter = 0;
 
   Operation *operation;
@@ -81,22 +82,114 @@ START_TEST(suspendResume) {
 
   ck_assert_int_eq(5, $(queue, operationCount));
 
-  queue->isSuspended = false;
+  $(queue, resume);
+  ck_assert(queue->isSuspended == false);
+
+  $(queue, waitUntilAllOperationsAreFinished);
+
+  ck_assert_int_eq(5, counter);
+  ck_assert_int_eq(0, $(queue, operationCount));
+
+  release(queue);
+} END_TEST
+
+START_TEST(completionCallback) {
+
+  // a serial queue, so that `completions` needs no synchronization
+  OperationQueue *queue = $(alloc(OperationQueue), init);
+  ck_assert(queue != NULL);
+
+  int counter = 0;
+
+  for (int i = 0; i < 5; i++) {
+    Operation *operation = $(alloc(Operation), initWithFunction, suspendResume_func, &counter);
+
+    $(queue, addOperation, operation);
+
+    release(operation);
+  }
+
+  $(queue, waitUntilAllOperationsAreFinished);
+
+  ck_assert_int_eq(5, counter);
+
+  release(queue);
+} END_TEST
+
+START_TEST(cancelQueued) {
+
+  OperationQueue *queue = $(alloc(OperationQueue), init);
+  ck_assert(queue != NULL);
+
+  int counter = 0;
+
+  Operation *blocker = $(alloc(Operation), initWithFunction, suspendResume_func, &counter);
+  Operation *blocked = $(alloc(Operation), initWithFunction, suspendResume_func, &counter);
+
+  $(blocked, addDependency, blocker);
+
+  $(queue, addOperation, blocked);
+
+  ck_assert_int_eq(1, $(queue, operationCount));
+  ck_assert($(blocked, isReady) == false);
+
+  $(blocked, cancel);
+  ck_assert(blocked->isCancelled);
+
+  $(queue, waitUntilAllOperationsAreFinished);
+
+  ck_assert(blocked->isFinished);
+  ck_assert_int_eq(0, counter);
+  ck_assert_int_eq(0, $(queue, operationCount));
+
+  release(blocker);
+  release(blocked);
+  release(queue);
+} END_TEST
+
+#define CONCURRENT_COUNT 64
+
+static void concurrent_func(Operation *operation) {
+  *(int *) operation->data = 1;
+}
+
+START_TEST(concurrent) {
+
+  OperationQueue *queue = $(alloc(OperationQueue), initWithMaxConcurrentOperations, 4);
+  ck_assert(queue != NULL);
+
+  // each Operation writes its own slot, so the result needs no atomics
+  int flags[CONCURRENT_COUNT] = { 0 };
+
+  for (int i = 0; i < CONCURRENT_COUNT; i++) {
+    Operation *operation = $(alloc(Operation), initWithFunction, concurrent_func, flags + i);
+
+    $(queue, addOperation, operation);
+
+    release(operation);
+  }
 
   $(queue, waitUntilAllOperationsAreFinished);
 
   ck_assert_int_eq(0, $(queue, operationCount));
+
+  for (int i = 0; i < CONCURRENT_COUNT; i++) {
+    ck_assert_int_eq(1, flags[i]);
+  }
 
   release(queue);
 } END_TEST
 
 int main(int argc, char **argv) {
 
-  TCase *tcase = tcase_create("Operation");
+  TCase *tcase = tcase_create("OperationQueue");
   tcase_add_test(tcase, producerConsumer);
   tcase_add_test(tcase, suspendResume);
+  tcase_add_test(tcase, cancelQueued);
+  tcase_add_test(tcase, completionCallback);
+  tcase_add_test(tcase, concurrent);
 
-  Suite *suite = suite_create("Operation");
+  Suite *suite = suite_create("OperationQueue");
   suite_add_tcase(suite, tcase);
 
   SRunner *runner = srunner_create(suite);

@@ -23,7 +23,6 @@
 
 #include <assert.h>
 
-#include "Operation.h"
 #include "OperationQueue.h"
 
 #define _Class _Operation
@@ -77,6 +76,13 @@ static void cancel(Operation *self) {
     if (self->isFinished == false) {
       if (self->isExecuting == false) {
         self->isCancelled = true;
+
+        OperationQueue *queue = self->locals.queue;
+        if (queue) {
+          synchronized(queue->locals.condition, {
+            $(queue->locals.condition, broadcast);
+          });
+        }
       }
     }
   }
@@ -133,7 +139,7 @@ static Operation *initWithFunction(Operation *self, OperationFunction function, 
  */
 static bool isReady(const Operation *self) {
 
-  if (self->isExecuting || self->isFinished) {
+  if (self->isDispatched || self->isExecuting || self->isFinished) {
     return false;
   }
 
@@ -185,11 +191,6 @@ static void start(Operation *self) {
   synchronized(self->locals.condition, {
     $(self->locals.condition, broadcast);
   });
-
-  OperationQueue *currentQueue = $$(OperationQueue, currentQueue);
-  if (currentQueue) {
-    $(currentQueue, removeOperation, self);
-  }
 }
 
 /**

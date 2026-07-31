@@ -20,7 +20,7 @@ TESTS = \
 	Null \
 	Number \
 	Object \
-	Operation \
+	OperationQueue \
 	PointerArray \
 	Regexp \
 	Resource \

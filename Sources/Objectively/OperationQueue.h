@@ -30,14 +30,20 @@
 
 /**
  * @file
- * @brief OperationQueues provide a thread of execution for Operations.
+ * @brief OperationQueues provide threads of execution for Operations.
  */
 
 typedef struct OperationQueue OperationQueue;
 typedef struct OperationQueueInterface OperationQueueInterface;
 
 /**
- * @brief OperationQueues provide a thread of execution for Operations.
+ * @brief The function type for Operation completion.
+ * @param operation The finished Operation.
+ */
+typedef void (*OperationCompletion)(Operation *operation);
+
+/**
+ * @brief OperationQueues provide threads of execution for Operations.
  * @extends Object
  * @ingroup Concurrency
  */
@@ -70,14 +76,16 @@ struct OperationQueue {
     Array *operations;
 
     /**
-     * @brief The backing Thread.
+     * @brief The backing Threads, one per concurrently executing Operation.
      */
-    Thread *thread;
+    Array *threads;
 
   } locals;
 
   /**
    * @brief When `true`, the queue will not `start` any new Operations.
+   * @remarks Read-only; use `suspend` and `resume`, which notify the queue's
+   * Threads of the transition.
    */
   bool isSuspended;
 };
@@ -132,12 +140,25 @@ struct OperationQueueInterface {
 
   /**
    * @fn OperationQueue *OperationQueue::init(OperationQueue *self)
-   * @brief Initializes this OperationQueue.
+   * @brief Initializes this OperationQueue as a serial queue.
    * @param self The OperationQueue.
    * @return The initialized OperationQueue, or `NULL` on error.
+   * @remarks Serial queues run one Operation at a time. Use
+   * `initWithMaxConcurrentOperations` for concurrency.
    * @memberof OperationQueue
    */
   OperationQueue *(*init)(OperationQueue *self);
+
+  /**
+   * @fn OperationQueue *OperationQueue::initWithMaxConcurrentOperations(OperationQueue *self, size_t maxConcurrentOperations)
+   * @brief Initializes this OperationQueue with the given concurrency.
+   * @param self The OperationQueue.
+   * @param maxConcurrentOperations The number of Operations to run concurrently,
+   * which MUST be at least one.
+   * @return The initialized OperationQueue, or `NULL` on error.
+   * @memberof OperationQueue
+   */
+  OperationQueue *(*initWithMaxConcurrentOperations)(OperationQueue *self, size_t maxConcurrentOperations);
 
   /**
    * @fn size_t OperationQueue::operationCount(const OperationQueue *self)
@@ -163,6 +184,23 @@ struct OperationQueueInterface {
    * @memberof OperationQueue
    */
   void (*removeOperation)(OperationQueue *self, Operation *operation);
+
+  /**
+   * @fn void OperationQueue::resume(OperationQueue *self)
+   * @brief Resumes this queue, allowing it to `start` Operations again.
+   * @param self The OperationQueue.
+   * @memberof OperationQueue
+   */
+  void (*resume)(OperationQueue *self);
+
+  /**
+   * @fn void OperationQueue::suspend(OperationQueue *self)
+   * @brief Suspends this queue, preventing it from starting any new Operations.
+   * @param self The OperationQueue.
+   * @remarks Operations already executing run to completion.
+   * @memberof OperationQueue
+   */
+  void (*suspend)(OperationQueue *self);
 
   /**
    * @fn void OperationQueue::waitUntilAllOperationsAreFinished(OperationQueue *self)

@@ -44,10 +44,21 @@ static void dealloc(Object *self) {
 
   OperationQueue *this = (OperationQueue *) self;
 
-  $(this->locals.thread, cancel);
-  $(this->locals.thread, join, NULL);
+  const Array *threads = (Array *) this->locals.threads;
 
-  release(this->locals.thread);
+  for (size_t i = 0; i < threads->count; i++) {
+    $((Thread *) $(threads, objectAtIndex, i), cancel);
+  }
+
+  synchronized(this->locals.condition, {
+    $(this->locals.condition, broadcast);
+  });
+
+  for (size_t i = 0; i < threads->count; i++) {
+    $((Thread *) $(threads, objectAtIndex, i), join, NULL);
+  }
+
+  release(this->locals.threads);
   release(this->locals.condition);
   release(this->locals.operations);
 
@@ -68,6 +79,7 @@ static void addOperation(OperationQueue *self, Operation *operation) {
   assert(operation->isFinished == false);
 
   synchronized(self->locals.condition, {
+    operation->locals.queue = self;
     $(self->locals.operations, addObject, operation);
     $(self->locals.condition, broadcast);
   });
@@ -110,12 +122,18 @@ static __thread OperationQueue *_currentQueue;
  * @memberof OperationQueue
  */
 static OperationQueue *currentQueue(void) {
-
   return _currentQueue;
 }
 
 /**
- * @brief ThreadFunction for the OperationQueue Thread.
+ * @brief Predicate matching the next Operation eligible to start.
+ */
+static bool isOperationReady(const ident obj, ident data) {
+  return $((Operation *) obj, isReady);
+}
+
+/**
+ * @brief ThreadFunction for the OperationQueue Threads.
  */
 static ident run(Thread *thread) {
 
@@ -123,34 +141,30 @@ static ident run(Thread *thread) {
 
   while (thread->isCancelled == false) {
 
-    if (self->isSuspended == false) {
-      Array *operations = NULL;
+    Operation *operation = NULL;
 
-      retry:
+    synchronized(self->locals.condition, {
 
-      release(operations);
-      operations = $(self, operations);
+      if (self->isSuspended == false) {
 
-      for (size_t i = 0; i < operations->count; i++) {
-
-        Operation *operation = $(operations, objectAtIndex, i);
-        if ($(operation, isReady)) {
-          $(operation, start);
-          goto retry;
+        operation = $(self->locals.operations, find, isOperationReady, NULL);
+        if (operation) {
+          operation->isDispatched = true;
         }
       }
 
-      release(operations);
-    }
-
-    const Time interval = { .tv_usec = 10 };
-    Date *date = $$(Date, dateWithTimeSinceNow, &interval);
-
-    synchronized(self->locals.condition, {
-      $(self->locals.condition, waitUntilDate, date);
+      if (operation == NULL) {
+        $(self->locals.condition, wait);
+      }
     });
 
-    release(date);
+    if (operation == NULL) {
+      continue;
+    }
+
+    $(operation, start);
+
+    $(self, removeOperation, operation);
   }
 
   return NULL;
@@ -161,6 +175,16 @@ static ident run(Thread *thread) {
  * @memberof OperationQueue
  */
 static OperationQueue *init(OperationQueue *self) {
+  return $(self, initWithMaxConcurrentOperations, 1);
+}
+
+/**
+ * @fn OperationQueue *OperationQueue::initWithMaxConcurrentOperations(OperationQueue *self, size_t maxConcurrentOperations)
+ * @memberof OperationQueue
+ */
+static OperationQueue *initWithMaxConcurrentOperations(OperationQueue *self, size_t maxConcurrentOperations) {
+
+  assert(maxConcurrentOperations);
 
   self = (OperationQueue *) super(Object, self, init);
   if (self) {
@@ -171,10 +195,23 @@ static OperationQueue *init(OperationQueue *self) {
     self->locals.operations = $(alloc(Array), init);
     assert(self->locals.operations);
 
-    self->locals.thread = $(alloc(Thread), initWithFunction, run, self);
-    assert(self->locals.thread);
+    self->locals.threads = $(alloc(Array), init);
+    assert(self->locals.threads);
 
-    $(self->locals.thread, start);
+    for (size_t i = 0; i < maxConcurrentOperations; i++) {
+
+      Thread *thread = $(alloc(Thread), initWithFunction, run, self);
+      assert(thread);
+
+      $(self->locals.threads, addObject, thread);
+
+      release(thread);
+    }
+
+    const Array *threads = (Array *) self->locals.threads;
+    for (size_t i = 0; i < threads->count; i++) {
+      $((Thread *) $(threads, objectAtIndex, i), start);
+    }
   }
 
   return self;
@@ -220,8 +257,32 @@ static void removeOperation(OperationQueue *self, Operation *operation) {
   assert(operation->isExecuting == false);
 
   synchronized(self->locals.condition, {
+    operation->locals.queue = NULL;
     $(self->locals.operations, removeObject, operation);
     $(self->locals.condition, broadcast);
+  });
+}
+
+/**
+ * @fn void OperationQueue::resume(OperationQueue *self)
+ * @memberof OperationQueue
+ */
+static void resume(OperationQueue *self) {
+
+  synchronized(self->locals.condition, {
+    self->isSuspended = false;
+    $(self->locals.condition, broadcast);
+  });
+}
+
+/**
+ * @fn void OperationQueue::suspend(OperationQueue *self)
+ * @memberof OperationQueue
+ */
+static void suspend(OperationQueue *self) {
+
+  synchronized(self->locals.condition, {
+    self->isSuspended = true;
   });
 }
 
@@ -253,9 +314,12 @@ static void initialize(Class *clazz) {
   ((OperationQueueInterface *) clazz->interface)->cancelAllOperations = cancelAllOperations;
   ((OperationQueueInterface *) clazz->interface)->currentQueue = currentQueue;
   ((OperationQueueInterface *) clazz->interface)->init = init;
+  ((OperationQueueInterface *) clazz->interface)->initWithMaxConcurrentOperations = initWithMaxConcurrentOperations;
   ((OperationQueueInterface *) clazz->interface)->operationCount = operationCount;
   ((OperationQueueInterface *) clazz->interface)->operations = operations;
   ((OperationQueueInterface *) clazz->interface)->removeOperation = removeOperation;
+  ((OperationQueueInterface *) clazz->interface)->resume = resume;
+  ((OperationQueueInterface *) clazz->interface)->suspend = suspend;
   ((OperationQueueInterface *) clazz->interface)->waitUntilAllOperationsAreFinished = waitUntilAllOperationsAreFinished;
 }
 
