@@ -81,7 +81,7 @@ static void addOperation(OperationQueue *self, Operation *operation) {
   synchronized(self->locals.condition, {
     operation->locals.queue = self;
     $(self->locals.operations, addObject, operation);
-    $(self->locals.condition, broadcast);
+    $(self->locals.condition, signal);
   });
 }
 
@@ -150,10 +150,11 @@ static ident run(Thread *thread) {
         operation = $(self->locals.operations, find, isOperationReady, NULL);
         if (operation) {
           operation->isDispatched = true;
+          $(self->locals.condition, signal);
         }
       }
 
-      if (operation == NULL) {
+      if (operation == NULL && thread->isCancelled == false) {
         $(self->locals.condition, wait);
       }
     });
@@ -259,7 +260,7 @@ static void removeOperation(OperationQueue *self, Operation *operation) {
   synchronized(self->locals.condition, {
     operation->locals.queue = NULL;
     $(self->locals.operations, removeObject, operation);
-    $(self->locals.condition, broadcast);
+    $(self->locals.condition, signal);
   });
 }
 
@@ -292,11 +293,25 @@ static void suspend(OperationQueue *self) {
  */
 static void waitUntilAllOperationsAreFinished(OperationQueue *self) {
 
-  synchronized(self->locals.condition, {
-    while (((Array *) self->locals.operations)->count > 0) {
-      $(self->locals.condition, wait);
+  while (true) {
+
+    Operation *operation = NULL;
+
+    synchronized(self->locals.condition, {
+      const Array *operations = (Array *) self->locals.operations;
+      if (operations->count) {
+        operation = retain($(operations, firstObject));
+      }
+    });
+
+    if (operation == NULL) {
+      break;
     }
-  });
+
+    $(operation, waitUntilFinished);
+
+    release(operation);
+  }
 }
 
 #pragma mark - Class lifecycle

@@ -80,7 +80,7 @@ static void cancel(Operation *self) {
         OperationQueue *queue = self->locals.queue;
         if (queue) {
           synchronized(queue->locals.condition, {
-            $(queue->locals.condition, broadcast);
+            $(queue->locals.condition, signal);
           });
         }
       }
