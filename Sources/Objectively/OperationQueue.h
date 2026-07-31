@@ -37,12 +37,6 @@ typedef struct OperationQueue OperationQueue;
 typedef struct OperationQueueInterface OperationQueueInterface;
 
 /**
- * @brief The function type for Operation completion.
- * @param operation The finished Operation.
- */
-typedef void (*OperationCompletion)(Operation *operation);
-
-/**
  * @brief OperationQueues provide threads of execution for Operations.
  * @extends Object
  * @ingroup Concurrency

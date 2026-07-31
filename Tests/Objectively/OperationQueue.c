@@ -93,29 +93,6 @@ START_TEST(suspendResume) {
   release(queue);
 } END_TEST
 
-START_TEST(completionCallback) {
-
-  // a serial queue, so that `completions` needs no synchronization
-  OperationQueue *queue = $(alloc(OperationQueue), init);
-  ck_assert(queue != NULL);
-
-  int counter = 0;
-
-  for (int i = 0; i < 5; i++) {
-    Operation *operation = $(alloc(Operation), initWithFunction, suspendResume_func, &counter);
-
-    $(queue, addOperation, operation);
-
-    release(operation);
-  }
-
-  $(queue, waitUntilAllOperationsAreFinished);
-
-  ck_assert_int_eq(5, counter);
-
-  release(queue);
-} END_TEST
-
 START_TEST(cancelQueued) {
 
   OperationQueue *queue = $(alloc(OperationQueue), init);
@@ -186,7 +163,6 @@ int main(int argc, char **argv) {
   tcase_add_test(tcase, producerConsumer);
   tcase_add_test(tcase, suspendResume);
   tcase_add_test(tcase, cancelQueued);
-  tcase_add_test(tcase, completionCallback);
   tcase_add_test(tcase, concurrent);
 
   Suite *suite = suite_create("OperationQueue");
