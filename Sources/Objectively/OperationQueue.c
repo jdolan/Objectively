@@ -139,13 +139,17 @@ static ident run(Thread *thread) {
 
   OperationQueue *self = _currentQueue = thread->data;
 
-  while (thread->isCancelled == false) {
+  bool isCancelled = false;
+
+  while (!isCancelled) {
 
     Operation *operation = NULL;
 
     synchronized(self->locals.condition, {
 
-      if (self->isSuspended == false) {
+      isCancelled = thread->isCancelled;
+
+      if (!isCancelled && self->isSuspended == false) {
 
         operation = $(self->locals.operations, find, isOperationReady, NULL);
         if (operation) {
@@ -154,7 +158,7 @@ static ident run(Thread *thread) {
         }
       }
 
-      if (operation == NULL && thread->isCancelled == false) {
+      if (operation == NULL && !isCancelled) {
         $(self->locals.condition, wait);
       }
     });

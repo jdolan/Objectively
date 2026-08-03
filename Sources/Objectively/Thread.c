@@ -65,6 +65,7 @@ static void cancel(Thread *self) {
 
   assert(self->isCancelled == false);
 
+  // https://stackoverflow.com/a/4760758
   // int err = pthread_cancel(*((pthread_t *) self->thread));
   // assert(err == 0);
 
