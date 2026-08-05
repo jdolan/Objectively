@@ -29,6 +29,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#if defined(_WIN32)
+#include <windows.h>
+#endif
+
 #if HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -39,6 +43,16 @@
 size_t _pageSize;
 
 static Class *_classes;
+
+/**
+ * @brief The registered ClassLoaders.
+ * @remarks This is a plain array rather than a MutableArray because Class is
+ * beneath the collections: initializing one here would reenter `_initialize`.
+ * Loaders are added and removed as images are loaded and closed, not per lookup.
+ */
+#define MAX_CLASS_LOADERS 8
+static ClassLoader _classLoaders[MAX_CLASS_LOADERS];
+static size_t _classLoaderCount;
 
 /**
  * @brief Called `atexit` to teardown Objectively.
@@ -158,6 +172,84 @@ ident _cast(const Class *clazz, const ident obj) {
   return (ident) obj;
 }
 
+/**
+ * @return The base address of the image containing `address`, or `NULL`.
+ * @remarks The Windows dlfcn shim has no `dladdr`. `UNCHANGED_REFCOUNT` matters:
+ * without it this would pin the very module the caller is about to release.
+ */
+static const void *imageForAddress(const void *address) {
+
+  assert(address);
+
+#if defined(_WIN32)
+  HMODULE module;
+  if (GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
+      GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCSTR) address, &module)) {
+    return module;
+  }
+#else
+  Dl_info info;
+  if (dladdr(address, &info)) {
+    return info.dli_fbase;
+  }
+#endif
+
+  return NULL;
+}
+
+void removeClassesForImage(const void *address) {
+
+  const void *image = imageForAddress(address);
+  if (image == NULL) {
+    return;
+  }
+
+  Class **link = &_classes;
+  while (*link) {
+    Class *clazz = *link;
+
+    /* def.name is a literal in the image that declared the Class, where the
+     * ClassDef itself is a compound literal with automatic storage. */
+    if (imageForAddress(clazz->def.name) == image) {
+
+      *link = clazz->next;
+
+      if (clazz->def.destroy) {
+        clazz->def.destroy(clazz);
+      }
+
+      free(clazz->interface);
+      free(clazz);
+    } else {
+      link = &clazz->next;
+    }
+  }
+}
+
+void addClassLoader(ClassLoader loader) {
+
+  assert(loader);
+  assert(_classLoaderCount < MAX_CLASS_LOADERS);
+
+  _classLoaders[_classLoaderCount++] = loader;
+}
+
+void removeClassLoader(ClassLoader loader) {
+
+  assert(loader);
+
+  for (size_t i = 0; i < _classLoaderCount; i++) {
+    if (_classLoaders[i] == loader) {
+
+      memmove(_classLoaders + i, _classLoaders + i + 1,
+          (_classLoaderCount - i - 1) * sizeof(ClassLoader));
+
+      _classLoaders[--_classLoaderCount] = NULL;
+      return;
+    }
+  }
+}
+
 Class *classForName(const char *name) {
 
   if (name) {
@@ -167,6 +259,13 @@ Class *classForName(const char *name) {
         return c;
       }
       c = c->next;
+    }
+
+    for (size_t i = _classLoaderCount; i > 0; i--) {
+      Class *clazz = _classLoaders[i - 1](name);
+      if (clazz) {
+        return clazz;
+      }
     }
 
     char *s;

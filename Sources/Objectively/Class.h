@@ -128,7 +128,49 @@ OBJECTIVELY_EXPORT ident _alloc(Class *clazz);
 OBJECTIVELY_EXPORT ident _cast(const Class *clazz, const ident obj);
 
 /**
+ * @brief Resolves a Class by name on behalf of `classForName`.
+ * @param name The Class name, e.g. `"CvarCheckbox"`.
+ * @return The Class, or `NULL` if this loader does not provide it.
+ * @remarks `classForName` otherwise falls back on the process-wide namespace,
+ * which a shared object loaded `RTLD_LOCAL` is absent from, and which Windows
+ * does not have at all. An application that loads Classes from a plugin
+ * provides a loader that resolves them against that plugin's handle.
+ */
+typedef Class *(*ClassLoader)(const char *name);
+
+/**
+ * @brief Adds the given ClassLoader.
+ * @remarks Loaders are consulted most recently added first, so the loader for a
+ * newly loaded plugin answers ahead of one added for its predecessor.
+ * @remarks A loader MUST be removed before the image backing it is closed, or
+ * `classForName` will call through a dangling pointer.
+ */
+OBJECTIVELY_EXPORT void addClassLoader(ClassLoader loader);
+
+/**
+ * @brief Removes the given ClassLoader.
+ */
+OBJECTIVELY_EXPORT void removeClassLoader(ClassLoader loader);
+
+/**
+ * @brief Destroys every Class that the image containing `address` declared.
+ * @param address Any address within the image, e.g. one of its exported symbols.
+ * @remarks Classes initialized from an image outlive it otherwise: they are
+ * cached by name, and `classForName` answers from that cache ahead of any
+ * loader. On a platform where closing an image really unmaps it - which
+ * `dlclose` does on Linux and `FreeLibrary` does on Windows, while macOS leaves
+ * it mapped - the next lookup would then call through an interface that no
+ * longer exists.
+ * @remarks MUST be called while the image is still open, since resolving which
+ * image declared a Class reads from it, and only once nothing instantiated from
+ * it survives.
+ */
+OBJECTIVELY_EXPORT void removeClassesForImage(const void *address);
+
+/**
  * @return The Class with the given name, or `NULL` if no such Class has been initialized.
+ * @remarks Classes already initialized are answered first, then each
+ * ClassLoader, then the process-wide namespace.
  */
 OBJECTIVELY_EXPORT Class *classForName(const char *name);
 
