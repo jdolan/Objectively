@@ -108,6 +108,14 @@ struct Class {
    * @brief Provides chaining of initialized Classes.
    */
   Class *next;
+
+  /**
+   * @brief The base address of the image that declared this Class.
+   * @details Recorded by `_initialize`, which is the only place that sees every
+   * Class: one resolved through a registered image and one initialized by that
+   * image calling `alloc` arrive here alike. `removeClassImage` matches on it.
+   */
+  ident image;
 };
 
 /**
@@ -128,49 +136,45 @@ OBJECTIVELY_EXPORT ident _alloc(Class *clazz);
 OBJECTIVELY_EXPORT ident _cast(const Class *clazz, const ident obj);
 
 /**
- * @brief Resolves a Class by name on behalf of `classForName`.
- * @param name The Class name, e.g. `"CvarCheckbox"`.
- * @return The Class, or `NULL` if this loader does not provide it.
- * @remarks `classForName` otherwise falls back on the process-wide namespace,
- * which a shared object loaded `RTLD_LOCAL` is absent from, and which Windows
- * does not have at all. An application that loads Classes from a plugin
- * provides a loader that resolves them against that plugin's handle.
+ * @brief Registers an image that provides Classes, e.g. a plugin.
+ * @param handle A handle from `dlopen`.
+ * @details `classForName` resolves a name it has not yet initialized through the
+ * process-wide namespace, which holds only images loaded `RTLD_GLOBAL`, and which
+ * Windows does not have at all. An application that loads Classes from a plugin
+ * registers it here instead, and may then load it `RTLD_LOCAL` - which is how it
+ * keeps two plugins exporting the same symbols from coalescing.
+ * @remarks Registered images are searched most recently added first, so a newly
+ * loaded plugin answers ahead of the one it replaced.
+ * @remarks Resolution is by Objectively's own convention, the Class name
+ * prefixed with an underscore, so nothing about the image has to be declared.
  */
-typedef Class *(*ClassLoader)(const char *name);
+OBJECTIVELY_EXPORT void addClassImage(ident handle);
 
 /**
- * @brief Adds the given ClassLoader.
- * @remarks Loaders are consulted most recently added first, so the loader for a
- * newly loaded plugin answers ahead of one added for its predecessor.
- * @remarks A loader MUST be removed before the image backing it is closed, or
- * `classForName` will call through a dangling pointer.
- */
-OBJECTIVELY_EXPORT void addClassLoader(ClassLoader loader);
-
-/**
- * @brief Removes the given ClassLoader.
- */
-OBJECTIVELY_EXPORT void removeClassLoader(ClassLoader loader);
-
-/**
- * @brief Destroys every Class that the image containing `address` declared.
- * @param address Any address within the image, e.g. one of its exported symbols.
+ * @brief Unregisters an image, and every Class it declared.
+ * @param handle The handle given to `addClassImage`.
  * @remarks Classes initialized from an image outlive it otherwise: they are
- * cached by name, and `classForName` answers from that cache ahead of any
- * loader. On a platform where closing an image really unmaps it - which
- * `dlclose` does on Linux and `FreeLibrary` does on Windows, while macOS leaves
- * it mapped - the next lookup would then call through an interface that no
- * longer exists.
- * @remarks MUST be called while the image is still open, since resolving which
- * image declared a Class reads from it, and only once nothing instantiated from
- * it survives.
+ * cached by name, and `classForName` answers from that cache ahead of any image.
+ * On a platform where closing an image really unmaps it - which `dlclose` does on
+ * Linux and `FreeLibrary` does on Windows - the next lookup would then read a
+ * `ClassDef` that is no longer mapped. `classForName` compares the name of every
+ * Class it walks, so one left behind breaks every lookup, not only its own.
+ * @remarks The Classes are **not** destroyed, and this is not an oversight.
+ * `dlclose` does not unmap on macOS, so an archetype that has already run keeps
+ * answering from its own `static Class *` for as long as the process lives, and
+ * would hand back whatever this freed. Unregistering is the only thing that is
+ * safe whether the image goes away or stays: the Class becomes unreachable by
+ * name, and remains valid for the archetype that owns it. The cost is the Class
+ * and its interface, which are not reclaimed.
+ * @remarks MUST be called while the handle is still open, and only once nothing
+ * instantiated from that image survives.
  */
-OBJECTIVELY_EXPORT void removeClassesForImage(const void *address);
+OBJECTIVELY_EXPORT void removeClassImage(ident handle);
 
 /**
  * @return The Class with the given name, or `NULL` if no such Class has been initialized.
- * @remarks Classes already initialized are answered first, then each
- * ClassLoader, then the process-wide namespace.
+ * @remarks Classes already initialized are answered first, then each registered
+ * image, then the process-wide namespace.
  */
 OBJECTIVELY_EXPORT Class *classForName(const char *name);
 

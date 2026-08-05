@@ -30,7 +30,11 @@
 #include <string.h>
 
 #if defined(_WIN32)
-#include <windows.h>
+#include <Windows.h>
+#elif defined(__APPLE__)
+#include <mach-o/dyld.h>
+#else
+#include <link.h>
 #endif
 
 #if HAVE_UNISTD_H
@@ -45,14 +49,14 @@ size_t _pageSize;
 static Class *_classes;
 
 /**
- * @brief The registered ClassLoaders.
+ * @brief The registered images providing Classes.
  * @remarks This is a plain array rather than a MutableArray because Class is
  * beneath the collections: initializing one here would reenter `_initialize`.
- * Loaders are added and removed as images are loaded and closed, not per lookup.
+ * Images are added and removed as they are loaded and closed, not per lookup.
  */
-#define MAX_CLASS_LOADERS 8
-static ClassLoader _classLoaders[MAX_CLASS_LOADERS];
-static size_t _classLoaderCount;
+#define MAX_CLASS_IMAGES 8
+static ident _classImages[MAX_CLASS_IMAGES];
+static size_t _classImageCount;
 
 /**
  * @brief Called `atexit` to teardown Objectively.
@@ -97,6 +101,31 @@ static void setup(void) {
   atexit(teardown);
 }
 
+/**
+ * @return The base address of the image containing `address`, or `NULL`.
+ * @remarks The Windows dlfcn shim has no `dladdr`. `UNCHANGED_REFCOUNT` matters:
+ * without it this would pin the very module the caller is about to release.
+ */
+static const ident imageForAddress(const ident address) {
+
+  assert(address);
+
+#if defined(_WIN32)
+  HMODULE module;
+  if (GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
+      GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCSTR) address, &module)) {
+    return module;
+  }
+#else
+  Dl_info info;
+  if (dladdr(address, &info)) {
+    return info.dli_fbase;
+  }
+#endif
+
+  return NULL;
+}
+
 Class *_initialize(const ClassDef *def) {
 
   static Once once;
@@ -128,6 +157,10 @@ Class *_initialize(const ClassDef *def) {
   if (clazz->def.initialize) {
     clazz->def.initialize(clazz);
   }
+
+  /* def.name is a literal in the declaring image, where the ClassDef itself is
+   * a compound literal with automatic storage. */
+  clazz->image = imageForAddress((ident) def->name);
 
   clazz->next = __sync_lock_test_and_set(&_classes, clazz);
 
@@ -173,33 +206,64 @@ ident _cast(const Class *clazz, const ident obj) {
 }
 
 /**
- * @return The base address of the image containing `address`, or `NULL`.
- * @remarks The Windows dlfcn shim has no `dladdr`. `UNCHANGED_REFCOUNT` matters:
- * without it this would pin the very module the caller is about to release.
+ * @return The base address of the image behind `handle`, or `NULL`.
+ * @remarks There is no one call for this. Windows hands out the module itself as
+ * the handle, which `GetModuleFileName` confirms rather than assumes; glibc
+ * answers from the link map; and macOS, which has neither, is left with matching
+ * the handle against the loaded images.
  */
-static const void *imageForAddress(const void *address) {
+static ident imageForHandle(ident handle) {
 
-  assert(address);
+  assert(handle);
 
 #if defined(_WIN32)
-  HMODULE module;
-  if (GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
-      GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCSTR) address, &module)) {
-    return module;
+  char path[MAX_PATH];
+  if (GetModuleFileNameA((HMODULE) handle, path, sizeof(path))) {
+    return handle;
+  }
+#elif defined(__APPLE__)
+  for (uint32_t i = 0; i < _dyld_image_count(); i++) {
+
+    /* RTLD_LOCAL is not the default on macOS, and dlopen of an image already
+     * loaded promotes it to the global namespace, which would put every image in
+     * the process there - undoing the isolation the caller loaded it for. */
+    ident image = dlopen(_dyld_get_image_name(i), RTLD_LAZY | RTLD_NOLOAD | RTLD_LOCAL);
+    if (image == NULL) {
+      continue;
+    }
+
+    dlclose(image);
+
+    if (image == handle) {
+      return (ident) _dyld_get_image_header(i);
+    }
   }
 #else
-  Dl_info info;
-  if (dladdr(address, &info)) {
-    return info.dli_fbase;
+  struct link_map *map;
+  if (dlinfo(handle, RTLD_DI_LINKMAP, &map) == 0 && map) {
+    return (ident) map->l_addr;
   }
 #endif
 
   return NULL;
 }
 
-void removeClassesForImage(const void *address) {
+void removeClassImage(ident handle) {
 
-  const void *image = imageForAddress(address);
+  assert(handle);
+
+  for (size_t i = 0; i < _classImageCount; i++) {
+    if (_classImages[i] == handle) {
+
+      memmove(_classImages + i, _classImages + i + 1,
+          (_classImageCount - i - 1) * sizeof(ident));
+
+      _classImages[--_classImageCount] = NULL;
+      break;
+    }
+  }
+
+  const ident image = imageForHandle(handle);
   if (image == NULL) {
     return;
   }
@@ -208,46 +272,21 @@ void removeClassesForImage(const void *address) {
   while (*link) {
     Class *clazz = *link;
 
-    /* def.name is a literal in the image that declared the Class, where the
-     * ClassDef itself is a compound literal with automatic storage. */
-    if (imageForAddress(clazz->def.name) == image) {
-
+    if (clazz->image == image) {
       *link = clazz->next;
-
-      if (clazz->def.destroy) {
-        clazz->def.destroy(clazz);
-      }
-
-      free(clazz->interface);
-      free(clazz);
+      clazz->next = NULL;
     } else {
       link = &clazz->next;
     }
   }
 }
 
-void addClassLoader(ClassLoader loader) {
+void addClassImage(ident handle) {
 
-  assert(loader);
-  assert(_classLoaderCount < MAX_CLASS_LOADERS);
+  assert(handle);
+  assert(_classImageCount < MAX_CLASS_IMAGES);
 
-  _classLoaders[_classLoaderCount++] = loader;
-}
-
-void removeClassLoader(ClassLoader loader) {
-
-  assert(loader);
-
-  for (size_t i = 0; i < _classLoaderCount; i++) {
-    if (_classLoaders[i] == loader) {
-
-      memmove(_classLoaders + i, _classLoaders + i + 1,
-          (_classLoaderCount - i - 1) * sizeof(ClassLoader));
-
-      _classLoaders[--_classLoaderCount] = NULL;
-      return;
-    }
-  }
+  _classImages[_classImageCount++] = handle;
 }
 
 Class *classForName(const char *name) {
@@ -261,24 +300,26 @@ Class *classForName(const char *name) {
       c = c->next;
     }
 
-    for (size_t i = _classLoaderCount; i > 0; i--) {
-      Class *clazz = _classLoaders[i - 1](name);
-      if (clazz) {
-        return clazz;
-      }
-    }
-
     char *s;
     if (asprintf(&s, "_%s", name) > 0) {
       Class *clazz = NULL;
+      Class *(*archetype)(void) = NULL;
+
+      for (size_t i = _classImageCount; i > 0 && archetype == NULL; i--) {
+        archetype = dlsym(_classImages[i - 1], s);
+      }
+
+      if (archetype == NULL) {
 #if defined(_WIN32)
-      static Once once;
-      static ident handle;
-      do_once(&once, { handle = dlopen(NULL, RTLD_LAZY); });
-      Class *(*archetype)(void) = handle ? dlsym(handle, s) : NULL;
+        static Once once;
+        static ident handle;
+        do_once(&once, { handle = dlopen(NULL, RTLD_LAZY); });
+        archetype = handle ? dlsym(handle, s) : NULL;
 #else
-      Class *(*archetype)(void) = dlsym(RTLD_DEFAULT, s);
+        archetype = dlsym(RTLD_DEFAULT, s);
 #endif
+      }
+
       if (archetype) {
         clazz = archetype();
       }
