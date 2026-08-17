@@ -41,8 +41,11 @@ typedef long Once;
  * @ingroup Concurrency
  */
 #define do_once(once, block) \
-    if (__sync_val_compare_and_swap(once, 0, -1) == 0) { \
-      block; *once = 1; \
-    } else { \
-      while (*once != 1) ; \
-    }
+    do { \
+      Once _pending = 0; \
+      if (__atomic_compare_exchange_n(once, &_pending, -1, 0, __ATOMIC_RELAXED, __ATOMIC_RELAXED)) { \
+        block; __atomic_store_n(once, 1, __ATOMIC_RELEASE); \
+      } else { \
+        while (__atomic_load_n(once, __ATOMIC_ACQUIRE) != 1) ; \
+      } \
+    } while (0)

@@ -50,9 +50,6 @@ static Class *_classes;
 
 /**
  * @brief The registered images providing Classes.
- * @remarks This is a plain array rather than a MutableArray because Class is
- * beneath the collections: initializing one here would reenter `_initialize`.
- * Images are added and removed as they are loaded and closed, not per lookup.
  */
 #define MAX_CLASS_IMAGES 8
 static ident _classImages[MAX_CLASS_IMAGES];
@@ -162,7 +159,8 @@ Class *_initialize(const ClassDef *def) {
    * a compound literal with automatic storage. */
   clazz->image = imageForAddress((ident) def->name);
 
-  clazz->next = __sync_lock_test_and_set(&_classes, clazz);
+  clazz->next = __atomic_load_n(&_classes, __ATOMIC_RELAXED);
+  while (!__atomic_compare_exchange_n(&_classes, &clazz->next, clazz, 1, __ATOMIC_RELEASE, __ATOMIC_RELAXED)) ;
 
   return clazz;
 }
@@ -254,10 +252,7 @@ void removeClassImage(ident handle) {
 
   for (size_t i = 0; i < _classImageCount; i++) {
     if (_classImages[i] == handle) {
-
-      memmove(_classImages + i, _classImages + i + 1,
-          (_classImageCount - i - 1) * sizeof(ident));
-
+      memmove(_classImages + i, _classImages + i + 1, (_classImageCount - i - 1) * sizeof(ident));
       _classImages[--_classImageCount] = NULL;
       break;
     }
@@ -292,7 +287,7 @@ void addClassImage(ident handle) {
 Class *classForName(const char *name) {
 
   if (name) {
-    Class *c = _classes;
+    Class *c = __atomic_load_n(&_classes, __ATOMIC_ACQUIRE);
     while (c) {
       if (strcmp(name, c->def.name) == 0) {
         return c;
@@ -339,7 +334,8 @@ ident release(ident obj) {
 
     assert(object);
 
-    if (__sync_add_and_fetch(&object->referenceCount, -1) == 0) {
+    if (__atomic_fetch_sub(&object->referenceCount, 1, __ATOMIC_RELEASE) == 1) {
+      __atomic_thread_fence(__ATOMIC_ACQUIRE);
       $(object, dealloc);
     }
   }
@@ -353,7 +349,16 @@ ident retain(ident obj) {
 
   assert(object);
 
-  __sync_add_and_fetch(&object->referenceCount, 1);
+  /* A reference count of zero means another thread is already inside dealloc,
+   * and the caller is retaining memory that is about to be freed. */
+  unsigned int referenceCount = __atomic_load_n(&object->referenceCount, __ATOMIC_RELAXED);
+  do {
+    if (referenceCount == 0) {
+      fprintf(stderr, "%s: %p is being deallocated\n", __func__, object);
+      abort();
+    }
+  } while (!__atomic_compare_exchange_n(&object->referenceCount, &referenceCount,
+      referenceCount + 1, 1, __ATOMIC_RELAXED, __ATOMIC_RELAXED));
 
   return obj;
 }
