@@ -31,10 +31,6 @@
 
 #if defined(_WIN32)
 #include <Windows.h>
-#elif defined(__APPLE__)
-#include <mach-o/dyld.h>
-#else
-#include <link.h>
 #endif
 
 #if HAVE_UNISTD_H
@@ -49,11 +45,22 @@ size_t _pageSize;
 static Class *_classes;
 
 /**
- * @brief The registered images providing Classes.
+ * @brief A registered image: the handle the application holds, and the base
+ * address that the Classes it declares record in `Class::image`.
  */
-#define MAX_CLASS_IMAGES 8
-static ident _classImages[MAX_CLASS_IMAGES];
-static size_t _classImageCount;
+typedef struct ClassImage ClassImage;
+struct ClassImage {
+  ident handle;
+  ident image;
+  ClassImage *next;
+};
+
+/**
+ * @brief The registered images providing Classes, most recently added first.
+ * @remarks A plain list rather than a MutableArray because Class is beneath the
+ * collections: initializing one here would reenter `_initialize`.
+ */
+static ClassImage *_images;
 
 /**
  * @brief Called `atexit` to teardown Objectively.
@@ -79,6 +86,16 @@ static void teardown(void) {
     free(c);
 
     c = next;
+  }
+
+  ClassImage *i = _images;
+  while (i) {
+
+    ClassImage *next = i->next;
+
+    free(i);
+
+    i = next;
   }
 }
 
@@ -207,85 +224,62 @@ ident _cast(const Class *clazz, const ident obj) {
   return (ident) obj;
 }
 
-/**
- * @return The base address of the image behind `handle`, or `NULL`.
- * @remarks There is no one call for this. Windows hands out the module itself as
- * the handle, which `GetModuleFileName` confirms rather than assumes; glibc
- * answers from the link map; and macOS, which has neither, is left with matching
- * the handle against the loaded images.
- */
-static ident imageForHandle(ident handle) {
+void addClassImage(ident handle, const ident address) {
 
   assert(handle);
+  assert(address);
 
-#if defined(_WIN32)
-  char path[MAX_PATH];
-  if (GetModuleFileNameA((HMODULE) handle, path, sizeof(path))) {
-    return handle;
+  const ident image = imageForAddress(address);
+  if (image == NULL) {
+    fprintf(stderr, "%s: no image contains %p\n", __func__, address);
+    abort();
   }
-#elif defined(__APPLE__)
-  for (uint32_t i = 0; i < _dyld_image_count(); i++) {
 
-    /* RTLD_LOCAL is not the default on macOS, and dlopen of an image already
-     * loaded promotes it to the global namespace, which would put every image in
-     * the process there - undoing the isolation the caller loaded it for. */
-    ident image = dlopen(_dyld_get_image_name(i), RTLD_LAZY | RTLD_NOLOAD | RTLD_LOCAL);
-    if (image == NULL) {
-      continue;
-    }
+  ClassImage *classImage = calloc(1, sizeof(ClassImage));
+  assert(classImage);
 
-    dlclose(image);
+  classImage->handle = handle;
+  classImage->image = image;
+  classImage->next = _images;
 
-    if (image == handle) {
-      return (ident) _dyld_get_image_header(i);
-    }
-  }
-#else
-  struct link_map *map;
-  if (dlinfo(handle, RTLD_DI_LINKMAP, &map) == 0 && map) {
-    return (ident) map->l_addr;
-  }
-#endif
-
-  return NULL;
+  _images = classImage;
 }
 
 void removeClassImage(ident handle) {
 
   assert(handle);
 
-  for (size_t i = 0; i < _classImageCount; i++) {
-    if (_classImages[i] == handle) {
-      memmove(_classImages + i, _classImages + i + 1, (_classImageCount - i - 1) * sizeof(ident));
-      _classImages[--_classImageCount] = NULL;
+  ident image = NULL;
+
+  /* Retired in place rather than unlinked, so that a concurrent classForName
+   * parked on this node still has a next to follow. Retired nodes are skipped
+   * on lookup and freed at teardown; reusing one would put a newly registered
+   * image where the retired one sat, and lookup order is newest first. */
+  for (ClassImage *i = _images; i; i = i->next) {
+    if (i->handle == handle) {
+      image = i->image;
+      i->handle = NULL;
+      i->image = NULL;
       break;
     }
   }
 
-  const ident image = imageForHandle(handle);
   if (image == NULL) {
-    return;
+    fprintf(stderr, "%s: %p was never registered\n", __func__, handle);
+    abort();
   }
 
-  Class **link = &_classes;
-  while (*link) {
-    Class *clazz = *link;
+  Class **classes = &_classes;
+  while (*classes) {
+    Class *clazz = *classes;
 
     if (clazz->image == image) {
-      *link = clazz->next;
+      *classes = clazz->next;
       clazz->next = NULL;
     } else {
-      link = &clazz->next;
+      classes = &clazz->next;
     }
   }
-}
-
-void addClassImage(ident handle) {
-
-  assert(handle);
-  assert(_classImageCount < MAX_CLASS_IMAGES);
-
-  _classImages[_classImageCount++] = handle;
 }
 
 Class *classForName(const char *name) {
@@ -304,8 +298,10 @@ Class *classForName(const char *name) {
       Class *clazz = NULL;
       Class *(*archetype)(void) = NULL;
 
-      for (size_t i = _classImageCount; i > 0 && archetype == NULL; i--) {
-        archetype = dlsym(_classImages[i - 1], s);
+      for (ClassImage *i = _images; i && archetype == NULL; i = i->next) {
+        if (i->handle) {
+          archetype = dlsym(i->handle, s);
+        }
       }
 
       if (archetype == NULL) {

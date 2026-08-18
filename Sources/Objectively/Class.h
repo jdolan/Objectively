@@ -138,6 +138,8 @@ OBJECTIVELY_EXPORT ident _cast(const Class *clazz, const ident obj);
 /**
  * @brief Registers an image that provides Classes, e.g. a plugin.
  * @param handle A handle from `dlopen`.
+ * @param address Any address within that image, such as the entry point the
+ * application resolved from `handle`.
  * @details `classForName` resolves a name it has not yet initialized through the
  * process-wide namespace, which holds only images loaded `RTLD_GLOBAL`, and which
  * Windows does not have at all. An application that loads Classes from a plugin
@@ -147,8 +149,12 @@ OBJECTIVELY_EXPORT ident _cast(const Class *clazz, const ident obj);
  * loaded plugin answers ahead of the one it replaced.
  * @remarks Resolution is by Objectively's own convention, the Class name
  * prefixed with an underscore, so nothing about the image has to be declared.
+ * @remarks `address` is what identifies the image. Classes record the base
+ * address of the image that declared them, and the platforms report that for an
+ * address, not for a handle, so this takes one that the caller can vouch for.
+ * Aborts if no loaded image contains it.
  */
-OBJECTIVELY_EXPORT void addClassImage(ident handle);
+OBJECTIVELY_EXPORT void addClassImage(ident handle, const ident address);
 
 /**
  * @brief Unregisters an image, and every Class it declared.
@@ -168,6 +174,8 @@ OBJECTIVELY_EXPORT void addClassImage(ident handle);
  * and its interface, which are not reclaimed.
  * @remarks MUST be called while the handle is still open, and only once nothing
  * instantiated from that image survives.
+ * @remarks Aborts if `handle` was never registered, rather than leaving the
+ * Classes it declared behind, which is the failure this exists to prevent.
  */
 OBJECTIVELY_EXPORT void removeClassImage(ident handle);
 
