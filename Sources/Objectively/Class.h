@@ -174,8 +174,9 @@ OBJECTIVELY_EXPORT void addClassImage(ident handle, const ident address);
  * and its interface, which are not reclaimed.
  * @remarks MUST be called while the handle is still open, and only once nothing
  * instantiated from that image survives.
- * @remarks Aborts if `handle` was never registered, rather than leaving the
- * Classes it declared behind, which is the failure this exists to prevent.
+ * @remarks Aborts if `handle` was not registered, rather than leaving the
+ * Classes it declared behind, which is the failure this exists to prevent. Two
+ * calls for the same handle abort on the second, whichever order they arrive in.
  */
 OBJECTIVELY_EXPORT void removeClassImage(ident handle);
 

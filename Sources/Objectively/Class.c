@@ -262,6 +262,11 @@ void removeClassImage(ident handle) {
 
   assert(handle);
 
+  /* Held from the search to the last unlink, so that retiring an image and
+   * dropping its Classes is one operation, and a second call for the same handle
+   * finds it already gone. Nothing here reaches the loader. */
+  pthread_mutex_lock(&_classesLock);
+
   ident image = NULL;
 
   /* Retired in place rather than unlinked, so that a concurrent classForName
@@ -282,8 +287,6 @@ void removeClassImage(ident handle) {
     fprintf(stderr, "%s: %p was never registered\n", __func__, handle);
     abort();
   }
-
-  pthread_mutex_lock(&_classesLock);
 
   Class **classes = &_classes;
   while (*classes) {
