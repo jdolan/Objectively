@@ -25,6 +25,7 @@
 
 #include <assert.h>
 #include <dlfcn.h>
+#include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -45,6 +46,12 @@ size_t _pageSize;
 static Class *_classes;
 
 /**
+ * @brief Guards the structure of `_classes`. MUST NOT be held across `dlsym`,
+ * `dlopen`, or a Class initializer, each of which can reenter `_initialize`.
+ */
+static pthread_mutex_t _classesLock = PTHREAD_MUTEX_INITIALIZER;
+
+/**
  * @brief A registered image: the handle the application holds, and the base
  * address that the Classes it declares record in `Class::image`.
  */
@@ -57,8 +64,9 @@ struct ClassImage {
 
 /**
  * @brief The registered images providing Classes, most recently added first.
- * @remarks A plain list rather than a MutableArray because Class is beneath the
- * collections: initializing one here would reenter `_initialize`.
+ * Published atomically rather than under `_classesLock`, which cannot be held
+ * across the `dlsym` this list exists for. A plain list rather than a
+ * MutableArray, because Class is beneath the collections.
  */
 static ClassImage *_images;
 
@@ -176,12 +184,14 @@ Class *_initialize(const ClassDef *def) {
    * a compound literal with automatic storage. */
   clazz->image = imageForAddress((ident) def->name);
 
-  /* Link before publishing, and relaxed on the way in: the CAS is a read-modify-
-   * write, so it joins the release sequence of the push it displaces, and a
-   * reader acquiring the head synchronizes with every publisher behind it. The
-   * head is only copied here, never dereferenced, so there is nothing to acquire. */
-  clazz->next = __atomic_load_n(&_classes, __ATOMIC_RELAXED);
-  while (!__atomic_compare_exchange_n(&_classes, &clazz->next, clazz, 1, __ATOMIC_RELEASE, __ATOMIC_RELAXED)) ;
+  /* Taken here rather than around the whole function: def.initialize above can
+   * reach other archetypes, and so this, before that Class is published. */
+  pthread_mutex_lock(&_classesLock);
+
+  clazz->next = _classes;
+  _classes = clazz;
+
+  pthread_mutex_unlock(&_classesLock);
 
   return clazz;
 }
@@ -273,6 +283,8 @@ void removeClassImage(ident handle) {
     abort();
   }
 
+  pthread_mutex_lock(&_classesLock);
+
   Class **classes = &_classes;
   while (*classes) {
     Class *clazz = *classes;
@@ -284,17 +296,27 @@ void removeClassImage(ident handle) {
       classes = &clazz->next;
     }
   }
+
+  pthread_mutex_unlock(&_classesLock);
 }
 
 Class *classForName(const char *name) {
 
   if (name) {
-    Class *c = __atomic_load_n(&_classes, __ATOMIC_ACQUIRE);
+    pthread_mutex_lock(&_classesLock);
+
+    Class *c = _classes;
     while (c) {
       if (strcmp(name, c->def.name) == 0) {
-        return c;
+        break;
       }
       c = c->next;
+    }
+
+    pthread_mutex_unlock(&_classesLock);
+
+    if (c) {
+      return c;
     }
 
     char *s;
