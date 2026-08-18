@@ -159,6 +159,10 @@ Class *_initialize(const ClassDef *def) {
    * a compound literal with automatic storage. */
   clazz->image = imageForAddress((ident) def->name);
 
+  /* Link before publishing, and relaxed on the way in: the CAS is a read-modify-
+   * write, so it joins the release sequence of the push it displaces, and a
+   * reader acquiring the head synchronizes with every publisher behind it. The
+   * head is only copied here, never dereferenced, so there is nothing to acquire. */
   clazz->next = __atomic_load_n(&_classes, __ATOMIC_RELAXED);
   while (!__atomic_compare_exchange_n(&_classes, &clazz->next, clazz, 1, __ATOMIC_RELEASE, __ATOMIC_RELAXED)) ;
 
