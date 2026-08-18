@@ -52,7 +52,7 @@ Tests/Objectively/List
 Tests/Objectively/Null
 Tests/Objectively/Number
 Tests/Objectively/Object
-Tests/Objectively/Operation
+Tests/Objectively/OperationQueue
 Tests/Objectively/PointerArray
 Tests/Objectively/Regexp
 Tests/Objectively/RESTClient
