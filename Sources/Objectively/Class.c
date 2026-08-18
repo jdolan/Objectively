@@ -25,16 +25,13 @@
 
 #include <assert.h>
 #include <dlfcn.h>
+#include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
 #if defined(_WIN32)
 #include <Windows.h>
-#elif defined(__APPLE__)
-#include <mach-o/dyld.h>
-#else
-#include <link.h>
 #endif
 
 #if HAVE_UNISTD_H
@@ -49,11 +46,29 @@ size_t _pageSize;
 static Class *_classes;
 
 /**
- * @brief The registered images providing Classes.
+ * @brief Guards the structure of `_classes`. MUST NOT be held across `dlsym`,
+ * `dlopen`, or a Class initializer, each of which can reenter `_initialize`.
  */
-#define MAX_CLASS_IMAGES 8
-static ident _classImages[MAX_CLASS_IMAGES];
-static size_t _classImageCount;
+static pthread_mutex_t _classesLock = PTHREAD_MUTEX_INITIALIZER;
+
+/**
+ * @brief A registered image: the handle the application holds, and the base
+ * address that the Classes it declares record in `Class::image`.
+ */
+typedef struct ClassImage ClassImage;
+struct ClassImage {
+  ident handle;
+  ident image;
+  ClassImage *next;
+};
+
+/**
+ * @brief The registered images providing Classes, most recently added first.
+ * Published atomically rather than under `_classesLock`, which cannot be held
+ * across the `dlsym` this list exists for. A plain list rather than a
+ * MutableArray, because Class is beneath the collections.
+ */
+static ClassImage *_images;
 
 /**
  * @brief Called `atexit` to teardown Objectively.
@@ -79,6 +94,16 @@ static void teardown(void) {
     free(c);
 
     c = next;
+  }
+
+  ClassImage *i = _images;
+  while (i) {
+
+    ClassImage *next = i->next;
+
+    free(i);
+
+    i = next;
   }
 }
 
@@ -159,12 +184,14 @@ Class *_initialize(const ClassDef *def) {
    * a compound literal with automatic storage. */
   clazz->image = imageForAddress((ident) def->name);
 
-  /* Link before publishing, and relaxed on the way in: the CAS is a read-modify-
-   * write, so it joins the release sequence of the push it displaces, and a
-   * reader acquiring the head synchronizes with every publisher behind it. The
-   * head is only copied here, never dereferenced, so there is nothing to acquire. */
-  clazz->next = __atomic_load_n(&_classes, __ATOMIC_RELAXED);
-  while (!__atomic_compare_exchange_n(&_classes, &clazz->next, clazz, 1, __ATOMIC_RELEASE, __ATOMIC_RELAXED)) ;
+  /* Taken here rather than around the whole function: def.initialize above can
+   * reach other archetypes, and so this, before that Class is published. */
+  pthread_mutex_lock(&_classesLock);
+
+  clazz->next = _classes;
+  _classes = clazz;
+
+  pthread_mutex_unlock(&_classesLock);
 
   return clazz;
 }
@@ -207,96 +234,92 @@ ident _cast(const Class *clazz, const ident obj) {
   return (ident) obj;
 }
 
-/**
- * @return The base address of the image behind `handle`, or `NULL`.
- * @remarks There is no one call for this. Windows hands out the module itself as
- * the handle, which `GetModuleFileName` confirms rather than assumes; glibc
- * answers from the link map; and macOS, which has neither, is left with matching
- * the handle against the loaded images.
- */
-static ident imageForHandle(ident handle) {
+void addClassImage(ident handle, const ident address) {
 
   assert(handle);
+  assert(address);
 
-#if defined(_WIN32)
-  char path[MAX_PATH];
-  if (GetModuleFileNameA((HMODULE) handle, path, sizeof(path))) {
-    return handle;
+  const ident image = imageForAddress(address);
+  if (image == NULL) {
+    fprintf(stderr, "%s: no image contains %p\n", __func__, address);
+    abort();
   }
-#elif defined(__APPLE__)
-  for (uint32_t i = 0; i < _dyld_image_count(); i++) {
 
-    /* RTLD_LOCAL is not the default on macOS, and dlopen of an image already
-     * loaded promotes it to the global namespace, which would put every image in
-     * the process there - undoing the isolation the caller loaded it for. */
-    ident image = dlopen(_dyld_get_image_name(i), RTLD_LAZY | RTLD_NOLOAD | RTLD_LOCAL);
-    if (image == NULL) {
-      continue;
-    }
+  ClassImage *classImage = calloc(1, sizeof(ClassImage));
+  assert(classImage);
 
-    dlclose(image);
+  classImage->handle = handle;
+  classImage->image = image;
 
-    if (image == handle) {
-      return (ident) _dyld_get_image_header(i);
-    }
-  }
-#else
-  struct link_map *map;
-  if (dlinfo(handle, RTLD_DI_LINKMAP, &map) == 0 && map) {
-    return (ident) map->l_addr;
-  }
-#endif
-
-  return NULL;
+  /* Published the same way a Class is, and for the same reason: classForName
+   * walks this list on any thread. */
+  classImage->next = __atomic_load_n(&_images, __ATOMIC_RELAXED);
+  while (!__atomic_compare_exchange_n(&_images, &classImage->next, classImage, 1,
+      __ATOMIC_RELEASE, __ATOMIC_RELAXED)) ;
 }
 
 void removeClassImage(ident handle) {
 
   assert(handle);
 
-  for (size_t i = 0; i < _classImageCount; i++) {
-    if (_classImages[i] == handle) {
-      memmove(_classImages + i, _classImages + i + 1, (_classImageCount - i - 1) * sizeof(ident));
-      _classImages[--_classImageCount] = NULL;
+  /* Held from the search to the last unlink, so that retiring an image and
+   * dropping its Classes is one operation, and a second call for the same handle
+   * finds it already gone. Nothing here reaches the loader. */
+  pthread_mutex_lock(&_classesLock);
+
+  ident image = NULL;
+
+  /* Retired in place rather than unlinked, so that a concurrent classForName
+   * parked on this node still has a next to follow, and never reads a node that
+   * has been freed. Retiring is a single store of the handle it matches on, so
+   * that walk sees this image or does not, and never half of it. Retired nodes
+   * are freed at teardown; reusing one would put a newly registered image where
+   * the retired one sat, and lookup order is newest first. */
+  for (ClassImage *i = __atomic_load_n(&_images, __ATOMIC_ACQUIRE); i; i = i->next) {
+    if (__atomic_load_n(&i->handle, __ATOMIC_ACQUIRE) == handle) {
+      image = i->image;
+      __atomic_store_n(&i->handle, NULL, __ATOMIC_RELEASE);
       break;
     }
   }
 
-  const ident image = imageForHandle(handle);
   if (image == NULL) {
-    return;
+    fprintf(stderr, "%s: %p was never registered\n", __func__, handle);
+    abort();
   }
 
-  Class **link = &_classes;
-  while (*link) {
-    Class *clazz = *link;
+  Class **classes = &_classes;
+  while (*classes) {
+    Class *clazz = *classes;
 
     if (clazz->image == image) {
-      *link = clazz->next;
+      *classes = clazz->next;
       clazz->next = NULL;
     } else {
-      link = &clazz->next;
+      classes = &clazz->next;
     }
   }
-}
 
-void addClassImage(ident handle) {
-
-  assert(handle);
-  assert(_classImageCount < MAX_CLASS_IMAGES);
-
-  _classImages[_classImageCount++] = handle;
+  pthread_mutex_unlock(&_classesLock);
 }
 
 Class *classForName(const char *name) {
 
   if (name) {
-    Class *c = __atomic_load_n(&_classes, __ATOMIC_ACQUIRE);
+    pthread_mutex_lock(&_classesLock);
+
+    Class *c = _classes;
     while (c) {
       if (strcmp(name, c->def.name) == 0) {
-        return c;
+        break;
       }
       c = c->next;
+    }
+
+    pthread_mutex_unlock(&_classesLock);
+
+    if (c) {
+      return c;
     }
 
     char *s;
@@ -304,8 +327,13 @@ Class *classForName(const char *name) {
       Class *clazz = NULL;
       Class *(*archetype)(void) = NULL;
 
-      for (size_t i = _classImageCount; i > 0 && archetype == NULL; i--) {
-        archetype = dlsym(_classImages[i - 1], s);
+      for (ClassImage *i = __atomic_load_n(&_images, __ATOMIC_ACQUIRE);
+          i && archetype == NULL; i = i->next) {
+
+        ident handle = __atomic_load_n(&i->handle, __ATOMIC_ACQUIRE);
+        if (handle) {
+          archetype = dlsym(handle, s);
+        }
       }
 
       if (archetype == NULL) {

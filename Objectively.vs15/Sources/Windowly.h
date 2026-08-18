@@ -88,12 +88,3 @@ OBJECTIVELY_EXPORT int vasprintf(char **str, const char *fmt, va_list args);
 #endif
 
 #define iconv(c0, c1, c2, c3, c4) libiconv(c0, (const char **)c1, c2, c3, c4)
-
-// INTERLOCK STUFF
-OBJECTIVELY_EXPORT long __sync_val_compare_and_swap_(long volatile *Destination, long Exchange, long Comparand);
-OBJECTIVELY_EXPORT long __sync_add_and_fetch_(long volatile *Append, long Value);
-OBJECTIVELY_EXPORT void *__sync_lock_test_and_set_(void *volatile *Target, void *Value);
-
-#define __sync_val_compare_and_swap(c0, c1, c2) __sync_val_compare_and_swap_((volatile long *) c0, c1, c2)
-#define __sync_add_and_fetch(c0, c1) __sync_add_and_fetch_((volatile long *) c0, c1)
-#define __sync_lock_test_and_set(c0, c1) __sync_lock_test_and_set_((void *volatile *) c0, (void *) c1)
