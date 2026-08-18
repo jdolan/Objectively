@@ -240,9 +240,12 @@ void addClassImage(ident handle, const ident address) {
 
   classImage->handle = handle;
   classImage->image = image;
-  classImage->next = _images;
 
-  _images = classImage;
+  /* Published the same way a Class is, and for the same reason: classForName
+   * walks this list on any thread. */
+  classImage->next = __atomic_load_n(&_images, __ATOMIC_RELAXED);
+  while (!__atomic_compare_exchange_n(&_images, &classImage->next, classImage, 1,
+      __ATOMIC_RELEASE, __ATOMIC_RELAXED)) ;
 }
 
 void removeClassImage(ident handle) {
@@ -252,14 +255,15 @@ void removeClassImage(ident handle) {
   ident image = NULL;
 
   /* Retired in place rather than unlinked, so that a concurrent classForName
-   * parked on this node still has a next to follow. Retired nodes are skipped
-   * on lookup and freed at teardown; reusing one would put a newly registered
-   * image where the retired one sat, and lookup order is newest first. */
-  for (ClassImage *i = _images; i; i = i->next) {
-    if (i->handle == handle) {
+   * parked on this node still has a next to follow, and never reads a node that
+   * has been freed. Retiring is a single store of the handle it matches on, so
+   * that walk sees this image or does not, and never half of it. Retired nodes
+   * are freed at teardown; reusing one would put a newly registered image where
+   * the retired one sat, and lookup order is newest first. */
+  for (ClassImage *i = __atomic_load_n(&_images, __ATOMIC_ACQUIRE); i; i = i->next) {
+    if (__atomic_load_n(&i->handle, __ATOMIC_ACQUIRE) == handle) {
       image = i->image;
-      i->handle = NULL;
-      i->image = NULL;
+      __atomic_store_n(&i->handle, NULL, __ATOMIC_RELEASE);
       break;
     }
   }
@@ -298,9 +302,12 @@ Class *classForName(const char *name) {
       Class *clazz = NULL;
       Class *(*archetype)(void) = NULL;
 
-      for (ClassImage *i = _images; i && archetype == NULL; i = i->next) {
-        if (i->handle) {
-          archetype = dlsym(i->handle, s);
+      for (ClassImage *i = __atomic_load_n(&_images, __ATOMIC_ACQUIRE);
+          i && archetype == NULL; i = i->next) {
+
+        ident handle = __atomic_load_n(&i->handle, __ATOMIC_ACQUIRE);
+        if (handle) {
+          archetype = dlsym(handle, s);
         }
       }
 
