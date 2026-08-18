@@ -248,6 +248,21 @@ struct RESTClientInterface {
       RESTClientCompletion completion, void *user_data);
 
   /**
+   * @fn void RESTClient::postAsyncWithHeaders(RESTClient *self, const char *url, const Data *body, const char **headers, RESTClientCompletion completion, void *user_data)
+   * @brief Asynchronously performs an HTTP `POST` request with additional headers.
+   * @param self The RESTClient.
+   * @param url The URL string.
+   * @param body The request body, or `NULL`.
+   * @param headers A `NULL`-terminated array of alternating field/value C strings
+   * (e.g. `{ "X-Field", "value", NULL }`), or `NULL` for no additional headers.
+   * @param completion The completion handler.
+   * @param user_data User data passed through to `completion`.
+   * @memberof RESTClient
+   */
+  void (*postAsyncWithHeaders)(RESTClient *self, const char *url, const Data *body,
+      const char **headers, RESTClientCompletion completion, void *user_data);
+
+  /**
    * @fn int RESTClient::put(RESTClient *self, const char *url, const Data *body, Data **data)
    * @brief Synchronously performs an HTTP `PUT` request.
    * @param self The RESTClient.
