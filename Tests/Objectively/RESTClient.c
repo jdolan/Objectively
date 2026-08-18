@@ -74,7 +74,7 @@ START_TEST(get) {
   RESTClient *client = $(alloc(RESTClient), init);
 
   Data *data = NULL;
-  const int32_t status = $(client, get, HTTPBIN_GET, &data);
+  const int32_t status = $(client, get, HTTPBIN_GET, NULL, &data);
 
   ck_assert_int_eq(200, status);
   ck_assert_ptr_ne(NULL, data);
@@ -103,7 +103,7 @@ START_TEST(post) {
   ck_assert_ptr_ne(NULL, body);
 
   Data *data = NULL;
-  const int32_t status = $(client, post, HTTPBIN_POST, body, &data);
+  const int32_t status = $(client, post, HTTPBIN_POST, body, NULL, &data);
   release(body);
 
   ck_assert_int_eq(200, status);
@@ -135,7 +135,7 @@ START_TEST(patch) {
   ck_assert_ptr_ne(NULL, body);
 
   Data *data = NULL;
-  const int32_t status = $(client, patch, HTTPBIN_PATCH, body, &data);
+  const int32_t status = $(client, patch, HTTPBIN_PATCH, body, NULL, &data);
   release(body);
 
   ck_assert_int_eq(200, status);
@@ -189,7 +189,7 @@ START_TEST(getAsync) {
   Date *deadline = $$(Date, dateWithTimeSinceNow, &timeout);
 
   synchronized(condition, {
-    $(client, getAsync, HTTPBIN_GET, getAsync_completion, NULL);
+    $(client, getAsync, HTTPBIN_GET, NULL, getAsync_completion, NULL);
     ck_assert($(condition, waitUntilDate, deadline));
   });
 
@@ -206,7 +206,7 @@ START_TEST(head) {
 
   RESTClient *client = $(alloc(RESTClient), init);
 
-  const int32_t status = $(client, head, HTTPBIN_GET);
+  const int32_t status = $(client, head, HTTPBIN_GET, NULL);
   ck_assert_int_eq(200, status);
 
   release(client);
@@ -218,7 +218,7 @@ START_TEST(options) {
   RESTClient *client = $(alloc(RESTClient), init);
 
   Data *data = NULL;
-  const int32_t status = $(client, options, HTTPBIN_GET, &data);
+  const int32_t status = $(client, options, HTTPBIN_GET, NULL, &data);
   ck_assert(status == 200 || status == 204);
 
   release(data);
@@ -236,7 +236,7 @@ int main(int argc, char **argv) {
 
   RESTClient *probe = $(alloc(RESTClient), initWithSession, session);
   Data *data = NULL;
-  const int32_t status = $(probe, get, HTTPBIN_GET, &data);
+  const int32_t status = $(probe, get, HTTPBIN_GET, NULL, &data);
   release(data);
   release(probe);
   release(session);
