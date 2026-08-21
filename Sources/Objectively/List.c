@@ -33,6 +33,26 @@
 #pragma mark - Object
 
 /**
+ * @see Object::copy(const Object *)
+ * @remarks Elements are not retained, since List does not retain them on
+ * insertion either. The copy does not inherit `destroy`, and so borrows the
+ * elements rather than owning them, as `filteredList` and `mappedList` do.
+ */
+static Object *copy(const Object *self) {
+
+  const List *this = (List *) self;
+
+  List *copy = $(alloc(List), init);
+  assert(copy);
+
+  for (ListNode *node = this->head; node; node = node->next) {
+    $(copy, append, node->element);
+  }
+
+  return (Object *) copy;
+}
+
+/**
  * @see Object::dealloc(Object *)
  */
 static void dealloc(Object *self) {
@@ -357,6 +377,7 @@ static void _sort(List *self, Comparator comparator) {
  */
 static void initialize(Class *clazz) {
 
+  ((ObjectInterface *) clazz->interface)->copy = copy;
   ((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
   ((ListInterface *) clazz->interface)->append = append;
