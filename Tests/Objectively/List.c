@@ -25,6 +25,46 @@
 
 #include "Objectively.h"
 
+START_TEST(copyList) {
+
+  int one = 1, two = 2, three = 3, four = 4;
+
+  List *list = $(alloc(List), init);
+
+  $(list, append, &one);
+  $(list, append, &two);
+  $(list, append, &three);
+
+  List *copy = (List *) $((Object *) list, copy);
+
+  ck_assert_ptr_ne(list, copy);
+  ck_assert_int_eq(3, copy->count);
+
+  ListNode *a = list->head, *b = copy->head;
+  while (a && b) {
+    ck_assert_ptr_eq(a->element, b->element);
+    ck_assert_ptr_ne(a, b);
+    a = a->next;
+    b = b->next;
+  }
+  ck_assert_ptr_eq(NULL, a);
+  ck_assert_ptr_eq(NULL, b);
+
+  $(copy, append, &four);
+
+  ck_assert_int_eq(4, copy->count);
+  ck_assert_int_eq(3, list->count);
+
+  release(copy);
+
+  ck_assert_int_eq(3, list->count);
+  ck_assert_ptr_eq(&one, list->head->element);
+  ck_assert_ptr_eq(&three, list->tail->element);
+
+  release(list);
+
+} END_TEST
+
 START_TEST(appendElement) {
 
   int one = 1, two = 2, three = 3;
@@ -384,6 +424,7 @@ int main(int argc, char **argv) {
   TCase *tcase = tcase_create("List");
   tcase_add_test(tcase, appendElement);
   tcase_add_test(tcase, containsElement);
+  tcase_add_test(tcase, copyList);
   tcase_add_test(tcase, enumerate);
   tcase_add_test(tcase, filter);
   tcase_add_test(tcase, filteredList);
