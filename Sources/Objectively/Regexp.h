@@ -48,10 +48,10 @@ struct Regexp {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  RegexpInterface *interface;
+  RegexpInterface *interface[0];
 
   /**
    * @brief The pattern

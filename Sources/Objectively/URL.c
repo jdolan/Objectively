@@ -254,7 +254,6 @@ Class *_URL(void) {
       .name = "URL",
       .superclass = _Object(),
       .instanceSize = sizeof(URL),
-      .interfaceOffset = offsetof(URL, interface),
       .interfaceSize = sizeof(URLInterface),
       .initialize = initialize,
       .destroy = destroy,

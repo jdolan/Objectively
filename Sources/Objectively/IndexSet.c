@@ -376,7 +376,6 @@ Class *_IndexSet(void) {
       .name = "IndexSet",
       .superclass = _Object(),
       .instanceSize = sizeof(IndexSet),
-      .interfaceOffset = offsetof(IndexSet, interface),
       .interfaceSize = sizeof(IndexSetInterface),
       .initialize = initialize,
     });

@@ -46,10 +46,10 @@ struct Boole {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  BooleInterface *interface;
+  BooleInterface *interface[0];
 
   /**
    * @brief The backing bool.

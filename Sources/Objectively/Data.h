@@ -55,10 +55,10 @@ struct Data {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  DataInterface *interface;
+  DataInterface *interface[0];
 
   /**
    * @brief The bytes.

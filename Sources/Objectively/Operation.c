@@ -240,7 +240,6 @@ Class *_Operation(void) {
       .name = "Operation",
       .superclass = _Object(),
       .instanceSize = sizeof(Operation),
-      .interfaceOffset = offsetof(Operation, interface),
       .interfaceSize = sizeof(OperationInterface),
       .initialize = initialize,
     });

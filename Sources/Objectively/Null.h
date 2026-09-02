@@ -47,10 +47,10 @@ struct Null {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  NullInterface *interface;
+  NullInterface *interface[0];
 };
 
 /**

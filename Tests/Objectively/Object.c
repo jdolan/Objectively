@@ -55,10 +55,59 @@ START_TEST(object) {
 
 } END_TEST
 
+static int reclassedHash(const Object *self) {
+  return 0x5eed;
+}
+
+static void reclassInitialize(Class *clazz) {
+  ((ObjectInterface *) clazz->interface)->hash = reclassedHash;
+}
+
+/*
+ * Dispatch and type identity both resolve through Object::clazz, so reassigning it
+ * must change what `$` calls immediately, while the instance remains a kind of its
+ * original Class. Guards against reintroducing a per-instance interface pointer.
+ */
+START_TEST(reclass) {
+
+  Object *object = $(alloc(Object), init);
+  ck_assert_ptr_ne(NULL, object);
+
+  const int hash = $(object, hash);
+  ck_assert_int_ne(0x5eed, hash);
+
+  Class *proxy = _initialize(&(const ClassDef) {
+    .name = "Object(reclass)",
+    .superclass = classof(object),
+    .instanceSize = classof(object)->def.instanceSize,
+    .interfaceSize = classof(object)->def.interfaceSize,
+    .initialize = reclassInitialize,
+  });
+
+  object->clazz = proxy;
+
+  ck_assert_ptr_eq(proxy, classof(object));
+  ck_assert_int_eq(0x5eed, $(object, hash));
+
+  ck_assert($(object, isKindOfClass, proxy));
+  ck_assert($(object, isKindOfClass, _Object()));
+  ck_assert(instanceof(Object, object));
+
+  ck_assert($(object, isEqual, object));
+
+  object->clazz = _Object();
+
+  ck_assert_int_eq(hash, $(object, hash));
+
+  release(object);
+
+} END_TEST
+
 int main(int argc, char **argv) {
 
   TCase *tcase = tcase_create("Object");
   tcase_add_test(tcase, object);
+  tcase_add_test(tcase, reclass);
 
   Suite *suite = suite_create("Object");
   suite_add_tcase(suite, tcase);

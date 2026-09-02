@@ -135,7 +135,6 @@ Class *_Lock(void) {
       .name = "Lock",
       .superclass = _Object(),
       .instanceSize = sizeof(Lock),
-      .interfaceOffset = offsetof(Lock, interface),
       .interfaceSize = sizeof(LockInterface),
       .initialize = initialize,
     });

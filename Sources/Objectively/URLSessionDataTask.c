@@ -234,7 +234,6 @@ Class *_URLSessionDataTask(void) {
       .name = "URLSessionDataTask",
       .superclass = _URLSessionTask(),
       .instanceSize = sizeof(URLSessionDataTask),
-      .interfaceOffset = offsetof(URLSessionDataTask, interface),
       .interfaceSize = sizeof(URLSessionDataTaskInterface),
       .initialize = initialize,
     });

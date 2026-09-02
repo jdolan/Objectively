@@ -97,7 +97,6 @@ Class *_NumberFormatter(void) {
       .name = "NumberFormatter",
       .superclass = _Object(),
       .instanceSize = sizeof(NumberFormatter),
-      .interfaceOffset = offsetof(NumberFormatter, interface),
       .interfaceSize = sizeof(NumberFormatterInterface),
       .initialize = initialize,
     });

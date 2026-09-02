@@ -1,6 +1,6 @@
 AC_PREREQ(2.69)
 
-AC_INIT([Objectively], [2.0.23], [jay@jaydolan.com])
+AC_INIT([Objectively], [2.2.0], [jay@jaydolan.com])
 
 AC_CONFIG_HEADERS([Sources/Objectively/Config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -13,7 +13,7 @@ AC_USE_SYSTEM_EXTENSIONS
 AC_PROG_CC
 AC_PROG_CXX
 LT_INIT
-AC_SUBST([LT_VERSION], [2:0:0])
+AC_SUBST([RELEASE_VERSION], [m4_bpatsubst(AC_PACKAGE_VERSION, [\.[0-9]*$], [])])
 
 AM_INIT_AUTOMAKE([foreign])
 AM_SILENT_RULES([yes])

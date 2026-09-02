@@ -349,7 +349,6 @@ Class *_RESTClient(void) {
       .name = "RESTClient",
       .superclass = _Object(),
       .instanceSize = sizeof(RESTClient),
-      .interfaceOffset = offsetof(RESTClient, interface),
       .interfaceSize = sizeof(RESTClientInterface),
       .initialize = initialize,
       .destroy = destroy,

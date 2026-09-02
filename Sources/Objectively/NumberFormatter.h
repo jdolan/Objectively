@@ -62,10 +62,10 @@ struct NumberFormatter {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  NumberFormatterInterface *interface;
+  NumberFormatterInterface *interface[0];
 
   /**
    * @brief The format string.

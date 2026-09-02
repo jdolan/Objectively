@@ -37,9 +37,9 @@ struct Hello {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    */
-  HelloInterface *interface;
+  HelloInterface *interface[0];
 
   /**
    * @brief The greeting.

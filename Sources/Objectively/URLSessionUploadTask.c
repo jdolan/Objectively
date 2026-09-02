@@ -93,7 +93,6 @@ Class *_URLSessionUploadTask(void) {
       .name = "URLSessionUploadTask",
       .superclass = _URLSessionTask(),
       .instanceSize = sizeof(URLSessionUploadTask),
-      .interfaceOffset = offsetof(URLSessionUploadTask, interface),
       .interfaceSize = sizeof(URLSessionUploadTaskInterface),
       .initialize = initialize,
     });

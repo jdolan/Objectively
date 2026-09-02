@@ -117,7 +117,6 @@ Class *_URLResponse(void) {
       .name = "URLResponse",
       .superclass = _Object(),
       .instanceSize = sizeof(URLResponse),
-      .interfaceOffset = offsetof(URLResponse, interface),
       .interfaceSize = sizeof(URLResponseInterface),
       .initialize = initialize,
     });

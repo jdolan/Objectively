@@ -77,10 +77,10 @@ struct JSONContext {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  JSONContextInterface *interface;
+  JSONContextInterface *interface[0];
 
   /**
    * @brief Errors accumulated during the operation.

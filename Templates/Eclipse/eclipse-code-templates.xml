@@ -64,7 +64,6 @@ Class *_${file_base}(void) {
       .name = "${file_base}",
       .superclass = _Object(),
       .instanceSize = sizeof(${file_base}),
-      .interfaceOffset = offsetof(${file_base}, interface),
       .interfaceSize = sizeof(${file_base}Interface),
       .initialize = initialize,
     });
@@ -100,10 +99,10 @@ struct ${file_base} {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  ${file_base}Interface *interface;
+  ${file_base}Interface *interface[0];
 
   //.. 
 };

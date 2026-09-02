@@ -49,10 +49,10 @@ struct URLSessionConfiguration {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  URLSessionConfigurationInterface *interface;
+  URLSessionConfigurationInterface *interface[0];
 
   /**
    * @brief Credentials for URLRequests requiring authentication.

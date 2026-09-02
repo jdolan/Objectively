@@ -49,10 +49,10 @@ struct PointerArray {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  PointerArrayInterface *interface;
+  PointerArrayInterface *interface[0];
 
   /**
    * @brief The capacity.

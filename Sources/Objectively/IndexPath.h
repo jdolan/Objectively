@@ -45,10 +45,10 @@ struct IndexPath {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  IndexPathInterface *interface;
+  IndexPathInterface *interface[0];
 
   /**
    * @brief The indexes.

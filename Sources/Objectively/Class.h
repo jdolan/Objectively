@@ -69,11 +69,6 @@ struct ClassDef {
   size_t instanceSize;
 
   /**
-   * @brief The interface offset (required).
-   */
-  ptrdiff_t interfaceOffset;
-
-  /**
    * @brief The interface size (required).
    */
   size_t interfaceSize;
@@ -257,11 +252,22 @@ OBJECTIVELY_EXPORT size_t _pageSize;
 
 /**
  * @brief Invoke an instance method.
+ * @details The receiver's static type selects the interface layout: `typeof` of its
+ * zero-length `interface` member yields e.g. `StringInterface *` without that member
+ * occupying any storage. The interface itself is resolved through `Object::clazz`, so
+ * dispatch always follows the receiver's live Class, with every override in place.
+ * @remarks Instance dispatch, `isKindOfClass`, and `cast` all resolve through the same
+ * field, `Object::clazz`. There is no per-instance copy of the interface pointer. One
+ * consequence: reassigning `clazz` after allocation (Objective-C's `object_setClass`) is
+ * sound - type checks and dispatch see the new Class together, immediately. That makes
+ * runtime re-classing viable: proxies, spies, KVO-style observation, and Classes minted
+ * purely for behavior that reuse an existing struct's `instanceSize` with an overridden
+ * interface, without that struct declaring anything of its own (see issue #23).
  */
 #define $(obj, method, ...) \
   ({ \
-    typeof(obj) _obj = obj; \
-    _obj->interface->method(_obj, ## __VA_ARGS__); \
+    typeof(obj) _obj = (obj); \
+    ((typeof(_obj->interface[0])) classof(_obj)->interface)->method(_obj, ## __VA_ARGS__); \
   })
 
 /// @brief Invoke a Class method.

@@ -19,7 +19,7 @@ typedef struct FooInterface FooInterface;
 
 struct Foo {
   Bar bar;                     // parent first (starts-with inheritance)
-  FooInterface *interface;
+  FooInterface *interface[0];  // zero-length: carries a type for `$`, no storage; MUST follow the parent
   // instance variables...
 };
 
@@ -82,7 +82,6 @@ Class *_Foo(void) {
       .name = "Foo",
       .superclass = _Bar(),
       .instanceSize = sizeof(Foo),
-      .interfaceOffset = offsetof(Foo, interface),
       .interfaceSize = sizeof(FooInterface),
       .initialize = initialize,
     });

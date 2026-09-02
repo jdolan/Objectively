@@ -124,7 +124,6 @@ Class *_JSONPath(void) {
       .name = "JSONPath",
       .superclass = _Object(),
       .instanceSize = sizeof(JSONPath),
-      .interfaceOffset = offsetof(JSONPath, interface),
       .interfaceSize = sizeof(JSONPathInterface),
       .initialize = initialize,
       .destroy = destroy,

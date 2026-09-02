@@ -47,10 +47,10 @@ struct Lock {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  LockInterface *interface;
+  LockInterface *interface[0];
 
   /**
    * @brief The backing lock.

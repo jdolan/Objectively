@@ -68,7 +68,6 @@ Class *_URLSessionConfiguration(void) {
       .name = "URLSessionConfiguration",
       .superclass = _Object(),
       .instanceSize = sizeof(URLSessionConfiguration),
-      .interfaceOffset = offsetof(URLSessionConfiguration, interface),
       .interfaceSize = sizeof(URLSessionConfigurationInterface),
       .initialize = initialize,
     });

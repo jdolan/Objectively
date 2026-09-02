@@ -768,7 +768,6 @@ Class *_Dictionary(void) {
       .name = "Dictionary",
       .superclass = _Object(),
       .instanceSize = sizeof(Dictionary),
-      .interfaceOffset = offsetof(Dictionary, interface),
       .interfaceSize = sizeof(DictionaryInterface),
       .initialize = initialize,
     });

@@ -61,10 +61,10 @@ struct Array {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  ArrayInterface *interface;
+  ArrayInterface *interface[0];
 
   /**
    * @brief The count of elements.

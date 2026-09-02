@@ -49,10 +49,10 @@ struct OperationQueue {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  OperationQueueInterface *interface;
+  OperationQueueInterface *interface[0];
 
   /**
    * @private

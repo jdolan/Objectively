@@ -247,7 +247,6 @@ Class *_Resource(void) {
       .name = "Resource",
       .superclass = _Object(),
       .instanceSize = sizeof(Resource),
-      .interfaceOffset = offsetof(Resource, interface),
       .interfaceSize = sizeof(ResourceInterface),
       .initialize = initialize,
       .destroy = destroy,

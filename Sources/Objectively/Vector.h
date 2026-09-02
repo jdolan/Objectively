@@ -56,10 +56,10 @@ struct Vector {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  VectorInterface *interface;
+  VectorInterface *interface[0];
 
   /**
    * @brief The capacity.

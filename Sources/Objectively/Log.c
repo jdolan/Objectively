@@ -291,7 +291,6 @@ Class *_Log(void) {
       .name = "Log",
       .superclass = _Object(),
       .instanceSize = sizeof(Log),
-      .interfaceOffset = offsetof(Log, interface),
       .interfaceSize = sizeof(LogInterface),
       .initialize = initialize,
       .destroy = destroy,

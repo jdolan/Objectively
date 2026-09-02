@@ -827,7 +827,6 @@ Class *_JSONContext(void) {
       .name = "JSONContext",
       .superclass = _Object(),
       .instanceSize = sizeof(JSONContext),
-      .interfaceOffset = offsetof(JSONContext, interface),
       .interfaceSize = sizeof(JSONContextInterface),
       .initialize = initialize,
       .destroy = destroy,

@@ -766,7 +766,6 @@ Class *_Array(void) {
       .name = "Array",
       .superclass = _Object(),
       .instanceSize = sizeof(Array),
-      .interfaceOffset = offsetof(Array, interface),
       .interfaceSize = sizeof(ArrayInterface),
       .initialize = initialize,
     });

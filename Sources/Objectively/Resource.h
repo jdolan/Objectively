@@ -58,10 +58,10 @@ struct Resource {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  ResourceInterface *interface;
+  ResourceInterface *interface[0];
 
   /**
    * @brief The resource data.

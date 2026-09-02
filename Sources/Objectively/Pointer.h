@@ -45,10 +45,10 @@ struct Pointer {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  PointerInterface *interface;
+  PointerInterface *interface[0];
 
   /**
    * @brief An optional destructor that, if set, is called on `dealloc`.

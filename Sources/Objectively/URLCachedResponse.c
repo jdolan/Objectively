@@ -170,7 +170,6 @@ Class *_URLCachedResponse(void) {
       .name = "URLCachedResponse",
       .superclass = _Object(),
       .instanceSize = sizeof(URLCachedResponse),
-      .interfaceOffset = offsetof(URLCachedResponse, interface),
       .interfaceSize = sizeof(URLCachedResponseInterface),
       .initialize = initialize,
     });

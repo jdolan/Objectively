@@ -49,10 +49,10 @@ struct URL {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  URLInterface *interface;
+  URLInterface *interface[0];
 
   /**
    * @brief The fragment.

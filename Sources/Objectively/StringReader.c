@@ -198,7 +198,6 @@ Class *_StringReader(void) {
       .name = "StringReader",
       .superclass = _Object(),
       .instanceSize = sizeof(StringReader),
-      .interfaceOffset = offsetof(StringReader, interface),
       .interfaceSize = sizeof(StringReaderInterface),
       .initialize = initialize,
     });

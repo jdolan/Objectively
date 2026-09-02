@@ -172,7 +172,6 @@ Class *_Error(void) {
       .name = "Error",
       .superclass = _Object(),
       .instanceSize = sizeof(Error),
-      .interfaceOffset = offsetof(Error, interface),
       .interfaceSize = sizeof(ErrorInterface),
       .initialize = initialize,
     });

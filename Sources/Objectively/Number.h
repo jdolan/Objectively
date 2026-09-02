@@ -46,10 +46,10 @@ struct Number {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  NumberInterface *interface;
+  NumberInterface *interface[0];
 
   /**
    * @brief The backing value.

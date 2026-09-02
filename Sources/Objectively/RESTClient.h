@@ -67,10 +67,10 @@ struct RESTClient {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  RESTClientInterface *interface;
+  RESTClientInterface *interface[0];
 
   /**
    * @brief The URLSession backing this client.

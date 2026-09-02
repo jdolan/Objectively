@@ -47,10 +47,10 @@ struct URLResponse {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  URLResponseInterface *interface;
+  URLResponseInterface *interface[0];
 
   /**
    * @brief The HTTP response headers.

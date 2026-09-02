@@ -58,10 +58,10 @@ struct DateFormatter {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  DateFormatterInterface *interface;
+  DateFormatterInterface *interface[0];
 
   /**
    * @brief The UTF-8 encoded format string.

@@ -187,7 +187,6 @@ Class *_PointerArray(void) {
       .name = "PointerArray",
       .superclass = _Object(),
       .instanceSize = sizeof(PointerArray),
-      .interfaceOffset = offsetof(PointerArray, interface),
       .interfaceSize = sizeof(PointerArrayInterface),
       .initialize = initialize,
     });

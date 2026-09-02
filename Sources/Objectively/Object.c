@@ -141,7 +141,6 @@ Class *_Object(void) {
     clazz = _initialize(&(const ClassDef) {
       .name = "Object",
       .instanceSize = sizeof(Object),
-      .interfaceOffset = offsetof(Object, interface),
       .interfaceSize = sizeof(ObjectInterface),
       .initialize = initialize,
     });
