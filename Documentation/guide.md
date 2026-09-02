@@ -145,8 +145,9 @@ To invoke a supertype's method implementation, use the `super` macro.
 An instance carries no interface pointer of its own: `$`, `cast`, and `isKindOfClass` all resolve through `Object::clazz`. Reassigning `clazz` after allocation therefore changes an instance's behavior and its type identity together, immediately. This permits one-off Classes minted purely for behavior, with no struct, header, or archetype of their own:
 
 ```c
-static void resizeHandle_captureEvent(Control *self, const SDL_Event *event) {
+static bool resizeHandle_captureEvent(Control *self, const SDL_Event *event) {
     // ...
+    return true;
 }
 
 static void resizeHandle_initialize(Class *clazz) {
