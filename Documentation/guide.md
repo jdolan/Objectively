@@ -9,15 +9,17 @@ A guide to declaring, implementing, and using your own types with Objectively.
 
 Every Objectively type consists of three components:
 
-**1. The instance struct** — starts with the parent type, then the interface pointer, then instance variables:
+**1. The instance struct** — starts with the parent type, then the zero-length interface member, then instance variables:
 
 ```c
 struct Hello {
-    Object object;           // parent (starts-with = single inheritance)
-    HelloInterface *interface;
+    Object object;               // parent (starts-with = single inheritance)
+    HelloInterface *interface[0]; // carries a type, occupies no storage
     const char *greeting;
 };
 ```
+
+The `interface` member exists only so that `$` can read its type with `typeof`; it holds nothing. The interface itself lives on the Class and is reached through `Object::clazz`. The member MUST directly follow the parent, where its pointer alignment costs no padding.
 
 **2. The interface struct** — starts with the parent interface, then method function pointers:
 
@@ -76,7 +78,6 @@ Class *_Hello(void) {
             .name            = "Hello",
             .superclass      = _Object(),
             .instanceSize    = sizeof(Hello),
-            .interfaceOffset = offsetof(Hello, interface),
             .interfaceSize   = sizeof(HelloInterface),
             .initialize      = initialize,
         });
@@ -138,6 +139,32 @@ To invoke a supertype's method implementation, use the `super` macro.
 ```c
     super(Object, self, dealloc);
 ```
+
+## Re-classing an instance
+
+An instance carries no interface pointer of its own: `$`, `cast`, and `isKindOfClass` all resolve through `Object::clazz`. Reassigning `clazz` after allocation therefore changes an instance's behavior and its type identity together, immediately. This permits one-off Classes minted purely for behavior, with no struct, header, or archetype of their own:
+
+```c
+static void resizeHandle_captureEvent(Control *self, const SDL_Event *event) {
+    // ...
+}
+
+static void resizeHandle_initialize(Class *clazz) {
+    ((ControlInterface *) clazz->interface)->captureEvent = resizeHandle_captureEvent;
+}
+
+Class *proxy = _initialize(&(const ClassDef) {
+    .name          = "Control(resizeHandle)",
+    .superclass    = classof(resizeHandle),
+    .instanceSize  = classof(resizeHandle)->def.instanceSize,
+    .interfaceSize = classof(resizeHandle)->def.interfaceSize,
+    .initialize    = resizeHandle_initialize,
+});
+
+((Object *) resizeHandle)->clazz = proxy;
+```
+
+The new Class inherits every method of the original, since `_initialize` copies the superclass interface before calling `initialize`. The instance struct MUST NOT change: a Class minted this way SHOULD reuse the superclass's `instanceSize` exactly, because the memory has already been allocated.
 
 ## Managing memory
 

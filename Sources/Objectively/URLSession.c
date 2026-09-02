@@ -420,7 +420,6 @@ Class *_URLSession(void) {
       .name = "URLSession",
       .superclass = _Object(),
       .instanceSize = sizeof(URLSession),
-      .interfaceOffset = offsetof(URLSession, interface),
       .interfaceSize = sizeof(URLSessionInterface),
       .initialize = initialize,
       .destroy = destroy,

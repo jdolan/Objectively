@@ -63,10 +63,10 @@ struct URLRequest {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  URLRequestInterface *interface;
+  URLRequestInterface *interface[0];
 
   /**
    * @brief The HTTP request body, sent as `POST` or `PUT` data.

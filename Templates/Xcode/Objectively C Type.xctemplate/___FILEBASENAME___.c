@@ -70,7 +70,6 @@ Class *____FILEBASENAMEASIDENTIFIER___(void) {
       .name = "___FILEBASENAMEASIDENTIFIER___",
       .superclass = ____VARIABLE_superclass:identifier___(),
       .instanceSize = sizeof(___FILEBASENAMEASIDENTIFIER___),
-      .interfaceOffset = offsetof(___FILEBASENAMEASIDENTIFIER___, interface),
       .interfaceSize = sizeof(___FILEBASENAMEASIDENTIFIER___Interface),
       .initialize = initialize,
     });

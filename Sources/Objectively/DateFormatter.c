@@ -138,7 +138,6 @@ Class *_DateFormatter(void) {
       .name = "DateFormatter",
       .superclass = _Object(),
       .instanceSize = sizeof(DateFormatter),
-      .interfaceOffset = offsetof(DateFormatter, interface),
       .interfaceSize = sizeof(DateFormatterInterface),
       .initialize = initialize,
     });

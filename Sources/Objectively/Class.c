@@ -157,7 +157,6 @@ Class *_initialize(const ClassDef *def) {
   assert(def->name);
   assert(def->instanceSize);
   assert(def->interfaceSize);
-  assert(def->interfaceOffset);
 
   Class *clazz = calloc(1, sizeof(Class));
   assert(clazz);
@@ -206,11 +205,6 @@ ident _alloc(Class *clazz) {
   object->magic = OBJECTIVELY_MAGIC;
   object->clazz = clazz;
   object->referenceCount = 1;
-
-  ident interface = clazz->interface;
-  do {
-    *(ident *) (obj + clazz->def.interfaceOffset) = interface;
-  } while ((clazz = clazz->def.superclass));
 
   return obj;
 }

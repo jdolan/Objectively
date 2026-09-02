@@ -49,10 +49,10 @@ struct URLCachedResponse {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  URLCachedResponseInterface *interface;
+  URLCachedResponseInterface *interface[0];
 
   /**
    * @brief The HTTP response.

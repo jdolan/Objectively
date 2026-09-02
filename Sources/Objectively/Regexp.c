@@ -205,7 +205,6 @@ Class *_Regexp(void) {
       .name = "Regexp",
       .superclass = _Object(),
       .instanceSize = sizeof(Regexp),
-      .interfaceOffset = offsetof(Regexp, interface),
       .interfaceSize = sizeof(RegexpInterface),
       .initialize = initialize,
     });

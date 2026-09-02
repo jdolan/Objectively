@@ -186,7 +186,6 @@ Class *_IndexPath(void) {
       .name = "IndexPath",
       .superclass = _Object(),
       .instanceSize = sizeof(IndexPath),
-      .interfaceOffset = offsetof(IndexPath, interface),
       .interfaceSize = sizeof(IndexPathInterface),
       .initialize = initialize,
     });

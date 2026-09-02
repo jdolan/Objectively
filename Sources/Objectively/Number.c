@@ -204,7 +204,6 @@ Class *_Number(void) {
       .name = "Number",
       .superclass = _Object(),
       .instanceSize = sizeof(Number),
-      .interfaceOffset = offsetof(Number, interface),
       .interfaceSize = sizeof(NumberInterface),
       .initialize = initialize,
     });

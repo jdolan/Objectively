@@ -49,10 +49,10 @@ struct Condition {
   Lock lock;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  ConditionInterface *interface;
+  ConditionInterface *interface[0];
 
   /**
    * @brief The backing condition.

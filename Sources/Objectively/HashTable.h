@@ -85,10 +85,10 @@ struct HashTable {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  HashTableInterface *interface;
+  HashTableInterface *interface[0];
 
   /**
    * @brief The number of entries.

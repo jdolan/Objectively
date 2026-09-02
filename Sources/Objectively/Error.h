@@ -46,10 +46,10 @@ struct Error {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  ErrorInterface *interface;
+  ErrorInterface *interface[0];
 
   /**
    * @brief The error code.

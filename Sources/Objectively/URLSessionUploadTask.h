@@ -48,10 +48,10 @@ struct URLSessionUploadTask {
   URLSessionTask urlSessionTask;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  URLSessionUploadTaskInterface *interface;
+  URLSessionUploadTaskInterface *interface[0];
 
   /**
    * @brief The FILE to upload.

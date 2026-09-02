@@ -62,10 +62,10 @@ struct URLSession {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  URLSessionInterface *interface;
+  URLSessionInterface *interface[0];
 
   /**
    * @private

@@ -82,7 +82,6 @@ Class *_Hello(void) {
       .name = "Hello",
       .superclass = _Object(),
       .instanceSize = sizeof(Hello),
-      .interfaceOffset = offsetof(Hello, interface),
       .interfaceSize = sizeof(HelloInterface),
       .initialize = initialize,
     });

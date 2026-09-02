@@ -66,10 +66,10 @@ struct Log {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  LogInterface *interface;
+  LogInterface *interface[0];
 
   /**
    * @brief The format string, defaults to `LOG_FORMAT_DEFAULT`.

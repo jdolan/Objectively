@@ -58,10 +58,10 @@ struct Thread {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  ThreadInterface *interface;
+  ThreadInterface *interface[0];
 
   /**
    * @brief The user data.

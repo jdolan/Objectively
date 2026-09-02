@@ -73,10 +73,10 @@ struct URLSessionTask {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  URLSessionTaskInterface *interface;
+  URLSessionTaskInterface *interface[0];
 
   /**
    * @private

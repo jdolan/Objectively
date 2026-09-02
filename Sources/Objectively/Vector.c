@@ -456,7 +456,6 @@ Class *_Vector(void) {
       .name = "Vector",
       .superclass = _Object(),
       .instanceSize = sizeof(Vector),
-      .interfaceOffset = offsetof(Vector, interface),
       .interfaceSize = sizeof(VectorInterface),
       .initialize = initialize,
     });

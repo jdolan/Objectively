@@ -355,7 +355,6 @@ Class *_OperationQueue(void) {
       .name = "OperationQueue",
       .superclass = _Object(),
       .instanceSize = sizeof(OperationQueue),
-      .interfaceOffset = offsetof(OperationQueue, interface),
       .interfaceSize = sizeof(OperationQueueInterface),
       .initialize = initialize,
     });

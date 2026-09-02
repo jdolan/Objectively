@@ -334,7 +334,6 @@ Class *_HashTable(void) {
       .name = "HashTable",
       .superclass = _Object(),
       .instanceSize = sizeof(HashTable),
-      .interfaceOffset = offsetof(HashTable, interface),
       .interfaceSize = sizeof(HashTableInterface),
       .initialize = initialize,
     });

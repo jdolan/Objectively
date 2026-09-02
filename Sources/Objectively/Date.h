@@ -79,10 +79,10 @@ struct Date {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  DateInterface *interface;
+  DateInterface *interface[0];
 
   /**
    * @brief The time.

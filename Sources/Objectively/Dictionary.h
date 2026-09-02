@@ -65,10 +65,10 @@ struct Dictionary {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  DictionaryInterface *interface;
+  DictionaryInterface *interface[0];
 
   /**
    * @brief The internal size (number of bins).

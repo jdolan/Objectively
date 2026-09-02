@@ -30,10 +30,10 @@ struct ___FILEBASENAMEASIDENTIFIER___ {
   ___VARIABLE_superclass:identifier___ ___VARIABLE_superclassMember:identifier___;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  ___FILEBASENAMEASIDENTIFIER___Interface *interface;
+  ___FILEBASENAMEASIDENTIFIER___Interface *interface[0];
 
   //..
 };

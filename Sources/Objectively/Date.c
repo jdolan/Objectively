@@ -228,7 +228,6 @@ Class *_Date(void) {
       .name = "Date",
       .superclass = _Object(),
       .instanceSize = sizeof(Date),
-      .interfaceOffset = offsetof(Date, interface),
       .interfaceSize = sizeof(DateInterface),
       .initialize = initialize,
     });

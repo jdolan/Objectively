@@ -46,10 +46,10 @@ struct IndexSet {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  IndexSetInterface *interface;
+  IndexSetInterface *interface[0];
 
   /**
    * @brief The indexes.

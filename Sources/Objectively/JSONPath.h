@@ -47,10 +47,10 @@ struct JSONPath {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  JSONPathInterface *interface;
+  JSONPathInterface *interface[0];
 };
 
 /**

@@ -89,7 +89,6 @@ Class *_Null(void) {
       .name = "Null",
       .superclass = _Object(),
       .instanceSize = sizeof(Null),
-      .interfaceOffset = offsetof(Null, interface),
       .interfaceSize = sizeof(NullInterface),
       .initialize = initialize,
       .destroy = destroy,

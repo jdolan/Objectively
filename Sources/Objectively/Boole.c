@@ -131,7 +131,6 @@ Class *_Boole(void) {
       .name = "Boole",
       .superclass = _Object(),
       .instanceSize = sizeof(Boole),
-      .interfaceOffset = offsetof(Boole, interface),
       .interfaceSize = sizeof(BooleInterface),
       .initialize = initialize,
       .destroy = destroy,

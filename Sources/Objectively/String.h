@@ -74,10 +74,10 @@ struct String {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  StringInterface *interface;
+  StringInterface *interface[0];
 
   /**
    * @brief The backing null-terminated UTF-8 encoded character array.

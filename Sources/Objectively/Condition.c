@@ -147,7 +147,6 @@ Class *_Condition(void) {
       .name = "Condition",
       .superclass = _Lock(),
       .instanceSize = sizeof(Condition),
-      .interfaceOffset = offsetof(Condition, interface),
       .interfaceSize = sizeof(ConditionInterface),
       .initialize = initialize,
     });

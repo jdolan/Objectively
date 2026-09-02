@@ -55,10 +55,10 @@ struct Object {
   Class *clazz;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  ObjectInterface *interface;
+  ObjectInterface *interface[0];
 
   /**
    * @brief The reference count of this Object.

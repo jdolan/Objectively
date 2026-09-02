@@ -417,7 +417,6 @@ Class *_URLCache(void) {
       .name = "URLCache",
       .superclass = _Object(),
       .instanceSize = sizeof(URLCache),
-      .interfaceOffset = offsetof(URLCache, interface),
       .interfaceSize = sizeof(URLCacheInterface),
       .initialize = initialize,
     });

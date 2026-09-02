@@ -52,10 +52,10 @@ struct StringReader {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  StringReaderInterface *interface;
+  StringReaderInterface *interface[0];
 
   /**
    * @brief The StringReader head.

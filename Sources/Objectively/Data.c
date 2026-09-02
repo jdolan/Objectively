@@ -425,7 +425,6 @@ Class *_Data(void) {
       .name = "Data",
       .superclass = _Object(),
       .instanceSize = sizeof(Data),
-      .interfaceOffset = offsetof(Data, interface),
       .interfaceSize = sizeof(DataInterface),
       .initialize = initialize,
     });

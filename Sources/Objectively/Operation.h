@@ -58,10 +58,10 @@ struct Operation {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  OperationInterface *interface;
+  OperationInterface *interface[0];
 
   /**
    * @private

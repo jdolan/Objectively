@@ -212,7 +212,6 @@ Class *_Thread(void) {
       .name = "Thread",
       .superclass = _Object(),
       .instanceSize = sizeof(Thread),
-      .interfaceOffset = offsetof(Thread, interface),
       .interfaceSize = sizeof(ThreadInterface),
       .initialize = initialize,
     });

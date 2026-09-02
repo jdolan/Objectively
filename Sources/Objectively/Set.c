@@ -675,7 +675,6 @@ Class *_Set(void) {
       .name = "Set",
       .superclass = _Object(),
       .instanceSize = sizeof(Set),
-      .interfaceOffset = offsetof(Set, interface),
       .interfaceSize = sizeof(SetInterface),
       .initialize = initialize,
     });

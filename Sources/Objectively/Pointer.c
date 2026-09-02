@@ -143,7 +143,6 @@ Class *_Pointer(void) {
       .name = "Pointer",
       .superclass = _Object(),
       .instanceSize = sizeof(Pointer),
-      .interfaceOffset = offsetof(Pointer, interface),
       .interfaceSize = sizeof(PointerInterface),
       .initialize = initialize,
     });

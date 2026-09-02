@@ -60,10 +60,10 @@ struct Set {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  SetInterface *interface;
+  SetInterface *interface[0];
 
   /**
    * @brief The internal size (number of bins).

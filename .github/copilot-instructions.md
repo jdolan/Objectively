@@ -29,14 +29,15 @@ Tests use [libcheck](https://libcheck.github.io/check/). Each test file has its 
 
 Every Objectively type consists of exactly three pieces:
 
-1. **Instance struct** (`Foo.h`) — starts with the parent type, then the interface pointer, then instance variables:
+1. **Instance struct** (`Foo.h`) — starts with the parent type, then the zero-length interface member, then instance variables:
    ```c
    struct Foo {
-     Bar bar;               // parent (starts-with composition = single inheritance)
-     FooInterface *interface;
+     Bar bar;                    // parent (starts-with composition = single inheritance)
+     FooInterface *interface[0]; // carries a type, occupies no storage; `$` reads it via typeof
      int myField;
    };
    ```
+   The `interface` member MUST directly follow the parent: it has pointer alignment, so placing it after a smaller field would introduce padding.
 
 2. **Interface struct** (`Foo.h`) — starts with the parent interface, then method function pointers:
    ```c
@@ -58,7 +59,7 @@ The `.c` file contains `static` implementations, an `initialize` function that w
 
 ### Dispatch macros
 ```c
-$(obj, method, args)          // instance method dispatch (obj->interface->method)
+$(obj, method, args)          // instance method dispatch (classof(obj)->interface->method)
 $$(Type, method, args)        // class/static method dispatch
 super(Type, obj, method, args) // call superclass implementation
 alloc(Type)                   // allocate an instance
@@ -95,7 +96,6 @@ Class *_Foo(void) {
       .name = "Foo",
       .superclass = _Bar(),
       .instanceSize = sizeof(Foo),
-      .interfaceOffset = offsetof(Foo, interface),
       .interfaceSize = sizeof(FooInterface),
       .initialize = initialize,
     });

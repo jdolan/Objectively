@@ -49,10 +49,10 @@ struct URLSessionDataTask {
   URLSessionTask urlSessionTask;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  URLSessionDataTaskInterface *interface;
+  URLSessionDataTaskInterface *interface[0];
 
   /**
    * @brief The data received.

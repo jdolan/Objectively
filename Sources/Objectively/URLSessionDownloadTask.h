@@ -48,10 +48,10 @@ struct URLSessionDownloadTask {
   URLSessionTask urlSessionTask;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  URLSessionDownloadTaskInterface *interface;
+  URLSessionDownloadTaskInterface *interface[0];
 
   /**
    * @brief The target FILE.

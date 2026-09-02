@@ -412,7 +412,6 @@ Class *_List(void) {
       .name = "List",
       .superclass = _Object(),
       .instanceSize = sizeof(List),
-      .interfaceOffset = offsetof(List, interface),
       .interfaceSize = sizeof(ListInterface),
       .initialize = initialize,
     });

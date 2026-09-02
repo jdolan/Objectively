@@ -210,7 +210,6 @@ Class *_URLRequest(void) {
       .name = "URLRequest",
       .superclass = _Object(),
       .instanceSize = sizeof(URLRequest),
-      .interfaceOffset = offsetof(URLRequest, interface),
       .interfaceSize = sizeof(URLRequestInterface),
       .initialize = initialize,
     });

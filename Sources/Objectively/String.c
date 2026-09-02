@@ -1005,7 +1005,6 @@ Class *_String(void) {
       .name = "String",
       .superclass = _Object(),
       .instanceSize = sizeof(String),
-      .interfaceOffset = offsetof(String, interface),
       .interfaceSize = sizeof(StringInterface),
       .initialize = initialize,
     });

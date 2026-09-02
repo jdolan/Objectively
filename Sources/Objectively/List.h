@@ -65,10 +65,10 @@ struct List {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  ListInterface *interface;
+  ListInterface *interface[0];
 
   /**
    * @brief The number of elements.

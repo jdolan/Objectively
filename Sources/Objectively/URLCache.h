@@ -49,10 +49,10 @@ struct URLCache {
   Object object;
 
   /**
-   * @brief The interface.
+   * @brief The interface type.
    * @protected
    */
-  URLCacheInterface *interface;
+  URLCacheInterface *interface[0];
 
   /**
    * @brief The lock protecting this cache.
