@@ -117,7 +117,7 @@ libObjectively_la_CFLAGS = \
 
 libObjectively_la_LDFLAGS = \
 	@HOST_LDFLAGS@ \
-	-version-info @LT_VERSION@
+	-release @RELEASE_VERSION@
 
 libObjectively_la_LIBADD = \
 	-lpthread \
