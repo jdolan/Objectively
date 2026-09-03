@@ -52,7 +52,6 @@
 			dependencies = (
 				CE4A539C1F40E0DD00927421 /* PBXTargetDependency */,
 				CE4A539E1F40E0DF00927421 /* PBXTargetDependency */,
-				CE4A53A01F40E0E100927421 /* PBXTargetDependency */,
 			);
 			name = "Objectively-Examples";
 			productName = "Objectively-Tests";
@@ -75,7 +74,6 @@
 		CE4A53141F40DFF800927421 /* Hello.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D9131C481E390096DD31 /* Hello.c */; };
 		CE4A531B1F40DFFC00927421 /* Objectively.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* Objectively.framework */; };
 		CE4A53211F40E00700927421 /* HelloCpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CED1578E1C4B1A2100FBA2DE /* HelloCpp.cpp */; };
-		CE4A53281F40E00A00927421 /* Objectively.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* Objectively.framework */; };
 		CE4A53A41F40E28C00927421 /* Null.c in Sources */ = {isa = PBXBuildFile; fileRef = CE76D95A1C481E390096DD31 /* Null.c */; };
 		CE4F535A202A8C6D00D71C07 /* Objectively.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* Objectively.framework */; };
 		CE4F5360202A8C8600D71C07 /* Resource.c in Sources */ = {isa = PBXBuildFile; fileRef = CE4F5352202A8BDD00D71C07 /* Resource.c */; };
@@ -248,13 +246,6 @@
 			remoteGlobalIDString = CE76D9671C48218E0096DD31;
 			remoteInfo = Objectively;
 		};
-		CE4A53241F40E00A00927421 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CE76D9671C48218E0096DD31;
-			remoteInfo = Objectively;
-		};
 		CE4A53331F40E0C800927421 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
@@ -401,13 +392,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = CE4A53151F40DFFC00927421;
 			remoteInfo = "Objectively-HelloCpp";
-		};
-		CE4A539F1F40E0E100927421 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CE4A53221F40E00A00927421;
-			remoteInfo = "Objectively-HelloObjC";
 		};
 		CE4F5355202A8C6D00D71C07 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -655,15 +639,6 @@
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 		CE4A531C1F40DFFC00927421 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-		CE4A53291F40E00A00927421 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -925,7 +900,6 @@
 		CE423A501F544CFB002767E7 /* Hello.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hello.h; sourceTree = "<group>"; };
 		CE4A53131F40DFE800927421 /* Objectively-Hello */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Hello"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A53201F40DFFC00927421 /* Objectively-HelloCpp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-HelloCpp"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE4A532D1F40E00A00927421 /* Objectively-HelloObjC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-HelloObjC"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4F5352202A8BDD00D71C07 /* Resource.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Resource.c; sourceTree = "<group>"; };
 		CE4F535F202A8C6D00D71C07 /* Objectively-Resource */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-Resource"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4F5363202A924B00D71C07 /* Config.h.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Config.h.in; sourceTree = "<group>"; };
@@ -1115,14 +1089,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE4A531B1F40DFFC00927421 /* Objectively.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CE4A53271F40E00A00927421 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CE4A53281F40E00A00927421 /* Objectively.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1578,7 +1544,6 @@
 				CEEB02FA1F40DD4F004C2EDD /* Objectively-URLSession */,
 				CE4A53131F40DFE800927421 /* Objectively-Hello */,
 				CE4A53201F40DFFC00927421 /* Objectively-HelloCpp */,
-				CE4A532D1F40E00A00927421 /* Objectively-HelloObjC */,
 				CE594BE21F49F931004D74FF /* Objectively-StringReader */,
 				CE4F535F202A8C6D00D71C07 /* Objectively-Resource */,
 				CE129E6E23B8242B007D0433 /* Objectively-Vector */,
@@ -1752,24 +1717,6 @@
 			name = "Objectively-HelloCpp";
 			productName = "Objectively-Test";
 			productReference = CE4A53201F40DFFC00927421 /* Objectively-HelloCpp */;
-			productType = "com.apple.product-type.tool";
-		};
-		CE4A53221F40E00A00927421 /* Objectively-HelloObjC */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CE4A532A1F40E00A00927421 /* Build configuration list for PBXNativeTarget "Objectively-HelloObjC" */;
-			buildPhases = (
-				CE4A53251F40E00A00927421 /* Sources */,
-				CE4A53271F40E00A00927421 /* Frameworks */,
-				CE4A53291F40E00A00927421 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CE4A53231F40E00A00927421 /* PBXTargetDependency */,
-			);
-			name = "Objectively-HelloObjC";
-			productName = "Objectively-Test";
-			productReference = CE4A532D1F40E00A00927421 /* Objectively-HelloObjC */;
 			productType = "com.apple.product-type.tool";
 		};
 		CE4F5353202A8C6D00D71C07 /* Objectively-Resource */ = {
@@ -2324,7 +2271,6 @@
 				CE4A532F1F40E0A600927421 /* Objectively-Tests */,
 				CE4A53071F40DFE800927421 /* Objectively-Hello */,
 				CE4A53151F40DFFC00927421 /* Objectively-HelloCpp */,
-				CE4A53221F40E00A00927421 /* Objectively-HelloObjC */,
 				CE4A53651F40E0CD00927421 /* Objectively-Examples */,
 			);
 		};
@@ -2358,7 +2304,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd $BUILT_PRODUCTS_DIR &&\n./Objectively-Array &&\n./Objectively-Boole &&\n./Objectively-Data &&\n./Objectively-Date &&\n./Objectively-Dictionary &&\n./Objectively-HashTable &&\n./Objectively-IndexPath &&\n./Objectively-IndexSet &&\n./Objectively-JSON &&\n./Objectively-List &&\n./Objectively-Log &&\n./Objectively-Null &&\n./Objectively-Number &&\n./Objectively-Object &&\n./Objectively-Operation &&\n./Objectively-Regexp &&\n./Objectively-Resource &&\n./Objectively-RESTClient &&\n./Objectively-Set &&\n./Objectively-String &&\n./Objectively-StringReader &&\n./Objectively-Thread &&\n./Objectively-URL &&\n./Objectively-URLCache &&\n./Objectively-URLSession &&\n./Objectively-Vector\n";
+			shellScript = "cd $BUILT_PRODUCTS_DIR &&\n./Objectively-Array &&\n./Objectively-Boole &&\n./Objectively-Data &&\n./Objectively-Date &&\n./Objectively-Dictionary &&\n./Objectively-HashTable &&\n./Objectively-IndexPath &&\n./Objectively-IndexSet &&\n./Objectively-JSON \"$SRCROOT/Tests/Objectively/Fixtures/test.json\" &&\n./Objectively-List &&\n./Objectively-Log &&\n./Objectively-Null &&\n./Objectively-Number &&\n./Objectively-Object &&\n./Objectively-Operation &&\n./Objectively-Regexp &&\n./Objectively-Resource &&\n./Objectively-RESTClient &&\n./Objectively-Set &&\n./Objectively-String &&\n./Objectively-StringReader &&\n./Objectively-Thread &&\n./Objectively-URL &&\n./Objectively-URLCache &&\n./Objectively-URLSession &&\n./Objectively-Vector\n";
 		};
 		CEC0F1600000000000000001 /* Configure */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2399,13 +2345,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE4A53211F40E00700927421 /* HelloCpp.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CE4A53251F40E00A00927421 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2694,11 +2633,6 @@
 			target = CE76D9671C48218E0096DD31 /* Objectively */;
 			targetProxy = CE4A53171F40DFFC00927421 /* PBXContainerItemProxy */;
 		};
-		CE4A53231F40E00A00927421 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CE76D9671C48218E0096DD31 /* Objectively */;
-			targetProxy = CE4A53241F40E00A00927421 /* PBXContainerItemProxy */;
-		};
 		CE4A53341F40E0C800927421 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CE84A89D1DA15B80008BC685 /* Objectively-Array */;
@@ -2803,11 +2737,6 @@
 			isa = PBXTargetDependency;
 			target = CE4A53151F40DFFC00927421 /* Objectively-HelloCpp */;
 			targetProxy = CE4A539D1F40E0DF00927421 /* PBXContainerItemProxy */;
-		};
-		CE4A53A01F40E0E100927421 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CE4A53221F40E00A00927421 /* Objectively-HelloObjC */;
-			targetProxy = CE4A539F1F40E0E100927421 /* PBXContainerItemProxy */;
 		};
 		CE4F5354202A8C6D00D71C07 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3019,22 +2948,6 @@
 			name = Debug;
 		};
 		CE4A531F1F40DFFC00927421 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		CE4A532B1F40E00A00927421 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		CE4A532C1F40E00A00927421 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
@@ -3687,15 +3600,6 @@
 			buildConfigurations = (
 				CE4A531E1F40DFFC00927421 /* Debug */,
 				CE4A531F1F40DFFC00927421 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CE4A532A1F40E00A00927421 /* Build configuration list for PBXNativeTarget "Objectively-HelloObjC" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CE4A532B1F40E00A00927421 /* Debug */,
-				CE4A532C1F40E00A00927421 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
