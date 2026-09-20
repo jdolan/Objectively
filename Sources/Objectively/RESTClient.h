@@ -44,10 +44,10 @@ typedef struct RESTClientInterface RESTClientInterface;
  * @brief A completion handler for asynchronous RESTClient requests.
  * @param status The HTTP response status code, or `0` on connection failure.
  * @param data The response body, or `NULL`.
- * @param user_data The user data pointer passed to the originating async method.
+ * @param userData The user data pointer passed to the originating async method.
  * @ingroup REST
  */
-typedef void (*RESTClientCompletion)(int status, Data *data, void *user_data);
+typedef void (*RESTClientCompletion)(int status, Data *data, void *userData);
 
 /**
  * @brief An HTTP REST client backed by URLSession.
@@ -102,18 +102,18 @@ struct RESTClientInterface {
   int (*del)(RESTClient *self, const char *url, const char **headers, Data **data);
 
   /**
-   * @fn void RESTClient::delAsync(RESTClient *self, const char *url, const char **headers, RESTClientCompletion completion, void *user_data)
+   * @fn void RESTClient::delAsync(RESTClient *self, const char *url, const char **headers, RESTClientCompletion completion, void *userData)
    * @brief Asynchronously performs an HTTP `DELETE` request.
    * @param self The RESTClient.
    * @param url The URL string.
    * @param headers A `NULL`-terminated array of alternating field/value C strings
    * (e.g. `{ "X-Field", "value", NULL }`) to add to the request, or `NULL` for none.
    * @param completion The completion handler.
-   * @param user_data User data passed through to `completion`.
+   * @param userData User data passed through to `completion`.
    * @memberof RESTClient
    */
   void (*delAsync)(RESTClient *self, const char *url, const char **headers,
-      RESTClientCompletion completion, void *user_data);
+      RESTClientCompletion completion, void *userData);
 
   /**
    * @fn int RESTClient::get(RESTClient *self, const char *url, const char **headers, Data **data)
@@ -129,18 +129,18 @@ struct RESTClientInterface {
   int (*get)(RESTClient *self, const char *url, const char **headers, Data **data);
 
   /**
-   * @fn void RESTClient::getAsync(RESTClient *self, const char *url, const char **headers, RESTClientCompletion completion, void *user_data)
+   * @fn void RESTClient::getAsync(RESTClient *self, const char *url, const char **headers, RESTClientCompletion completion, void *userData)
    * @brief Asynchronously performs an HTTP `GET` request.
    * @param self The RESTClient.
    * @param url The URL string.
    * @param headers A `NULL`-terminated array of alternating field/value C strings
    * (e.g. `{ "X-Field", "value", NULL }`) to add to the request, or `NULL` for none.
    * @param completion The completion handler.
-   * @param user_data User data passed through to `completion`.
+   * @param userData User data passed through to `completion`.
    * @memberof RESTClient
    */
   void (*getAsync)(RESTClient *self, const char *url, const char **headers,
-      RESTClientCompletion completion, void *user_data);
+      RESTClientCompletion completion, void *userData);
 
   /**
    * @fn int RESTClient::head(RESTClient *self, const char *url, const char **headers)
@@ -155,18 +155,18 @@ struct RESTClientInterface {
   int (*head)(RESTClient *self, const char *url, const char **headers);
 
   /**
-   * @fn void RESTClient::headAsync(RESTClient *self, const char *url, const char **headers, RESTClientCompletion completion, void *user_data)
+   * @fn void RESTClient::headAsync(RESTClient *self, const char *url, const char **headers, RESTClientCompletion completion, void *userData)
    * @brief Asynchronously performs an HTTP `HEAD` request.
    * @param self The RESTClient.
    * @param url The URL string.
    * @param headers A `NULL`-terminated array of alternating field/value C strings
    * (e.g. `{ "X-Field", "value", NULL }`) to add to the request, or `NULL` for none.
    * @param completion The completion handler.
-   * @param user_data User data passed through to `completion`.
+   * @param userData User data passed through to `completion`.
    * @memberof RESTClient
    */
   void (*headAsync)(RESTClient *self, const char *url, const char **headers,
-      RESTClientCompletion completion, void *user_data);
+      RESTClientCompletion completion, void *userData);
 
   /**
    * @fn RESTClient *RESTClient::init(RESTClient *self)
@@ -201,18 +201,18 @@ struct RESTClientInterface {
   int (*options)(RESTClient *self, const char *url, const char **headers, Data **data);
 
   /**
-   * @fn void RESTClient::optionsAsync(RESTClient *self, const char *url, const char **headers, RESTClientCompletion completion, void *user_data)
+   * @fn void RESTClient::optionsAsync(RESTClient *self, const char *url, const char **headers, RESTClientCompletion completion, void *userData)
    * @brief Asynchronously performs an HTTP `OPTIONS` request.
    * @param self The RESTClient.
    * @param url The URL string.
    * @param headers A `NULL`-terminated array of alternating field/value C strings
    * (e.g. `{ "X-Field", "value", NULL }`) to add to the request, or `NULL` for none.
    * @param completion The completion handler.
-   * @param user_data User data passed through to `completion`.
+   * @param userData User data passed through to `completion`.
    * @memberof RESTClient
    */
   void (*optionsAsync)(RESTClient *self, const char *url, const char **headers,
-      RESTClientCompletion completion, void *user_data);
+      RESTClientCompletion completion, void *userData);
 
   /**
    * @fn int RESTClient::patch(RESTClient *self, const char *url, const Data *body, const char **headers, Data **data)
@@ -229,7 +229,7 @@ struct RESTClientInterface {
   int (*patch)(RESTClient *self, const char *url, const Data *body, const char **headers, Data **data);
 
   /**
-   * @fn void RESTClient::patchAsync(RESTClient *self, const char *url, const Data *body, const char **headers, RESTClientCompletion completion, void *user_data)
+   * @fn void RESTClient::patchAsync(RESTClient *self, const char *url, const Data *body, const char **headers, RESTClientCompletion completion, void *userData)
    * @brief Asynchronously performs an HTTP `PATCH` request.
    * @param self The RESTClient.
    * @param url The URL string.
@@ -237,11 +237,11 @@ struct RESTClientInterface {
    * @param headers A `NULL`-terminated array of alternating field/value C strings
    * (e.g. `{ "X-Field", "value", NULL }`) to add to the request, or `NULL` for none.
    * @param completion The completion handler.
-   * @param user_data User data passed through to `completion`.
+   * @param userData User data passed through to `completion`.
    * @memberof RESTClient
    */
   void (*patchAsync)(RESTClient *self, const char *url, const Data *body, const char **headers,
-      RESTClientCompletion completion, void *user_data);
+      RESTClientCompletion completion, void *userData);
 
   /**
    * @fn int RESTClient::post(RESTClient *self, const char *url, const Data *body, const char **headers, Data **data)
@@ -258,7 +258,7 @@ struct RESTClientInterface {
   int (*post)(RESTClient *self, const char *url, const Data *body, const char **headers, Data **data);
 
   /**
-   * @fn void RESTClient::postAsync(RESTClient *self, const char *url, const Data *body, const char **headers, RESTClientCompletion completion, void *user_data)
+   * @fn void RESTClient::postAsync(RESTClient *self, const char *url, const Data *body, const char **headers, RESTClientCompletion completion, void *userData)
    * @brief Asynchronously performs an HTTP `POST` request.
    * @param self The RESTClient.
    * @param url The URL string.
@@ -266,11 +266,11 @@ struct RESTClientInterface {
    * @param headers A `NULL`-terminated array of alternating field/value C strings
    * (e.g. `{ "X-Field", "value", NULL }`) to add to the request, or `NULL` for none.
    * @param completion The completion handler.
-   * @param user_data User data passed through to `completion`.
+   * @param userData User data passed through to `completion`.
    * @memberof RESTClient
    */
   void (*postAsync)(RESTClient *self, const char *url, const Data *body, const char **headers,
-      RESTClientCompletion completion, void *user_data);
+      RESTClientCompletion completion, void *userData);
 
   /**
    * @fn int RESTClient::put(RESTClient *self, const char *url, const Data *body, const char **headers, Data **data)
@@ -287,7 +287,7 @@ struct RESTClientInterface {
   int (*put)(RESTClient *self, const char *url, const Data *body, const char **headers, Data **data);
 
   /**
-   * @fn void RESTClient::putAsync(RESTClient *self, const char *url, const Data *body, const char **headers, RESTClientCompletion completion, void *user_data)
+   * @fn void RESTClient::putAsync(RESTClient *self, const char *url, const Data *body, const char **headers, RESTClientCompletion completion, void *userData)
    * @brief Asynchronously performs an HTTP `PUT` request.
    * @param self The RESTClient.
    * @param url The URL string.
@@ -295,11 +295,11 @@ struct RESTClientInterface {
    * @param headers A `NULL`-terminated array of alternating field/value C strings
    * (e.g. `{ "X-Field", "value", NULL }`) to add to the request, or `NULL` for none.
    * @param completion The completion handler.
-   * @param user_data User data passed through to `completion`.
+   * @param userData User data passed through to `completion`.
    * @memberof RESTClient
    */
   void (*putAsync)(RESTClient *self, const char *url, const Data *body, const char **headers,
-      RESTClientCompletion completion, void *user_data);
+      RESTClientCompletion completion, void *userData);
 
   /**
    * @static

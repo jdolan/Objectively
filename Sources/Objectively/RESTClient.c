@@ -35,7 +35,7 @@
 
 typedef struct {
   RESTClientCompletion completion;
-  void *user_data;
+  void *userData;
 } RESTClient_AsyncState;
 
 static void RESTClient_AsyncCompletion(URLSessionTask *task, bool success) {
@@ -45,7 +45,7 @@ static void RESTClient_AsyncCompletion(URLSessionTask *task, bool success) {
   const int status = task->response ? task->response->httpStatusCode : 0;
 
   if (state->completion) {
-    state->completion(status, dataTask->data, state->user_data);
+    state->completion(status, dataTask->data, state->userData);
   }
 
   free(state);
@@ -97,7 +97,7 @@ static int request(RESTClient *self, HTTPMethod method, const char *url_string,
 }
 
 static void requestAsync(RESTClient *self, HTTPMethod method, const char *url_string,
-    const Data *body, const char **headers, RESTClientCompletion completion, void *user_data) {
+    const Data *body, const char **headers, RESTClientCompletion completion, void *userData) {
 
   URLSessionDataTask *task;
 
@@ -125,7 +125,7 @@ static void requestAsync(RESTClient *self, HTTPMethod method, const char *url_st
 
   RESTClient_AsyncState *state = calloc(1, sizeof(RESTClient_AsyncState));
   state->completion = completion;
-  state->user_data = user_data;
+  state->userData = userData;
   task->urlSessionTask.data = state;
 
   $((URLSessionTask *) task, resume);
@@ -160,8 +160,8 @@ static int del(RESTClient *self, const char *url, const char **headers, Data **d
  * @memberof RESTClient
  */
 static void delAsync(RESTClient *self, const char *url, const char **headers,
-    RESTClientCompletion completion, void *user_data) {
-  requestAsync(self, HTTP_DELETE, url, NULL, headers, completion, user_data);
+    RESTClientCompletion completion, void *userData) {
+  requestAsync(self, HTTP_DELETE, url, NULL, headers, completion, userData);
 }
 
 /**
@@ -177,8 +177,8 @@ static int get(RESTClient *self, const char *url, const char **headers, Data **d
  * @memberof RESTClient
  */
 static void getAsync(RESTClient *self, const char *url, const char **headers,
-    RESTClientCompletion completion, void *user_data) {
-  requestAsync(self, HTTP_GET, url, NULL, headers, completion, user_data);
+    RESTClientCompletion completion, void *userData) {
+  requestAsync(self, HTTP_GET, url, NULL, headers, completion, userData);
 }
 
 /**
@@ -194,8 +194,8 @@ static int head(RESTClient *self, const char *url, const char **headers) {
  * @memberof RESTClient
  */
 static void headAsync(RESTClient *self, const char *url, const char **headers,
-    RESTClientCompletion completion, void *user_data) {
-  requestAsync(self, HTTP_HEAD, url, NULL, headers, completion, user_data);
+    RESTClientCompletion completion, void *userData) {
+  requestAsync(self, HTTP_HEAD, url, NULL, headers, completion, userData);
 }
 
 /**
@@ -233,8 +233,8 @@ static int options(RESTClient *self, const char *url, const char **headers, Data
  * @memberof RESTClient
  */
 static void optionsAsync(RESTClient *self, const char *url, const char **headers,
-    RESTClientCompletion completion, void *user_data) {
-  requestAsync(self, HTTP_OPTIONS, url, NULL, headers, completion, user_data);
+    RESTClientCompletion completion, void *userData) {
+  requestAsync(self, HTTP_OPTIONS, url, NULL, headers, completion, userData);
 }
 
 /**
@@ -250,8 +250,8 @@ static int patch(RESTClient *self, const char *url, const Data *body, const char
  * @memberof RESTClient
  */
 static void patchAsync(RESTClient *self, const char *url, const Data *body, const char **headers,
-    RESTClientCompletion completion, void *user_data) {
-  requestAsync(self, HTTP_PATCH, url, body, headers, completion, user_data);
+    RESTClientCompletion completion, void *userData) {
+  requestAsync(self, HTTP_PATCH, url, body, headers, completion, userData);
 }
 
 /**
@@ -267,8 +267,8 @@ static int post(RESTClient *self, const char *url, const Data *body, const char 
  * @memberof RESTClient
  */
 static void postAsync(RESTClient *self, const char *url, const Data *body, const char **headers,
-    RESTClientCompletion completion, void *user_data) {
-  requestAsync(self, HTTP_POST, url, body, headers, completion, user_data);
+    RESTClientCompletion completion, void *userData) {
+  requestAsync(self, HTTP_POST, url, body, headers, completion, userData);
 }
 
 /**
@@ -284,8 +284,8 @@ static int put(RESTClient *self, const char *url, const Data *body, const char *
  * @memberof RESTClient
  */
 static void putAsync(RESTClient *self, const char *url, const Data *body, const char **headers,
-    RESTClientCompletion completion, void *user_data) {
-  requestAsync(self, HTTP_PUT, url, body, headers, completion, user_data);
+    RESTClientCompletion completion, void *userData) {
+  requestAsync(self, HTTP_PUT, url, body, headers, completion, userData);
 }
 
 static RESTClient *_sharedInstance;

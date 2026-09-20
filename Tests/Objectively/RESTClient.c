@@ -159,7 +159,7 @@ static Condition *condition;
 static int32_t async_status;
 static char async_url[256];
 
-static void getAsync_completion(int32_t status, Data *data, void *user_data) {
+static void getAsync_completion(int32_t status, Data *data, void *userData) {
 
   async_status = status;
 

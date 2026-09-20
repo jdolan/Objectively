@@ -269,30 +269,30 @@ START_TEST(json_struct_properties) {
 typedef struct {
   char name[64];
   int score;
-} json_nested_entry_t;
+} JsonNestedEntry;
 
 typedef struct {
   char title[64];
-  json_nested_entry_t owner;
-  json_nested_entry_t items[2];
+  JsonNestedEntry owner;
+  JsonNestedEntry items[2];
   size_t num_items;
-} json_nested_response_t;
+} JsonNestedResponse;
 
-static const JSONProperties json_nested_entry_properties = MakeJSONProperties(json_nested_entry_t,
-  MakeJSONProperty(json_nested_entry_t, name,  NULL, JSONDeserializeCharacters, NULL),
-  MakeJSONProperty(json_nested_entry_t, score, NULL, JSONDeserializeInt32, NULL)
+static const JSONProperties json_nested_entry_properties = MakeJSONProperties(JsonNestedEntry,
+  MakeJSONProperty(JsonNestedEntry, name,  NULL, JSONDeserializeCharacters, NULL),
+  MakeJSONProperty(JsonNestedEntry, score, NULL, JSONDeserializeInt32, NULL)
 );
 
 static const JSONArrayProperties json_nested_response_items = {
   .properties   = &json_nested_entry_properties,
-  .capacity = lengthof(((json_nested_response_t *) 0)->items),
-  .count = offsetof(json_nested_response_t, num_items),
+  .capacity = lengthof(((JsonNestedResponse *) 0)->items),
+  .count = offsetof(JsonNestedResponse, num_items),
 };
 
-static const JSONProperties json_nested_response_properties = MakeJSONProperties(json_nested_response_t,
-  MakeJSONProperty(json_nested_response_t, title, NULL, JSONDeserializeCharacters, NULL),
-  MakeJSONProperty(json_nested_response_t, owner, NULL, JSONDeserializeStruct, (ident) &json_nested_entry_properties),
-  MakeJSONProperty(json_nested_response_t, items, NULL, JSONDeserializeArray, (ident) &json_nested_response_items)
+static const JSONProperties json_nested_response_properties = MakeJSONProperties(JsonNestedResponse,
+  MakeJSONProperty(JsonNestedResponse, title, NULL, JSONDeserializeCharacters, NULL),
+  MakeJSONProperty(JsonNestedResponse, owner, NULL, JSONDeserializeStruct, (ident) &json_nested_entry_properties),
+  MakeJSONProperty(JsonNestedResponse, items, NULL, JSONDeserializeArray, (ident) &json_nested_response_items)
 );
 
 /**
@@ -356,7 +356,7 @@ START_TEST(json_nested_callbacks) {
   Data *data = $(ctx, dataFromObject, dict, 0);
   ck_assert_ptr_ne(NULL, data);
 
-  json_nested_response_t response = { 0 };
+  JsonNestedResponse response = { 0 };
   ck_assert($(ctx, structFromData, &json_nested_response_properties, data, &response));
 
   ck_assert_str_eq("outer", response.title);
@@ -375,76 +375,76 @@ START_TEST(json_nested_callbacks) {
 } END_TEST
 
 /**
- * @brief Tests dataFromStructs with a struct mirroring `g_frag_t` from Quetoo,
+ * @brief Tests dataFromStructs with a struct mirroring `g_Frag` from Quetoo,
  * exercising the exact property types and edge cases seen in production.
  */
-START_TEST(json_frag_t) {
+START_TEST(json_Frag) {
 
 #define FRAG_QPATH 64
 
   typedef struct {
     char level[FRAG_QPATH];
     char attacker[FRAG_QPATH];
-    char attacker_guid[FRAG_QPATH];
-    bool attacker_ai;
+    char attackerGuid[FRAG_QPATH];
+    bool attackerAi;
     char target[FRAG_QPATH];
-    char target_guid[FRAG_QPATH];
-    bool target_ai;
+    char targetGuid[FRAG_QPATH];
+    bool targetAi;
     char weapon[FRAG_QPATH];
     int mod;
     int damage;
     int time;
-  } frag_t;
+  } Frag;
 
-  const JSONProperties properties = MakeJSONProperties(frag_t,
-    MakeJSONProperty(frag_t, level, JSONSerializeCharacters, NULL, NULL),
-    MakeJSONProperty(frag_t, attacker, JSONSerializeCharacters, NULL, NULL),
-    MakeJSONProperty(frag_t, attacker_guid, JSONSerializeCharacters, NULL, NULL),
-    MakeJSONProperty(frag_t, attacker_ai, JSONSerializeBoole, NULL, NULL),
-    MakeJSONProperty(frag_t, target, JSONSerializeCharacters, NULL, NULL),
-    MakeJSONProperty(frag_t, target_guid, JSONSerializeCharacters, NULL, NULL),
-    MakeJSONProperty(frag_t, target_ai, JSONSerializeBoole, NULL, NULL),
-    MakeJSONProperty(frag_t, weapon, JSONSerializeCharacters, NULL, NULL),
-    MakeJSONProperty(frag_t, mod, JSONSerializeInt32, NULL, NULL),
-    MakeJSONProperty(frag_t, damage, JSONSerializeInt32, NULL, NULL),
-    MakeJSONProperty(frag_t, time, JSONSerializeUint32, NULL, NULL)
+  const JSONProperties properties = MakeJSONProperties(Frag,
+    MakeJSONProperty(Frag, level, JSONSerializeCharacters, NULL, NULL),
+    MakeJSONProperty(Frag, attacker, JSONSerializeCharacters, NULL, NULL),
+    MakeJSONProperty(Frag, attackerGuid, JSONSerializeCharacters, NULL, NULL),
+    MakeJSONProperty(Frag, attackerAi, JSONSerializeBoole, NULL, NULL),
+    MakeJSONProperty(Frag, target, JSONSerializeCharacters, NULL, NULL),
+    MakeJSONProperty(Frag, targetGuid, JSONSerializeCharacters, NULL, NULL),
+    MakeJSONProperty(Frag, targetAi, JSONSerializeBoole, NULL, NULL),
+    MakeJSONProperty(Frag, weapon, JSONSerializeCharacters, NULL, NULL),
+    MakeJSONProperty(Frag, mod, JSONSerializeInt32, NULL, NULL),
+    MakeJSONProperty(Frag, damage, JSONSerializeInt32, NULL, NULL),
+    MakeJSONProperty(Frag, time, JSONSerializeUint32, NULL, NULL)
   );
 
-  frag_t frags[] = {
+  Frag frags[] = {
     {
       .level = "edge",
-      .attacker = "jdolan", .attacker_guid = "3a56346d46f8e00b88232df6db2b4595", .attacker_ai = false,
-      .target = "Skies912", .target_guid  = "02bd0844f98709ceb87a9c41998484228", .target_ai = false,
+      .attacker = "jdolan", .attackerGuid = "3a56346d46f8e00b88232df6db2b4595", .attackerAi = false,
+      .target = "Skies912", .targetGuid  = "02bd0844f98709ceb87a9c41998484228", .targetAi = false,
       .weapon = "rockets", .mod = 1, .damage = 80, .time = 12345
     },
     {
       .level = "edge",
-      .attacker = "jdolan", .attacker_guid = "3a56346d46f8e00b88232df6db2b4595", .attacker_ai = false,
-      .target = "[BOT] Makron", .target_guid = "81f97126cfaa1b4c41f152d76fee16b3", .target_ai = true,
+      .attacker = "jdolan", .attackerGuid = "3a56346d46f8e00b88232df6db2b4595", .attackerAi = false,
+      .target = "[BOT] Makron", .targetGuid = "81f97126cfaa1b4c41f152d76fee16b3", .targetAi = true,
       .weapon = "railgun", .mod = 7, .damage = 100, .time = 23456
     },
     {
       .level = "edge",
-      .attacker = "[BOT] Brain", .attacker_guid = "b19e1c04f191f77ea2cd73552997a603", .attacker_ai = true,
-      .target = "Skies912", .target_guid = "02bd0844f98709ceb87a9c41998484228", .target_ai = false,
+      .attacker = "[BOT] Brain", .attackerGuid = "b19e1c04f191f77ea2cd73552997a603", .attackerAi = true,
+      .target = "Skies912", .targetGuid = "02bd0844f98709ceb87a9c41998484228", .targetAi = false,
       .weapon = "plasma", .mod = 3, .damage = 60, .time = 34567
     },
     {
       .level = "edge",
-      .attacker = "jdolan", .attacker_guid = "3a56346d46f8e00b88232df6db2b4595", .attacker_ai = false,
-      .target = "jdolan", .target_guid   = "3a56346d46f8e00b88232df6db2b4595", .target_ai = false,
+      .attacker = "jdolan", .attackerGuid = "3a56346d46f8e00b88232df6db2b4595", .attackerAi = false,
+      .target = "jdolan", .targetGuid   = "3a56346d46f8e00b88232df6db2b4595", .targetAi = false,
       .weapon = "", .mod = 0, .damage = 0, .time = 45678
     },
     {
       .level = "edge",
-      .attacker = "Skies912", .attacker_guid = "02bd0844f98709ceb87a9c41998484228", .attacker_ai = false,
-      .target = "jdolan",   .target_guid   = "3a56346d46f8e00b88232df6db2b4595", .target_ai = false,
+      .attacker = "Skies912", .attackerGuid = "02bd0844f98709ceb87a9c41998484228", .attackerAi = false,
+      .target = "jdolan",   .targetGuid   = "3a56346d46f8e00b88232df6db2b4595", .targetAi = false,
       .weapon = "bfg", .mod = 9, .damage = 0, .time = 56789
     },
     {
       .level = "edge",
-      .attacker = "jdolan", .attacker_guid = "3a56346d46f8e00b88232df6db2b4595", .attacker_ai = false,
-      .target = "[BOT] Gladiator", .target_guid = "73c6bc5c39e6b7fbbca031eeadf71c09", .target_ai = true,
+      .attacker = "jdolan", .attackerGuid = "3a56346d46f8e00b88232df6db2b4595", .attackerAi = false,
+      .target = "[BOT] Gladiator", .targetGuid = "73c6bc5c39e6b7fbbca031eeadf71c09", .targetAi = true,
       .weapon = "hyperblaster", .mod = 5, .damage = 50, .time = 1781060274
     },
   };
@@ -468,11 +468,11 @@ START_TEST(json_frag_t) {
     ck_assert_str_eq("jdolan", ((String *) $(d, objectForKey, k))->chars);
     release(k);
 
-    k = $$(String, stringWithCharacters, "attacker_ai");
+    k = $$(String, stringWithCharacters, "attackerAi");
     ck_assert(((Boole *) $(d, objectForKey, k))->value == false);
     release(k);
 
-    k = $$(String, stringWithCharacters, "target_ai");
+    k = $$(String, stringWithCharacters, "targetAi");
     ck_assert(((Boole *) $(d, objectForKey, k))->value == false);
     release(k);
 
@@ -617,7 +617,7 @@ int main(int argc, char **argv) {
   tcase_add_test(tcase, json_array_toplevel);
   tcase_add_test(tcase, json_struct_properties);
   tcase_add_test(tcase, json_nested_callbacks);
-  tcase_add_test(tcase, json_frag_t);
+  tcase_add_test(tcase, json_Frag);
   tcase_add_test(tcase, json_object_properties);
 
   Suite *suite = suite_create("Json");
