@@ -136,18 +136,29 @@ struct JSONProperties {
 };
 
 /**
- * @brief Creates a JSONProperty for a named field of a struct, deriving offset automatically.
- * @details The JSON key is the stringified field name.
+ * @brief Creates a JSONProperty for a named field of a struct under an explicit JSON key.
+ * @details Use this wherever the wire name and the field name differ, for example a snake_case
+ *   API bound to camelCase members. The key MUST be stated here rather than left to the field
+ *   name, because a later rename of the field would otherwise rename the wire key with it, and
+ *   nothing would fail to compile.
  */
-#define MakeJSONProperty(Struct, field, serializer_, deserializer_, data_) \
+#define MakeJSONPropertyWithKey(Struct, field, key_, serializer_, deserializer_, data_) \
   (JSONProperty) { \
-    .key = #field, \
+    .key = (key_), \
     .offset = (ptrdiff_t) offsetof(Struct, field), \
     .size = sizeof(((Struct *) NULL)->field), \
     .serializer = (serializer_), \
     .deserializer = (deserializer_), \
     .data = (data_) \
   }
+
+/**
+ * @brief Creates a JSONProperty for a named field of a struct, deriving offset automatically.
+ * @details The JSON key is the stringified field name, so the field MUST be spelled as the wire
+ *   spells it. Use MakeJSONPropertyWithKey where the two differ.
+ */
+#define MakeJSONProperty(Struct, field, serializer_, deserializer_, data_) \
+  MakeJSONPropertyWithKey(Struct, field, #field, serializer_, deserializer_, data_)
 
 /**
  * @brief Creates a JSONProperties descriptor for a C struct type.
