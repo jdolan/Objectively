@@ -515,12 +515,7 @@ static void appendCharacters(String *self, const char *chars) {
 
       if (newCapacity > self->capacity) {
 
-        if (self->length) {
-          self->chars = realloc(self->chars, newCapacity);
-        } else {
-          self->chars = malloc(newCapacity);
-        }
-
+        self->chars = realloc(self->chars, newCapacity);
         assert(self->chars);
         self->capacity = newCapacity;
       }
