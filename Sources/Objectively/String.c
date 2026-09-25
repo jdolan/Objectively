@@ -767,7 +767,7 @@ static void replaceCharactersInRange(String *self, const Range range, const char
     char *remainder = strdup(self->chars + range.location + range.length);
 
     self->length = range.location;
-    self->chars[range.location + 1] = '\0';
+    self->chars[range.location] = '\0';
 
     $(self, appendCharacters, chars);
     $(self, appendCharacters, remainder);

@@ -178,6 +178,57 @@ START_TEST(string_mutation) {
 
 } END_TEST
 
+START_TEST(string_replaceCharactersInRange) {
+
+  String *string = $$(String, stringWithCharacters, "hello world");
+
+  $(string, replaceCharactersInRange, (Range) { 0, 5 }, "goodbye");
+  ck_assert_str_eq("goodbye world", string->chars);
+  ck_assert_int_eq(13, string->length);
+
+  $(string, replaceCharactersInRange, (Range) { 7, 6 }, "");
+  ck_assert_str_eq("goodbye", string->chars);
+  ck_assert_int_eq(7, string->length);
+
+  $(string, replaceCharactersInRange, (Range) { 0, 7 }, "");
+  ck_assert_str_eq("", string->chars);
+  ck_assert_int_eq(0, string->length);
+
+  $(string, replaceCharactersInRange, (Range) { 0, 0 }, "hello");
+  ck_assert_str_eq("hello", string->chars);
+  ck_assert_int_eq(5, string->length);
+
+  release(string);
+
+} END_TEST
+
+START_TEST(string_appendCharactersAfterTruncation) {
+
+  const size_t len = 3 * getpagesize();
+
+  char *chars = malloc(len + 1);
+  ck_assert_ptr_nonnull(chars);
+
+  memset(chars, 'a', len);
+  chars[len] = '\0';
+
+  String *string = $$(String, stringWithCharacters, "hello");
+
+  $(string, setCharacters, chars);
+  ck_assert_int_eq(len, string->length);
+  ck_assert_str_eq(chars, string->chars);
+
+  $(string, replaceCharactersInRange, (Range) { 0, string->length }, "");
+  $(string, appendCharacters, chars);
+  $(string, appendCharacters, chars);
+  ck_assert_int_eq(2 * len, string->length);
+  ck_assert_int_eq('\0', string->chars[2 * len]);
+
+  release(string);
+  free(chars);
+
+} END_TEST
+
 START_TEST(string_appendBytes) {
 
   String *string = $$(String, string);
@@ -247,6 +298,8 @@ int main(int argc, char **argv) {
   tcase_add_test(tcase, _strtrim);
 
   tcase_add_test(tcase, string_mutation);
+  tcase_add_test(tcase, string_replaceCharactersInRange);
+  tcase_add_test(tcase, string_appendCharactersAfterTruncation);
   tcase_add_test(tcase, string_appendBytes);
   tcase_add_test(tcase, string_initWithBytes);
   tcase_add_test(tcase, string_initWithData);
