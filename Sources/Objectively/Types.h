@@ -52,7 +52,6 @@ typedef void *ident;
  * @brief A location and length into contiguous collections.
  */
 typedef struct {
-
   /**
    * @brief The location.
    */

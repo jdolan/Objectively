@@ -413,7 +413,6 @@ OBJECTIVELY_EXPORT bool JSONDeserializeArray(const JSONProperties *properties,
  * @brief Describes the JSON binding for an inline array field of a C struct.
  */
 typedef struct {
-
   /**
    * @brief The JSONProperties of the array element type.
    */
