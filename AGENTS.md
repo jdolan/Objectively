@@ -85,7 +85,7 @@ sudo make install
 3. `Objectively.vs15/Objectively.vcxproj` and `Objectively.vcxproj.filters`.
 4. The umbrella header `Sources/Objectively.h`.
 
-`.github/copilot/skills/new-type.md` and `add-method.md` hold the full checklists, including the
+The `new-type` and `add-method` skills in `.claude/skills/` hold the full checklists, including the
 Xcode test target.
 
 ### CI
