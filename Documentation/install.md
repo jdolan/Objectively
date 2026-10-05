@@ -12,7 +12,7 @@ Tagged releases are published on the [GitHub releases page](https://github.com/j
 ## Dependencies
 
 * [libcurl](https://curl.se/libcurl/) >= 7.16.0 — for `URLSession`, `JSONContext` and `RESTClient`
-* [check](https://libcheck.github.io/check/) >= 0.9.4 — to build and run the test suite (optional)
+* [check](https://libcheck.github.io/check/) >= 0.9.4 — for the test suite. `configure` requires it
 
 ## Building
 
