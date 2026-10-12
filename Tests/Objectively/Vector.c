@@ -159,8 +159,22 @@ START_TEST(initWithElements) {
   ck_assert_ptr_eq(_Vector(), classof(vector));
 
   ck_assert_int_eq(3, vector->count);
+  ck_assert_int_eq(3, vector->capacity);
   ck_assert_ptr_eq(foo, vector->elements);
 
+  for (int i = 0; i < 3; i++) {
+    $(vector, add, &(Foo) { .bar = i });
+  }
+
+  ck_assert_int_eq(6, vector->count);
+  ck_assert_int_le(6, vector->capacity);
+  ck_assert_int_eq(2, VectorElement(vector, Foo, 5)->bar);
+
+  Vector *copy = (Vector *) $((Object *) vector, copy);
+  ck_assert_int_eq(6, copy->count);
+  ck_assert_int_eq(2, VectorElement(copy, Foo, 5)->bar);
+
+  release(copy);
   release(vector);
 
 } END_TEST
