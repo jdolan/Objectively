@@ -93,8 +93,9 @@ struct Operation {
 
   /**
    * @brief `true` when this Operation has been cancelled, `false` otherwise.
-   * @remarks Operation::cancel MAY set this from another thread while the Operation executes, so
-   * the function SHOULD read it with `__atomic_load_n(&operation->isCancelled, __ATOMIC_ACQUIRE)`.
+   * @remarks Operation::cancel MAY set this from another thread while the Operation executes.
+   * Read it with Operation::isCancelled.
+   * @private
    */
   bool isCancelled;
 
@@ -181,6 +182,16 @@ struct OperationInterface {
    * @memberof Operation
    */
   Operation *(*initWithFunction)(Operation *self, OperationFunction function, ident data);
+
+  /**
+   * @fn bool Operation::isCancelled(const Operation *self)
+   * @param self The Operation.
+   * @return `true` if this Operation has been cancelled, `false` otherwise.
+   * @remarks This MAY be called from any thread, including from the Operation's function while
+   * another thread cancels it.
+   * @memberof Operation
+   */
+  bool (*isCancelled)(const Operation *self);
 
   /**
    * @fn bool Operation::isReady(const Operation *self)

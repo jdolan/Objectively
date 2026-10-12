@@ -72,7 +72,7 @@ static void addDependency(Operation *self, Operation *dependency) {
  */
 static void cancel(Operation *self) {
 
-  if (__atomic_load_n(&self->isCancelled, __ATOMIC_ACQUIRE) || self->isFinished) {
+  if ($(self, isCancelled) || self->isFinished) {
     return;
   }
 
@@ -134,6 +134,14 @@ static Operation *initWithFunction(Operation *self, OperationFunction function, 
 }
 
 /**
+ * @fn bool Operation::isCancelled(const Operation *self)
+ * @memberof Operation
+ */
+static bool isCancelled(const Operation *self) {
+  return __atomic_load_n(&self->isCancelled, __ATOMIC_ACQUIRE);
+}
+
+/**
  * @fn bool Operation::isReady(const Operation *self)
  * @memberof Operation
  */
@@ -143,7 +151,7 @@ static bool isReady(const Operation *self) {
     return false;
   }
 
-  if (__atomic_load_n(&self->isCancelled, __ATOMIC_ACQUIRE)) {
+  if ($(self, isCancelled)) {
     return true;
   }
 
@@ -180,7 +188,7 @@ static void start(Operation *self) {
     return;
   }
 
-  if (__atomic_load_n(&self->isCancelled, __ATOMIC_ACQUIRE) == false) {
+  if ($(self, isCancelled) == false) {
     self->isExecuting = true;
     self->function(self);
     self->isExecuting = false;
@@ -221,6 +229,7 @@ static void initialize(Class *clazz) {
   ((OperationInterface *) clazz->interface)->dependencies = dependencies;
   ((OperationInterface *) clazz->interface)->init = init;
   ((OperationInterface *) clazz->interface)->initWithFunction = initWithFunction;
+  ((OperationInterface *) clazz->interface)->isCancelled = isCancelled;
   ((OperationInterface *) clazz->interface)->isReady = isReady;
   ((OperationInterface *) clazz->interface)->removeDependency = removeDepdenency;
   ((OperationInterface *) clazz->interface)->start = start;

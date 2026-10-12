@@ -65,7 +65,7 @@ static void dealloc(Object *self) {
 static void addOperation(OperationQueue *self, Operation *operation) {
 
   assert(operation);
-  assert(operation->isCancelled == false);
+  assert($(operation, isCancelled) == false);
   assert(operation->isExecuting == false);
   assert(operation->isFinished == false);
 

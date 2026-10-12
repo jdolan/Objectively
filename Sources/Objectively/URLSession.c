@@ -63,7 +63,7 @@ static ident taskWithRequest(URLSession *self, ident task, URLRequest *request, 
     bool isInvalidated;
 
     synchronized(self->condition, {
-      isInvalidated = self->thread->isCancelled;
+      isInvalidated = $(self->thread, isCancelled);
       if (isInvalidated == false) {
         $(self->tasks, addObject, task);
         $(self->condition, signal);
@@ -91,7 +91,7 @@ static URLSessionDataTask *dataTaskWithRequest(URLSession *self, URLRequest *req
     bool isInvalidated;
 
     synchronized(self->condition, {
-      isInvalidated = self->thread->isCancelled;
+      isInvalidated = $(self->thread, isCancelled);
     });
 
     if (isInvalidated) {
@@ -107,7 +107,7 @@ static URLSessionDataTask *dataTaskWithRequest(URLSession *self, URLRequest *req
     }
 
     synchronized(self->condition, {
-      isInvalidated = self->thread->isCancelled;
+      isInvalidated = $(self->thread, isCancelled);
       if (isInvalidated == false) {
         $(self->tasks, addObject, task);
         $(self->condition, signal);
@@ -212,10 +212,10 @@ static ident run(Thread *thread) {
 
     bool idle;
     synchronized(self->condition, {
-      while (!hasWork(self) && !(thread->isCancelled && self->tasks->count == 0)) {
+      while (!hasWork(self) && !($(thread, isCancelled) && self->tasks->count == 0)) {
         $(self->condition, wait);
       }
-      idle = thread->isCancelled && self->tasks->count == 0;
+      idle = $(thread, isCancelled) && self->tasks->count == 0;
     });
 
     if (idle) {
@@ -392,7 +392,7 @@ static void invalidateAndCancel(URLSession *self) {
   bool isInvalidated;
 
   synchronized(self->condition, {
-    isInvalidated = self->thread->isCancelled;
+    isInvalidated = $(self->thread, isCancelled);
     if (isInvalidated == false) {
       $(self->thread, cancel);
       $(self->condition, signal);

@@ -127,11 +127,27 @@ START_TEST(cond) {
 
 } END_TEST
 
+START_TEST(isCancelled) {
+
+  Thread *thread = $(alloc(Thread), initWithFunction, increment, NULL);
+  ck_assert(thread != NULL);
+
+  ck_assert($(thread, isCancelled) == false);
+
+  $(thread, cancel);
+
+  ck_assert($(thread, isCancelled));
+
+  release(thread);
+
+} END_TEST
+
 int main(int argc, char **argv) {
 
   TCase *tcase = tcase_create("Thread");
   tcase_add_test(tcase, thread);
   tcase_add_test(tcase, cond);
+  tcase_add_test(tcase, isCancelled);
 
   Suite *suite = suite_create("Thread");
   suite_add_tcase(suite, tcase);
