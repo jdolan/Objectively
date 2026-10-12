@@ -44,8 +44,8 @@ static void dealloc(Object *self) {
 
   Operation *this = (Operation *) self;
 
-  release(this->locals.condition);
-  release(this->locals.dependencies);
+  release(this->condition);
+  release(this->dependencies);
 
   super(Object, self, dealloc);
 }
@@ -61,9 +61,9 @@ static void addDependency(Operation *self, Operation *dependency) {
   assert(dependency);
   assert(dependency != self);
 
-  assert($((Array *) self->locals.dependencies, indexOfObject, dependency) == -1);
+  assert($((Array *) self->dependencies, indexOfObject, dependency) == -1);
 
-  $(self->locals.dependencies, addObject, dependency);
+  $(self->dependencies, addObject, dependency);
 }
 
 /**
@@ -77,10 +77,10 @@ static void cancel(Operation *self) {
       if (self->isExecuting == false) {
         self->isCancelled = true;
 
-        OperationQueue *queue = self->locals.queue;
+        OperationQueue *queue = self->queue;
         if (queue) {
-          synchronized(queue->locals.condition, {
-            $(queue->locals.condition, signal);
+          synchronized(queue->condition, {
+            $(queue->condition, signal);
           });
         }
       }
@@ -94,7 +94,7 @@ static void cancel(Operation *self) {
  */
 static Array *dependencies(const Operation *self) {
 
-  ident dependencies = $((Object *) self->locals.dependencies, copy);
+  ident dependencies = $((Object *) self->dependencies, copy);
 
   return (Array *) dependencies;
 }
@@ -108,11 +108,11 @@ static Operation *init(Operation *self) {
   self = (Operation *) super(Object, self, init);
   if (self) {
 
-    self->locals.condition = $(alloc(Condition), init);
-    assert(self->locals.condition);
+    self->condition = $(alloc(Condition), init);
+    assert(self->condition);
 
-    self->locals.dependencies = $(alloc(Array), init);
-    assert(self->locals.dependencies);
+    self->dependencies = $(alloc(Array), init);
+    assert(self->dependencies);
   }
 
   return self;
@@ -147,7 +147,7 @@ static bool isReady(const Operation *self) {
     return true;
   }
 
-  const Array *dependencies = (Array *) self->locals.dependencies;
+  const Array *dependencies = (Array *) self->dependencies;
   for (size_t i = 0; i < dependencies->count; i++) {
 
     Operation *dependency = $(dependencies, objectAtIndex, i);
@@ -167,7 +167,7 @@ static void removeDepdenency(Operation *self, Operation *dependency) {
 
   assert(dependency);
 
-  $(self->locals.dependencies, removeObject, dependency);
+  $(self->dependencies, removeObject, dependency);
 }
 
 /**
@@ -188,8 +188,8 @@ static void start(Operation *self) {
 
   self->isFinished = true;
 
-  synchronized(self->locals.condition, {
-    $(self->locals.condition, broadcast);
+  synchronized(self->condition, {
+    $(self->condition, broadcast);
   });
 }
 
@@ -199,9 +199,9 @@ static void start(Operation *self) {
  */
 static void waitUntilFinished(const Operation *self) {
 
-  synchronized(self->locals.condition, {
+  synchronized(self->condition, {
     while (self->isFinished == false) {
-      $(self->locals.condition, wait);
+      $(self->condition, wait);
     }
   });
 }

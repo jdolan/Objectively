@@ -64,38 +64,27 @@ struct Operation {
   OperationInterface *interface[0];
 
   /**
-   * @private
-   */
-  struct {
-    /**
-     * @brief The Condition enabling `waitUntilFinished`.
-     */
-    Condition *condition;
-
-    /**
-     * @brief Contains Operations which must finish before this one can start.
-     */
-    Array *dependencies;
-
-    /**
-     * @brief The OperationQueue this Operation was added to, if any.
-     * @remarks Not retained; an OperationQueue retains its Operations. This
-     * exists so that `cancel` can notify the queue, which must re-evaluate
-     * because cancelling an Operation makes it ready.
-     */
-    OperationQueue *queue;
-  } locals;
-
-  /**
    * @brief If `true`, this Operation will be expected to coordinate its own
    * concurrency and internal state management by overriding `start`.
    */
   bool asynchronous;
 
   /**
+   * @brief The Condition enabling `waitUntilFinished`.
+   * @private
+   */
+  Condition *condition;
+
+  /**
    * @brief The user data.
    */
   ident data;
+
+  /**
+   * @brief Contains Operations which must finish before this one can start.
+   * @private
+   */
+  Array *dependencies;
 
   /**
    * @brief The Operation function.
@@ -106,7 +95,7 @@ struct Operation {
    * @brief `true` when this Operation has been cancelled, `false` otherwise.
    */
   bool isCancelled;
-  
+
   /**
    * @brief True once an OperationQueue has dispatched this Operation to one of
    * its Threads, so that no other Thread also starts it.
@@ -122,6 +111,15 @@ struct Operation {
    * @brief `true` when this Operation is finished, `false` otherwise.
    */
   bool isFinished;
+
+  /**
+   * @brief The OperationQueue this Operation was added to, if any.
+   * @remarks Not retained; an OperationQueue retains its Operations. This
+   * exists so that `cancel` can notify the queue, which must re-evaluate
+   * because cancelling an Operation makes it ready.
+   * @private
+   */
+  OperationQueue *queue;
 };
 
 /**

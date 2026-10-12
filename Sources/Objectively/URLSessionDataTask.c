@@ -131,9 +131,9 @@ static void execute(URLSessionTask *self) {
 
   $(self, setup);
 
-  CURLcode code = curl_easy_perform(self->locals.handle);
+  CURLcode code = curl_easy_perform(self->handle);
 
-  curl_easy_getinfo(self->locals.handle, CURLINFO_RESPONSE_CODE, (long *) &self->response->httpStatusCode);
+  curl_easy_getinfo(self->handle, CURLINFO_RESPONSE_CODE, (long *) &self->response->httpStatusCode);
 
   this->urlSessionTask.state = URLSESSIONTASK_COMPLETED;
 
@@ -200,8 +200,8 @@ static void setup(URLSessionTask *self) {
 
   super(URLSessionTask, self, setup);
 
-  curl_easy_setopt(self->locals.handle, CURLOPT_WRITEFUNCTION, writeFunction);
-  curl_easy_setopt(self->locals.handle, CURLOPT_WRITEDATA, self);
+  curl_easy_setopt(self->handle, CURLOPT_WRITEFUNCTION, writeFunction);
+  curl_easy_setopt(self->handle, CURLOPT_WRITEDATA, self);
 }
 
 #pragma mark - Class lifecycle

@@ -68,34 +68,33 @@ struct URLSession {
   URLSessionInterface *interface[0];
 
   /**
+   * @brief The condition, and the Lock guarding access to `tasks`.
    * @private
    */
-  struct {
-    /**
-     * @brief The condition, and the Lock guarding access to `tasks`.
-     */
-    Condition *condition;
-
-    /**
-     * @brief The libcurl handle.
-     */
-    ident handle;
-
-    /**
-     * @brief The URLSessionTasks.
-     */
-    Array *tasks;
-
-    /**
-     * @brief The backing Thread.
-     */
-    Thread *thread;
-  } locals;
+  Condition *condition;
 
   /**
    * @brief The session configuration.
    */
   URLSessionConfiguration *configuration;
+
+  /**
+   * @brief The libcurl handle.
+   * @private
+   */
+  ident handle;
+
+  /**
+   * @brief The URLSessionTasks.
+   * @private
+   */
+  Array *tasks;
+
+  /**
+   * @brief The backing Thread.
+   * @private
+   */
+  Thread *thread;
 };
 
 /**

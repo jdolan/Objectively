@@ -79,21 +79,6 @@ struct URLSessionTask {
   URLSessionTaskInterface *interface[0];
 
   /**
-   * @private
-   */
-  struct {
-    /**
-     * @brief The backing libcurl handle.
-     */
-    ident handle;
-
-    /**
-     * @brief HTTP headers, in libcurl list structure.
-     */
-    ident requestHeaders;
-  } locals;
-
-  /**
    * @brief The count of bytes this task expects to receive.
    */
   size_t bytesExpectedToReceive;
@@ -129,6 +114,12 @@ struct URLSessionTask {
   char *error;
 
   /**
+   * @brief The backing libcurl handle.
+   * @private
+   */
+  ident handle;
+
+  /**
    * @brief The progress function.
    */
   URLSessionTaskProgress progress;
@@ -137,6 +128,12 @@ struct URLSessionTask {
    * @brief The request.
    */
   struct URLRequest *request;
+
+  /**
+   * @brief HTTP headers, in libcurl list structure.
+   * @private
+   */
+  ident requestHeaders;
 
   /**
    * @brief The response.

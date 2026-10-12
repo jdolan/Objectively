@@ -55,26 +55,10 @@ struct OperationQueue {
   OperationQueueInterface *interface[0];
 
   /**
+   * @brief A condition signaled on `addOperation` and `removeOperation`.
    * @private
    */
-  struct {
-
-    /**
-     * @brief A condition signaled on `addOperation` and `removeOperation`.
-     */
-    Condition *condition;
-
-    /**
-     * @brief The Operations.
-     */
-    Array *operations;
-
-    /**
-     * @brief The backing Threads, one per concurrently executing Operation.
-     */
-    Array *threads;
-
-  } locals;
+  Condition *condition;
 
   /**
    * @brief When `true`, the queue will not `start` any new Operations.
@@ -82,6 +66,18 @@ struct OperationQueue {
    * Threads of the transition.
    */
   bool isSuspended;
+
+  /**
+   * @brief The Operations.
+   * @private
+   */
+  Array *operations;
+
+  /**
+   * @brief The backing Threads, one per concurrently executing Operation.
+   * @private
+   */
+  Array *threads;
 };
 
 /**

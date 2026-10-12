@@ -40,11 +40,11 @@ static void dealloc(Object *self) {
 
   $(this, invalidateAndCancel);
 
-  $(this->locals.thread, join, NULL);
+  $(this->thread, join, NULL);
 
-  release(this->locals.condition);
-  release(this->locals.thread);
-  release(this->locals.tasks);
+  release(this->condition);
+  release(this->thread);
+  release(this->tasks);
   release(this->configuration);
 
   super(Object, self, dealloc);
@@ -60,9 +60,9 @@ static ident taskWithRequest(URLSession *self, ident task, URLRequest *request, 
   task = $((URLSessionTask *) task, initWithRequestInSession, request, self, completion);
   if (task) {
 
-    synchronized(self->locals.condition, {
-      $(self->locals.tasks, addObject, task);
-      $(self->locals.condition, signal);
+    synchronized(self->condition, {
+      $(self->tasks, addObject, task);
+      $(self->condition, signal);
     });
   }
 
@@ -87,9 +87,9 @@ static URLSessionDataTask *dataTaskWithRequest(URLSession *self, URLRequest *req
       }
     }
 
-    synchronized(self->locals.condition, {
-      $(self->locals.tasks, addObject, task);
-      $(self->locals.condition, signal);
+    synchronized(self->condition, {
+      $(self->tasks, addObject, task);
+      $(self->condition, signal);
     });
   }
 
@@ -158,18 +158,18 @@ static ident run(Thread *thread) {
 
   URLSession *self = thread->data;
 
-  self->locals.handle = curl_multi_init();
-  assert(self->locals.handle);
+  self->handle = curl_multi_init();
+  assert(self->handle);
 
   while (true) {
     int ret;
 
     bool idle;
-    synchronized(self->locals.condition, {
-      while (!thread->isCancelled && self->locals.tasks->count == 0) {
-        $(self->locals.condition, wait);
+    synchronized(self->condition, {
+      while (!thread->isCancelled && self->tasks->count == 0) {
+        $(self->condition, wait);
       }
-      idle = thread->isCancelled && self->locals.tasks->count == 0;
+      idle = thread->isCancelled && self->tasks->count == 0;
     });
 
     if (idle) {
@@ -183,8 +183,8 @@ static ident run(Thread *thread) {
       URLSessionTask *task = $(tasks, objectAtIndex, i);
       if (task->state == URLSESSIONTASK_SUSPENDING) {
 
-        if (task->locals.handle) {
-          const CURLcode err = curl_easy_pause(task->locals.handle, CURLPAUSE_ALL);
+        if (task->handle) {
+          const CURLcode err = curl_easy_pause(task->handle, CURLPAUSE_ALL);
           assert(err == CURLE_OK);
         }
 
@@ -192,15 +192,15 @@ static ident run(Thread *thread) {
 
       } else if (task->state == URLSESSIONTASK_RESUMING) {
 
-        if (task->locals.handle == NULL) {
+        if (task->handle == NULL) {
 
           $(task, setup);
-          assert(task->locals.handle);
+          assert(task->handle);
 
-          const CURLMcode merr = curl_multi_add_handle(self->locals.handle, task->locals.handle);
+          const CURLMcode merr = curl_multi_add_handle(self->handle, task->handle);
           assert(merr == CURLM_OK);
         } else {
-          const CURLcode err = curl_easy_pause(task->locals.handle, CURLPAUSE_CONT);
+          const CURLcode err = curl_easy_pause(task->handle, CURLPAUSE_CONT);
           assert(err == CURLE_OK);
         }
 
@@ -208,8 +208,8 @@ static ident run(Thread *thread) {
 
       } else if (task->state == URLSESSIONTASK_CANCELING) {
 
-        if (task->locals.handle) {
-          const CURLMcode merr = curl_multi_remove_handle(self->locals.handle, task->locals.handle);
+        if (task->handle) {
+          const CURLMcode merr = curl_multi_remove_handle(self->handle, task->handle);
           assert(merr == CURLM_OK);
         }
 
@@ -221,31 +221,31 @@ static ident run(Thread *thread) {
 
         $(task, teardown);
 
-        synchronized(self->locals.condition, {
-          $(self->locals.tasks, removeObject, task);
+        synchronized(self->condition, {
+          $(self->tasks, removeObject, task);
         });
       } else if (task->state == URLSESSIONTASK_COMPLETED) {
 
-        synchronized(self->locals.condition, {
-          $(self->locals.tasks, removeObject, task);
+        synchronized(self->condition, {
+          $(self->tasks, removeObject, task);
         });
       }
     }
 
-    CURLMcode merr = curl_multi_wait(self->locals.handle, NULL, 0, 0, NULL);
+    CURLMcode merr = curl_multi_wait(self->handle, NULL, 0, 0, NULL);
     assert(merr == CURLM_OK);
 
-    merr = curl_multi_perform(self->locals.handle, &ret);
+    merr = curl_multi_perform(self->handle, &ret);
     assert(merr == CURLM_OK);
 
     CURLMsg *message;
-    while ((message = curl_multi_info_read(self->locals.handle, &ret))) {
+    while ((message = curl_multi_info_read(self->handle, &ret))) {
 
       URLSessionTask *task = NULL;
       for (size_t i = 0; i < tasks->count; i++) {
 
         URLSessionTask *t = $(tasks, objectAtIndex, i);
-        if (t->locals.handle == message->easy_handle) {
+        if (t->handle == message->easy_handle) {
           task = t;
           break;
         }
@@ -255,12 +255,12 @@ static ident run(Thread *thread) {
 
       if (message->msg == CURLMSG_DONE) {
 
-        merr = curl_multi_remove_handle(self->locals.handle, task->locals.handle);
+        merr = curl_multi_remove_handle(self->handle, task->handle);
         assert(merr == CURLM_OK);
 
         task->state = URLSESSIONTASK_COMPLETED;
 
-        curl_easy_getinfo(task->locals.handle, CURLINFO_RESPONSE_CODE, (long *) &task->response->httpStatusCode);
+        curl_easy_getinfo(task->handle, CURLINFO_RESPONSE_CODE, (long *) &task->response->httpStatusCode);
 
         if (message->data.result == CURLE_OK && $((Object *) task, isKindOfClass, _URLSessionDataTask())) {
           $((URLSessionDataTask *) task, cacheResponse);
@@ -272,8 +272,8 @@ static ident run(Thread *thread) {
 
         $(task, teardown);
 
-        synchronized(self->locals.condition, {
-          $(self->locals.tasks, removeObject, task);
+        synchronized(self->condition, {
+          $(self->tasks, removeObject, task);
         });
       }
     }
@@ -281,7 +281,7 @@ static ident run(Thread *thread) {
     release(tasks);
   }
 
-  curl_multi_cleanup(self->locals.handle);
+  curl_multi_cleanup(self->handle);
 
   return NULL;
 }
@@ -298,11 +298,11 @@ static URLSession *initWithConfiguration(URLSession *self, URLSessionConfigurati
   if (self) {
     self->configuration = retain(configuration);
 
-    self->locals.condition = $(alloc(Condition), init);
-    self->locals.tasks = $(alloc(Array), init);
-    self->locals.thread = $(alloc(Thread), initWithFunction, run, self);
+    self->condition = $(alloc(Condition), init);
+    self->tasks = $(alloc(Array), init);
+    self->thread = $(alloc(Thread), initWithFunction, run, self);
 
-    $(self->locals.thread, start);
+    $(self->thread, start);
   }
 
   return self;
@@ -314,7 +314,7 @@ static URLSession *initWithConfiguration(URLSession *self, URLSessionConfigurati
  */
 static void invalidateAndCancel(URLSession *self) {
 
-  if (self->locals.thread->isCancelled) {
+  if (self->thread->isCancelled) {
     return;
   }
 
@@ -328,8 +328,8 @@ static void invalidateAndCancel(URLSession *self) {
 
   release(tasks);
 
-  $(self->locals.thread, cancel);
-  synchronized(self->locals.condition, $(self->locals.condition, signal));
+  $(self->thread, cancel);
+  synchronized(self->condition, $(self->condition, signal));
 }
 
 static URLSession *_sharedInstance;
@@ -357,8 +357,8 @@ static Array *tasks(const URLSession *self) {
 
   Array *array;
 
-  synchronized(self->locals.condition, {
-    array = $$(Array, arrayWithArray, (Array *) self->locals.tasks);
+  synchronized(self->condition, {
+    array = $$(Array, arrayWithArray, (Array *) self->tasks);
   });
 
   return array;
