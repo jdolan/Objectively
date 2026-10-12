@@ -24,6 +24,8 @@
 #include <assert.h>
 #include <stdlib.h>
 
+#include <curl/curl.h>
+
 #include "RESTClient.h"
 #include "URL.h"
 #include "URLRequest.h"
@@ -42,10 +44,13 @@ static void RESTClient_AsyncCompletion(URLSessionTask *task, bool success) {
 
   RESTClient_AsyncState *state = task->data;
   URLSessionDataTask *dataTask = (URLSessionDataTask *) task;
-  const int status = task->response ? task->response->httpStatusCode : 0;
 
   if (state->completion) {
-    state->completion(status, dataTask->data, state->userData);
+    if (success) {
+      state->completion(task->response->httpStatusCode, dataTask->data, state->userData);
+    } else {
+      state->completion(0, NULL, state->userData);
+    }
   }
 
   free(state);
@@ -85,10 +90,17 @@ static int request(RESTClient *self, HTTPMethod method, const char *url_string,
     release(request);
   }
 
+  if (task == NULL) {
+    return 0;
+  }
+
   $((URLSessionTask *) task, execute);
 
-  const int status = task->urlSessionTask.response->httpStatusCode;
-  if (out_data && task->data) {
+  const URLSessionTask *t = (URLSessionTask *) task;
+  const bool success = t->state == URLSESSIONTASK_COMPLETED && t->result == CURLE_OK;
+
+  const int status = success ? t->response->httpStatusCode : 0;
+  if (success && out_data && task->data) {
     *out_data = retain(task->data);
   }
 
@@ -121,6 +133,13 @@ static void requestAsync(RESTClient *self, HTTPMethod method, const char *url_st
     }
     task = $(self->session, dataTaskWithRequest, request, RESTClient_AsyncCompletion);
     release(request);
+  }
+
+  if (task == NULL) {
+    if (completion) {
+      completion(0, NULL, userData);
+    }
+    return;
   }
 
   RESTClient_AsyncState *state = calloc(1, sizeof(RESTClient_AsyncState));

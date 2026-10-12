@@ -55,7 +55,6 @@ static void dealloc(Object *self) {
   }
 
   release(this->request);
-  release(this->session);
   release(this->response);
 
   super(Object, self, dealloc);
@@ -69,16 +68,19 @@ static void dealloc(Object *self) {
  */
 static void cancel(URLSessionTask *self) {
 
-  switch (self->state) {
-    case URLSESSIONTASK_RESUMING:
-    case URLSESSIONTASK_RESUMED:
-    case URLSESSIONTASK_SUSPENDING:
-    case URLSESSIONTASK_SUSPENDED:
-      self->state = URLSESSIONTASK_CANCELING;
-      break;
-    default:
-      break;
-  }
+  synchronized(self->session->condition, {
+    switch (self->state) {
+      case URLSESSIONTASK_RESUMING:
+      case URLSESSIONTASK_RESUMED:
+      case URLSESSIONTASK_SUSPENDING:
+      case URLSESSIONTASK_SUSPENDED:
+        self->state = URLSESSIONTASK_CANCELING;
+        $(self->session->condition, signal);
+        break;
+      default:
+        break;
+    }
+  });
 }
 
 /**
@@ -87,13 +89,43 @@ static void cancel(URLSessionTask *self) {
  */
 static void execute(URLSessionTask *self) {
 
+  Condition *condition = self->session->condition;
+
+  bool isExecuting = false;
+
+  synchronized(condition, {
+    switch (self->state) {
+      case URLSESSIONTASK_CANCELING:
+        self->state = URLSESSIONTASK_CANCELED;
+        break;
+      case URLSESSIONTASK_CANCELED:
+      case URLSESSIONTASK_COMPLETED:
+        break;
+      default:
+        self->isExecuting = isExecuting = true;
+        break;
+    }
+  });
+
+  if (isExecuting == false) {
+    return;
+  }
+
   $(self, setup);
 
-  curl_easy_perform(self->handle);
+  self->result = curl_easy_perform(self->handle);
 
   curl_easy_getinfo(self->handle, CURLINFO_RESPONSE_CODE, (long *) &self->response->httpStatusCode);
 
-  self->state = URLSESSIONTASK_COMPLETED;
+  synchronized(condition, {
+    self->isExecuting = false;
+    if (self->state == URLSESSIONTASK_CANCELING) {
+      self->state = URLSESSIONTASK_CANCELED;
+    } else {
+      self->state = URLSESSIONTASK_COMPLETED;
+    }
+    $(condition, signal);
+  });
 
   $(self, teardown);
 }
@@ -115,7 +147,7 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
     assert(self->error);
 
     self->request = retain(request);
-    self->session = retain(session);
+    self->session = session;
 
     self->response = $(alloc(URLResponse), init);
 
@@ -133,14 +165,17 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
  */
 static void resume(URLSessionTask *self) {
 
-  switch (self->state) {
-    case URLSESSIONTASK_SUSPENDING:
-    case URLSESSIONTASK_SUSPENDED:
-      self->state = URLSESSIONTASK_RESUMING;
-      break;
-    default:
-      break;
-  }
+  synchronized(self->session->condition, {
+    switch (self->state) {
+      case URLSESSIONTASK_SUSPENDING:
+      case URLSESSIONTASK_SUSPENDED:
+        self->state = URLSESSIONTASK_RESUMING;
+        $(self->session->condition, signal);
+        break;
+      default:
+        break;
+    }
+  });
 }
 
 /**
@@ -185,7 +220,7 @@ static size_t responseHeader(char *buffer, size_t size, size_t count, void *data
 /**
  * @brief The `CURLOPT_XFERINFOFUNCTION`, which updates internal state and dispatches the task's
  * progress function.
- * @remarks This is also the mechanism for resuming suspended tasks.
+ * @return Nonzero to abort the transfer, which is how `cancel` interrupts `execute`.
  */
 static int progress(ident self, curl_off_t bytesExpectedToReceive, curl_off_t bytesReceived,
     curl_off_t bytesExpectedToSend, curl_off_t bytesSent) {
@@ -201,7 +236,7 @@ static int progress(ident self, curl_off_t bytesExpectedToReceive, curl_off_t by
     this->progress(this);
   }
 
-  return 0;
+  return this->state == URLSESSIONTASK_CANCELING;
 }
 
 /**
@@ -231,6 +266,7 @@ static void setup(URLSessionTask *self) {
   curl_easy_setopt(self->handle, CURLOPT_HEADERFUNCTION, responseHeader);
   curl_easy_setopt(self->handle, CURLOPT_HEADERDATA, self);
 
+  curl_easy_setopt(self->handle, CURLOPT_NOPROGRESS, 0L);
   curl_easy_setopt(self->handle, CURLOPT_XFERINFOFUNCTION, progress);
   curl_easy_setopt(self->handle, CURLOPT_XFERINFODATA, self);
 
@@ -289,14 +325,17 @@ static void setup(URLSessionTask *self) {
  */
 static void suspend(URLSessionTask *self) {
 
-  switch (self->state) {
-    case URLSESSIONTASK_RESUMING:
-    case URLSESSIONTASK_RESUMED:
-      self->state = URLSESSIONTASK_SUSPENDING;
-      break;
-    default:
-      break;
-  }
+  synchronized(self->session->condition, {
+    switch (self->state) {
+      case URLSESSIONTASK_RESUMING:
+      case URLSESSIONTASK_RESUMED:
+        self->state = URLSESSIONTASK_SUSPENDING;
+        $(self->session->condition, signal);
+        break;
+      default:
+        break;
+    }
+  });
 }
 
 /**

@@ -42,7 +42,7 @@ typedef struct RESTClientInterface RESTClientInterface;
 
 /**
  * @brief A completion handler for asynchronous RESTClient requests.
- * @param status The HTTP response status code, or `0` on connection failure.
+ * @param status The HTTP response status code, or `0` if the transfer failed or was cancelled.
  * @param data The response body, or `NULL`.
  * @param userData The user data pointer passed to the originating async method.
  * @ingroup REST
@@ -96,7 +96,7 @@ struct RESTClientInterface {
    * @param headers A `NULL`-terminated array of alternating field/value C strings
    * (e.g. `{ "X-Field", "value", NULL }`) to add to the request, or `NULL` for none.
    * @param data Optionally receives the retained response body. Caller must `release`.
-   * @return The HTTP response status code, or `0` on connection failure.
+   * @return The HTTP response status code, or `0` if the transfer failed or was cancelled.
    * @memberof RESTClient
    */
   int (*del)(RESTClient *self, const char *url, const char **headers, Data **data);
@@ -123,7 +123,7 @@ struct RESTClientInterface {
    * @param headers A `NULL`-terminated array of alternating field/value C strings
    * (e.g. `{ "X-Field", "value", NULL }`) to add to the request, or `NULL` for none.
    * @param data Optionally receives the retained response body. Caller must `release`.
-   * @return The HTTP response status code, or `0` on connection failure.
+   * @return The HTTP response status code, or `0` if the transfer failed or was cancelled.
    * @memberof RESTClient
    */
   int (*get)(RESTClient *self, const char *url, const char **headers, Data **data);
@@ -149,7 +149,7 @@ struct RESTClientInterface {
    * @param url The URL string.
    * @param headers A `NULL`-terminated array of alternating field/value C strings
    * (e.g. `{ "X-Field", "value", NULL }`) to add to the request, or `NULL` for none.
-   * @return The HTTP response status code, or `0` on connection failure.
+   * @return The HTTP response status code, or `0` if the transfer failed or was cancelled.
    * @memberof RESTClient
    */
   int (*head)(RESTClient *self, const char *url, const char **headers);
@@ -195,7 +195,7 @@ struct RESTClientInterface {
    * @param headers A `NULL`-terminated array of alternating field/value C strings
    * (e.g. `{ "X-Field", "value", NULL }`) to add to the request, or `NULL` for none.
    * @param data Optionally receives the retained response body. Caller must `release`.
-   * @return The HTTP response status code, or `0` on connection failure.
+   * @return The HTTP response status code, or `0` if the transfer failed or was cancelled.
    * @memberof RESTClient
    */
   int (*options)(RESTClient *self, const char *url, const char **headers, Data **data);
@@ -223,7 +223,7 @@ struct RESTClientInterface {
    * @param headers A `NULL`-terminated array of alternating field/value C strings
    * (e.g. `{ "X-Field", "value", NULL }`) to add to the request, or `NULL` for none.
    * @param data Optionally receives the retained response body. Caller must `release`.
-   * @return The HTTP response status code, or `0` on connection failure.
+   * @return The HTTP response status code, or `0` if the transfer failed or was cancelled.
    * @memberof RESTClient
    */
   int (*patch)(RESTClient *self, const char *url, const Data *body, const char **headers, Data **data);
@@ -252,7 +252,7 @@ struct RESTClientInterface {
    * @param headers A `NULL`-terminated array of alternating field/value C strings
    * (e.g. `{ "X-Field", "value", NULL }`) to add to the request, or `NULL` for none.
    * @param data Optionally receives the retained response body. Caller must `release`.
-   * @return The HTTP response status code, or `0` on connection failure.
+   * @return The HTTP response status code, or `0` if the transfer failed or was cancelled.
    * @memberof RESTClient
    */
   int (*post)(RESTClient *self, const char *url, const Data *body, const char **headers, Data **data);
@@ -281,7 +281,7 @@ struct RESTClientInterface {
    * @param headers A `NULL`-terminated array of alternating field/value C strings
    * (e.g. `{ "X-Field", "value", NULL }`) to add to the request, or `NULL` for none.
    * @param data Optionally receives the retained response body. Caller must `release`.
-   * @return The HTTP response status code, or `0` on connection failure.
+   * @return The HTTP response status code, or `0` if the transfer failed or was cancelled.
    * @memberof RESTClient
    */
   int (*put)(RESTClient *self, const char *url, const Data *body, const char **headers, Data **data);

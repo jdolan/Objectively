@@ -129,19 +129,18 @@ static void execute(URLSessionTask *self) {
     return;
   }
 
-  $(self, setup);
-
-  CURLcode code = curl_easy_perform(self->handle);
-
-  curl_easy_getinfo(self->handle, CURLINFO_RESPONSE_CODE, (long *) &self->response->httpStatusCode);
-
-  this->urlSessionTask.state = URLSESSIONTASK_COMPLETED;
-
-  if (code == CURLE_OK) {
-    $(this, cacheResponse);
+  URLCache *cache = self->session->configuration->urlCache;
+  if (cache) {
+    retain(cache);
   }
 
-  $(self, teardown);
+  super(URLSessionTask, self, execute);
+
+  if (cache && self->state == URLSESSIONTASK_COMPLETED && self->result == CURLE_OK) {
+    $(cache, storeCachedResponseForRequest, self->request, self->response, this->data);
+  }
+
+  release(cache);
 }
 
 /**
