@@ -195,7 +195,7 @@ static ident waitForGateOrCancel(Thread *thread) {
     $(condition, broadcast);
   });
 
-  while (__atomic_load_n(&thread->isCancelled, __ATOMIC_ACQUIRE) == false) {
+  while ($(thread, isCancelled) == false) {
     usleep(1000);
   }
 
@@ -281,7 +281,7 @@ static ident untilCancelled(Thread *thread) {
     $(condition, broadcast);
   });
 
-  while (__atomic_load_n(&thread->isCancelled, __ATOMIC_ACQUIRE) == false) {
+  while ($(thread, isCancelled) == false) {
     usleep(1000);
   }
 

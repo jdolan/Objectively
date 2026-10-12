@@ -75,8 +75,8 @@ struct Thread {
 
   /**
    * @brief `true` when this Thread has been cancelled, `false` otherwise.
-   * @remarks Thread::cancel sets this from another thread, so the ThreadFunction SHOULD read it
-   * with `__atomic_load_n(&thread->isCancelled, __ATOMIC_ACQUIRE)`.
+   * @remarks Thread::cancel sets this from another thread. Read it with Thread::isCancelled.
+   * @private
    */
   bool isCancelled;
 
@@ -156,6 +156,15 @@ struct ThreadInterface {
    * @memberof Thread
    */
   Thread *(*initWithFunction)(Thread *self, ThreadFunction function, ident data);
+
+  /**
+   * @fn bool Thread::isCancelled(const Thread *self)
+   * @param self The Thread.
+   * @return `true` if this Thread has been cancelled, `false` otherwise.
+   * @remarks This MAY be called from any thread, including while another thread cancels this one.
+   * @memberof Thread
+   */
+  bool (*isCancelled)(const Thread *self);
 
   /**
    * @fn void Thread::join(Thread *self, ident *status)

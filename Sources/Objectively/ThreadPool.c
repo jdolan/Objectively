@@ -250,7 +250,7 @@ static ident run(Thread *thread) {
 
   while (true) {
 
-    while (self->head == NULL && thread->isCancelled == false) {
+    while (self->head == NULL && $(thread, isCancelled) == false) {
       $(condition, wait);
     }
 

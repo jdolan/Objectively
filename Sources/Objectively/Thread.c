@@ -125,6 +125,14 @@ static Thread *initWithFunction(Thread *self, ThreadFunction function, ident dat
 }
 
 /**
+ * @fn bool Thread::isCancelled(const Thread *self)
+ * @memberof Thread
+ */
+static bool isCancelled(const Thread *self) {
+  return __atomic_load_n(&self->isCancelled, __ATOMIC_ACQUIRE);
+}
+
+/**
  * @fn void Thread::join(Thread *self, ident *status)
  * @memberof Thread
  */
@@ -194,6 +202,7 @@ static void initialize(Class *clazz) {
   ((ThreadInterface *) clazz->interface)->detach = detach;
   ((ThreadInterface *) clazz->interface)->init = init;
   ((ThreadInterface *) clazz->interface)->initWithFunction = initWithFunction;
+  ((ThreadInterface *) clazz->interface)->isCancelled = isCancelled;
   ((ThreadInterface *) clazz->interface)->join = join;
   ((ThreadInterface *) clazz->interface)->kill = _kill;
   ((ThreadInterface *) clazz->interface)->start = start;
