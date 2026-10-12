@@ -200,6 +200,7 @@ static Vector *initWithElements(Vector *self, size_t size, size_t count, ident e
 
   self = $(self, initWithSize, size);
   if (self) {
+    self->capacity = count;
     self->count = count;
     self->elements = elements;
   }
