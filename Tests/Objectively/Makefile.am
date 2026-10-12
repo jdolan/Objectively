@@ -28,6 +28,7 @@ TESTS = \
 	String \
 	StringReader \
 	Thread \
+	ThreadPool \
 	URLCache \
 	URL \
 	URLSession \

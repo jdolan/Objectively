@@ -129,6 +129,9 @@
     <ClInclude Include="..\Sources\Objectively\Thread.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
+    <ClInclude Include="..\Sources\Objectively\ThreadPool.h">
+      <Filter>Sources\Objectively</Filter>
+    </ClInclude>
     <ClInclude Include="..\Sources\Objectively\Types.h">
       <Filter>Sources\Objectively</Filter>
     </ClInclude>
@@ -294,6 +297,9 @@
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
     <ClCompile Include="..\Sources\Objectively\Thread.c">
+      <Filter>Sources\Objectively</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Objectively\ThreadPool.c">
       <Filter>Sources\Objectively</Filter>
     </ClCompile>
     <ClCompile Include="..\Sources\Objectively\URL.c">

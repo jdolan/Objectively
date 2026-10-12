@@ -26,7 +26,7 @@
 #include <Objectively/Condition.h>
 #include <Objectively/Object.h>
 #include <Objectively/Operation.h>
-#include <Objectively/Thread.h>
+#include <Objectively/ThreadPool.h>
 
 /**
  * @file
@@ -61,6 +61,12 @@ struct OperationQueue {
   Condition *condition;
 
   /**
+   * @brief `true` when this queue is being deallocated, which ends its ThreadFunctions.
+   * @private
+   */
+  bool isCancelled;
+
+  /**
    * @brief When `true`, the queue will not `start` any new Operations.
    * @remarks Read-only; use `suspend` and `resume`, which notify the queue's
    * Threads of the transition.
@@ -74,10 +80,10 @@ struct OperationQueue {
   Array *operations;
 
   /**
-   * @brief The backing Threads, one per concurrently executing Operation.
+   * @brief The backing ThreadPool, with one Thread per concurrently executing Operation.
    * @private
    */
-  Array *threads;
+  ThreadPool *threadPool;
 };
 
 /**

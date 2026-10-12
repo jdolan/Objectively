@@ -18,7 +18,7 @@ Objectively is a cross-platform framework that provides rich object-oriented sem
  * **Automatic memory management** with reference counting
  * **Unicode strings** with mutlibyte character support
  * **Collections** for Objects and C types: Array, Dictionary, List, Set and more
- * **Concurrency**: Lock, Condition, Thread, Operation, OperationQueue
+ * **Concurrency**: Lock, Condition, Thread, ThreadPool, Operation, OperationQueue
  * **Networking**: URLSession, JSONContext & RESTClient
 
 ## tl;dr

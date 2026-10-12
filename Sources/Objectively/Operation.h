@@ -145,6 +145,8 @@ struct OperationInterface {
    * @fn void Operation::cancel(Operation *self)
    * @brief Cancels this Operation, allowing it to complete immediately.
    * @param self The Operation.
+   * @remarks An Operation that has not started will not run its function. An Operation that is
+   * executing runs to completion, but its function MAY check `isCancelled` and return early.
    * @memberof Operation
    */
   void (*cancel)(Operation *self);

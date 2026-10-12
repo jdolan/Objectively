@@ -72,18 +72,18 @@ static void addDependency(Operation *self, Operation *dependency) {
  */
 static void cancel(Operation *self) {
 
-  if (self->isCancelled == false) {
-    if (self->isFinished == false) {
-      if (self->isExecuting == false) {
-        self->isCancelled = true;
+  if (self->isCancelled || self->isFinished) {
+    return;
+  }
 
-        OperationQueue *queue = self->queue;
-        if (queue) {
-          synchronized(queue->condition, {
-            $(queue->condition, signal);
-          });
-        }
-      }
+  self->isCancelled = true;
+
+  if (self->isExecuting == false) {
+    OperationQueue *queue = self->queue;
+    if (queue) {
+      synchronized(queue->condition, {
+        $(queue->condition, signal);
+      });
     }
   }
 }

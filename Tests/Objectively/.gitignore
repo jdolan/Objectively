@@ -22,6 +22,7 @@ Set
 String
 StringReader
 Thread
+ThreadPool
 URL
 URLSession
 Vector

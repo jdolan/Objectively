@@ -44,21 +44,12 @@ static void dealloc(Object *self) {
 
   OperationQueue *this = (OperationQueue *) self;
 
-  const Array *threads = (Array *) this->threads;
-
-  for (size_t i = 0; i < threads->count; i++) {
-    $((Thread *) $(threads, objectAtIndex, i), cancel);
-  }
-
   synchronized(this->condition, {
+    this->isCancelled = true;
     $(this->condition, broadcast);
   });
 
-  for (size_t i = 0; i < threads->count; i++) {
-    $((Thread *) $(threads, objectAtIndex, i), join, NULL);
-  }
-
-  release(this->threads);
+  release(this->threadPool);
   release(this->condition);
   release(this->operations);
 
@@ -147,7 +138,7 @@ static ident run(Thread *thread) {
 
     synchronized(self->condition, {
 
-      isCancelled = thread->isCancelled;
+      isCancelled = self->isCancelled;
 
       if (!isCancelled && self->isSuspended == false) {
 
@@ -200,22 +191,11 @@ static OperationQueue *initWithMaxConcurrentOperations(OperationQueue *self, siz
     self->operations = $(alloc(Array), init);
     assert(self->operations);
 
-    self->threads = $(alloc(Array), init);
-    assert(self->threads);
+    self->threadPool = $(alloc(ThreadPool), initWithSize, maxConcurrentOperations);
+    assert(self->threadPool);
 
     for (size_t i = 0; i < maxConcurrentOperations; i++) {
-
-      Thread *thread = $(alloc(Thread), initWithFunction, run, self);
-      assert(thread);
-
-      $(self->threads, addObject, thread);
-
-      release(thread);
-    }
-
-    const Array *threads = (Array *) self->threads;
-    for (size_t i = 0; i < threads->count; i++) {
-      $((Thread *) $(threads, objectAtIndex, i), start);
+      $(self->threadPool, detach, run, self);
     }
   }
 
