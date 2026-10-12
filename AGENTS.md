@@ -52,6 +52,9 @@ beside this repository, and they consume the **installed** copy from `/usr/local
   initializer), then fills the instance inside `if (self) { ... }`, and returns `self`.
 - `dealloc` releases what the instance owns, then ends with `super(Object, self, dealloc)`.
 - `release` always returns `NULL`, so clear a field with `self->foo = release(self->foo)`.
+- The members of an instance struct, after the parent struct and `interface[0]`, are in
+  alphabetical order. A private member is an ordinary member whose documentation carries
+  `@private`. A type MUST NOT nest its private members in a `locals` struct.
 - A `.c` file groups its methods under `#pragma mark - <Superclass>`, `#pragma mark - <Type>` and
   `#pragma mark - Class lifecycle`. Methods in an interface struct and in its `.c` file are in
   alphabetical order. A private helper sits directly above its first caller.

@@ -43,6 +43,7 @@ pkginclude_HEADERS = \
 	String.h \
 	StringReader.h \
 	Thread.h \
+	ThreadPool.h \
 	Types.h \
 	URL.h \
 	URLCache.h \
@@ -96,6 +97,7 @@ libObjectively_la_SOURCES = \
 	String.c \
 	StringReader.c \
 	Thread.c \
+	ThreadPool.c \
 	URL.c \
 	URLCache.c \
  	URLCachedResponse.c \

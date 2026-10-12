@@ -64,10 +64,10 @@ static void setup(URLSessionTask *self) {
   err = fseek(this->file, 0, SEEK_SET);
   assert(err == 0);
 
-  curl_easy_setopt(self->locals.handle, CURLOPT_INFILESIZE_LARGE, self->bytesExpectedToSend);
+  curl_easy_setopt(self->handle, CURLOPT_INFILESIZE_LARGE, self->bytesExpectedToSend);
 
-  curl_easy_setopt(self->locals.handle, CURLOPT_READFUNCTION, readFunction);
-  curl_easy_setopt(self->locals.handle, CURLOPT_READDATA, self);
+  curl_easy_setopt(self->handle, CURLOPT_READFUNCTION, readFunction);
+  curl_easy_setopt(self->handle, CURLOPT_READDATA, self);
 }
 
 #pragma mark - Class lifecycle

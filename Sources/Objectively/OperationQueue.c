@@ -44,23 +44,14 @@ static void dealloc(Object *self) {
 
   OperationQueue *this = (OperationQueue *) self;
 
-  const Array *threads = (Array *) this->locals.threads;
-
-  for (size_t i = 0; i < threads->count; i++) {
-    $((Thread *) $(threads, objectAtIndex, i), cancel);
-  }
-
-  synchronized(this->locals.condition, {
-    $(this->locals.condition, broadcast);
+  synchronized(this->condition, {
+    this->isCancelled = true;
+    $(this->condition, broadcast);
   });
 
-  for (size_t i = 0; i < threads->count; i++) {
-    $((Thread *) $(threads, objectAtIndex, i), join, NULL);
-  }
-
-  release(this->locals.threads);
-  release(this->locals.condition);
-  release(this->locals.operations);
+  release(this->threadPool);
+  release(this->condition);
+  release(this->operations);
 
   super(Object, self, dealloc);
 }
@@ -78,10 +69,10 @@ static void addOperation(OperationQueue *self, Operation *operation) {
   assert(operation->isExecuting == false);
   assert(operation->isFinished == false);
 
-  synchronized(self->locals.condition, {
-    operation->locals.queue = self;
-    $(self->locals.operations, addObject, operation);
-    $(self->locals.condition, signal);
+  synchronized(self->condition, {
+    operation->queue = self;
+    $(self->operations, addObject, operation);
+    $(self->condition, signal);
   });
 }
 
@@ -145,21 +136,21 @@ static ident run(Thread *thread) {
 
     Operation *operation = NULL;
 
-    synchronized(self->locals.condition, {
+    synchronized(self->condition, {
 
-      isCancelled = thread->isCancelled;
+      isCancelled = self->isCancelled;
 
       if (!isCancelled && self->isSuspended == false) {
 
-        operation = $(self->locals.operations, find, isOperationReady, NULL);
+        operation = $(self->operations, find, isOperationReady, NULL);
         if (operation) {
           operation->isDispatched = true;
-          $(self->locals.condition, signal);
+          $(self->condition, signal);
         }
       }
 
       if (operation == NULL && !isCancelled) {
-        $(self->locals.condition, wait);
+        $(self->condition, wait);
       }
     });
 
@@ -194,28 +185,17 @@ static OperationQueue *initWithMaxConcurrentOperations(OperationQueue *self, siz
   self = (OperationQueue *) super(Object, self, init);
   if (self) {
 
-    self->locals.condition = $(alloc(Condition), init);
-    assert(self->locals.condition);
+    self->condition = $(alloc(Condition), init);
+    assert(self->condition);
 
-    self->locals.operations = $(alloc(Array), init);
-    assert(self->locals.operations);
+    self->operations = $(alloc(Array), init);
+    assert(self->operations);
 
-    self->locals.threads = $(alloc(Array), init);
-    assert(self->locals.threads);
+    self->threadPool = $(alloc(ThreadPool), initWithSize, maxConcurrentOperations);
+    assert(self->threadPool);
 
     for (size_t i = 0; i < maxConcurrentOperations; i++) {
-
-      Thread *thread = $(alloc(Thread), initWithFunction, run, self);
-      assert(thread);
-
-      $(self->locals.threads, addObject, thread);
-
-      release(thread);
-    }
-
-    const Array *threads = (Array *) self->locals.threads;
-    for (size_t i = 0; i < threads->count; i++) {
-      $((Thread *) $(threads, objectAtIndex, i), start);
+      $(self->threadPool, detach, run, self);
     }
   }
 
@@ -230,8 +210,8 @@ static size_t operationCount(const OperationQueue *self) {
 
   size_t count;
 
-  synchronized(self->locals.condition, {
-    count = ((Array *) self->locals.operations)->count;
+  synchronized(self->condition, {
+    count = ((Array *) self->operations)->count;
   });
 
   return count;
@@ -245,8 +225,8 @@ static Array *operations(const OperationQueue *self) {
 
   ident operations;
 
-  synchronized(self->locals.condition, {
-    operations = $((Object * ) self->locals.operations, copy);
+  synchronized(self->condition, {
+    operations = $((Object * ) self->operations, copy);
   });
 
   return (Array *) operations;
@@ -261,10 +241,10 @@ static void removeOperation(OperationQueue *self, Operation *operation) {
   assert(operation);
   assert(operation->isExecuting == false);
 
-  synchronized(self->locals.condition, {
-    operation->locals.queue = NULL;
-    $(self->locals.operations, removeObject, operation);
-    $(self->locals.condition, signal);
+  synchronized(self->condition, {
+    operation->queue = NULL;
+    $(self->operations, removeObject, operation);
+    $(self->condition, signal);
   });
 }
 
@@ -274,9 +254,9 @@ static void removeOperation(OperationQueue *self, Operation *operation) {
  */
 static void resume(OperationQueue *self) {
 
-  synchronized(self->locals.condition, {
+  synchronized(self->condition, {
     self->isSuspended = false;
-    $(self->locals.condition, broadcast);
+    $(self->condition, broadcast);
   });
 }
 
@@ -286,7 +266,7 @@ static void resume(OperationQueue *self) {
  */
 static void suspend(OperationQueue *self) {
 
-  synchronized(self->locals.condition, {
+  synchronized(self->condition, {
     self->isSuspended = true;
   });
 }
@@ -301,8 +281,8 @@ static void waitUntilAllOperationsAreFinished(OperationQueue *self) {
 
     Operation *operation = NULL;
 
-    synchronized(self->locals.condition, {
-      const Array *operations = (Array *) self->locals.operations;
+    synchronized(self->condition, {
+      const Array *operations = (Array *) self->operations;
       if (operations->count) {
         operation = retain($(operations, firstObject));
       }

@@ -55,7 +55,6 @@ static void dealloc(Object *self) {
   }
 
   release(this->request);
-  release(this->session);
   release(this->response);
 
   super(Object, self, dealloc);
@@ -69,16 +68,19 @@ static void dealloc(Object *self) {
  */
 static void cancel(URLSessionTask *self) {
 
-  switch (self->state) {
-    case URLSESSIONTASK_RESUMING:
-    case URLSESSIONTASK_RESUMED:
-    case URLSESSIONTASK_SUSPENDING:
-    case URLSESSIONTASK_SUSPENDED:
-      self->state = URLSESSIONTASK_CANCELING;
-      break;
-    default:
-      break;
-  }
+  synchronized(self->session->condition, {
+    switch (self->state) {
+      case URLSESSIONTASK_RESUMING:
+      case URLSESSIONTASK_RESUMED:
+      case URLSESSIONTASK_SUSPENDING:
+      case URLSESSIONTASK_SUSPENDED:
+        self->state = URLSESSIONTASK_CANCELING;
+        $(self->session->condition, signal);
+        break;
+      default:
+        break;
+    }
+  });
 }
 
 /**
@@ -87,13 +89,43 @@ static void cancel(URLSessionTask *self) {
  */
 static void execute(URLSessionTask *self) {
 
+  Condition *condition = self->session->condition;
+
+  bool isExecuting = false;
+
+  synchronized(condition, {
+    switch (self->state) {
+      case URLSESSIONTASK_CANCELING:
+        self->state = URLSESSIONTASK_CANCELED;
+        break;
+      case URLSESSIONTASK_CANCELED:
+      case URLSESSIONTASK_COMPLETED:
+        break;
+      default:
+        self->isExecuting = isExecuting = true;
+        break;
+    }
+  });
+
+  if (isExecuting == false) {
+    return;
+  }
+
   $(self, setup);
 
-  curl_easy_perform(self->locals.handle);
+  self->result = curl_easy_perform(self->handle);
 
-  curl_easy_getinfo(self->locals.handle, CURLINFO_RESPONSE_CODE, (long *) &self->response->httpStatusCode);
+  curl_easy_getinfo(self->handle, CURLINFO_RESPONSE_CODE, (long *) &self->response->httpStatusCode);
 
-  self->state = URLSESSIONTASK_COMPLETED;
+  synchronized(condition, {
+    self->isExecuting = false;
+    if (self->state == URLSESSIONTASK_CANCELING) {
+      self->state = URLSESSIONTASK_CANCELED;
+    } else {
+      self->state = URLSESSIONTASK_COMPLETED;
+    }
+    $(condition, signal);
+  });
 
   $(self, teardown);
 }
@@ -115,7 +147,7 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
     assert(self->error);
 
     self->request = retain(request);
-    self->session = retain(session);
+    self->session = session;
 
     self->response = $(alloc(URLResponse), init);
 
@@ -133,14 +165,17 @@ static URLSessionTask *initWithRequestInSession(URLSessionTask *self, struct URL
  */
 static void resume(URLSessionTask *self) {
 
-  switch (self->state) {
-    case URLSESSIONTASK_SUSPENDING:
-    case URLSESSIONTASK_SUSPENDED:
-      self->state = URLSESSIONTASK_RESUMING;
-      break;
-    default:
-      break;
-  }
+  synchronized(self->session->condition, {
+    switch (self->state) {
+      case URLSESSIONTASK_SUSPENDING:
+      case URLSESSIONTASK_SUSPENDED:
+        self->state = URLSESSIONTASK_RESUMING;
+        $(self->session->condition, signal);
+        break;
+      default:
+        break;
+    }
+  });
 }
 
 /**
@@ -185,14 +220,14 @@ static size_t responseHeader(char *buffer, size_t size, size_t count, void *data
 /**
  * @brief The `CURLOPT_XFERINFOFUNCTION`, which updates internal state and dispatches the task's
  * progress function.
- * @remarks This is also the mechanism for resuming suspended tasks.
+ * @return Nonzero to abort the transfer, which is how `cancel` interrupts `execute`.
  */
 static int progress(ident self, curl_off_t bytesExpectedToReceive, curl_off_t bytesReceived,
     curl_off_t bytesExpectedToSend, curl_off_t bytesSent) {
 
   URLSessionTask *this = (URLSessionTask *) self;
 
-  curl_easy_getinfo(this->locals.handle, CURLINFO_RESPONSE_CODE, (long *) &this->response->httpStatusCode);
+  curl_easy_getinfo(this->handle, CURLINFO_RESPONSE_CODE, (long *) &this->response->httpStatusCode);
 
   this->bytesExpectedToReceive = bytesExpectedToReceive;
   this->bytesExpectedToSend = bytesExpectedToSend;
@@ -201,7 +236,12 @@ static int progress(ident self, curl_off_t bytesExpectedToReceive, curl_off_t by
     this->progress(this);
   }
 
-  return 0;
+  bool isCanceling;
+  synchronized(this->session->condition, {
+    isCanceling = this->state == URLSESSIONTASK_CANCELING;
+  });
+
+  return isCanceling;
 }
 
 /**
@@ -210,34 +250,35 @@ static int progress(ident self, curl_off_t bytesExpectedToReceive, curl_off_t by
  */
 static void setup(URLSessionTask *self) {
 
-  self->locals.handle = curl_easy_init();
-  assert(self->locals.handle);
+  self->handle = curl_easy_init();
+  assert(self->handle);
 
-  curl_easy_setopt(self->locals.handle, CURLOPT_ERRORBUFFER, self->error);
-  curl_easy_setopt(self->locals.handle, CURLOPT_FOLLOWLOCATION, true);
+  curl_easy_setopt(self->handle, CURLOPT_ERRORBUFFER, self->error);
+  curl_easy_setopt(self->handle, CURLOPT_FOLLOWLOCATION, true);
 
   const URLSessionConfiguration *config = self->session->configuration;
   if (config->connectTimeout) {
-    curl_easy_setopt(self->locals.handle, CURLOPT_CONNECTTIMEOUT, config->connectTimeout);
+    curl_easy_setopt(self->handle, CURLOPT_CONNECTTIMEOUT, config->connectTimeout);
   }
   if (config->timeout) {
-    curl_easy_setopt(self->locals.handle, CURLOPT_TIMEOUT, config->timeout);
+    curl_easy_setopt(self->handle, CURLOPT_TIMEOUT, config->timeout);
   }
   if (!config->longPolling) {
-    curl_easy_setopt(self->locals.handle, CURLOPT_LOW_SPEED_LIMIT, 1L);
-    curl_easy_setopt(self->locals.handle, CURLOPT_LOW_SPEED_TIME, 10L);
+    curl_easy_setopt(self->handle, CURLOPT_LOW_SPEED_LIMIT, 1L);
+    curl_easy_setopt(self->handle, CURLOPT_LOW_SPEED_TIME, 10L);
   }
 
-  curl_easy_setopt(self->locals.handle, CURLOPT_HEADERFUNCTION, responseHeader);
-  curl_easy_setopt(self->locals.handle, CURLOPT_HEADERDATA, self);
+  curl_easy_setopt(self->handle, CURLOPT_HEADERFUNCTION, responseHeader);
+  curl_easy_setopt(self->handle, CURLOPT_HEADERDATA, self);
 
-  curl_easy_setopt(self->locals.handle, CURLOPT_XFERINFOFUNCTION, progress);
-  curl_easy_setopt(self->locals.handle, CURLOPT_XFERINFODATA, self);
+  curl_easy_setopt(self->handle, CURLOPT_NOPROGRESS, 0L);
+  curl_easy_setopt(self->handle, CURLOPT_XFERINFOFUNCTION, progress);
+  curl_easy_setopt(self->handle, CURLOPT_XFERINFODATA, self);
 
   Data *body = self->request->httpBody;
   if (body) {
-    curl_easy_setopt(self->locals.handle, CURLOPT_POSTFIELDS, body->bytes);
-    curl_easy_setopt(self->locals.handle, CURLOPT_POSTFIELDSIZE, body->length);
+    curl_easy_setopt(self->handle, CURLOPT_POSTFIELDS, body->bytes);
+    curl_easy_setopt(self->handle, CURLOPT_POSTFIELDSIZE, body->length);
   }
 
   struct curl_slist *httpHeaders = NULL;
@@ -253,34 +294,34 @@ static void setup(URLSessionTask *self) {
     $(headers, enumerateObjectsAndKeys, requestHeaders_enumerator, &httpHeaders);
   }
 
-  curl_easy_setopt(self->locals.handle, CURLOPT_HTTPHEADER, httpHeaders);
+  curl_easy_setopt(self->handle, CURLOPT_HTTPHEADER, httpHeaders);
 
-  self->locals.requestHeaders = httpHeaders;
+  self->requestHeaders = httpHeaders;
 
   switch (self->request->httpMethod) {
     case HTTP_POST:
-      curl_easy_setopt(self->locals.handle, CURLOPT_POST, true);
+      curl_easy_setopt(self->handle, CURLOPT_POST, true);
       break;
     case HTTP_PUT:
-      curl_easy_setopt(self->locals.handle, CURLOPT_PUT, true);
+      curl_easy_setopt(self->handle, CURLOPT_PUT, true);
       break;
     case HTTP_DELETE:
-      curl_easy_setopt(self->locals.handle, CURLOPT_CUSTOMREQUEST, "DELETE");
+      curl_easy_setopt(self->handle, CURLOPT_CUSTOMREQUEST, "DELETE");
       break;
     case HTTP_PATCH:
-      curl_easy_setopt(self->locals.handle, CURLOPT_CUSTOMREQUEST, "PATCH");
+      curl_easy_setopt(self->handle, CURLOPT_CUSTOMREQUEST, "PATCH");
       break;
     case HTTP_HEAD:
-      curl_easy_setopt(self->locals.handle, CURLOPT_NOBODY, true);
+      curl_easy_setopt(self->handle, CURLOPT_NOBODY, true);
       break;
     case HTTP_OPTIONS:
-      curl_easy_setopt(self->locals.handle, CURLOPT_CUSTOMREQUEST, "OPTIONS");
+      curl_easy_setopt(self->handle, CURLOPT_CUSTOMREQUEST, "OPTIONS");
       break;
     default:
       break;
   }
 
-  curl_easy_setopt(self->locals.handle, CURLOPT_URL, self->request->url->urlString->chars);
+  curl_easy_setopt(self->handle, CURLOPT_URL, self->request->url->urlString->chars);
 }
 
 /**
@@ -289,14 +330,17 @@ static void setup(URLSessionTask *self) {
  */
 static void suspend(URLSessionTask *self) {
 
-  switch (self->state) {
-    case URLSESSIONTASK_RESUMING:
-    case URLSESSIONTASK_RESUMED:
-      self->state = URLSESSIONTASK_SUSPENDING;
-      break;
-    default:
-      break;
-  }
+  synchronized(self->session->condition, {
+    switch (self->state) {
+      case URLSESSIONTASK_RESUMING:
+      case URLSESSIONTASK_RESUMED:
+        self->state = URLSESSIONTASK_SUSPENDING;
+        $(self->session->condition, signal);
+        break;
+      default:
+        break;
+    }
+  });
 }
 
 /**
@@ -305,14 +349,14 @@ static void suspend(URLSessionTask *self) {
  */
 static void teardown(URLSessionTask *self) {
 
-  if (self->locals.handle) {
-    curl_easy_cleanup(self->locals.handle);
-    self->locals.handle = NULL;
+  if (self->handle) {
+    curl_easy_cleanup(self->handle);
+    self->handle = NULL;
   }
 
-  if (self->locals.requestHeaders) {
-    curl_slist_free_all(self->locals.requestHeaders);
-    self->locals.requestHeaders = NULL;
+  if (self->requestHeaders) {
+    curl_slist_free_all(self->requestHeaders);
+    self->requestHeaders = NULL;
   }
 }
 

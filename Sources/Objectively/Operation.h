@@ -64,38 +64,27 @@ struct Operation {
   OperationInterface *interface[0];
 
   /**
-   * @private
-   */
-  struct {
-    /**
-     * @brief The Condition enabling `waitUntilFinished`.
-     */
-    Condition *condition;
-
-    /**
-     * @brief Contains Operations which must finish before this one can start.
-     */
-    Array *dependencies;
-
-    /**
-     * @brief The OperationQueue this Operation was added to, if any.
-     * @remarks Not retained; an OperationQueue retains its Operations. This
-     * exists so that `cancel` can notify the queue, which must re-evaluate
-     * because cancelling an Operation makes it ready.
-     */
-    OperationQueue *queue;
-  } locals;
-
-  /**
    * @brief If `true`, this Operation will be expected to coordinate its own
    * concurrency and internal state management by overriding `start`.
    */
   bool asynchronous;
 
   /**
+   * @brief The Condition enabling `waitUntilFinished`.
+   * @private
+   */
+  Condition *condition;
+
+  /**
    * @brief The user data.
    */
   ident data;
+
+  /**
+   * @brief Contains Operations which must finish before this one can start.
+   * @private
+   */
+  Array *dependencies;
 
   /**
    * @brief The Operation function.
@@ -104,9 +93,11 @@ struct Operation {
 
   /**
    * @brief `true` when this Operation has been cancelled, `false` otherwise.
+   * @remarks Operation::cancel MAY set this from another thread while the Operation executes, so
+   * the function SHOULD read it with `__atomic_load_n(&operation->isCancelled, __ATOMIC_ACQUIRE)`.
    */
   bool isCancelled;
-  
+
   /**
    * @brief True once an OperationQueue has dispatched this Operation to one of
    * its Threads, so that no other Thread also starts it.
@@ -122,6 +113,15 @@ struct Operation {
    * @brief `true` when this Operation is finished, `false` otherwise.
    */
   bool isFinished;
+
+  /**
+   * @brief The OperationQueue this Operation was added to, if any.
+   * @remarks Not retained; an OperationQueue retains its Operations. This
+   * exists so that `cancel` can notify the queue, which must re-evaluate
+   * because cancelling an Operation makes it ready.
+   * @private
+   */
+  OperationQueue *queue;
 };
 
 /**
@@ -147,6 +147,8 @@ struct OperationInterface {
    * @fn void Operation::cancel(Operation *self)
    * @brief Cancels this Operation, allowing it to complete immediately.
    * @param self The Operation.
+   * @remarks An Operation that has not started will not run its function. An Operation that is
+   * executing runs to completion, but its function MAY check `isCancelled` and return early.
    * @memberof Operation
    */
   void (*cancel)(Operation *self);

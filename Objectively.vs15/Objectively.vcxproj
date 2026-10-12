@@ -56,6 +56,7 @@
     <ClInclude Include="..\Sources\Objectively\String.h" />
     <ClInclude Include="..\Sources\Objectively\StringReader.h" />
     <ClInclude Include="..\Sources\Objectively\Thread.h" />
+    <ClInclude Include="..\Sources\Objectively\ThreadPool.h" />
     <ClInclude Include="..\Sources\Objectively\Types.h" />
     <ClInclude Include="..\Sources\Objectively\URL.h" />
     <ClInclude Include="..\Sources\Objectively\URLCachedResponse.h" />
@@ -114,6 +115,7 @@
     <ClCompile Include="..\Sources\Objectively\String.c" />
     <ClCompile Include="..\Sources\Objectively\StringReader.c" />
     <ClCompile Include="..\Sources\Objectively\Thread.c" />
+    <ClCompile Include="..\Sources\Objectively\ThreadPool.c" />
     <ClCompile Include="..\Sources\Objectively\URL.c" />
     <ClCompile Include="..\Sources\Objectively\URLCachedResponse.c" />
     <ClCompile Include="..\Sources\Objectively\URLCache.c" />

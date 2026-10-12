@@ -69,7 +69,7 @@ static void cancel(Thread *self) {
   // int err = pthread_cancel(*((pthread_t *) self->thread));
   // assert(err == 0);
 
-  self->isCancelled = true;
+  __atomic_store_n(&self->isCancelled, true, __ATOMIC_RELEASE);
 }
 
 static __thread Thread *_currentThread;

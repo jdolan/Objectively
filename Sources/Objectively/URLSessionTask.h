@@ -79,21 +79,6 @@ struct URLSessionTask {
   URLSessionTaskInterface *interface[0];
 
   /**
-   * @private
-   */
-  struct {
-    /**
-     * @brief The backing libcurl handle.
-     */
-    ident handle;
-
-    /**
-     * @brief HTTP headers, in libcurl list structure.
-     */
-    ident requestHeaders;
-  } locals;
-
-  /**
    * @brief The count of bytes this task expects to receive.
    */
   size_t bytesExpectedToReceive;
@@ -129,6 +114,19 @@ struct URLSessionTask {
   char *error;
 
   /**
+   * @brief The backing libcurl handle.
+   * @private
+   */
+  ident handle;
+
+  /**
+   * @brief `true` while `execute` runs this task on the calling thread. The URLSession does
+   * not touch the libcurl handle of such a task.
+   * @private
+   */
+  bool isExecuting;
+
+  /**
    * @brief The progress function.
    */
   URLSessionTaskProgress progress;
@@ -139,12 +137,28 @@ struct URLSessionTask {
   struct URLRequest *request;
 
   /**
+   * @brief HTTP headers, in libcurl list structure.
+   * @private
+   */
+  ident requestHeaders;
+
+  /**
    * @brief The response.
    */
   struct URLResponse *response;
 
   /**
-   * @brief The session.
+   * @brief The libcurl result code (`CURLcode`) of the transfer, `0` on success.
+   * @remarks Only meaningful once the task is `URLSESSIONTASK_COMPLETED`. A transfer that ends
+   * early, for example with fewer bytes than its `Content-Length`, completes with a nonzero result.
+   */
+  int result;
+
+  /**
+   * @brief The session, which is not retained.
+   * @remarks The session's Thread releases tasks, so a task that retained its session could
+   * release the session's last reference on that Thread, which then could not join itself. A task
+   * MUST NOT be used after its session is deallocated.
    */
   struct URLSession *session;
 
@@ -168,6 +182,9 @@ struct URLSessionTaskInterface {
    * @fn void URLSessionTask::cancel(URLSessionTask *self)
    * @brief Cancels this task.
    * @param self The URLSessionTask.
+   * @remarks This MAY be called from any thread. It also interrupts a task that `execute` is
+   * running on another thread: `execute` then returns within about one second, and the task is
+   * `URLSESSIONTASK_CANCELED`.
    * @memberof URLSessionTask
    */
   void (*cancel)(URLSessionTask *self);
@@ -177,7 +194,8 @@ struct URLSessionTaskInterface {
    * @brief Executes this task synchronously, on the calling thread.
    * @param self The URLSessionTask.
    * @memberof URLSessionTask
-   * @remarks Do not mix calls to execute with calls to resume.
+   * @remarks Do not mix calls to execute with calls to resume. A task that is cancelled before
+   * or while it executes ends `URLSESSIONTASK_CANCELED`, otherwise `URLSESSIONTASK_COMPLETED`.
    */
   void (*execute)(URLSessionTask *self);
 

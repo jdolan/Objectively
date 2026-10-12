@@ -51,6 +51,8 @@ typedef struct URLSessionInterface URLSessionInterface;
 
 /**
  * @brief A management context for loading resources via URLs.
+ * @remarks Tasks do not retain their session. Deallocating a URLSession cancels its tasks, and a
+ * task MUST NOT be used after its session is deallocated.
  * @extends Object
  * @ingroup URLSession
  */
@@ -68,34 +70,33 @@ struct URLSession {
   URLSessionInterface *interface[0];
 
   /**
+   * @brief The condition, and the Lock guarding access to `tasks`.
    * @private
    */
-  struct {
-    /**
-     * @brief The condition, and the Lock guarding access to `tasks`.
-     */
-    Condition *condition;
-
-    /**
-     * @brief The libcurl handle.
-     */
-    ident handle;
-
-    /**
-     * @brief The URLSessionTasks.
-     */
-    Array *tasks;
-
-    /**
-     * @brief The backing Thread.
-     */
-    Thread *thread;
-  } locals;
+  Condition *condition;
 
   /**
    * @brief The session configuration.
    */
   URLSessionConfiguration *configuration;
+
+  /**
+   * @brief The libcurl handle.
+   * @private
+   */
+  ident handle;
+
+  /**
+   * @brief The URLSessionTasks.
+   * @private
+   */
+  Array *tasks;
+
+  /**
+   * @brief The backing Thread.
+   * @private
+   */
+  Thread *thread;
 };
 
 /**
@@ -114,7 +115,7 @@ struct URLSessionInterface {
    * @param self The URLSession.
    * @param request The URLRequest to perform.
    * @param completion The completion handler.
-   * @return The URLSessionDataTask, or `NULL` on error.
+   * @return The URLSessionDataTask, or `NULL` if this URLSession is invalidated.
    * @memberof URLSession
    */
   URLSessionDataTask *(*dataTaskWithRequest)(URLSession *self, URLRequest *request,
@@ -126,7 +127,7 @@ struct URLSessionInterface {
    * @param self The URLSession.
    * @param url The URL to `GET`.
    * @param completion The completion handler.
-   * @return The URLSessionDataTask, or `NULL` on error.
+   * @return The URLSessionDataTask, or `NULL` if this URLSession is invalidated.
    * @memberof URLSession
    */
   URLSessionDataTask *(*dataTaskWithURL)(URLSession *self, URL *url,
@@ -138,7 +139,7 @@ struct URLSessionInterface {
    * @param self The URLSession.
    * @param request The URLRequest to perform.
    * @param completion The completion handler.
-   * @return The URLSessionDownloadTask, or `NULL` on error.
+   * @return The URLSessionDownloadTask, or `NULL` if this URLSession is invalidated.
    * @memberof URLSession
    */
   URLSessionDownloadTask *(*downloadTaskWithRequest)(URLSession *self, URLRequest *request,
@@ -150,7 +151,7 @@ struct URLSessionInterface {
    * @param self The URLSession.
    * @param url The URL to `GET`.
    * @param completion The completion handler.
-   * @return The URLSessionDownloadTask, or `NULL` on error.
+   * @return The URLSessionDownloadTask, or `NULL` if this URLSession is invalidated.
    * @memberof URLSession
    */
   URLSessionDownloadTask *(*downloadTaskWithURL)(URLSession *self, URL *url,
@@ -179,6 +180,10 @@ struct URLSessionInterface {
    * @fn void URLSession::invalidateAndCancel(URLSession *self)
    * @brief Invalidates this URLSession and cancels all pending tasks.
    * @param self The URLSession.
+   * @remarks Tasks that `URLSessionTask::execute` is running on other threads are interrupted too.
+   * After this call, the task factories return `NULL`. This method returns without waiting for the
+   * cancelled tasks. Deallocating the URLSession invalidates it, then waits for its Thread, which
+   * finishes once every task has completed or been cancelled.
    * @memberof URLSession
    */
   void (*invalidateAndCancel)(URLSession *self);
@@ -205,7 +210,7 @@ struct URLSessionInterface {
    * @param self The URLSession.
    * @param request The URLRequest to perform.
    * @param completion The completion handler.
-   * @return The URLSessionUploadTask, or `NULL` on error.
+   * @return The URLSessionUploadTask, or `NULL` if this URLSession is invalidated.
    * @memberof URLSession
    */
   URLSessionUploadTask *(*uploadTaskWithRequest)(URLSession *self, URLRequest *request,

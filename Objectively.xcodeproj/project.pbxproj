@@ -38,6 +38,7 @@
 				CE4A53601F40E0C800927421 /* PBXTargetDependency */,
 				CE4A53621F40E0C800927421 /* PBXTargetDependency */,
 				CE7F044C2FE05A8B00AE0D63 /* PBXTargetDependency */,
+				3027F959E6443E23C73A711B /* PBXTargetDependency */,
 				CE4A53641F40E0C800927421 /* PBXTargetDependency */,
 				CE161E4823BE31780023AC8D /* PBXTargetDependency */,
 			);
@@ -150,10 +151,14 @@
 		CE76DA2D1C4860130096DD31 /* Objectively.h in Headers */ = {isa = PBXBuildFile; fileRef = CE76D8FC1C481C4E0096DD31 /* Objectively.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE7F04242FD993C600AE0D63 /* URLCachedResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = CE7F04202FD993C600AE0D63 /* URLCachedResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE7F04252FD993C600AE0D63 /* URLCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CE7F04222FD993C600AE0D63 /* URLCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C63981E92917506BA5025BBF /* ThreadPool.h in Headers */ = {isa = PBXBuildFile; fileRef = 782FF50CC78357133DAFBF81 /* ThreadPool.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE7F04262FD993C600AE0D63 /* URLCache.c in Sources */ = {isa = PBXBuildFile; fileRef = CE7F04232FD993C600AE0D63 /* URLCache.c */; };
+		266F7D92119FCF6C9B852B75 /* ThreadPool.c in Sources */ = {isa = PBXBuildFile; fileRef = 9C2FE7612EDDB2F063109328 /* ThreadPool.c */; };
 		CE7F04272FD993C600AE0D63 /* URLCachedResponse.c in Sources */ = {isa = PBXBuildFile; fileRef = CE7F04212FD993C600AE0D63 /* URLCachedResponse.c */; };
 		CE7F042E2FD9943600AE0D63 /* Objectively.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* Objectively.framework */; };
+		BEC2F8C826569B4E03E5ED8F /* Objectively.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE76D9681C48218E0096DD31 /* Objectively.framework */; };
 		CE7F04362FD9947500AE0D63 /* URLCache.c in Sources */ = {isa = PBXBuildFile; fileRef = CE7F04352FD9947500AE0D63 /* URLCache.c */; };
+		920C18A744E410FD9786DEA4 /* ThreadPool.c in Sources */ = {isa = PBXBuildFile; fileRef = 65857D7B78E1D02C982979CE /* ThreadPool.c */; };
 		CE7F04392FDF2B1100AE0D63 /* JSONContext.h in Headers */ = {isa = PBXBuildFile; fileRef = CE7F04372FDF2B1100AE0D63 /* JSONContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE7F043A2FDF2B1100AE0D63 /* JSONContext.c in Sources */ = {isa = PBXBuildFile; fileRef = CE7F04382FDF2B1100AE0D63 /* JSONContext.c */; };
 		CE7F043B2FDF2B1100AE0D63 /* JSONSerializers.h in Headers */ = {isa = PBXBuildFile; fileRef = CE7F043C2FDF2B1100AE0D63 /* JSONSerializers.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -428,6 +433,13 @@
 			remoteGlobalIDString = CE76D9671C48218E0096DD31;
 			remoteInfo = Objectively;
 		};
+		43D69B38AD06ECEA6CDEA0B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE76D9671C48218E0096DD31;
+			remoteInfo = Objectively;
+		};
 		CE7F043D2FE058E700AE0D63 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
@@ -448,6 +460,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = CE7F04282FD9943600AE0D63;
 			remoteInfo = "Objectively-URLCache";
+		};
+		7299628DF38C1132501F2E48 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE76D7F31C481B530096DD31 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6997E9352EE943DDECA86642;
+			remoteInfo = "Objectively-ThreadPool";
 		};
 		CE84A8A51DA15B88008BC685 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -666,6 +685,15 @@
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 		CE7F04302FD9943600AE0D63 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		F756E2B8198B8690009A27C3 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -1010,9 +1038,13 @@
 		CE7F04202FD993C600AE0D63 /* URLCachedResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLCachedResponse.h; sourceTree = "<group>"; };
 		CE7F04212FD993C600AE0D63 /* URLCachedResponse.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = URLCachedResponse.c; sourceTree = "<group>"; };
 		CE7F04222FD993C600AE0D63 /* URLCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLCache.h; sourceTree = "<group>"; };
+		782FF50CC78357133DAFBF81 /* ThreadPool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThreadPool.h; sourceTree = "<group>"; };
 		CE7F04232FD993C600AE0D63 /* URLCache.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = URLCache.c; sourceTree = "<group>"; };
+		9C2FE7612EDDB2F063109328 /* ThreadPool.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ThreadPool.c; sourceTree = "<group>"; };
 		CE7F04342FD9943600AE0D63 /* Objectively-URLCache */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-URLCache"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9F2267A09C1C219F8FE9A42 /* Objectively-ThreadPool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Objectively-ThreadPool"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE7F04352FD9947500AE0D63 /* URLCache.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = URLCache.c; sourceTree = "<group>"; };
+		65857D7B78E1D02C982979CE /* ThreadPool.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ThreadPool.c; sourceTree = "<group>"; };
 		CE7F04372FDF2B1100AE0D63 /* JSONContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSONContext.h; sourceTree = "<group>"; };
 		CE7F04382FDF2B1100AE0D63 /* JSONContext.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = JSONContext.c; sourceTree = "<group>"; };
 		CE7F043C2FDF2B1100AE0D63 /* JSONSerializers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSONSerializers.h; sourceTree = "<group>"; };
@@ -1120,6 +1152,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE7F042E2FD9943600AE0D63 /* Objectively.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7F9F7505BEBFC4370394ED0C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEC2F8C826569B4E03E5ED8F /* Objectively.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1415,6 +1455,8 @@
 				CE594BD21F47BA07004D74FF /* StringReader.h */,
 				CE76D8E91C481C4E0096DD31 /* Thread.c */,
 				CE76D8EA1C481C4E0096DD31 /* Thread.h */,
+				9C2FE7612EDDB2F063109328 /* ThreadPool.c */,
+				782FF50CC78357133DAFBF81 /* ThreadPool.h */,
 				CE76D8EB1C481C4E0096DD31 /* Types.h */,
 				CE76D8EC1C481C4E0096DD31 /* URL.c */,
 				CE76D8ED1C481C4E0096DD31 /* URL.h */,
@@ -1502,6 +1544,7 @@
 				CE76D9601C481E390096DD31 /* String.c */,
 				CE594BD51F49F8DB004D74FF /* StringReader.c */,
 				CE76D9611C481E390096DD31 /* Thread.c */,
+				65857D7B78E1D02C982979CE /* ThreadPool.c */,
 				CE76D9621C481E390096DD31 /* URL.c */,
 				CE7F04352FD9947500AE0D63 /* URLCache.c */,
 				CE76D9631C481E390096DD31 /* URLSession.c */,
@@ -1540,6 +1583,7 @@
 				CEEB02C61F40DD27004C2EDD /* Objectively-Set */,
 				CEEB02D31F40DD29004C2EDD /* Objectively-String */,
 				CEEB02E01F40DD2B004C2EDD /* Objectively-Thread */,
+				B9F2267A09C1C219F8FE9A42 /* Objectively-ThreadPool */,
 				CEEB02ED1F40DD4E004C2EDD /* Objectively-URL */,
 				CEEB02FA1F40DD4F004C2EDD /* Objectively-URLSession */,
 				CE4A53131F40DFE800927421 /* Objectively-Hello */,
@@ -1646,6 +1690,7 @@
 				CE76DA221C4860130096DD31 /* String.h in Headers */,
 				CE594BD41F47BA07004D74FF /* StringReader.h in Headers */,
 				CE76DA231C4860130096DD31 /* Thread.h in Headers */,
+				C63981E92917506BA5025BBF /* ThreadPool.h in Headers */,
 				CE76DA241C4860130096DD31 /* Types.h in Headers */,
 				CE76DA251C4860130096DD31 /* URL.h in Headers */,
 				CE7F04252FD993C600AE0D63 /* URLCache.h in Headers */,
@@ -1790,6 +1835,24 @@
 			name = "Objectively-URLCache";
 			productName = "Objectively-Test";
 			productReference = CE7F04342FD9943600AE0D63 /* Objectively-URLCache */;
+			productType = "com.apple.product-type.tool";
+		};
+		6997E9352EE943DDECA86642 /* Objectively-ThreadPool */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A635B4520A8F0CA5664FB71 /* Build configuration list for PBXNativeTarget "Objectively-ThreadPool" */;
+			buildPhases = (
+				4F971EB776C08D728076D4C6 /* Sources */,
+				7F9F7505BEBFC4370394ED0C /* Frameworks */,
+				F756E2B8198B8690009A27C3 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				703E652D8FC69C337A23B18A /* PBXTargetDependency */,
+			);
+			name = "Objectively-ThreadPool";
+			productName = "Objectively-Test";
+			productReference = B9F2267A09C1C219F8FE9A42 /* Objectively-ThreadPool */;
 			productType = "com.apple.product-type.tool";
 		};
 		CE7F043B2FE058E700AE0D63 /* Objectively-RESTClient */ = {
@@ -2264,6 +2327,7 @@
 				CEEB02C71F40DD29004C2EDD /* Objectively-String */,
 				CE594BD61F49F931004D74FF /* Objectively-StringReader */,
 				CEEB02D41F40DD2B004C2EDD /* Objectively-Thread */,
+				6997E9352EE943DDECA86642 /* Objectively-ThreadPool */,
 				CEEB02E11F40DD4E004C2EDD /* Objectively-URL */,
 				CE7F04282FD9943600AE0D63 /* Objectively-URLCache */,
 				CEEB02EE1F40DD4F004C2EDD /* Objectively-URLSession */,
@@ -2304,7 +2368,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd $BUILT_PRODUCTS_DIR &&\n./Objectively-Array &&\n./Objectively-Boole &&\n./Objectively-Data &&\n./Objectively-Date &&\n./Objectively-Dictionary &&\n./Objectively-HashTable &&\n./Objectively-IndexPath &&\n./Objectively-IndexSet &&\n./Objectively-JSON \"$SRCROOT/Tests/Objectively/Fixtures/test.json\" &&\n./Objectively-List &&\n./Objectively-Log &&\n./Objectively-Null &&\n./Objectively-Number &&\n./Objectively-Object &&\n./Objectively-Operation &&\n./Objectively-Regexp &&\n./Objectively-Resource &&\n./Objectively-RESTClient &&\n./Objectively-Set &&\n./Objectively-String &&\n./Objectively-StringReader &&\n./Objectively-Thread &&\n./Objectively-URL &&\n./Objectively-URLCache &&\n./Objectively-URLSession &&\n./Objectively-Vector\n";
+			shellScript = "cd $BUILT_PRODUCTS_DIR &&\n./Objectively-Array &&\n./Objectively-Boole &&\n./Objectively-Data &&\n./Objectively-Date &&\n./Objectively-Dictionary &&\n./Objectively-HashTable &&\n./Objectively-IndexPath &&\n./Objectively-IndexSet &&\n./Objectively-JSON \"$SRCROOT/Tests/Objectively/Fixtures/test.json\" &&\n./Objectively-List &&\n./Objectively-Log &&\n./Objectively-Null &&\n./Objectively-Number &&\n./Objectively-Object &&\n./Objectively-Operation &&\n./Objectively-Regexp &&\n./Objectively-Resource &&\n./Objectively-RESTClient &&\n./Objectively-Set &&\n./Objectively-String &&\n./Objectively-StringReader &&\n./Objectively-Thread &&\n./Objectively-ThreadPool &&\n./Objectively-URL &&\n./Objectively-URLCache &&\n./Objectively-URLSession &&\n./Objectively-Vector\n";
 		};
 		CEC0F1600000000000000001 /* Configure */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2403,6 +2467,7 @@
 				CE76D98A1C4821CE0096DD31 /* String.c in Sources */,
 				CE594BD31F47BA07004D74FF /* StringReader.c in Sources */,
 				CE76D98B1C4821CE0096DD31 /* Thread.c in Sources */,
+				266F7D92119FCF6C9B852B75 /* ThreadPool.c in Sources */,
 				CE76D98C1C4821CE0096DD31 /* URL.c in Sources */,
 				CE7F04262FD993C600AE0D63 /* URLCache.c in Sources */,
 				CE7F04272FD993C600AE0D63 /* URLCachedResponse.c in Sources */,
@@ -2423,6 +2488,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE7F04362FD9947500AE0D63 /* URLCache.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F971EB776C08D728076D4C6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				920C18A744E410FD9786DEA4 /* ThreadPool.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2763,6 +2836,11 @@
 			target = CE76D9671C48218E0096DD31 /* Objectively */;
 			targetProxy = CE7F042A2FD9943600AE0D63 /* PBXContainerItemProxy */;
 		};
+		703E652D8FC69C337A23B18A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE76D9671C48218E0096DD31 /* Objectively */;
+			targetProxy = 43D69B38AD06ECEA6CDEA0B5 /* PBXContainerItemProxy */;
+		};
 		CE7F043C2FE058E700AE0D63 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CE76D9671C48218E0096DD31 /* Objectively */;
@@ -2777,6 +2855,11 @@
 			isa = PBXTargetDependency;
 			target = CE7F04282FD9943600AE0D63 /* Objectively-URLCache */;
 			targetProxy = CE7F044B2FE05A8B00AE0D63 /* PBXContainerItemProxy */;
+		};
+		3027F959E6443E23C73A711B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6997E9352EE943DDECA86642 /* Objectively-ThreadPool */;
+			targetProxy = 7299628DF38C1132501F2E48 /* PBXContainerItemProxy */;
 		};
 		CE84A8A61DA15B88008BC685 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3151,7 +3234,25 @@
 			};
 			name = Debug;
 		};
+		C2A2B533960082B9A5EB65FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
+				OTHER_LDFLAGS = "-lcheck";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
 		CE7F04332FD9943600AE0D63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
+				OTHER_LDFLAGS = "-lcheck";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		19A7AC8AA20D613DDD05D0D7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LIBRARY_SEARCH_PATHS = "$(HOMEBREW_PREFIX)/lib";
@@ -3663,6 +3764,15 @@
 			buildConfigurations = (
 				CE7F04322FD9943600AE0D63 /* Debug */,
 				CE7F04332FD9943600AE0D63 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4A635B4520A8F0CA5664FB71 /* Build configuration list for PBXNativeTarget "Objectively-ThreadPool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2A2B533960082B9A5EB65FC /* Debug */,
+				19A7AC8AA20D613DDD05D0D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

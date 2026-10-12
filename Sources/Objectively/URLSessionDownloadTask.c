@@ -56,8 +56,8 @@ static void setup(URLSessionTask *self) {
 
   assert(this->file);
 
-  curl_easy_setopt(self->locals.handle, CURLOPT_WRITEFUNCTION, writeFunction);
-  curl_easy_setopt(self->locals.handle, CURLOPT_WRITEDATA, self);
+  curl_easy_setopt(self->handle, CURLOPT_WRITEFUNCTION, writeFunction);
+  curl_easy_setopt(self->handle, CURLOPT_WRITEDATA, self);
 }
 
 #pragma mark - Class lifecycle

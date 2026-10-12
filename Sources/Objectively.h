@@ -65,6 +65,7 @@
 #include <Objectively/String.h>
 #include <Objectively/StringReader.h>
 #include <Objectively/Thread.h>
+#include <Objectively/ThreadPool.h>
 #include <Objectively/Types.h>
 #include <Objectively/URL.h>
 #include <Objectively/URLCache.h>

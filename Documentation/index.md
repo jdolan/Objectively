@@ -18,7 +18,7 @@ Object oriented framework for C.
 - **Unicode strings** with multibyte character set support
 - **Collections** for Objects and C types: Array, Dictionary, List, Set and more
 - **JSON** parsing, marshaling, and JSONPath queries
-- **Concurrency**: Lock, Condition, Thread, Operation, OperationQueue
+- **Concurrency**: Lock, Condition, Thread, ThreadPool, Operation, OperationQueue
 - **Networking**: URLSession, JSONContext & RESTClient
 
 ## tl;dr
