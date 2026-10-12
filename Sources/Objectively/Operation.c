@@ -72,11 +72,11 @@ static void addDependency(Operation *self, Operation *dependency) {
  */
 static void cancel(Operation *self) {
 
-  if (self->isCancelled || self->isFinished) {
+  if (__atomic_load_n(&self->isCancelled, __ATOMIC_ACQUIRE) || self->isFinished) {
     return;
   }
 
-  self->isCancelled = true;
+  __atomic_store_n(&self->isCancelled, true, __ATOMIC_RELEASE);
 
   if (self->isExecuting == false) {
     OperationQueue *queue = self->queue;
@@ -143,7 +143,7 @@ static bool isReady(const Operation *self) {
     return false;
   }
 
-  if (self->isCancelled) {
+  if (__atomic_load_n(&self->isCancelled, __ATOMIC_ACQUIRE)) {
     return true;
   }
 
@@ -180,7 +180,7 @@ static void start(Operation *self) {
     return;
   }
 
-  if (self->isCancelled == false) {
+  if (__atomic_load_n(&self->isCancelled, __ATOMIC_ACQUIRE) == false) {
     self->isExecuting = true;
     self->function(self);
     self->isExecuting = false;

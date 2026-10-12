@@ -236,7 +236,12 @@ static int progress(ident self, curl_off_t bytesExpectedToReceive, curl_off_t by
     this->progress(this);
   }
 
-  return this->state == URLSESSIONTASK_CANCELING;
+  bool isCanceling;
+  synchronized(this->session->condition, {
+    isCanceling = this->state == URLSESSIONTASK_CANCELING;
+  });
+
+  return isCanceling;
 }
 
 /**

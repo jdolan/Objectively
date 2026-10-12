@@ -93,6 +93,8 @@ struct Operation {
 
   /**
    * @brief `true` when this Operation has been cancelled, `false` otherwise.
+   * @remarks Operation::cancel MAY set this from another thread while the Operation executes, so
+   * the function SHOULD read it with `__atomic_load_n(&operation->isCancelled, __ATOMIC_ACQUIRE)`.
    */
   bool isCancelled;
 

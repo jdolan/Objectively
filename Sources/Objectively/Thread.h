@@ -75,6 +75,8 @@ struct Thread {
 
   /**
    * @brief `true` when this Thread has been cancelled, `false` otherwise.
+   * @remarks Thread::cancel sets this from another thread, so the ThreadFunction SHOULD read it
+   * with `__atomic_load_n(&thread->isCancelled, __ATOMIC_ACQUIRE)`.
    */
   bool isCancelled;
 
