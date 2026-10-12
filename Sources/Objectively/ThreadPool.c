@@ -49,14 +49,14 @@ typedef enum {
 
 struct ThreadPoolWork {
   /**
-   * @brief The user data.
-   */
-  ident data;
-
-  /**
    * @brief The ThreadFunction.
    */
   ThreadFunction function;
+
+  /**
+   * @brief The user data.
+   */
+  ident data;
 
   /**
    * @brief `true` if the Thread that runs this ThreadPoolWork frees it.
